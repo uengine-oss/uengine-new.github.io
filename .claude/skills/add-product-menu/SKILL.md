@@ -1,0 +1,195 @@
+---
+name: add-product-menu
+description: 유엔진 홈페이지(uengine-new.github.io)에 유튜브 데모 영상 하나만 주면 신규 제품/메뉴를 자동으로 추가합니다. 영상 트랜스크립트로 기능을 추출하고, 영상에서 핵심 화면을 캡처하며, roboarchitect.html 템플릿 기반의 상세 페이지를 생성하고, 전체 페이지의 상단 네비/푸터 메뉴와 메인 스플래시 슬라이드까지 일괄 반영합니다. "유튜브로 메뉴 추가", "새 제품 페이지 만들어", "홈페이지에 메뉴 추가", "이 영상으로 제품 페이지", "/add-product-menu", "제품 메뉴 신설", "스플래시에 추가" 등의 표현이 있을 때 트리거.
+---
+
+# add-product-menu — 유튜브 영상 → 홈페이지 제품 메뉴 자동 추가
+
+유엔진 홈페이지(정적 HTML, `index.html` + `contents/*.html`)에 신규 제품을 추가하는
+전 과정을 자동화한다. 사용자가 **유튜브 데모 URL** 하나만 주면 나머지를 알아서 채운다.
+
+## 대상 리포지토리
+- 루트: 홈페이지 프로젝트 루트 (`index.html`, `contents/`, `images/` 존재)
+- 템플릿: `contents/roboarchitect.html` (제품 상세 페이지 표준 레이아웃)
+- 모든 페이지(`index.html` + `contents/*.html`)는 **각자 nav/footer를 하드코딩**으로 복제한다.
+  → 메뉴 변경은 전체 파일에 일괄 반영해야 한다.
+
+## 입력 (없으면 AskUserQuestion 으로 확인)
+1. **유튜브 URL** (필수) — 데모/소개 영상
+2. **제품명** (예: `Ontology Studio`) — 페이지 제목/메뉴 라벨/파일 slug의 근거
+3. **파일 slug** (예: `ontologystudio`) → `contents/<slug>.html`, `images/<slug>/`
+4. **외부 링크** — GitHub 또는 제품 사이트 (헤더/CTA 버튼 및 설명 소스)
+5. **배치 위치** 둘 중 하나:
+   - (A) 기존 top-level 메뉴의 `<Products>` 밑에 제품 링크 추가
+   - (B) **신규 top-level 메뉴 신설** (예: `Ontology`) — Ontology 추가 때 했던 방식
+6. **한 줄 한국어 소개** (스플래시/헤더용) — 없으면 트랜스크립트/README로 초안 작성 후 확인
+
+## 사전 도구 확인
+```bash
+which yt-dlp ffmpeg   # 둘 다 필요. 없으면: brew install yt-dlp ffmpeg
+```
+
+---
+
+## 절차
+
+### 1. 자료 수집 (병렬)
+- `WebFetch` 로 GitHub/사이트 README → 제품 설명·핵심 기능·YouTube 링크 확인
+- 스크래치패드에서 트랜스크립트 다운로드:
+```bash
+cd <SCRATCH>/onto && \
+yt-dlp --write-auto-subs --write-subs --sub-langs "ko,en" --skip-download \
+  --sub-format vtt -o "onto.%(ext)s" "<YOUTUBE_URL>"
+```
+- VTT → 타임스탬프 텍스트 정리 (auto-sub 롤링 중복 제거):
+```bash
+python3 - <<'EOF'
+import re
+lines=open('onto.ko.vtt',encoding='utf-8').read().splitlines()
+out=[];last=None;t=None
+for l in lines:
+    m=re.match(r'(\d\d:\d\d:\d\d)\.\d+ -->',l)
+    if m: t=m.group(1); continue
+    if not l.strip() or l.startswith(('WEBVTT','Kind:','Language:')): continue
+    x=re.sub(r'<[^>]+>','',l).strip()
+    if x and x!=last: out.append((t,x)); last=x
+for t,x in out: print(t,x)
+EOF
+```
+- 트랜스크립트를 읽고 **핵심 기능 5~6개**와 각 기능이 **화면에 보이는 타임스탬프**를 정리한다.
+
+### 2. 스크린샷 추출
+```bash
+yt-dlp -f "best[height<=720]" --no-update -o "video.%(ext)s" "<YOUTUBE_URL>"
+mkdir -p frames
+for t in 00:00:06 00:01:05 00:03:14 ... ; do   # 1단계에서 고른 타임스탬프들
+  fn=$(echo $t|tr ':' '-'); ffmpeg -loglevel error -ss $t -i video.mp4 -frames:v 1 -q:v 3 "frames/f_$fn.jpg" -y
+done
+```
+- 추출한 프레임을 `Read` 로 직접 보고 **가장 잘 나온 컷들**을 고른다(전환 중/모션블러 프레임 제외; 필요시 ±1~2초 재추출).
+  기능이 많으면 **캡처 10~12장**까지 늘려도 좋다(기능 카드 한 장에 하나씩).
+- 선정본을 기능 카드용으로 복사한다. 브라우저 크롬(macOS 메뉴바·주소창)과 하단 Dock 은
+  `ffmpeg crop` 으로 잘라내 앱 화면만 남긴다(예: 상단 82px 제거, Dock 있으면 하단도):
+```bash
+mkdir -p images/<slug>
+ffmpeg -loglevel error -i frames/f_XXX.jpg -vf "crop=1114:638:0:82" images/<slug>/<slug>-기능명.jpg -y
+```
+- **스플래시용 png 는 단순 복사가 아니라 “2장 겹침 + 보라빛 라운드 테두리”로 합성한다.**
+  다른 슬라이드(Process GPT·Robo Modernizer 등)와 동일한 룩이며, `main-slide-img > img` 에는
+  CSS 테두리가 없으므로 **테두리/겹침은 PNG 에 구워 넣어야 한다.** 헬퍼 스크립트 사용:
+```bash
+# BACK = 제품 UI/목록 화면, FRONT = 색감이 강한 캔버스/그래프 화면(대비되게)
+python3 .claude/skills/add-product-menu/compose-splash.py \
+  images/full-width-images/main-img-<slug>.png \
+  images/<slug>/<back>.jpg images/<slug>/<front>.jpg [--crop-top 30] [--crop-bottom 38]
+```
+  결과: 투명 배경 1120×860 PNG(우상단·좌하단 대각선 겹침, 보라 테두리 #7C5CFF, 드롭섀도우).
+  `Read` 로 확인해 Dock/크롬이 남으면 `--crop-top/--crop-bottom` 을 조정한다.
+
+### 3. 제품 상세 페이지 생성
+```bash
+cp contents/roboarchitect.html contents/<slug>.html
+```
+그다음 다음을 교체한다:
+- `<title>` / `<meta name="description">` → 제품 내용
+- `<main id="main"> … </main>` 전체를 새 콘텐츠로 교체 (아래 구조 유지)
+- 문의 폼 `<input type="hidden" name="classification" value="RoboArchitect">` → 제품명
+
+**main 구조(템플릿과 동일 클래스 재사용):**
+1. Header Section — `hs-title-1` 제품명 + 버튼(GitHub/영상 링크)
+2. About Section — `.video-box > iframe src="https://www.youtube.com/embed/<VIDEO_ID>"` + 소개 문단
+3. 주요 기능 — `feature-card` 그리드. **각 카드 상단에 `images/<slug>/*.jpg` 캡처**를 넣고
+   (`padding:0 0 30px; overflow:hidden`, `img width:100%`), 아래 제목·설명·체크 불릿(`feature-item`) 3개
+4. 동작 방식 — `features-2-item` 4단계
+5. 비교표 — `tbl-default` (해당 제품의 차별점)
+6. Call Action — CTA 버튼(GitHub/영상)
+7. Contact — 템플릿 폼 그대로, `classification` 값만 변경
+
+main 교체는 파이썬 슬라이스로 안전하게:
+```python
+s=open(f).read(); i=s.index('            <main id="main">'); j=s.index('</main>')+len('</main>')
+s=s[:i]+open('newmain.html').read().rstrip('\n')+s[j:]; open(f,'w').write(s)
+```
+> 주의: `roboarchitect.html`을 복사하면 nav/footer는 이미 최신 상태. 새 제품 메뉴 항목은 4단계에서 전체 파일에 일괄 삽입되므로 이 파일도 포함된다.
+
+### 4. 전체 페이지 nav + footer 일괄 반영
+`index.html` 은 링크 경로 접두사 `contents/`, `contents/*.html` 은 접두사 없음.
+
+**(B) 신규 top-level 메뉴 신설** — About 메뉴 앞에 삽입. 앵커(28/32스페이스, 전 파일 공통):
+```
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">About
+```
+이 앵커 문자열 앞에 신규 `<li>…megamenu…</li>` 블록을 끼워 넣는다. 푸터는
+`<h3 class="fw-title">About</h3>` 위젯 바로 앞(`<!-- Footer Widget -->`)에 신규 컬럼을 삽입하고,
+5열이 되면 Insights 컬럼을 `col-sm-3`→`col-sm-2`로 줄여 합계 12를 맞춘다(SDD3+BPM3+신규2+About2+Insights2).
+
+**(A) 기존 메뉴에 제품만 추가** — 해당 메뉴 `<Products>` `<ul>` 안에 `<li><a href="{P}<slug>.html">제품명</a></li>` 한 줄 추가. 푸터도 같은 위젯의 `<ul class="fw-menu clearlist">` 에 동일 링크 추가.
+
+**일괄 처리 스크립트 골격** (파일별 접두사 처리 + 앵커 존재 검증):
+```python
+import glob
+files=glob.glob('contents/*.html')+['index.html']
+NAV_ABOUT='                            <!-- Item With Sub -->\n                            <li>\n                                <a href="#" class="mn-has-sub active">About'
+def block(P): return f'''<Ontology-style megamenu 문자열, {P}<slug>.html 링크 포함>'''
+for f in files:
+    P='contents/' if f=='index.html' else ''
+    s=open(f,encoding='utf-8').read()
+    assert NAV_ABOUT in s, f  # 앵커 검증
+    s=s.replace(NAV_ABOUT, block(P)+NAV_ABOUT, 1)
+    if '<h3 class="fw-title">About</h3>' in s:   # openingSoon.html 처럼 푸터 없는 페이지는 건너뜀
+        pos=s.index('<h3 class="fw-title">About</h3>'); fw=s.rindex('<!-- Footer Widget -->',0,pos)
+        s=s[:fw]+footer_block(P)+s[fw:]
+        # (신규 top-level일 때만) Insights col-sm-3 -> col-sm-2
+    open(f,'w',encoding='utf-8').write(s)
+```
+> **중요(부분쓰기 방지):** 루프 도중 `assert`/`index` 실패로 일부 파일만 저장되면 리포가 반쯤 바뀐다.
+> 먼저 전 파일에 대해 앵커 존재를 검사한 뒤 쓰거나, 실패 시 `git checkout -- index.html contents/*.html` 로 되돌리고 스크립트를 고쳐 재실행한다.
+> `contents/openingSoon.html` 은 nav만 있고 footer 위젯이 없으니 footer 단계는 조건부로 건너뛴다.
+
+### 5. 메인 스플래시 슬라이드 추가 (index.html)
+`<!-- Fullwidth Slider -->` 컨테이너 안, 첫 슬라이드로 삽입(가장 먼저 노출). 기존 슬라이드
+(`<!-- Slide Item - process gpt -->`)와 동일 구조:
+- `main-slide-img > img src="images/full-width-images/main-img-<slug>.png" class="wow scaleOutIn"`
+  → 이미지는 2단계에서 `compose-splash.py` 로 만든 **보라빛 라운드 테두리 + 2장 겹침** PNG 여야 한다.
+    단순 화면 캡처 1장을 그대로 넣지 말 것(테두리가 안 들어가 다른 슬라이드와 튄다).
+  → `scaleOutIn` 클래스가 있어야 다른 슬라이드처럼 등장 애니메이션이 붙는다.
+- `hs-title-11` = 카테고리(신규 메뉴명 또는 기존 카테고리)
+- `hs-title-12 > span.owl-animate-chars` = 제품명
+- `hs-title-11i` = 한 줄 한국어 소개
+- `Learn More` → `contents/<slug>.html`
+
+### 6. 검증
+```bash
+python3 -m http.server 8123 --bind 127.0.0.1 &   # 8000이 사용 중이면 다른 포트
+```
+- `grep` 으로 남은 옛 라벨 0, 신규 링크 경로(파일 타입별 접두사) 확인
+- `<main>`/`<section>` 여는/닫는 태그 수 일치 확인
+- Chrome headless 스크린샷으로 페이지·nav·footer(열 정렬)·스플래시 렌더 확인:
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+  --hide-scrollbars --window-size=1400,3000 --screenshot=out.png "http://127.0.0.1:8123/contents/<slug>.html"
+```
+- 브라우저로 `open http://127.0.0.1:8123/contents/<slug>.html` 및 `index.html` 열어 사용자에게 확인 요청
+
+## 산출물
+- `contents/<slug>.html` (신규)
+- `images/<slug>/*.jpg` (기능 캡처, 5~12장) + `images/full-width-images/main-img-<slug>.png` (테두리 합성 스플래시)
+- 전체 `*.html` 의 nav/footer 메뉴 반영
+- `index.html` 스플래시 슬라이드
+
+## 산출물 헬퍼
+- `.claude/skills/add-product-menu/compose-splash.py` — 스플래시 이미지 합성기.
+  캡처 2장 → 보라빛 라운드 테두리 + 대각선 겹침 + 드롭섀도우 투명 PNG. (2·5단계에서 사용)
+
+## 체크리스트
+- [ ] yt-dlp/ffmpeg 존재
+- [ ] 트랜스크립트로 기능 도출(기능 많으면 10~12개까지)
+- [ ] 캡처 프레임 육안 선별(블러/전환 제외), 크롬·Dock 크롭
+- [ ] `<slug>.html` head/main/폼 classification 교체
+- [ ] **선언부**에 제품의 근본 정체성(예: Spec-Driven Development) 명시, 필요 시 사상(DDD/BDD 등) "왜 좋은지" 종합 섹션 추가
+- [ ] nav 앵커 전 파일 존재 검증 후 일괄 삽입 (부분쓰기 시 git 복구)
+- [ ] 신규 top-level이면 footer 5열 폭 재조정
+- [ ] **스플래시 이미지 = compose-splash.py 로 테두리+겹침 합성** (단순 캡처 1장 금지), `scaleOutIn` 클래스, Learn More 링크
+- [ ] 로컬 서버 + headless 스크린샷으로 렌더 검증
