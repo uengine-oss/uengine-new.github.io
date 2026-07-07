@@ -87,6 +87,21 @@ grep -c "ontologystudio" contents/bloglist.html contents/blog/*.html
   5. CTA 문단 — `../processgpt.html` 등 내부 페이지와 외부 사이트(`target="_blank"`) 링크.
 - 관련 제품 페이지(`../ontologystudio.html` 등) 내부 링크도 자연스럽게 삽입.
 
+- **[필수] 딥링크 규칙 — 기능을 언급하면 그 기능 소개 섹션으로 직접 링크한다.**
+  개념→기능 매핑 표(또는 본문)에서 제품 기능을 거론할 때, 제품 소개 페이지의 **전체**가 아니라
+  **그 기능을 설명하는 정확한 섹션**으로 앵커 링크(`#앵커`)를 항상 함께 건다.
+  1. 제품 소개 페이지에서 대상 기능 섹션(예: `processgpt.html`의 "핵심 차별점" 카드)에
+     앵커가 없으면 먼저 심는다 — 제목 `<h4>` 바로 앞에 `<a id="diff-<key>" name="diff-<key>"></a>`
+     (`diff-nocode`, `diff-selflearning`, `diff-reverse`, `diff-agent`, `diff-bpmn`, `diff-ontology` 가 현재 존재).
+  2. 매핑 표의 기능 셀(우측 열) 끝에 소개 섹션으로 가는 링크를 붙인다:
+     ```html
+     <br><a href="../processgpt.html#diff-<key>" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a>
+     ```
+  3. 대응되는 소개 섹션이 없는 기능은 억지 링크를 만들지 말고 링크 없이 둔다.
+  4. 심은 앵커와 건 링크가 1:1로 맞는지 grep 으로 검증:
+     `grep -o 'id="diff-[a-z]*"' contents/processgpt.html` ↔
+     `grep -o 'processgpt.html#diff-[a-z]*' contents/blog/<slug>.html`
+
 ### 5. 목록 반영 — `contents/bloglist.html`
 목록 첫 카드(`<!-- Content --> <div class="col-lg-8 offset-lg-2">` 바로 아래 첫 `<!-- Post -->`)
 **앞에** 새 카드를 삽입한다 (최신 글이 맨 위):
@@ -126,5 +141,6 @@ open http://127.0.0.1:8123/contents/blog/<slug>.html
 - [ ] blockquote 헤더 + `.prose` 블록 + 인라인 표 스타일로 본문 변환
 - [ ] ASCII 다이어그램은 스타일링된 div 다이어그램으로 재작성 (+캡션)
 - [ ] (요청 시) 제품 소개 페이지에서 기능 추출 → 개념-기능 매핑 표 + CTA 섹션
+- [ ] 매핑 표의 각 기능 셀 → 제품 소개 페이지의 해당 섹션 앵커(`#diff-…`)로 딥링크 (앵커 없으면 심고, 1:1 검증)
 - [ ] bloglist.html 첫 카드로 삽입, 날짜 형식 `Month DD, YYYY`
 - [ ] 태그 균형 검사 통과 (footer `</a>` 2건 제외)
