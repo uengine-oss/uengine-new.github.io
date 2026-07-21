@@ -15,7 +15,9 @@ description: 유엔진 홈페이지(uengine-new.github.io)에 유튜브 데모 �
   → 메뉴 변경은 전체 파일에 일괄 반영해야 한다.
 
 ## 입력 (없으면 AskUserQuestion 으로 확인)
-1. **유튜브 URL** (필수) — 데모/소개 영상
+1. **유튜브 URL** (필수) — 데모/소개 영상. 영상 대신 **doc-inbox/의 NotebookLM류 워터마크 PDF**
+   (슬라이드/인포그래픽)가 소스로 주어지면, `doc-inbox-rebrand` 스킬로 워터마크를 uEngine 로고로
+   교체한 아키텍처/다이어그램 이미지를 만든 뒤 2~3단계의 스크린샷 대신 사용한다.
 2. **제품명** (예: `Ontology Studio`) — 페이지 제목/메뉴 라벨/파일 slug의 근거
 3. **파일 slug** (예: `ontologystudio`) → `contents/<slug>.html`, `images/<slug>/`
 4. **외부 링크** — GitHub 또는 제품 사이트 (헤더/CTA 버튼 및 설명 소스)
