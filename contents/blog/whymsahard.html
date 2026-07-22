@@ -386,7 +386,7 @@
                                                 "마이크로서비스로 전환했는데, 시스템은 더 느려지고 장애는 더 잦아졌으며 배포는 오히려 더 무서워졌다." — MSA 전환 프로젝트를 경험한 조직에서 어렵지 않게 들을 수 있는 고백입니다. 마이크로서비스 아키텍처는 <b>독립적인 배포, 탄력적인 확장, 장애 격리</b>라는 매력적인 약속을 내걸지만, 그 약속이 현실이 되는 조직은 생각보다 많지 않습니다.
                                             </p>
                                             <p>
-                                                왜일까요? 결론부터 말하면, <b>마이크로서비스의 어려움은 '기술'이 아니라 '설계'에서 온다</b>는 것이 우리의 경험입니다. Kubernetes를 도입하고 서비스를 여러 개로 쪼개는 일은 이제 어렵지 않습니다. 정작 어려운 것은 <b>"어디에 경계선을 긋는가"</b>, <b>"데이터는 누가 소유하는가"</b>, <b>"트랜잭션 없이 어떻게 일관성을 지키는가"</b>라는 세 가지 설계 질문입니다. 이 글에서는 유엔진이 다년간의 MSA 컨설팅과 교육에서 반복적으로 목격해 온 세 가지 함정을 짚고, 그 해답이 되는 설계 원칙들을 관련 심화 글과 함께 안내합니다.
+                                                왜일까요? 결론부터 말하면, <b>마이크로서비스의 어려움은 '기술'이 아니라 '설계'에서 온다</b>는 것이 우리의 경험입니다. Kubernetes를 도입하고 서비스를 여러 개로 쪼개는 일은 이제 어렵지 않습니다. 정작 어려운 것은 <b>"어디에 경계선을 긋는가"</b>, <b>"데이터는 누가 소유하는가"</b>, <b>"트랜잭션 없이 어떻게 일관성을 지키는가"</b>라는 세 가지 설계 질문입니다. 이 글에서는 유엔진이 다년간의 MSA 컨설팅과 교육에서 반복적으로 목격해 온 세 가지 함정을 짚고, 그 해답이 되는 설계 원칙들을 관련 심화 글과 함께 안내합니다. 아울러 그 해답을 채택한 뒤에도 설계·구현·운영·배포로 이어지는 <b>프로젝트 라이프사이클 전 단계에서 만나게 되는 난제들의 지도</b>까지 함께 그려봅니다.
                                             </p>
                                         </div>
 
@@ -562,9 +562,78 @@
                                             </p>
                                         </div>
 
+                                                                                <blockquote>
+                                            <p>
+                                                &nbsp; 6. 해답의 청구서 — 라이프사이클 전 단계에서 만나는 난제들
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                여기까지 읽고 "행위 중심으로 경계를 긋고 이벤트로 연결하면 되는구나"라고 정리했다면, 절반만 맞습니다. <b>이벤트 기반 마이크로서비스 아키텍처(EDMSA)</b>는 확장성, 결합도 분리, 실시간 처리에서 뛰어난 해답이지만, 이 처방을 받아들이는 순간 어려움이 사라지는 것이 아니라 <b>형태를 바꿔 프로젝트 라이프사이클 전 단계로 흩어집니다.</b> "분산 환경의 복잡성"과 "비동기 메시징"이 결합되면서 설계·구현·운영·배포 각 단계마다 고유한 난제가 기다립니다. 미리 지도를 그려두면 겁낼 일이 아니라 체크리스트가 됩니다.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #5b6b9e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
+                                                    <div style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">📐 1. 설계 단계</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>이벤트의 굵기:</b> 과도하게 세분화하면 메시지 폭증, 너무 크게 묶으면 결합도 상승 — 적정선 찾기가 곧 설계</li>
+                                                        <li style="margin-bottom: 6px;"><b>이벤트 스키마 버전 관리:</b> 하위 호환을 지키며 진화시키는 거버넌스(Schema Registry, Avro/Protobuf)가 없으면 수신 서비스가 깨짐</li>
+                                                        <li style="margin-bottom: 6px;"><b>2PC의 불가:</b> 단일 ACID 트랜잭션 없이 최종 일관성의 시간차를 UX와 비즈니스 로직에 반영해야 함 ("주문 완료" 후 정산 반영 지연)</li>
+                                                        <li><b>Saga 설계 복잡성:</b> 실패 시 보상 트랜잭션을 일일이 설계하고, 오케스트레이션 vs 코레오그래피 방식도 선택해야 함</li>
+                                                    </ul>
+                                                </div>
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #7c4dbc; border-radius: 14px; background: linear-gradient(180deg, #f8f5fc 0%, #f0e9f8 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(124,77,188,0.10);">
+                                                    <div style="font-weight: 700; color: #4a2a75; margin-bottom: 10px;">🛠️ 2. 구현 단계</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>Dual Write 문제:</b> DB 저장은 성공했는데 브로커 발행이 실패하는 원자성 균열 — Transactional Outbox나 CDC(Debezium)로 풀어야 하며 그만큼 인프라·개발 공수 추가</li>
+                                                        <li style="margin-bottom: 6px;"><b>멱등성:</b> At-Least-Once 전달 특성상 중복 수신은 기본값 — 모든 컨슈머가 중복 실행에 안전해야 함</li>
+                                                        <li style="margin-bottom: 6px;"><b>순서 역전:</b> 지연·재시도로 '주문 생성 → 취소'가 뒤바뀔 수 있어 파티셔닝 키 전략 필수</li>
+                                                        <li><b>Poison Pill:</b> 계속 실패하는 메시지가 큐를 막지 않도록 DLQ 격리 + 백오프 재시도 + 재처리(Replay) 메커니즘 구축</li>
+                                                    </ul>
+                                                </div>
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #1e8449; border-radius: 14px; background: linear-gradient(180deg, #f2faf5 0%, #e6f5ec 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(30,132,73,0.10);">
+                                                    <div style="font-weight: 700; color: #145a32; margin-bottom: 10px;">📡 3. 운영·관찰 가능성</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>끊긴 호출 스택:</b> 비동기 이벤트는 콜스택이 끊겨, Correlation/Trace ID를 이벤트 헤더로 전파하고 OpenTelemetry·Zipkin·Jaeger와 연동하지 않으면 "어디서 멈췄는지"를 알 수 없음</li>
+                                                        <li style="margin-bottom: 6px;"><b>브로커 자체가 거대한 인프라:</b> Kafka·RabbitMQ의 HA, 파티션 관리, 보존 기간, 백프레셔, 컨슈머 랙 적체 대응</li>
+                                                        <li><b>이벤트 재처리:</b> 버그 수정 후 과거 이벤트를 Replay할 때 부작용(이메일 재발송 등) 없이 데이터만 재동기화하는 절차의 복잡성</li>
+                                                    </ul>
+                                                </div>
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #b9770e; border-radius: 14px; background: linear-gradient(180deg, #fdf9f0 0%, #faf0dc 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(185,119,14,0.10);">
+                                                    <div style="font-weight: 700; color: #7e5109; margin-bottom: 10px;">🚢 4. 배포·진화 단계</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>신·구 버전 동시 기동:</b> 카나리/블루-그린 배포 순간 "어느 버전이 이 이벤트를 소비하는가" — 스키마 변경이 겹치면 구 컨슈머가 신 이벤트를 읽고 깨질 수 있어 비파괴적 변경(Non-breaking change) 전략과 정교한 배포 순서 필요</li>
+                                                        <li><b>파티션 구조 변경:</b> 트래픽 증가로 파티션을 늘리는 순간 순서 보장 키 매핑이 깨져 이벤트 순서가 꼬일 수 있음</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">이벤트 기반 MSA 프로젝트가 라이프사이클 단계별로 마주하는 난제 지도</p>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">
+                                                <b>"비동기 이벤트 기반 아키텍처는 결합도를 낮춰주는 대신, 시스템 전체의 상태를 파악하고 제어하는 난이도를 대폭 상승시킨다."</b> — 그래서 EDMSA 도입 전에는 최소한 네 가지를 사전 검토해야 합니다.
+                                            </p>
+                                            <ul style="margin-left: 20px;">
+                                                <li><b style="font-weight: bold;">📤 ①</b> Transactional Outbox 패턴·CDC의 표준 적용 여부</li>
+                                                <li><b style="font-weight: bold;">🔭 ②</b> OpenTelemetry 기반 End-to-End 분산 트레이싱 체계</li>
+                                                <li><b style="font-weight: bold;">📜 ③</b> Schema Registry를 통한 이벤트 스키마 거버넌스</li>
+                                                <li><b style="font-weight: bold;">🧰 ④</b> 컨슈머 멱등성 처리와 DLQ 자동화 로직의 공통 라이브러리화</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                이 목록은 겁을 주기 위한 것이 아닙니다. 하나하나가 <b>이미 검증된 표준 패턴과 도구가 존재하는, 정복 가능한 난제</b>라는 점이 핵심입니다. 읽기 모델 분리로 조회 복잡도를 다루는 <a href="cqrs.html">CQRS</a>도 그 무기고의 하나입니다. 그리고 이 난제들이 실제 대규모 프로젝트에서 어떻게 하나씩 처리되는지는, 바로 다음의 정부24 사례 — Saga·멱등성·재시도·DLQ가 그대로 등장합니다 — 가 보여줍니다.
+                                            </p>
+                                        </div>
+
                                         <blockquote>
                                             <p>
-                                                &nbsp; 6. 원칙은 현장에서 통하는가 — 정부24 클라우드 네이티브 전환 사례
+                                                &nbsp; 7. 원칙은 현장에서 통하는가 — 정부24 클라우드 네이티브 전환 사례
                                             </p>
                                         </blockquote>
 
@@ -587,7 +656,7 @@
 
                                         <blockquote>
                                             <p>
-                                                &nbsp; 7. 혼자 넘기 어려운 산이라면 — 설계 원칙에서 제품·서비스까지
+                                                &nbsp; 8. 혼자 넘기 어려운 산이라면 — 설계 원칙에서 제품·서비스까지
                                             </p>
                                         </blockquote>
 
