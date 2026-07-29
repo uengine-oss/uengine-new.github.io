@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        
+        <title>uEngine &mdash; Robo Analyzer</title>
+        <meta name="description" content="Robo Analyzer는 레거시 소스 코드와 데이터베이스 스키마를 함께 분석해, 함수 호출과 테이블·컬럼의 읽기/쓰기 관계를 원문 근거가 연결된 그래프로 보여주는 레거시 시스템 분석 도구입니다.">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="canonical" href="https://www.uengine.org/contents/roboanalyzer.html">
+        <link rel="icon" href="../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/style.css?after">
+        <link rel="stylesheet" href="../css/style-responsive.css">
+        <link rel="stylesheet" href="../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../css/magnific-popup.css">
+        <link rel="stylesheet" href="../css/owl.carousel.css">
+        <link rel="stylesheet" href="../css/splitting.css">
+        <link rel="stylesheet" href="../css/YTPlayer.css">
+        <link rel="stylesheet" href="../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+            <style>#main p, #main h1, #main h2, #main h3, #main h4, #main td, #main div{word-break: keep-all;} #main p, #main td, #main .features-2-descr, #main .testimonials-6-author{text-wrap: pretty;} #main h1, #main h2, #main h3, #main h4{text-wrap: balance;}</style>
+    </head>
+    
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../index.html" class="logo">
+                            <img src="../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <a href="contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/enterprisebrain.html" style="font-size: 18px;">AI-Native Enterprise란?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Products&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationax.html" style="font-size: 18px">AX 전환 컨설팅 교육</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/aidevoutlook.html" style="font-size: 18px;">AI 기반 개발의 현재와 향후 전망</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Products&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="leaddevelopment.html" style="font-size: 18px;">선도개발 구현 컨설팅</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">MSA Architecture <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/whymsahard.html" style="font-size: 18px;">왜 마이크로서비스 아키텍처는 어려운가?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">MSA School 바로가기</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://uengine.stibee.com/" target="_blank" style="font-size: 18px;">Newsletter</a>
+                                            </li>
+                                            <li>
+                                                <a href="interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                               
+                            <li class="pc-chat"><a href="contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a></li>
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section pb-100 pb-sm-60 bg-gray-light-1 bg-light-alpha-90 bg-scroll" style="background-image: url(../images/full-width-images/section-bg-2.jpg)">
+                    <div class="container position-relative pt-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h2 class="section-caption-border mb-30 mb-xs-20 wow fadeInUp" data-wow-duration="1.2s">
+                                        AI-Driven Development
+                                    </h2>
+                                    <h1 class="hs-title-1 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Robo Analyzer</span>
+                                    </h1>
+                                    <p class="section-descr mb-40 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                                        코드와 데이터의 연결을, 읽을 수 있는 그래프로.<br>
+                                        레거시 소스 코드와 데이터베이스 스키마를 함께 분석해 함수 호출과 테이블 읽기&middot;쓰기 관계를 하나의 그래프로 보여줍니다. 어느 지점에서든 실제 코드 원문까지 내려갈 수 있습니다.
+                                    </p>
+                                    <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                        <a href="https://youtu.be/WwEFIn5lEoA" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10" target="_blank" rel="noopener">
+                                            <span style="font-size: 16px;">전체 데모 영상 보기</span>
+                                        </a>
+                                        <a href="#scenario" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                            <span style="font-size: 16px;">주요 기능 보기</span>
+                                        </a>
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+                <!-- About Section -->
+                <section class="page-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7 mb-sm-30 mt-n10">
+                                <div class="video-box">
+                                    <iframe src="https://www.youtube.com/embed/WwEFIn5lEoA"
+                                        title="Robo Analyzer 전체 데모 &mdash; 쇼핑몰 도메인 분석"
+                                        frameborder="0" scrolling="no" loading="lazy" allowfullscreen=""></iframe>
+                                </div>
+                                <p class="mt-15 mb-0" style="font-size: 0.95rem; color: #888;">
+                                    약 4분 47초 &middot; 내레이션은 합성 음성(OpenAI TTS)입니다. 소리를 켜고 보시면 각 화면의 설명을 함께 들으실 수 있습니다.
+                                </p>
+                            </div>
+                            <div class="col-md-5 mt-n10 mt-sm-20">
+                                <div class="wow linesAnimIn" data-splitting="lines">
+                                    <p class="section-descr wow fadeInUp" data-wow-delay="0.1s">
+                                        <span style="font-size: 1.8rem; color: #111; font-weight: 600;">코드만 읽어서는 알 수 없는 것들</span>
+                                    </p>
+                                    <p class="lead mt-0 mb-40 mb-sm-20" style="font-size: 20px;">
+                                        오래된 시스템은 코드만 읽어서는 실제 호출 흐름을 알기 어렵습니다. 테이블이 어디에서 읽히고 쓰이는지 문서와 코드가 서로 어긋납니다.<br><br>
+                                        Robo Analyzer는 <b>현재 시스템을 코드와 데이터 근거로 이해하는 단계</b>에 집중합니다. 분석 이후의 명세&middot;설계&middot;구현 자동화는 별도 제품이 담당합니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End About Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 남는 질문 Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center mb-60 mb-sm-40">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">레거시에는 늘 같은 질문이 남습니다</span>
+                            </h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 d-flex align-items-stretch mb-30">
+                                <div style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); padding:40px 34px; width:100%;">
+                                    <p style="font-size:1.35rem; font-weight:600; color:#111; line-height:1.6; margin:0;">이 함수를 고치면<br>어디까지 영향이 갑니까?</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-stretch mb-30">
+                                <div style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); padding:40px 34px; width:100%;">
+                                    <p style="font-size:1.35rem; font-weight:600; color:#111; line-height:1.6; margin:0;">이 테이블은 지금<br>누가 읽고 누가 씁니까?</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-stretch mb-30">
+                                <div style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); padding:40px 34px; width:100%;">
+                                    <p style="font-size:1.35rem; font-weight:600; color:#111; line-height:1.6; margin:0;">문서와 코드가 다르면<br>무엇을 믿어야 합니까?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center mt-20 mb-0" style="font-size:1.1rem; color:#777;">
+                            답을 아는 사람은 대개 회사에 없거나, 있어도 확신하지 못합니다.
+                        </p>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 핵심 차별점 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="row">
+                            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                                <h2 class="section-title mb-50 wow fadeInUp">Robo Analyzer의 핵심 차별점</h2>
+                            </div>
+                        </div>
+                        <div class="row mt-n30">
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">LLM 없이 계산되는 구조</h4>
+                                    <div class="features-2-descr">구조·관계·군집·위험도는 LLM 없이 계산합니다. AI는 의미를 붙일 때만 씁니다.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.15s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">깨진 코드도 분석</h4>
+                                    <div class="features-2-descr">실패한 부분만 복구를 시도하고, 안 되면 남기고 진행합니다. 원본은 수정하지 않습니다.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">진행이 실시간으로</h4>
+                                    <div class="features-2-descr">파싱과 분석 양쪽에서 단계·콘솔·노드 수가 완료 전부터 계속 갱신됩니다.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">업무 언어로 검색</h4>
+                                    <div class="features-2-descr">"재고를 예약했다가 부족하면 취소하는 부분" — 문장 그대로 관련 코드를 찾습니다.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.15s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">원문으로 증명</h4>
+                                    <div class="features-2-descr">모든 결과가 실제 파일과 줄 번호로 이어집니다. 근거 없는 그림이 아닙니다.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">운영 DB는 읽기 전용</h4>
+                                    <div class="features-2-descr">조회만 허용하고 쓰기를 차단하며, 접속 비밀번호는 어디에도 저장하지 않습니다.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 비교 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-60 mb-sm-40 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">코드를 열어보는 것만으로는 알 수 없습니다</span>
+                            </h3>
+                        </div>
+                        <div class="col-lg-10 offset-lg-1 row mb-n20">
+                            <table class="tbl-default">
+                                <tr class="border-bottom-n" style="background-color: none !important;">
+                                    <th class="tbl-title-gray">질문</th>
+                                    <th class="tbl-title-gray">지금까지</th>
+                                    <th class="tbl-title-gray">Robo Analyzer</th>
+                                </tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">호출 영향 범위</td><td>이름을 추측해 반복 검색</td><td>호출과 읽기&middot;쓰기를 하나의 그래프로</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">데이터 출처</td><td>SQL과 코드를 따로 조사</td><td>테이블에서 함수와 코드 줄로 바로 이동</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">업무 경계</td><td>담당자 기억과 오래된 문서에 의존</td><td>모듈과 업무 단위를 분석 결과로 비교</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">진행 상태</td><td>끝날 때까지 결과를 모름</td><td>단계&middot;콘솔&middot;그래프 수를 실시간 확인</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">재확인</td><td>확인할 때마다 처음부터 다시</td><td>한 번 분석하고 계속 탐색</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 깨진 코드 + 업무규칙 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-60 mb-sm-40 mt-n20" style="line-height:1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">구조만 보여주고 끝나지 않습니다</span>
+                            </h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); padding:40px 36px; width:100%;">
+                                    <h4 style="font-size:1.6rem; font-weight:bold; margin-top:0; margin-bottom:20px;">컴파일도 안 되는 코드를 받아본 적 있습니까</h4>
+                                    <p style="font-size:1.05rem; color:#666; line-height:1.7;">
+                                        레거시 소스에는 문법이 깨진 파일이 섞여 있는 것이 정상입니다.
+                                        정상 파일은 그대로 처리하고, 실패한 부분만 문법 규칙 기반으로 복구를 시도합니다.
+                                        그래도 안 되면 그 부분만 남기고 다음 파일로 넘어갑니다.
+                                    </p>
+                                    <p style="font-size:1.05rem; color:#111; font-weight:600; line-height:1.7; margin-bottom:0;">
+                                        기본 설정에서 원본 소스 파일은 수정하지 않습니다.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); padding:40px 36px; width:100%;">
+                                    <h4 style="font-size:1.6rem; font-weight:bold; margin-top:0; margin-bottom:20px;">업무 규칙과 위험 지점까지</h4>
+                                    <p style="font-size:1.05rem; color:#666; line-height:1.7;">
+                                        코드 안에 흩어져 있는 판단 조건을 규칙으로 뽑아냅니다. 예를 들어 &ldquo;잔액이 0보다 크면 출금 허용&rdquo; 같은 규칙입니다.
+                                        규칙과 사례, 확인이 필요한 질문으로 정리되고 관련 테이블과 연결됩니다.
+                                    </p>
+                                    <p style="font-size:1.05rem; color:#666; line-height:1.7; margin-bottom:0;">
+                                        함수마다 불려지는 횟수, 부르는 횟수, 코드 길이, 순환 참조 여부, 테이블 결합도를 계산해
+                                        <b>낮음&middot;보통&middot;높음</b> 등급을 매깁니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- FEATURES Section -->
+                <section class="page-section" id="scenario">
+                    <div class="container position-relative">
+
+                        <div class="row">
+                            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                                <h3 class="section-title mb-80 mb-sm-60"><span class="wow charsAnimIn" data-splitting="chars">FEATURES</span></h3>
+                            </div>
+                        </div>
+
+                        <!-- 01 분석 대상 선정 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 col-lg-6 offset-lg-1 mb-sm-40">
+                                <a href="../images/roboanalyzer/feature-01-upload.jpg" class="lightbox mfp-image" title="분석 대상 선정 — 언어 자동 감지, DDL 자동 분류">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../images/roboanalyzer/feature-01-upload.jpg" alt="업로드 창 — 소스 파일마다 C 자동 감지, DDL 자동 분류 배지가 붙는 화면" class="wow scaleOutIn" loading="lazy" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 offset-md-1 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">아무렇게나 넣어도,<br>알아서 처리됩니다</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍ소스와 DDL을 함께 올리면 자동으로 구분됩니다<br>
+                                            ㆍ언어는 자동으로 감지됩니다 (Java &middot; C &middot; Python &middot; Oracle PL/SQL &middot; PostgreSQL)<br>
+                                            ㆍ운영 DB 연결은 선택 사항입니다
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/C_ZKSXLp3X0" target="_blank" rel="noopener"><b>영상보기</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 02 실시간 진행 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 offset-md-1 col-lg-6 offset-lg-1 order-md-last mb-sm-40">
+                                <a href="../images/roboanalyzer/feature-02-realtime.jpg" class="lightbox mfp-image" title="실시간 진행 — 여덟 단계와 노드·관계 수가 계속 갱신">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../images/roboanalyzer/feature-02-realtime.jpg" alt="인제스천 진행 패널 — 단계 2/8, 175 노드 164 관계, 여덟 단계 목록이 전부 보이는 화면" class="wow scaleOutIn" loading="lazy" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">진행 과정이<br>실시간으로 보입니다</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍ여덟 단계와 현재 위치가 표시됩니다<br>
+                                            ㆍ노드&middot;관계 수가 완료 전부터 계속 갱신됩니다<br>
+                                            ㆍ분석 중 일시정지&middot;재개&middot;중단이 가능합니다
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/reiDZSrEODY" target="_blank" rel="noopener"><b>영상보기</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 03 메타데이터 보강 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 col-lg-6 offset-lg-1 mb-sm-40">
+                                <a href="../images/roboanalyzer/feature-03-metadata.jpg" class="lightbox mfp-image" title="노드를 클릭하면 — 논리명·개요·함수 목록·원문 코드">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../images/roboanalyzer/feature-03-metadata.jpg" alt="shipping 노드 상세 패널 — 논리명, 개요, 함수 11개 목록, 원문 코드가 함께 보이는 화면" class="wow scaleOutIn" loading="lazy" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 offset-md-1 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">노드를 클릭하면,<br>의미가 함께 보입니다</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍ물리명 옆에 분석이 붙인 논리명이 함께 보입니다<br>
+                                            ㆍshipping &rarr; &ldquo;배송 주문 처리 및 상태 관리 서비스&rdquo;<br>
+                                            ㆍ[핵심] 요약과 함수 목록, 각 함수에도 논리명 병기<br>
+                                            ㆍ같은 패널에서 원문 코드까지
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/J8B4B3-UntY" target="_blank" rel="noopener"><b>영상보기</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 04 응집도와 결합도 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 offset-md-1 col-lg-6 offset-lg-1 order-md-last mb-sm-40">
+                                <a href="../images/roboanalyzer/feature-04-coupling.jpg" class="lightbox mfp-image" title="응집도와 결합도 — 도메인 경계를 넘는 WRITES가 드러난다">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../images/roboanalyzer/feature-04-coupling.jpg" alt="도메인 영역이 hull로 묶이고 경계를 넘는 주황 WRITES 선이 여러 가닥 보이는 화면, 응집도·결합도 라벨" class="wow scaleOutIn" loading="lazy" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">응집도와 결합도가<br>눈에 보입니다</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍ도메인 영역 안은 응집, 경계를 넘는 선은 결합<br>
+                                            ㆍ도메인을 넘는 WRITES가 많으면 위험 신호<br>
+                                            ㆍ선 위에 CALLS &middot; READS &middot; WRITES 라벨
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/VGSXZgBkT4s" target="_blank" rel="noopener"><b>영상보기</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 05 의미 검색 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 col-lg-6 offset-lg-1 mb-sm-40">
+                                <a href="../images/roboanalyzer/feature-05-semantic.jpg" class="lightbox mfp-image" title="의미 검색 — 해당 노드만 테두리로 강조">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../images/roboanalyzer/feature-05-semantic.jpg" alt="업무 문장 검색 결과 — 재고 예약·검증·확정·해제 노드만 밝은 테두리로 강조된 화면" class="wow scaleOutIn" loading="lazy" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 offset-md-1 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">업무 문장으로 검색하면,<br>진짜로 강조됩니다</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍ&ldquo;재고를 예약했다가 부족하면 취소하는 부분&rdquo; 그대로 입력<br>
+                                            ㆍ흩어진 노드 중 해당 노드만 테두리로 하이라이트<br>
+                                            ㆍ결과 노드에서 그대로 탐색을 이어감
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/kAMKrlk2q2o" target="_blank" rel="noopener"><b>영상보기</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 06 테이블 출처 -->
+                        <div class="row">
+                            <div class="col-md-5 offset-md-1 col-lg-6 offset-lg-1 order-md-last mb-sm-40">
+                                <a href="../images/roboanalyzer/feature-06-evidence.jpg" class="lightbox mfp-image" title="테이블 출처 — review_point.c 117행 FROM orders 하이라이트">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../images/roboanalyzer/feature-06-evidence.jpg" alt="orders 테이블 카드에서 출처를 고르자 review_point.c 117행 FROM orders 줄이 하이라이트된 화면" class="wow scaleOutIn" loading="lazy" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">출처를 고르면 실제<br>코드 줄이 하이라이트됩니다</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍ테이블 카드에서 읽기&middot;쓰기 출처를 선택<br>
+                                            ㆍreview_point.c 117행 &ldquo;FROM orders&rdquo; 가 그대로 하이라이트<br>
+                                            ㆍ&ldquo;이 테이블을 읽는다&rdquo;는 말이 파일과 줄 번호로 증명
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/y3VTteGi4dU" target="_blank" rel="noopener"><b>영상보기</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End FEATURES -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 8단계 Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center mb-50 mb-sm-30">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height:1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">여덟 단계, 그리고 결정론</span>
+                            </h3>
+                        </div>
+                        <div class="col-lg-10 offset-lg-1 wow fadeInUp">
+                            <div class="row">
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">1</div>
+                                        <div style="font-weight:600; color:#111;">DDL 파싱</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">2</div>
+                                        <div style="font-weight:600; color:#111;">AST 적재</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">3</div>
+                                        <div style="font-weight:600; color:#111;">외부 파일 적재</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">4</div>
+                                        <div style="font-weight:600; color:#111;">프로젝트 스캔</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">5</div>
+                                        <div style="font-weight:600; color:#111;">관계 연결</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">6</div>
+                                        <div style="font-weight:600; color:#111;">컨텍스트</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">7</div>
+                                        <div style="font-weight:600; color:#111;">코드 분석</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">8</div>
+                                        <div style="font-weight:600; color:#111;">후처리</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background:#F2EFFF; border:2px solid #7C5CFF; border-radius:14px; padding:28px 22px; text-align:center; margin-top:16px;">
+                                <p style="font-size:1.3rem; font-weight:700; color:#7C5CFF; margin:0 0 8px;">구조 &middot; 관계 &middot; 군집 &middot; 위험도는 LLM 없이 계산합니다</p>
+                                <p style="font-size:1.05rem; color:#555; margin:0;">AI는 &ldquo;이 함수가 무슨 일을 하는가&rdquo; 같은 의미를 붙일 때만 씁니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 아키텍처 Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                            <h3 class="section-title mb-30 mb-sm-20 mt-n20" style="text-transform:uppercase;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Architecture</span>
+                            </h3>
+                        </div>
+                        <div class="mb-60 mb-sm-40 text-center wow fadeInUp" style="font-size:18px;">
+                            업로드 · 파싱 · 분석은 사용자가 세 번 눌러 진행하며, 접근은 주소 하나로 이루어집니다.<br>
+                            파일 공유는 코드 파서와 분석 엔진 사이에만 존재합니다.
+                            <div class="local-scroll mt-30">
+                                <a target="_blank" href="../images/Robo-Analyzer-intro.pdf" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border: 2px solid #111;">
+                                    <span style="font-size: 16px;">소개서(PDF) 다운로드</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10 offset-lg-1 mb-50 mb-sm-30 wow fadeInUp">
+                                <p style="font-size:1.3rem; font-weight:600; margin-bottom:15px; text-align:center;">분석 요청 흐름</p>
+                                <div class="overflow-hidden" style="border:7px solid #fff; border-radius:5px; box-shadow:0 10px 30px rgba(0,0,0,0.1); background:#fff;">
+<svg viewBox="0 0 1200 690" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="분석 요청 흐름 시퀀스" style="width:100%; height:auto; display:block; background:#fff; font-family:inherit;">
+  <defs>
+    <marker id="sg" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#94A3B8"/></marker>
+    <marker id="sp" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#7C5CFF"/></marker>
+    <filter id="ssh" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#1B2A4A" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- 생명선 -->
+  <line x1="170" y1="92" x2="170" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <line x1="500" y1="92" x2="500" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <line x1="820" y1="92" x2="820" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <line x1="1090" y1="92" x2="1090" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+
+  <!-- 활성 막대 -->
+  <g fill="#F2EFFF" stroke="#7C5CFF" stroke-width="1">
+    <rect x="495" y="122" width="10" height="104" rx="3"/>
+    <rect x="815" y="160" width="10" height="66" rx="3"/>
+    <rect x="495" y="272" width="10" height="118" rx="3"/>
+    <rect x="815" y="310" width="10" height="80" rx="3"/>
+    <rect x="495" y="442" width="10" height="118" rx="3"/>
+    <rect x="1085" y="480" width="10" height="80" rx="3"/>
+  </g>
+
+  <!-- 헤더 -->
+  <g filter="url(#ssh)">
+    <rect x="70" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="400" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="720" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="990" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+  </g>
+  <rect x="70" y="40" width="200" height="6" rx="3" fill="#475569"/>
+  <rect x="400" y="40" width="200" height="6" rx="3" fill="#2E7DD1"/>
+  <rect x="720" y="40" width="200" height="6" rx="3" fill="#2E7DD1"/>
+  <rect x="990" y="40" width="200" height="6" rx="3" fill="#7C5CFF"/>
+  <g fill="#475569">
+    <circle cx="170" cy="10" r="7"/><path d="M158 30 q12 -12 24 0 v4 h-24 z"/>
+  </g>
+  <text x="170" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">사용자</text>
+  <text x="500" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">화면</text>
+  <text x="820" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">코드 파서</text>
+  <text x="1090" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">분석 엔진</text>
+
+  <!-- ① 업로드 -->
+  <circle cx="170" cy="128" r="13" fill="#7C5CFF"/>
+  <text x="170" y="133" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1</text>
+  <line x1="187" y1="128" x2="491" y2="128" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="339" y="120" text-anchor="middle" font-size="13" fill="#334155">소스와 DDL 업로드</text>
+  <line x1="505" y1="166" x2="811" y2="166" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="660" y="158" text-anchor="middle" font-size="13" fill="#334155">파일 전달</text>
+  <line x1="815" y1="204" x2="509" y2="204" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#sg)"/>
+  <text x="660" y="196" text-anchor="middle" font-size="13" fill="#334155">소스 · DDL 구분 결과</text>
+
+  <!-- ② 파싱 -->
+  <circle cx="170" cy="278" r="13" fill="#7C5CFF"/>
+  <text x="170" y="283" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">2</text>
+  <line x1="187" y1="278" x2="491" y2="278" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="339" y="270" text-anchor="middle" font-size="13" fill="#334155">파싱 시작</text>
+  <line x1="505" y1="316" x2="811" y2="316" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="660" y="308" text-anchor="middle" font-size="13" fill="#334155">파싱 요청</text>
+  <line x1="815" y1="354" x2="509" y2="354" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <line x1="815" y1="378" x2="509" y2="378" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <text x="660" y="346" text-anchor="middle" font-size="13" font-weight="700" fill="#7C5CFF">파일별 진행 · 결과를 계속 전달 (실시간)</text>
+
+  <!-- ③ 분석 -->
+  <circle cx="170" cy="448" r="13" fill="#7C5CFF"/>
+  <text x="170" y="453" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">3</text>
+  <line x1="187" y1="448" x2="491" y2="448" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="339" y="440" text-anchor="middle" font-size="13" fill="#334155">분석 시작</text>
+  <line x1="505" y1="486" x2="1081" y2="486" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="793" y="478" text-anchor="middle" font-size="13" fill="#334155">분석 요청</text>
+  <line x1="1085" y1="524" x2="509" y2="524" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <line x1="1085" y1="548" x2="509" y2="548" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <text x="793" y="516" text-anchor="middle" font-size="13" font-weight="700" fill="#7C5CFF">단계 · 노드/관계 수를 계속 전달 (실시간)</text>
+
+  <!-- 하단 안내 -->
+  <rect x="240" y="602" width="720" height="52" rx="12" fill="#F2EFFF"/>
+  <text x="600" y="634" text-anchor="middle" font-size="14" font-weight="700" fill="#7C5CFF">업로드 · 파싱 · 분석을 각각 누릅니다 &#8212; 자동으로 이어지지 않습니다</text>
+</svg>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 offset-lg-1 wow fadeInUp">
+                                <p style="font-size:1.3rem; font-weight:600; margin-bottom:15px; text-align:center;">시스템 구성</p>
+                                <div class="overflow-hidden" style="border:7px solid #fff; border-radius:5px; box-shadow:0 10px 30px rgba(0,0,0,0.1); background:#fff;">
+<svg viewBox="0 0 1200 815" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Robo Analyzer 시스템 구성" style="width:100%; height:auto; display:block; background:#fff; font-family:inherit;">
+  <defs>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#94A3B8"/></marker>
+    <marker id="ap" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#7C5CFF"/></marker>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#D14343"/></marker>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#1B2A4A" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- 사용자 -->
+  <g fill="#475569">
+    <circle cx="576" cy="22" r="8"/><path d="M562 46 q14 -14 28 0 v6 h-28 z"/>
+    <circle cx="624" cy="22" r="8"/><path d="M610 46 q14 -14 28 0 v6 h-28 z"/>
+  </g>
+  <text x="600" y="70" text-anchor="middle" font-size="13" fill="#475569">아키텍트 · 개발자</text>
+  <line x1="583" y1="60" x2="420" y2="88" stroke="#CBD5E1" stroke-width="1.5"/>
+  <line x1="617" y1="60" x2="780" y2="88" stroke="#CBD5E1" stroke-width="1.5"/>
+
+  <!-- 접근 -->
+  <g filter="url(#sh)">
+    <rect x="260" y="92" width="280" height="58" rx="12" fill="#E9F2FC" stroke="#2E7DD1" stroke-width="1.5"/>
+    <rect x="660" y="92" width="280" height="58" rx="12" fill="#E9F2FC" stroke="#2E7DD1" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="116" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">웹 브라우저</text>
+  <text x="400" y="137" text-anchor="middle" font-size="11.5" fill="#64748B">설치 없이 접속</text>
+  <text x="800" y="116" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">데스크톱 앱</text>
+  <text x="800" y="137" text-anchor="middle" font-size="11.5" fill="#64748B">설치형</text>
+
+  <line x1="400" y1="152" x2="400" y2="204" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="800" y1="152" x2="800" y2="204" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- 실시간 스트림 (시스템 → 사용자) -->
+  <line x1="600" y1="244" x2="600" y2="160" stroke="#7C5CFF" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ap)"/>
+  <text x="614" y="190" font-size="12" font-weight="700" fill="#7C5CFF">진행 스트림 (실시간)</text>
+
+  <!-- 시스템 경계 -->
+  <rect x="40" y="210" width="1120" height="482" rx="16" fill="#FBFAFF" stroke="#7C5CFF" stroke-width="2" stroke-dasharray="9 6"/>
+  <text x="64" y="238" font-size="13" font-weight="700" fill="#7C5CFF">Robo Analyzer</text>
+
+  <!-- 단일 진입점 -->
+  <rect x="90" y="248" width="1020" height="54" rx="10" fill="#F2EFFF" stroke="#7C5CFF" stroke-width="1.5"/>
+  <text x="600" y="281" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">단일 진입점 <tspan font-weight="400" fill="#64748B" font-size="13">(경로 라우팅 · 접근 통제)</tspan></text>
+
+  <line x1="195" y1="302" x2="195" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="465" y1="302" x2="465" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="735" y1="302" x2="735" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="1005" y1="302" x2="1005" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- 서비스 4 -->
+  <g filter="url(#sh)">
+    <rect x="75" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="345" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="615" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="885" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+  </g>
+  <rect x="75" y="336" width="240" height="6" rx="3" fill="#2E7DD1"/>
+  <rect x="345" y="336" width="240" height="6" rx="3" fill="#7C5CFF"/>
+  <rect x="615" y="336" width="240" height="6" rx="3" fill="#0D9488"/>
+  <rect x="885" y="336" width="240" height="6" rx="3" fill="#D97706"/>
+
+  <text x="195" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">코드 파서</text>
+  <line x1="105" y1="384" x2="285" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="195" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">언어 자동 감지</text>
+  <text x="195" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">구문 분석</text>
+  <text x="195" y="452" text-anchor="middle" font-size="12.5" fill="#64748B">문법 오류 복구</text>
+
+  <text x="465" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">분석 엔진</text>
+  <line x1="375" y1="384" x2="555" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="465" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">여덟 단계 파이프라인</text>
+  <text x="465" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">그래프 적재</text>
+  <text x="465" y="452" text-anchor="middle" font-size="12.5" fill="#64748B">원문 제공</text>
+
+  <text x="735" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">카탈로그</text>
+  <line x1="645" y1="384" x2="825" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="735" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">그래프 조회</text>
+  <text x="735" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">화면 전달</text>
+
+  <text x="1005" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">데이터 연결</text>
+  <line x1="915" y1="384" x2="1095" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="1005" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">운영 DB 접근</text>
+  <text x="1005" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">읽기 전용 강제</text>
+
+  <!-- 공유 저장소 -->
+  <rect x="90" y="545" width="300" height="58" rx="10" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="240" y="580" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">공유 저장소</text>
+  <line x1="195" y1="490" x2="195" y2="540" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="168" y="520" font-size="12" font-weight="700" fill="#475569">쓰기</text>
+  <line x1="392" y1="556" x2="430" y2="494" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="430" y="540" font-size="12" font-weight="700" fill="#475569">읽기</text>
+
+  <!-- 그래프 DB -->
+  <g stroke="#0D9488" stroke-width="1.8" fill="#E6F7F1">
+    <path d="M645 552 v52 a55 12 0 0 0 110 0 v-52" />
+    <ellipse cx="700" cy="552" rx="55" ry="12"/>
+  </g>
+  <text x="700" y="590" text-anchor="middle" font-size="14" font-weight="700" fill="#0F766E">그래프 DB</text>
+  <line x1="510" y1="490" x2="655" y2="543" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="556" y="508" font-size="12" font-weight="700" fill="#475569">적재</text>
+  <line x1="735" y1="490" x2="714" y2="538" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="744" y="516" font-size="12" font-weight="700" fill="#475569">조회</text>
+
+  <!-- 외부: 언어 모델 -->
+  <line x1="465" y1="490" x2="478" y2="716" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="5 5" marker-end="url(#ag)"/>
+  <text x="494" y="646" font-size="12" font-weight="700" fill="#64748B">의미 부여에만</text>
+  <rect x="370" y="722" width="220" height="58" rx="10" fill="#fff" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="480" y="748" text-anchor="middle" font-size="14" font-weight="700" fill="#475569">언어 모델</text>
+  <text x="480" y="768" text-anchor="middle" font-size="11" fill="#94A3B8">구조·관계 계산에는 쓰지 않음</text>
+
+  <!-- 외부: 운영 DB -->
+  <line x1="1005" y1="490" x2="1005" y2="714" stroke="#D14343" stroke-width="2.2" marker-end="url(#ar)"/>
+  <text x="1020" y="620" font-size="12.5" font-weight="700" fill="#B91C1C">읽기 전용</text>
+  <g stroke="#D14343" stroke-width="1.8" fill="#FDECEC">
+    <path d="M950 730 v46 a55 12 0 0 0 110 0 v-46" />
+    <ellipse cx="1005" cy="730" rx="55" ry="12"/>
+  </g>
+  <text x="1005" y="764" text-anchor="middle" font-size="14" font-weight="700" fill="#B91C1C">운영 DB</text>
+</svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Architecture Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 지원 환경 Section -->
+                <section class="page-section mt-n20 mt-sm-0 mb-sm-30">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                            <h3 class="section-title mb-70 mb-sm-50" style="text-transform: uppercase;"><span class="wow charsAnimIn" data-splitting="chars">Environment</span></h3>
+                        </div>
+                        <div class="mb-30 mb-sm-40 col-lg-8 offset-lg-2">
+                            <p class="testimonials-6-author" style="font-weight: 300;">
+                                ㆍ<span style="font-weight: 600;">분석 언어:</span> Java &middot; C &middot; Python &middot; Oracle PL/SQL &middot; PostgreSQL &mdash; 파일 내용으로 자동 감지<br>
+                                ㆍ<span style="font-weight: 600;">배포 형태:</span> 웹 브라우저(설치 없이 접속) &middot; 데스크톱 앱(설치형)<br>
+                                ㆍ<span style="font-weight: 600;">운영 DB 접근:</span> 읽기 전용 &mdash; 조회만 허용, 행 수 상한 강제, 접속 비밀번호 미저장
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 제품 경계 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="row align-items-center">
+                            <div class="col-lg-10 offset-lg-1">
+                                <h2 class="section-caption-border mb-20">관련 제품</h2>
+                                <h3 class="section-title mb-30" style="line-height:1.4;">분석 다음 단계는 Robo Architect</h3>
+                                <p class="section-descr mb-30">
+                                    Robo Analyzer는 <b>현재 시스템을 코드와 데이터 근거로 이해하는 단계</b>에 집중합니다.
+                                    분석 이후의 요구사항 명세&middot;설계&middot;구현 자동화는 별도 제품인 Robo Architect에서 확인하실 수 있습니다.
+                                </p>
+                                <div class="local-scroll">
+                                    <a href="roboarchitect.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border:2px solid #111;">
+                                        <span style="font-size:16px;">Robo Architect 보기</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- FAQ Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-60 mb-sm-40 mt-n20" style="line-height:1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">자주 묻는 질문</span>
+                            </h3>
+                        </div>
+                        <div class="col-lg-10 offset-lg-1 row">
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">어떤 소스 언어를 분석할 수 있나요?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">Java, C, Python, Oracle PL/SQL, PostgreSQL을 파일 내용에서 자동 감지합니다. 사용자가 타깃 언어를 직접 지정할 필요가 없습니다.</p>
+                            </div>
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">운영 DB 연결 없이 시작할 수 있나요?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">가능합니다. 소스 코드와 DDL만으로 분석을 시작할 수 있습니다. 운영 DB를 함께 등록하면 코드에서 발견한 테이블 접근을 실제 스키마와 대조할 수 있습니다.</p>
+                            </div>
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">운영 DB에 붙여도 안전한가요?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">조회 구문만 허용하고 쓰기&middot;변경&middot;삭제는 차단합니다. 가져오는 행 수에 서버가 상한을 씌우며, 접속 비밀번호는 저장소&middot;응답&middot;로그 어디에도 남지 않습니다.</p>
+                            </div>
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">문법이 깨진 파일이 있으면 어떻게 되나요?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">실패한 부분만 복구를 시도하고, 안 되면 그 부분만 남기고 다음 파일로 넘어갑니다. 분석 전체가 멈추지 않으며 원본 소스 파일은 수정하지 않습니다.</p>
+                            </div>
+
+                            <div class="col-md-6 mb-40 mb-sm-0">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">분석 결과를 AI가 지어낸 건 아닌가요?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">구조와 관계, 군집, 위험도는 LLM을 쓰지 않고 계산합니다. AI는 함수 요약이나 규칙 문장화처럼 <b>의미를 붙일 때만</b> 사용합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End FAQ Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- Call Action Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative mt-n30 mt-sm-0">
+                        <div class="row wow fadeInUp get-started-content">
+                            <div>
+                                <p class="mb-20 mt-n10" style="font-size:2.2rem; font-weight:600;">우리 시스템으로 확인해 보세요</p>
+                                <p class="section-title-tiny mb-50 mb-sm-30" style="font-size:1.2rem;">
+                                    보유하신 소스 코드와 데이터베이스로 Robo Analyzer가 무엇을 찾아내는지 함께 확인합니다.<br>
+                                    데모 상담을 요청하시면 담당자가 연락드립니다.
+                                </p>
+                                <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                    <a href="https://youtu.be/WwEFIn5lEoA" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10" target="_blank" rel="noopener"><span style="font-size:16px;">전체 데모 영상 보기</span></a>
+                                    <a href="roboarchitect.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border:2px solid #111;"><span style="font-size:16px;">Robo Architect 보기</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+                <!-- Contact us Section -->
+                <section class="page-section mt-n10 mt-sm-0 mb-sm-20">
+                    <div class="container position-relative">
+
+                        <div class="row text-center wow fadeInUp">
+                            <div class="col-md-8 offset-md-2 col-lg-10 offset-lg-1">
+                                <p class="section-title-tiny mb-10" style="font-size: 2rem;">
+                                    더 궁금한 점이 있으신가요?
+                                </p>
+                                <p class="section-title-tiny mb-50 mb-sm-30">
+                                    <b>Robo Analyzer</b>에 대해 더 알고 싶으시거나 문의사항이 있으시면 언제든지 연락주세요.
+                                </p>
+                                <div class="local-scroll">
+                                    <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
+                                        <span>Contact us</span>
+                                    </a>
+                                </div>
+
+                                <!-- Contact Form (초기 숨김) -->
+                                <div id="contact_form_container" class="contact-form-container" style="display: none;">
+                                    <div class="form-header">
+                                        <div></div>
+                                        <h2>문의하기</h2>
+                                        <button id="close_btn" class="close-button">✖</button>
+                                    </div>
+
+                                    <form id="contact_form" action="https://formspree.io/f/mjkydzab" method="POST" class="form contact-form fadeInUp wch-unset">
+                                        <div class="row">
+                                            <input type="hidden" name="classification" value="RoboAnalyzer">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">이름 <span>*</span></label>
+                                                    <input type="text" name="name" id="name" class="input-lg round form-control" placeholder="이름을 입력해 주세요">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email">이메일 <span>*</span></label>
+                                                    <input type="email" name="email" id="email" class="input-lg round form-control" placeholder="답변받으실 이메일 주소를 입력해 주세요">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="company">회사 <span>*</span></label>
+                                                    <input type="text" name="company" id="company" class="input-lg round form-control" placeholder="회사명 또는 소속기관을 입력해 주세요">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="position">직급</label>
+                                                    <input type="text" name="position" id="position" class="input-lg round form-control" placeholder="직급을 입력해 주세요">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="message">문의내용 <span>*</span></label>
+                                            <textarea name="message" id="message" class="input-lg round form-control" placeholder="문의 내용을 입력해 주세요"></textarea>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-tip pt-0">
+                                                    <div class="contact_form_policy">
+                                                        <label style="color: var(--color-gray-light-6);">
+                                                            <input type="checkbox" name="contact_policy" id="contact_policy" value="동의" style="vertical-align: middle; width: 15px; height: 15px;">
+                                                            <span style="color: var(--color-gray-light-6);">(필수)</span>
+                                                            <button id="contact_form_modal_open" data-modal="contact_form_policy_modal" type="button">개인정보 수집 및 이용</button>
+                                                            <span style="color: var(--color-gray-light-6);">에 동의합니다.</span>
+                                                        </label>
+                                                        <div class="contact_form_msg_error" id="contact_policy_error"></div>
+                                                        <div class="contact_form_modal blind" id="contact_form_policy_modal">
+                                                            <div class="contact_form_modal_body">
+                                                                <h1 class="contact_form_modal_title">
+                                                                    개인정보 수집 및 이용
+                                                                </h1>
+                                                                <div class="contact_form_modal_text">
+                                                                    유엔진솔루션즈(이하 "회사")가 문의하신 내용에 대한 답변을 제공하기 위해 개인정보를 수집·이용하고자 하는 경우에는 ｢개인정보 보호법｣등 관계 법령에 따라 본인의 동의가 필요합니다.
+                                                                    <br>회사 제품 구매 및 컨설팅 문의 응답, 회사가 제공하는 서비스 이용과정을 위한 최소한의 개인정보를 수집하고 이용합니다.
+                                                                    <br>수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료될 경우 즉시 파기됩니다.
+                                                                </div>
+                                                                <div class="contact_form_modal_btn">
+                                                                    <button id="contact_form_modal_close"
+                                                                        class="contact_form_modal_close_btn btn btn-mod btn-round"
+                                                                        data-modal="contact_form_policy_modal"
+                                                                        type="button"
+                                                                        style="background-color: var(--color-dark-3);
+                                                                        color: var(--color-gray-light-3);">닫기</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="contact_form_modal_bg" id="contact_form_modal_bg"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="text-end pt-20 pt-xs-40">
+                                                    <button class="submit_btn btn btn-mod btn-large btn-round btn-hover-anim" id="submit_btn" aria-controls="result">
+                                                        <span>Send Message</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                       <div id="result" role="region" aria-live="polite" aria-atomic="true"></div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-4 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                유엔진솔루션즈는 2003년 이래 업무 프로세스 관리 (Business Process Management), AI, MSA, 기업용 SNS, PaaS 를 포함한 클라우드 플랫폼, 도메인 기반 개발 방법을 지향하는 개발 프레임워크 등을 개발하고 오픈소스 프로젝트로 제공하는 기술 집약적 기업입니다.
+                            </p>
+                            
+                            <div>                                
+                                본사: 서울 서초구 사임당로 31 궁현빌딩 3층 301호<br>
+                                지사: 경상남도 창원시 성산구 상남로37
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/enterprisebrain.html">AI-Native Enterprise란?</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="educationax.html">AX 전환 컨설팅 교육</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/aidevoutlook.html">AI 기반 개발의 현재와 향후 전망</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="leaddevelopment.html">선도개발 구현 컨설팅</a></li>
+                                        <li><a href="casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">MSA Architecture</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/whymsahard.html">왜 마이크로서비스 아키텍처는 어려운가?</a></li>
+                                        <li><a href="msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">MSA School 바로가기</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="history.html">History</a></li>
+                                        <li><a href="partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="newsroom.html">Newsroom</a></li>
+                                        <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li>
+                                        <li><a href="interview.html">Interview</a></li>
+                                        <li><a href="webinars.html">Webinars</a></li>
+                                        <li><a href="bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">유엔진솔루션즈 | 사업자등록번호: 2118795355 | 대표: 장진영</span><br>
+                            <b>© uEngine 2024. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../js/contact-form.js"></script>        
+        <script src="../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
+
