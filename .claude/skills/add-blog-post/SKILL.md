@@ -119,7 +119,22 @@ grep -c "ontologystudio" contents/bloglist.html contents/blog/*.html
 <!-- End Post -->
 ```
 
-### 6. 검증
+### 6. SEO 메타 적용 — **필수**
+`bloglist.html` 카드를 넣은 **뒤에** 실행한다. 블로그 글의 title·description·og:image·
+`BlogPosting` JSON-LD 는 **목록 카드의 제목·날짜·요약에서 자동으로 만들어지므로**,
+5단계를 건너뛰면 SEO 가 붙지 않는다.
+
+```bash
+python3 .claude/skills/seo-optimize/apply_seo.py
+```
+
+- 출력의 **경고를 0건으로 만든다.** 새 글에 대한 경고가 남으면 카드의 요약문이 짧거나(60자 미만)
+  날짜 형식이 `Month DD, YYYY` 가 아닌 것이다.
+- og:image 는 본문의 첫 로컬 이미지가 자동 선택된다. 특정 이미지를 쓰고 싶으면
+  `.claude/skills/seo-optimize/seo-meta.json` 의 `pages["contents/blog/<slug>.html"]` 에 `image` 를 지정한다.
+- 자세한 규칙은 `seo-optimize` 스킬 참고.
+
+### 7. 검증
 - HTML 태그 균형 검사 (python HTMLParser 스택 방식):
 ```python
 from html.parser import HTMLParser
@@ -137,6 +152,7 @@ open http://127.0.0.1:8123/contents/blog/<slug>.html
 ## 산출물
 - `contents/blog/<slug>.html` (신규, 최신 nav/footer 적용)
 - `contents/bloglist.html` 맨 위 카드 추가
+- `sitemap.xml` 갱신 + 새 글의 SEO 메타 블록 (6단계 자동 생성)
 
 ## 체크리스트
 - [ ] 소스 전체를 읽고 구조(섹션/표/다이어그램/참고문헌) 파악
@@ -145,5 +161,6 @@ open http://127.0.0.1:8123/contents/blog/<slug>.html
 - [ ] ASCII 다이어그램은 스타일링된 div 다이어그램으로 재작성 (+캡션)
 - [ ] 제품 소개 페이지에서 기능 추출 → 개념-기능 매핑 표 + CTA 섹션
 - [ ] 매핑 표의 각 기능 셀 → 제품 소개 페이지의 해당 섹션 앵커(`#diff-…`)로 딥링크 (앵커 없으면 심고, 1:1 검증)
-- [ ] bloglist.html 첫 카드로 삽입, 날짜 형식 `Month DD, YYYY`
+- [ ] bloglist.html 첫 카드로 삽입, 날짜 형식 `Month DD, YYYY`, 요약문 60자 이상
+- [ ] `apply_seo.py` 실행 후 경고 0건 (title·description·OG·JSON-LD·sitemap 반영 확인)
 - [ ] 태그 균형 검사 통과 (footer `</a>` 2건 제외)

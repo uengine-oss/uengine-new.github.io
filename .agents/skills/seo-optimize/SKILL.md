@@ -1,0 +1,207 @@
+---
+name: seo-optimize
+description: 유엔진 홈페이지(uengine-new.github.io)의 SEO 메타데이터를 관리합니다. 모든 페이지의 title·description·canonical·Open Graph·Twitter Card·JSON-LD 구조화 데이터를 일괄 주입하고 sitemap.xml/robots.txt 를 생성하며, h1 구조·이미지 alt·지연 로딩까지 점검합니다. 페이지를 새로 추가하거나 제목·요약을 수정한 직후에는 반드시 실행하세요. "SEO 점검", "SEO 최적화", "메타태그", "sitemap 갱신", "og 태그", "검색 노출", "구조화 데이터", "/seo-optimize" 같은 표현이 있을 때, 그리고 contents/ 아래 HTML 페이지를 추가·수정한 뒤에 트리거.
+---
+
+# seo-optimize — 사이트 전체 SEO 메타 관리
+
+유엔진 홈페이지는 정적 HTML 55+ 페이지이고 `<head>` 가 페이지마다 복제되어 있다.
+이 스킬은 그 중복을 **하나의 레지스트리 + 하나의 스크립트**로 관리한다.
+
+```
+.claude/skills/seo-optimize/
+├── SKILL.md          ← 이 문서
+├── seo-meta.json     ← 사람이 고치는 유일한 파일 (사이트 설정 + 페이지별 큐레이션 메타)
+├── apply_seo.py      ← 레지스트리를 읽어 모든 페이지의 <head> 를 다시 씀 (멱등)
+└── convert_webp.py   ← LCP 후보 이미지 → WebP 변환 (Core Web Vitals)
+```
+
+## 핵심 규칙
+
+> **`<head>` 안의 SEO 태그를 손으로 고치지 마라.**
+> `<!-- SEO:BEGIN --> … <!-- SEO:END -->` 블록은 매 실행마다 통째로 재생성된다.
+> 바꾸려면 `seo-meta.json` 을 고치고 스크립트를 다시 돌린다.
+
+## 실행
+
+```bash
+# 전체 적용 (sitemap.xml · robots.txt 재생성 포함) — 기본
+python3 .claude/skills/seo-optimize/apply_seo.py
+
+# 검사만 (파일 안 건드림, 문제 있으면 exit 1) — 커밋 전 확인용
+python3 .claude/skills/seo-optimize/apply_seo.py --check
+
+# 특정 페이지만 (sitemap 은 건드리지 않음)
+python3 .claude/skills/seo-optimize/apply_seo.py --only contents/blog/foo.html
+```
+
+전체 실행은 1초 이내이고 **멱등**이다. 두 번 돌려도 결과가 같으면 정상.
+
+## 스크립트가 하는 일
+
+각 페이지의 `<head>` 를 다음으로 재작성한다.
+
+| 항목 | 내용 |
+|---|---|
+| `<meta charset>` | head 최상단으로 승격 (1024바이트 규칙) |
+| `<title>` | 페이지 고유 제목 + 브랜드 접미사 (`titleMaxLen` 초과 시 단어 경계에서 절삭) |
+| `description` | 페이지 고유 요약 (`descMinLen`~`descMaxLen` 검사) |
+| `robots` | 기본 `index, follow, max-image-preview:large`, `noindex: true` 면 `noindex, follow` |
+| `canonical` | 절대 URL. `canonicalTo` 지정 시 대표 페이지를 가리킴 (중복 콘텐츠 처리) |
+| Open Graph | `og:type/site_name/locale/title/description/url/image/image:alt` + article 은 발행·수정일 |
+| Twitter Card | `summary_large_image` + title/description/image |
+| JSON-LD | 아래 표 참고 + `BreadcrumbList` |
+| 검증·분석 태그 | `site.analytics` 값이 채워져 있으면 GA4 / Search Console / 네이버 확인 태그 삽입 |
+
+그리고 본문에 대해:
+
+- `<html lang="ko">` 누락 시 추가
+- `<main>` 이후 이미지에 `loading="lazy" decoding="async"` 부여
+  (히어로 후보 2장은 LCP 보호를 위해 즉시 로딩 유지, 네비게이션·로고는 제외)
+- 장식용 이미지(`decoration-*.svg` 등)에는 `aria-hidden="true"`
+
+**JSON-LD 스키마 선택** — `seo-meta.json` 의 `schema` 값:
+
+| 값 | 쓰는 곳 |
+|---|---|
+| `Organization` | 홈(index.html). `WebSite` 도 함께 출력 |
+| `SoftwareApplication` | 제품 페이지 (Process GPT, Robo Architect, Ontologic …) |
+| `Course` | 교육 페이지 |
+| `BlogPosting` / `NewsArticle` | 블로그 글 / 뉴스룸 글 (자동 지정) |
+| `CollectionPage` · `Blog` · `ContactPage` · `WebPage` | 목록·기타 페이지 |
+
+## 메타데이터가 정해지는 순서
+
+1. **`seo-meta.json` 의 `pages["경로"]`** — 큐레이션된 값. 가장 우선.
+2. **`contents/bloglist.html` 의 카드** — 블로그 글은 목록의 제목·날짜·요약을 그대로 가져온다.
+3. **`contents/newsroom.html` 의 카드** — 뉴스룸 글도 동일.
+4. **페이지 본문** — `<h1>` 과 첫 문단에서 유추. **이 경우 경고를 띄운다.**
+
+즉 **블로그·뉴스 글은 목록 페이지만 제대로 채우면 SEO가 자동으로 붙는다.**
+제품·서비스 페이지는 목록이 없으므로 `seo-meta.json` 에 직접 써야 한다.
+
+## 페이지를 새로 추가했을 때 (체크리스트)
+
+1. 블로그/뉴스 글이면 → `bloglist.html` / `newsroom.html` 에 카드(제목·날짜·요약)를 먼저 추가한다.
+   제품·서비스 페이지면 → `seo-meta.json` 의 `pages` 에 항목을 추가한다.
+
+   ```jsonc
+   "contents/newproduct.html": {
+     "title": "제품명 — 한 줄 가치제안",        // 브랜드 접미사는 자동, 70자 이내
+     "description": "무엇을 하는 제품인지 …",   // 60~160자, 핵심은 앞 78자 안에
+     "image": "/images/full-width-images/main-img-newproduct.png",  // 사이트 루트 기준
+     "schema": "SoftwareApplication",
+     "appCategory": "BusinessApplication",
+     "breadcrumb": ["AI-Native Enterprise", "제품명"],
+     "priority": "0.9"
+   }
+   ```
+
+2. `python3 .claude/skills/seo-optimize/apply_seo.py` 실행.
+3. 출력된 **경고를 0건으로 만든다.** 남아 있으면 SEO가 덜 된 것이다.
+
+## 한국어 카피 작성 규칙
+
+- **title**: 70자 이내. `제품명 — 핵심 가치` 형태. 브랜드 접미사(` | uEngine`)는 스크립트가 붙이므로 쓰지 않는다.
+- **description**: 60~160자. 구글 한국어 SERP는 **약 78자에서 잘리므로** 핵심 메시지를 앞부분에 둔다.
+- **모든 페이지의 title·description 은 서로 달라야 한다.** 중복이면 스크립트가 경고한다.
+- 키워드를 나열하지 말고 사람이 읽는 문장으로 쓴다. `meta keywords` 는 의도적으로 넣지 않는다(랭킹 신호 아님).
+
+## 경고 종류와 대응
+
+| 경고 | 대응 |
+|---|---|
+| `… 을(를) 페이지 본문에서 자동 유추했습니다` | `seo-meta.json` 에 제대로 된 title/description 을 쓴다 |
+| `목록 페이지에 카드가 없습니다` | `bloglist.html` / `newsroom.html` 에 카드를 추가한다 |
+| `title 중복` / `description 중복` | 페이지마다 다르게 다시 쓴다 |
+| `description 이 너무 짧습니다` | 60자 이상으로 늘린다 |
+| `<h1> 이 없습니다` | 히어로 제목을 `<h1>` 으로 만든다 |
+| `<h1> 이 N개입니다` | 대표 제목 하나만 `<h1>`, 나머지는 `<h2>` (모달 제목·캐러셀 슬라이드가 흔한 원인) |
+| `alt 속성이 없는/빈 <img>` | 내용이 있는 이미지면 설명을 넣는다. 순수 장식이면 파일명에 `decoration` 을 쓰면 검사에서 제외된다 |
+
+## 이미지 — WebP 와 Core Web Vitals
+
+SEO 랭킹에 걸리는 건 **이미지 포맷이 아니라 LCP(Largest Contentful Paint)** 다.
+LCP 에 잡히는 건 **지연 로딩이 아닌 본문 이미지**, 즉 화면에 바로 보이는 히어로 이미지뿐이다.
+스크롤 아래 이미지는 `apply_seo.py` 가 이미 `loading="lazy"` 를 붙이므로 LCP 계산에서 빠지고,
+변환해도 랭킹 이득이 없다(대역폭 이득만 있다).
+
+```bash
+python3 .claude/skills/seo-optimize/convert_webp.py            # 대상 목록만 확인
+python3 .claude/skills/seo-optimize/convert_webp.py --apply    # 변환 + HTML 참조 갱신
+python3 .claude/skills/seo-optimize/apply_seo.py               # ← 변환 후 필수 (og:image 재계산)
+```
+
+지켜야 할 규칙:
+
+- **원본 PNG/JPEG 를 지우지 않는다.** 참조를 놓쳐도 안 깨지고(안전한 실패),
+  og:image 가 원본을 계속 쓸 수 있다.
+- **og:image 는 절대 WebP 로 두지 않는다.** 카카오톡 등 일부 링크 프리뷰 크롤러가
+  WebP 썸네일을 렌더링하지 못한다. `apply_seo.py` 의 `social_safe()` 가
+  `.webp` 참조를 같은 이름의 원본 래스터로 되돌려 준다.
+- 이미 최적화된 JPEG 은 WebP 가 더 커질 수 있다. 변환기가 자동으로 감지해 건너뛴다.
+- 애니메이션 GIF 는 WebP 가 아니라 **MP4(H.264)** 로 바꾼다. 아래 별도 절 참고.
+  `convert_webp.py` 는 GIF 를 건드리지 않는다.
+- `apply_seo.py` 는 지연 로딩이 아닌 본문 이미지가 **200KB** 를 넘으면 경고한다.
+  새 페이지를 만든 뒤 이 경고가 뜨면 `convert_webp.py --apply` 를 돌린다.
+
+## 애니메이션 GIF → MP4
+
+GIF 는 압축 효율이 극단적으로 나쁘다. 2026-08 작업에서 6개 GIF **66.9MB → 6.3MB (-91%)**
+로 줄였다. 화질 손실은 평균 픽셀 차이 1% 수준으로 한글 UI 텍스트도 그대로 판독된다.
+
+```bash
+# 1) 인코딩 (crf 27 이면 화면 녹화물에 충분)
+ffmpeg -i in.gif -movflags +faststart -pix_fmt yuv420p \
+  -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -c:v libx264 -crf 27 -preset slow -an out.mp4
+
+# 2) 포스터(첫 프레임) — preload="none" 일 때 첫 화면으로 쓰인다
+python3 -c "from PIL import Image; im=Image.open('in.gif'); im.seek(0); \
+  im.convert('RGB').save('out-poster.webp','WEBP',quality=80,method=6)"
+```
+
+마크업은 `<img>` 를 그대로 `<video>` 로 바꾼다. `css/style.css` 의
+`img:not([draggable]), embed, object, video { max-width:100%; height:auto }` 규칙이
+이미 `video` 를 포함하므로 **CSS 는 손댈 필요가 없다.** `wow scaleOutIn` 등 애니메이션
+클래스도 태그 종속이 아니라 그대로 옮기면 된다.
+
+```html
+<video class="wow scaleOutIn" autoplay loop muted playsinline preload="none"
+       poster="../images/demo-corporate/NAME-poster.webp"
+       aria-label="무엇을 보여주는 영상인지 한국어로">
+    <source src="../images/demo-corporate/NAME.mp4" type="video/mp4">
+    (동영상을 재생할 수 없는 환경입니다)
+</video>
+```
+
+주의할 점:
+
+- `autoplay loop muted playsinline` 네 개가 다 있어야 GIF 처럼 동작한다.
+  특히 `muted` 없이는 자동재생이 차단되고, `playsinline` 없이는 iOS 에서 전체화면이 된다.
+- `preload="none"` + `poster` 조합이면 화면에 들어오기 전까지 내려받지 않는다.
+  `<img loading="lazy">` 와 같은 효과를 JS 없이 낸다.
+- `alt` 대신 **`aria-label`** 을 쓴다. `<video>` 에는 alt 속성이 없다.
+- **WebM(VP9) 은 추가하지 않는다.** 이 사이트 소재로 실측한 결과 VP9(crf36) 6.6MB 로
+  H.264(crf27) 6.3MB 보다 오히려 컸다. H.264 는 지원율 100% 이므로 MP4 단독이 낫다.
+- GIF 에 실제 투명 픽셀이 있으면 비디오로 못 옮긴다. 변환 전 확인할 것
+  (GIF 는 쓰지 않아도 transparency 플래그가 붙어 있는 경우가 많아 플래그만 보면 안 된다).
+
+## 아직 사람이 해야 하는 일
+
+`seo-meta.json` 의 `site.analytics` 는 비어 있다. 값을 채우면 다음 실행에서 전 페이지에 자동 삽입된다.
+
+- `ga4MeasurementId` — GA4 측정 ID (`G-XXXXXXXXXX`). analytics.google.com 에서 발급
+- `googleSiteVerification` — Google Search Console 소유 확인 메타태그 `content` 값
+- `naverSiteVerification` — 네이버 서치어드바이저 소유 확인 값 (국내 B2B 유입에 중요)
+
+등록 후에는 Search Console·서치어드바이저에 `https://www.uengine.org/sitemap.xml` 을 제출한다.
+
+## 자동 실행
+
+`.claude/settings.json` 의 훅이 다음을 자동으로 수행한다.
+
+- **PostToolUse** — `contents/**.html` 또는 `index.html` 을 Write/Edit 하면 그 페이지에 `--only` 로 즉시 적용.
+  큐레이션이 필요한 경고가 있으면 그 내용이 Claude 에게 전달된다.
+- **Stop** — 응답이 끝날 때 HTML 변경이 있었으면 전체 실행으로 `sitemap.xml` · `robots.txt` 를 갱신한다.
+
+훅이 돌더라도 **새 페이지의 `seo-meta.json` 항목은 사람(또는 Claude)이 써야 한다.** 훅은 누락을 알려줄 뿐이다.

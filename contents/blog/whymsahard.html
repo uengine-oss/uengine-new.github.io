@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        
-        <title>uEngine &mdash; The AI-first Company</title>
-        <meta name="description" content="유엔진솔루션즈 블로그는 복잡한 기술 개념을 누구나 쉽게 이해할 수 있도록 풀어냅니다.">
         <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>왜 마이크로서비스 아키텍처는 어려운가? | uEngine 블로그</title>
+        <meta name="description" content="마이크로서비스의 어려움은 기술이 아니라 설계에서 온다 — 잘못된 경계 긋기(수다쟁이 마이크로서비스), 갓테이블, 사라진 트랜잭션이라는 세 가지 함정을 짚고, 응집도·결합도, 데이터 지역성, 어그리게이트와 이벤추얼 컨시스턴시라는 처방을 정부24 클라우드 네이티브 전환 사례와 함께…">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/whymsahard.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="왜 마이크로서비스 아키텍처는 어려운가? | uEngine 블로그">
+        <meta property="og:description" content="마이크로서비스의 어려움은 기술이 아니라 설계에서 온다 — 잘못된 경계 긋기(수다쟁이 마이크로서비스), 갓테이블, 사라진 트랜잭션이라는 세 가지 함정을 짚고, 응집도·결합도, 데이터 지역성, 어그리게이트와 이벤추얼 컨시스턴시라는 처방을 정부24 클라우드 네이티브 전환 사례와 함께…">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/whymsahard.html">
+        <meta property="og:image" content="https://www.uengine.org/images/full-width-images/section-bg-1.jpg">
+        <meta property="og:image:alt" content="왜 마이크로서비스 아키텍처는 어려운가? | uEngine 블로그">
+        <meta property="article:published_time" content="2026-07-22">
+        <meta property="article:modified_time" content="2026-08-03">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="왜 마이크로서비스 아키텍처는 어려운가? | uEngine 블로그">
+        <meta name="twitter:description" content="마이크로서비스의 어려움은 기술이 아니라 설계에서 온다 — 잘못된 경계 긋기(수다쟁이 마이크로서비스), 갓테이블, 사라진 트랜잭션이라는 세 가지 함정을 짚고, 응집도·결합도, 데이터 지역성, 어그리게이트와 이벤추얼 컨시스턴시라는 처방을 정부24 클라우드 네이티브 전환 사례와 함께…">
+        <meta name="twitter:image" content="https://www.uengine.org/images/full-width-images/section-bg-1.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"왜 마이크로서비스 아키텍처는 어려운가?","description":"마이크로서비스의 어려움은 기술이 아니라 설계에서 온다 — 잘못된 경계 긋기(수다쟁이 마이크로서비스), 갓테이블, 사라진 트랜잭션이라는 세 가지 함정을 짚고, 응집도·결합도, 데이터 지역성, 어그리게이트와 이벤추얼 컨시스턴시라는 처방을 정부24 클라우드 네이티브 전환 사례와 함께…","image":["https://www.uengine.org/images/full-width-images/section-bg-1.jpg"],"url":"https://www.uengine.org/contents/blog/whymsahard.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/whymsahard.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-07-22","dateModified":"2026-08-03"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"왜 마이크로서비스 아키텍처는 어려운가?","item":"https://www.uengine.org/contents/blog/whymsahard.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         <!-- Favicon -->

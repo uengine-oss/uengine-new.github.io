@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        
-        <title>uEngine &mdash; The AI-first Company</title>
-        <meta name="description" content="유엔진솔루션즈 블로그는 복잡한 기술 개념을 누구나 쉽게 이해할 수 있도록 풀어냅니다.">
         <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>어그리게이트(Aggregate) 모범 사례 | uEngine 블로그</title>
+        <meta name="description" content="이 글은 JPA/Hibernate를 사용할 때 도메인 주도 설계(DDD) 원칙을 적용하여 흔한 문제들을 해결하는 방법에 대해 설명합니다. JPA와 Hibernate를 사용하면서 경험할 수 있는 여러 가지 문제점들을 소개하고, 이를 해결하기 위한 접근 방법을 제시합니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/aggregate.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="어그리게이트(Aggregate) 모범 사례 | uEngine 블로그">
+        <meta property="og:description" content="이 글은 JPA/Hibernate를 사용할 때 도메인 주도 설계(DDD) 원칙을 적용하여 흔한 문제들을 해결하는 방법에 대해 설명합니다. JPA와 Hibernate를 사용하면서 경험할 수 있는 여러 가지 문제점들을 소개하고, 이를 해결하기 위한 접근 방법을 제시합니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/aggregate.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/blog03.jpg">
+        <meta property="og:image:alt" content="어그리게이트(Aggregate) 모범 사례 | uEngine 블로그">
+        <meta property="article:published_time" content="2024-08-28">
+        <meta property="article:modified_time" content="2026-08-03">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="어그리게이트(Aggregate) 모범 사례 | uEngine 블로그">
+        <meta name="twitter:description" content="이 글은 JPA/Hibernate를 사용할 때 도메인 주도 설계(DDD) 원칙을 적용하여 흔한 문제들을 해결하는 방법에 대해 설명합니다. JPA와 Hibernate를 사용하면서 경험할 수 있는 여러 가지 문제점들을 소개하고, 이를 해결하기 위한 접근 방법을 제시합니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/blog03.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"어그리게이트(Aggregate) 모범 사례","description":"이 글은 JPA/Hibernate를 사용할 때 도메인 주도 설계(DDD) 원칙을 적용하여 흔한 문제들을 해결하는 방법에 대해 설명합니다. JPA와 Hibernate를 사용하면서 경험할 수 있는 여러 가지 문제점들을 소개하고, 이를 해결하기 위한 접근 방법을 제시합니다.","image":["https://www.uengine.org/images/blog/blog03.jpg"],"url":"https://www.uengine.org/contents/blog/aggregate.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/aggregate.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2024-08-28","dateModified":"2026-08-03"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"어그리게이트(Aggregate) 모범 사례","item":"https://www.uengine.org/contents/blog/aggregate.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         <!-- Favicon -->
@@ -378,7 +401,7 @@
                                         <!-- Media Gallery -->
                                         <!-- <div class="blog-media mb-40 mb-xs-30">
                                             <div>
-                                                <img src="../../images/blog/blog03.jpg" alt="아기 돼지 삼형제" />
+                                                <img src="../../images/blog/blog03.jpg" alt="아기 돼지 삼형제" decoding="async" />
                                             </div>
                                         </div>                                         -->
 
@@ -427,7 +450,7 @@
 
                                         <div class="blog-media mb-40 mb-xs-30">
                                             <div>
-                                                <img src="https://github.com/user-attachments/assets/b074c0e1-8a12-42c6-8f29-56bd053c0531" alt="관계형 데이터베이스 스키마 설계" />
+                                                <img src="https://github.com/user-attachments/assets/b074c0e1-8a12-42c6-8f29-56bd053c0531" alt="관계형 데이터베이스 스키마 설계" decoding="async" />
                                             </div>
                                         </div> 
 
@@ -458,7 +481,7 @@
 
                                         <div class="blog-media mb-40 mb-xs-30">
                                             <div>
-                                                <img src="https://github.com/user-attachments/assets/24a91c6e-bb3a-4dfb-940d-2938a3f4844b" alt="어그리게이트 루트 찾기" />
+                                                <img src="https://github.com/user-attachments/assets/24a91c6e-bb3a-4dfb-940d-2938a3f4844b" alt="어그리게이트 루트 찾기" loading="lazy" decoding="async" />
                                             </div>
                                         </div> 
 

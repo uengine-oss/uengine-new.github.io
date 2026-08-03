@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        
-        <title>uEngine &mdash; The AI-first Company</title>
-        <meta name="description" content="유엔진솔루션즈 블로그는 복잡한 기술 개념을 누구나 쉽게 이해할 수 있도록 풀어냅니다.">
         <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>데이터 일관성과 성능의 균형: 어그리게이트와 이벤추얼 컨시스턴시 | uEngine 블로그</title>
+        <meta name="description" content="오늘은 마이크로서비스 아키텍처에서 가장 큰 도전 과제 중 하나인 &quot;데이터 일관성과 성능의 균형&quot;에 대해 이야기해보려 합니다. 특히, 도메인 주도 설계(DDD)의 '어그리게이트' 개념과 '이벤추얼 컨시스턴시' 패턴이 어떻게 이 문제를 해결하는지 살펴보겠습니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/tradeoff.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="데이터 일관성과 성능의 균형: 어그리게이트와 이벤추얼 컨시스턴시 | uEngine 블로그">
+        <meta property="og:description" content="오늘은 마이크로서비스 아키텍처에서 가장 큰 도전 과제 중 하나인 &quot;데이터 일관성과 성능의 균형&quot;에 대해 이야기해보려 합니다. 특히, 도메인 주도 설계(DDD)의 '어그리게이트' 개념과 '이벤추얼 컨시스턴시' 패턴이 어떻게 이 문제를 해결하는지 살펴보겠습니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/tradeoff.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/blog03.jpg">
+        <meta property="og:image:alt" content="데이터 일관성과 성능의 균형: 어그리게이트와 이벤추얼 컨시스턴시 | uEngine 블로그">
+        <meta property="article:published_time" content="2024-09-26">
+        <meta property="article:modified_time" content="2026-08-03">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="데이터 일관성과 성능의 균형: 어그리게이트와 이벤추얼 컨시스턴시 | uEngine 블로그">
+        <meta name="twitter:description" content="오늘은 마이크로서비스 아키텍처에서 가장 큰 도전 과제 중 하나인 &quot;데이터 일관성과 성능의 균형&quot;에 대해 이야기해보려 합니다. 특히, 도메인 주도 설계(DDD)의 '어그리게이트' 개념과 '이벤추얼 컨시스턴시' 패턴이 어떻게 이 문제를 해결하는지 살펴보겠습니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/blog03.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"데이터 일관성과 성능의 균형: 어그리게이트와 이벤추얼 컨시스턴시","description":"오늘은 마이크로서비스 아키텍처에서 가장 큰 도전 과제 중 하나인 \"데이터 일관성과 성능의 균형\"에 대해 이야기해보려 합니다. 특히, 도메인 주도 설계(DDD)의 '어그리게이트' 개념과 '이벤추얼 컨시스턴시' 패턴이 어떻게 이 문제를 해결하는지 살펴보겠습니다.","image":["https://www.uengine.org/images/blog/blog03.jpg"],"url":"https://www.uengine.org/contents/blog/tradeoff.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/tradeoff.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2024-09-26","dateModified":"2026-08-03"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"데이터 일관성과 성능의 균형: 어그리게이트와 이벤추얼 컨시스턴시","item":"https://www.uengine.org/contents/blog/tradeoff.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         <!-- Favicon -->
@@ -378,7 +401,7 @@
                                         <!-- Media Gallery -->
                                         <!-- <div class="blog-media mb-40 mb-xs-30">
                                             <div>
-                                                <img src="../../images/blog/blog03.jpg" alt="아기 돼지 삼형제" />
+                                                <img src="../../images/blog/blog03.jpg" alt="아기 돼지 삼형제" decoding="async" />
                                             </div>
                                         </div>                                         -->
 
@@ -391,7 +414,7 @@
                                         <!-- Media Gallery -->
                                         <!-- <div class="blog-media mb-40 mb-xs-30">
                                             <div style="width: 86%; margin: 0 auto;">
-                                                <img src="../../images/blog/cohesion.png" alt="소프트웨어 설계의 응집도와 결합도(실생활의 예: 실, 가위, 니퍼, 전선)" />
+                                                <img src="../../images/blog/cohesion.webp" alt="소프트웨어 설계의 응집도와 결합도(실생활의 예: 실, 가위, 니퍼, 전선)" decoding="async" />
                                             </div>
                                         </div>   -->
 
