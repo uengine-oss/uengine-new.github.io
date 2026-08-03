@@ -549,11 +549,17 @@ User-agent: *
 Allow: /
 
 # 검색 인덱스에서 제외할 내부 경로
+# (gh-pages 배포가 .gitignore 로 걸러지지 않는 파일을 전부 올리므로 여기서 색인만 막는다)
 Disallow: /php/
 Disallow: /node_modules/
 Disallow: /doc-inbox/
 Disallow: /newsletters/
 Disallow: /learning/
+Disallow: /.claude/
+Disallow: /.agents/
+Disallow: /CLAUDE.md
+Disallow: /README.md
+Disallow: /package.json
 
 # AI 검색/에이전트 크롤러 명시적 허용 (인용 노출을 위해)
 User-agent: GPTBot
