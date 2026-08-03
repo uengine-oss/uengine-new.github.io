@@ -182,7 +182,33 @@ for f in files:
 - `hs-title-11i` = 한 줄 한국어 소개
 - `Learn More` → `contents/<slug>.html`
 
-### 6. 검증
+### 6. SEO 메타 등록 — **필수**
+제품 페이지는 목록 카드가 없으므로 **레지스트리에 직접 써야 한다.** 안 쓰면 본문에서 유추한
+빈약한 메타가 붙는다. `.claude/skills/seo-optimize/seo-meta.json` 의 `pages` 에 추가:
+
+```jsonc
+"contents/<slug>.html": {
+  "title": "제품명 — 한 줄 가치제안",        // 70자 이내. " | uEngine" 접미사는 자동
+  "description": "무엇을 하는 제품인지 …",   // 60~160자. 핵심은 앞 78자 안에 (한국어 SERP 절삭 지점)
+  "image": "/images/full-width-images/main-img-<slug>.png",   // 5단계 스플래시 이미지 재사용
+  "schema": "SoftwareApplication",
+  "appCategory": "BusinessApplication",      // 개발자 도구면 "DeveloperApplication"
+  "breadcrumb": ["<상단 카테고리>", "제품명"],
+  "priority": "0.9"
+}
+```
+
+그 다음 실행하고 **경고를 0건으로 만든다**:
+```bash
+python3 .claude/skills/seo-optimize/apply_seo.py
+```
+
+이 단계가 `<title>`·description·canonical·OG/Twitter 카드·`SoftwareApplication` JSON-LD·
+`sitemap.xml` 등록·이미지 지연 로딩까지 한 번에 처리한다. 자세한 규칙은 `seo-optimize` 스킬 참고.
+
+> `<h1>` 은 제품 페이지 전체에서 **1개**여야 한다. 템플릿의 문의 모달 제목은 `<h2>` 로 둘 것.
+
+### 7. 검증
 ```bash
 python3 -m http.server 8123 --bind 127.0.0.1 &   # 8000이 사용 중이면 다른 포트
 ```
@@ -200,6 +226,7 @@ python3 -m http.server 8123 --bind 127.0.0.1 &   # 8000이 사용 중이면 다�
 - `images/<slug>/*.jpg` (기능 캡처, 5~12장) + `images/full-width-images/main-img-<slug>.png` (테두리 합성 스플래시)
 - 전체 `*.html` 의 nav/footer 메뉴 반영
 - `index.html` 스플래시 슬라이드
+- `seo-meta.json` 신규 항목 + `sitemap.xml` 갱신 + 페이지 SEO 메타 블록 (6단계)
 
 ## 산출물 헬퍼
 - `.claude/skills/add-product-menu/compose-splash.py` — 스플래시 이미지 합성기.
@@ -215,5 +242,6 @@ python3 -m http.server 8123 --bind 127.0.0.1 &   # 8000이 사용 중이면 다�
 - [ ] nav 앵커 전 파일 존재 검증 후 일괄 삽입 (부분쓰기 시 git 복구)
 - [ ] 신규 top-level이면 footer 5열 폭 재조정
 - [ ] **스플래시 이미지 = compose-splash.py 로 테두리+겹침 합성** (단순 캡처 1장 금지), `scaleOutIn` 클래스, Learn More 링크
+- [ ] `seo-meta.json` 에 신규 페이지 항목 추가 후 `apply_seo.py` 실행 → 경고 0건
 - [ ] 로컬 서버 + headless 스크린샷으로 렌더 검증
 - [ ] 검증 통과 후 doc-inbox/ 원본 파일(로고 제외) 삭제

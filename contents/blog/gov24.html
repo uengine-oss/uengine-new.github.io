@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        
-        <title>uEngine &mdash; The AI-first Company</title>
-        <meta name="description" content="유엔진솔루션즈 블로그는 복잡한 기술 개념을 누구나 쉽게 이해할 수 있도록 풀어냅니다.">
         <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>정부24 클라우드 네이티브 전환: 마이크로서비스 아키텍처로 공공서비스 혁신하기 | uEngine 블로그</title>
+        <meta name="description" content="본 포스트에서는 유엔진솔루션즈가 수행한 정부24 포털 클라우드 네이티브 전환 1차 프로젝트의 설계 및 분석 과정을 살펴보고, 마이크로서비스 아키텍처(MSA) 도입을 통해 어떤 변화가 이루어졌는지 기술적 흐름을 깊이 있게 설명합니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/gov24.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="정부24 클라우드 네이티브 전환: 마이크로서비스 아키텍처로 공공서비스 혁신하기 | uEngine 블로그">
+        <meta property="og:description" content="본 포스트에서는 유엔진솔루션즈가 수행한 정부24 포털 클라우드 네이티브 전환 1차 프로젝트의 설계 및 분석 과정을 살펴보고, 마이크로서비스 아키텍처(MSA) 도입을 통해 어떤 변화가 이루어졌는지 기술적 흐름을 깊이 있게 설명합니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/gov24.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/cohesion.png">
+        <meta property="og:image:alt" content="정부24 클라우드 네이티브 전환: 마이크로서비스 아키텍처로 공공서비스 혁신하기 | uEngine 블로그">
+        <meta property="article:published_time" content="2025-12-17">
+        <meta property="article:modified_time" content="2026-08-03">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="정부24 클라우드 네이티브 전환: 마이크로서비스 아키텍처로 공공서비스 혁신하기 | uEngine 블로그">
+        <meta name="twitter:description" content="본 포스트에서는 유엔진솔루션즈가 수행한 정부24 포털 클라우드 네이티브 전환 1차 프로젝트의 설계 및 분석 과정을 살펴보고, 마이크로서비스 아키텍처(MSA) 도입을 통해 어떤 변화가 이루어졌는지 기술적 흐름을 깊이 있게 설명합니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/cohesion.png">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"정부24 클라우드 네이티브 전환: 마이크로서비스 아키텍처로 공공서비스 혁신하기","description":"본 포스트에서는 유엔진솔루션즈가 수행한 정부24 포털 클라우드 네이티브 전환 1차 프로젝트의 설계 및 분석 과정을 살펴보고, 마이크로서비스 아키텍처(MSA) 도입을 통해 어떤 변화가 이루어졌는지 기술적 흐름을 깊이 있게 설명합니다.","image":["https://www.uengine.org/images/blog/cohesion.png"],"url":"https://www.uengine.org/contents/blog/gov24.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/gov24.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2025-12-17","dateModified":"2026-08-03"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"정부24 클라우드 네이티브 전환: 마이크로서비스 아키텍처로 공공서비스 혁신하기","item":"https://www.uengine.org/contents/blog/gov24.html"}]}</script>
+        <!-- SEO:END -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         <!-- Favicon -->
@@ -384,7 +404,7 @@
                                         <!-- Media Gallery -->
                                         <!-- <div class="blog-media mb-40 mb-xs-30">
                                             <div style="width: 86%; margin: 0 auto;">
-                                                <img src="../../images/blog/cohesion.png" alt="소프트웨어 설계의 응집도와 결합도(실생활의 예: 실, 가위, 니퍼, 전선)" />
+                                                <img src="../../images/blog/cohesion.png" alt="소프트웨어 설계의 응집도와 결합도(실생활의 예: 실, 가위, 니퍼, 전선)" decoding="async" />
                                             </div>
                                         </div>   -->
 
@@ -417,7 +437,7 @@
                                         <!-- Media Gallery -->
                                         <div class="blog-media mb-80">
                                             <div style="width: 86%; margin: 0 auto;">
-                                                <img src="../../images/blog/gov24-01.png" alt="정부24 클라우드 네이티브 전환 핵심" />
+                                                <img src="../../images/blog/gov24-01.png" alt="정부24 클라우드 네이티브 전환 핵심" decoding="async" />
                                             </div>
                                             <p class="text-center mt-10">[정부24 클라우드 네이티브 전환 핵심]</p>
                                         </div>
@@ -580,7 +600,7 @@
                                         <!-- Media Gallery -->
                                         <div class="blog-media mb-30">
                                             <div style="width: 86%; margin: 0 auto;">
-                                                <img src="../../images/blog/gov24-02.png" alt="주요 민원 이벤트스토밍 모델, MSA-Ez" />
+                                                <img src="../../images/blog/gov24-02.png" alt="주요 민원 이벤트스토밍 모델, MSA-Ez" loading="lazy" decoding="async" />
                                             </div>
                                             <p class="text-center mt-10">[주요 민원 이벤트스토밍 모델, MSA-Ez]</p>
                                         </div>
