@@ -190,19 +190,49 @@ def derive_from_page(src: str) -> dict:
     return out
 
 
+def social_safe(root_path: str) -> str:
+    """og:image 는 WebP 를 피하고 같은 이름의 PNG/JPEG 원본을 쓴다.
+
+    카카오톡·일부 링크 프리뷰 크롤러가 아직 WebP 썸네일을 렌더링하지 못한다.
+    성능을 위해 페이지 <img> 는 .webp 를 참조하더라도, 공유 카드용 이미지는
+    나란히 남아 있는 원본 래스터 파일을 가리키게 한다.
+    """
+    if not root_path.lower().endswith(".webp"):
+        return root_path
+    stem = os.path.splitext(root_path)[0]
+    for ext in (".png", ".jpg", ".jpeg"):
+        if os.path.exists(os.path.join(ROOT, (stem + ext).lstrip("/"))):
+            return stem + ext
+    return root_path
+
+
+IMG_REF = re.compile(r'["\(]((?:\.\./)*images/[^"\')\s]+\.(?:jpg|jpeg|png|webp))', re.I)
+
+# og:image 로 절대 쓰면 안 되는 것 — 파비콘/로고/프로필은 공유 카드에서 흉하다.
+NEVER_OG = ("logo", "favicon", "icon", "author")
+# 콘텐츠 이미지가 하나도 없을 때만 최후 수단으로 허용하는 것 (실제 사진이라 카드로는 쓸 만함).
+LAST_RESORT_OG = ("section-bg", "page-title-bg", "decoration")
+
+# 지연 로딩이 아닌 본문 이미지(=LCP 후보)가 이 크기를 넘으면 경고한다.
+LCP_IMAGE_KB_LIMIT = 200
+
+
 def first_local_image(src: str, page: str) -> str | None:
     """페이지가 참조하는 첫 로컬 이미지를 사이트 루트 기준 경로로."""
-    depth = page.count("/")
-    for m in re.finditer(r'["\(]((?:\.\./)*images/[^"\')\s]+\.(?:jpg|jpeg|png))', src):
-        p = m.group(1)
+    _ = page
+    last_resort = None
+    for m in IMG_REF.finditer(src):
+        p = "/" + re.sub(r"^(\.\./)+", "", m.group(1))
         low = p.lower()
-        if any(k in low for k in ("logo", "favicon", "icon", "author", "section-bg", "page-title-bg")):
+        if any(k in low for k in NEVER_OG):
             continue
-        return "/" + re.sub(r"^(\.\./)+", "", p)
-    for m in re.finditer(r'["\(]((?:\.\./)*images/[^"\')\s]+\.(?:jpg|jpeg|png))', src):
-        return "/" + re.sub(r"^(\.\./)+", "", m.group(1))
-    _ = depth
-    return None
+        if any(k in low for k in LAST_RESORT_OG):
+            if last_resort is None:
+                last_resort = p
+            continue
+        return social_safe(p)
+    # 콘텐츠 이미지가 없으면 최후 수단, 그것도 없으면 호출부가 기본 이미지로 처리한다.
+    return social_safe(last_resort) if last_resort else None
 
 
 # ──────────────────────────────────────────────────────────── 블록 생성
@@ -650,6 +680,24 @@ def main():
                 warn(f"{page}: <h1> 이 없습니다")
             elif h1n > 1:
                 warn(f"{page}: <h1> 이 {h1n}개입니다 (1개만 두고 나머지는 <h2> 로)")
+
+            # LCP 후보(= 지연 로딩이 아닌 본문 이미지)가 무겁지 않은지
+            body = src[re.search(r"<main\b", src).start():] if re.search(r"<main\b", src) else src
+            for tag in re.findall(r"<img\b[^>]*>", body):
+                if 'loading="lazy"' in tag:
+                    continue
+                m2 = re.search(r'src="((?:\.\./)*images/[^"]+)"', tag)
+                if not m2:
+                    continue
+                rel = re.sub(r"^(\.\./)+", "", m2.group(1))
+                full = os.path.join(ROOT, rel)
+                if not os.path.exists(full):
+                    continue
+                kb = os.path.getsize(full) / 1024
+                if kb > LCP_IMAGE_KB_LIMIT and not rel.lower().endswith(".webp"):
+                    warn(f"{page}: LCP 후보 이미지가 {kb:.0f}KB 입니다 — {rel} "
+                         f"(WebP 로 변환하면 보통 75~90% 줄어듭니다. "
+                         f"convert_webp.py 참고)")
 
             imgs = re.findall(r"<img\b[^>]*>", src)
             no_alt = [i for i in imgs if not re.search(r'\balt\s*=', i)]

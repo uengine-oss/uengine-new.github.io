@@ -12,7 +12,8 @@ description: 유엔진 홈페이지(uengine-new.github.io)의 SEO 메타데이�
 .claude/skills/seo-optimize/
 ├── SKILL.md          ← 이 문서
 ├── seo-meta.json     ← 사람이 고치는 유일한 파일 (사이트 설정 + 페이지별 큐레이션 메타)
-└── apply_seo.py      ← 레지스트리를 읽어 모든 페이지의 <head> 를 다시 씀 (멱등)
+├── apply_seo.py      ← 레지스트리를 읽어 모든 페이지의 <head> 를 다시 씀 (멱등)
+└── convert_webp.py   ← LCP 후보 이미지 → WebP 변환 (Core Web Vitals)
 ```
 
 ## 핵심 규칙
@@ -117,6 +118,32 @@ python3 .claude/skills/seo-optimize/apply_seo.py --only contents/blog/foo.html
 | `<h1> 이 없습니다` | 히어로 제목을 `<h1>` 으로 만든다 |
 | `<h1> 이 N개입니다` | 대표 제목 하나만 `<h1>`, 나머지는 `<h2>` (모달 제목·캐러셀 슬라이드가 흔한 원인) |
 | `alt 속성이 없는/빈 <img>` | 내용이 있는 이미지면 설명을 넣는다. 순수 장식이면 파일명에 `decoration` 을 쓰면 검사에서 제외된다 |
+
+## 이미지 — WebP 와 Core Web Vitals
+
+SEO 랭킹에 걸리는 건 **이미지 포맷이 아니라 LCP(Largest Contentful Paint)** 다.
+LCP 에 잡히는 건 **지연 로딩이 아닌 본문 이미지**, 즉 화면에 바로 보이는 히어로 이미지뿐이다.
+스크롤 아래 이미지는 `apply_seo.py` 가 이미 `loading="lazy"` 를 붙이므로 LCP 계산에서 빠지고,
+변환해도 랭킹 이득이 없다(대역폭 이득만 있다).
+
+```bash
+python3 .claude/skills/seo-optimize/convert_webp.py            # 대상 목록만 확인
+python3 .claude/skills/seo-optimize/convert_webp.py --apply    # 변환 + HTML 참조 갱신
+python3 .claude/skills/seo-optimize/apply_seo.py               # ← 변환 후 필수 (og:image 재계산)
+```
+
+지켜야 할 규칙:
+
+- **원본 PNG/JPEG 를 지우지 않는다.** 참조를 놓쳐도 안 깨지고(안전한 실패),
+  og:image 가 원본을 계속 쓸 수 있다.
+- **og:image 는 절대 WebP 로 두지 않는다.** 카카오톡 등 일부 링크 프리뷰 크롤러가
+  WebP 썸네일을 렌더링하지 못한다. `apply_seo.py` 의 `social_safe()` 가
+  `.webp` 참조를 같은 이름의 원본 래스터로 되돌려 준다.
+- 이미 최적화된 JPEG 은 WebP 가 더 커질 수 있다. 변환기가 자동으로 감지해 건너뛴다.
+- 애니메이션 GIF 는 WebP 가 아니라 **MP4/WebM** 으로 바꿔야 한다(보통 95% 이상 감소).
+  변환기는 GIF 를 건드리지 않는다.
+- `apply_seo.py` 는 지연 로딩이 아닌 본문 이미지가 **200KB** 를 넘으면 경고한다.
+  새 페이지를 만든 뒤 이 경고가 뜨면 `convert_webp.py --apply` 를 돌린다.
 
 ## 아직 사람이 해야 하는 일
 
