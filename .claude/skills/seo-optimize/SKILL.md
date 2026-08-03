@@ -140,10 +140,51 @@ python3 .claude/skills/seo-optimize/apply_seo.py               # ← 변환 후 
   WebP 썸네일을 렌더링하지 못한다. `apply_seo.py` 의 `social_safe()` 가
   `.webp` 참조를 같은 이름의 원본 래스터로 되돌려 준다.
 - 이미 최적화된 JPEG 은 WebP 가 더 커질 수 있다. 변환기가 자동으로 감지해 건너뛴다.
-- 애니메이션 GIF 는 WebP 가 아니라 **MP4/WebM** 으로 바꿔야 한다(보통 95% 이상 감소).
-  변환기는 GIF 를 건드리지 않는다.
+- 애니메이션 GIF 는 WebP 가 아니라 **MP4(H.264)** 로 바꾼다. 아래 별도 절 참고.
+  `convert_webp.py` 는 GIF 를 건드리지 않는다.
 - `apply_seo.py` 는 지연 로딩이 아닌 본문 이미지가 **200KB** 를 넘으면 경고한다.
   새 페이지를 만든 뒤 이 경고가 뜨면 `convert_webp.py --apply` 를 돌린다.
+
+## 애니메이션 GIF → MP4
+
+GIF 는 압축 효율이 극단적으로 나쁘다. 2026-08 작업에서 6개 GIF **66.9MB → 6.3MB (-91%)**
+로 줄였다. 화질 손실은 평균 픽셀 차이 1% 수준으로 한글 UI 텍스트도 그대로 판독된다.
+
+```bash
+# 1) 인코딩 (crf 27 이면 화면 녹화물에 충분)
+ffmpeg -i in.gif -movflags +faststart -pix_fmt yuv420p \
+  -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -c:v libx264 -crf 27 -preset slow -an out.mp4
+
+# 2) 포스터(첫 프레임) — preload="none" 일 때 첫 화면으로 쓰인다
+python3 -c "from PIL import Image; im=Image.open('in.gif'); im.seek(0); \
+  im.convert('RGB').save('out-poster.webp','WEBP',quality=80,method=6)"
+```
+
+마크업은 `<img>` 를 그대로 `<video>` 로 바꾼다. `css/style.css` 의
+`img:not([draggable]), embed, object, video { max-width:100%; height:auto }` 규칙이
+이미 `video` 를 포함하므로 **CSS 는 손댈 필요가 없다.** `wow scaleOutIn` 등 애니메이션
+클래스도 태그 종속이 아니라 그대로 옮기면 된다.
+
+```html
+<video class="wow scaleOutIn" autoplay loop muted playsinline preload="none"
+       poster="../images/demo-corporate/NAME-poster.webp"
+       aria-label="무엇을 보여주는 영상인지 한국어로">
+    <source src="../images/demo-corporate/NAME.mp4" type="video/mp4">
+    (동영상을 재생할 수 없는 환경입니다)
+</video>
+```
+
+주의할 점:
+
+- `autoplay loop muted playsinline` 네 개가 다 있어야 GIF 처럼 동작한다.
+  특히 `muted` 없이는 자동재생이 차단되고, `playsinline` 없이는 iOS 에서 전체화면이 된다.
+- `preload="none"` + `poster` 조합이면 화면에 들어오기 전까지 내려받지 않는다.
+  `<img loading="lazy">` 와 같은 효과를 JS 없이 낸다.
+- `alt` 대신 **`aria-label`** 을 쓴다. `<video>` 에는 alt 속성이 없다.
+- **WebM(VP9) 은 추가하지 않는다.** 이 사이트 소재로 실측한 결과 VP9(crf36) 6.6MB 로
+  H.264(crf27) 6.3MB 보다 오히려 컸다. H.264 는 지원율 100% 이므로 MP4 단독이 낫다.
+- GIF 에 실제 투명 픽셀이 있으면 비디오로 못 옮긴다. 변환 전 확인할 것
+  (GIF 는 쓰지 않아도 transparency 플래그가 붙어 있는 경우가 많아 플래그만 보면 안 된다).
 
 ## 아직 사람이 해야 하는 일
 
