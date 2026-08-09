@@ -221,6 +221,31 @@ python3 -m http.server 8123 --bind 127.0.0.1 &   # 8000이 사용 중이면 다�
 ```
 - 브라우저로 `open http://127.0.0.1:8123/contents/<slug>.html` 및 `index.html` 열어 사용자에게 확인 요청
 
+### 8. Playwright 로 메뉴 열어보기 — **메뉴를 건드렸으면 필수**
+헤드리스 스크린샷은 **닫힌 상태의 nav** 만 찍는다. 메가메뉴는 hover 해야 펼쳐지므로,
+링크를 넣고도 안 보이는 상태(부모 `<li>` 오배치, 컬럼 폭 붕괴, 경로 오타)를 스크린샷으로는 못 잡는다.
+그래서 메뉴 추가·변경 작업의 **마지막 단계는 항상 Playwright 로 그 메뉴를 실제로 열어보는 것**이다.
+
+```bash
+python3 .claude/skills/add-product-menu/verify-menu.py \
+  --menu "<상단 대메뉴 라벨>" --label "<새 메뉴 항목 라벨>" --path contents/<slug>.html
+# 눈으로 같이 보려면 --headed, 스크린샷 위치는 --out <dir> (기본 /tmp/verify-menu)
+```
+
+검사 항목(전부 통과해야 종료코드 0):
+1. 상단 대메뉴 존재 → hover 시 서브메뉴가 **실제로 펼쳐지는지**
+2. 펼친 메뉴 안에서 신규 라벨이 `is_visible()` 인지 + `href` 가 지정 경로와 일치하는지
+3. 클릭 시 제품 페이지로 이동하는지, `<h1>` 이 1개인지
+4. 푸터에도 같은 링크가 있는지
+5. **제품 페이지의 nav 에도** 같은 항목이 반영됐는지 (전 파일 일괄 삽입 누락 탐지)
+6. 콘솔 에러 / 4xx 리소스 수집
+
+실패하면 `01-menu-open.png` / `02-product-footer.png` / `03-product-full.png` 을 `Read` 로 열어
+어디가 깨졌는지 확인하고 고친 뒤 재실행한다.
+
+> 사전 준비: `python3 -c "import playwright"` 로 존재 확인.
+> 없으면 `pip3 install playwright && python3 -m playwright install chromium`.
+
 ## 산출물
 - `contents/<slug>.html` (신규)
 - `images/<slug>/*.jpg` (기능 캡처, 5~12장) + `images/full-width-images/main-img-<slug>.png` (테두리 합성 스플래시)
@@ -231,6 +256,8 @@ python3 -m http.server 8123 --bind 127.0.0.1 &   # 8000이 사용 중이면 다�
 ## 산출물 헬퍼
 - `.claude/skills/add-product-menu/compose-splash.py` — 스플래시 이미지 합성기.
   캡처 2장 → 보라빛 라운드 테두리 + 대각선 겹침 + 드롭섀도우 투명 PNG. (2·5단계에서 사용)
+- `.claude/skills/add-product-menu/verify-menu.py` — Playwright 메뉴 검증기.
+  대메뉴 hover → 신규 항목 노출·경로·이동·푸터·제품페이지 nav 반영까지 확인. (8단계에서 사용)
 
 ## 체크리스트
 - [ ] doc-inbox/ (logo/ 제외) 잔여 파일 확인 — 워터마크면 rebrand, 아니면 원본 그대로 다운로드 자료화
@@ -244,4 +271,5 @@ python3 -m http.server 8123 --bind 127.0.0.1 &   # 8000이 사용 중이면 다�
 - [ ] **스플래시 이미지 = compose-splash.py 로 테두리+겹침 합성** (단순 캡처 1장 금지), `scaleOutIn` 클래스, Learn More 링크
 - [ ] `seo-meta.json` 에 신규 페이지 항목 추가 후 `apply_seo.py` 실행 → 경고 0건
 - [ ] 로컬 서버 + headless 스크린샷으로 렌더 검증
+- [ ] **`verify-menu.py` 로 메뉴를 실제로 열어 검증 — 메뉴 작업의 마지막 단계, 생략 금지**
 - [ ] 검증 통과 후 doc-inbox/ 원본 파일(로고 제외) 삭제
