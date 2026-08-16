@@ -53,6 +53,69 @@
         <style>
             .vision-slide{
                 background-image: radial-gradient(60% 80% at 78% 50%, rgba(69,103,237,0.20) 0%, rgba(183,71,217,0.10) 45%, rgba(17,17,17,0) 75%);
+                position: relative;
+            }
+            .vision-slide .home-content{ position: relative; z-index: 2; }
+
+            /* 4계층 에이전틱 스택 (VISION 01 우측 비주얼) */
+            .vision-stack{
+                position: absolute;
+                right: 1.5%;
+                top: 46%;
+                transform: translateY(-50%);
+                width: clamp(280px, 24vw, 380px);
+                z-index: 1;
+                pointer-events: none;
+                -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 18%);
+                mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 18%);
+            }
+            .vision-stack .ls-stack{ display: block; width: 100%; height: auto; }
+            .vision-stack .ls-stack text{
+                font-family: "Pretendard","Pretendard Variable",sans-serif;
+                white-space: pre;
+            }
+            @media (max-width: 1199px){ .vision-stack{ display: none; } }
+
+            /* 계층이 아래에서부터 하나씩 쌓이는 연출 (시간 기반) */
+            .vision-stack.ls-armed .ls-layer{
+                opacity: 0;
+                transform: translate(0px, -70px);
+                transition: opacity .55s ease, transform .85s cubic-bezier(.2,.9,.25,1);
+            }
+            .vision-stack.ls-armed .ls-layer.is-in{ opacity: 1; transform: translate(0px, 0px); }
+            .vision-stack.ls-armed .ls-layer-body{ opacity: 0; transition: opacity .5s ease .2s; }
+            .vision-stack.ls-armed .ls-layer.is-in .ls-layer-body{ opacity: 1; }
+            .vision-stack.ls-armed .ls-posts path{
+                stroke-dasharray: 1px 1px;
+                stroke-dashoffset: var(--ls-draw, -1px);
+                transition: stroke-dashoffset .95s ease-out;
+            }
+            .vision-stack.ls-armed .ls-node{
+                opacity: 0;
+                transform: translate(0px, -18px);
+                transition: opacity .4s ease .3s, transform .5s ease .3s;
+            }
+            .vision-stack.ls-armed .ls-node.is-in{ opacity: 1; transform: translate(0px, 0px); }
+
+            /* 계층을 잇는 선 위로 흐르는 토큰 */
+            .vision-stack .ls-flow{ opacity: 0; transition: opacity .5s ease; }
+            .vision-stack .ls-flow.is-in{ opacity: 1; }
+            .vision-stack .ls-token{
+                offset-rotate: 0deg;
+                animation-name: ls-token-move;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+                animation-play-state: paused;
+            }
+            .vision-stack .ls-flow.is-in .ls-token{ animation-play-state: running; }
+            @keyframes ls-token-move{
+                0%{ offset-distance: 0%; opacity: 0; }
+                14%{ opacity: 1; }
+                86%{ opacity: 1; }
+                100%{ offset-distance: 100%; opacity: 0; }
+            }
+            @media (prefers-reduced-motion: reduce){
+                .vision-stack .ls-token{ animation: none !important; opacity: 0; }
             }
             .vision-eyebrow{
                 display: flex;
@@ -493,6 +556,536 @@
 
                     <!-- Vision Slide 01 - AI-Native Enterprise -->
                     <section class="home-section bg-scroll bg-dark-alpha-60 light-content vision-slide" style="background-color: #111;">
+                        <!-- ===== 4-Layer Agentic Stack (time-based) ===== -->
+                        <div class="vision-stack" id="vision-stack" aria-hidden="true">
+<svg class="ls-stack" xmlns="http://www.w3.org/2000/svg" viewBox="616 1056 1268 1740" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="vs_gGreenTop" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#f4fbf9"/><stop offset="0.55" stop-color="#e3f3ed"/><stop offset="1" stop-color="#cfe8dd"/>
+    </linearGradient><linearGradient id="vs_gBlueTop" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#e8f1fa"/><stop offset="0.55" stop-color="#cee1f1"/><stop offset="1" stop-color="#adcbe6"/>
+    </linearGradient><linearGradient id="vs_gAmberTop" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#fcf3dc"/><stop offset="0.55" stop-color="#f4e4b8"/><stop offset="1" stop-color="#e9d08d"/>
+    </linearGradient><linearGradient id="vs_gDarkTop" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#585f74"/><stop offset="0.55" stop-color="#464c5f"/><stop offset="1" stop-color="#343948"/>
+    </linearGradient><linearGradient id="vs_gGreenRim" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#5f9d88"/><stop offset="1" stop-color="#42806b"/>
+    </linearGradient><linearGradient id="vs_gBlueRim" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#9ec1de"/><stop offset="1" stop-color="#7aa4c7"/>
+    </linearGradient><linearGradient id="vs_gAmberRim" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#e7c375"/><stop offset="1" stop-color="#d2a750"/>
+    </linearGradient><linearGradient id="vs_gDarkRim" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#3e4455"/><stop offset="1" stop-color="#2b2f3c"/>
+    </linearGradient><linearGradient id="vs_gSheen" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0"    stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1"    stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient><filter id="vs_fPlate" x="-15%" y="-25%" width="130%" height="170%">
+      <feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#5a6272" flood-opacity="0.28"/>
+    </filter><filter id="vs_fSoft" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="#2c3444" flood-opacity="0.28"/>
+    </filter><filter id="vs_fChip" x="-30%" y="-45%" width="160%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6" flood-color="#334055" flood-opacity="0.30"/>
+    </filter><filter id="vs_fIcon" x="-50%" y="-50%" width="200%" height="210%">
+      <feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#2a3a44" flood-opacity="0.38"/>
+    </filter><marker id="vs_arrGreen" viewBox="0 0 10 10" refX="8.6" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M0,0.6 L9.6,5 L0,9.4 Z" fill="#4e8b76"/>
+    </marker><marker id="vs_arrBlue" viewBox="0 0 10 10" refX="8.6" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M0,0.6 L9.6,5 L0,9.4 Z" fill="#5f8cb4"/>
+    </marker><marker id="vs_arrAmber" viewBox="0 0 10 10" refX="8.6" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M0,0.6 L9.6,5 L0,9.4 Z" fill="#a8813a"/>
+    </marker><marker id="vs_arrLight" viewBox="0 0 10 10" refX="8.6" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M0,0.6 L9.6,5 L0,9.4 Z" fill="#d7dbea"/>
+    </marker><g id="vs_robot">
+      <line x1="50" y1="19" x2="50" y2="9" stroke="#7ba5c8" stroke-width="3.4" stroke-linecap="round"/>
+      <circle cx="50" cy="7" r="4.6" fill="#8fb9d8" stroke="#6a97bd" stroke-width="1.6"/>
+      <rect x="6"  y="38" width="13" height="24" rx="6.5" fill="#dfeaf5" stroke="#7ba5c8" stroke-width="2.6"/>
+      <rect x="81" y="38" width="13" height="24" rx="6.5" fill="#dfeaf5" stroke="#7ba5c8" stroke-width="2.6"/>
+      <rect x="16" y="19" width="68" height="62" rx="20" fill="#f7fafd" stroke="#6f9dc4" stroke-width="3"/>
+      <rect x="25" y="29" width="50" height="42" rx="14" fill="#cadff2" stroke="#8fb4d4" stroke-width="2"/>
+      <circle cx="39" cy="46" r="6.4" fill="#3a5670"/>
+      <circle cx="61" cy="46" r="6.4" fill="#3a5670"/>
+      <circle cx="37" cy="43.6" r="2.1" fill="#ffffff" opacity="0.9"/>
+      <circle cx="59" cy="43.6" r="2.1" fill="#ffffff" opacity="0.9"/>
+      <path d="M40,58 Q50,66 60,58" fill="none" stroke="#3a5670" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M24,26 Q34,21 46,22" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    </g><path id="vs_petal" d="M0,-15 A17,17 0 0,1 0,15 A17,17 0 0,1 0,-15"/><g id="vs_db">
+      <path d="M-29,-30 v58 a29,11 0 0,0 58,0 v-58 Z" fill="#e6e9f5" stroke="#a5abc8" stroke-width="2"/>
+      <path d="M-29,-11 a29,11 0 0,0 58,0" fill="none" stroke="#a5abc8" stroke-width="2"/>
+      <path d="M-29,8   a29,11 0 0,0 58,0" fill="none" stroke="#a5abc8" stroke-width="2"/>
+      <ellipse cx="0" cy="-30" rx="29" ry="11" fill="#f7f8fd" stroke="#a5abc8" stroke-width="2"/>
+    </g></defs>
+<g data-name="아키텍처 4레이어 (vector)">
+  <g data-name="4-layer stack" transform="translate(636,1030) scale(1.46)">
+
+  <!-- ============================================================ -->
+  <!-- CONNECTOR POSTS (behind the plates)                          -->
+  <!-- ============================================================ -->
+  <g class="ls-posts" stroke="#ccd1da" stroke-width="2.4" fill="none" stroke-linecap="round">
+    <path pathLength="1" d="M128,236 L118,1100"/>
+    <path pathLength="1" d="M415,150 L415,1122"/>
+    <path pathLength="1" d="M712,116 L722,1012"/>
+    <path pathLength="1" d="M212,300 L206,1112"/>
+    <path pathLength="1" d="M610,120 L616,1050"/>
+  </g>
+
+  <!-- token flows between layers (populated by script) -->
+  <g class="ls-tokens" aria-hidden="true"></g>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 4 : DATA SOURCES (dark navy)                           -->
+  <!-- ============================================================ -->
+  <g class="ls-layer" data-ls-layer="4">
+  <g filter="url(#vs_fPlate)">
+    <g transform="matrix(0.37932,0.07888,-0.41180,0.22272,435.24,860.20)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="#22262f"/>
+    </g>
+    <g transform="matrix(0.37932,0.07888,-0.41180,0.22272,435.24,834.20)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="url(#vs_gDarkRim)"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gDarkTop)"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gSheen)" opacity="0.26"/>
+    </g>
+  </g>
+
+  <g class="ls-layer-body" id="vs_layer4-content">
+
+    <!-- database cluster -->
+    <g filter="url(#vs_fSoft)">
+      <use href="#vs_db" transform="translate(199,938) scale(0.98)"/>
+      <use href="#vs_db" transform="translate(266,922) scale(0.94)"/>
+      <use href="#vs_db" transform="translate(140,972) scale(0.74)"/>
+      <use href="#vs_db" transform="translate(196,1000) scale(0.92)"/>
+      <use href="#vs_db" transform="translate(263,986) scale(0.90)"/>
+    </g>
+
+    <!-- documents -->
+    <g filter="url(#vs_fSoft)">
+      <g>
+        <path d="M300,1004 h34 l16,16 v54 h-50 Z" fill="#f4f5fa" stroke="#9ea5c0" stroke-width="2"/>
+        <path d="M334,1004 v16 h16 Z" fill="#d9dcea" stroke="#9ea5c0" stroke-width="1.6"/>
+        <g stroke="#b9bed3" stroke-width="2.4" stroke-linecap="round">
+          <path d="M308,1034 h30"/><path d="M308,1044 h30"/><path d="M308,1054 h20"/>
+        </g>
+        <text x="325" y="1069" font-size="9.5" font-weight="700" fill="#6d7490" text-anchor="middle" letter-spacing="0.5">PDF</text>
+      </g>
+      <g>
+        <path d="M356,966 h44 l20,20 v78 h-64 Z" fill="#fbfbfe" stroke="#9ea5c0" stroke-width="2.2"/>
+        <path d="M400,966 v20 h20 Z" fill="#dcdfec" stroke="#9ea5c0" stroke-width="1.6"/>
+        <g stroke="#b9bed3" stroke-width="2.6" stroke-linecap="round">
+          <path d="M366,1000 h42"/><path d="M366,1012 h42"/>
+          <path d="M366,1024 h42"/><path d="M366,1036 h28"/>
+        </g>
+        <text x="388" y="1057" font-size="10" font-weight="700" fill="#6d7490" text-anchor="middle" letter-spacing="0.5">DOCX</text>
+      </g>
+    </g>
+
+    <!-- feeds converging into the API -->
+    <g fill="none" stroke="#dfe3f0" stroke-width="2.4" stroke-linecap="round">
+      <path d="M424,992  C462,984 476,966 506,956" marker-end="url(#vs_arrLight)"/>
+      <path d="M424,1008 C464,1000 478,976 506,966" marker-end="url(#vs_arrLight)"/>
+      <path d="M424,1024 C466,1016 480,986 506,976" marker-end="url(#vs_arrLight)"/>
+      <path d="M424,1040 C468,1032 482,996 506,986" marker-end="url(#vs_arrLight)"/>
+      <path d="M300,922  C382,906 442,924 506,946" marker-end="url(#vs_arrLight)"/>
+    </g>
+
+    <!-- API -->
+    <g filter="url(#vs_fSoft)">
+      <rect x="510" y="930" width="92" height="64" rx="13" fill="#eceff8" stroke="#b6bcd2" stroke-width="2.4"/>
+      <text x="556" y="971" font-size="25" font-weight="700" fill="#3c4358" text-anchor="middle" letter-spacing="1">API</text>
+    </g>
+
+    <path d="M606,954 C630,942 638,932 650,920" fill="none" stroke="#dfe3f0"
+          stroke-width="2.8" stroke-linecap="round" marker-end="url(#vs_arrLight)"/>
+
+    <!-- gear -->
+    <g filter="url(#vs_fSoft)" transform="translate(692,900)">
+      <path d="M-10,-46 h20 l3.4,13.2 a34,34 0 0,1 10.4,4.3 L35,-36 l14.2,14.2 -7.5,11.2
+               a34,34 0 0,1 4.3,10.4 L59,3 v20 l-13.2,3.4 a34,34 0 0,1 -4.3,10.4 L49,48
+               34.8,62.2 23.6,54.7 a34,34 0 0,1 -10.4,4.3 L9.8,72.2 h-20 L-13.6,59
+               a34,34 0 0,1 -10.4,-4.3 L-35.2,62.2 -49.4,48 -41.9,36.8
+               a34,34 0 0,1 -4.3,-10.4 L-59.4,23 v-20 l13.2,-3.4 a34,34 0 0,1 4.3,-10.4
+               L-49.4,-22 -35.2,-36.2 -24,-28.7 a34,34 0 0,1 10.4,-4.3 Z"
+            transform="translate(0,-13) scale(0.86)"
+            fill="#e8ebf5" stroke="#b2b8ce" stroke-width="2.4" stroke-linejoin="round"/>
+      <circle cx="0" cy="0" r="16.5" fill="#454b5e" stroke="#b2b8ce" stroke-width="2.4"/>
+    </g>
+  </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 3 : KNOWLEDGE GRAPH (amber)                            -->
+  <!-- ============================================================ -->
+  <g class="ls-layer" data-ls-layer="3">
+  <g filter="url(#vs_fPlate)">
+    <g transform="matrix(0.35970,0.07480,-0.39050,0.21120,434.40,593.00)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="#bf9540"/>
+    </g>
+    <g transform="matrix(0.35970,0.07480,-0.39050,0.21120,434.40,569.00)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="url(#vs_gAmberRim)"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gAmberTop)" opacity="0.93"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gSheen)" opacity="0.5"/>
+    </g>
+  </g>
+
+  <g class="ls-layer-body">
+  <!-- graph edges: cube base centres, screen space -->
+  <g fill="none" stroke="#a8813a" stroke-width="2.6" stroke-linecap="round" opacity="0.9">
+    <path d="M247.1,710.9 L313.7,718.7" marker-end="url(#vs_arrAmber)"/>
+    <path d="M305.0,692.6 L327.3,710.3" marker-end="url(#vs_arrAmber)"/>
+    <path d="M305.1,739.0 L322.8,730.9" marker-end="url(#vs_arrAmber)"/>
+    <path d="M367.4,727.1 L403.8,734.4" marker-end="url(#vs_arrAmber)"/>
+    <path d="M414.3,787.7 L422.9,754.8" marker-end="url(#vs_arrAmber)"/>
+    <path d="M444.3,730.6 L481.7,712.4" marker-end="url(#vs_arrAmber)"/>
+    <path d="M513.1,698.1 L549.9,682.3" marker-end="url(#vs_arrAmber)"/>
+    <path d="M574.5,661.8 L584.8,643.9" marker-end="url(#vs_arrAmber)"/>
+    <path d="M518.4,701.6 L626.0,684.6" marker-end="url(#vs_arrAmber)"/>
+    <path d="M601.2,641.5 L636.5,670.7" marker-end="url(#vs_arrAmber)"/>
+  </g>
+
+  <!-- graph nodes: upright isometric cubes -->
+  <g id="vs_cubes">
+    <g filter="url(#vs_fSoft)">
+      <path d="M196,682 l26,-13 26,13 -26,13 Z" fill="#f0dcaf"/>
+      <path d="M222,695 l26,-13 v26 l-26,13 Z" fill="#dcbf82"/>
+      <path d="M222,695 l-26,-13 v26 l26,13 Z" fill="#c8a75f"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M270,660 l23,-11.5 23,11.5 -23,11.5 Z" fill="#fbf3e0"/>
+      <path d="M293,671.5 l23,-11.5 v23 l-23,11.5 Z" fill="#e9d8b6"/>
+      <path d="M293,671.5 l-23,-11.5 v23 l23,11.5 Z" fill="#d5c096"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M268,724 l22,-11 22,11 -22,11 Z" fill="#fbf3e0"/>
+      <path d="M290,735 l22,-11 v22 l-22,11 Z" fill="#e9d8b6"/>
+      <path d="M290,735 l-22,-11 v22 l22,11 Z" fill="#d5c096"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M312,692 l30,-15 30,15 -30,15 Z" fill="#eec063"/>
+      <path d="M342,707 l30,-15 v30 l-30,15 Z" fill="#d9a544"/>
+      <path d="M342,707 l-30,-15 v30 l30,15 Z" fill="#bf8b32"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M400,712 l27,-13.5 27,13.5 -27,13.5 Z" fill="#eec063"/>
+      <path d="M427,725.5 l27,-13.5 v27 l-27,13.5 Z" fill="#d9a544"/>
+      <path d="M427,725.5 l-27,-13.5 v27 l27,13.5 Z" fill="#bf8b32"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M382,776 l28,-14 28,14 -28,14 Z" fill="#eec063"/>
+      <path d="M410,790 l28,-14 v28 l-28,14 Z" fill="#d9a544"/>
+      <path d="M410,790 l-28,-14 v28 l28,14 Z" fill="#bf8b32"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M474,682 l23,-11.5 23,11.5 -23,11.5 Z" fill="#fbf3e0"/>
+      <path d="M497,693.5 l23,-11.5 v23 l-23,11.5 Z" fill="#e9d8b6"/>
+      <path d="M497,693.5 l-23,-11.5 v23 l23,11.5 Z" fill="#d5c096"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M542,650 l25,-12.5 25,12.5 -25,12.5 Z" fill="#f0dcaf"/>
+      <path d="M567,662.5 l25,-12.5 v25 l-25,12.5 Z" fill="#dcbf82"/>
+      <path d="M567,662.5 l-25,-12.5 v25 l25,12.5 Z" fill="#c8a75f"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M624,656 l25,-12.5 25,12.5 -25,12.5 Z" fill="#fbf3e0"/>
+      <path d="M649,668.5 l25,-12.5 v25 l-25,12.5 Z" fill="#e9d8b6"/>
+      <path d="M649,668.5 l-25,-12.5 v25 l25,12.5 Z" fill="#d5c096"/>
+    </g>
+    <g filter="url(#vs_fSoft)">
+      <path d="M572,614 l19,-9.5 19,9.5 -19,9.5 Z" fill="#f0dcaf"/>
+      <path d="M591,623.5 l19,-9.5 v19 l-19,9.5 Z" fill="#dcbf82"/>
+      <path d="M591,623.5 l-19,-9.5 v19 l19,9.5 Z" fill="#c8a75f"/>
+    </g>
+  </g>
+
+  <g font-size="13" fill="#6b5320">
+    <text x="182" y="656" text-anchor="middle">Entity</text>
+    <text x="264" y="774" text-anchor="middle">Concept</text>
+    <text x="524" y="744" text-anchor="middle">Relationship</text>
+    <text x="672" y="712" text-anchor="middle">Relationship</text>
+    <text x="476" y="806" text-anchor="middle">Entity</text>
+  </g>
+  </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 2 : AGENTS AND FRAMEWORKS (blue)                       -->
+  <!-- ============================================================ -->
+  <g class="ls-layer" data-ls-layer="2">
+  <g filter="url(#vs_fPlate)">
+    <g transform="matrix(0.34335,0.07140,-0.37275,0.20160,433.70,326.50)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="#6f9bc0"/>
+    </g>
+    <g transform="matrix(0.34335,0.07140,-0.37275,0.20160,433.70,303.50)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="url(#vs_gBlueRim)"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gBlueTop)" opacity="0.92"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gSheen)" opacity="0.5"/>
+    </g>
+  </g>
+
+  <g class="ls-layer-body">
+  <!-- agent links, flat on the plane -->
+  <g transform="matrix(0.34335,0.07140,-0.37275,0.20160,433.70,303.50)"
+     fill="none" stroke="#5f8cb4" stroke-width="7.5" stroke-linecap="round">
+    <path d="M240,505 L434,531" marker-start="url(#vs_arrBlue)" marker-end="url(#vs_arrBlue)"/>
+    <path d="M535,651 L531,742" marker-end="url(#vs_arrBlue)"/>
+    <path d="M450,776 L214,561" marker-end="url(#vs_arrBlue)"/>
+    <path d="M727,652 L625,595" marker-end="url(#vs_arrBlue)"/>
+    <path d="M790,780 C740,880 630,910 566,878" marker-end="url(#vs_arrBlue)"/>
+  </g>
+
+  <!-- agents (upright) -->
+  <g>
+    <g filter="url(#vs_fSoft)"><use href="#vs_robot" transform="translate(265,379) scale(0.66)"/></g>
+    <g filter="url(#vs_fSoft)"><use href="#vs_robot" transform="translate(379,415) scale(0.72)"/></g>
+    <g filter="url(#vs_fSoft)"><use href="#vs_robot" transform="translate(267,479) scale(0.66)"/></g>
+    <g filter="url(#vs_fSoft)"><use href="#vs_robot" transform="translate(419,470) scale(0.66)"/></g>
+  </g>
+
+  <!-- framework chips -->
+  <g id="vs_chips" filter="url(#vs_fChip)">
+    <g>
+      <rect x="470" y="356" width="204" height="32" rx="8" fill="#ffffff" stroke="#dfe4ec" stroke-width="1.4"/>
+      <g transform="translate(477,363)"><rect x="1" y="2" width="18" height="15" rx="3.5" fill="#4f6f8f"/>
+        <path d="M4.5,7 L7.5,9.5 L4.5,12" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9.5,12.6 H15" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round"/></g>
+      <text x="500" y="377" font-size="14" fill="#2f3646" font-weight="500">Claude Code / Codex / Pi</text>
+    </g>
+    <g>
+      <rect x="474" y="398" width="171" height="32" rx="8" fill="#ffffff" stroke="#dfe4ec" stroke-width="1.4"/>
+      <g transform="translate(481,405)"><path d="M4,15 C1,11 2,4 8,2 C13,0.5 17,3 17,7 C17,11 14,13 11,13 L11,16 Z" fill="#3f9c5c"/>
+        <path d="M8,4 C11,3 14,4.5 14,7" fill="none" stroke="#2d7444" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="12" cy="5.4" r="1.5" fill="#1f2a24"/>
+        <path d="M15.5,6.5 L19,8 L15.5,9.5 Z" fill="#e2a13a"/>
+        <path d="M4,15 L2,18 L7,17 Z" fill="#c8443a"/></g>
+      <text x="504" y="419" font-size="14" fill="#2f3646" font-weight="500">LangChain / CrewAI</text>
+    </g>
+    <g>
+      <rect x="486" y="440" width="114" height="32" rx="8" fill="#ffffff" stroke="#dfe4ec" stroke-width="1.4"/>
+      <g transform="translate(493,447)"><path d="M14.6,1.6 a5.6,5.6 0 0,0 -7.3,7.3 L1.6,14.6 a2.2,2.2 0 0,0 3.1,3.1
+        l5.7,-5.7 a5.6,5.6 0 0,0 7.3,-7.3 L14.4,8 11.6,8 11.6,5.2 Z" fill="#7c8797"/></g>
+      <text x="516" y="461" font-size="14" fill="#2f3646" font-weight="500">MCP / A2A</text>
+    </g>
+  </g>
+  </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 1 : ORCHESTRATION / WORKFLOW (green, top)              -->
+  <!-- ============================================================ -->
+  <g class="ls-layer" data-ls-layer="1">
+  <g filter="url(#vs_fPlate)">
+    <g transform="matrix(0.32700,0.06800,-0.35500,0.19200,433.00,062.00)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="#3d7a64"/>
+    </g>
+    <g transform="matrix(0.32700,0.06800,-0.35500,0.19200,433.00,040.00)">
+      <rect x="0" y="0" width="1000" height="1000" rx="34" fill="url(#vs_gGreenRim)"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gGreenTop)" opacity="0.94"/>
+      <rect x="42" y="42" width="916" height="916" rx="20" fill="url(#vs_gSheen)" opacity="0.55"/>
+    </g>
+  </g>
+
+  <g class="ls-layer-body">
+  <!-- workflow graph, flat on the plane -->
+  <g transform="matrix(0.32700,0.06800,-0.35500,0.19200,433.00,040.00)">
+
+    <g fill="none" stroke="#4e8b76" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M380,440 H530 V476"           marker-end="url(#vs_arrGreen)"/>
+      <path d="M530,638 V705 H435 V739"      marker-end="url(#vs_arrGreen)"/>
+      <path d="M645,560 H672 V620 H699"      marker-end="url(#vs_arrGreen)"/>
+      <path d="M740,796 V686"                marker-end="url(#vs_arrGreen)"/>
+      <path d="M300,805 H214"                marker-end="url(#vs_arrGreen)"/>
+      <path d="M245,380 V296 H948 V620 H931" marker-end="url(#vs_arrGreen)"/>
+      <path d="M598,438 L546,476" stroke-dasharray="15 12" marker-end="url(#vs_arrGreen)"/>
+    </g>
+
+    <g stroke="#4e8b76" stroke-width="6.5">
+      <rect x="110" y="380" width="270" height="120" rx="24" fill="#f7fcfa"/>
+      <rect x="300" y="745" width="270" height="120" rx="24" fill="#f7fcfa"/>
+      <rect x="705" y="560" width="220" height="120" rx="24" fill="#f7fcfa"/>
+      <rect x="620" y="800" width="240" height="120" rx="24" fill="#f7fcfa"/>
+      <path d="M530,482 L645,560 L530,638 L415,560 Z" fill="#f7fcfa" stroke-linejoin="round"/>
+      <circle cx="160" cy="805" r="46" fill="#8fd3bc"/>
+    </g>
+
+    <g fill="#2f5c4c" text-anchor="middle" font-weight="500" font-size="42">
+      <text x="245" y="454">Task 1</text>
+      <text x="435" y="819">Task 2</text>
+      <text x="815" y="634">Task 3</text>
+      <text x="740" y="874">Task 4</text>
+      <text x="530" y="573" font-size="33">Decision</text>
+    </g>
+  </g>
+
+  <!-- model badges, floating above the top plane -->
+  <g id="vs_ai-icons">
+    <path d="M517,140 L487,159" stroke="#8fbdaa" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+
+    <!-- neural/model chip resting on the plane -->
+    <g filter="url(#vs_fIcon)" transform="translate(484,158)">
+      <rect x="-30" y="-27" width="60" height="54" rx="15" fill="#4f9c83" stroke="#3d8069" stroke-width="2"/>
+      <rect x="-30" y="-27" width="60" height="27" rx="15" fill="#ffffff" opacity="0.10"/>
+      <g stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round">
+        <path d="M-5,-14 a9,9 0 0,0 -9,9 a7.5,7.5 0 0,0 1,10 a8,8 0 0,0 8,4 Z"/>
+        <path d="M5,-14 a9,9 0 0,1 9,9 a7.5,7.5 0 0,1 -1,10 a8,8 0 0,1 -8,4 Z"/>
+        <path d="M0,-14.5 V14"/>
+        <path d="M-10,-4 h6 M-10,6 h6 M10,-4 h-6 M10,6 h-6"/>
+      </g>
+      <g fill="#ffffff">
+        <circle cx="-10" cy="-4" r="2"/><circle cx="-10" cy="6" r="2"/>
+        <circle cx="10" cy="-4" r="2"/><circle cx="10" cy="6" r="2"/>
+      </g>
+    </g>
+
+    <!-- LLM knot badge -->
+    <g filter="url(#vs_fIcon)" transform="translate(517,111)">
+      <rect x="-30" y="-30" width="60" height="60" rx="16" fill="#3f7f68" stroke="#336854" stroke-width="2"/>
+      <rect x="-30" y="-30" width="60" height="30" rx="16" fill="#ffffff" opacity="0.09"/>
+      <g fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round">
+        <use href="#vs_petal"/>
+        <use href="#vs_petal" transform="rotate(60)"/>
+        <use href="#vs_petal" transform="rotate(120)"/>
+      </g>
+      <circle cx="0" cy="0" r="3.4" fill="#ffffff"/>
+    </g>
+  </g>
+  </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- CONNECTOR NODES                                              -->
+  <!-- ============================================================ -->
+  <g stroke="#ffffff" stroke-width="1.6">
+    <circle class="ls-node" data-ls-layer="1" cx="124" cy="352"  r="7" fill="#bcd8cb"/>
+    <circle class="ls-node" data-ls-layer="2" cx="120" cy="612"  r="7" fill="#b9d0e4"/>
+    <circle class="ls-node" data-ls-layer="3" cx="116" cy="878"  r="7" fill="#e3cd97"/>
+    <circle class="ls-node" data-ls-layer="1" cx="712" cy="352"  r="7" fill="#bcd8cb"/>
+    <circle class="ls-node" data-ls-layer="2" cx="716" cy="600"  r="7" fill="#b9d0e4"/>
+    <circle class="ls-node" data-ls-layer="3" cx="720" cy="862"  r="7" fill="#e3cd97"/>
+    <circle class="ls-node" data-ls-layer="2" cx="415" cy="722"  r="7" fill="#b9d0e4"/>
+    <circle class="ls-node" data-ls-layer="3" cx="415" cy="1104" r="7" fill="#e3cd97"/>
+    <circle class="ls-node" data-ls-layer="4" cx="207" cy="1108" r="7" fill="#cfd5e2"/>
+    <circle class="ls-node" data-ls-layer="1" cx="611" cy="150"  r="6" fill="#cfe0d8"/>
+  </g>
+  </g>
+</g>
+</svg>
+                        </div>
+                        <script>
+(function () {
+  var host = document.getElementById('vision-stack');
+  if (!host) return;
+  var svg = host.querySelector('.ls-stack');
+  var NS = 'http://www.w3.org/2000/svg';
+
+  // 아래(데이터)에서 위(오케스트레이션)로 쌓이는 순서
+  var ORDER = [4, 3, 2, 1];
+  var layers = ORDER.map(function (n) { return svg.querySelector('.ls-layer[data-ls-layer="' + n + '"]'); });
+  var nodes = [].slice.call(svg.querySelectorAll('.ls-node'));
+
+  var POSTS = [
+    [128, 236, 118, 1100],
+    [415, 150, 415, 1122],
+    [712, 116, 722, 1012],
+    [212, 300, 206, 1112],
+    [610, 120, 616, 1050]
+  ];
+  var AMBER = '#d2a750', BLUE = '#6f9bc0', GREEN = '#4d8b76';
+  // [post, y at lower layer, y at upper layer, stage that turns it on, colour]
+  var SEGMENTS = [
+    [0, 1100, 878, 2, AMBER], [0, 878, 612, 3, BLUE], [0, 612, 352, 4, GREEN],
+    [1, 1104, 722, 3, BLUE], [1, 722, 340, 4, GREEN],
+    [2, 1012, 862, 2, AMBER], [2, 862, 600, 3, BLUE], [2, 600, 352, 4, GREEN],
+    [3, 1108, 813, 2, AMBER], [3, 813, 518, 3, BLUE], [3, 518, 305, 4, GREEN],
+    [4, 944, 645, 3, BLUE], [4, 645, 346, 4, GREEN]
+  ];
+  function xAt(p, y) { return p[0] + (y - p[1]) * (p[2] - p[0]) / (p[3] - p[1]); }
+
+  var flows = [];
+  var canFlow = window.CSS && CSS.supports && CSS.supports('offset-path', "path('M0,0 L1,1')");
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (canFlow && !reduced) {
+    var tokenHost = svg.querySelector('.ls-tokens');
+    SEGMENTS.forEach(function (s) {
+      var p = POSTS[s[0]];
+      var x1 = xAt(p, s[1]), y1 = s[1], x2 = xAt(p, s[2]), y2 = s[2];
+      var dur = Math.max(1.9, Math.min(3.6, Math.abs(y1 - y2) / 110));
+      var g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'ls-flow');
+      g.setAttribute('data-ls-stage', s[3]);
+      for (var i = 0; i < 3; i++) {
+        var t = document.createElementNS(NS, 'g');
+        t.setAttribute('class', 'ls-token');
+        t.style.offsetPath = "path('M " + x1.toFixed(1) + " " + y1 + " L " + x2.toFixed(1) + " " + y2 + "')";
+        t.style.animationDuration = dur.toFixed(2) + 's';
+        t.style.animationDelay = (-dur * i / 3).toFixed(2) + 's';
+        t.innerHTML =
+          '<circle r="15" fill="' + s[4] + '" opacity="0.20"></circle>' +
+          '<circle r="6.4" fill="' + s[4] + '"></circle>' +
+          '<circle r="2.6" fill="#ffffff" opacity="0.88"></circle>';
+        g.appendChild(t);
+      }
+      tokenHost.appendChild(g);
+      flows.push(g);
+    });
+  }
+
+  function setStage(s) {
+    layers.forEach(function (el, i) { if (el) el.classList.toggle('is-in', s >= i + 1); });
+    nodes.forEach(function (el) {
+      el.classList.toggle('is-in', s >= 5 - parseInt(el.getAttribute('data-ls-layer'), 10));
+    });
+    flows.forEach(function (el) {
+      el.classList.toggle('is-in', s >= parseInt(el.getAttribute('data-ls-stage'), 10));
+    });
+    svg.style.setProperty('--ls-draw', (s / ORDER.length - 1).toFixed(3) + 'px');
+  }
+
+  if (reduced) { setStage(ORDER.length); return; }
+
+  host.classList.add('ls-armed');
+  setStage(0);
+
+  var timers = [];
+  function play() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    setStage(0);
+    for (var s = 1; s <= ORDER.length; s++) {
+      (function (stage) {
+        timers.push(setTimeout(function () { setStage(stage); }, 450 + (stage - 1) * 560));
+      })(s);
+    }
+  }
+
+  // 스크롤과 무관하게, 이 슬라이드가 다시 보일 때마다 처음부터 쌓는다.
+  // 슬라이더(owl)가 초기화되면서 .owl-item 으로 감싸므로 초기화 이후에 관찰을 건다.
+  function watchSlide() {
+    var slide = host.closest ? host.closest('.owl-item') : null;
+    if (!slide || !window.MutationObserver) return false;
+    var wasActive = slide.classList.contains('active');
+    new MutationObserver(function () {
+      var now = slide.classList.contains('active');
+      if (now && !wasActive) { play(); }
+      wasActive = now;
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+    return true;
+  }
+  var tries = 0;
+  (function waitForSlider() {
+    if (watchSlide() || ++tries > 40) return;
+    setTimeout(waitForSlider, 250);
+  })();
+
+  setTimeout(play, 700);
+})();
+                        </script>
+                        <!-- ===== /4-Layer Agentic Stack ===== -->
+
+
                         <div class="container min-height-100vh d-flex align-items-center pt-100 pb-100 pt-sm-120 pb-sm-120">
 
                             <!-- Home Section Content -->
