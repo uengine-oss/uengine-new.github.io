@@ -116,6 +116,8 @@ html,body{margin:0;padding:0;height:100%;background:#000;overflow:hidden;
 .rail-item.on .rail-tx{color:rgba(255,255,255,.92);}
 
 /* ---------- 상단/하단 HUD ---------- */
+html.embed .hud-top,html.embed .hud-bot{display:none!important}
+html.embed{cursor:default}
 .hud-top{position:absolute;left:56px;right:56px;top:44px;z-index:6;transition:opacity .6s ease;
   display:flex;align-items:center;justify-content:space-between;}
 .hud-brand{display:flex;align-items:center;gap:16px;pointer-events:auto;text-decoration:none;}
@@ -1298,7 +1300,9 @@ var SCENES = [
    ============================================================ */
 (function () {
   var qs = new URLSearchParams(location.search);
-  var SHORT = qs.get('mode') === 'short';
+  var EMBED = qs.get('embed') === '1';   /* 메인 페이지 미니 플레이어용: HUD 숨김 + 축약본 */
+  if (EMBED) { document.documentElement.classList.add('embed'); }
+  var SHORT = qs.get('mode') === 'short' || EMBED;
   var list = SHORT ? SCENES.filter(function (s) { return s.short; }) : SCENES.slice();
 
   var stage = document.getElementById('stage');
