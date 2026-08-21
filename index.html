@@ -232,6 +232,37 @@
                 /* 모바일에서는 솔루션 이름만 노출해 슬라이드 높이를 줄임 */
                 .vision-chip span{ display: none; }
             }
+
+            /* ===== Showcase 미니 플레이어 (우측 하단, 전 슬라이드 공통) ===== */
+            .sc-peek{
+                position: fixed; right: calc(var(--full-wrapper-margin-x) + 58px); bottom: 30px; z-index: 90;
+                display: block; width: 272px; border-radius: 12px; overflow: hidden; text-decoration: none;
+                background: #000; border: 1px solid rgba(255,255,255,.18);
+                box-shadow: 0 16px 48px rgba(0,0,0,.55);
+                transition: opacity .45s ease, transform .45s ease, border-color .3s ease;
+            }
+            .sc-peek:hover{ border-color: rgba(255,255,255,.6); transform: translateY(-4px); }
+            .sc-peek.is-hidden{ opacity: 0; pointer-events: none; transform: translateY(20px); }
+            .sc-peek-frame{ position: relative; width: 272px; height: 153px; overflow: hidden; background: #000; }
+            .sc-peek-frame iframe{
+                position: absolute; left: 0; top: 0; width: 1280px; height: 720px; border: 0;
+                transform: scale(0.2125); transform-origin: 0 0; pointer-events: none;
+            }
+            .sc-peek-label{
+                position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 10px;
+                padding: 26px 12px 10px; color: #fff; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+                background: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,0) 100%);
+            }
+            .sc-peek-label b{
+                display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+                width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #111; font-size: 9px; padding-left: 2px;
+            }
+            .sc-peek-label i{ margin-left: auto; font-style: normal; opacity: .7; font-size: 10px; letter-spacing: .06em; }
+            .sc-peek-live{ position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 6px;
+                padding: 3px 8px; border-radius: 999px; background: rgba(0,0,0,.55); color: #fff; font-size: 9px; letter-spacing: .16em; font-weight: 700; }
+            .sc-peek-live::before{ content: ""; width: 6px; height: 6px; border-radius: 50%; background: #ff4d4d; box-shadow: 0 0 0 0 rgba(255,77,77,.6); animation: scPeekPulse 1.6s infinite; }
+            @keyframes scPeekPulse{ 0%{ box-shadow: 0 0 0 0 rgba(255,77,77,.6);} 100%{ box-shadow: 0 0 0 8px rgba(255,77,77,0);} }
+            @media (max-width: 991px){ .sc-peek{ display: none; } }
         </style>
     </head>
     <body class="appear-animate">
@@ -607,6 +638,15 @@
             
             <main id="main">
             
+                <!-- Showcase 미니 플레이어 (미니맵처럼 우측 하단에서 상영, 클릭 시 전체 페이지로) -->
+                <a href="contents/showcase.html" class="sc-peek d-none d-lg-block" id="sc-peek" title="Showcase 전체 화면으로 보기" aria-label="Showcase 전체 화면으로 보기">
+                    <div class="sc-peek-frame">
+                        <iframe src="contents/showcase.html?embed=1" title="uEngine Showcase 미리보기" tabindex="-1" aria-hidden="true" loading="lazy" scrolling="no"></iframe>
+                        <span class="sc-peek-live">LIVE</span>
+                        <span class="sc-peek-label"><b>&#9654;</b> Showcase <i>클릭하여 전체화면</i></span>
+                    </div>
+                </a>
+
                 <!-- Fullwidth Slider -->
                 <div class="home-section fullwidth-slider-fade bg-dark light-content" id="home">
 
@@ -2699,5 +2739,23 @@
         <script src="js/all.js"></script> 
         <!-- End JS -->       
         
-    </body>
+    <script>
+/* Showcase 미니 플레이어: 메인 슬라이더 영역을 벗어나 스크롤하면 숨김 */
+(function () {
+  var peek = document.getElementById('sc-peek'), home = document.getElementById('home');
+  if (!peek || !home) return;
+  var frame = peek.querySelector('iframe'), src = frame.getAttribute('src'), off = false, t = null;
+  function sync() {
+    var hide = home.getBoundingClientRect().bottom < 160 || innerWidth < 992;
+    peek.classList.toggle('is-hidden', hide);
+    clearTimeout(t);
+    if (hide) {
+      /* 화면 밖으로 나가면 상영을 멈춰 CPU 를 아낀다 */
+      t = setTimeout(function () { if (!off) { off = true; frame.removeAttribute('src'); } }, 2000);
+    } else if (off) { off = false; frame.setAttribute('src', src); }
+  }
+  addEventListener('scroll', sync, { passive: true }); addEventListener('resize', sync); sync();
+})();
+</script>
+</body>
 </html>
