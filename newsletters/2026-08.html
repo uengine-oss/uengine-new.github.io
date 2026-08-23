@@ -1,9 +1,18 @@
 <!--
   uEngine 뉴스레터 — 2026년 08월 (월간)
-  이메일(Stibee 등) 발송용 HTML. 모든 이미지/링크는 절대경로(https://www.uengine.org/...)이며,
-  인라인 style만 사용해 대부분의 이메일 클라이언트에서 동일하게 렌더링되도록 작성됨.
-  대상 범위: 945366d..4ee85cf (2026-07-21 ~ 2026-08-19) — 직전 월간호(2026년 7월) 이후 전체
-  참고: 2026-08-W1 주간호와 내용이 일부 겹침 (월간 합본으로 요청됨)
+  이메일(Stibee 등) 발송용 HTML. 절대경로 + 인라인 style + 640px 테이블 레이아웃.
+  대상 범위: 945366d..4ee85cf (2026-07-21 ~ 2026-08-19)
+
+  구성: SKILL.md 5장 — 카드 5장 고정 (제품·소식 4 + 블로그 1)
+  lines_with_commits: L1, L2, L3, L4  → 라인 상한 2장
+    1  L1 최고점 고정   Deterministic Replay          70  NEW FEATURE
+    2  전체 최고점      정부24 + CNA/MSA 컨설팅        80  CASE STUDY
+    3  미등장 라인(L2)  Robo Analyzer                 60  NEW FEATURE
+    4  남은 최고점      Ontology Studio 이기종 DB       70  NEW FEATURE
+    5  L4 블로그 고정   aidevoutlook (아카이브 선정)    —   INSIGHT
+  블로그: 이번 주기 신규 2편 모두 직전 호(2026-08-W1) 게재 → 5-7 기준 ③ 탈락,
+          아카이브에서 4/4 충족한 aidevoutlook 선정
+  한 줄 소식: 4계층 스택(L1,50), AX 교육(L3,20), 오픈소스 생존 전략, 린 AI 네이티브
   생성: .claude/skills/newsletter
 -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#eceff7; padding:32px 12px; font-family:Arial,'Apple SD Gothic Neo',sans-serif;">
@@ -17,12 +26,12 @@
             <img src="https://www.uengine.org/images/logo-w.png" width="105" height="22" alt="uEngine" style="display:block; margin:0 auto 20px auto; border:0;">
             <div style="color:#ffffff; font-size:22px; font-weight:700; letter-spacing:0.3px;">2026년 08월 uEngine 뉴스레터</div>
             <div style="color:#c9cfe8; font-size:14px; margin-top:10px; line-height:1.6;">
-              지난 한 달, uEngine은 &ldquo;AI가 기업의 지식과 프로세스를 직접 다루게 한다&rdquo;는 하나의 방향으로 제품을 촘촘히 채웠습니다. 같은 일을 매번 똑같이 해내는 <b style="color:#ffffff;">Deterministic Replay</b>, 문서와 데이터베이스를 한 그래프로 묶은 <b style="color:#ffffff;">Ontology Studio</b>, 레거시를 읽는 <b style="color:#ffffff;">Robo Analyzer</b>, 그리고 새로 연 <b style="color:#ffffff;">MSA Architecture</b> 메뉴까지 &mdash; 7월호 이후의 소식을 한 번에 모았습니다.
+              <b style="color:#ffffff;">Process GPT</b>가 한 번 검증한 실행 경로를 그대로 재현하기 시작했습니다. <b style="color:#ffffff;">정부24</b> 클라우드 네이티브 전환에서 확인한 설계 원칙으로 CNA/MSA 컨설팅을 시작하고, 레거시를 코드와 DB로 함께 읽는 <b style="color:#ffffff;">Robo Analyzer</b> 페이지를 열었으며, <b style="color:#ffffff;">Ontology Studio</b>는 사내 데이터베이스까지 하나의 지식 그래프로 묶었습니다. 끝에는 발주기관&middot;PMO의 질문에 데이터로 답한 <b style="color:#ffffff;">AI 기반 개발 전망</b> 글을 붙였습니다 &mdash; 7월호 이후의 소식을 한 번에 모았습니다.
             </div>
           </td>
         </tr>
 
-        <!-- Item 1: Deterministic Replay -->
+        <!-- 슬롯 1 · L1 ProcessGPT · 70 -->
         <tr>
           <td style="padding:36px 40px 8px 40px;">
             <span style="display:inline-block; background-color:#f0ebfb; color:#7c4dbc; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">NEW FEATURE</span>
@@ -31,20 +40,20 @@
         <tr>
           <td style="padding:12px 40px 0 40px;">
             <a href="https://www.uengine.org/contents/processgpt.html#deterministic-replay" target="_blank" style="text-decoration:none;">
-              <img src="https://www.uengine.org/images/full-width-images/main-img-deterministicreplay.png" width="560" alt="Process GPT Deterministic Replay" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
+              <img src="https://www.uengine.org/images/full-width-images/main-img-deterministicreplay.png" width="560" height="430" alt="Process GPT Deterministic Replay" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:20px 40px 8px 40px;">
             <a href="https://www.uengine.org/contents/processgpt.html#deterministic-replay" target="_blank" style="text-decoration:none; color:#1a1a2e;">
-              <span style="font-size:19px; font-weight:700; line-height:1.4;">한 번 배운 업무는, 매번 정확하게 &mdash; Process GPT &lsquo;Deterministic Replay&rsquo;</span>
+              <span style="font-size:19px; font-weight:700; line-height:1.4;">E2E 검증 21/21 PASS &mdash; Process GPT &lsquo;Deterministic Replay&rsquo;</span>
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:0 40px 20px 40px; color:#444; font-size:14.5px; line-height:1.75;">
-            AI 에이전트를 실무에 맡기지 못하는 가장 큰 이유는 &ldquo;같은 일을 시켜도 매번 다르게 한다&rdquo;는 점이었습니다. <b>Process GPT</b>는 1차 실행에서 에이전트가 호출한 MCP 도구 이력을 이벤트로 기록하고, 검증된 실행 경로를 <b>파라미터화된 Python 코드로 고착</b>합니다. 2차 실행부터는 LLM 추론 없이 그 코드가 그대로 돌아 경로를 100% 재현하고, 보상(undo) 코드까지 자동 생성돼 되돌리기도 안전합니다. E2E 검증 21/21 PASS로 확인했습니다.
+            AI 에이전트에 실무를 맡기지 못한 이유는 같은 일을 시켜도 매번 다르게 처리한다는 점이었습니다. <b>Process GPT</b>는 1차 실행에서 에이전트가 호출한 MCP 도구 이력을 이벤트로 기록하고, 검증된 실행 경로를 <b>파라미터화된 Python 코드로 고착</b>합니다. 2차 실행부터는 LLM 추론 없이 그 코드가 그대로 돌아 경로를 재현하고 보상(undo) 코드까지 자동 생성되며, <b>E2E 검증 21건을 전부 통과</b>했습니다.
           </td>
         </tr>
         <tr>
@@ -55,42 +64,42 @@
 
         <tr><td style="padding:0 40px;"><hr style="border:none; border-top:1px solid #eee; margin:0;"></td></tr>
 
-        <!-- Item 2: Ontology Studio — 문서 + DB -->
+        <!-- 슬롯 2 · L3 · 80 -->
         <tr>
           <td style="padding:36px 40px 8px 40px;">
-            <span style="display:inline-block; background-color:#e6f0fb; color:#1e6fbc; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">PRODUCT</span>
+            <span style="display:inline-block; background-color:#fdeee3; color:#c56a1f; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">CASE STUDY</span>
           </td>
         </tr>
         <tr>
           <td style="padding:12px 40px 0 40px;">
-            <a href="https://www.uengine.org/contents/ontologystudio.html" target="_blank" style="text-decoration:none;">
-              <img src="https://www.uengine.org/images/ontology/onto-db-graph.jpg" width="560" alt="Ontology Studio - 문서와 데이터베이스를 하나의 그래프로" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
+            <a href="https://www.uengine.org/contents/msaacademy.html" target="_blank" style="text-decoration:none;">
+              <img src="https://www.uengine.org/images/full-width-images/main-img-whymsahard.png" width="560" height="168" alt="데이터 중심 분해(고객·주문·배달 서비스로 쪼개 동기 호출이 얽히는 Chatty Microservice)와 행위 중심 분해(주문하기·조리하기·배달하기가 각자 데이터를 보유하고 도메인 이벤트 Pub/Sub로 연결) 비교" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:20px 40px 8px 40px;">
-            <a href="https://www.uengine.org/contents/ontologystudio.html" target="_blank" style="text-decoration:none; color:#1a1a2e;">
-              <span style="font-size:19px; font-weight:700; line-height:1.4;">한 곳에 답이 없는 질문에 답하다 &mdash; Ontology Studio, 이제 사내 DB까지 하나의 그래프로</span>
+            <a href="https://www.uengine.org/contents/msaacademy.html" target="_blank" style="text-decoration:none; color:#1a1a2e;">
+              <span style="font-size:19px; font-weight:700; line-height:1.4;">정부24는 어떻게 전환했나 &mdash; CNA/MSA 컨설팅을 시작합니다</span>
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:0 40px 20px 40px; color:#444; font-size:14.5px; line-height:1.75;">
-            현업의 질문은 대개 문서 한 곳에도, 테이블 한 곳에도 답이 없습니다. <b>Ontology Studio</b>가 문서에 더해 <b>MySQL&middot;PostgreSQL 등 7가지 데이터소스</b>를 직접 연결해, 문서의 조항과 데이터베이스의 레코드를 <b>하나의 지식 그래프</b> 위에서 함께 탐색하도록 확장됐습니다. 핵심은 <b>데이터를 옮기지 않는다</b>는 점입니다 &mdash; DB는 복제 0건의 virtual 바인딩으로 붙어 별도 ETL이나 데이터 웨어하우스 구축이 필요 없습니다. 스토어드 프로시저의 주석&middot;계산식까지 해석해 컬럼의 의미를 잡아내고, 관계마다 조인 키를 명시해 추측을 없앴습니다. 답변에는 사용한 조회 경로가 근거로 함께 제시되며, 맞다/틀리다 피드백으로 스키마를 보강해 다시 구축하는 자가 개선 루프까지 돕니다.
+            <b>정부24</b>는 핵심 서비스 하나가 멈추면 전체 민원 업무가 중단되는 일체형 구조였습니다. 이 전환에서 확인한 설계 원칙 &mdash; 잘못된 경계, 갓테이블, 사라진 트랜잭션이라는 세 가지 함정과 그 처방 &mdash; 을 정리해 <b>MSA Architecture</b> 메뉴를 새로 열고, <b>전자정부 표준프레임워크</b> 기반의 설계&rarr;구현&rarr;배포&middot;운영 3단계 컨설팅을 시작합니다. 진단은 Robo Analyzer, 구현은 Robo Architect가 받쳐주며 MSA School 플랫폼에서 정규 교육 과정과 공개 세미나도 함께 운영합니다.
           </td>
         </tr>
         <tr>
           <td style="padding:0 40px 12px 40px;">
-            <a href="https://www.uengine.org/contents/ontologystudio.html#demo" target="_blank" style="display:inline-block; background-color:#7c4dbc; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none; padding:11px 22px; border-radius:24px;">연합 질의 데모 보기 &rarr;</a>
-            <a href="https://www.uengine.org/contents/ontologystudio.html#feat-binding" target="_blank" style="display:inline-block; color:#7c4dbc; font-size:14px; font-weight:700; text-decoration:none; padding:11px 6px;">Zero-ETL 바인딩 &rarr;</a>
+            <a href="https://www.uengine.org/contents/msaacademy.html" target="_blank" style="display:inline-block; background-color:#7c4dbc; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none; padding:11px 22px; border-radius:24px;">컨설팅&middot;교육 보기 &rarr;</a>
+            <a href="https://www.uengine.org/contents/blog/whymsahard.html" target="_blank" style="display:inline-block; color:#7c4dbc; font-size:14px; font-weight:700; text-decoration:none; padding:11px 6px;">사례 읽기 &rarr;</a>
           </td>
         </tr>
         <tr><td style="padding:0 40px 24px 40px;"></td></tr>
 
         <tr><td style="padding:0 40px;"><hr style="border:none; border-top:1px solid #eee; margin:0;"></td></tr>
 
-        <!-- Item 3: 4계층 에이전틱 스택 -->
+        <!-- 슬롯 3 · L2 ROBO Suite · 60 -->
         <tr>
           <td style="padding:36px 40px 8px 40px;">
             <span style="display:inline-block; background-color:#f0ebfb; color:#7c4dbc; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">NEW FEATURE</span>
@@ -98,56 +107,21 @@
         </tr>
         <tr>
           <td style="padding:12px 40px 0 40px;">
-            <a href="https://www.uengine.org/contents/blog/enterprisebrain.html#ls-figure" target="_blank" style="text-decoration:none;">
-              <img src="https://www.uengine.org/images/full-width-images/main-img-processgpt.png" width="560" alt="ProcessGPT 4계층 에이전틱 스택" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:20px 40px 8px 40px;">
-            <a href="https://www.uengine.org/contents/blog/enterprisebrain.html#ls-figure" target="_blank" style="text-decoration:none; color:#1a1a2e;">
-              <span style="font-size:19px; font-weight:700; line-height:1.4;">데이터에서 프로세스까지, 네 개의 층으로 &mdash; 에이전틱 스택을 그림 한 장으로</span>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:0 40px 20px 40px; color:#444; font-size:14.5px; line-height:1.75;">
-            &ldquo;에이전틱 AI를 도입한다&rdquo;는 말이 실제로 무엇을 쌓는 일인지, 홈 화면과 AI-Native Enterprise 비전 페이지에 <b>4계층 스택 다이어그램</b>으로 정리했습니다. 사내 DB&middot;문서&middot;외부 API를 표준 인터페이스로 잇는 <b>데이터 연동</b>, 실행 결과를 엔터티&middot;관계로 축적하는 <b>지식 그래프/온톨로지</b>, LangChain&middot;CrewAI와 MCP&middot;A2A 위에서 협업하는 <b>멀티 에이전트</b>, 그리고 목표를 태스크와 분기로 자동 설계해 실행 순서를 조율하는 <b>에이전틱 비즈니스 프로세스 관리</b>까지 &mdash; 스크롤에 따라 한 층씩 쌓이며 층 사이로 데이터가 흐르는 모습을 직접 보실 수 있습니다.
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:0 40px 12px 40px;">
-            <a href="https://www.uengine.org/contents/blog/enterprisebrain.html#ls-figure" target="_blank" style="display:inline-block; background-color:#7c4dbc; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none; padding:11px 22px; border-radius:24px;">스택 살펴보기 &rarr;</a>
-            <a href="https://www.uengine.org/" target="_blank" style="display:inline-block; color:#7c4dbc; font-size:14px; font-weight:700; text-decoration:none; padding:11px 6px;">홈 화면에서 보기 &rarr;</a>
-          </td>
-        </tr>
-        <tr><td style="padding:0 40px 24px 40px;"></td></tr>
-
-        <tr><td style="padding:0 40px;"><hr style="border:none; border-top:1px solid #eee; margin:0;"></td></tr>
-
-        <!-- Item 4: Robo Analyzer -->
-        <tr>
-          <td style="padding:36px 40px 8px 40px;">
-            <span style="display:inline-block; background-color:#e6f0fb; color:#1e6fbc; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">PRODUCT</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:12px 40px 0 40px;">
             <a href="https://www.uengine.org/contents/roboanalyzer.html" target="_blank" style="text-decoration:none;">
-              <img src="https://www.uengine.org/images/full-width-images/main-img-roboanalyzer.png" width="560" alt="Robo Analyzer" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
+              <img src="https://www.uengine.org/images/full-width-images/main-img-roboanalyzer.png" width="560" height="430" alt="Robo Analyzer" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:20px 40px 8px 40px;">
             <a href="https://www.uengine.org/contents/roboanalyzer.html" target="_blank" style="text-decoration:none; color:#1a1a2e;">
-              <span style="font-size:19px; font-weight:700; line-height:1.4;">코드와 DB를 하나의 그래프로, 근거는 원문까지 &mdash; Robo Analyzer 페이지 공개</span>
+              <span style="font-size:19px; font-weight:700; line-height:1.4;">코드와 DB를 하나의 그래프로, 근거는 원문까지 &mdash; Robo Analyzer</span>
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:0 40px 20px 40px; color:#444; font-size:14.5px; line-height:1.75;">
-            7월호에서 소개했던 레거시 분석 제품이 <b>Robo Analyzer</b>로 이름을 정리하고 전용 페이지를 열었습니다. 레거시 소스 코드와 데이터베이스 스키마를 <b>함께</b> 분석해 함수 호출과 테이블&middot;컬럼 읽기/쓰기 관계를 하나의 그래프로 보여주고, 자연어로 물으면 관련 로직을 찾아줍니다. 어느 지점에서든 판단의 근거가 된 <b>실제 코드 원문</b>까지 되짚어 볼 수 있어, 분석 결과를 그대로 신뢰하고 다음 단계로 넘길 수 있습니다.
+            레거시를 걷어내려 해도 어느 코드가 어느 테이블을 건드리는지 파악하는 데만 긴 시간이 걸립니다. 지난 호에서 소개한 레거시 분석 제품이 <b>Robo Analyzer</b>로 이름을 정리하고 전용 페이지를 열었는데, 소스 코드와 데이터베이스 스키마를 <b>함께</b> 분석해 함수 호출과 테이블&middot;컬럼 읽기/쓰기 관계를 하나의 그래프로 보여주고 &ldquo;재고를 예약했다가 부족하면 취소하는 부분&rdquo; 같은 <b>업무 언어로 검색</b>하면 문장 그대로 관련 코드를 찾아줍니다. 어느 지점에서든 판단 근거가 된 <b>실제 코드 원문</b>까지 되짚어 볼 수 있어, 분석 결과를 그대로 전환 설계의 입력으로 넘길 수 있습니다.
           </td>
         </tr>
         <tr>
@@ -158,42 +132,43 @@
 
         <tr><td style="padding:0 40px;"><hr style="border:none; border-top:1px solid #eee; margin:0;"></td></tr>
 
-        <!-- Item 5: MSA Architecture 특집 -->
+        <!-- 슬롯 4 (L4 블로그) — 5-7 기준 미충족으로 비움 -->
+
+        <!-- 슬롯 5 · L3 · 70 -->
         <tr>
           <td style="padding:36px 40px 8px 40px;">
-            <span style="display:inline-block; background-color:#fdeee3; color:#c56a1f; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">MSA 특집</span>
+            <span style="display:inline-block; background-color:#f0ebfb; color:#7c4dbc; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">NEW FEATURE</span>
           </td>
         </tr>
         <tr>
           <td style="padding:12px 40px 0 40px;">
-            <a href="https://www.uengine.org/contents/blog/whymsahard.html" target="_blank" style="text-decoration:none;">
-              <img src="https://www.uengine.org/images/full-width-images/main-img-whymsahard.png" width="560" height="328" alt="왜 마이크로서비스는 어려운가 — 설계가 어긋나는 세 가지 함정(데이터 관점의 분해·갓테이블·사라진 트랜잭션)과 그 처방 원칙" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
+            <a href="https://www.uengine.org/contents/ontologystudio.html#demo" target="_blank" style="text-decoration:none;">
+              <img src="https://www.uengine.org/images/ontology/onto-db-graph.jpg" width="560" height="298" alt="Ontology Studio — 문서와 데이터베이스를 하나의 지식 그래프로" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:20px 40px 8px 40px;">
-            <a href="https://www.uengine.org/contents/blog/whymsahard.html" target="_blank" style="text-decoration:none; color:#1a1a2e;">
-              <span style="font-size:19px; font-weight:700; line-height:1.4;">왜 마이크로서비스는 어려운가 &mdash; &lsquo;MSA Architecture&rsquo; 메뉴를 새로 열었습니다</span>
+            <a href="https://www.uengine.org/contents/ontologystudio.html#demo" target="_blank" style="text-decoration:none; color:#1a1a2e;">
+              <span style="font-size:19px; font-weight:700; line-height:1.4;">문서와 사내 DB를 하나의 그래프로 &mdash; Ontology Studio 이기종 DB 연동</span>
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:0 40px 20px 40px; color:#444; font-size:14.5px; line-height:1.75;">
-            마이크로서비스의 어려움은 기술이 아니라 <b>설계</b>에서 옵니다. 새 플래그십 글에서 수다쟁이 마이크로서비스(잘못된 경계), 갓테이블, 사라진 트랜잭션이라는 세 가지 함정을 짚고 응집도&middot;결합도, 데이터 지역성, 어그리게이트와 이벤추얼 컨시스턴시라는 처방을 <b>정부24 클라우드 네이티브 전환 사례</b>와 함께 정리했습니다. 함께 연 <b>CNA/MSA Consulting</b> 페이지에서는 전자정부 표준프레임워크 기반의 설계&rarr;구현&rarr;배포&middot;운영 3단계 컨설팅과, MSA School 플랫폼에서 운영되는 정규 교육 과정&middot;공개 세미나를 확인하실 수 있습니다. 진단은 Robo Analyzer, 구현은 Robo Architect가 받쳐주는 구성입니다.
+            현업의 질문은 문서 한 곳에도, 데이터베이스 한 곳에도 답이 없는 경우가 대부분입니다. <b>Ontology Studio</b>가 <b>MySQL&middot;PostgreSQL 등 7가지 데이터소스</b>를 직접 연결해, 문서의 조항과 DB의 레코드를 하나의 지식 그래프 위에서 함께 탐색하도록 확장됐습니다. 데이터베이스는 <b>복제 0건의 virtual 바인딩</b>으로 붙어 별도 ETL이나 데이터 웨어하우스 없이 연결되고, 답변에는 사용한 조회 경로가 근거로 함께 제시됩니다.
           </td>
         </tr>
         <tr>
-          <td style="padding:0 40px 12px 40px;">
-            <a href="https://www.uengine.org/contents/blog/whymsahard.html" target="_blank" style="display:inline-block; background-color:#7c4dbc; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none; padding:11px 22px; border-radius:24px;">블로그 읽기 &rarr;</a>
-            <a href="https://www.uengine.org/contents/msaacademy.html" target="_blank" style="display:inline-block; color:#7c4dbc; font-size:14px; font-weight:700; text-decoration:none; padding:11px 6px;">컨설팅&middot;교육 보기 &rarr;</a>
+          <td style="padding:0 40px 36px 40px;">
+            <a href="https://www.uengine.org/contents/ontologystudio.html#demo" target="_blank" style="display:inline-block; background-color:#7c4dbc; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none; padding:11px 22px; border-radius:24px;">연합 질의 데모 보기 &rarr;</a>
           </td>
         </tr>
-        <tr><td style="padding:0 40px 24px 40px;"></td></tr>
+
 
         <tr><td style="padding:0 40px;"><hr style="border:none; border-top:1px solid #eee; margin:0;"></td></tr>
 
-        <!-- Item 6: 오픈소스 생존 전략 블로그 -->
+        <!-- 슬롯 5 · L4 블로그 (아카이브 선정: aidevoutlook) -->
         <tr>
           <td style="padding:36px 40px 8px 40px;">
             <span style="display:inline-block; background-color:#e9edf7; color:#3f4d7a; font-size:12px; font-weight:700; padding:5px 12px; border-radius:20px; letter-spacing:0.3px;">INSIGHT</span>
@@ -201,40 +176,39 @@
         </tr>
         <tr>
           <td style="padding:12px 40px 0 40px;">
-            <a href="https://www.uengine.org/contents/blog/opensource-survival.html" target="_blank" style="text-decoration:none;">
-              <img src="https://www.uengine.org/images/blog/news-opensource-2026.jpg" width="560" alt="2026 오픈소스 개발자대회 오리엔테이션 특별강연" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
+            <a href="https://www.uengine.org/contents/blog/aidevoutlook.html" target="_blank" style="text-decoration:none;">
+              <img src="https://www.uengine.org/images/blog/aidevoutlook-maturity.png" width="560" height="274" alt="AI 개발 성숙도 자가진단 — L0 부재, L1 개인 활용, L2 팀 표준, L3 명세 주도, L4 조직 내재화" style="display:block; width:100%; max-width:560px; height:auto; border:0; border-radius:10px;">
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:20px 40px 8px 40px;">
-            <a href="https://www.uengine.org/contents/blog/opensource-survival.html" target="_blank" style="text-decoration:none; color:#1a1a2e;">
-              <span style="font-size:19px; font-weight:700; line-height:1.4;">1인 창업자를 위한 AI 시대의 오픈소스 생존 전략</span>
+            <a href="https://www.uengine.org/contents/blog/aidevoutlook.html" target="_blank" style="text-decoration:none; color:#1a1a2e;">
+              <span style="font-size:19px; font-weight:700; line-height:1.4;">우리 조직은 지금 몇 단계인가 &mdash; AI 기반 개발의 현재와 향후 전망</span>
             </a>
           </td>
         </tr>
         <tr>
           <td style="padding:0 40px 20px 40px; color:#444; font-size:14.5px; line-height:1.75;">
-            <b>2026 오픈소스 개발자대회 오리엔테이션 특별강연</b>을 글로 정리했습니다. 2003년 공모대전 대상에서 출발한 오픈소스 기업 23년의 기록을 따라가며, 코드를 공개하고도 사업이 굴러가게 만드는 구조를 짚습니다. 핵심은 <b>&lsquo;신뢰 퍼널&rsquo;</b> &mdash; 제품이 아니라 <b>운영의 위험</b>을 유료화하는 전략입니다. AI가 코드 생산 비용을 끌어내린 시대에 1인 창업자와 소규모 팀이 무엇을 열고 무엇을 남겨야 하는지, 실제 사례로 정리했습니다.
+            AI 개발 도구를 도입할지가 아니라 <b>어디까지 믿고 맡길 수 있는지</b>가 실제 질문인데, 근거로 삼을 수치는 벤더마다 제각각입니다. 이 글은 <b>발주기관&middot;개발사&middot;PMO</b>가 각자 던지는 세 질문 &mdash; 쓸 만한가 / 뭐가 달라지나 / 뭘 준비하나 &mdash; 에 공개 데이터와 사례로 답하고, 조직의 현 위치를 <b>L0 부재부터 L4 조직 내재화까지 다섯 단계</b>로 자가진단하는 척도를 제시합니다. 망분리&middot;보안등급이 걸린 공공&middot;금융 환경의 제약을 따로 짚고 벤더 자기보고 수치의 한계까지 명시해, 그대로 검토 자료로 쓰실 수 있습니다.
           </td>
         </tr>
         <tr>
           <td style="padding:0 40px 36px 40px;">
-            <a href="https://www.uengine.org/contents/blog/opensource-survival.html" target="_blank" style="display:inline-block; background-color:#7c4dbc; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none; padding:11px 22px; border-radius:24px;">블로그 읽기 &rarr;</a>
+            <a href="https://www.uengine.org/contents/blog/aidevoutlook.html" target="_blank" style="display:inline-block; background-color:#7c4dbc; color:#ffffff; font-size:14px; font-weight:700; text-decoration:none; padding:11px 22px; border-radius:24px;">블로그 읽기 &rarr;</a>
           </td>
         </tr>
 
-        <!-- 짧은 소식 -->
+        <!-- 한 줄 소식 (커밋은 있었으나 카드에서 밀린 항목만) -->
         <tr>
           <td style="padding:0 40px 36px 40px;">
             <div style="background-color:#f6f7fb; border-radius:10px; padding:20px 22px;">
-              <div style="color:#1a1a2e; font-size:14px; font-weight:700; margin-bottom:10px;">그 밖의 소식</div>
+              <div style="color:#1a1a2e; font-size:14px; font-weight:700; margin-bottom:10px;">한 줄 소식</div>
               <div style="color:#555; font-size:13.5px; line-height:1.8;">
-                &bull; 흩어져 있던 AI 관련 교육 과정을 <a href="https://www.uengine.org/contents/educationax.html" target="_blank" style="color:#7c4dbc; font-weight:700; text-decoration:none;">AX 전환 컨설팅 교육</a>으로 통합했습니다. 경영진의 AI 도입 전략을 다루는 <b>수요자 트랙</b>과 개발팀의 AI 에이전트 플랫폼 구축 역량을 다루는 <b>공급자 트랙</b>으로 나뉘며, 두 트랙 모두 <b>Spec-Driven Development</b>를 축으로 연결됩니다.<br>
-                &bull; 새 블로그 <a href="https://www.uengine.org/contents/blog/leanainative.html" target="_blank" style="color:#7c4dbc; font-weight:700; text-decoration:none;">「소수 인원으로 거대한 매출을 만드는 기업은 무엇이 다른가」</a> &mdash; Midjourney&middot;Cursor&middot;Cal AI 등 직원 50명 미만으로 ARR 500만 달러를 넘긴 린 AI 네이티브 기업들을 분석했습니다.
-              </div>
-              <div style="margin-top:14px;">
-                <a href="https://www.uengine.org/contents/educationax.html" target="_blank" style="color:#7c4dbc; font-size:13.5px; font-weight:700; text-decoration:none;">교육 커리큘럼 보기 &rarr;</a>
+                &bull; 에이전틱 AI 도입이 실제로 무엇을 갖추는 일인지 <a href="https://www.uengine.org/contents/blog/enterprisebrain.html#ls-figure" target="_blank" style="color:#7c4dbc; font-weight:700; text-decoration:none;">4계층 스택 다이어그램</a>으로 정리 &mdash; 데이터 연동 &rarr; 지식 그래프 &rarr; 멀티 에이전트 &rarr; 에이전틱 프로세스 관리<br>
+                &bull; 흩어져 있던 AI 교육 과정을 <a href="https://www.uengine.org/contents/educationax.html" target="_blank" style="color:#7c4dbc; font-weight:700; text-decoration:none;">AX 전환 컨설팅 교육</a>으로 통합 &mdash; 경영진 대상 수요자 트랙, 개발팀 대상 공급자 트랙<br>
+                &bull; 새 블로그 <a href="https://www.uengine.org/contents/blog/opensource-survival.html" target="_blank" style="color:#7c4dbc; font-weight:700; text-decoration:none;">「1인 창업자를 위한 AI 시대의 오픈소스 생존 전략」</a> &mdash; 2026 오픈소스 개발자대회 오리엔테이션 특별강연 정리<br>
+                &bull; 새 블로그 <a href="https://www.uengine.org/contents/blog/leanainative.html" target="_blank" style="color:#7c4dbc; font-weight:700; text-decoration:none;">「소수 인원으로 거대한 매출을 만드는 기업은 무엇이 다른가」</a> &mdash; 린 AI 네이티브 기업 분석
               </div>
             </div>
           </td>
