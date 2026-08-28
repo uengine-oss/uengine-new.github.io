@@ -40,11 +40,10 @@
       "label": "2026년 08월",
       "cadence": "monthly",
       "file": "newsletters/2026-08.html",
-      "publishedAt": "2026-08-19",
+      "publishedAt": "2026-08-28",
       "coversFrom": "945366d",
-      "coversTo": "4ee85cf",
-      "note": "사용자 요청으로 주간(2026-08-W1) 대신 7월호 이후 전체를 담은 월간 합본. 범위가 2026-08-W1(945366d..9dac7e6)을 포함하므로 W1 을 실제 발송했다면 슬롯 1·2·3 이 중복 노출됨. 다음 호는 4ee85cf 이후부터.",
-      "issue": "2026-08",
+      "coversTo": "aed51bc",
+      "note": "7월호 이후 전체를 담은 월간 합본(재작성본). 범위가 2026-08-W1(945366d..9dac7e6)을 포함하므로 W1 을 실제 발송했다면 슬롯 3·4 가 중복 노출됨. 사용자 요청으로 Deterministic Replay 카드를 제외하고 Process GPT 적용 사례로 교체. NDA 사유로 사례 고객사명은 업종 표현으로 익명화(공공 에너지 기관 / 통신 기업) — 사이트 원문(contents/processgpt.html#processgpt-cases)에는 실명이 그대로 노출되어 있음. 다음 호는 aed51bc 이후부터.",
       "lines_with_commits": [
         "L1",
         "L2",
@@ -54,19 +53,20 @@
       "cards": [
         {
           "slot": 1,
-          "title": "Process GPT Deterministic Replay",
+          "title": "Process GPT 적용 사례 공개",
           "line": "L1",
-          "score": 70,
-          "badge": "NEW FEATURE",
-          "breakdown": "독자영향 30 / 증거 20 (E2E 21/21 PASS) / 실행가능성 20 / 신규성 -10 / 완결성 10"
+          "score": 90,
+          "badge": "CASE STUDY",
+          "breakdown": "독자영향 40 / 증거 20 (PoC 성공·표준 프레임워크 갭 분석) / 실행가능성 20 (#processgpt-cases 딥링크) / 신규성 +10 / 완결성 10",
+          "anonymized": "고객사 실명 대신 업종 표현 사용 (NDA). 실명 대조표는 이 파일에 남기지 않음."
         },
         {
           "slot": 2,
-          "title": "정부24 전환 사례 + CNA/MSA 컨설팅 신설",
+          "title": "uEngine RPA 제품 페이지 신설",
           "line": "L3",
           "score": 80,
-          "badge": "CASE STUDY",
-          "breakdown": "독자영향 40 / 증거 20 (정부24) / 실행가능성 20 / 신규성 -10 / 완결성 10"
+          "badge": "NEW FEATURE",
+          "breakdown": "독자영향 40 (신규 제품) / 증거 0 / 실행가능성 20 / 신규성 +10 / 완결성 10"
         },
         {
           "slot": 3,
@@ -78,50 +78,72 @@
         },
         {
           "slot": 4,
-          "title": "Ontology Studio 이기종 DB 연동",
+          "title": "정부24 전환 사례 + CNA/MSA 컨설팅 신설",
           "line": "L3",
-          "score": 70,
-          "badge": "NEW FEATURE",
-          "breakdown": "독자영향 30 / 증거 0 / 실행가능성 20 / 신규성 +10 / 완결성 10"
+          "score": 80,
+          "badge": "CASE STUDY",
+          "breakdown": "독자영향 40 / 증거 20 (정부24) / 실행가능성 20 / 신규성 -10 / 완결성 10"
         },
         {
           "slot": 5,
-          "title": "AI 기반 개발의 현재와 향후 전망",
+          "title": "프로세스의 귀환: AI 시대의 BPM은 도구가 아니라 경영 규율이다",
           "line": "L4",
           "score": null,
           "badge": "INSIGHT",
-          "slug": "aidevoutlook",
-          "breakdown": "L4는 채점하지 않음. 5-7 기준 4/4 충족 (①제품 피치 없음 — 결론이 출처 목록 + 벤더 수치 경계 문구 / ②발주기관·PMO 대상 명시 / ③직전 2개 호 미게재 / ④L0~L4 성숙도 자가진단 척도)",
-          "source": "이번 주기 신규 블로그 2편(opensource-survival, leanainative)이 모두 2026-08-W1 게재로 기준 ③ 탈락 → 아카이브 후보 16편에서 선정"
+          "slug": "bpmalive",
+          "breakdown": "L4는 채점하지 않음. 5-7 기준 3/4 충족 (②발주기관·경영진 대상 ③직전 2개 호 미게재 ④동적 작업 배분 판단 기준 제시 / ①결론부에 자사 제품 2종 언급 있어 미충족). 이번 주기 신규 글 풀에서 ③을 통과한 유일한 후보라 아카이브 폴백 미적용.",
+          "image": "images/blog/bpmalive-three-workforces.png — 본문 핵심 다이어그램(ONE PROCESS — THREE WORKFORCES)이 HTML/CSS 로만 그려져 있어 해당 블록을 헤드리스 크롬으로 렌더해 저장. 내용은 본문 그대로이며 신규 제작 아님."
         }
       ],
       "oneLiners": [
         {
+          "title": "Showcase 시네마틱 페이지 신설",
+          "line": "L1",
+          "score": 70,
+          "reason": "슬롯 경합에서 밀림 (기존 자산 재구성이라 신규 기능 아님)"
+        },
+        {
+          "title": "Ontology Studio 이기종 DB 온톨로지",
+          "line": "L3",
+          "score": 70,
+          "reason": "L3 라인 상한 2장 초과"
+        },
+        {
           "title": "4계층 에이전틱 스택 다이어그램",
           "line": "L1",
           "score": 50,
-          "reason": "슬롯4 경합에서 Ontology Studio(70)에 밀림"
+          "reason": "L1 최고점(90)에 밀림"
+        },
+        {
+          "title": "uEngine6 BPM 관련 제품 섹션 + 소개서 PDF",
+          "line": "L1",
+          "score": 20,
+          "reason": "점수 미달"
         },
         {
           "title": "AX 전환 컨설팅 교육 통합",
           "line": "L3",
           "score": 20,
           "reason": "점수 미달"
-        },
-        {
-          "title": "블로그: 1인 창업자를 위한 AI 시대의 오픈소스 생존 전략",
-          "line": "L4",
-          "reason": "5-7 기준 ③ (직전 호 게재)"
-        },
-        {
-          "title": "블로그: 소수 인원으로 거대한 매출을 만드는 기업은 무엇이 다른가",
-          "line": "L4",
-          "reason": "5-7 기준 ③ (직전 호 게재)"
         }
       ],
-      "blog_slug": "aidevoutlook"
+      "blog_slug": "bpmalive",
+      "headlines": [
+        "Process GPT 적용 사례 공개 (공공 에너지 기관 PoC / 통신 기업 프로세스 자산화)",
+        "uEngine RPA 제품 페이지 신설",
+        "Robo Analyzer 제품 페이지 공개",
+        "정부24 전환 사례 + CNA/MSA 컨설팅 신설",
+        "블로그: 프로세스의 귀환 — AI 시대의 BPM은 도구가 아니라 경영 규율이다"
+      ],
+      "excluded": [
+        {
+          "title": "Process GPT Deterministic Replay",
+          "score": 70,
+          "reason": "사용자 판단 — 주요 소식이 아니라고 보아 이번 호에서 제외. 다음 호에서도 재게재하지 않음."
+        }
+      ]
     }
   ],
-  "last_commit": "4ee85cf",
+  "last_commit": "aed51bc",
   "carryover": []
 }
