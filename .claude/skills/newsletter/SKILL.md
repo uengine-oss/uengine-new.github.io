@@ -1,6 +1,6 @@
 ---
 name: newsletter
-description: 직전 뉴스레터 발행 시점(newsletters/state.json 에 기록된 커밋) 이후의 git 변경사항만 모아 이메일 발송용 뉴스레터 HTML을 자동 생성합니다. 주간/월간 모두 지원하며 발행 라벨은 "YYYY년 MM월 N주" 형식을 씁니다. 그 기간 동안 바뀐 제품 페이지·신규 블로그 글·공지 등을 카테고리별로 묶어, 고객이 관심 가질 만한 키워드와 제목으로 재구성한 요약 카드를 만들고, 각 카드에는 실제 사이트 콘텐츠로 가는 절대경로 링크와 기존 repo 이미지를 하나씩 붙입니다. 결과물은 Stibee 등 이메일 서비스에 그대로 붙여넣을 수 있는 인라인 스타일 HTML(newsletters/YYYY-MM-WN.html)로 저장하고, 발행 이력을 state.json 에 추가합니다. "뉴스레터 만들어줘", "이번주 뉴스레터", "주간 뉴스레터 생성", "월간 뉴스레터", "뉴스레터 초안", "/newsletter" 등의 표현이 있을 때 트리거.
+description: 직전 뉴스레터 발행 시점(newsletters/state.json 에 기록된 커밋) 이후의 git 변경사항만 모아 이메일 발송용 뉴스레터 HTML을 자동 생성합니다. 주간/월간 모두 지원하며 발행 라벨은 "YYYY년 MM월 N주" 형식을 씁니다. 그 기간 동안 바뀐 제품 페이지·신규 블로그 글·공지 등을 카테고리별로 묶어, 고객이 관심 가질 만한 키워드와 제목으로 재구성한 요약 카드를 만들고, 각 카드에는 실제 사이트 콘텐츠로 가는 절대경로 링크와 기존 repo 이미지를 하나씩 붙입니다. 결과물은 브라우저에서 바로 열리고 Stibee 등 이메일 서비스에 그대로 붙여넣을 수 있는 완전한 반응형 HTML 문서(newsletters/YYYY-MM-WN.html — DOCTYPE + charset + 미디어쿼리 포함, 모바일/데스크톱 양쪽 대응)로 저장하고, 발행 이력을 state.json 에 추가합니다. "뉴스레터 만들어줘", "이번주 뉴스레터", "주간 뉴스레터 생성", "월간 뉴스레터", "뉴스레터 초안", "/newsletter" 등의 표현이 있을 때 트리거.
 ---
 
 # newsletter — 직전 발행 이후 변경분 → 이메일 뉴스레터 HTML 생성
@@ -243,6 +243,28 @@ grep -oE '<h[12][^>]*>[^<]{4,120}</h[12]>' <file> | sed 's/<[^>]*>//g'
 ### 5-10. 카드 본문
 각 카드는 **pain → solution → effect 3문장.** 확인된 수치만 쓴다.
 
+**문체 — 2026-08호가 기준이다.** 그 호의 문안은 사용자가 직접 다듬은 것이니,
+새 호를 쓸 때 `newsletters/2026-08.html` 의 인트로·카드 본문·한 줄 소식을 먼저 읽고
+같은 결로 맞춘다. 사용자가 실제로 고친 방향은 다음과 같다:
+
+| 고치기 전 (쓰지 말 것) | 고친 뒤 (이렇게) |
+|---|---|
+| 말로 만들고 AI 비용 없이 **돌리는** | 말로 자동화를 만들고 이후에는 AI 비용 없이 **실행하는** |
+| 그다음부터는 AI 없이 로봇이 **매일 그 작업을 처리하는** | 이후부터는 AI 호출 없이 로봇이 해당 작업을 **반복 수행하는** |
+| 레거시를 **걷어내려** 해도 | 레거시 시스템을 **현대화하려** 해도 |
+| 어느 코드가 어느 테이블을 **건드리는지** | 어느 코드가 어떤 테이블을 **사용하는지** |
+| 실무에 **올리자는 결정에서 막히는** 질문 | 실무에 **도입하려 할 때 가장 먼저 나오는** 질문 |
+| 적용 사례 섹션을 새로 **열어** | 적용 사례 섹션을 새로 **마련해** |
+| **앞의 사례는 / 뒤의 사례는** | **공공 에너지 기관 사례에서는 / 통신 기업 사례에서는** |
+| 업무가 **중단되는** 구조 | 업무가 **중단될 수 있는** 구조 |
+| Showcase 페이지 **신설** (명사 종결) | Showcase 페이지를 **새로 열었습니다** (완결형 문장) |
+| `Process GPT` **가** / `uEngine RPA` **를** (태그 뒤 공백) | `Process GPT`**의** / `uEngine RPA`**를** (공백 없이 붙임) |
+
+요약하면 — 구어체 동사("돌리다·걷어내다·건드리다·올리다")를 **문어체 표준 표현**으로,
+지시대명사("앞의/뒤의")를 **구체적 주어**로, 단정("중단되는")을 **가능성 표현**("중단될 수
+있는")으로, 한 줄 소식의 명사 종결을 **완결형 문장**으로 쓴다. `</b>` 뒤에 조사가 올 때
+공백을 넣지 않는다.
+
 ### 5-11. 출력 전 자가 점검
 HTML을 쓰기 전에 `| 순위 | 카드 | 라인 | 총점 | 배지 |` 표를 출력하고 검토한다.
 
@@ -283,8 +305,69 @@ git rev-list --left-right --count origin/main...HEAD   # 0	0 이면 푸시 완�
 
 ## 8. 이메일 호환 HTML 작성
 
-- `<table>` 기반 레이아웃, 컨테이너 최대폭 640px, **인라인 `style=""`만** 사용
-  (Gmail 등 다수 클라이언트가 `<head><style>` 블록을 제거한다).
+### 8-0. 산출물 형태 — 완전한 HTML 문서 (2026-08호부터 확정)
+
+조각(fragment)이 아니라 `<!DOCTYPE html>` 로 시작하는 **완전한 문서**로 만든다.
+사용자가 파일을 더블클릭해 브라우저에서 확인하고, 그대로 Stibee에 붙여넣기 때문이다.
+`newsletters/2026-08.html` 이 기준 산출물이니 새 호는 그 파일을 열어 그대로 따른다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">                                          <!-- 한글 깨짐 방지: 필수 -->
+<meta name="viewport" content="width=device-width, initial-scale=1">  <!-- 모바일 대응 전제 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="format-detection" content="telephone=no">           <!-- 전화번호 자동 링크 방지 -->
+<title>YYYY년 M월 uEngine 뉴스레터</title>
+<style type="text/css"> ... 8-1 의 미디어쿼리 ... </style>
+</head>
+<body style="margin:0; padding:0; background-color:#eceff7;">
+<!-- 발행 라벨·대상 커밋 범위·카드 편성 근거를 담은 메타 주석 -->
+... 640px 테이블 레이아웃 ...
+</body>
+</html>
+```
+
+메타 주석(발행 라벨 / 대상 커밋 범위 / 슬롯별 점수·배지 / 생성 스킬)은 `<body>` 맨 앞에
+그대로 남긴다. 다음 호 작성 시 직전 호의 판단 근거를 읽는 용도다.
+
+### 8-1. 반응형 — 인라인 스타일 + 미디어쿼리 하이브리드
+
+레이아웃은 `<table>` 기반, 컨테이너 최대폭 640px, 스타일은 **인라인 `style=""` 우선**.
+다만 인라인만으로는 미디어쿼리를 쓸 수 없으므로 `<head>` 에 `<style>` 블록을 함께 둔다.
+
+- **인라인 = 데스크톱 기본값, `<style>` = 모바일 덮어쓰기.** 이 순서를 지키면 `<style>` 을
+  무시하는 클라이언트(Outlook 데스크톱 등)에서도 기존 640px 레이아웃 그대로 나오고
+  깨지지 않는다. 반대로 하면(모바일을 인라인에 두면) Outlook 에서 무너진다.
+- 인라인 `padding` 단축 속성은 `padding-left/right: ... !important` 로 덮어쓴다.
+  `!important` longhand 가 인라인 shorthand 를 이긴다.
+- 카드 테이블은 `width="640"` 고정폭이 아니라 `width="100%"` +
+  `style="width:100%; max-width:640px;"` 유동폭으로 쓴다.
+
+기준 클래스와 미디어쿼리(2026-08호에서 확정, 그대로 복사해 쓸 것):
+
+```css
+img{ -ms-interpolation-mode:bicubic; }
+table{ border-collapse:collapse; }
+@media only screen and (max-width:620px){
+  .u-outer{ padding:16px 8px !important; }                  /* 바깥 래퍼 td */
+  .u-p{ padding-left:20px !important; padding-right:20px !important; }  /* 40px 좌우 td 전부 */
+  .u-top{ padding-top:28px !important; }                    /* 카드 상단(36px 40px) td */
+  .u-foot{ padding-top:24px !important; padding-bottom:24px !important; }
+  .u-h1{ font-size:19px !important; line-height:1.35 !important; }   /* 헤더 제목 22px */
+  .u-h2{ font-size:17px !important; line-height:1.35 !important; }   /* 카드 제목 19px */
+  .u-body{ font-size:14px !important; line-height:1.7 !important; }  /* 본문 14.5px */
+  .u-news{ padding:16px !important; }                       /* 한 줄 소식 박스 */
+  .u-btn{ display:block !important; text-align:center !important; margin-bottom:8px !important; }
+}
+```
+
+클래스 부착 위치: 좌우 40px 패딩을 가진 **모든** `<td>` 에 `u-p`(본문 td 는 `u-body` 추가,
+`36px 40px` 로 시작하는 td 는 `u-top` 추가, 푸터 td 는 `u-foot` 추가), 바깥 래퍼 테이블에
+`u-outer`, 카드 제목 `<span>` 에 `u-h2`, 헤더 제목 `<div>` 에 `u-h1`,
+`display:inline-block` CTA `<a>` 전부에 `u-btn`, 한 줄 소식 `<div>` 에 `u-news`.
+
 - 웹폰트 대신 시스템 폰트 스택(`Arial, "Apple SD Gothic Neo", sans-serif`).
 - 사이트 톤 유지: 헤더 다크 네이비(`#1a1a2e`) 배경 + 로고, 포인트 컬러 보라(`#7c4dbc`).
 - **헤더 로고**: `https://www.uengine.org/images/logo-w.png`, 원본 비율 2170×451(≈4.81:1).
@@ -356,7 +439,11 @@ open newsletters/<slug>.html
 - [ ] 이미지는 repo 기존 자산만 재사용 — **`.webp` 금지, 한글 파일명 금지**, 없으면 생략
 - [ ] 쓰려는 이미지가 커밋·푸시되어 실제 라이브인지 확인
 - [ ] 모든 이미지·링크는 `https://www.uengine.org/...` 절대경로, 신기능은 `#앵커` 딥링크
-- [ ] 테이블 레이아웃 + 인라인 style만 사용(이메일 클라이언트 호환)
+- [ ] **`<!DOCTYPE html>` 로 시작하는 완전한 문서**인가 (8-0) — `charset=utf-8`·viewport 포함
+- [ ] 테이블 레이아웃 + 인라인 style(데스크톱 기본값) + `<head><style>` 미디어쿼리(모바일 덮어쓰기)
+- [ ] 카드 테이블이 `width="100%"` + `max-width:640px` 유동폭인가 (640 고정폭 금지)
+- [ ] `u-p`/`u-h1`/`u-h2`/`u-body`/`u-btn`/`u-news`/`u-outer` 클래스가 빠짐없이 붙었는가 (8-1)
+- [ ] 320px·375px 에서 가로 스크롤이 없고, 데스크톱 카드폭이 640px 그대로인지 확인했는가
 - [ ] 헤더 로고 `width`/`height`가 원본 비율(2170×451 ≈ 4.81:1)과 일치(찌그러짐 방지)
 - [ ] `newsletters/state.json` 에 이번 호 항목 추가 (누락 시 다음 호 중복 게재)
 - [ ] 존재하지 않는 경로 없는지 grep 검증 + 로컬에서 열어 렌더 확인
