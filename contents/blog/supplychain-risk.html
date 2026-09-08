@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>통관 지연에 대응하는 AI 업무 프로세스: 분석부터 승인까지 | uEngine 블로그</title>
+        <meta name="description" content="통관 지연이 발생했을 때 조달·재고·구매·고객지원 업무를 어떻게 연결할까요? 온톨로지 스튜디오와 Process GPT로 지연 영향을 분석하고, 대체 발주 승인과 고객 회신까지 처리하는 시연을 살펴봅니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/supplychain-risk.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="통관 지연에 대응하는 AI 업무 프로세스: 분석부터 승인까지 | uEngine 블로그">
+        <meta property="og:description" content="통관 지연이 발생했을 때 조달·재고·구매·고객지원 업무를 어떻게 연결할까요? 온톨로지 스튜디오와 Process GPT로 지연 영향을 분석하고, 대체 발주 승인과 고객 회신까지 처리하는 시연을 살펴봅니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/supplychain-risk.html">
+        <meta property="og:image" content="https://www.uengine.org/images/pgpt-features/supplychain/01-four-systems.jpg">
+        <meta property="og:image:alt" content="통관 지연에 대응하는 AI 업무 프로세스: 분석부터 승인까지 | uEngine 블로그">
+        <meta property="article:published_time" content="2026-09-02">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="통관 지연에 대응하는 AI 업무 프로세스: 분석부터 승인까지 | uEngine 블로그">
+        <meta name="twitter:description" content="통관 지연이 발생했을 때 조달·재고·구매·고객지원 업무를 어떻게 연결할까요? 온톨로지 스튜디오와 Process GPT로 지연 영향을 분석하고, 대체 발주 승인과 고객 회신까지 처리하는 시연을 살펴봅니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/pgpt-features/supplychain/01-four-systems.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"통관 지연에 대응하는 AI 업무 프로세스: 분석부터 승인까지","description":"통관 지연이 발생했을 때 조달·재고·구매·고객지원 업무를 어떻게 연결할까요? 온톨로지 스튜디오와 Process GPT로 지연 영향을 분석하고, 대체 발주 승인과 고객 회신까지 처리하는 시연을 살펴봅니다.","image":["https://www.uengine.org/images/pgpt-features/supplychain/01-four-systems.jpg"],"url":"https://www.uengine.org/contents/blog/supplychain-risk.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/supplychain-risk.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-09-02","dateModified":"2026-09-02"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"통관 지연에 대응하는 AI 업무 프로세스: 분석부터 승인까지","item":"https://www.uengine.org/contents/blog/supplychain-risk.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">AI-Native Enterprise란?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX 전환 컨설팅 교육</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">AI 기반 개발의 현재와 향후 전망</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">선도개발 구현 컨설팅</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM 은 죽지 않았다</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Microservices <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">왜 마이크로서비스 아키텍처는 어려운가?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">MSA School 바로가기</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://uengine.stibee.com/" target="_blank" style="font-size: 18px;">Newsletter</a>
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                                     
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+ 
+                            <!-- Languages -->
+                            <!-- <li>
+                                <a href="#" class="mn-has-sub opacity-1">Kr <i class="mi-chevron-down"></i></a>
+                                <ul class="mn-sub to-left">                                    
+                                    <li><a href="../../enContents/webinars.html">English</a></li>
+                                    <li><a href="../webinars.html">Korean</a></li>
+                                </ul>
+                                
+                            </li> -->
+                            <!-- End Languages -->                             
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">통관 지연에 대응하는 AI 업무 프로세스: 분석부터 승인까지</span>
+                                    </h1>
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  September 02, 2026</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        <div class="row">
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    <div class="blog-item-body chat-gpt">
+                                        <style>
+                                        .blog-item-body details > summary::-webkit-details-marker { display: none; }
+                                        .blog-item-body details > summary::marker { content: ""; }
+                                        .blog-item-body details > summary:hover { background: #f3eeff; border-radius: 12px; }
+                                        .blog-item-body details[open] > summary { border-bottom: 1px solid #e3e6ef; border-radius: 12px 12px 0 0; }
+                                        .blog-item-body details[open] > summary > span:first-child { transform: rotate(90deg); display: inline-block; }
+                                        </style>
+
+                                        <div class="mb-50 prose">
+                                            <p>부산 세관에서 발주 번호 <b>PO-20116-0117</b>에 해당하는 선적의 통관이 보류됐습니다. 원산지 증명서가 제출되지 않아 9일째 지연되고 있는 상황입니다. 이 글에서는 이 시연 사례를 통해 납기 지연에 대응하는 과정을 살펴봅니다.</p>
+                                            <p>통관 지연에 대응하려면 여러 부서가 함께 움직여야 합니다. 각 부서가 확인할 내용은 다음과 같습니다.</p>
+                                            <ul>
+                                                <li><b>조달:</b> 계약상 납기 조건과 지연에 따른 위약금을 확인합니다.</li>
+                                                <li><b>재고:</b> 현재 재고가 안전재고 기준 아래로 떨어지는지 확인합니다.</li>
+                                                <li><b>구매:</b> 대체 공급사를 찾고 추가 발주 방안을 검토합니다.</li>
+                                                <li><b>고객지원:</b> 고객에게 지연 사유와 대응 계획을 안내합니다.</li>
+                                            </ul>
+                                            <p>핵심은 <b>여러 시스템에 흩어진 정보를 연결하고, 부서별 대응을 하나의 업무 흐름으로 관리하는 것</b>입니다. 온톨로지 스튜디오와 Process GPT가 각각 어떤 역할을 하는지 살펴보겠습니다.</p>
+                                        </div>
+
+                                        <blockquote><p>1. 여러 시스템에 흩어진 정보부터 연결해야 합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>발주와 계약 정보는 ERP에, 선적과 재고 정보는 창고 관리 시스템(WMS)에 저장되어 있습니다. 통관 신고는 관세 시스템에서, 고객 정보와 클레임은 CRM에서 관리합니다. 담당자는 납기 지연의 영향을 파악하기 위해 이 정보를 함께 확인해야 합니다.</p>
+                                            <p>같은 품목을 가리키는 식별자도 시스템마다 다릅니다. ERP에서는 <b>item_id</b>, 창고 시스템에서는 <b>SKU 코드</b>, 관세 시스템에서는 별도의 참조 품목 코드를 사용합니다. 담당자가 경험으로 알고 있는 식별자 간 대응 관계를 시스템에서도 활용할 수 있도록 정리해야 합니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/01-four-systems.jpg" alt="ERP·WMS·통관·CRM 네 시스템과 서로 다른 품목 식별자" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">같은 품목을 시스템마다 서로 다른 식별자로 관리하므로, 데이터를 함께 조회하려면 식별자 간 대응 관계가 필요합니다.</p>
+                                        </div>
+
+<blockquote><p>2. 온톨로지에 데이터 관계와 업무 규칙을 정의합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p><a href="../ontologystudio.html">온톨로지 스튜디오</a>에서는 발주·선적·재고 등 업무 개념과 그 관계를 지식 지도로 표현합니다. 각 개념을 원본 시스템의 테이블에 연결하고, <b>어떤 컬럼을 기준으로 데이터를 연결할지 조인 규칙으로 정의</b>합니다.</p>
+                                            <p>이 구조에서는 데이터를 원본 시스템에 유지하면서 필요한 정보를 연결해 조회합니다. 온톨로지 스튜디오는 개인 컴퓨터에 설치해 사용하는 데스크톱 앱입니다.</p>
+                                            <p style="text-decoration: underline;">지식 지도에 정의하는 두 가지 개념</p>
+                                            <ul>
+                                                <li><b>기록에 해당하는 개념:</b> 발주, 선적, 재고, 클레임처럼 원본 시스템의 테이블에 연결되는 업무 정보입니다.</li>
+                                                <li><b>규칙으로 판단하는 개념:</b> 납기 지연 위험, 위약금 적용 여부, 안전재고 미달 여부, 재고 커버리지처럼 계산이나 조건 판단이 필요한 정보입니다.</li>
+                                            </ul>
+                                            <p>예를 들어 지연이 며칠 이상일 때 위약금을 적용하는지, 현재 재고로 수요를 며칠간 충당할 수 있는지 등을 업무 규칙으로 정의합니다. <b>규칙이 바뀌면 온톨로지의 해당 정의를 수정해 에이전트가 참조하는 기준을 갱신할 수 있습니다.</b></p>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">업무 규칙을 온톨로지에서 관리하면 현업 담당자가 판단 기준을 확인하고 수정하기 쉽습니다. 여러 에이전트가 같은 기준을 참조하도록 관리하는 데도 도움이 됩니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/02-ontology-graph.jpg" alt="온톨로지 스튜디오의 지식 지도 그래프" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">온톨로지 스튜디오에서 업무 개념을 연결하고, 시스템 간 데이터 조회에 필요한 조인 규칙을 정의합니다.</p>
+                                        </div>
+
+<blockquote><p>3. 대량의 기록은 원본 시스템에서 조회합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>일별 재고나 통관 신고처럼 데이터가 많은 기록은 원본 시스템에 유지합니다. 질의에 필요한 컬럼만 조회해 가져오도록 구성합니다.</p>
+                                            <p>시계열 기록을 모두 그래프에 복제하면 저장 공간과 처리 부담이 커집니다. <b>온톨로지는 데이터의 위치와 관계를 정의하고, 조회와 계산은 원본 데이터베이스에서 수행</b>하도록 역할을 나눕니다.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <div style="max-width: 660px; margin: 0 auto; border: 2px solid #1a1a2e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 24px 22px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
+                                                <div style="text-align: center; font-weight: 700; color: #7c4dbc; margin-bottom: 4px;">🗺️ 지식 지도 (온톨로지 스튜디오)</div>
+                                                <div style="text-align: center; font-size: 13px; color: #666; margin-bottom: 14px;">개념·데이터 관계·업무 규칙을 정의하고 원본 데이터를 조회</div>
+                                                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 16px;">
+                                                    <span style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">📐 납기 리스크</span>
+                                                    <span style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">📐 위약금 적용 조건</span>
+                                                    <span style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">📐 안전재고 미달</span>
+                                                    <span style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">📐 재고 커버리지</span>
+                                                </div>
+                                                <div style="text-align: center; color: #5b6b9e; font-size: 20px; margin-bottom: 10px;">▲ &nbsp; 필요한 컬럼을 원본에서 조회 &nbsp; ▲</div>
+                                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                                    <div style="flex: 1 1 130px; border: 2px solid #5b6b9e; border-radius: 10px; background: #fff; padding: 12px 8px; text-align: center; font-size: 14px;"><b>ERP</b><br><span style="font-size:12px; color:#777;">발주·계약<br>item_id</span></div>
+                                                    <div style="flex: 1 1 130px; border: 2px solid #5b6b9e; border-radius: 10px; background: #fff; padding: 12px 8px; text-align: center; font-size: 14px;"><b>창고 시스템</b><br><span style="font-size:12px; color:#777;">선적·재고<br>SKU 코드</span></div>
+                                                    <div style="flex: 1 1 130px; border: 2px solid #5b6b9e; border-radius: 10px; background: #fff; padding: 12px 8px; text-align: center; font-size: 14px;"><b>관세 시스템</b><br><span style="font-size:12px; color:#777;">통관 신고<br>reference_item_code</span></div>
+                                                    <div style="flex: 1 1 130px; border: 2px solid #5b6b9e; border-radius: 10px; background: #fff; padding: 12px 8px; text-align: center; font-size: 14px;"><b>CRM</b><br><span style="font-size:12px; color:#777;">고객·클레임</span></div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">온톨로지는 데이터의 관계와 조회 규칙을 관리하고, 실제 기록은 각 원본 시스템에 유지합니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/03-keep-in-source.jpg" alt="원본 데이터소스 목록 — 기록은 원본 시스템에 둔다" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">대량의 재고·통관 기록을 복제하지 않고 필요한 데이터만 원본 시스템에서 조회합니다.</p>
+                                        </div>
+
+<blockquote><p>4. BPMN으로 담당 역할과 승인 절차를 설계합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>정보를 연결한 다음에는 <b>업무 순서와 담당 역할, 사람의 승인이 필요한 단계</b>를 정해야 합니다. <a href="../processgpt.html">Process GPT</a>에서는 이를 BPMN 다이어그램으로 설계합니다. 시연 화면은 왼쪽 레인에 사람의 업무를, 오른쪽 레인에 에이전트의 업무를 배치해 역할을 구분합니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/04-bpmn-design.jpg" alt="BPMN 다이어그램 — 왼쪽은 사람, 오른쪽은 에이전트 레인" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">BPMN 다이어그램에서 사람과 에이전트의 담당 업무, 실행 순서, 승인 지점을 함께 정의합니다.</p>
+                                        </div>
+
+<blockquote><p>5. 에이전트가 지연 영향을 분석하고 대응안을 작성합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>조달 담당자가 발주 번호와 고객 정보를 입력해 모니터링 대상으로 등록하면 분석이 시작됩니다. 이후에는 프로세스에 정의된 순서에 따라 에이전트가 업무를 수행하고, 앞 단계의 결과를 다음 단계에 전달합니다. 담당자는 뒤에서 설명할 승인 단계에서 대응안을 검토합니다.</p>
+                                            <p style="text-decoration: underline;"><b>① 조달 에이전트</b></p>
+                                            <p>시연에서는 조회 순서를 하나하나 지정하지 않습니다. 에이전트가 지식 지도에서 업무 개념과 원본 데이터의 연결 관계를 확인하고, <b>필요한 데이터를 조회할 질의를 생성해 실행</b>합니다.</p>
+                                            <p>조회 결과, 선적은 원산지 증명서 미첨부로 9일째 통관이 보류된 상태였습니다. 시연의 계약 조건은 납기 지연 시 발주 금액의 2%를 위약금으로 적용합니다. 발주 금액이 $81,307이므로 예상 위약금은 반올림해 <b>약 $1,626</b>입니다.</p>
+                                            <p>분석 결과에는 <b>적용한 업무 규칙과 조회 근거</b>도 포함됩니다. 어느 데이터 소스의 어떤 테이블에서 몇 건을 조회했는지 확인할 수 있습니다.</p>
+                                            <p>발주는 ERP에, 선적은 창고 시스템에 있지만 온톨로지에 정의한 관계를 바탕으로 함께 조회할 수 있습니다. 발주 번호와 선적의 참조 발주 번호를 연결하는 규칙이 시스템 간 조회의 기준이 됩니다.</p>
+                                            <p style="text-decoration: underline;"><b>② 재고·구매 에이전트</b></p>
+                                            <p>재고·구매 에이전트는 조달 에이전트의 보고서를 전달받아 안전재고 미달 여부를 확인하고 대체 공급사를 비교합니다. <b>앞 단계의 산출물이 다음 단계의 입력으로 전달되도록</b> 업무 흐름을 구성한 것입니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/05-procurement-agent.jpg" alt="조달 에이전트의 납기 리스크 점검 결과" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">조달 분석 결과에는 통관 지연 기간과 사유, 예상 위약금, 데이터 조회 근거가 함께 표시됩니다.</p>
+                                        </div>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> 재고·구매 에이전트의 후속 분석</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/06-inventory-agent.jpg" alt="재고 영향 분석과 대체 공급사 비교 결과" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">재고·구매 에이전트가 앞 단계의 보고서를 바탕으로 재고 부족 가능성과 대체 공급사를 검토합니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+<blockquote><p>6. 대체 발주는 담당자의 승인을 거칩니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p><b>대체 발주는 비용이 발생하는 의사결정</b>이므로, 에이전트가 작성한 대응안을 사람이 검토하도록 구성했습니다.</p>
+                                            <ul>
+                                                <li><b>에이전트의 조회 권한:</b> 시연에서는 읽기 전용으로 설정하고, 발주서는 초안까지만 작성합니다.</li>
+                                                <li><b>사람의 승인:</b> 팀장이 대응안을 승인해야 다음 단계로 진행합니다.</li>
+                                                <li><b>승인 결과에 따른 분기:</b> BPMN 게이트웨이가 선택된 경로로 업무를 전달하고, 결정 내용은 이력에 남습니다.</li>
+                                            </ul>
+                                            <p>승인이 완료되면 고객지원 에이전트가 회신 초안을 작성합니다. CRM의 클레임에서 출발해 고객·주문·발주·선적 정보를 차례로 확인하고, ERP와 창고 시스템의 조회 결과를 반영합니다. 회신 본문은 입력 폼에 채워지며, <b>참조한 시스템과 테이블, 조회 건수</b>도 함께 기록됩니다.</p>
+                                            <p>이렇게 통관 지연의 영향 분석부터 대체 발주 검토, 승인, 고객 회신 작성까지 하나의 프로세스로 이어집니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/07-hitl-approval.jpg" alt="대체 발주 승인 (HITL) — 사람이 승인/반려를 고르는 화면" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">대체 발주안은 팀장의 승인을 거쳐 다음 단계로 전달됩니다.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/08-customer-reply.jpg" alt="고객 회신문 작성 — 본문과 확인한 시스템·테이블 근거" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">고객지원 에이전트가 관련 정보를 다시 확인하고, 조회 근거와 함께 회신 초안을 작성합니다.</p>
+                                        </div>
+
+<blockquote><p>7. 실행 기록으로 분석과 대응 과정을 확인합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>각 단계에는 <b>호출한 도구, 입력값, 반환 결과</b>가 기록됩니다. 담당자는 이 기록을 통해 에이전트가 어떤 정보를 사용했는지 확인하고 분석 결과를 검토할 수 있습니다.</p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">관리할 정보</th>
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">관리 위치</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">🗺️ 지식 (개념·조인 규칙·업무 규칙)</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">지식 지도<br><a href="../ontologystudio.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 온톨로지 스튜디오</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">업무 순서와 책임: 담당자·실행 시점·승인 단계</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">업무 흐름 (BPMN)<br><a href="../processgpt.html#diff-bpmn" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">분석 근거: 도구·입력값·응답</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">실행 기록<br><a href="../processgpt.html#diff-agent" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">업무 개념과 원본 데이터의 대응 관계</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">온톨로지 연결<br><a href="../processgpt.html#diff-ontology" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="mt-30">이 사례의 핵심은 <b>데이터 관계, 업무 절차, 실행 근거를 각각 명확하게 관리하는 것</b>입니다. 기존 시스템의 연결을 활용하면서 온톨로지와 프로세스를 확장해 새로운 업무에 적용할 수 있습니다.</p>
+                                            <p>
+                                                자세한 내용은 <a href="../processgpt.html">Process GPT</a>와 <a href="../ontologystudio.html">온톨로지 스튜디오</a> 소개 페이지에서 확인하고,
+                                                <a href="https://www.process-gpt.io" target="_blank">process-gpt.io</a>에서 직접 사용해 보세요.
+                                            </p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/supplychain/09-evidence.jpg" alt="답이 그럴듯한지가 아니라 어디서 나왔는지를 따질 수 있다" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">도구 호출 내역과 프로세스 실행 상태를 통해 분석 결과의 근거와 처리 과정을 확인합니다.</p>
+                                        </div>
+
+<div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>참고 자료</b></p>
+                                            <ul style="font-size: 14px;">
+                                                <li><a href="https://youtu.be/4Cx7SIHVrdA" target="_blank">데모 영상 — 공급망 납기리스크 대응 시연 (자막 포함)</a></li>
+                                                <li><a href="../ontologystudio.html" target="_blank">온톨로지 스튜디오 제품 소개</a></li>
+                                                <li><a href="../processgpt.html" target="_blank">Process GPT 제품 소개</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+                
+            </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                유엔진솔루션즈는 2003년 이래 업무 프로세스 관리 (Business Process Management), AI, MSA, 기업용 SNS, PaaS 를 포함한 클라우드 플랫폼, 도메인 기반 개발 방법을 지향하는 개발 프레임워크 등을 개발하고 오픈소스 프로젝트로 제공하는 기술 집약적 기업입니다.
+                            </p>
+                            
+                            <div>                                
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                본사: 서울 서초구 사임당로 31 궁현빌딩 3층 301호<br>
+                                지사: 경상남도 창원시 성산구 상남로37
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">AI-Native Enterprise란?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX 전환 컨설팅 교육</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">AI 기반 개발의 현재와 향후 전망</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">선도개발 구현 컨설팅</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM 은 죽지 않았다</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Microservices</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="whymsahard.html">왜 마이크로서비스 아키텍처는 어려운가?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">MSA School 바로가기</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li>
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">유엔진솔루션즈 | 사업자등록번호: 2118795355 | 대표: 장진영</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->        
+        
+    </body>
+</html>
