@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>기업용 MCP 허브: 서버 연결부터 권한·호출 이력 관리까지 | uEngine 블로그</title>
+        <meta name="description" content="여러 MCP 서버를 운영하려면 연결 설정과 함께 권한, 버전, 호출 이력을 관리해야 합니다. Process GPT의 MCP 허브에서 서버를 등록하고 연결을 검증하며, 툴별 권한과 운영 상태를 확인하는 방법을 살펴봅니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/mcp-hub.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="기업용 MCP 허브: 서버 연결부터 권한·호출 이력 관리까지 | uEngine 블로그">
+        <meta property="og:description" content="여러 MCP 서버를 운영하려면 연결 설정과 함께 권한, 버전, 호출 이력을 관리해야 합니다. Process GPT의 MCP 허브에서 서버를 등록하고 연결을 검증하며, 툴별 권한과 운영 상태를 확인하는 방법을 살펴봅니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/mcp-hub.html">
+        <meta property="og:image" content="https://www.uengine.org/images/pgpt-features/mcphub/01-server-list.jpg">
+        <meta property="og:image:alt" content="기업용 MCP 허브: 서버 연결부터 권한·호출 이력 관리까지 | uEngine 블로그">
+        <meta property="article:published_time" content="2026-09-02">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="기업용 MCP 허브: 서버 연결부터 권한·호출 이력 관리까지 | uEngine 블로그">
+        <meta name="twitter:description" content="여러 MCP 서버를 운영하려면 연결 설정과 함께 권한, 버전, 호출 이력을 관리해야 합니다. Process GPT의 MCP 허브에서 서버를 등록하고 연결을 검증하며, 툴별 권한과 운영 상태를 확인하는 방법을 살펴봅니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/pgpt-features/mcphub/01-server-list.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"기업용 MCP 허브: 서버 연결부터 권한·호출 이력 관리까지","description":"여러 MCP 서버를 운영하려면 연결 설정과 함께 권한, 버전, 호출 이력을 관리해야 합니다. Process GPT의 MCP 허브에서 서버를 등록하고 연결을 검증하며, 툴별 권한과 운영 상태를 확인하는 방법을 살펴봅니다.","image":["https://www.uengine.org/images/pgpt-features/mcphub/01-server-list.jpg"],"url":"https://www.uengine.org/contents/blog/mcp-hub.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/mcp-hub.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-09-02","dateModified":"2026-09-02"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"기업용 MCP 허브: 서버 연결부터 권한·호출 이력 관리까지","item":"https://www.uengine.org/contents/blog/mcp-hub.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">AI-Native Enterprise란?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX 전환 컨설팅 교육</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">AI 기반 개발의 현재와 향후 전망</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">선도개발 구현 컨설팅</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM 은 죽지 않았다</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Microservices <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">왜 마이크로서비스 아키텍처는 어려운가?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">MSA School 바로가기</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://uengine.stibee.com/" target="_blank" style="font-size: 18px;">Newsletter</a>
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                                     
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+ 
+                            <!-- Languages -->
+                            <!-- <li>
+                                <a href="#" class="mn-has-sub opacity-1">Kr <i class="mi-chevron-down"></i></a>
+                                <ul class="mn-sub to-left">                                    
+                                    <li><a href="../../enContents/webinars.html">English</a></li>
+                                    <li><a href="../webinars.html">Korean</a></li>
+                                </ul>
+                                
+                            </li> -->
+                            <!-- End Languages -->                             
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">기업용 MCP 허브: 서버 연결부터 권한·호출 이력 관리까지</span>
+                                    </h1>
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  September 02, 2026</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        <div class="row">
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    <div class="blog-item-body chat-gpt">
+                                        <style>
+                                        .blog-item-body details > summary::-webkit-details-marker { display: none; }
+                                        .blog-item-body details > summary::marker { content: ""; }
+                                        .blog-item-body details > summary:hover { background: #f3eeff; border-radius: 12px; }
+                                        .blog-item-body details[open] > summary { border-bottom: 1px solid #e3e6ef; border-radius: 12px 12px 0 0; }
+                                        .blog-item-body details[open] > summary > span:first-child { transform: rotate(90deg); display: inline-block; }
+                                        </style>
+
+                                        <div class="mb-50 prose">
+                                            <p>MCP(Model Context Protocol)는 AI 에이전트가 외부 도구를 호출할 때 사용하는 연결 규약입니다. 기업에서 여러 MCP 서버를 운영하려면 연결 설정뿐 아니라 서버 상태, 사용 권한, 변경 이력도 함께 관리해야 합니다.</p>
+                                            <p>기존 Process GPT에서는 테넌트별 설정에 MCP 서버 정보를 JSON으로 입력했습니다. 이 방식만으로는 연결 상태를 미리 확인하거나, 제공되는 툴과 설정 변경 이력을 체계적으로 관리하기 어려웠습니다.</p>
+                                            <p><b>MCP 허브</b>는 이러한 운영 기능을 한곳에 모았습니다. 사이드바의 <b>MCP 서버·갤러리·관측·연계 표준</b> 메뉴를 통해 서버 등록부터 권한 설정, 호출 이력 확인까지 관리할 수 있습니다.</p>
+                                        </div>
+
+                                        <blockquote><p>1. 서버를 등록하기 전에 연결 상태를 확인합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>서버 목록에는 제공사, 전송 방식, 버전, 연결 상태가 표시됩니다. 시연 화면의 ‘정상 1 / 장애 4’는 주기적인 연결 점검 결과를 집계한 값입니다.</p>
+                                            <p style="text-decoration: underline;">저장 전 연결 테스트</p>
+                                            <p>서버를 저장하기 전에 연결을 테스트하고, 사용할 수 있는 툴 목록을 확인합니다. 예를 들어 ‘툴 3개를 찾았습니다’라는 결과로 등록할 서버가 제공하는 기능을 미리 파악할 수 있습니다. 연결 검증은 MCP 검증 서비스에서 수행합니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/01-server-list.jpg" alt="MCP 서버 목록 — 제공사·전송 방식·버전·실시간 연결 상태" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">서버 목록에서 연결 정보와 주기적인 상태 점검 결과를 확인합니다.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/02-register-test.jpg" alt="MCP 서버 등록 화면 — 저장 전 연결 테스트" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">새 서버를 저장하기 전에 연결을 테스트하고 제공되는 툴을 확인합니다.</p>
+                                        </div>
+
+<blockquote><p>2. 툴·권한·설정 버전을 서버별로 관리합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <ul>
+                                                <li><b>상태:</b> 연결 정보, 지연 시간, 최근 24시간 가용성, 연속 실패 횟수를 확인합니다.</li>
+                                                <li><b>툴 카탈로그:</b> 툴 이름과 입력 스키마를 저장합니다. 에이전트가 사용할 기능을 개별 툴 단위로 선택할 수 있습니다.</li>
+                                                <li><b>버전 관리:</b> 연결 설정을 버전별 스냅샷으로 보관합니다. 설정을 변경하면 새 버전을 만들고, 문제가 발생하면 이전 버전으로 되돌릴 수 있습니다.</li>
+                                                <li><b>접근 권한:</b> 역할·사용자·에이전트별로 권한을 설정합니다. 재고 변경처럼 운영 데이터에 영향을 주는 툴은 개별적으로 차단할 수 있습니다.</li>
+                                                <li><b>호출 이력:</b> 서버에 전달된 요청과 해당 요청이 발생한 프로세스 인스턴스를 확인합니다.</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">툴을 개별적으로 선택하고 권한을 제한하면 에이전트에 업무상 필요한 기능만 허용할 수 있습니다. 데이터를 조회하는 툴과 변경하는 툴을 구분해 관리하는 데도 유용합니다.</p>
+                                        </div>
+
+                                                                                <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;">
+                                                <span style="color: #7c4dbc; font-size: 13px;">▶</span> 상태 — 지연 시간·24시간 가용성·연속 실패
+                                            </summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/03-server-detail.jpg" alt="서버 상세 — 지연 시간 30ms, 24시간 가용성 78.69%" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">서버 상세 화면에서 지연 시간, 최근 24시간 가용성, 연속 실패 횟수를 확인합니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;">
+                                                <span style="color: #7c4dbc; font-size: 13px;">▶</span> 툴 카탈로그 — 입력 스키마까지 저장
+                                            </summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/04-tool-catalog.jpg" alt="툴 카탈로그 — check_stock 툴의 입력 스키마" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">툴의 입력 스키마를 확인하고, 에이전트가 사용할 툴을 개별적으로 선택합니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> 버전 관리: 설정 이력과 이전 버전 복원</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/05-versions.jpg" alt="버전 이력 — 주소를 바꿀 때마다 쌓이는 불변 스냅샷" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">설정을 변경하면 새 스냅샷이 생성됩니다. 기존 스냅샷은 유지되며 필요할 때 이전 버전을 복원할 수 있습니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;">
+                                                <span style="color: #7c4dbc; font-size: 13px;">▶</span> 접근 권한 — 역할·사용자·에이전트 단위
+                                            </summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/06-permissions.jpg" alt="접근 권한 — 역할/사용자/에이전트별 권한과 툴 단위 차단" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">역할·사용자·에이전트별로 권한을 설정하고, 데이터 변경 툴의 사용을 개별적으로 제한합니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> 호출 이력: 요청이 발생한 프로세스 확인</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/07-call-history.jpg" alt="서버로 들어온 호출 이력" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">각 호출이 어느 프로세스 인스턴스에서 발생했는지 확인합니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+<blockquote><p>3. 갤러리와 레지스트리에서 서버를 찾습니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>갤러리에서는 사전에 등록된 서버를 선택해 설치할 수 있습니다. 갤러리 목록은 저장소에 포함되어 있어 외부 인터넷에 연결되지 않은 환경에서도 확인할 수 있습니다. 실제 설치와 연결에는 해당 서버에 필요한 실행 환경과 네트워크 접근이 갖춰져 있어야 합니다.</p>
+                                            <p>외부 연결이 가능한 환경에서는 공식 MCP 레지스트리도 검색할 수 있습니다. 레지스트리에 접근할 수 없으면 해당 검색 기능을 비활성화하고 내장 갤러리를 제공합니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/08-gallery.jpg" alt="MCP 갤러리 — 검증된 서버 원클릭 설치" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">갤러리에서 등록된 서버를 선택해 설치합니다. 내장 목록은 외부 레지스트리에 접속하지 않아도 확인할 수 있습니다.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/09-registry.jpg" alt="공식 MCP 레지스트리 검색 결과" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">공식 MCP 레지스트리 검색을 지원하며, 외부 연결이 불가능하면 내장 갤러리를 사용합니다.</p>
+                                        </div>
+
+<blockquote><p>4. 호출 지표와 상세 실행 기록을 확인합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>관측 대시보드에는 실제 호출 기록을 집계한 총 호출 수, 성공률, P95 응답 시간이 표시됩니다. P95는 전체 호출의 95%가 해당 시간 이내에 응답했다는 뜻입니다. 서버별·툴별 응답 시간과 오류율도 확인할 수 있습니다.</p>
+                                            <p>개별 호출을 선택하면 입력과 출력, 연결된 프로세스 인스턴스와 워크아이템이 표시됩니다. 같은 트레이스 ID를 통해 LiteLLM 프록시에 기록된 언어 모델 호출도 함께 추적할 수 있습니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/10-observability.jpg" alt="MCP 관측 대시보드 — 총 호출 113건, 성공률 88.50%, P95 15ms" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">전체 호출 지표와 서버별·툴별 응답 시간 및 오류율을 확인합니다.</p>
+                                        </div>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> 상세 추적: 툴 호출과 언어 모델 호출의 연결</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/11-call-detail.jpg" alt="호출 상세 — 입력·출력과 프로세스 인스턴스 연결" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">개별 호출의 입력·출력과 관련 업무를 확인하고, 같은 트레이스 ID로 언어 모델 호출까지 추적합니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+<blockquote><p>5. 프로세스·워크플로·MCP 툴의 역할을 구분합니다</p></blockquote>
+
+                                        <div class="mb-50">
+                                            <div style="max-width: 660px; margin: 0 auto; border: 2px solid #1a1a2e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 24px 22px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
+                                                <div style="border: 2px solid #1a1a2e; border-radius: 12px; background: #fff; padding: 16px 14px; margin-bottom: 12px;">
+                                                    <div style="font-weight: 700; color: #1a1a2e;">🏢 프로세스</div>
+                                                    <div style="font-size: 14px; color: #555; margin-top: 6px;">부서별 담당 역할, 승인 절차, 대기 상태를 관리하는 업무 흐름</div>
+                                                </div>
+                                                <div style="border: 2px dashed #5b6b9e; border-radius: 12px; background: #fff; padding: 16px 14px; margin-bottom: 12px;">
+                                                    <div style="font-weight: 700; color: #5b6b9e;">⚙️ n8n 워크플로우</div>
+                                                    <div style="font-size: 14px; color: #555; margin-top: 6px;">시스템 간 데이터 전달과 자동 처리 순서를 구성하는 흐름</div>
+                                                </div>
+                                                <div style="border: 2px solid #7c4dbc; border-radius: 12px; background: linear-gradient(180deg, #faf7ff 0%, #f3ecff 100%); padding: 16px 14px;">
+                                                    <div style="font-weight: 700; color: #7c4dbc;">🔧 MCP 툴</div>
+                                                    <div style="font-size: 14px; color: #555; margin-top: 6px;">한 번의 호출로 실행하는 개별 기능</div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">단계 수가 많더라도 시스템 내부에서 자동으로 처리되는 흐름과, 여러 부서의 승인·대기가 필요한 업무는 관리 요구사항이 다릅니다.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p>이 구성에서는 <b>부서별 역할과 승인 이력을 관리하는 업무는 BPMN 프로세스에, 시스템 간 자동 처리는 n8n 워크플로에, 개별 기능 호출은 MCP 툴에 배치</b>합니다. 노드 수보다는 담당자 배정, 승인, 장기 대기 등 어떤 업무 관리 기능이 필요한지를 기준으로 역할을 나눕니다.</p>
+                                        </div>
+
+                                        <blockquote><p>6. 등록 단계에서 연계 표준 준수 여부를 검사합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>사내 MCP 서버에 적용할 연계 표준에는 전송 방식, 인증정보 참조 방식, 툴 이름 규칙, 오류 분류, 응답 시간 등이 포함됩니다.</p>
+                                            <p>등록 전에 연결 상태, 이름 규칙, 스키마 설명, 응답 시간 등을 자동으로 검사하고 A·B·C 등급으로 결과를 표시합니다. 운영자는 등록 단계에서 표준 준수 수준과 보완할 항목을 확인할 수 있습니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/12-integration-standard.jpg" alt="사내 MCP 서버 연계 표준 문서 화면" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">연계 표준에서 연결 방식, 인증정보 관리, 이름 규칙, 오류 분류와 응답 시간 기준을 확인합니다.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/mcphub/13-compliance-grade.jpg" alt="표준 준수 자동 검사 결과 — A 등급 판정" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">등록 전 자동 검사 결과를 A·B·C 등급으로 표시합니다.</p>
+                                        </div>
+
+<div class="mb-50 prose">
+                                            <p style="text-decoration: underline;">MCP 허브 도입으로 달라진 관리 방식</p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">기존 방식</th>
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">MCP 허브</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">테넌트별 JSON 설정으로 연결 정보 관리</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">서버·툴·버전·권한을 구분해 관리</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">실행 시점에 연결 설정 확인</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">저장 전 연결 테스트 및 표준 준수 등급 확인</td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">서버 단위로 기능 연결</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">툴별 선택 및 접근 권한 설정</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">이전 설정 복원에 별도 이력 관리 필요</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">설정 스냅샷을 활용한 이전 버전 복원</td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">오류 원인 확인을 위해 관련 로그 조사</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">호출 이력에서 관련 프로세스와 언어 모델 호출 추적</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>Process GPT에서 확인하기</b></p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">이 글의 개념</th>
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Process GPT의 기능</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">필요한 툴을 선택해 사내 시스템 호출</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">MCP·A2A 기반 멀티 에이전트 실행<br><a href="../processgpt.html#diff-agent" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">부서별 역할과 승인을 프로세스로 관리</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">BPMN 기반 사람·에이전트 협업 설계<br><a href="../processgpt.html#diff-bpmn" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">시스템에 흩어진 업무 개념을 연결</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">온톨로지 기반 지식 연결<br><a href="../processgpt.html#diff-ontology" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="mt-30">
+                                                MCP 허브는 <a href="../processgpt.html">Process GPT</a>에 기본 탑재되어 있습니다.
+                                                <a href="https://www.process-gpt.io" target="_blank">process-gpt.io</a>에서 직접 확인해 보세요.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>참고 자료</b></p>
+                                            <ul style="font-size: 14px;">
+                                                <li><a href="https://youtu.be/vQlC6otnHJk" target="_blank">데모 영상 — MCP 허브</a></li>
+                                                <li><a href="https://modelcontextprotocol.io" target="_blank">Model Context Protocol 공식 문서</a></li>
+                                                <li><a href="../processgpt.html" target="_blank">Process GPT 제품 소개</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+                
+            </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                유엔진솔루션즈는 2003년 이래 업무 프로세스 관리 (Business Process Management), AI, MSA, 기업용 SNS, PaaS 를 포함한 클라우드 플랫폼, 도메인 기반 개발 방법을 지향하는 개발 프레임워크 등을 개발하고 오픈소스 프로젝트로 제공하는 기술 집약적 기업입니다.
+                            </p>
+                            
+                            <div>                                
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                본사: 서울 서초구 사임당로 31 궁현빌딩 3층 301호<br>
+                                지사: 경상남도 창원시 성산구 상남로37
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">AI-Native Enterprise란?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX 전환 컨설팅 교육</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">AI 기반 개발의 현재와 향후 전망</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">선도개발 구현 컨설팅</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM 은 죽지 않았다</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Microservices</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="whymsahard.html">왜 마이크로서비스 아키텍처는 어려운가?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">MSA School 바로가기</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li>
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">유엔진솔루션즈 | 사업자등록번호: 2118795355 | 대표: 장진영</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->        
+        
+    </body>
+</html>

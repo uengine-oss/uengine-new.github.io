@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>AI 에이전트의 도구 사용 현황과 오류를 분석하는 방법 | uEngine 블로그</title>
+        <meta name="description" content="AI 에이전트가 어떤 도구를 어디에서 사용하고, 어떤 상황에서 실패하는지 살펴봅니다. Process GPT의 툴 분석으로 부서·프로세스·실행 엔진별 사용량과 실패율을 비교하고 개선 대상을 찾는 방법을 소개합니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/tool-analytics.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="AI 에이전트의 도구 사용 현황과 오류를 분석하는 방법 | uEngine 블로그">
+        <meta property="og:description" content="AI 에이전트가 어떤 도구를 어디에서 사용하고, 어떤 상황에서 실패하는지 살펴봅니다. Process GPT의 툴 분석으로 부서·프로세스·실행 엔진별 사용량과 실패율을 비교하고 개선 대상을 찾는 방법을 소개합니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/tool-analytics.html">
+        <meta property="og:image" content="https://www.uengine.org/images/pgpt-features/toolanalytics/01-coverage-matrix.jpg">
+        <meta property="og:image:alt" content="AI 에이전트의 도구 사용 현황과 오류를 분석하는 방법 | uEngine 블로그">
+        <meta property="article:published_time" content="2026-09-02">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="AI 에이전트의 도구 사용 현황과 오류를 분석하는 방법 | uEngine 블로그">
+        <meta name="twitter:description" content="AI 에이전트가 어떤 도구를 어디에서 사용하고, 어떤 상황에서 실패하는지 살펴봅니다. Process GPT의 툴 분석으로 부서·프로세스·실행 엔진별 사용량과 실패율을 비교하고 개선 대상을 찾는 방법을 소개합니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/pgpt-features/toolanalytics/01-coverage-matrix.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI 에이전트의 도구 사용 현황과 오류를 분석하는 방법","description":"AI 에이전트가 어떤 도구를 어디에서 사용하고, 어떤 상황에서 실패하는지 살펴봅니다. Process GPT의 툴 분석으로 부서·프로세스·실행 엔진별 사용량과 실패율을 비교하고 개선 대상을 찾는 방법을 소개합니다.","image":["https://www.uengine.org/images/pgpt-features/toolanalytics/01-coverage-matrix.jpg"],"url":"https://www.uengine.org/contents/blog/tool-analytics.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/tool-analytics.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-09-02","dateModified":"2026-09-02"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"AI 에이전트의 도구 사용 현황과 오류를 분석하는 방법","item":"https://www.uengine.org/contents/blog/tool-analytics.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">AI-Native Enterprise란?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX 전환 컨설팅 교육</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">AI 기반 개발의 현재와 향후 전망</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">선도개발 구현 컨설팅</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM 은 죽지 않았다</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Microservices <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">왜 마이크로서비스 아키텍처는 어려운가?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">MSA School 바로가기</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://uengine.stibee.com/" target="_blank" style="font-size: 18px;">Newsletter</a>
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                                     
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+ 
+                            <!-- Languages -->
+                            <!-- <li>
+                                <a href="#" class="mn-has-sub opacity-1">Kr <i class="mi-chevron-down"></i></a>
+                                <ul class="mn-sub to-left">                                    
+                                    <li><a href="../../enContents/webinars.html">English</a></li>
+                                    <li><a href="../webinars.html">Korean</a></li>
+                                </ul>
+                                
+                            </li> -->
+                            <!-- End Languages -->                             
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">AI 에이전트의 도구 사용 현황과 오류를 분석하는 방법</span>
+                                    </h1>
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  September 02, 2026</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        <div class="row">
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    <div class="blog-item-body chat-gpt">
+                                        <style>
+                                        .blog-item-body details > summary::-webkit-details-marker { display: none; }
+                                        .blog-item-body details > summary::marker { content: ""; }
+                                        .blog-item-body details > summary:hover { background: #f3eeff; border-radius: 12px; }
+                                        .blog-item-body details[open] > summary { border-bottom: 1px solid #e3e6ef; border-radius: 12px 12px 0 0; }
+                                        .blog-item-body details[open] > summary > span:first-child { transform: rotate(90deg); display: inline-block; }
+                                        </style>
+
+                                        <div class="mb-50 prose">
+                                            <p>프로세스를 개선할 때는 보통 업무별 소요 시간과 담당자별 처리량을 확인합니다. AI 에이전트가 업무를 수행하기 시작하면 여기에 한 가지 질문이 더 필요합니다. <b>에이전트가 사용하는 도구는 어디에서 얼마나 호출되고, 어떤 상황에서 실패할까요?</b></p>
+                                            <p>도구의 호출 기록을 프로세스·부서·실행 엔진과 연결하면 사용 현황과 오류 발생 패턴을 함께 살펴볼 수 있습니다. 이 글에서는 제품 화면의 명칭에 맞춰 도구를 ‘툴’로 표기합니다.</p>
+                                            <p>Process GPT의 <b>툴 분석</b>은 이러한 정보를 프로세스 분석 메뉴에서 제공합니다. 분석 대상의 범위를 확인한 뒤 교차표로 사용 현황을 비교하고, 개선이 필요한 지점을 찾는 순서로 살펴보겠습니다.</p>
+                                        </div>
+
+                                        <blockquote><p>1. 분석에 포함된 데이터의 범위를 확인합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>툴 분석 화면은 먼저 <b>호출 기록이 업무 정보와 얼마나 연결되어 있는지</b> 보여 줍니다. 시연의 툴 호출 243건 중 프로세스를 식별할 수 있는 비율과 사용 부서까지 확인할 수 있는 비율을 표시합니다.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">일부 호출에 프로세스나 부서 정보가 없다면 분석 결과도 전체 사용 현황을 보여 주지 못할 수 있습니다. 따라서 수치를 해석하기 전에 데이터가 어느 범위까지 연결되어 있는지 확인해야 합니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/toolanalytics/01-coverage-matrix.jpg" alt="툴 분석 화면 — 커버리지 안내와 툴×부서 교차표" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">전체 호출 중 프로세스와 사용 부서를 확인할 수 있는 비율을 먼저 표시합니다.</p>
+                                        </div>
+
+<blockquote><p>2. 부서·프로세스·실행 엔진별로 사용 현황을 비교합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>기본 교차표는 행에 툴을, 열에 사용 부서를 표시합니다. 색이 진할수록 호출 횟수가 많습니다. 시연에서는 재고 조회 툴을 경영지원팀이 많이 사용하는 것을 확인할 수 있습니다.</p>
+                                            <p>열의 기준과 측정값을 바꾸면 다음과 같은 항목을 비교할 수 있습니다.</p>
+                                            <ul>
+                                                <li><b>프로세스별 비교:</b> 같은 툴을 사용하는 업무를 확인합니다. 시연에서는 재고 관리와 정산 검토 프로세스가 같은 툴을 공유합니다.</li>
+                                                <li><b>실행 엔진별 비교:</b> 딥 에이전트와 컴플리션 CLI 에이전트가 각각 어떤 툴을 호출하는지 비교합니다. 실행 엔진에 따른 사용 패턴을 살펴볼 수 있습니다.</li>
+                                                <li><b>실패율 비교:</b> 호출 횟수 대신 실패율을 표시해 오류가 집중되는 조합을 찾습니다. 시연에서는 재고 확인 툴의 실패가 재고 관리 프로세스에 집중되어 있습니다.</li>
+                                            </ul>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/toolanalytics/02-axis-dropdown.jpg" alt="열 축을 바꾸는 드롭다운" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">교차표의 열을 부서·프로세스·실행 엔진으로 바꿔 툴 사용 현황을 비교합니다.</p>
+                                        </div>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> 프로세스별 비교: 같은 툴을 사용하는 업무</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/toolanalytics/03-by-process.jpg" alt="열을 프로세스로 바꾼 교차표" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">프로세스를 기준으로 보면 재고 관리와 정산 검토 업무가 같은 툴을 사용한다는 점을 확인할 수 있습니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> 실패율 비교: 오류가 집중되는 구간</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../images/pgpt-features/toolanalytics/04-failure-rate.jpg" alt="측정값을 실패율(%)로 바꾼 교차표 — 합계행이 없다" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">실패율을 선택하면 오류가 집중되는 조합을 확인할 수 있습니다. 실패율은 단순 합산할 수 없으므로 합계 행을 표시하지 않습니다.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+<blockquote><p>3. 실패율과 평균 응답 시간은 단순 합산하지 않습니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>측정값을 실패율로 바꾸면 합계 행이 사라집니다. 비율을 단순히 더한 값을 전체 실패율로 오해하지 않도록 한 설계입니다.</p>
+                                            <p>각 셀의 호출 건수가 다르므로 실패율을 더해서는 전체 실패율을 구할 수 없습니다. 전체 실패 건수를 전체 호출 건수로 나누어야 합니다. 평균 응답 시간도 단순 합산할 수 없어 이 화면에서는 합계 행을 제공하지 않습니다.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <div style="max-width: 620px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <div style="flex: 1 1 260px; border: 2px solid #3a6fd8; border-radius: 12px; background: #f1f6ff; padding: 16px 14px;">
+                                                    <div style="font-weight: 700; color: #2c56ad;">➕ 가산 가능 (호출 수)</div>
+                                                    <div style="font-size: 14px; color: #555; margin-top: 6px;">행·열 합계를 보여준다</div>
+                                                </div>
+                                                <div style="flex: 1 1 260px; border: 2px solid #c14b4b; border-radius: 12px; background: #fff2f2; padding: 16px 14px;">
+                                                    <div style="font-weight: 700; color: #9c3131;">🚫 가산 불가 (실패율·평균)</div>
+                                                    <div style="font-size: 14px; color: #555; margin-top: 6px;">합계를 아예 렌더링하지 않는다</div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">호출 횟수, 비율, 평균은 집계 방법이 다릅니다. 지표의 성격에 맞게 표시해야 분석 결과를 올바르게 해석할 수 있습니다.</p>
+                                        </div>
+
+                                        <blockquote><p>4. 툴을 제공하는 부서와 사용하는 부서를 구분합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>교차표 아래의 툴별 현황에서는 제공 MCP 서버, 등록 부서, 실패율, 평균 응답 시간, 사용 프로세스 수를 함께 확인할 수 있습니다.</p>
+                                            <p>오른쪽에는 사용량이 많은 부서·툴 조합이 표시됩니다. 이때 <b>툴을 제공하는 부서와 실제 사용하는 부서</b>를 구분합니다. 예를 들어 물류팀이 등록한 재고 툴을 경영지원팀이 가장 많이 쓸 수 있습니다. 두 정보를 함께 보면 운영 담당 부서가 어떤 사용 부서와 개선을 협의해야 할지 판단하는 데 도움이 됩니다.</p>
+                                            <p>이를 지원하기 위해 데이터웨어하우스에도 MCP 툴·서버별 분류 기준과 툴 사용 집계 구조를 추가했습니다. 서버는 분류, 제공 부서, 개별 서버 순으로 상세 현황을 확인할 수 있도록 구성했습니다.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../images/pgpt-features/toolanalytics/05-tool-status.jpg" alt="툴별 현황과 부서·툴 상위 조합" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">툴별 운영 지표와 사용량이 많은 부서·툴 조합을 함께 확인합니다. 제공 부서와 사용 부서는 별도로 구분합니다.</p>
+                                        </div>
+
+<blockquote><p>5. 호출 기록에 누락된 업무 정보를 보완했습니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>프로세스와 부서별 분석을 제공하려면 호출 기록에 해당 정보가 연결되어 있어야 합니다. 개발 과정에서 다음 두 가지 누락을 보완했습니다. 아래 수치는 당시 점검한 데이터 기준입니다.</p>
+                                            <ul>
+                                                <li><b>프로세스 연결 누락:</b> 일부 툴 호출 로그에 인스턴스 ID가 없었습니다. 워크아이템을 통해 연결 관계를 찾아, 프로세스를 식별할 수 있는 호출을 90건에서 150건으로 늘렸습니다.</li>
+                                                <li><b>부서 정보 갱신 누락:</b> 점검한 워크아이템 295건의 부서 정보가 모두 비어 있었습니다. 갱신 처리에서 부서 컬럼이 빠져 있어, 나중에 확인된 조직 정보가 기존 기록에 반영되지 않는 문제를 수정했습니다.</li>
+                                            </ul>
+                                            <p>분석 화면의 정확도는 원본 기록과 업무 정보의 연결 상태에 달려 있습니다. 차트를 구성하는 작업과 함께 누락된 데이터와 갱신 로직을 점검해야 했습니다.</p>
+                                        </div>
+
+                                        <blockquote><p>6. 사용 현황과 오류 패턴을 바탕으로 개선 대상을 정합니다</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>툴 분석을 통해 프로세스·부서·실행 엔진별 사용량과 실패율을 한 화면에서 비교할 수 있습니다. 자주 쓰이는 툴과 오류가 집중되는 업무를 함께 확인하는 데 유용합니다.</p>
+                                            <p>분석 결과를 바탕으로 <b>어떤 툴을 우선 개선할지, 오류 원인을 어느 프로세스에서 조사할지, 어떤 부서와 협의할지</b> 정할 수 있습니다. 다만 실패율만으로 원인을 단정하기보다는 해당 호출의 상세 기록을 함께 확인해야 합니다.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>Process GPT에서 확인하기</b></p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">이 글의 개념</th>
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Process GPT의 기능</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">툴 호출을 독립적인 분석 대상으로 관리</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">MCP 기반 멀티 에이전트 실행<br><a href="../processgpt.html#diff-agent" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">툴 사용 기록을 프로세스·부서와 연결</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">BPMN 프로세스 인스턴스·워크아이템 기반 실행<br><a href="../processgpt.html#diff-bpmn" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">실패 지점을 찾아 개선에 활용</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">실행 기록 기반 자기학습<br><a href="../processgpt.html#diff-selflearning" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="mt-30">
+                                                툴 분석은 <a href="../processgpt.html">Process GPT</a>의 프로세스 분석 메뉴에 포함되어 있습니다.
+                                                <a href="https://www.process-gpt.io" target="_blank">process-gpt.io</a>에서 직접 확인해 보세요.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>참고 자료</b></p>
+                                            <ul style="font-size: 14px;">
+                                                <li><a href="https://youtu.be/6qz0clRfT5M" target="_blank">데모 영상 — 툴 분석</a></li>
+                                                <li><a href="https://youtu.be/vQlC6otnHJk" target="_blank">데모 영상 — MCP 허브</a></li>
+                                                <li><a href="../processgpt.html" target="_blank">Process GPT 제품 소개</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+                
+            </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                유엔진솔루션즈는 2003년 이래 업무 프로세스 관리 (Business Process Management), AI, MSA, 기업용 SNS, PaaS 를 포함한 클라우드 플랫폼, 도메인 기반 개발 방법을 지향하는 개발 프레임워크 등을 개발하고 오픈소스 프로젝트로 제공하는 기술 집약적 기업입니다.
+                            </p>
+                            
+                            <div>                                
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                본사: 서울 서초구 사임당로 31 궁현빌딩 3층 301호<br>
+                                지사: 경상남도 창원시 성산구 상남로37
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">AI-Native Enterprise란?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX 전환 컨설팅 교육</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">AI 기반 개발의 현재와 향후 전망</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">선도개발 구현 컨설팅</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM 은 죽지 않았다</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Microservices</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="whymsahard.html">왜 마이크로서비스 아키텍처는 어려운가?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">MSA School 바로가기</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li>
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">유엔진솔루션즈 | 사업자등록번호: 2118795355 | 대표: 장진영</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->        
+        
+    </body>
+</html>
