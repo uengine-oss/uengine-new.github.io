@@ -95,10 +95,37 @@
     return {g,aura,ring,shell,name,tag,button};
   });
   let selected=0, playing=!reduced.matches, visible=true, dragging=false, dragged=false;
-  let angleY=0, angleX=0, targetZoom=1, zoom=1, focus=0, targetFocus=0;
+  const restingPitch=.32, restingYaw=-.12, diagonalTilt=-.18;
+  let angleY=restingYaw, angleX=restingPitch;
+  let targetZoom=1, zoom=1, focus=0, targetFocus=0;
   let pointer=null, lastX=0, lastY=0, startX=0, startY=0, elapsed=0, lastTime=0, frameId=0;
   let rotationTime=0, frameTime=0;
   const duration=8500;
+  const introDuration=5200, introSpeed=4.75, cruisingSpeed=.035;
+  let introElapsed=reduced.matches?introDuration:0;
+  const pageLoader=document.querySelector('.page-loader');
+  let sceneReady=!pageLoader;
+  function finishIntro() {
+    if(introElapsed===introDuration)return;
+    introElapsed=introDuration;
+    targetZoom=1.13;targetFocus=1;
+  }
+  function advanceRotation(dt) {
+    // Integrating the cubic speed curve makes the entrance frame-rate independent.
+    // Drive the same two rotation angles as pointer dragging, fast first, then slowly.
+    const before=Math.min(1,introElapsed/introDuration);
+    const next=Math.min(introDuration,introElapsed+dt);
+    const after=next/introDuration;
+    const delta=cruisingSpeed*dt/1000+
+      (introSpeed-cruisingSpeed)*introDuration/4000*
+      (Math.pow(1-before,4)-Math.pow(1-after,4));
+    const previousYaw=angleY;
+    angleY=(angleY+delta)%(Math.PI*2);
+    // Incremental pitch preserves the user's orientation when playback resumes.
+    angleX=Math.max(-.75,Math.min(.75,angleX+.10*(Math.sin(angleY)-Math.sin(previousYaw))));
+    if(before<1&&after===1)finishIntro();
+    else introElapsed=next;
+  }
   const playButton=$('#ontology-play');
   function updatePlayback() {
     playButton.textContent=playing?'Ⅱ':'▶';
@@ -107,7 +134,7 @@
     root.classList.toggle('is-paused',!playing);
     $('#ontology-announcement').textContent='';
   }
-  function pause() {playing=false;updatePlayback();}
+  function pause() {playing=false;finishIntro();updatePlayback();}
   function choose(i,manual) {
     selected=(i+products.length)%products.length;
     const p=products[selected];
@@ -148,12 +175,14 @@
     if(reduced.matches){zoom=targetZoom;focus=targetFocus;render();}
   }
   function project(pos) {
+    // Automatic playback and pointer dragging share this exact projection.
     const [x,y,z]=pos;
     const cy=Math.cos(angleY),sy=Math.sin(angleY),cx=Math.cos(angleX),sx=Math.sin(angleX);
     const rx=x*cy+z*sy, rz=-x*sy+z*cy;
     const ry=y*cx-rz*sx, depth=y*sx+rz*cx;
     const perspective=1000/(1000-depth);
-    return {x:rx*perspective,y:ry*perspective,z:depth};
+    const cr=Math.cos(diagonalTilt),sr=Math.sin(diagonalTilt);
+    return {x:(rx*cr-ry*sr)*perspective,y:(rx*sr+ry*cr)*perspective,z:depth};
   }
   function render() {
     const anchor=project(products[selected].pos);
@@ -162,7 +191,7 @@
     const sceneScale=window.innerWidth<=480?.84:1;
     const point = pos => {const p=project(pos);return {x:410+(p.x+shiftX)*zoom*sceneScale,y:284+(p.y+shiftY)*zoom*sceneScale,z:p.z};};
     const points=products.map(p=>point(p.pos));
-    const origin=point([0,-20,0]);center.setAttribute('transform',`translate(${origin.x} ${origin.y})`);
+    const origin=point([0,0,0]);center.setAttribute('transform',`translate(${origin.x} ${origin.y})`);
     orbitPaths.forEach((path,k)=>{
       let d='';
       for(let j=0;j<=90;j++){
@@ -189,7 +218,7 @@
       e.arrow.setAttribute('stroke',active?colors[products[selected].group]:'#52728e');e.arrow.setAttribute('opacity',active?.9:.2);
       e.text.setAttribute('x',(ax+bx)/2);e.text.setAttribute('y',(ay+by)/2-8);
       // Only nearby relation labels are shown, keeping the network readable.
-      e.text.setAttribute('opacity',active&&len>135?1:0);
+      e.text.setAttribute('opacity',active&&len>135&&introElapsed===introDuration?1:0);
     });
     nodeViews.forEach((v,i)=>{
       const p=points[i];v.g.setAttribute('transform',`translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`);
@@ -201,9 +230,11 @@
     frameId=0;
     if(!visible||document.hidden)return;
     const dt=lastTime?Math.min(time-lastTime,64):16;lastTime=time;
-    if(playing&&!dragging){
-      elapsed+=dt;if(!reduced.matches)rotationTime+=dt;
-      if(!reduced.matches){angleY=Math.sin(rotationTime*.00006)*.22;angleX=Math.sin(rotationTime*.00013)*.065;}
+    // Let the entrance begin after the existing page loader has revealed the scene.
+    if(!sceneReady)sceneReady=getComputedStyle(pageLoader).display==='none';
+    if(playing&&!dragging&&sceneReady){
+      if(introElapsed===introDuration)elapsed+=dt;
+      if(!reduced.matches){rotationTime+=dt;advanceRotation(dt);}
       if(elapsed>=duration)choose(selected+1,false);
     }
     const blend=reduced.matches?1:1-Math.exp(-dt/550);
@@ -215,7 +246,7 @@
   function startFrame(){if(!frameId&&visible&&!document.hidden){lastTime=0;frameId=requestAnimationFrame(tick);}}
   function camera(action) {
     pause();
-    if(action==='reset'){angleX=0;angleY=0;targetZoom=1;targetFocus=0;}
+    if(action==='reset'){angleX=restingPitch;angleY=restingYaw;targetZoom=1;targetFocus=0;}
     else targetZoom=Math.max(.72,Math.min(1.8,targetZoom+(action==='in'?.16:-.16)));
     if(reduced.matches){zoom=targetZoom;focus=targetFocus;render();}
   }
@@ -223,7 +254,7 @@
   $('#ontology-prev').addEventListener('click',()=>choose(selected-1,true));
   $('#ontology-next').addEventListener('click',()=>choose(selected+1,true));
   playButton.addEventListener('click',()=>{
-    playing=!playing;elapsed=0;updatePlayback();
+    playing=!playing;elapsed=0;if(!playing)finishIntro();updatePlayback();
     startFrame();
   });
   svg.addEventListener('pointerdown',e=>{
@@ -265,5 +296,8 @@
   // Keyboard reading pauses the tour so content cannot change under focus.
   $('.ontology-detail').addEventListener('focusin',e=>{if(!e.target.closest('.ontology-tour-buttons'))pause();});
   reduced.addEventListener('change',()=>{if(reduced.matches){pause();cancelAnimationFrame(frameId);frameId=0;render();}else startFrame();});
-  choose(0,false);updatePlayback();render();startFrame();
+  choose(0,false);
+  // Reveal the whole universe first, then bring the first product into focus.
+  if(!reduced.matches){targetZoom=.96;zoom=.96;targetFocus=0;}
+  updatePlayback();render();startFrame();
 })();
