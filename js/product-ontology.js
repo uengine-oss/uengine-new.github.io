@@ -22,6 +22,57 @@
     {id:'dxez', name:'DX Easy', group:2, tag:'MODEL TO CODE', category:'DIGITAL TRANSFORMATION', role:'비즈니스 모델에서 실행 가능한 서비스까지', pos:[-180,205,0], icon:'cube', description:'고객 여정과 비즈니스 모델, 이벤트 스토밍에서 코드 생성으로 이어집니다. Git 기반 개발과 CI, Kubernetes 배포를 연결하는 디지털 전환 플랫폼입니다.', vision:'비즈니스의 생각이|실행 가능한 서비스가 되다.', future:'기획과 설계, 개발과 배포 사이의 간극을 줄여 비즈니스 변화가 서비스에 이어지도록 합니다.'},
     {id:'uenginecloud', name:'uEngine Cloud', group:3, tag:'CLOUD OPERATIONS', category:'CLOUD-NATIVE FOUNDATION', role:'만들어진 가치를 안정적으로 전달하는 기반', pos:[35,237,10], icon:'cloud', description:'Robo Architect의 산출물을 Kubernetes에 배포하고 운영하는 오픈소스 PaaS입니다. 앱·자원 관리부터 단계적 배포, 롤백, 로그와 모니터링을 하나의 포털에서 다룹니다.', vision:'좋은 설계가 멈추지 않고,|살아 있는 서비스가 되도록.', future:'개발에서 운영까지 이어지는 클라우드 네이티브 기반으로 기업의 변화를 지속 가능한 서비스로 만듭니다.'}
   ];
+  // Reuse the former splash artwork and the same local demos as Showcase.
+  const productMedia = {
+    ontologystudio:{image:'images/full-width-images/main-img-ontology.webp',caption:'온톨로지 구축 · 그래프 질의'},
+    ontologic:{image:'images/full-width-images/main-img-ontologic.webp',caption:'시맨틱 레이어 · 데이터 인텔리전스'},
+    processgpt:{image:'images/full-width-images/main-img-processgpt.webp',video:'images/demo-corporate/processGPT-01.mp4',poster:'images/demo-corporate/processGPT-01-poster.webp',caption:'규정 문서에서 프로세스 역설계'},
+    uengine6bpm:{image:'images/full-width-images/main-img-bpm6.png',video:'images/bpm6-process-animation.mp4',caption:'표준 BPMN 프로세스 실행'},
+    uenginerpa:{image:'images/full-width-images/main-img-uenginerpa.webp',video:'images/uenginerpa/uenginerpa-vibe-demo.mp4',poster:'images/uenginerpa/uenginerpa-vibe-demo-poster.jpg',caption:'AI와 함께 만드는 업무 자동화'},
+    roboanalyzer:{image:'images/full-width-images/main-img-roboanalyzer.webp',caption:'코드와 데이터의 연결 분석'},
+    roboarchitect:{image:'images/full-width-images/main-img-roboarchitect.webp',caption:'명세 기반 설계 · 구현 · 검증'},
+    dreamvibe:{image:'images/vibe-coding/pc-04.png',caption:'AI와 협업하는 코드 생성'},
+    uenginecloud:{image:'images/full-width-images/main-img-uenginecloud.webp',caption:'클라우드 서비스 배포 · 운영'}
+  };
+  const mediaHost=$('#ontology-media'),mediaImage=$('#ontology-media-image');
+  const mediaVideo=$('#ontology-media-video');
+  let mediaSuspended=false,resumeVideo=false;
+  function playVideo() {const play=mediaVideo.play();if(play)play.catch(()=>{});}
+  function showMedia(product) {
+    const media=productMedia[product.id];
+    // Stop and release the previous clip, including pending network requests.
+    mediaVideo.pause();mediaVideo.removeAttribute('src');mediaVideo.load();
+    resumeVideo=false;mediaHost.hidden=!media;
+    if(!media)return;
+    const hasVideo=Boolean(media.video);
+    mediaImage.hidden=hasVideo;mediaVideo.hidden=!hasVideo;
+    mediaImage.src=media.image;mediaImage.alt=product.name+' — '+media.caption+' 화면';
+    $('#ontology-media-caption').textContent=(hasVideo?'무음 데모 · ':'')+media.caption;
+    $('#ontology-media-full').href=media.video||media.image;
+    $('#ontology-media-full').setAttribute('aria-label',product.name+(hasVideo?' 데모 영상':' 화면')+' 크게 보기');
+    if(hasVideo){
+      mediaVideo.poster=media.poster||media.image;
+      mediaVideo.setAttribute('aria-label',product.name+' — '+media.caption+' 데모 영상');
+      mediaVideo.muted=true;mediaVideo.src=media.video;
+      resumeVideo=!reduced.matches;
+      if(resumeVideo&&visible&&!document.hidden)playVideo();
+    }
+  }
+  function syncMediaVisibility() {
+    const suspended=!visible||document.hidden;
+    if(suspended&&!mediaSuspended){resumeVideo=!mediaVideo.paused;mediaVideo.pause();}
+    else if(!suspended&&mediaSuspended&&resumeVideo&&!mediaVideo.hidden)playVideo();
+    mediaSuspended=suspended;
+  }
+  // A failed or unsupported clip retains the original product screenshot.
+  mediaVideo.addEventListener('error',()=>{
+    const product=products[selected],media=productMedia[product.id];
+    if(!media||!media.video||!mediaVideo.getAttribute('src'))return;
+    mediaVideo.hidden=true;mediaImage.hidden=false;resumeVideo=false;
+    $('#ontology-media-caption').textContent=product.name+' 제품 화면';
+    $('#ontology-media-full').href=media.image;
+    $('#ontology-media-full').setAttribute('aria-label',product.name+' 화면 크게 보기');
+  });
   const edges = [
     [0,1,'의미 → 판단'],[0,2,'지식 → 실행'],[1,2,'판단 → 실행'],[2,3,'업무 오케스트레이션'],
     [3,4,'로봇 업무 연결'],[2,4,'반복 업무 자동화'],[5,0,'레거시 맥락'],[5,1,'코드·데이터 이해'],
@@ -160,6 +211,7 @@
     $('#ontology-vision-body').textContent=p.future;
     $('#ontology-link').href='contents/'+p.id+'.html';
     $('#ontology-link').setAttribute('aria-label',p.name+' 제품 자세히 보기');
+    showMedia(p);
     const related=$('#ontology-related'); related.replaceChildren();
     edges.filter(e=>e[0]===selected||e[1]===selected).slice(0,2).forEach(([a,b,label])=>{
       const dest=a===selected?b:a;
@@ -299,13 +351,13 @@
     else if(e.key==='+'||e.key==='-')camera(e.key==='+'?'in':'out');
     else {angleY+=e.key==='ArrowLeft'?-.12:e.key==='ArrowRight'?.12:0;angleX+=e.key==='ArrowUp'?-.1:e.key==='ArrowDown'?.1:0;render();}
   });
-  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)startFrame();else if(frameId){cancelAnimationFrame(frameId);frameId=0;}},{threshold:.08});
+  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncMediaVisibility();if(visible)startFrame();else if(frameId){cancelAnimationFrame(frameId);frameId=0;}},{threshold:.08});
   observer.observe(root);
   window.addEventListener('resize',render);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frameId);frameId=0;}else startFrame();});
+  document.addEventListener('visibilitychange',()=>{syncMediaVisibility();if(document.hidden){cancelAnimationFrame(frameId);frameId=0;}else startFrame();});
   // Keyboard reading pauses the tour so content cannot change under focus.
   $('.ontology-detail').addEventListener('focusin',e=>{if(!e.target.closest('.ontology-tour-buttons'))pause();});
-  reduced.addEventListener('change',()=>{if(reduced.matches){pause();cancelAnimationFrame(frameId);frameId=0;render();}else startFrame();});
+  reduced.addEventListener('change',()=>{if(reduced.matches){pause();mediaVideo.pause();resumeVideo=false;cancelAnimationFrame(frameId);frameId=0;render();}else startFrame();});
   choose(0,false);
   // Reveal the whole universe first, then bring the first product into focus.
   if(!reduced.matches){targetZoom=.96;zoom=.96;targetFocus=0;}
