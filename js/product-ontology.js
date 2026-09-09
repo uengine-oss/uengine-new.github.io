@@ -96,7 +96,7 @@
   });
   let selected=0, playing=!reduced.matches, visible=true, dragging=false, dragged=false;
   const restingPitch=.32, restingYaw=-.12, diagonalTilt=-.18;
-  let angleY=restingYaw, angleX=restingPitch;
+  let angleY=restingYaw, angleX=restingPitch, orbitAngle=0;
   let targetZoom=1, zoom=1, focus=0, targetFocus=0;
   let pointer=null, lastX=0, lastY=0, startX=0, startY=0, elapsed=0, lastTime=0, frameId=0;
   let rotationTime=0, frameTime=0;
@@ -111,18 +111,26 @@
     targetZoom=1.13;targetFocus=1;
   }
   function advanceRotation(dt) {
-    // Integrating the cubic speed curve makes the entrance frame-rate independent.
-    // Drive the same two rotation angles as pointer dragging, fast first, then slowly.
-    const before=Math.min(1,introElapsed/introDuration);
+    const before=introElapsed/introDuration;
     const next=Math.min(introDuration,introElapsed+dt);
     const after=next/introDuration;
-    const delta=cruisingSpeed*dt/1000+
+    // Crossfade the axes over the last 1.2 seconds of the entrance. Integrating
+    // smoothstep keeps both angular velocities continuous across the handoff.
+    const rampIntegral=t=>{
+      const u=Math.max(0,Math.min(1,(t-(introDuration-1200))/1200));
+      return 1200*(u*u*u-.5*u*u*u*u);
+    };
+    const orbitTime=rampIntegral(next)-rampIntegral(introElapsed)+dt-(next-introElapsed);
+    const spinTime=dt-orbitTime;
+    const delta=cruisingSpeed*spinTime/1000+
       (introSpeed-cruisingSpeed)*introDuration/4000*
       (Math.pow(1-before,4)-Math.pow(1-after,4));
     const previousYaw=angleY;
+    // Entrance: the existing mouse-drag axes. Afterwards these angles stay put.
     angleY=(angleY+delta)%(Math.PI*2);
-    // Incremental pitch preserves the user's orientation when playback resumes.
     angleX=Math.max(-.75,Math.min(.75,angleX+.10*(Math.sin(angleY)-Math.sin(previousYaw))));
+    // Steady motion: the original slow orbit within the tilted elliptical plane.
+    orbitAngle=(orbitAngle+cruisingSpeed*orbitTime/1000)%(Math.PI*2);
     if(before<1&&after===1)finishIntro();
     else introElapsed=next;
   }
@@ -175,8 +183,10 @@
     if(reduced.matches){zoom=targetZoom;focus=targetFocus;render();}
   }
   function project(pos) {
-    // Automatic playback and pointer dragging share this exact projection.
-    const [x,y,z]=pos;
+    const [px,py,z]=pos;
+    const co=Math.cos(orbitAngle),so=Math.sin(orbitAngle),aspect=.78;
+    const x=px*co-py/aspect*so, y=px*aspect*so+py*co;
+    // Mouse dragging still controls the view of this same inclined plane.
     const cy=Math.cos(angleY),sy=Math.sin(angleY),cx=Math.cos(angleX),sx=Math.sin(angleX);
     const rx=x*cy+z*sy, rz=-x*sy+z*cy;
     const ry=y*cx-rz*sx, depth=y*sx+rz*cx;
@@ -246,7 +256,7 @@
   function startFrame(){if(!frameId&&visible&&!document.hidden){lastTime=0;frameId=requestAnimationFrame(tick);}}
   function camera(action) {
     pause();
-    if(action==='reset'){angleX=restingPitch;angleY=restingYaw;targetZoom=1;targetFocus=0;}
+    if(action==='reset'){angleX=restingPitch;angleY=restingYaw;orbitAngle=0;targetZoom=1;targetFocus=0;}
     else targetZoom=Math.max(.72,Math.min(1.8,targetZoom+(action==='in'?.16:-.16)));
     if(reduced.matches){zoom=targetZoom;focus=targetFocus;render();}
   }
