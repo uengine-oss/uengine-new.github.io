@@ -37,27 +37,27 @@
   function sendShowcase(command,extra={}) {
     if(showcaseReady)showcaseFrame.contentWindow.postMessage({type:'uengine-showcase-command',command,...extra},location.origin);
   }
-  function syncShowcaseVisibility() {sendShowcase('visibility',{suspended:!visible||document.hidden});}
+  function syncShowcaseVisibility() {sendShowcase('visibility',{suspended:!sceneReady||!visible||document.hidden});}
   function beginShowcase() {
     showcaseState='showcase';universe.hidden=true;
     root.classList.remove('is-folding');root.classList.add('is-showcase');
     stage.style.height=showcase.offsetHeight+'px';
     if(showcaseReady){
       showcase.classList.add('is-ready');$('#ontology-showcase-loading').hidden=true;
-      sendShowcase('start',{suspended:!visible||document.hidden,reduced:reduced.matches});
+      sendShowcase('start',{suspended:!sceneReady||!visible||document.hidden,reduced:reduced.matches});
     }
     if(showcaseReturnFocus)showcaseClose.focus({preventScroll:true});
   }
-  function openShowcase(event) {
+  function openShowcase(event,immediate=false) {
     if(showcaseState!=='universe')return;
     showcaseReturnFocus=(event||universe.contains(document.activeElement))?document.activeElement:null;
     pause();
     stage.style.height=universe.offsetHeight+'px';
     showcaseState='folding';foldElapsed=0;showcaseReady=false;
     universe.inert=true;showcase.hidden=false;
-    root.classList.add('is-folding');
+    if(!immediate)root.classList.add('is-folding');
     showcaseFrame.src='contents/showcase.html?mode=short&inline=1';
-    if(reduced.matches)beginShowcase();else startFrame();
+    if(immediate||reduced.matches)beginShowcase();else startFrame();
   }
   function closeShowcase() {
     if(showcaseState==='universe')return;
@@ -179,7 +179,15 @@
   const introDuration=5200, introSpeed=4.75, cruisingSpeed=.035;
   let introElapsed=reduced.matches?introDuration:0;
   const pageLoader=document.querySelector('.page-loader');
-  let sceneReady=!pageLoader;
+  let sceneReady=!pageLoader||getComputedStyle(pageLoader).display==='none';
+  if(!sceneReady){
+    // A Showcase opening also waits for the page loader before its first layer builds.
+    const loaderObserver=new MutationObserver(()=>{
+      if(getComputedStyle(pageLoader).display!=='none')return;
+      sceneReady=true;loaderObserver.disconnect();syncShowcaseVisibility();
+    });
+    loaderObserver.observe(pageLoader,{attributes:true,attributeFilter:['style','class']});
+  }
   function finishIntro() {
     if(introElapsed===introDuration)return;
     introElapsed=introDuration;
@@ -397,5 +405,8 @@
   choose(tourOrder[0],false);
   // Reveal the whole universe first, then bring the first product into focus.
   if(!reduced.matches){targetZoom=.96;zoom=.96;targetFocus=0;}
-  updatePlayback();render();startFrame();
+  updatePlayback();render();
+  // Choose afresh on each page load; direct Showcase entry skips the folding transition.
+  if(Math.random()<.5)openShowcase(null,true);
+  else startFrame();
 })();
