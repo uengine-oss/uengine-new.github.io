@@ -22,6 +22,57 @@
     {id:'dxez', name:'DX Easy', group:2, tag:'MODEL TO CODE', category:'DIGITAL TRANSFORMATION', role:'비즈니스 모델에서 실행 가능한 서비스까지', pos:[-180,205,0], icon:'cube', description:'고객 여정과 비즈니스 모델, 이벤트 스토밍에서 코드 생성으로 이어집니다. Git 기반 개발과 CI, Kubernetes 배포를 연결하는 디지털 전환 플랫폼입니다.', vision:'비즈니스의 생각이|실행 가능한 서비스가 되다.', future:'기획과 설계, 개발과 배포 사이의 간극을 줄여 비즈니스 변화가 서비스에 이어지도록 합니다.'},
     {id:'uenginecloud', name:'uEngine Cloud', group:3, tag:'CLOUD OPERATIONS', category:'CLOUD-NATIVE FOUNDATION', role:'만들어진 가치를 안정적으로 전달하는 기반', pos:[35,237,10], icon:'cloud', description:'Robo Architect의 산출물을 Kubernetes에 배포하고 운영하는 오픈소스 PaaS입니다. 앱·자원 관리부터 단계적 배포, 롤백, 로그와 모니터링을 하나의 포털에서 다룹니다.', vision:'좋은 설계가 멈추지 않고,|살아 있는 서비스가 되도록.', future:'개발에서 운영까지 이어지는 클라우드 네이티브 기반으로 기업의 변화를 지속 가능한 서비스로 만듭니다.'}
   ];
+  // Showcase flow: orchestration/agents → ontology → legacy data → development.
+  // Keep graph indices stable so changing the tour cannot change its relationships.
+  const tourOrder=['processgpt','uengine6bpm','uenginerpa','ontologystudio','ontologic',
+    'roboanalyzer','roboarchitect','dreamvibe','dxez','uenginecloud']
+    .map(id=>products.findIndex(product=>product.id===id));
+  const introduced=new Set();
+  let tourComplete=false;
+  const showcase=$('#ontology-showcase'),showcaseFrame=$('#ontology-showcase-frame');
+  const showcaseLaunch=$('#ontology-showcase-launch'),showcaseClose=$('#ontology-showcase-close');
+  let showcaseReturnFocus=null;
+  function openShowcase() {
+    if(showcase.open)return;
+    showcaseReturnFocus=document.activeElement;
+    pause();mediaVideo.pause();resumeVideo=false;
+    cancelAnimationFrame(frameId);frameId=0;
+    document.documentElement.classList.add('ontology-showcase-open');
+    showcase.showModal();
+    showcaseFrame.src='contents/showcase.html?mode=short';
+    showcaseClose.focus({preventScroll:true});
+  }
+  function closeShowcase() {if(showcase.open)showcase.close();}
+  showcaseLaunch.addEventListener('click',openShowcase);
+  showcaseClose.addEventListener('click',closeShowcase);
+  showcase.addEventListener('click',event=>{
+    if(event.target!==showcase)return;
+    const box=showcase.getBoundingClientRect();
+    if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)closeShowcase();
+  });
+  showcase.addEventListener('close',()=>{
+    // Unload the embedded presentation so no hidden video or scene keeps running.
+    showcaseFrame.removeAttribute('src');
+    document.documentElement.classList.remove('ontology-showcase-open');
+    const target=showcaseReturnFocus&&showcaseReturnFocus!==document.body&&showcaseReturnFocus.isConnected
+      ?showcaseReturnFocus:playButton;
+    target.focus({preventScroll:true});
+    startFrame();
+  });
+  showcaseFrame.addEventListener('load',()=>{
+    if(!showcase.open||!showcaseFrame.getAttribute('src'))return;
+    // Escape must also work after the visitor focuses the same-origin iframe.
+    showcaseFrame.contentWindow.addEventListener('keydown',event=>{
+      if(event.key==='Escape'){event.preventDefault();event.stopPropagation();closeShowcase();}
+    },true);
+  });
+  function advanceTour(manual) {
+    if(!manual){
+      introduced.add(selected);
+      if(introduced.size===tourOrder.length){tourComplete=true;openShowcase();return;}
+    }
+    choose(tourOrder[(tourOrder.indexOf(selected)+1)%tourOrder.length],manual);
+  }
   // Reuse the former splash artwork and the same local demos as Showcase.
   const productMedia = {
     ontologystudio:{image:'images/full-width-images/main-img-ontology.webp',caption:'온톨로지 구축 · 그래프 질의'},
@@ -59,7 +110,7 @@
     }
   }
   function syncMediaVisibility() {
-    const suspended=!visible||document.hidden;
+    const suspended=!visible||document.hidden||showcase.open;
     if(suspended&&!mediaSuspended){resumeVideo=!mediaVideo.paused;mediaVideo.pause();}
     else if(!suspended&&mediaSuspended&&resumeVideo&&!mediaVideo.hidden)playVideo();
     mediaSuspended=suspended;
@@ -141,11 +192,12 @@
     g.addEventListener('click',() => { if (!dragged) choose(i,true); });
     g.addEventListener('keydown',e => { if (e.key==='Enter'||e.key===' ') {e.preventDefault();choose(i,true);} });
     const button = document.createElement('button');
-    button.type='button'; button.innerHTML='<span>'+String(i+1).padStart(2,'0')+'</span> '+p.name;
+    button.type='button'; button.innerHTML='<span>'+String(tourOrder.indexOf(i)+1).padStart(2,'0')+'</span> '+p.name;
     button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>choose(i,true));nav.appendChild(button);
     return {g,aura,ring,shell,name,tag,button};
   });
-  let selected=0, playing=!reduced.matches, visible=true, dragging=false, dragged=false;
+  tourOrder.forEach(index=>nav.appendChild(nodeViews[index].button));
+  let selected=tourOrder[0], playing=!reduced.matches, visible=true, dragging=false, dragged=false;
   const restingPitch=.32, restingYaw=-.12, diagonalTilt=-.18;
   let angleY=restingYaw, angleX=restingPitch, orbitAngle=0;
   let targetZoom=1, zoom=1, focus=0, targetFocus=0;
@@ -197,12 +249,12 @@
   function choose(i,manual) {
     selected=(i+products.length)%products.length;
     const p=products[selected];
-    if(manual) pause();
+    if(manual){pause();introduced.clear();tourComplete=false;}
     elapsed=0;targetFocus=1;targetZoom=1.13;
     root.style.setProperty('--ont-accent',colors[p.group]);
     $('.ontology-detail').style.setProperty('--ont-accent',colors[p.group]);
     $('#ontology-category').textContent=p.category;
-    $('#ontology-index').textContent=String(selected+1).padStart(2,'0')+' / '+products.length;
+    $('#ontology-index').textContent=String(tourOrder.indexOf(selected)+1).padStart(2,'0')+' / '+tourOrder.length;
     $('#ontology-role').textContent=p.role;
     $('#ontology-product').textContent=p.name;
     $('#ontology-description').textContent=p.description;
@@ -290,22 +342,22 @@
   }
   function tick(time) {
     frameId=0;
-    if(!visible||document.hidden)return;
+    if(!visible||document.hidden||showcase.open)return;
     const dt=lastTime?Math.min(time-lastTime,64):16;lastTime=time;
     // Let the entrance begin after the existing page loader has revealed the scene.
     if(!sceneReady)sceneReady=getComputedStyle(pageLoader).display==='none';
     if(playing&&!dragging&&sceneReady){
       if(introElapsed===introDuration)elapsed+=dt;
       if(!reduced.matches){rotationTime+=dt;advanceRotation(dt);}
-      if(elapsed>=duration)choose(selected+1,false);
+      if(elapsed>=duration)advanceTour(false);
     }
     const blend=reduced.matches?1:1-Math.exp(-dt/550);
     zoom+=(targetZoom-zoom)*blend;focus+=(targetFocus-focus)*blend;
     frameTime+=dt;
     if(frameTime>=32||dragging){render();frameTime=0;}
-    if(!reduced.matches||playing)frameId=requestAnimationFrame(tick);
+    if(!showcase.open&&(!reduced.matches||playing))frameId=requestAnimationFrame(tick);
   }
-  function startFrame(){if(!frameId&&visible&&!document.hidden){lastTime=0;frameId=requestAnimationFrame(tick);}}
+  function startFrame(){if(!frameId&&visible&&!document.hidden&&!showcase.open){lastTime=0;frameId=requestAnimationFrame(tick);}}
   function camera(action) {
     pause();
     if(action==='reset'){angleX=restingPitch;angleY=restingYaw;orbitAngle=0;targetZoom=1;targetFocus=0;}
@@ -313,9 +365,10 @@
     if(reduced.matches){zoom=targetZoom;focus=targetFocus;render();}
   }
   root.querySelectorAll('[data-camera]').forEach(btn=>btn.addEventListener('click',()=>camera(btn.dataset.camera)));
-  $('#ontology-prev').addEventListener('click',()=>choose(selected-1,true));
-  $('#ontology-next').addEventListener('click',()=>choose(selected+1,true));
+  $('#ontology-prev').addEventListener('click',()=>choose(tourOrder[(tourOrder.indexOf(selected)-1+tourOrder.length)%tourOrder.length],true));
+  $('#ontology-next').addEventListener('click',()=>advanceTour(true));
   playButton.addEventListener('click',()=>{
+    if(!playing&&tourComplete){introduced.clear();tourComplete=false;choose(tourOrder[0],false);}
     playing=!playing;elapsed=0;if(!playing)finishIntro();updatePlayback();
     startFrame();
   });
@@ -358,7 +411,7 @@
   // Keyboard reading pauses the tour so content cannot change under focus.
   $('.ontology-detail').addEventListener('focusin',e=>{if(!e.target.closest('.ontology-tour-buttons'))pause();});
   reduced.addEventListener('change',()=>{if(reduced.matches){pause();mediaVideo.pause();resumeVideo=false;cancelAnimationFrame(frameId);frameId=0;render();}else startFrame();});
-  choose(0,false);
+  choose(tourOrder[0],false);
   // Reveal the whole universe first, then bring the first product into focus.
   if(!reduced.matches){targetZoom=.96;zoom=.96;targetFocus=0;}
   updatePlayback();render();startFrame();
