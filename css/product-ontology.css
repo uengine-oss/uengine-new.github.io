@@ -133,17 +133,39 @@
 /* The product tour hands off to an on-page Showcase after one complete round. */
 .ontology-showcase-launch{flex-shrink:0;border:1px solid #ffffff24;border-radius:5px;background:#ffffff06;color:#bddfdc;font-size:10px!important;padding:9px 11px}
 .ontology-showcase-launch:hover{border-color:#66eee0;color:#fff}
-html.ontology-showcase-open{overflow:hidden}
-.ontology-showcase{width:min(1320px,94vw);max-width:none;max-height:94svh;margin:auto;padding:0;border:1px solid #7bcfc44d;border-radius:14px;background:#090e17;color:#edf4fc;box-shadow:0 30px 110px #0009;overflow:hidden;font-family:"Pretendard Variable","Pretendard",sans-serif}
-.ontology-showcase::backdrop{background:#02050dde;backdrop-filter:blur(10px)}
-.ontology-showcase-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 22px;border-bottom:1px solid #ffffff18}
-.ontology-showcase-bar>div>span{display:block;font-size:8px;letter-spacing:.18em;color:#71b7b2;margin-bottom:3px}
-.ontology-showcase-bar h2{font-size:19px;font-weight:550;color:#f2f5ff;line-height:1.3;margin:0}
-.ontology-showcase-bar button{display:flex;gap:14px;align-items:center;min-height:40px;padding:6px 10px;border:1px solid #ffffff25;border-radius:6px;background:#ffffff06;color:#d9e7ef;font-size:11px}
-.ontology-showcase-bar button:hover{background:#ffffff13}
-.ontology-showcase-bar button>span{font-size:24px;line-height:1}
-.ontology-showcase iframe{display:block;width:100%;height:min(70svh,742px);border:0;background:#090e17}
-.ontology-showcase-hint{display:flex;justify-content:space-between;gap:12px;margin:0;padding:10px 22px;color:#8596ac;font-size:10px;line-height:1.5}
+
+/* One continuous stage: the universe folds before the stack begins building. */
+.ontology-stage{overflow-anchor:none;position:relative;max-width:1600px;margin:auto;transition:height .8s cubic-bezier(.22,1,.36,1)}
+.ontology-stage [hidden]{display:none!important}
+.ontology-skip-row{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:12px 0 18px}
+.ontology-skip-row>span{font-size:10px;color:#8295a9;letter-spacing:.1em}
+.ontology-skip-row .ontology-showcase-launch{font-size:12px!important;background:#66eee00a;border-color:#66eee03d;padding:10px 15px}
+#ontology-universe .ontology-detail,#ontology-universe .ontology-footer,#ontology-universe .ontology-note,#ontology-universe .ontology-skip-row,#ontology-universe .ontology-map-caption,#ontology-universe .ontology-map-bottom,#ontology-universe .ontology-legend{transition:opacity .45s,transform .65s}
+.is-folding #ontology-universe .ontology-detail,.is-folding #ontology-universe .ontology-footer,.is-folding #ontology-universe .ontology-note,.is-folding #ontology-universe .ontology-skip-row,.is-folding #ontology-universe .ontology-map-caption,.is-folding #ontology-universe .ontology-map-bottom,.is-folding #ontology-universe .ontology-legend{opacity:0;transform:translateY(14px);pointer-events:none}
+.ontology-showcase{position:relative;width:100%;color:#edf4fc;opacity:0;transition:opacity .7s;}
+.is-folding .ontology-showcase{position:absolute;inset:0 0 auto;visibility:hidden;pointer-events:none}
+.is-showcase .ontology-showcase{opacity:1}
+.ontology-showcase-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0 10px}
+.ontology-showcase-bar>div>span{display:block;font-size:9px;letter-spacing:.18em;color:#71b7b2;margin-bottom:8px}
+.ontology-showcase-bar h2{font-size:24px;font-weight:550;color:#f2f5ff;line-height:1.4;margin:0}
+.ontology-showcase-bar button,.ontology-showcase-controls button{min-height:40px;padding:6px 12px;border:1px solid #ffffff25;border-radius:6px;background:#ffffff06;color:#d9e7ef;font-size:11px}
+.ontology-showcase-bar button:hover,.ontology-showcase-controls button:hover{background:#ffffff13}
+.ontology-showcase iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;background:transparent;opacity:0;transition:opacity .5s}
+.ontology-showcase.is-ready iframe{opacity:1}
+#ontology-showcase-loading{position:absolute;top:42%;width:100%;text-align:center;color:#9bbfc5;font-size:13px}
+.ontology-showcase-hint{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0;padding:12px 0;color:#8596ac;font-size:10px;line-height:1.5;border-top:1px solid #ffffff12}
 .ontology-showcase-hint a{color:#a9dcd7;text-decoration:none}
-@media(max-width:900px){.ontology-footer{flex-wrap:wrap}.ontology-showcase{width:96vw}.ontology-showcase-bar{padding:12px 14px}.ontology-showcase iframe{height:min(66svh,65vw)}.ontology-showcase-hint{flex-wrap:wrap;padding:10px 14px;font-size:9px}}
-@media(max-width:480px){.ontology-showcase-bar h2{font-size:16px}.ontology-showcase-bar button{font-size:10px;gap:8px}.ontology-showcase-hint{gap:5px}.ontology-showcase-launch{margin-top:3px}}
+.ontology-showcase-controls{display:flex;align-items:center;gap:8px}
+.ontology-showcase-controls button{min-width:40px;font-size:15px}
+#ontology-showcase-scene{margin-left:6px}
+@media(max-width:900px){.ontology-footer{flex-wrap:wrap}.ontology-showcase-bar{align-items:flex-start}.ontology-showcase-bar h2{font-size:20px}.ontology-showcase-hint{flex-wrap:wrap}}
+@media(max-width:600px){.ontology-showcase iframe{aspect-ratio:4/7}.ontology-showcase-bar{flex-wrap:wrap;padding-top:14px}.ontology-showcase-bar h2{font-size:20px}.ontology-skip-row>span{font-size:9px}.ontology-skip-row .ontology-showcase-launch{font-size:11px!important}.ontology-showcase-hint{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.ontology-stage,.ontology-showcase,.ontology-showcase iframe{transition:none}}
+
+.ontology-showcase-transport{display:flex;padding:8px 0 4px;color:#8596ac;font-size:10px}
+/* Give the built stack the first viewport once the universe has folded away. */
+.ontology-heading{max-height:300px;overflow:hidden;transition:max-height .8s cubic-bezier(.22,1,.36,1),margin .8s,opacity .45s}
+.is-folding .ontology-heading,.is-showcase .ontology-heading{opacity:0}
+.is-showcase .ontology-heading{max-height:0;margin-bottom:0;pointer-events:none}
+@media(min-width:601px){.ontology-showcase iframe{aspect-ratio:auto;height:min(66svh,51.75vw)}}
+@media(prefers-reduced-motion:reduce){.ontology-heading{transition:none}}

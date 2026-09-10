@@ -263,6 +263,50 @@ html.embed{cursor:default}
   .vision-stack .ls-token{animation:none !important;opacity:0;}
   .sc.on .frame img,.sc.on .frame video{animation:none !important;}
 }
+
+/* The homepage owns the background and transport controls in inline mode. */
+html.inline-showcase,html.inline-showcase body,html.inline-showcase #kiosk,html.inline-showcase #stage{background:transparent}
+html.inline-showcase .hud-top,html.inline-showcase .hud-bot,html.inline-showcase .bgfx,html.inline-showcase .grain{display:none!important}
+html.inline-paused *,html.inline-paused *::before,html.inline-paused *::after{animation-play-state:paused!important}
+html.inline-showcase .build .lg{animation:none;transition:opacity .8s,transform .8s}
+html.inline-showcase .build .lg.is-in{opacity:1;transform:none}
+html.inline-paused .sc-in,html.inline-paused .lu-row,html.inline-paused .lu-tile{animation:none;opacity:1;transform:none}
+html.inline-showcase .m-hero{transform:translate(320px,270px) scale(.95)}
+html.inline-showcase .build .legend{left:1050px;right:auto;top:340px;width:680px}
+html.inline-showcase .build .lg b{font-size:27px}
+html.inline-showcase .build .lg span{font-size:22px}
+html.inline-portrait #stage{width:900px;height:1575px}
+html.inline-portrait #rail{display:none}
+html.inline-portrait .m-hero{transform:translate(215px,270px) scale(.9)}
+html.inline-portrait .m-left{transform:translate(235px,40px) scale(.8)}
+html.inline-portrait .m-rail{opacity:0}
+html.inline-portrait .build .top{left:40px;right:40px;top:35px}
+html.inline-portrait .build .top h2{font-size:47px}
+html.inline-portrait .build .top p{font-size:28px;line-height:1.6}
+html.inline-portrait .build .legend{left:60px;right:60px;top:940px;width:auto}
+html.inline-portrait .build .lg{padding:16px 0}
+html.inline-portrait .build .lg b{font-size:30px}
+html.inline-portrait .build .lg span{font-size:28px}
+html.inline-portrait .chapter .txt{left:60px;top:720px;width:780px}
+html.inline-portrait .chapter .txt h2{font-size:70px}
+html.inline-portrait .chapter .txt p{font-size:32px}
+html.inline-portrait .shot .txt{left:50px;top:65px;width:800px}
+html.inline-portrait .shot .txt h3{font-size:51px}
+html.inline-portrait .shot .txt p{font-size:30px;line-height:1.65}
+html.inline-portrait .shot .step{font-size:22px}
+html.inline-portrait .shot .badge{font-size:25px}
+html.inline-portrait .frame{left:40px;top:650px;width:820px;height:650px}
+html.inline-portrait .shot .live{left:50px;top:600px;right:auto;font-size:22px}
+html.inline-portrait .outro .txt{left:40px;top:45px;width:820px}
+html.inline-portrait .outro h2{font-size:48px}
+html.inline-portrait .lu-row{grid-template-columns:220px 1fr;gap:18px;padding:20px 0}
+html.inline-portrait .lu-tile{min-width:240px}
+html.inline-portrait .lu-tile b{font-size:25px}
+html.inline-portrait .lu-tile span,html.inline-portrait .lu-layer span{font-size:20px}
+html.inline-portrait .lu-layer b{font-size:24px}
+html.inline-portrait .outro .cta{left:40px;bottom:35px}
+@media(prefers-reduced-motion:reduce){html.inline-showcase *,html.inline-showcase *::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -785,7 +829,10 @@ var VSTACK = (function () {
     });
   }
 
+  var lastStage = -1;
   function setStage(s) {
+    if (s === lastStage) return;
+    lastStage = s;
     layers.forEach(function (el, i) { if (el) el.classList.toggle('is-in', s >= i + 1); });
     nodes.forEach(function (el) {
       el.classList.toggle('is-in', s >= 5 - parseInt(el.getAttribute('data-ls-layer'), 10));
@@ -813,6 +860,8 @@ var VSTACK = (function () {
         })(s);
       }
     },
+    // Inline playback uses the scene clock, so scrolling away also pauses the build.
+    progress: function (ms) { clear(); setStage(ms < 600 ? 0 : Math.min(4, 1 + Math.floor((ms - 600) / 3400))); },
     full: function () { clear(); setStage(ORDER.length); },
     /* 지금 다루는 층만 밝힌다. n 이 없으면 전체 복원 */
     focus: function (n) {
@@ -1264,10 +1313,14 @@ var SCENES = [
    ============================================================ */
 (function () {
   var qs = new URLSearchParams(location.search);
+  var INLINE = qs.get('inline') === '1' && parent !== window;
+  if (INLINE) document.documentElement.classList.add('inline-showcase');
   var EMBED = qs.get('embed') === '1';   /* 메인 페이지 미니 플레이어용: HUD 숨김 + 축약본 */
   if (EMBED) { document.documentElement.classList.add('embed'); }
   var SHORT = qs.get('mode') === 'short' || EMBED;
   var list = SHORT ? SCENES.filter(function (s) { return s.short; }) : SCENES.slice();
+
+  if (INLINE) list = list.filter(function (s) { return s.t !== 'logo'; });
 
   var stage = document.getElementById('stage');
   var host = document.getElementById('sceneHost');
@@ -1297,9 +1350,12 @@ var SCENES = [
 
   /* ---------- 스테이지 스케일 ---------- */
   function fit() {
-    var s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    var portrait = INLINE && innerHeight > innerWidth;
+    document.documentElement.classList.toggle('inline-portrait', portrait);
+    var w = portrait ? 900 : 1920, h = portrait ? 1575 : 1080;
+    var s = Math.min(innerWidth / w, innerHeight / h);
     stage.style.transform = 'scale(' + s + ')';
-    stage.style.margin = ((innerHeight - 1080 * s) / 2) + 'px ' + ((innerWidth - 1920 * s) / 2) + 'px';
+    stage.style.margin = ((innerHeight - h * s) / 2) + 'px ' + ((innerWidth - w * s) / 2) + 'px';
   }
   addEventListener('resize', fit); fit();
 
@@ -1405,6 +1461,7 @@ var SCENES = [
 
   /* ---------- 재생 ---------- */
   var idx = -1, elapsedMs = 0, last = 0, paused = false, current = null;
+  var suspended = false, started = !INLINE;
 
   function stackMode(sc) {
     var m = sc.stack || (sc.t === 'logo' ? 'off' : 'rail');
@@ -1432,14 +1489,15 @@ var SCENES = [
     [].slice.call(host.children).forEach(function (c) {
       if (c === el) return;
       c.classList.remove('on');
+      [].slice.call(c.querySelectorAll('video')).forEach(function (v) { v.pause(); });
       setTimeout(function () { if (c.parentNode) c.parentNode.removeChild(c); }, 800);
     });
 
-    if (sc.t === 'build') { VSTACK.build(3400); }
+    if (sc.t === 'build') { if (INLINE) VSTACK.progress(0); else VSTACK.build(3400); }
     else if (i === 0) { VSTACK.full(); }
     else { VSTACK.full(); }
 
-    if (paused) {
+    if (paused || suspended) {
       [].slice.call(el.querySelectorAll('video')).forEach(function (v) { v.pause(); });
     }
     stackMode(sc);
@@ -1447,6 +1505,7 @@ var SCENES = [
     document.querySelector('.hud-top').style.opacity = (sc.t === 'logo') ? '0' : '1';
     metaRight.textContent = (i + 1) + ' / ' + list.length + (SHORT ? '  ·  SHORT CUT' : '');
     preload(i + 1);
+    reportState();
   }
 
   function next() { show(idx + 1); }
@@ -1463,9 +1522,15 @@ var SCENES = [
 
   function tick(ts) {
     if (!last) last = ts;
-    var dt = ts - last; last = ts;
-    if (!paused && current) {
+    var dt = INLINE ? Math.min(64, ts - last) : ts - last; last = ts;
+    if (!paused && !suspended && current) {
       elapsedMs += dt;
+      if (INLINE && current.t === 'build') {
+        VSTACK.progress(elapsedMs);
+        [].slice.call(host.querySelectorAll('.sc.on .lg')).forEach(function (el, i, all) {
+          el.classList.toggle('is-in', elapsedMs >= 600 + (all.length - 1 - i) * 3400);
+        });
+      }
       var p = (offsets[idx] + Math.min(elapsedMs / 1000, current.dur)) / total;
       barFill.style.width = (p * 100).toFixed(3) + '%';
       if (elapsedMs >= current.dur * 1000) next();
@@ -1474,15 +1539,43 @@ var SCENES = [
   }
 
   /* ---------- 조작 ---------- */
-  function setPaused(v) {
-    paused = v;
-    [].slice.call(host.querySelectorAll('video')).forEach(function (v2) {
-      if (paused) { v2.pause(); } else { var pr = v2.play(); if (pr && pr.catch) pr.catch(function () {}); }
+  function reportState() {
+    if (INLINE && current) parent.postMessage({type:'uengine-showcase-state', paused:paused,
+      label:(idx + 1) + ' / ' + list.length + ' · ' + ((ACTS[current.act] || {}).label || 'Enterprise Stack')}, location.origin);
+  }
+  function syncPlayback() {
+    var stopped = paused || suspended;
+    document.documentElement.classList.toggle('inline-paused', INLINE && stopped);
+    [].slice.call(host.querySelectorAll('video')).forEach(function (v) {
+      if (stopped || !v.closest('.sc').classList.contains('on')) v.pause();
+      else { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
     });
     hint.style.opacity = paused ? '1' : '';
+    last = 0; reportState();
   }
+  function setPaused(v) { paused = v; syncPlayback(); }
+  if (INLINE) addEventListener('message', function (event) {
+    if (event.source !== parent || event.origin !== location.origin) return;
+    var data = event.data || {};
+    if (data.type !== 'uengine-showcase-command') return;
+    if (data.command === 'start' && !started) {
+      started = true; suspended = Boolean(data.suspended); paused = Boolean(data.reduced);
+      show(0); syncPlayback();
+      if (paused) {
+        VSTACK.full();
+        [].slice.call(host.querySelectorAll('.lg')).forEach(function (el) { el.classList.add('is-in'); });
+      }
+    } else if (data.command === 'visibility') { suspended = Boolean(data.suspended); syncPlayback(); }
+    else if (started && data.command === 'toggle') setPaused(!paused);
+    else if (started && data.command === 'next') next();
+    else if (started && data.command === 'prev') prev();
+  });
 
   addEventListener('keydown', function (e) {
+    if (INLINE && e.key === 'Escape') {
+      e.preventDefault(); parent.postMessage({type:'uengine-showcase-return'}, location.origin); return;
+    }
+    if (!started) return;
     var k = e.key.toLowerCase();
     if (e.key === ' ') { e.preventDefault(); setPaused(!paused); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
@@ -1493,7 +1586,7 @@ var SCENES = [
       if (document.fullscreenElement) { document.exitFullscreen(); }
       else { document.documentElement.requestFullscreen(); }
     }
-    else if (k === 's') {
+    else if (k === 's' && !INLINE) {
       location.search = SHORT ? '' : '?mode=short';
     }
   });
@@ -1509,6 +1602,7 @@ var SCENES = [
 
   /* 클릭/탭으로도 다음 장면 */
   stage.addEventListener('click', function (e) {
+    if (!started) return;
     if (e.clientX < innerWidth * 0.18) { prev(); } else { next(); }
   });
 
@@ -1516,7 +1610,8 @@ var SCENES = [
     'uengine.org  ·  ' + Math.floor(total / 60) + '분 ' + (total % 60) + '초 자동 반복 상영' +
     (SHORT ? '  ·  축약본' : '');
 
-  show(0);
+  if (INLINE) parent.postMessage({type:'uengine-showcase-ready'}, location.origin);
+  else show(0);
   requestAnimationFrame(tick);
 })();
 
