@@ -31,41 +31,64 @@
   let tourComplete=false;
   const showcase=$('#ontology-showcase'),showcaseFrame=$('#ontology-showcase-frame');
   const showcaseLaunch=$('#ontology-showcase-launch'),showcaseClose=$('#ontology-showcase-close');
-  let showcaseReturnFocus=null;
-  function openShowcase() {
-    if(showcase.open)return;
-    showcaseReturnFocus=document.activeElement;
-    pause();mediaVideo.pause();resumeVideo=false;
-    cancelAnimationFrame(frameId);frameId=0;
-    document.documentElement.classList.add('ontology-showcase-open');
-    showcase.showModal();
-    showcaseFrame.src='contents/showcase.html?mode=short';
-    showcaseClose.focus({preventScroll:true});
+  const universe=$('#ontology-universe'),stage=$('#ontology-stage');
+  let showcaseReturnFocus=null,showcaseState='universe',foldElapsed=0,showcaseReady=false;
+  const foldDuration=1500;
+  function sendShowcase(command,extra={}) {
+    if(showcaseReady)showcaseFrame.contentWindow.postMessage({type:'uengine-showcase-command',command,...extra},location.origin);
   }
-  function closeShowcase() {if(showcase.open)showcase.close();}
-  showcaseLaunch.addEventListener('click',openShowcase);
-  showcaseClose.addEventListener('click',closeShowcase);
-  showcase.addEventListener('click',event=>{
-    if(event.target!==showcase)return;
-    const box=showcase.getBoundingClientRect();
-    if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)closeShowcase();
-  });
-  showcase.addEventListener('close',()=>{
-    // Unload the embedded presentation so no hidden video or scene keeps running.
-    showcaseFrame.removeAttribute('src');
-    document.documentElement.classList.remove('ontology-showcase-open');
-    const target=showcaseReturnFocus&&showcaseReturnFocus!==document.body&&showcaseReturnFocus.isConnected
-      ?showcaseReturnFocus:playButton;
+  function syncShowcaseVisibility() {sendShowcase('visibility',{suspended:!visible||document.hidden});}
+  function beginShowcase() {
+    showcaseState='showcase';universe.hidden=true;
+    root.classList.remove('is-folding');root.classList.add('is-showcase');
+    stage.style.height=showcase.offsetHeight+'px';
+    if(showcaseReady){
+      showcase.classList.add('is-ready');$('#ontology-showcase-loading').hidden=true;
+      sendShowcase('start',{suspended:!visible||document.hidden,reduced:reduced.matches});
+    }
+    if(showcaseReturnFocus)showcaseClose.focus({preventScroll:true});
+  }
+  function openShowcase(event) {
+    if(showcaseState!=='universe')return;
+    showcaseReturnFocus=(event||universe.contains(document.activeElement))?document.activeElement:null;
+    pause();mediaVideo.pause();resumeVideo=false;
+    stage.style.height=universe.offsetHeight+'px';
+    showcaseState='folding';foldElapsed=0;showcaseReady=false;
+    universe.inert=true;showcase.hidden=false;
+    root.classList.add('is-folding');
+    showcaseFrame.src='contents/showcase.html?mode=short&inline=1';
+    if(reduced.matches)beginShowcase();else startFrame();
+  }
+  function closeShowcase() {
+    if(showcaseState==='universe')return;
+    showcaseState='universe';showcaseReady=false;foldElapsed=0;
+    // Unload all scene timers and videos when returning to the product graph.
+    showcaseFrame.removeAttribute('src');showcase.hidden=true;showcase.classList.remove('is-ready');
+    $('#ontology-showcase-loading').hidden=false;
+    universe.hidden=false;universe.inert=false;stage.style.height='';
+    root.classList.remove('is-folding','is-showcase');
+    render();startFrame();
+    const target=showcaseReturnFocus&&showcaseReturnFocus.isConnected?showcaseReturnFocus:showcaseLaunch;
     target.focus({preventScroll:true});
-    startFrame();
+  }
+  root.querySelectorAll('[data-showcase-launch]').forEach(button=>button.addEventListener('click',openShowcase));
+  showcaseClose.addEventListener('click',closeShowcase);
+  root.querySelectorAll('[data-showcase-command]').forEach(button=>button.addEventListener('click',()=>sendShowcase(button.dataset.showcaseCommand)));
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&showcaseState!=='universe'){event.preventDefault();closeShowcase();}});
+  window.addEventListener('message',event=>{
+    if(event.origin!==location.origin||event.source!==showcaseFrame.contentWindow||showcaseState==='universe')return;
+    const data=event.data||{};
+    if(data.type==='uengine-showcase-ready'){
+      showcaseReady=true;
+      if(showcaseState==='showcase')beginShowcase();
+    }else if(data.type==='uengine-showcase-return')closeShowcase();
+    else if(data.type==='uengine-showcase-state'){
+      $('#ontology-showcase-scene').textContent=data.label;
+      $('#ontology-showcase-play').textContent=data.paused?'▶':'Ⅱ';
+      $('#ontology-showcase-play').setAttribute('aria-label',data.paused?'Showcase 재생':'Showcase 일시정지');
+    }
   });
-  showcaseFrame.addEventListener('load',()=>{
-    if(!showcase.open||!showcaseFrame.getAttribute('src'))return;
-    // Escape must also work after the visitor focuses the same-origin iframe.
-    showcaseFrame.contentWindow.addEventListener('keydown',event=>{
-      if(event.key==='Escape'){event.preventDefault();event.stopPropagation();closeShowcase();}
-    },true);
-  });
+  new ResizeObserver(()=>{if(showcaseState==='showcase')stage.style.height=showcase.offsetHeight+'px';}).observe(showcase);
   function advanceTour(manual) {
     if(!manual){
       introduced.add(selected);
@@ -110,7 +133,7 @@
     }
   }
   function syncMediaVisibility() {
-    const suspended=!visible||document.hidden||showcase.open;
+    const suspended=!visible||document.hidden||showcaseState!=='universe';
     if(suspended&&!mediaSuspended){resumeVideo=!mediaVideo.paused;mediaVideo.pause();}
     else if(!suspended&&mediaSuspended&&resumeVideo&&!mediaVideo.hidden)playVideo();
     mediaSuspended=suspended;
@@ -302,10 +325,16 @@
     const anchor=project(products[selected].pos);
     // Camera moves toward the chosen product while preserving its surrounding context.
     const shiftX=-anchor.x*.22*focus,shiftY=-anchor.y*.18*focus;
-    const sceneScale=window.innerWidth<=480?.84:1;
+    const fold=showcaseState==='folding'?Math.min(1,foldElapsed/foldDuration):0;
+    const collapse=1-(fold*fold*(3-2*fold));
+    const sceneScale=(window.innerWidth<=480?.84:1)*collapse;
+    orbitGroup.style.opacity=String(collapse*collapse);
+    $('.ontology-edges').style.opacity=String(collapse*collapse);
+    starGroup.style.opacity=String(collapse);
+    center.style.opacity=String(Math.min(1,collapse*3));
     const point = pos => {const p=project(pos);return {x:410+(p.x+shiftX)*zoom*sceneScale,y:284+(p.y+shiftY)*zoom*sceneScale,z:p.z};};
     const points=products.map(p=>point(p.pos));
-    const origin=point([0,0,0]);center.setAttribute('transform',`translate(${origin.x} ${origin.y})`);
+    const origin=point([0,0,0]);center.setAttribute('transform',`translate(${origin.x} ${origin.y}) scale(${.15+.85*collapse})`);
     orbitPaths.forEach((path,k)=>{
       let d='';
       for(let j=0;j<=90;j++){
@@ -335,29 +364,35 @@
       e.text.setAttribute('opacity',active&&len>135&&introElapsed===introDuration?1:0);
     });
     nodeViews.forEach((v,i)=>{
-      const p=points[i];v.g.setAttribute('transform',`translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`);
-      v.g.style.opacity=i===selected?'1':String(Math.max(.58,Math.min(1,.86+p.z/900)));
+      const p=points[i];v.g.setAttribute('transform',`translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) scale(${collapse})`);
+      v.g.style.opacity=String(collapse*(i===selected?1:Math.max(.58,Math.min(1,.86+p.z/900))));
     });
     $('.ontology-progress span').style.transform='scaleX('+Math.min(1,elapsed/duration)+')';
   }
   function tick(time) {
     frameId=0;
-    if(!visible||document.hidden||showcase.open)return;
+    if(!visible||document.hidden||showcaseState==='showcase')return;
     const dt=lastTime?Math.min(time-lastTime,64):16;lastTime=time;
+    if(showcaseState==='folding'){
+      foldElapsed+=dt;render();
+      if(foldElapsed>=foldDuration){beginShowcase();return;}
+      frameId=requestAnimationFrame(tick);return;
+    }
     // Let the entrance begin after the existing page loader has revealed the scene.
     if(!sceneReady)sceneReady=getComputedStyle(pageLoader).display==='none';
     if(playing&&!dragging&&sceneReady){
       if(introElapsed===introDuration)elapsed+=dt;
       if(!reduced.matches){rotationTime+=dt;advanceRotation(dt);}
       if(elapsed>=duration)advanceTour(false);
+      if(showcaseState!=='universe')return;
     }
     const blend=reduced.matches?1:1-Math.exp(-dt/550);
     zoom+=(targetZoom-zoom)*blend;focus+=(targetFocus-focus)*blend;
     frameTime+=dt;
     if(frameTime>=32||dragging){render();frameTime=0;}
-    if(!showcase.open&&(!reduced.matches||playing))frameId=requestAnimationFrame(tick);
+    if(showcaseState!=='showcase'&&(!reduced.matches||playing||showcaseState==='folding'))frameId=requestAnimationFrame(tick);
   }
-  function startFrame(){if(!frameId&&visible&&!document.hidden&&!showcase.open){lastTime=0;frameId=requestAnimationFrame(tick);}}
+  function startFrame(){if(!frameId&&visible&&!document.hidden&&showcaseState!=='showcase'){lastTime=0;frameId=requestAnimationFrame(tick);}}
   function camera(action) {
     pause();
     if(action==='reset'){angleX=restingPitch;angleY=restingYaw;orbitAngle=0;targetZoom=1;targetFocus=0;}
@@ -404,13 +439,13 @@
     else if(e.key==='+'||e.key==='-')camera(e.key==='+'?'in':'out');
     else {angleY+=e.key==='ArrowLeft'?-.12:e.key==='ArrowRight'?.12:0;angleX+=e.key==='ArrowUp'?-.1:e.key==='ArrowDown'?.1:0;render();}
   });
-  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncMediaVisibility();if(visible)startFrame();else if(frameId){cancelAnimationFrame(frameId);frameId=0;}},{threshold:.08});
+  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncMediaVisibility();syncShowcaseVisibility();if(visible)startFrame();else if(frameId){cancelAnimationFrame(frameId);frameId=0;}},{threshold:.08});
   observer.observe(root);
   window.addEventListener('resize',render);
-  document.addEventListener('visibilitychange',()=>{syncMediaVisibility();if(document.hidden){cancelAnimationFrame(frameId);frameId=0;}else startFrame();});
+  document.addEventListener('visibilitychange',()=>{syncMediaVisibility();syncShowcaseVisibility();if(document.hidden){cancelAnimationFrame(frameId);frameId=0;}else startFrame();});
   // Keyboard reading pauses the tour so content cannot change under focus.
   $('.ontology-detail').addEventListener('focusin',e=>{if(!e.target.closest('.ontology-tour-buttons'))pause();});
-  reduced.addEventListener('change',()=>{if(reduced.matches){pause();mediaVideo.pause();resumeVideo=false;cancelAnimationFrame(frameId);frameId=0;render();}else startFrame();});
+  reduced.addEventListener('change',()=>{if(reduced.matches){if(showcaseState==='folding')beginShowcase();pause();mediaVideo.pause();resumeVideo=false;cancelAnimationFrame(frameId);frameId=0;render();}else startFrame();});
   choose(tourOrder[0],false);
   // Reveal the whole universe first, then bring the first product into focus.
   if(!reduced.matches){targetZoom=.96;zoom=.96;targetFocus=0;}
