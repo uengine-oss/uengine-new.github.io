@@ -52,7 +52,9 @@ grep -c "ontologystudio" contents/bloglist.html contents/blog/*.html
 **본문 스타일 문법** (`.blog-item-body.chat-gpt` 내부):
 - 섹션 제목: `<blockquote><p>&nbsp; 1. 섹션 제목</p></blockquote>`
 - 문단 블록: `<div class="mb-50 prose"> <p>…</p> </div>`
-- 강조 목록: `<li><b style="font-weight: bold;">🔄 키워드:</b> 설명</li>` (이모지 불릿 적극 사용)
+- 강조 목록: `<li><b style="font-weight: bold;">키워드:</b> 설명</li>`
+  **이모지·아이콘 문자는 쓰지 않는다** (불릿·표 셀·배지·소제목 전부). 강조는 `<b>`와 문구로만 한다.
+  예외: 딥링크 표기의 `↗` 는 사이트 공통 표기라 유지한다.
 - 소제목: `<p style="text-decoration: underline;"><b>소제목</b></p>`
 - 인용/하이라이트 박스: `<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">…</p></div>`
 - 표: `<div style="overflow-x: auto;">` 로 감싸고 인라인 스타일 —
@@ -71,7 +73,7 @@ grep -c "ontologystudio" contents/bloglist.html contents/blog/*.html
   <div style="max-width: 640px; margin: 0 auto; border: 2px solid #1a1a2e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 24px 22px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
     <div style="text-align: center; font-weight: 700; ...">바깥 계층 이름</div>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; ...">
-      <span style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">🛡️ 항목 배지</span>
+      <span style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">항목 배지</span>
     </div>
     <div style="border: 2px dashed #5b6b9e; border-radius: 12px; ...">  <!-- 중간 계층: 점선 -->
       <div style="border: 2px solid #7c4dbc; ...">  <!-- 안쪽 계층: 포인트 컬러(보라) -->
@@ -142,10 +144,21 @@ from html.parser import HTMLParser
 ```
   > **알려진 무해 경고:** footer 전화번호/이메일 옆 잉여 `</a>` 2건은 전 페이지 공통의
   > 기존 마크업이다. 템플릿과 동일하게 유지하고 무시한다. 그 외 mismatch는 실제 오류.
-- (선택) 로컬 렌더 확인:
+- 이모지 잔여 검사 — **0건이어야 한다** (`↗` U+2197 은 허용):
+```bash
+python3 -c "
+import io,sys,unicodedata
+s=io.open(sys.argv[1],encoding='utf-8').read()
+bad=[c for c in s if c!='↗' and (0x1F000<=ord(c)<=0x1FAFF or ord(c)==0xFE0F
+     or (0x2600<=ord(c)<0x27C0 or 0x23E9<=ord(c)<0x23FB) and unicodedata.category(c)=='So')]
+print('이모지 잔여:', ''.join(bad) if bad else '없음')
+" contents/blog/<slug>.html
+```
+- (선택) 로컬 렌더 확인 — 파일을 고친 뒤 다시 볼 때는 **캐시를 우회**한다(`?v=2`).
+  안 그러면 수정 전 화면을 보고 잘못 판단한다:
 ```bash
 python3 -m http.server 8123 --bind 127.0.0.1 &
-open http://127.0.0.1:8123/contents/blog/<slug>.html
+open "http://127.0.0.1:8123/contents/blog/<slug>.html?v=2"
 ```
 - 커밋은 사용자가 요청할 때만.
 
@@ -158,6 +171,7 @@ open http://127.0.0.1:8123/contents/blog/<slug>.html
 - [ ] 소스 전체를 읽고 구조(섹션/표/다이어그램/참고문헌) 파악
 - [ ] nav/footer는 bloglist.html 최신 버전 기준 + blog/ 깊이 경로 변환 (`../../`, `../`)
 - [ ] blockquote 헤더 + `.prose` 블록 + 인라인 표 스타일로 본문 변환
+- [ ] **이모지·아이콘 문자 0건** (불릿·표 셀·배지·소제목 전부, `↗` 만 예외) — 7단계 스캔으로 확인
 - [ ] ASCII 다이어그램은 스타일링된 div 다이어그램으로 재작성 (+캡션)
 - [ ] 제품 소개 페이지에서 기능 추출 → 개념-기능 매핑 표 + CTA 섹션
 - [ ] 매핑 표의 각 기능 셀 → 제품 소개 페이지의 해당 섹션 앵커(`#diff-…`)로 딥링크 (앵커 없으면 심고, 1:1 검증)
