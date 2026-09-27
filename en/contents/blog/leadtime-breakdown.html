@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Where Do Delays Come From? Splitting Lead Time to Find Bottlenecks | uEngine Blog</title>
+        <meta name="description" content="Total elapsed time alone rarely explains why work is delayed. Learn how Process GPT separates human review and approval, agent execution, and queue wait time to find bottlenecks, and how to correctly read the work-time axis and estimated values.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/leadtime-breakdown.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Where Do Delays Come From? Splitting Lead Time to Find Bottlenecks | uEngine Blog">
+        <meta property="og:description" content="Total elapsed time alone rarely explains why work is delayed. Learn how Process GPT separates human review and approval, agent execution, and queue wait time to find bottlenecks, and how to correctly read the work-time axis and estimated values.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/leadtime-breakdown.html">
+        <meta property="og:image" content="https://www.uengine.org/images/en/pgpt-features/leadtime/01-analytics-dashboard.jpg">
+        <meta property="og:image:alt" content="Where Do Delays Come From? Splitting Lead Time to Find Bottlenecks | uEngine Blog">
+        <meta property="article:published_time" content="2026-09-02">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Where Do Delays Come From? Splitting Lead Time to Find Bottlenecks | uEngine Blog">
+        <meta name="twitter:description" content="Total elapsed time alone rarely explains why work is delayed. Learn how Process GPT separates human review and approval, agent execution, and queue wait time to find bottlenecks, and how to correctly read the work-time axis and estimated values.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/en/pgpt-features/leadtime/01-analytics-dashboard.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Where Do Delays Come From? Splitting Lead Time to Find Bottlenecks","description":"Total elapsed time alone rarely explains why work is delayed. Learn how Process GPT separates human review and approval, agent execution, and queue wait time to find bottlenecks, and how to correctly read the work-time axis and estimated values.","image":["https://www.uengine.org/images/en/pgpt-features/leadtime/01-analytics-dashboard.jpg"],"url":"https://www.uengine.org/en/contents/blog/leadtime-breakdown.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/leadtime-breakdown.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-09-02","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Where Do Delays Come From? Splitting Lead Time to Find Bottlenecks","item":"https://www.uengine.org/en/contents/blog/leadtime-breakdown.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/leadtime-breakdown.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/leadtime-breakdown.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/leadtime-breakdown.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/leadtime-breakdown.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://uengine.stibee.com/" target="_blank" style="font-size: 18px;">Newsletter</a>
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                                     
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/leadtime-breakdown.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+ 
+                            <!-- Languages -->
+                            <!-- <li>
+                                <a href="#" class="mn-has-sub opacity-1">Kr <i class="mi-chevron-down"></i></a>
+                                <ul class="mn-sub to-left">                                    
+                                    <li><a href="../../contents/webinars.html">English</a></li>
+                                    <li><a href="../webinars.html">Korean</a></li>
+                                </ul>
+                                
+                            </li> -->
+                            <!-- End Languages -->                             
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Where Do Delays Come From? Splitting Lead Time to Find Bottlenecks</span>
+                                    </h1>
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  September 02, 2026</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        <div class="row">
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    <div class="blog-item-body chat-gpt">
+                                        <style>
+                                        .blog-item-body details > summary::-webkit-details-marker { display: none; }
+                                        .blog-item-body details > summary::marker { content: ""; }
+                                        .blog-item-body details > summary:hover { background: #f3eeff; border-radius: 12px; }
+                                        .blog-item-body details[open] > summary { border-bottom: 1px solid #e3e6ef; border-radius: 12px 12px 0 0; }
+                                        .blog-item-body details[open] > summary > span:first-child { transform: rotate(90deg); display: inline-block; }
+                                        </style>
+
+                                        <div class="mb-50 prose">
+                                            <p>“Why does this task take so long to complete?” To improve a process, you need to know not just the total elapsed time but <b>which stage the time was spent in</b>.</p>
+                                            <p>The fix differs depending on whether the human review stage is long, agent execution is slow, or work sits waiting before it is assigned. Total time alone does not tell you where to start.</p>
+                                            <p>The <b>Lead Time Breakdown</b> in the Process GPT execution profiler splits total elapsed time by category. This post walks through how to read the time composition, drill into execution details, and what to watch out for when interpreting the data.</p>
+                                        </div>
+
+                                        <blockquote><p>1. Total elapsed time is split into three categories</p></blockquote>
+
+                                        <div class="mb-50">
+                                            <div style="max-width: 640px; margin: 0 auto; border: 2px solid #1a1a2e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 24px 22px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
+                                                <div style="text-align: center; font-weight: 700; color: #1a1a2e; margin-bottom: 16px;">Total elapsed time (Lead Time)</div>
+                                                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                                                    <div style="flex: 1 1 170px; border: 2px solid #e08a2e; border-radius: 12px; background: #fff8ef; padding: 14px 12px; text-align: center;">
+                                                        <div style="font-weight: 700; color: #b96c14;">🧑 Human judgment</div>
+                                                        <div style="font-size: 13px; color: #666; margin-top: 6px;">Waiting for review, approval, and sign-off</div>
+                                                    </div>
+                                                    <div style="flex: 1 1 170px; border: 2px solid #3a6fd8; border-radius: 12px; background: #f1f6ff; padding: 14px 12px; text-align: center;">
+                                                        <div style="font-weight: 700; color: #2c56ad;">🤖 Agent execution</div>
+                                                        <div style="font-size: 13px; color: #666; margin-top: 6px;">LLM calls and tool runs</div>
+                                                    </div>
+                                                    <div style="flex: 1 1 170px; border: 2px solid #8a8f9c; border-radius: 12px; background: #f7f7fa; padding: 14px 12px; text-align: center;">
+                                                        <div style="font-weight: 700; color: #5f6470;">⏳ Queue wait</div>
+                                                        <div style="font-size: 13px; color: #666; margin-top: 6px;">Time waiting before assignment</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Two tasks may both take three days, but what you should improve depends on which segment is longest: human judgment, agent execution, or queue wait.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p>In the demo, time classified as 'human judgment' accounted for the vast majority. Because this segment also includes waiting for review and approval, it should not be read as time the assignee spent actively working. In cases like this, it is more effective to <b>examine the review and approval procedure first</b> rather than model speed.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/leadtime/01-analytics-dashboard.jpg" alt="Process analytics dashboard" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">The existing analytics dashboard shows running instances and the share of work done by humans versus agents.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/leadtime/02-leadtime-breakdown.jpg" alt="Lead time breakdown: human judgment at 100%" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">The demo instance's elapsed time of 4 days is shown on screen as 100.0% 'human judgment'. Since this segment includes review and approval wait time, it must be interpreted separately from actual working time.</p>
+                                        </div>
+
+<blockquote><p>2. Zoom into short execution segments with the work-time axis</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>Execution segments are displayed as a waterfall chart with bars laid out in chronological order. In the demo data, the segments with recorded execution events made up less than 1% of the total lead time, so rendering the real time intervals as-is made the bars hard to distinguish.</p>
+                                            <p>The <b>work-time axis</b> compresses idle segments with no events and expands the recorded work segments in proportion to their relative length. In the demo, the combined bar width for the same data grew from 160 pixels to 1,400 pixels, making it much easier to compare individual segments.</p>
+                                            <p>Compressed wait time is shown separately in a badge below the scale. Users can see how much of the total elapsed time has been compressed on screen.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">The work-time axis is a display mode for examining short execution segments in detail. When judging total duration, always check the original time axis and the compressed wait time as well.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/leadtime/03-realtime-axis.jpg" alt="Real-time axis waterfall: the bars are barely visible" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">When real time intervals are preserved, short work segments shrink to near-dots and are hard to compare.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/leadtime/04-worktime-axis.jpg" alt="Work-time axis: idle time folded away, only actual work segments expanded" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">On the work-time axis, idle segments are compressed to enlarge the work bars, and the compressed time is shown as a badge.</p>
+                                        </div>
+
+<blockquote><p>3. Find the cause of delays in task and call records</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>Switching to the work-time axis makes it easier to compare human and agent execution segments. In the demo, the human review tasks shown in orange run noticeably longer than the agent execution segments shown in blue.</p>
+                                            <p>Select a task bar to see the related language model calls and tool calls. The language model call record shows the model, duration, and token cost; the prompt tab shows the messages sent; and the tool call record shows the input values and returned results. Sensitive values such as auth tokens and passwords are masked at the storage stage.</p>
+                                            <p>By aggregating multiple executions, you can also identify <b>recurring bottlenecks per process</b>. In the demo, the human review step was the longest in both processes. From there, you can further examine the workload at that step and the reasons for approval delays.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/leadtime/05-bottleneck.jpg" alt="Contrast between agent execution (blue) and human review (orange) segments" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Compare human review tasks against agent execution segments to find the steps that need a closer look.</p>
+                                        </div>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> Task details: language model and tool call records</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/leadtime/06-llm-span.jpg" alt="Language model span details: model, duration, and token cost" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Select a task bar to see the model, duration, and token cost of the related language model calls.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/leadtime/07-tool-span.jpg" alt="Tool spans: arguments, results, and failure records" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Inspect the input values and returned results of tool calls. Auth tokens and passwords are masked at the storage stage.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+<blockquote><p>4. Distinguish measured values from estimates</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>Accurate time classification requires both start and completion records. Of the 124 human tasks inspected during development, only 6 still had a start event, so the records had to be supplemented.</p>
+                                            <p>We then added database triggers so that status changes are recorded in the history table. Since the new recording method cannot recover events that were missed in the past, we applied the following principles.</p>
+                                            <ul>
+                                                <li><b>Time back-calculated from other records:</b> marked as an 'estimate' so it can be distinguished from measured values.</li>
+                                                <li><b>Segments with no evidence of completion:</b> left blank rather than calculating an arbitrary duration. During inspection, there was a case where incorrectly filling in a missing end time produced a human working time of 29 days.</li>
+                                            </ul>
+                                            <p>Clearly flagging segments with insufficient records prevents estimates from being mistaken for actual measurements and lets you set improvement priorities with confidence.</p>
+                                        </div>
+
+                                        <blockquote><p>5. View it in the existing process analytics screen</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>The lead time breakdown links records from the LLM proxy and event logs to the process instance. You can review execution segments and call details together in the existing process analytics screen without opening a separate observability application.</p>
+                                        </div>
+
+                                        <blockquote><p>6. Improve where the time is going</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>The lead time breakdown can be used to prioritize automation and operational improvements. After identifying the longest segment, consider the following improvements.</p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Where time is concentrated</th>
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Improvements to consider</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">🧑 Human judgment</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Examine the causes of review and approval delays; split roles into agent drafting and human approval, or clarify the approval criteria</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">🤖 Agent execution</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Review prompts, the number of tool calls, and model selection; compare cost and output quality together</td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">⏳ Queue wait</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Review assignment rules and the workload per assignee</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>See it in Process GPT</b></p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Concept in this article</th>
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Process GPT capability</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Compare human and agent durations within the same process</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Design humans and agents together with BPMN lanes<br><a href="../processgpt.html#diff-bpmn" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Select automation targets based on bottleneck analysis</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">A self-learning structure that improves itself by learning from execution records<br><a href="../processgpt.html#diff-selflearning" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="mt-30">
+                                                See the <a href="../processgpt.html">Process GPT product page</a> for full details, and
+                                                <a href="https://www.process-gpt.io" target="_blank">process-gpt.io</a> for the live application.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>References</b></p>
+                                            <ul style="font-size: 14px;">
+                                                <li><a href="https://youtu.be/fZQbtKik8_Q" target="_blank">Demo video: Lead Time Breakdown</a></li>
+                                                <li><a href="https://youtu.be/mW73WBndY9Y" target="_blank">Demo video: Execution Profiler</a></li>
+                                                <li><a href="../processgpt.html" target="_blank">Process GPT product overview</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+                
+            </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+                            
+                            <div>                                
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li>
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->        
+        
+    </body>
+</html>

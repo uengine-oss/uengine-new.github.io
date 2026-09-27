@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Robo Analyzer — Legacy Code & DB Schema Impact Analysis | uEngine</title>
+        <meta name="description" content="Analyzes legacy source code together with database schemas to show function calls and table/column read/write relationships in a single graph. From any point, you can trace all the way down to the original source code as evidence.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/roboanalyzer.html">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Robo Analyzer — Legacy Code & DB Schema Impact Analysis | uEngine">
+        <meta property="og:description" content="Analyzes legacy source code together with database schemas to show function calls and table/column read/write relationships in a single graph. From any point, you can trace all the way down to the original source code as evidence.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/roboanalyzer.html">
+        <meta property="og:image" content="https://www.uengine.org/images/full-width-images/main-img-roboanalyzer.png">
+        <meta property="og:image:alt" content="Robo Analyzer — Legacy Code & DB Schema Impact Analysis | uEngine">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Robo Analyzer — Legacy Code & DB Schema Impact Analysis | uEngine">
+        <meta name="twitter:description" content="Analyzes legacy source code together with database schemas to show function calls and table/column read/write relationships in a single graph. From any point, you can trace all the way down to the original source code as evidence.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/full-width-images/main-img-roboanalyzer.png">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Robo Analyzer","description":"Analyzes legacy source code together with database schemas to show function calls and table/column read/write relationships in a single graph. From any point, you can trace all the way down to the original source code as evidence.","url":"https://www.uengine.org/en/contents/roboanalyzer.html","image":"https://www.uengine.org/images/full-width-images/main-img-roboanalyzer.png","applicationCategory":"DeveloperApplication","operatingSystem":"Web","inLanguage":"en","publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}}}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Robo Analyzer","item":"https://www.uengine.org/en/contents/roboanalyzer.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/roboanalyzer.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/roboanalyzer.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/roboanalyzer.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+            <style>#main p, #main h1, #main h2, #main h3, #main h4, #main td, #main div{word-break: keep-all;} #main p, #main td, #main .features-2-descr, #main .testimonials-6-author{text-wrap: pretty;} #main h1, #main h2, #main h3, #main h4{text-wrap: balance;}</style>
+    </head>
+    
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../index.html" class="logo">
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../contents/roboanalyzer.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                               
+                            <li class="pc-chat lang-switch"><a href="../../contents/roboanalyzer.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section pb-100 pb-sm-60 bg-gray-light-1 bg-light-alpha-90 bg-scroll" style="background-image: url(../../images/full-width-images/section-bg-2.jpg)">
+                    <div class="container position-relative pt-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h2 class="section-caption-border mb-30 mb-xs-20 wow fadeInUp" data-wow-duration="1.2s">
+                                        AI-Driven Development
+                                    </h2>
+                                    <h1 class="hs-title-1 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Robo Analyzer</span>
+                                    </h1>
+                                    <p class="section-descr mb-40 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                                        The connection between code and data, as a graph you can read.<br>
+                                        Analyzes legacy source code together with database schemas to show function calls and table read&middot;write relationships in a single graph. From any point, you can drill down to the original source code.
+                                    </p>
+                                    <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                        <a href="https://youtu.be/WwEFIn5lEoA" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10" target="_blank" rel="noopener">
+                                            <span style="font-size: 16px;">Watch the full demo</span>
+                                        </a>
+                                        <a href="#scenario" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                            <span style="font-size: 16px;">See key features</span>
+                                        </a>
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+                <!-- About Section -->
+                <section class="page-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7 mb-sm-30 mt-n10">
+                                <div class="video-box">
+                                    <iframe src="https://www.youtube.com/embed/WwEFIn5lEoA?hl=en&cc_lang_pref=en"
+                                        title="Robo Analyzer full demo &mdash; Analyzing an e-commerce domain"
+                                        frameborder="0" scrolling="no" loading="lazy" allowfullscreen=""></iframe>
+                                </div>
+                                <p class="mt-15 mb-0" style="font-size: 0.95rem; color: #888;">
+                                    About 4 min 47 sec &middot; Narration is a synthetic voice (OpenAI TTS). Turn on the sound to hear each screen explained.
+                                </p>
+                            </div>
+                            <div class="col-md-5 mt-n10 mt-sm-20">
+                                <div class="wow linesAnimIn" data-splitting="lines">
+                                    <p class="section-descr wow fadeInUp" data-wow-delay="0.1s">
+                                        <span style="font-size: 1.8rem; color: #111; font-weight: 600;">What you can't learn from reading code alone</span>
+                                    </p>
+                                    <p class="lead mt-0 mb-40 mb-sm-20" style="font-size: 20px;">
+                                        In an aging system, reading the code alone rarely reveals the real call flow. Documentation and code disagree about where tables are read and written.<br><br>
+                                        Robo Analyzer focuses on <b>understanding the current system from code and data evidence</b>. Automating the specification, design, and implementation that follow analysis is the job of a separate product.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End About Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 남는 질문 Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center mb-60 mb-sm-40">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Legacy always leaves the same questions</span>
+                            </h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 d-flex align-items-stretch mb-30">
+                                <div style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); padding:40px 34px; width:100%;">
+                                    <p style="font-size:1.35rem; font-weight:600; color:#111; line-height:1.6; margin:0;">If I change this function,<br>how far does the impact reach?</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-stretch mb-30">
+                                <div style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); padding:40px 34px; width:100%;">
+                                    <p style="font-size:1.35rem; font-weight:600; color:#111; line-height:1.6; margin:0;">Who reads this table today,<br>and who writes to it?</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-stretch mb-30">
+                                <div style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.08); padding:40px 34px; width:100%;">
+                                    <p style="font-size:1.35rem; font-weight:600; color:#111; line-height:1.6; margin:0;">When the docs and the code disagree,<br>which one do I trust?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center mt-20 mb-0" style="font-size:1.1rem; color:#777;">
+                            The person who knows the answer has usually left the company — or is still there, but not certain.
+                        </p>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 핵심 차별점 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="row">
+                            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                                <h2 class="section-title mb-50 wow fadeInUp">What sets Robo Analyzer apart</h2>
+                            </div>
+                        </div>
+                        <div class="row mt-n30">
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">Structure computed without an LLM</h4>
+                                    <div class="features-2-descr">Structure, relationships, clusters, and risk levels are computed without an LLM. AI is used only to attach meaning.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.15s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">Analyzes broken code too</h4>
+                                    <div class="features-2-descr">Attempts recovery only on the failed parts; if that fails, it leaves them and moves on. The originals are never modified.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">Progress in real time</h4>
+                                    <div class="features-2-descr">In both parsing and analysis, the stage, console, and node counts keep updating long before completion.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">Search in business language</h4>
+                                    <div class="features-2-descr">"The part that reserves inventory and cancels if there's a shortage" — finds the relevant code from the sentence as written.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.15s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">Proven by the source</h4>
+                                    <div class="features-2-descr">Every result links to an actual file and line number. No diagrams without evidence.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                                    </div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">Production DB is read-only</h4>
+                                    <div class="features-2-descr">Only queries are allowed, writes are blocked, and connection passwords are never stored anywhere.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 비교 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-60 mb-sm-40 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Opening the code isn't enough to know</span>
+                            </h3>
+                        </div>
+                        <div class="col-lg-10 offset-lg-1 row mb-n20">
+                            <table class="tbl-default">
+                                <tr class="border-bottom-n" style="background-color: none !important;">
+                                    <th class="tbl-title-gray">Question</th>
+                                    <th class="tbl-title-gray">Until now</th>
+                                    <th class="tbl-title-gray">Robo Analyzer</th>
+                                </tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">Call impact scope</td><td>Guess names and search repeatedly</td><td>Calls and reads&middot;writes in one graph</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">Data origin</td><td>Investigate SQL and code separately</td><td>Jump straight from the table to the function and line of code</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">Business boundaries</td><td>Rely on staff memory and outdated documents</td><td>Compare modules and business units from analysis results</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">Progress status</td><td>No results until it finishes</td><td>Stage&middot;console&middot;graph counts visible in real time</td></tr>
+                                <tr><td class="border-left-n" style="font-weight:600;">Re-checking</td><td>Start from scratch every time</td><td>Analyze once, keep exploring</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 깨진 코드 + 업무규칙 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-60 mb-sm-40 mt-n20" style="line-height:1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">It doesn't stop at showing structure</span>
+                            </h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); padding:40px 36px; width:100%;">
+                                    <h4 style="font-size:1.6rem; font-weight:bold; margin-top:0; margin-bottom:20px;">Ever been handed code that doesn't even compile?</h4>
+                                    <p style="font-size:1.05rem; color:#666; line-height:1.7;">
+                                        It's normal for legacy source to include files with broken syntax.
+                                        Valid files are processed as-is; only the failed parts get a grammar-rule-based recovery attempt.
+                                        If that still fails, only that part is left behind and processing moves on to the next file.
+                                    </p>
+                                    <p style="font-size:1.05rem; color:#111; font-weight:600; line-height:1.7; margin-bottom:0;">
+                                        By default, original source files are never modified.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background:#fff; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); padding:40px 36px; width:100%;">
+                                    <h4 style="font-size:1.6rem; font-weight:bold; margin-top:0; margin-bottom:20px;">Down to business rules and risk points</h4>
+                                    <p style="font-size:1.05rem; color:#666; line-height:1.7;">
+                                        Extracts the decision conditions scattered through the code as rules — for example, &ldquo;allow withdrawal if the balance is greater than 0.&rdquo;
+                                        They are organized into rules, examples, and questions needing confirmation, and linked to the related tables.
+                                    </p>
+                                    <p style="font-size:1.05rem; color:#666; line-height:1.7; margin-bottom:0;">
+                                        For each function, it computes how often it is called, how many calls it makes, code length, circular references, and table coupling,
+                                        then assigns a <b>Low&middot;Medium&middot;High</b> grade.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- FEATURES Section -->
+                <section class="page-section" id="scenario">
+                    <div class="container position-relative">
+
+                        <div class="row">
+                            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                                <h3 class="section-title mb-80 mb-sm-60"><span class="wow charsAnimIn" data-splitting="chars">FEATURES</span></h3>
+                            </div>
+                        </div>
+
+                        <!-- 01 분석 대상 선정 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 col-lg-6 offset-lg-1 mb-sm-40">
+                                <a href="../../images/roboanalyzer/feature-01-upload.jpg" class="lightbox mfp-image" title="Selecting analysis targets — automatic language detection, automatic DDL classification">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../../images/roboanalyzer/feature-01-upload.jpg" alt="Upload window — each source file tagged with an automatic C-detection badge and an automatic DDL-classification badge" class="wow scaleOutIn" loading="lazy" decoding="async" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 offset-md-1 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">Drop files in any way you like,<br>and they're handled automatically</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍUpload source and DDL together and they are separated automatically<br>
+                                            ㆍLanguages are detected automatically (Java &middot; C &middot; Python &middot; Oracle PL/SQL &middot; PostgreSQL)<br>
+                                            ㆍConnecting a production DB is optional
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/C_ZKSXLp3X0" target="_blank" rel="noopener"><b>Watch video</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 02 실시간 진행 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 offset-md-1 col-lg-6 offset-lg-1 order-md-last mb-sm-40">
+                                <a href="../../images/roboanalyzer/feature-02-realtime.jpg" class="lightbox mfp-image" title="Real-time progress — eight stages with node and relationship counts continuously updated">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../../images/roboanalyzer/feature-02-realtime.jpg" alt="Ingestion progress panel — stage 2/8, 175 nodes and 164 relationships, with the full list of eight stages visible" class="wow scaleOutIn" loading="lazy" decoding="async" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">You can watch progress<br>in real time</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍAll eight stages and the current position are displayed<br>
+                                            ㆍNode&middot;relationship counts keep updating before completion<br>
+                                            ㆍPause&middot;resume&middot;stop are available during analysis
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/reiDZSrEODY" target="_blank" rel="noopener"><b>Watch video</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 03 메타데이터 보강 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 col-lg-6 offset-lg-1 mb-sm-40">
+                                <a href="../../images/roboanalyzer/feature-03-metadata.jpg" class="lightbox mfp-image" title="Click a node — logical name, overview, function list, original code">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../../images/roboanalyzer/feature-03-metadata.jpg" alt="shipping node detail panel — logical name, overview, list of 11 functions, and original code shown together" class="wow scaleOutIn" loading="lazy" decoding="async" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 offset-md-1 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">Click a node,<br>and its meaning appears with it</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍThe logical name assigned by analysis appears next to the physical name<br>
+                                            ㆍshipping &rarr; &ldquo;Shipping order processing and status management service&rdquo;<br>
+                                            ㆍ[Core] summary and function list, with logical names on each function too<br>
+                                            ㆍOriginal code right in the same panel
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/J8B4B3-UntY" target="_blank" rel="noopener"><b>Watch video</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 04 응집도와 결합도 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 offset-md-1 col-lg-6 offset-lg-1 order-md-last mb-sm-40">
+                                <a href="../../images/roboanalyzer/feature-04-coupling.jpg" class="lightbox mfp-image" title="Cohesion and coupling — WRITES that cross domain boundaries are exposed">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../../images/roboanalyzer/feature-04-coupling.jpg" alt="Domain areas grouped by hull, with several orange WRITES lines crossing the boundaries and cohesion/coupling labels" class="wow scaleOutIn" loading="lazy" decoding="async" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">Cohesion and coupling<br>become visible</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍInside a domain area is cohesion; lines crossing the boundary are coupling<br>
+                                            ㆍMany WRITES crossing domains is a warning sign<br>
+                                            ㆍCALLS &middot; READS &middot; WRITES labels on the lines
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/VGSXZgBkT4s" target="_blank" rel="noopener"><b>Watch video</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 05 의미 검색 -->
+                        <div class="row mb-120 mb-sm-80">
+                            <div class="col-md-5 col-lg-6 offset-lg-1 mb-sm-40">
+                                <a href="../../images/roboanalyzer/feature-05-semantic.jpg" class="lightbox mfp-image" title="Semantic search — only matching nodes are outlined">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../../images/roboanalyzer/feature-05-semantic.jpg" alt="Business-sentence search result — only the inventory reserve, validate, confirm, and release nodes are highlighted with a bright outline" class="wow scaleOutIn" loading="lazy" decoding="async" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 offset-md-1 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">Search with a business sentence,<br>and the right nodes really light up</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍType &ldquo;the part that reserves inventory and cancels if there's a shortage&rdquo; as-is<br>
+                                            ㆍAmong the scattered nodes, only the matching ones are outlined<br>
+                                            ㆍContinue exploring straight from the result nodes
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/kAMKrlk2q2o" target="_blank" rel="noopener"><b>Watch video</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                        <!-- 06 테이블 출처 -->
+                        <div class="row">
+                            <div class="col-md-5 offset-md-1 col-lg-6 offset-lg-1 order-md-last mb-sm-40">
+                                <a href="../../images/roboanalyzer/feature-06-evidence.jpg" class="lightbox mfp-image" title="Table origin — review_point.c line 117, FROM orders highlighted">
+                                    <div class="overflow-hidden" style="border:7px solid #eee; border-radius: 5px;">
+                                        <img src="../../images/roboanalyzer/feature-06-evidence.jpg" alt="After selecting the origin on the orders table card, the FROM orders line at review_point.c line 117 is highlighted" class="wow scaleOutIn" loading="lazy" decoding="async" />
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 offset-lg-1 d-flex align-items-center wow fadeInUp">
+                                <blockquote class="testimonials-6-item">
+                                    <div class="testimonials-6-icon black opacity-005" aria-hidden="true">&ldquo;</div>
+                                    <p class="testimonials-6-text mb-40">Pick an origin, and the actual<br>line of code is highlighted</p>
+                                    <div class="section-line mb-10"></div>
+                                    <footer>
+                                        <div class="testimonials-6-author" style="word-break: keep-all;">
+                                            ㆍSelect a read&middot;write origin from the table card<br>
+                                            ㆍreview_point.c line 117 &ldquo;FROM orders&rdquo; is highlighted as-is<br>
+                                            ㆍ&ldquo;This reads the table&rdquo; is proven with a file and line number
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <a href="https://youtu.be/y3VTteGi4dU" target="_blank" rel="noopener"><b>Watch video</b></a>
+                                        </div>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End FEATURES -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 8단계 Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center mb-50 mb-sm-30">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height:1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Eight stages, and determinism</span>
+                            </h3>
+                        </div>
+                        <div class="col-lg-10 offset-lg-1 wow fadeInUp">
+                            <div class="row">
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">1</div>
+                                        <div style="font-weight:600; color:#111;">DDL parsing</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">2</div>
+                                        <div style="font-weight:600; color:#111;">AST loading</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">3</div>
+                                        <div style="font-weight:600; color:#111;">External file loading</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">4</div>
+                                        <div style="font-weight:600; color:#111;">Project scan</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">5</div>
+                                        <div style="font-weight:600; color:#111;">Relationship linking</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">6</div>
+                                        <div style="font-weight:600; color:#111;">Context</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">7</div>
+                                        <div style="font-weight:600; color:#111;">Code analysis</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-20">
+                                    <div style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px 10px 16px; text-align:center; height:100%;">
+                                        <div style="width:36px; height:36px; line-height:36px; border-radius:50%; background:#7C5CFF; color:#fff; font-weight:700; margin:0 auto 10px;">8</div>
+                                        <div style="font-weight:600; color:#111;">Post-processing</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background:#F2EFFF; border:2px solid #7C5CFF; border-radius:14px; padding:28px 22px; text-align:center; margin-top:16px;">
+                                <p style="font-size:1.3rem; font-weight:700; color:#7C5CFF; margin:0 0 8px;">Structure &middot; relationships &middot; clusters &middot; risk levels are computed without an LLM</p>
+                                <p style="font-size:1.05rem; color:#555; margin:0;">AI is used only to attach meaning, such as &ldquo;what does this function do?&rdquo;</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 아키텍처 Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                            <h3 class="section-title mb-30 mb-sm-20 mt-n20" style="text-transform:uppercase;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Architecture</span>
+                            </h3>
+                        </div>
+                        <div class="mb-60 mb-sm-40 text-center wow fadeInUp" style="font-size:18px;">
+                            Upload · parse · analyze proceed with three clicks from the user, and access goes through a single address.<br>
+                            File sharing exists only between the code parser and the analysis engine.
+                            <div class="local-scroll mt-30">
+                                <a target="_blank" href="../../images/Robo-Analyzer-intro.pdf" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border: 2px solid #111;">
+                                    <span style="font-size: 16px;">Download the brochure (PDF)</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10 offset-lg-1 mb-50 mb-sm-30 wow fadeInUp">
+                                <p style="font-size:1.3rem; font-weight:600; margin-bottom:15px; text-align:center;">Analysis request flow</p>
+                                <div class="overflow-hidden" style="border:7px solid #fff; border-radius:5px; box-shadow:0 10px 30px rgba(0,0,0,0.1); background:#fff;">
+<svg viewBox="0 0 1200 690" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Analysis request flow sequence" style="width:100%; height:auto; display:block; background:#fff; font-family:inherit;">
+  <defs>
+    <marker id="sg" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#94A3B8"/></marker>
+    <marker id="sp" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#7C5CFF"/></marker>
+    <filter id="ssh" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#1B2A4A" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- 생명선 -->
+  <line x1="170" y1="92" x2="170" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <line x1="500" y1="92" x2="500" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <line x1="820" y1="92" x2="820" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <line x1="1090" y1="92" x2="1090" y2="640" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+
+  <!-- 활성 막대 -->
+  <g fill="#F2EFFF" stroke="#7C5CFF" stroke-width="1">
+    <rect x="495" y="122" width="10" height="104" rx="3"/>
+    <rect x="815" y="160" width="10" height="66" rx="3"/>
+    <rect x="495" y="272" width="10" height="118" rx="3"/>
+    <rect x="815" y="310" width="10" height="80" rx="3"/>
+    <rect x="495" y="442" width="10" height="118" rx="3"/>
+    <rect x="1085" y="480" width="10" height="80" rx="3"/>
+  </g>
+
+  <!-- 헤더 -->
+  <g filter="url(#ssh)">
+    <rect x="70" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="400" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="720" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="990" y="40" width="200" height="52" rx="12" fill="#fff" stroke="#E2E8F0"/>
+  </g>
+  <rect x="70" y="40" width="200" height="6" rx="3" fill="#475569"/>
+  <rect x="400" y="40" width="200" height="6" rx="3" fill="#2E7DD1"/>
+  <rect x="720" y="40" width="200" height="6" rx="3" fill="#2E7DD1"/>
+  <rect x="990" y="40" width="200" height="6" rx="3" fill="#7C5CFF"/>
+  <g fill="#475569">
+    <circle cx="170" cy="10" r="7"/><path d="M158 30 q12 -12 24 0 v4 h-24 z"/>
+  </g>
+  <text x="170" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">User</text>
+  <text x="500" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">UI</text>
+  <text x="820" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">Code parser</text>
+  <text x="1090" y="76" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">Analysis engine</text>
+
+  <!-- ① 업로드 -->
+  <circle cx="170" cy="128" r="13" fill="#7C5CFF"/>
+  <text x="170" y="133" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1</text>
+  <line x1="187" y1="128" x2="491" y2="128" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="339" y="120" text-anchor="middle" font-size="13" fill="#334155">Upload source and DDL</text>
+  <line x1="505" y1="166" x2="811" y2="166" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="660" y="158" text-anchor="middle" font-size="13" fill="#334155">Pass files</text>
+  <line x1="815" y1="204" x2="509" y2="204" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#sg)"/>
+  <text x="660" y="196" text-anchor="middle" font-size="13" fill="#334155">Source · DDL classification result</text>
+
+  <!-- ② 파싱 -->
+  <circle cx="170" cy="278" r="13" fill="#7C5CFF"/>
+  <text x="170" y="283" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">2</text>
+  <line x1="187" y1="278" x2="491" y2="278" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="339" y="270" text-anchor="middle" font-size="13" fill="#334155">Start parsing</text>
+  <line x1="505" y1="316" x2="811" y2="316" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="660" y="308" text-anchor="middle" font-size="13" fill="#334155">Parse request</text>
+  <line x1="815" y1="354" x2="509" y2="354" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <line x1="815" y1="378" x2="509" y2="378" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <text x="660" y="346" text-anchor="middle" font-size="13" font-weight="700" fill="#7C5CFF">Streams per-file progress · results continuously (real time)</text>
+
+  <!-- ③ 분석 -->
+  <circle cx="170" cy="448" r="13" fill="#7C5CFF"/>
+  <text x="170" y="453" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">3</text>
+  <line x1="187" y1="448" x2="491" y2="448" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="339" y="440" text-anchor="middle" font-size="13" fill="#334155">Start analysis</text>
+  <line x1="505" y1="486" x2="1081" y2="486" stroke="#94A3B8" stroke-width="2" marker-end="url(#sg)"/>
+  <text x="793" y="478" text-anchor="middle" font-size="13" fill="#334155">Analysis request</text>
+  <line x1="1085" y1="524" x2="509" y2="524" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <line x1="1085" y1="548" x2="509" y2="548" stroke="#7C5CFF" stroke-width="2" marker-end="url(#sp)"/>
+  <text x="793" y="516" text-anchor="middle" font-size="13" font-weight="700" fill="#7C5CFF">Streams stage · node/relationship counts continuously (real time)</text>
+
+  <!-- 하단 안내 -->
+  <rect x="240" y="602" width="720" height="52" rx="12" fill="#F2EFFF"/>
+  <text x="600" y="634" text-anchor="middle" font-size="14" font-weight="700" fill="#7C5CFF">Upload · parse · analyze are each clicked separately &#8212; they do not chain automatically</text>
+</svg>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 offset-lg-1 wow fadeInUp">
+                                <p style="font-size:1.3rem; font-weight:600; margin-bottom:15px; text-align:center;">System composition</p>
+                                <div class="overflow-hidden" style="border:7px solid #fff; border-radius:5px; box-shadow:0 10px 30px rgba(0,0,0,0.1); background:#fff;">
+<svg viewBox="0 0 1200 815" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Robo Analyzer system composition" style="width:100%; height:auto; display:block; background:#fff; font-family:inherit;">
+  <defs>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#94A3B8"/></marker>
+    <marker id="ap" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#7C5CFF"/></marker>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#D14343"/></marker>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#1B2A4A" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- 사용자 -->
+  <g fill="#475569">
+    <circle cx="576" cy="22" r="8"/><path d="M562 46 q14 -14 28 0 v6 h-28 z"/>
+    <circle cx="624" cy="22" r="8"/><path d="M610 46 q14 -14 28 0 v6 h-28 z"/>
+  </g>
+  <text x="600" y="70" text-anchor="middle" font-size="13" fill="#475569">Architects · Developers</text>
+  <line x1="583" y1="60" x2="420" y2="88" stroke="#CBD5E1" stroke-width="1.5"/>
+  <line x1="617" y1="60" x2="780" y2="88" stroke="#CBD5E1" stroke-width="1.5"/>
+
+  <!-- 접근 -->
+  <g filter="url(#sh)">
+    <rect x="260" y="92" width="280" height="58" rx="12" fill="#E9F2FC" stroke="#2E7DD1" stroke-width="1.5"/>
+    <rect x="660" y="92" width="280" height="58" rx="12" fill="#E9F2FC" stroke="#2E7DD1" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="116" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">Web browser</text>
+  <text x="400" y="137" text-anchor="middle" font-size="11.5" fill="#64748B">No install required</text>
+  <text x="800" y="116" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">Desktop app</text>
+  <text x="800" y="137" text-anchor="middle" font-size="11.5" fill="#64748B">Installed</text>
+
+  <line x1="400" y1="152" x2="400" y2="204" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="800" y1="152" x2="800" y2="204" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- 실시간 스트림 (시스템 → 사용자) -->
+  <line x1="600" y1="244" x2="600" y2="160" stroke="#7C5CFF" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ap)"/>
+  <text x="614" y="190" font-size="12" font-weight="700" fill="#7C5CFF">Progress stream (real time)</text>
+
+  <!-- 시스템 경계 -->
+  <rect x="40" y="210" width="1120" height="482" rx="16" fill="#FBFAFF" stroke="#7C5CFF" stroke-width="2" stroke-dasharray="9 6"/>
+  <text x="64" y="238" font-size="13" font-weight="700" fill="#7C5CFF">Robo Analyzer</text>
+
+  <!-- 단일 진입점 -->
+  <rect x="90" y="248" width="1020" height="54" rx="10" fill="#F2EFFF" stroke="#7C5CFF" stroke-width="1.5"/>
+  <text x="600" y="281" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1B2A4A">Single entry point <tspan font-weight="400" fill="#64748B" font-size="13">(path routing · access control)</tspan></text>
+
+  <line x1="195" y1="302" x2="195" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="465" y1="302" x2="465" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="735" y1="302" x2="735" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="1005" y1="302" x2="1005" y2="330" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- 서비스 4 -->
+  <g filter="url(#sh)">
+    <rect x="75" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="345" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="615" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <rect x="885" y="336" width="240" height="150" rx="12" fill="#fff" stroke="#E2E8F0"/>
+  </g>
+  <rect x="75" y="336" width="240" height="6" rx="3" fill="#2E7DD1"/>
+  <rect x="345" y="336" width="240" height="6" rx="3" fill="#7C5CFF"/>
+  <rect x="615" y="336" width="240" height="6" rx="3" fill="#0D9488"/>
+  <rect x="885" y="336" width="240" height="6" rx="3" fill="#D97706"/>
+
+  <text x="195" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">Code parser</text>
+  <line x1="105" y1="384" x2="285" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="195" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">Automatic language detection</text>
+  <text x="195" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">Syntax parsing</text>
+  <text x="195" y="452" text-anchor="middle" font-size="12.5" fill="#64748B">Syntax error recovery</text>
+
+  <text x="465" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">Analysis engine</text>
+  <line x1="375" y1="384" x2="555" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="465" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">Eight-stage pipeline</text>
+  <text x="465" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">Graph loading</text>
+  <text x="465" y="452" text-anchor="middle" font-size="12.5" fill="#64748B">Source retrieval</text>
+
+  <text x="735" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">Catalog</text>
+  <line x1="645" y1="384" x2="825" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="735" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">Graph queries</text>
+  <text x="735" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">Delivered to UI</text>
+
+  <text x="1005" y="370" text-anchor="middle" font-size="16" font-weight="700" fill="#1B2A4A">Data connection</text>
+  <line x1="915" y1="384" x2="1095" y2="384" stroke="#EEF2F7" stroke-width="2"/>
+  <text x="1005" y="408" text-anchor="middle" font-size="12.5" fill="#64748B">Production DB access</text>
+  <text x="1005" y="430" text-anchor="middle" font-size="12.5" fill="#64748B">Read-only enforced</text>
+
+  <!-- 공유 저장소 -->
+  <rect x="90" y="545" width="300" height="58" rx="10" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="240" y="580" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">Shared storage</text>
+  <line x1="195" y1="490" x2="195" y2="540" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="168" y="520" font-size="12" font-weight="700" fill="#475569">Write</text>
+  <line x1="392" y1="556" x2="430" y2="494" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="430" y="540" font-size="12" font-weight="700" fill="#475569">Read</text>
+
+  <!-- 그래프 DB -->
+  <g stroke="#0D9488" stroke-width="1.8" fill="#E6F7F1">
+    <path d="M645 552 v52 a55 12 0 0 0 110 0 v-52" />
+    <ellipse cx="700" cy="552" rx="55" ry="12"/>
+  </g>
+  <text x="700" y="590" text-anchor="middle" font-size="14" font-weight="700" fill="#0F766E">Graph DB</text>
+  <line x1="510" y1="490" x2="655" y2="543" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="556" y="508" font-size="12" font-weight="700" fill="#475569">Load</text>
+  <line x1="735" y1="490" x2="714" y2="538" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="744" y="516" font-size="12" font-weight="700" fill="#475569">Query</text>
+
+  <!-- 외부: 언어 모델 -->
+  <line x1="465" y1="490" x2="478" y2="716" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="5 5" marker-end="url(#ag)"/>
+  <text x="494" y="646" font-size="12" font-weight="700" fill="#64748B">Meaning only</text>
+  <rect x="370" y="722" width="220" height="58" rx="10" fill="#fff" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="480" y="748" text-anchor="middle" font-size="14" font-weight="700" fill="#475569">Language model</text>
+  <text x="480" y="768" text-anchor="middle" font-size="11" fill="#94A3B8">Not used for structure/relationship computation</text>
+
+  <!-- 외부: 운영 DB -->
+  <line x1="1005" y1="490" x2="1005" y2="714" stroke="#D14343" stroke-width="2.2" marker-end="url(#ar)"/>
+  <text x="1020" y="620" font-size="12.5" font-weight="700" fill="#B91C1C">Read-only</text>
+  <g stroke="#D14343" stroke-width="1.8" fill="#FDECEC">
+    <path d="M950 730 v46 a55 12 0 0 0 110 0 v-46" />
+    <ellipse cx="1005" cy="730" rx="55" ry="12"/>
+  </g>
+  <text x="1005" y="764" text-anchor="middle" font-size="14" font-weight="700" fill="#B91C1C">Production DB</text>
+</svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Architecture Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 지원 환경 Section -->
+                <section class="page-section mt-n20 mt-sm-0 mb-sm-30">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                            <h3 class="section-title mb-70 mb-sm-50" style="text-transform: uppercase;"><span class="wow charsAnimIn" data-splitting="chars">Environment</span></h3>
+                        </div>
+                        <div class="mb-30 mb-sm-40 col-lg-8 offset-lg-2">
+                            <p class="testimonials-6-author" style="font-weight: 300;">
+                                ㆍ<span style="font-weight: 600;">Supported languages:</span> Java &middot; C &middot; Python &middot; Oracle PL/SQL &middot; PostgreSQL &mdash; detected automatically from file contents<br>
+                                ㆍ<span style="font-weight: 600;">Deployment:</span> Web browser (no install required) &middot; Desktop app (installed)<br>
+                                ㆍ<span style="font-weight: 600;">Production DB access:</span> Read-only &mdash; queries only, row-count cap enforced, connection passwords never stored
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- 제품 경계 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+                        <div class="row align-items-center">
+                            <div class="col-lg-10 offset-lg-1">
+                                <h2 class="section-caption-border mb-20">Related products</h2>
+                                <h3 class="section-title mb-30" style="line-height:1.4;">After analysis, the next step is Robo Architect</h3>
+                                <p class="section-descr mb-30">
+                                    Robo Analyzer focuses on <b>understanding the current system from code and data evidence</b>.
+                                    For the requirements specification, design, and implementation automation that follow analysis, see our separate product, Robo Architect.
+                                </p>
+                                <div class="local-scroll">
+                                    <a href="roboarchitect.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border:2px solid #111;">
+                                        <span style="font-size:16px;">See Robo Architect</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- FAQ Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-60 mb-sm-40 mt-n20" style="line-height:1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Frequently Asked Questions</span>
+                            </h3>
+                        </div>
+                        <div class="col-lg-10 offset-lg-1 row">
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">Which source languages can be analyzed?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">Java, C, Python, Oracle PL/SQL, and PostgreSQL are detected automatically from file contents. Users never need to specify the target language.</p>
+                            </div>
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">Can I start without connecting a production DB?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">Yes. Analysis can begin with source code and DDL alone. If you also register a production DB, table accesses found in the code can be checked against the actual schema.</p>
+                            </div>
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">Is it safe to connect to a production DB?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">Only query statements are allowed; writes, changes, and deletes are blocked. The server caps the number of rows fetched, and connection passwords never appear in storage, responses, or logs.</p>
+                            </div>
+                            <div class="col-md-6 mb-40">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">What happens if some files have broken syntax?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">It retries only the failed portion; if that still fails, it leaves just that part behind and moves on to the next file. The analysis as a whole never stops, and the original source files are never modified.</p>
+                            </div>
+
+                            <div class="col-md-6 mb-40 mb-sm-0">
+                                <h4 style="font-size:1.3rem; font-weight:bold; margin-top:0; margin-bottom:12px;">Are the analysis results made up by the AI?</h4>
+                                <p style="font-size:1.05rem; color:#666; line-height:1.7; margin:0;">Structure, relationships, clusters, and risk scores are computed without an LLM. AI is used <b>only to attach meaning</b>, such as summarizing functions or phrasing rules in plain language.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End FAQ Section -->
+
+                <!-- Divider --><hr class="mt-0 mb-0"/><!-- End Divider -->
+
+                <!-- Call Action Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative mt-n30 mt-sm-0">
+                        <div class="row wow fadeInUp get-started-content">
+                            <div>
+                                <p class="mb-20 mt-n10" style="font-size:2.2rem; font-weight:600;">Try it on your own system</p>
+                                <p class="section-title-tiny mb-50 mb-sm-30" style="font-size:1.2rem;">
+                                    Let's see together what Robo Analyzer uncovers in your source code and databases.<br>
+                                    Request a demo consultation and a representative will get in touch.
+                                </p>
+                                <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                    <a href="https://youtu.be/WwEFIn5lEoA" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10" target="_blank" rel="noopener"><span style="font-size:16px;">Watch the full demo</span></a>
+                                    <a href="roboarchitect.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border:2px solid #111;"><span style="font-size:16px;">See Robo Architect</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+                <!-- Contact us Section -->
+                <section class="page-section mt-n10 mt-sm-0 mb-sm-20">
+                    <div class="container position-relative">
+
+                        <div class="row text-center wow fadeInUp">
+                            <div class="col-md-8 offset-md-2 col-lg-10 offset-lg-1">
+                                <p class="section-title-tiny mb-10" style="font-size: 2rem;">
+                                    Have more questions?
+                                </p>
+                                <p class="section-title-tiny mb-50 mb-sm-30">
+                                    Want to learn more about <b>Robo Analyzer</b> or have a question? Reach out anytime.
+                                </p>
+                                <div class="local-scroll">
+                                    <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
+                                        <span>Contact us</span>
+                                    </a>
+                                </div>
+
+                                <!-- Contact Form (초기 숨김) -->
+                                <div id="contact_form_container" class="contact-form-container" style="display: none;">
+                                    <div class="form-header">
+                                        <div></div>
+                                        <h2>Contact Us</h2>
+                                        <button id="close_btn" class="close-button">✖</button>
+                                    </div>
+
+                                    <form id="contact_form" action="https://formspree.io/f/mjkydzab" method="POST" class="form contact-form fadeInUp wch-unset">
+                                        <div class="row">
+                                            <input type="hidden" name="classification" value="RoboAnalyzer">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">Name <span>*</span></label>
+                                                    <input type="text" name="name" id="name" class="input-lg round form-control" placeholder="Please enter your name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email <span>*</span></label>
+                                                    <input type="email" name="email" id="email" class="input-lg round form-control" placeholder="Please enter the email address where you would like to receive our reply">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="company">Company <span>*</span></label>
+                                                    <input type="text" name="company" id="company" class="input-lg round form-control" placeholder="Please enter your company or organization name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="position">Job Title</label>
+                                                    <input type="text" name="position" id="position" class="input-lg round form-control" placeholder="Please enter your job title">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="message">Message <span>*</span></label>
+                                            <textarea name="message" id="message" class="input-lg round form-control" placeholder="Please enter your message"></textarea>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-tip pt-0">
+                                                    <div class="contact_form_policy">
+                                                        <label style="color: var(--color-gray-light-6);">
+                                                            <input type="checkbox" name="contact_policy" id="contact_policy" value="I agree" style="vertical-align: middle; width: 15px; height: 15px;">
+                                                            <span style="color: var(--color-gray-light-6);">(Required)</span>
+                                                            <button id="contact_form_modal_open" data-modal="contact_form_policy_modal" type="button">Collection and Use of Personal Information</button>
+                                                            <span style="color: var(--color-gray-light-6);"> to the terms above.</span>
+                                                        </label>
+                                                        <div class="contact_form_msg_error" id="contact_policy_error"></div>
+                                                        <div class="contact_form_modal blind" id="contact_form_policy_modal">
+                                                            <div class="contact_form_modal_body">
+                                                                <h2 class="contact_form_modal_title">
+                                                                    Collection and Use of Personal Information
+                                                                </h2>
+                                                                <div class="contact_form_modal_text">
+                                                                    When uEngine Solutions (the "Company") collects and uses personal information to respond to your inquiry, your consent is required under the Personal Information Protection Act and other applicable laws.
+                                                                    <br>The Company collects and uses only the minimum personal information needed to respond to product purchase and consulting inquiries and to deliver the services it provides.
+                                                                    <br>The collected information will not be used for any purpose other than sending responses and will be destroyed immediately once the service ends.
+                                                                </div>
+                                                                <div class="contact_form_modal_btn">
+                                                                    <button id="contact_form_modal_close"
+                                                                        class="contact_form_modal_close_btn btn btn-mod btn-round"
+                                                                        data-modal="contact_form_policy_modal"
+                                                                        type="button"
+                                                                        style="background-color: var(--color-dark-3);
+                                                                        color: var(--color-gray-light-3);">Close</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="contact_form_modal_bg" id="contact_form_modal_bg"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="text-end pt-20 pt-xs-40">
+                                                    <button class="submit_btn btn btn-mod btn-large btn-round btn-hover-anim" id="submit_btn" aria-controls="result">
+                                                        <span>Send Message</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                       <div id="result" role="region" aria-live="polite" aria-atomic="true"></div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+                            
+                            <div>                                
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="blog/whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="showcase.html">Showcase</a></li><li><a href="history.html">History</a></li>
+                                        <li><a href="partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="newsroom.html">Newsroom</a></li>
+                                        <li><a href="newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="interview.html">Interview</a></li>
+                                        <li><a href="webinars.html">Webinars</a></li>
+                                        <li><a href="bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/en/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
+

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>The Execution Profiler: Inspecting an AI Agent's Execution Path and Cost | uEngine Blog</title>
+        <meta name="description" content="Reviewing work done by AI agents requires their inputs, outputs, and tool-call records. See how the Process GPT Execution Profiler shows processing time and token cost per task and lets you trace down to individual calls.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/execution-profiler.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="The Execution Profiler: Inspecting an AI Agent's Execution Path and Cost | uEngine Blog">
+        <meta property="og:description" content="Reviewing work done by AI agents requires their inputs, outputs, and tool-call records. See how the Process GPT Execution Profiler shows processing time and token cost per task and lets you trace down to individual calls.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/execution-profiler.html">
+        <meta property="og:image" content="https://www.uengine.org/images/en/pgpt-features/profiler/01-instance-list.jpg">
+        <meta property="og:image:alt" content="The Execution Profiler: Inspecting an AI Agent's Execution Path and Cost | uEngine Blog">
+        <meta property="article:published_time" content="2026-09-02">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="The Execution Profiler: Inspecting an AI Agent's Execution Path and Cost | uEngine Blog">
+        <meta name="twitter:description" content="Reviewing work done by AI agents requires their inputs, outputs, and tool-call records. See how the Process GPT Execution Profiler shows processing time and token cost per task and lets you trace down to individual calls.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/en/pgpt-features/profiler/01-instance-list.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The Execution Profiler: Inspecting an AI Agent's Execution Path and Cost","description":"Reviewing work done by AI agents requires their inputs, outputs, and tool-call records. See how the Process GPT Execution Profiler shows processing time and token cost per task and lets you trace down to individual calls.","image":["https://www.uengine.org/images/en/pgpt-features/profiler/01-instance-list.jpg"],"url":"https://www.uengine.org/en/contents/blog/execution-profiler.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/execution-profiler.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-09-02","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"The Execution Profiler: Inspecting an AI Agent's Execution Path and Cost","item":"https://www.uengine.org/en/contents/blog/execution-profiler.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/execution-profiler.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/execution-profiler.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/execution-profiler.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/execution-profiler.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://uengine.stibee.com/" target="_blank" style="font-size: 18px;">Newsletter</a>
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                                     
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/execution-profiler.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+ 
+                            <!-- Languages -->
+                            <!-- <li>
+                                <a href="#" class="mn-has-sub opacity-1">Kr <i class="mi-chevron-down"></i></a>
+                                <ul class="mn-sub to-left">                                    
+                                    <li><a href="../../contents/webinars.html">English</a></li>
+                                    <li><a href="../webinars.html">Korean</a></li>
+                                </ul>
+                                
+                            </li> -->
+                            <!-- End Languages -->                             
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">The Execution Profiler: Inspecting an AI Agent's Execution Path and Cost</span>
+                                    </h1>
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  September 02, 2026</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        <div class="row">
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    <div class="blog-item-body chat-gpt">
+                                        <style>
+                                        .blog-item-body details > summary::-webkit-details-marker { display: none; }
+                                        .blog-item-body details > summary::marker { content: ""; }
+                                        .blog-item-body details > summary:hover { background: #f3eeff; border-radius: 12px; }
+                                        .blog-item-body details[open] > summary { border-bottom: 1px solid #e3e6ef; border-radius: 12px 12px 0 0; }
+                                        .blog-item-body details[open] > summary > span:first-child { transform: rotate(90deg); display: inline-block; }
+                                        </style>
+
+                                        <div class="mb-50 prose">
+                                            <p>When a piece of work takes longer than expected, the total elapsed time alone rarely reveals the cause. You need to see <b>which task was delayed, and which calls were executed within it</b>.</p>
+                                            <p>Execution records are also needed when reviewing an AI agent's results. Only by examining the input passed to the model, the tools it called, and the results those tools returned can you understand the processing path and the cause of errors.</p>
+                                            <p>Process GPT's <b>Execution Profiler</b> lets you inspect a work execution step by step, down to individual language model and tool calls. You can review processing time, token usage, and cost for each piece of work.</p>
+                                        </div>
+
+                                        <blockquote><p>1. Select a work execution to check its time and cost</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>On the process analysis screen, selecting a row for an instance — that is, a single work execution — opens the Execution Profiler. At the top, the total elapsed time, token usage, and cost are displayed together.</p>
+                                            <p>The waterfall chart below shows activities and tasks as bars in chronological order. You can compare the elapsed time of each segment by bar length and locate the tasks that need a closer look.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/01-instance-list.jpg" alt="Recent instance list in process analysis" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Select the execution you want to examine in detail from the process analysis list.</p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/02-profiler-overview.jpg" alt="Execution Profiler overview — elapsed time, tokens, cost, and the waterfall" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">The demo screen shows a total elapsed time of 4 min 22 s, 77.3k tokens used, and a cost of $0.26. The chart below shows the execution span of each task.</p>
+                                        </div>
+
+<blockquote><p>2. Trace from the task down to language model and tool calls</p></blockquote>
+
+                                        <div class="mb-50">
+                                            <div style="max-width: 640px; margin: 0 auto; border: 2px solid #1a1a2e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 24px 22px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
+                                                <div style="text-align: center; font-weight: 700; color: #1a1a2e; margin-bottom: 6px;">① Activity / Task</div>
+                                                <div style="text-align: center; font-size: 13px; color: #666; margin-bottom: 14px;">Waterfall bar = actual elapsed time</div>
+                                                <div style="border: 2px dashed #5b6b9e; border-radius: 12px; padding: 18px 16px; background: #fff;">
+                                                    <div style="text-align: center; font-weight: 700; color: #5b6b9e; margin-bottom: 6px;">② Language model call (LLM Span)</div>
+                                                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 14px;">
+                                                        <span style="background:#f7f7fa; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">🧠 Model · elapsed time</span>
+                                                        <span style="background:#f7f7fa; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">💰 Input/output tokens · cost</span>
+                                                        <span style="background:#f7f7fa; border:1px solid #c3cbe0; border-radius:20px; padding:5px 14px; font-size:13px;">📝 Prompt / Response tabs</span>
+                                                    </div>
+                                                    <div style="border: 2px solid #7c4dbc; border-radius: 10px; padding: 14px 12px; background: linear-gradient(180deg, #faf7ff 0%, #f3ecff 100%);">
+                                                        <div style="text-align: center; font-weight: 700; color: #7c4dbc; margin-bottom: 6px;">③ Tool call (Tool Span)</div>
+                                                        <div style="text-align: center; font-size: 13px; color: #555;">Input passed &nbsp;·&nbsp; Returned result &nbsp;·&nbsp; 🛡️ Auth tokens and passwords are masked at storage time</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Related records are viewed in order: process instance → task → language model call → tool call.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p>Select a task bar to expand the language model calls made in that task. Beneath each language model call, the records of the tool calls it requested are linked.</p>
+                                            <p>These links are built from the <b>spans — the trace records of individual calls</b> collected during execution. Because a trace record is created for each language model request and the related tool calls are attached to it, you can see exactly which request invoked which tool.</p>
+                                            <p style="text-decoration: underline;">What the call detail view shows</p>
+                                            <ul>
+                                                <li><b>Overview:</b> the model used, elapsed time, input and output token counts, and cost.</li>
+                                                <li><b>Prompt tab:</b> the messages actually sent to the model — system prompt, user instructions, and so on — broken down by role.</li>
+                                                <li><b>Response tab:</b> the body returned by the model, plus the name and input arguments of any tool it requested.</li>
+                                                <li><b>Tool span:</b> the input passed to the tool and the result it returned. Auth tokens and passwords are masked at storage time.</li>
+                                            </ul>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/03-waterfall-expand.jpg" alt="Expand a task to see its language model and tool calls" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Expanding a task displays its language model calls and the related tool calls as a hierarchy.</p>
+                                        </div>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;">
+                                                <span style="color: #7c4dbc; font-size: 13px;">▶</span> Language model span — model, time, token cost
+                                            </summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/04-llm-span.jpg" alt="Language model span detail — claude-sonnet-4-6, 1.4 s elapsed, cost $0.0057" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">View the model name, elapsed time, input and output tokens, and cost of each individual language model call. In the demo, this call shows $0.0057.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> Prompt tab: messages sent to the model</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/05-prompt-tab.jpg" alt="Prompt tab — messages by system/user role" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Review every message sent to the model, from the system prompt to the last user instruction, broken down by role.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;">
+                                                <span style="color: #7c4dbc; font-size: 13px;">▶</span> Response tab — the tool and arguments the model requested
+                                            </summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/06-response-tab.jpg" alt="Response tab — model body plus the requested tool (check_stock) and its arguments" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">View the model's response body together with the requested tool name and input arguments.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+                                        <details class="mb-30" style="border: 1px solid #e3e6ef; border-radius: 12px; background: #fbfbfd; padding: 0;">
+                                            <summary style="cursor: pointer; padding: 16px 20px; font-weight: 700; color: #1a1a2e; list-style: none; display: flex; align-items: center; gap: 10px;"><span style="color: #7c4dbc; font-size: 13px;">▶</span> Tool span: input, returned result, errors</summary>
+                                            <div style="padding: 4px 20px 20px;">
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/07-tool-span.jpg" alt="Tool span detail — demo-inventory check_stock call with a VALIDATION error" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">View the tool's input, returned result, and error details. In the demo, a lookup of a nonexistent SKU produced a VALIDATION error.</p>
+                                        </div>
+
+                                            </div>
+                                        </details>
+
+<blockquote><p>3. Show whether the execution engine supports detailed tracing</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>The trace information available depends on the execution engine. For engines that do not support detailed tracing, the supported scope is shown so you can tell whether a record is missing or the feature is simply not supported.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">Distinguishing unsupported information from uncollected information lets operators understand what can be verified instead of spending time investigating errors that are not there.</p>
+                                        </div>
+
+                                                                                <div class="mb-50">
+                                            <img src="../../../images/en/pgpt-features/profiler/08-unsupported-engine.jpg" alt="Notice screen for an engine that does not support detailed tracing" style="width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid #e3e6ef; box-shadow: 0 6px 20px rgba(26,26,46,0.10);" loading="lazy" decoding="async">
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">For engines without detailed tracing support, a notice reads: ‘This engine does not provide detailed LLM call information.’</p>
+                                        </div>
+
+<blockquote><p>4. Manage call records alongside business information</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>The Execution Profiler uses information collected from the LLM proxy and event logs. These records are linked to process instances and work items so they can be viewed from the existing business analysis screens.</p>
+                                            <p>Staff can open the record for a given execution directly, with no need to cross-reference trace IDs against business numbers in a separate screen. Stored raw content has sensitive values masked and is purged automatically once the retention period expires.</p>
+                                        </div>
+
+                                        <div style="overflow-x: auto;" class="mb-50">
+                                            <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                <tr style="background-color: #1a1a2e; color: #fff;">
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">What to check in operation</th>
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">How the Execution Profiler is delivered</th>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Linking call records to work</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Trace records attached to process instances and work items</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">How to reach the detailed record</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Select an execution from the process analysis list</td>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Trace data collection path</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Uses the existing LLM proxy and event logs</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <blockquote><p>5. Use it for result review and cost analysis</p></blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>To put agents to work on real business tasks, staff must be able to review what they produced. The Execution Profiler provides the inputs, outputs, and tool call records that review requires.</p>
+                                            <p>Seeing which prompt was sent, which values went into which tool, and what came back lets you investigate the cause of an error or verify the basis for a result. These records are <b>the actual messages exchanged and actions executed — not the model's internal reasoning</b>.</p>
+                                            <p>Per-execution token usage and cost can feed into analysis of automation operating expenses. Note that the token cost shown on screen is only part of the total cost of the work; infrastructure and external service costs must be considered separately.</p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>See it in Process GPT</b></p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Concept in this article</th>
+                                                        <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Process GPT capability</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Tracing agent inputs, outputs, and tool calls</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Span instrumentation across the multi-agent execution layers<br><a href="../processgpt.html#diff-agent" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ View on the product page</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">Linking execution records to the relevant work</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;">BPMN-based linkage to process instances and work items<br><a href="../processgpt.html#diff-bpmn" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ View on the product page</a></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="mt-30">
+                                                The Execution Profiler is covered together with the full feature set on the <a href="../processgpt.html">Process GPT product page</a>,
+                                                and you can try it yourself at <a href="https://www.process-gpt.io" target="_blank">process-gpt.io</a>.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>References</b></p>
+                                            <ul style="font-size: 14px;">
+                                                <li><a href="https://youtu.be/mW73WBndY9Y" target="_blank">Demo video — Execution Profiler (task profiling)</a></li>
+                                                <li><a href="../processgpt.html" target="_blank">Process GPT product overview</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+                
+            </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+                            
+                            <div>                                
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li>
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->        
+        
+    </body>
+</html>
