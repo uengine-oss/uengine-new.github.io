@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Building an Automated Coding Feedback Loop with a Graph DB and Embeddings | uEngine Blog</title>
+        <meta name="description" content="When migrating complex PL/SQL code to Java or refactoring large legacy codebases, we often run into unexpected bugs. Finding and fixing every problem by hand is tedious. But what if the code could analyze its own logs, find the cause, and fix itself?">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/embedding.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Building an Automated Coding Feedback Loop with a Graph DB and Embeddings | uEngine Blog">
+        <meta property="og:description" content="When migrating complex PL/SQL code to Java or refactoring large legacy codebases, we often run into unexpected bugs. Finding and fixing every problem by hand is tedious. But what if the code could analyze its own logs, find the cause, and fix itself?">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/embedding.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/embedding.png">
+        <meta property="og:image:alt" content="Building an Automated Coding Feedback Loop with a Graph DB and Embeddings | uEngine Blog">
+        <meta property="article:published_time" content="2025-05-09">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Building an Automated Coding Feedback Loop with a Graph DB and Embeddings | uEngine Blog">
+        <meta name="twitter:description" content="When migrating complex PL/SQL code to Java or refactoring large legacy codebases, we often run into unexpected bugs. Finding and fixing every problem by hand is tedious. But what if the code could analyze its own logs, find the cause, and fix itself?">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/embedding.png">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Building an Automated Coding Feedback Loop with a Graph DB and Embeddings","description":"When migrating complex PL/SQL code to Java or refactoring large legacy codebases, we often run into unexpected bugs. Finding and fixing every problem by hand is tedious. But what if the code could analyze its own logs, find the cause, and fix itself?","image":["https://www.uengine.org/images/blog/embedding.png"],"url":"https://www.uengine.org/en/contents/blog/embedding.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/embedding.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2025-05-09","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Building an Automated Coding Feedback Loop with a Graph DB and Embeddings","item":"https://www.uengine.org/en/contents/blog/embedding.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/embedding.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/embedding.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/embedding.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/embedding.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/embedding.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+                                
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+                                        
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Building an Automated Coding Feedback Loop with a Graph DB and Embeddings</span>
+                                    </h1>
+                                    
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span> May 09, 2025</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+                               
+                               </div>
+                               <!-- End Page Title -->
+                                
+                            </div>                            
+                        </div>
+                        <!-- End Section Content -->
+                        
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        
+                        <div class="row">
+                            
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    
+                                    <div class="blog-item-body chat-gpt">
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; When migrating complex PL/SQL code to Java or refactoring a large legacy codebase, we often run into unexpected bugs.
+                                            </p>
+                                        </blockquote>
+
+                                        <div>
+                                            <p class="mt-10">
+                                                Finding and fixing every problem by hand is tedious. But <b>what if the code could analyze its own logs, find the cause, and fix it?</b>
+                                                <br>In this article, we show how to build an automated <b>feedback loop</b> agent that uses a <b>graph DB</b> and <b>embedding vectors</b> to let code detect errors and iterate on fixes by itself. We will keep it in terms developers are familiar with.
+                                            </p>
+                                        </div>
+
+                                        <!-- Media Gallery -->
+                                        <div class="blog-media mb-40 mb-xs-30">
+                                            <div style="width: 86%; margin: 0 auto;">
+                                                <img src="../../../images/blog/embedding.webp" alt="Building an Automated Coding Feedback Loop with a Graph DB and Embeddings" decoding="async" />
+                                            </div>
+                                        </div>  
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Representing Code Structure as a Graph
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10">
+                                                First, we break the <b>PL/SQL code</b> into individual statements and represent each as a <b>graph node</b>. For example, suppose we have the following PL/SQL snippet.
+                                            </p>
+                                            
+
+                                            <!-- <p class="mid-title"><b>예시: 주문 어그리게이트</b></p> -->
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20" dir="ltr">
+<code class="!whitespace-pre hljs language-java">
+<span class="hljs-keyword">BEGIN</span></span><span>
+    </span><span><span class="hljs-keyword">SELECT</span></span><span> salary </span><span><span class="hljs-keyword">INTO</span></span><span> v_salary </span><span><span class="hljs-keyword">FROM</span></span><span> employees </span><span><span class="hljs-keyword">WHERE</span></span><span> id </span><span><span class="hljs-operator">=</span></span><span> v_id;
+    IF v_salary </span><span><span class="hljs-operator">&lt;</span></span><span> </span><span><span class="hljs-number">0</span></span><span> </span><span><span class="hljs-keyword">THEN</span></span><span>
+        RAISE invalid_salary;
+    </span><span><span class="hljs-keyword">END</span></span><span> IF;
+</span><span><span class="hljs-keyword">END</span></span><span>;
+</span></span></code></div>
+
+
+                                            <p class="prose">
+                                                In this code, the <code>SELECT</code> statement, the <code>IF</code> condition, and the <code>RAISE</code> exception handling each become a <b>node</b>. With a graph DB, the relationships between these code fragments can be stored explicitly. We defined two kinds of relationships.
+                                            </p>
+                                            <!-- <p style="text-decoration: underline; margin-bottom: 10px;"><b>어그리게이트의 특징:</b></p> -->
+                                            <ul class="mb-40 prose">
+                                                <li><b style="font-weight: bold;">PARENT_OF:</b> Represents containment. (e.g. the <code>BEGIN</code> block node <b style="font-weight: bold;">PARENT_OF</b> the <code>SELECT</code>/<code>IF</code> statement nodes inside it)</li>
+                                                <li><b style="font-weight: bold;">NEXT:</b> Represents execution order. (e.g. <code>SELECT</code> node <b style="font-weight: bold;">NEXT</b> <code>IF</code> node, <code>IF</code> node <b style="font-weight: bold;">NEXT</b> <code>END IF</code>, and so on)</li>
+                                            </ul>
+                                            <p class="prose">
+                                                Each node carries a one-line <b>summary</b> describing what the statement does. For example, the summary of the <code>SELECT ...</code> statement node might be <em>"Look up the salary from the employee table and store it in the v_salary variable"</em>. Thanks to this graph structure, the flow and hierarchy of the code can be grasped at a glance, and even <b>complex relationships</b> between nodes can be expressed
+                                                A graph DB lets us store rich relationships between complex pieces of information, and use them as the basis for more context-aware search and analysis.
+                                            </p>
+                                        </div>
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Converting Node Summaries into Embedding Vectors
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-10 prose">
+                                            <p class="mt-10">
+                                                Once the nodes exist in the graph, we convert each node's summary into a <b>vector embedding</b>. An <b>embedding</b> is a <b>high-dimensional vector representation</b> that quantifies the meaning of text. Simply put, if two embedding vectors are similar, the <b>meaning</b> of the two sentences can be considered similar as well. Such embedding vectors are easy to obtain with services like OpenAI's Embedding API. For example, embedding the summary <em>"Look up the salary from the employee table and store it in a variable"</em> makes the model return the meaning of that sentence as a vector with hundreds of dimensions.
+                                            </p>
+                                            <p>
+                                                We added a <code>node.embedding</code> field to each node object to store this vector. This enables <b>semantic search</b>: nodes can be found by their meaning rather than by the SQL text itself. (For instance, searching for the meaning "calculate salary" would return nodes related to salary calculation even if the actual SQL keywords differ.) In fact, combining vector-based similarity search with a graph has been reported to enable <b>more accurate, context-aware information retrieval</b>.
+                                            </p>
+                                        </div>  
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style=" margin-left: 20px;">
+                                                <b>Why embedding vectors</b>? Traditional keyword search can only find code that literally contains the word <code>"salary"</code>, whereas embedding search can catch matches even when the wording differs, such as <em>"wages" or "pay"</em>, as long as the meaning is similar. Because even complex sentences are compared by similarity in semantic space, it is well suited to comparing <b>semantic similarity between code fragments</b>.
+                                            </p>
+                                        </div>   
+
+                                        
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Converting PL/SQL to Java (Spring) Code
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p class="mt-10">
+                                                Now we convert the PL/SQL code itself into <b>Java (Spring Boot)</b> code. PL/SQL is a procedural language that runs inside the database; picture a scenario where it is reimplemented in Java to move it onto a modern application architecture. For example, the earlier PL/SQL <code>BEGIN ... END;</code> block would become a Java method, the <code>SELECT</code> statement a JPA or JDBC call, and the <code>IF</code> and <code>RAISE</code> would map to Java conditionals and exception handling.
+                                            </p>
+                                            <p>
+                                                At this stage, the key is not a <b>1:1 code conversion</b> but preserving the existing logic as faithfully as possible while moving it to Java. The converted Java code runs in a Spring Boot environment and must perform the same function as the original PL/SQL. (e.g. the logic that looks up and validates the salary must be identical.) But whether a person ports the code manually or an automatic conversion tool is used, <b>subtle differences</b> can introduce bugs. That is why the next step is to <b>test and verify</b> the converted code.
+                                            </p>
+                                        </div>     
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Running Tests and Collecting Logs
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p class="mt-10">
+                                                Once enough of the converted Java code is written, we run the prepared <b>test scenarios</b> to verify that it works correctly. For salary calculation code, for example, the tests would check the results across several employee records. If an <b>error occurs</b> or a result differs from what was expected, the symptom is left in the <b>log</b>. For example, a log line such as <em>"Employee ID 123: salary mismatch error - expected 5000, calculated 0"</em> might be printed.
+                                            </p>
+                                            <p>
+                                                We collected the <b>log messages</b> from failed test cases like these. What matters is understanding <b>what these logs mean</b>. Domain-friendly error messages (such as "salary mismatch") are far more useful for root-cause analysis than logs that contain only a technical stack trace like "NullPointerException at line 42". So wherever possible, it is a good idea to implement the application so that it leaves <b>meaningful error messages</b>.
+                                            </p>
+                                            <p>
+                                                To sum up so far: we ran tests against the code ported to Java and obtained <b>logs that reveal problems</b>. Now we need to use these logs as clues to find <b>which code is at fault</b>.
+                                            </p>
+                                        </div>     
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Understanding Logs Through Embeddings Too
+                                            </p>
+                                        </blockquote>
+                                     
+                                        <div class="mb-50 prose">
+                                            <p class="mt-10">
+                                                Just as we embedded the summaries of the code nodes earlier, we now embed the <b>log messages</b> the same way. Sending the log text (e.g. <em>"salary mismatch error - expected 5000, calculated 0"</em>) to the Embedding API yields another vector, <code>log.embedding</code>. This vector is a <b>coordinate representing the meaning</b> of that error log.
+                                            </p>
+                                            <p>
+                                                Now we can do something interesting: compare the similarity between the <b>log embedding</b> and the <b>code node embeddings</b>. Similarity between vectors is usually measured with <b>cosine similarity</b>. Cosine similarity ranges from -1 to 1, and the closer it is to 1, the more closely the two vectors point in the same direction, meaning their semantics are very similar.
+                                            </p>
+                                            <p>
+                                                Our system <b>compares the collected <code>log.embedding</code> against every <code>node.embedding</code> in the graph in turn</b>, and picks the top few pieces of code in order of similarity. For example, the embedding of a "salary mismatch" error log will most likely show high similarity with the embeddings of <b>code nodes related to salary calculation or processing</b>. In fact, Neo4j-based agent memory examples use a similar approach, storing <b>user question embeddings</b> in the graph DB and retrieving similar question-query pairs. We do much the same, <b>finding related code from log embeddings</b>.
+                                            </p>
+                                            <p>
+                                                This automatically narrows down where to look among a huge amount of code. Just as a search engine finds documents by keyword, <b>embedding search finds code fragments by meaning</b>.
+                                            </p>
+                                        </div>   
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Locating the Code with the Highest Similarity
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p class="mt-10">
+                                                If the similarity calculation shows that a particular PL/SQL statement node (or its corresponding Java code) is the most relevant to the error log, we can treat that node as the <b>likely point of failure</b>. For instance, if the node with the highest similarity to the <em>"salary mismatch"</em> log has the summary <em>"Add the employee's base pay and bonus to calculate total salary"</em>, then there is a good chance the problem lies in that part of the logic.
+                                            </p>
+                                            <p>
+                                                With a graph DB, it is also easy to obtain the <b>context</b> surrounding this problem spot. Walking up to the node's parent tells you which procedure or module the code belongs to, and following NEXT relationships lets you trace what logic runs before and after it. This is <b>structural information</b> that is hard to get from a plain text search. In short, <b>the graph provides structure and the embeddings provide meaning</b>, and the two approaches complement each other in pinpointing the bug.
+                                            </p>
+                                        </div>    
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Root-cause analysis and fix suggestions with an LLM
+                                            </p>
+                                        </blockquote>
+                                        
+                                        <div class="mb-50 prose">
+                                            <p class="mt-10">
+                                                Now the <b>LLM</b> enters the picture. LLM stands for <em>Large Language Model</em>, referring to large models such as GPT-4. In the previous step we identified the code nodes likely to contain the problem, along with related information. Next, we hand that code fragment (for example, part of a Java method) to the LLM together with the error log and ask: <b>"What is wrong with this code, and how can it be fixed?"</b>
+                                            </p>
+                                            <p>
+                                                Because modern LLMs can understand and generate both programming languages and natural language, given code and logs as context they can perform <b>root-cause reasoning</b> and <b>propose solutions</b> much like a seasoned senior developer. In practice, error-tracking tools such as Sentry have already begun using LLMs to offer <b>deeper root-cause analysis and fixes</b> that go beyond a simple stack trace. The LLM can spot logically incorrect sections or missing cases in the code and, with a response like <em>"This is probably caused by not handling the case where a zero value is used when calculating the bonus. Modify the code so that only the base salary is applied when there is no bonus,"</em> give <b>concrete guidance on the fix</b>.
+                                            </p>
+                                            <p>
+                                                If needed, the LLM can also propose a<b> corrected code snippet</b>. For example, it can show, in actual code, what should change in an if condition or a formula. It is like having an AI code reviewer and debugger at your side.
+                                            </p>
+                                        </div>     
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Applying the fix and updating the graph
+                                            </p>
+                                        </blockquote>
+                                        
+                                        <div class="mb-50 prose">
+                                            <p class="mt-10">
+                                                The code is modified based on the solution the LLM proposed. For instance, if the suggestion was <em>"treat a null bonus amount as zero"</em>, you would edit the Java code to add a null check or change the calculation formula. After the fix, there is one task you must not forget: <b> updating the graph and the embeddings</b>.
+                                            </p>
+                                            <p>
+                                                Since the code has changed, the summary of the corresponding syntax node may change as well. We refresh the node's summary to match the modified code, call the Embedding API again, and overwrite it with the new <code>node.embedding</code> vector. This ensures that the next time this part is searched or analyzed, the results are accurate and based on the <b> latest state of the code</b>. The structural part of the graph DB (the relationships between nodes) will mostly stay the same, but if new code constructs were added, nodes are added and relationships connected as needed. For example, if an exception-handling block that did not exist before was added, a new node and a PARENT_OF relationship are created.
+                                            </p>
+                                        </div>    
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Re-running tests and the iteration loop
+                                            </p>
+                                        </blockquote>
+                                        
+                                        <div class="mb-50 prose">
+                                            <p class="mt-10">
+                                                Once the code fix is in place, the <b>tests are run</b> again. Now we check whether the error in the scenario that failed earlier has been resolved. With luck, the problem is fixed and all tests pass. In that case, the feedback loop ends here.
+                                            </p>
+                                            <p>
+                                                But what if the problem persists, or the fix introduced a new error somewhere else? No need to worry. Our <b>feedback loop agent</b> simply repeats the same procedure. It embeds the newly generated log → finds the related code nodes → analyzes with the LLM → applies a fix, and repeats this <b>until the bug is gone</b>. Through this automated iteration, code quality can be improved continuously.
+                                            </p>
+                                            <p>
+                                                The concept of this <b>iterative feedback loop</b> mimics how humans debug. People also cycle through "run tests → check errors → estimate where the cause is → fix the code → re-run." The only difference is that our agent <b>automates</b> and <b>accelerates</b> that process with the power of a graph DB, embeddings, and an LLM.
+                                            </p>
+                                        </div>   
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; The powerful combination of graph + embeddings + LLM
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                In this article we looked at a feedback loop system in which <b>code finds and fixes its own errors</b>, using a graph database, embedding vectors, and an LLM. To recap the key ideas:
+                                            </p>
+                                            <!-- <p style="text-decoration: underline; margin-bottom: 5px;"><b>1. 어그리게이트 크기 결정</b></p> -->
+                                            <ol>
+                                                <li><b>Represent code as a graph</b> to obtain structured knowledge. (Nodes and relationships raise code comprehension ↑)</li>
+                                                <li><b>Represent meaning with embedding vectors</b> so that the semantic similarity of code constructs can be computed. (Semantic search)</li>
+                                                <li><b>Convert test logs into embeddings</b> to automatically find the code locations most relevant to the meaning of the error message. (Automated root-cause tracing)</li>
+                                                <li><b>Let the LLM analyze and propose solutions</b>, yielding code fixes with minimal human intervention. (Intelligent debugging)</li>
+                                                <li><b>Automate the fix → re-test loop</b> so the cycle can repeat until no errors remain. (Continuous improvement)</li>
+                                            </ol>
+
+                                            <p>
+                                                The combination of a graph DB and <b>vector embeddings</b> is extremely powerful because it leverages both structure and meaning. The graph preserves <b>context and relationships</b>, while embeddings surface <b>meaning-based associations</b>, producing results that are more precise and context-aware. Add the <b>reasoning power</b> of an LLM on top, and you go beyond merely locating errors to automatically deriving <b>"why it is a problem and how to fix it."</b>
+                                            </p>
+
+                                            <p>
+                                                In the future, autonomous coding agents like this are expected to relieve developers of much of their repetitive debugging work. Human review and verification are of course still required at this stage, but as the technology matures, the <b>accuracy of the agent's suggestions</b> and the <b>reliability of its fixes</b> keep improving. We hope the approach introduced here offers a bit of inspiration for your own code maintenance and debugging processes.
+                                            </p>
+                                        </div>
+
+                                        <!-- <div>
+                                            <p>[출처] <a href="https://www.msaschool.io/operation/design/design-trade-off/">MSA School - 마이크로서비스의 마법: 어그리게이트와 이벤추얼 컨시스턴시로 데이터 일관성과 성능 모두 잡기</a></p>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Section -->
+           
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>

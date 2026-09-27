@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Legacy Modernizer (Stored Procedure to Java) | uEngine Blog</title>
+        <meta name="description" content="Following our earlier series on 'The Difference Between Systems That Manage Business Logic in SQL and Systems That Manage It in Domain Classes,' this Part 3 walks through the 'operating structure and flow of the Legacy Modernizer.'">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/modernizer.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Legacy Modernizer (Stored Procedure to Java) | uEngine Blog">
+        <meta property="og:description" content="Following our earlier series on 'The Difference Between Systems That Manage Business Logic in SQL and Systems That Manage It in Domain Classes,' this Part 3 walks through the 'operating structure and flow of the Legacy Modernizer.'">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/modernizer.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/From-LegacySystem-to-Modernization.jpg">
+        <meta property="og:image:alt" content="Legacy Modernizer (Stored Procedure to Java) | uEngine Blog">
+        <meta property="article:published_time" content="2024-06-14">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Legacy Modernizer (Stored Procedure to Java) | uEngine Blog">
+        <meta name="twitter:description" content="Following our earlier series on 'The Difference Between Systems That Manage Business Logic in SQL and Systems That Manage It in Domain Classes,' this Part 3 walks through the 'operating structure and flow of the Legacy Modernizer.'">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/From-LegacySystem-to-Modernization.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Legacy Modernizer (Stored Procedure to Java)","description":"Following our earlier series on 'The Difference Between Systems That Manage Business Logic in SQL and Systems That Manage It in Domain Classes,' this Part 3 walks through the 'operating structure and flow of the Legacy Modernizer.'","image":["https://www.uengine.org/images/blog/From-LegacySystem-to-Modernization.jpg"],"url":"https://www.uengine.org/en/contents/blog/modernizer.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/modernizer.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2024-06-14","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Legacy Modernizer (Stored Procedure to Java)","item":"https://www.uengine.org/en/contents/blog/modernizer.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/modernizer.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/modernizer.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/modernizer.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/modernizer.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/modernizer.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+                                
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+                                        
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Legacy Modernizer<br>(Stored Procedure to Java)</span>
+                                    </h1>
+                                    
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span> June 14, 2024</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+                               
+                               </div>
+                               <!-- End Page Title -->
+                                
+                            </div>                            
+                        </div>
+                        <!-- End Section Content -->
+                        
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        
+                        <div class="row">
+                            
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    
+                                    <div class="blog-item-body chat-gpt">
+                                    
+                                        <!-- Media Gallery -->
+                                        <div class="blog-media mb-40 mb-xs-30">
+                                            <div>
+                                                <img src="../../../images/blog/From-LegacySystem-to-Modernization.webp" alt="From legacy systems to modernization: trade in the old house for a new one" decoding="async" />
+                                            </div>
+                                        </div>                                        
+
+                                        <div class="mb-80">
+                                            <p>
+                                                &nbsp;In  &nbsp;"<a href="blog1.html"><b>The Difference Between Systems That Manage Business Logic in SQL and Systems That Manage It in Domain Classes, Part 1</b></a>"  &nbsp;and
+                                                <br>  &nbsp;"<a href="blog2.html"><b>The Difference Between Systems That Manage Business Logic in SQL and Systems That Manage It in Domain Classes, Part 2</b></a>"  &nbsp;we used a payroll calculation example to compare the Transaction Script approach using stored procedures with the approach using domain classes in Java.
+                                                Today, in Part 3, we first look at <b>'the advantages you gain by moving from stored procedures to a Java clean architecture.'</b>
+                                            </p>
+                                        </div>
+                                        
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Benefits of moving from <span style="text-decoration: underline;">stored procedures</span> to a <span style="text-decoration: underline;">Java clean architecture</span>
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-80 mt-10">
+                                            <ul>
+                                                <li class="mb-10"><b style="font-weight: bold;">Improved maintainability:</b> Stored procedures are tied to the database system, so every change requires a database specialist. This demands specific expertise during maintenance and limits accessibility. Moving the logic to a general-purpose programming language such as Java, on the other hand, lets a much broader range of developers understand and modify the system, greatly improving maintainability. This is made possible by Java's rich documentation and community support, and it increases the flexibility and accessibility of the system.</li>
+                                                <li class="mb-10"><b style="font-weight: bold;">Easier testing and debugging:</b> Because stored procedures run inside the database, testing and debugging them is complex and difficult, whereas moving the logic to Java lets you use the wide range of testing and debugging tools available in modern development environments. Unit tests, integration tests and more are easy to implement in Java, and visual tools and logging make it fast and accurate to pinpoint problems when debugging.</li>
+                                                <li class="mb-10"><b style="font-weight: bold;">Scalability and flexibility:</b> Code written in a general-purpose language such as Java is platform-independent and runs on a variety of operating systems and environments. It integrates easily with modern infrastructure such as cloud-based architectures, greatly improving the scalability and flexibility of the system. Stored procedures, by contrast, are tied to a specific database system, making migration or expansion to other environments difficult. This limits their ability to adapt to new technology environments such as the cloud, and leaves the system's scalability and flexibility relatively low compared with Java.</li>
+                                                <li class="mb-10"><b style="font-weight: bold;">Higher development efficiency:</b> Java supports powerful libraries and frameworks and has a highly active worldwide developer community, giving access to a wealth of development resources and support. These factors greatly improve development speed and efficiency. Stored procedures, on the other hand, are tied to a specific database system, the libraries and tools available are limited, and the developer community is not as large as Java's. As a result they receive relatively less support during development and maintenance, which can constrain development flexibility and speed.</li>
+                                                <li><b style="font-weight: bold;">Stronger stability and security:</b> Java provides automatic memory management through garbage collection and a structured exception-handling mechanism, effectively managing memory leaks and exceptional conditions. Stored procedures rely on the database engine for memory management and have more limited exception handling, so fine-grained control is harder than in Java. In addition, Java offers strong security features through a variety of security frameworks and libraries, whereas stored procedures do not have such security features built in, limiting flexibility and extensibility from a security standpoint.</li>
+                                            </ul>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;<span style="text-decoration: underline;">AI-driven automated conversion</span> vs. <span style="text-decoration: underline;">manual conversion</span> when moving to Java
+                                            </p>
+                                        </blockquote>
+    
+                                        <div>
+                                            <table class="tbl-default chat-gpt border-right-aaa">
+                                                <thead class="tbl-title-md-gray chat-gpt">
+                                                    <tr>
+                                                        <th class="border-right-white"></th>
+                                                        <th class="border-right-white" style="padding:7px 4px;">Manual conversion by people</th>
+                                                        <th style="background-color: white; border-top: 1px solid white; border-bottom: 1px solid white;"></th>
+                                                        <th class="border-right-white" style="padding:7px 4px;">AI-driven automated conversion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Development process</strong></td>
+                                                        <td>Complex and requires expert involvement</td>
+                                                        <td style="border-bottom: 1px solid white;"></td>
+                                                        <td>AI resolves the complexity automatically</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Labor cost</strong></td>
+                                                        <td>Higher cost from reliance on specialists</td>
+                                                        <td style="border-bottom: 1px solid white;"></td>
+                                                        <td>Lower labor cost through automation</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Maintenance</strong></td>
+                                                        <td>Code is hard to understand and modify</td>
+                                                        <td style="font-size: 30px; padding: 10px; border-bottom: 1px solid white;">➜</td>
+                                                        <td>Easy to maintain thanks to clean architecture</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Error potential</strong></td>
+                                                        <td>Manual intervention can introduce errors</td>
+                                                        <td style="border-bottom: 1px solid white;"></td>
+                                                        <td>AI accuracy minimizes errors</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Collaboration efficiency</strong></td>
+                                                        <td>Limited communication</td>
+                                                        <td style="border-bottom: 1px solid white;"></td>
+                                                        <td>Stronger communication through a ubiquitous language</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        <p class="mb-80">
+                                            As shown, the differences between AI-driven automated conversion and manual conversion when moving to Java appear in many respects. <span style="font-weight: bold;">AI-driven automated conversion saves time and cost, minimizes errors and raises efficiency,</span> whereas manual conversion requires deep understanding and experience along with additional optimization work and testing.
+                                        </p>
+                                        
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;<b>Legacy Modernizer</b>
+                                            </p>
+                                        </blockquote>
+
+                                        <!-- Media Gallery -->
+                                        <div class="blog-media mb-40 mb-xs-30">
+                                            <div style="border-radius: 15px; border: 7px solid #eee;">
+                                                <img style="border-radius: 15px;" src="../../../images/blog/Legacy-Code-2-Clean-Code.webp" alt="Legacy Modernizer" decoding="async" />
+                                            </div>
+                                            <p style="text-align: center; margin-top: 10px;">Legacy Code 2 Clean Code — detailed operating structure
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-80">
+                                            <!-- <p class="mt-10" style="text-decoration: underline; margin-bottom: 10px;"><b>목표</b></p> -->
+                                            <p class="mt-10">
+                                                The AI-driven Legacy Modernizer tool is designed to convert existing, complex stored procedures into a modern, clean Java architecture. Going beyond superficial conversion, the tool supports the transition from a shared-database procedural style to a robust object-oriented model, including structural and syntactic changes.
+                                            </p>
+                                            <p>
+                                                In the core conversion step, hard-to-read SQL code that embeds business logic is rewritten in a far more approachable form using a ubiquitous language, so domain experts and developers can collaborate on it and maintain it with ease. The result is a major gain in code comprehension and maintainability.
+                                            </p>
+
+                                            <!-- <p class="mt-10" style="text-decoration: underline; margin-bottom: 10px;"><b>기능</b></p> -->
+                                            <ul class="mt-10">
+                                                <li class="mb-10">
+                                                    <b style="font-weight: bold;">Graph visualization:</b> The complex structure of legacy code (stored procedures) is visualized as a relational graph, making it easier to understand and refactor. By rendering the flow of stored procedures as a graph, you can clearly see how each procedure interacts with the others and how data moves between them. Developers and domain experts can quickly grasp the structure and intent of the code and refactor exactly the parts that need it. Graph visualization exposes complex dependencies visually, giving you a powerful tool for spotting and fixing problems in the code fast.
+                                                
+                                                    <p class="mt-20" style="text-align: center; font-weight: bold;">《 How RAG differs with a vector DB versus a graph DB 》</p>
+                                                    <table class="tbl-default chat-gpt border-right-aaa mt-n20">
+                                                        <thead class="tbl-title-md-gray chat-gpt">
+                                                            <tr>
+                                                                <th class="border-right-white">Aspect</th>
+                                                                <th class="border-right-white">Vector database</th>
+                                                                <th class="border-right-white" style="padding:7px 4px;">Graph database (KG)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><strong>Data structure</strong></td>
+                                                                <td><img src="../../../images/blog/similarity.jpg" alt="Legacy Modernizer - vector database" loading="lazy" decoding="async" /></td>
+                                                                <td><img src="../../../images/blog/relationships.jpg" alt="Legacy Modernizer - graph database" loading="lazy" decoding="async" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Data type</strong></td>
+                                                                <td class="txt-left">Ideal for managing large volumes of unstructured data such as text, images, and audio.</td>
+                                                                <td class="txt-left">Well suited to structured data with complex relationships between entities.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Domain fit</strong></td>
+                                                                <td class="txt-left">Commonly used in applications that need a variety of ML models and data types.</td>
+                                                                <td class="txt-left">Highly effective for applications that demand deep, specialized knowledge of a particular domain.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Explainability</strong></td>
+                                                                <td class="txt-left">Less transparent than a KG; focuses on similarity scores rather than explicit paths.</td>
+                                                                <td class="txt-left">Provides explicit reasoning paths, giving it high explainability.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Data integrity</strong></td>
+                                                                <td class="txt-left">Flexible data modeling can sometimes work against strict data consistency.</td>
+                                                                <td class="txt-left">Maintains data integrity and consistency, which is essential for trustworthy data representation.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Hybrid use cases</strong></td>
+                                                                <td class="txt-left">Can be combined with a KG to handle both structured and unstructured data effectively.</td>
+                                                                <td class="txt-left">Can be combined with a vector database to leverage both structured knowledge and ML capabilities.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p class="mt-n30"><a href="https://medium.com/@ahmedbehairy/rag-vector-databases-vs-knowledge-graphs-f22697b1a940" target="_blank">Source: RAG: Vector Databases vs Knowledge Graphs? | by Ahmed Behairy | Medium</a></p>
+                                                </li>
+                                                <li class="mb-10"><b style="font-weight: bold;">Conversion to Java:</b> Legacy code is converted to Java automatically using LLM AI technology. This reduces the need for manual rewrites and minimizes the chance of human error. The AI interprets and transforms complex business logic accurately into a modern, clean Java architecture that developers and domain experts can readily understand and maintain. This automated translation process saves time and cost while guaranteeing code consistency and quality.</li>
+                                                <li><b style="font-weight: bold;">Result verification:</b> A testing AI automatically generates and runs test cases, enabling a direct comparison against the original legacy code. Through these automated tests, you can confirm in real time, based on your existing data, that the application was converted correctly. This capability preserves the functional completeness of the existing system while ensuring the transition to the new architecture goes smoothly.</li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- <blockquote>
+                                            <p>
+                                                &nbsp;레거시 모더나이저의 전환 과정
+                                            </p>
+                                        </blockquote> -->
+
+
+                                        <!-- <blockquote>
+                                            <p>
+                                                &nbsp;<span style="text-decoration: underline;">벡터 데이터베이스</span>와 <span style="text-decoration: underline;">그래프 데이터베이스</span>를 이용한 RAG 기법의 차이
+                                            </p>
+                                        </blockquote>
+                                        
+                                        <table class="tbl-default chat-gpt border-right-aaa">
+                                            <thead class="tbl-title-md-gray chat-gpt">
+                                                <tr>
+                                                    <th class="border-right-white">측면</th>
+                                                    <th class="border-right-white">벡터 데이터베이스</th>
+                                                    <th class="border-right-white" style="padding:7px 4px;">그래프 데이터베이스 (KG)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>자료 구조</strong></td>
+                                                    <td><img src="../../../images/blog/similarity.jpg" alt="레거시 모더나이저-벡터 데이터베이스" loading="lazy" decoding="async" /></td>
+                                                    <td><img src="../../../images/blog/relationships.jpg" alt="레거시 모더나이저-그래프 데이터베이스" loading="lazy" decoding="async" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>데이터 유형</strong></td>
+                                                    <td class="txt-left">텍스트, 이미지, 오디오와 같은 대량의 비구조화된 데이터 관리에 이상적입니다.</td>
+                                                    <td class="txt-left">복잡한 관계를 가진 엔터티 간의 구조화된 데이터에 적합합니다.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>도메인 적합성</strong></td>
+                                                    <td class="txt-left">ML 모델과 데이터 유형의 다양성이 필요한 애플리케이션에서 자주 사용됩니다.</td>
+                                                    <td class="txt-left">특정 도메인에 대한 깊이 있는, 전문화된 지식이 요구되는 애플리케이션에 매우 효과적입니다.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>설명 가능성</strong></td>
+                                                    <td class="txt-left">KG보다는 투명성이 떨어지며, 명확한 경로보다는 유사성 점수에 초점을 맞춥니다.</td>
+                                                    <td class="txt-left">명확한 추론 경로를 제공하여 설명 가능성이 높습니다.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>데이터 무결성</strong></td>
+                                                    <td class="txt-left">데이터 모델링의 유연성이 때때로 엄격한 데이터 일관성을 저해할 수 있습니다.</td>
+                                                    <td class="txt-left">데이터 무결성과 일관성을 유지하며, 신뢰할 수 있는 데이터 표현에 필수적입니다.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>하이브리드 사용 사례</strong></td>
+                                                    <td class="txt-left">KG와 결합되어 구조화된 데이터와 비구조화된 데이터를 모두 효과적으로 처리할 수 있습니다.</td>
+                                                    <td class="txt-left">구조화된 지식과 ML 기능을 활용하기 위해 벡터 데이터베이스와 결합할 수 있습니다.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <p class="mb-80 mt-n30"><a href="https://medium.com/@ahmedbehairy/rag-vector-databases-vs-knowledge-graphs-f22697b1a940" target="_blank">Source: RAG: Vector Databases vs Knowledge Graphs? | by Ahmed Behairy | Medium</a></p> -->
+                                        
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;How to use <b>Legacy Modernizer</b>
+                                            </p>
+                                        </blockquote>
+
+                                        <!-- Video -->
+                                        <div class="blog-media mb-80 mb-xs-30">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/idgCzlfANW0?hl=en&cc_lang_pref=en" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                            <p class="mt-10" style="text-align: center; font-weight: bold;">Stored procedure to Java - MSA Easy Legacy Modernizer demo video</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Media Gallery -->
+                                    <div class="blog-media mb-40 mb-xs-30">
+                                        <div style="border-radius: 15px; border: 7px solid #eee;">
+                                            <img style="border-radius: 15px;" src="../../../images/blog/01.png" alt="Legacy Modernizer" loading="lazy" decoding="async" />
+                                        </div>
+                                        <p class="mt-10" style="text-align: center; font-weight: bold;">1. First, upload the stored procedure file to legacy-modernizer.</p>
+                                    </div>
+
+                                    <div class="blog-media mb-40 mb-xs-30">
+                                        <div style="border-radius: 15px; border: 7px solid #eee;">
+                                            <img style="border-radius: 15px;" src="../../../images/blog/02-1.png" alt="Legacy Modernizer" loading="lazy" decoding="async" />
+                                        </div>
+                                        <p class="mb-40 mb-xs-30 mt-10" style="text-align: center; font-weight: bold;">2. The contents of the uploaded stored procedure file are displayed, and the file is analyzed.</p>
+
+                                        <div style="border-radius: 15px; border: 7px solid #eee;">
+                                            <img style="border-radius: 15px;" src="../../../images/blog/02-2.png" alt="Legacy Modernizer" loading="lazy" decoding="async" />
+                                        </div>
+                                        <p class="mt-10">
+                                            However, passing the entire stored procedure file to an LLM (Large Language Model) would exceed the maximum token limit. So when sending data to the LLM (Large Language Model), it is important to split it into semantically connected chunks that respect the token limit while preserving context. For example, each block in the code (such as an IF statement, a SELECT statement, or a DECLARE) should be passed as a semantically complete unit rather than cut off in the middle. This preserves context and helps the model understand and process the data accurately. To do this, a parsing tool such as ANTLR (ANother Tool for Language Recognition) is used to analyze the structure of the code and convert it into a tree structure.
+                                        </p>
+                                    </div>
+
+                                    <div class="blog-media mb-40 mb-xs-30">
+                                        <div style="border-radius: 15px; border: 7px solid #eee;">
+                                            <img style="border-radius: 15px;" src="../../../images/blog/03.png" alt="Legacy Modernizer" loading="lazy" decoding="async" />
+                                        </div>
+                                        <p class="mt-10" style="text-align: center; font-weight: bold;">3. Next, the stored procedure you uploaded is first visualized as a graph.</p>
+                                        <p class="mt-n20">
+                                            The process of visualizing your stored procedure as a graph works as follows. First, based on the syntactic tree obtained from ANTLR and the stored procedure itself, Cypher queries are generated that define the nodes and relationships. These Cypher queries are executed to store the data in a graph database, and the result is then visualized as a graph. This lets you intuitively understand the structure and logic of the stored procedure.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="blog-media mb-40 mb-xs-30">
+                                        <div style="border-radius: 15px; border: 7px solid #eee;">
+                                            <img style="border-radius: 15px;" src="../../../images/blog/04.png" alt="Legacy Modernizer" loading="lazy" decoding="async" />
+                                        </div>
+                                        <p class="mt-10" style="text-align: center; font-weight: bold;">4. Click any node in the graph visualization to see the information related to that node.</p>
+                                        <p class="mt-n20">
+                                            For example, for a table node you can view the table's attribute information. For other kinds of nodes, you can see a summary describing what that node does in the code along with the source code of the corresponding section. This helps you gain a deeper understanding of the code's structure and the detailed role of each element through the graph.
+                                        </p>
+                                    </div>
+
+                                    <div class="blog-media mb-40 mb-xs-30">
+                                        <div style="border-radius: 15px; border: 7px solid #eee;">
+                                            <img style="border-radius: 15px;" src="../../../images/blog/05.png" alt="Legacy Modernizer" loading="lazy" decoding="async" />
+                                        </div>
+                                        <p class="mt-10" style="text-align: center; font-weight: bold;">5. The core step: conversion to a Java architecture.</p>
+                                        <p class="mt-n20">
+                                            When you click a table node in the graph, you can convert the relationships within two levels of depth of that table into a Java architecture. This conversion expresses not only the reference relationships between tables but also each table's attributes and associated methods as Java classes and interfaces. The result is an object-oriented Java code structure derived from the database schema, providing important architectural design guidance for application development.
+                                        </p>
+                                    </div>
+
+                                    <div class="blog-media mb-40 mb-xs-30">
+                                        <div style="border-radius: 15px; border: 7px solid #eee;">
+                                            <img style="border-radius: 15px;" src="../../../images/blog/06.png" alt="Legacy Modernizer" loading="lazy" decoding="async" />
+                                        </div>
+                                        <p class="mt-10">
+                                            If you are not satisfied with the result, you can request changes through chat to get the output you want. For example, if you ask "Please add a Repository interface for Employee as well," a Repository interface for Employee is added and the updated result is returned. The example above shows the EmployeeRepository interface added in response to the user's request.
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Section -->
+           
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
