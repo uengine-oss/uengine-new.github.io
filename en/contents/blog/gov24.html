@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Gov24 Cloud-Native Transformation: Reinventing Public Services with Microservices Architecture | uEngine Blog</title>
+        <meta name="description" content="This post walks through the design and analysis process of the first phase of the Gov24 portal cloud-native transformation project carried out by uEngine Solutions, and explains in technical depth the changes brought by adopting microservices architecture (MSA).">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/gov24.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Gov24 Cloud-Native Transformation: Reinventing Public Services with Microservices Architecture | uEngine Blog">
+        <meta property="og:description" content="This post walks through the design and analysis process of the first phase of the Gov24 portal cloud-native transformation project carried out by uEngine Solutions, and explains in technical depth the changes brought by adopting microservices architecture (MSA).">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/gov24.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/cohesion.png">
+        <meta property="og:image:alt" content="Gov24 Cloud-Native Transformation: Reinventing Public Services with Microservices Architecture | uEngine Blog">
+        <meta property="article:published_time" content="2025-12-17">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Gov24 Cloud-Native Transformation: Reinventing Public Services with Microservices Architecture | uEngine Blog">
+        <meta name="twitter:description" content="This post walks through the design and analysis process of the first phase of the Gov24 portal cloud-native transformation project carried out by uEngine Solutions, and explains in technical depth the changes brought by adopting microservices architecture (MSA).">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/cohesion.png">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Gov24 Cloud-Native Transformation: Reinventing Public Services with Microservices Architecture","description":"This post walks through the design and analysis process of the first phase of the Gov24 portal cloud-native transformation project carried out by uEngine Solutions, and explains in technical depth the changes brought by adopting microservices architecture (MSA).","image":["https://www.uengine.org/images/blog/cohesion.png"],"url":"https://www.uengine.org/en/contents/blog/gov24.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/gov24.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2025-12-17","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Gov24 Cloud-Native Transformation: Reinventing Public Services with Microservices Architecture","item":"https://www.uengine.org/en/contents/blog/gov24.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/gov24.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/gov24.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/gov24.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/gov24.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/gov24.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+                                
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+                                        
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Gov24 Cloud-Native Transformation: Reinventing Public Services with Microservices Architecture</span>
+                                    </h1>
+                                    
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span> December 17, 2025</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+                               
+                               </div>
+                               <!-- End Page Title -->
+                                
+                            </div>                            
+                        </div>
+                        <!-- End Section Content -->
+                        
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        
+                        <div class="row">
+                            
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    
+                                    <div class="blog-item-body chat-gpt">
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; This post walks through the <b>design and analysis process</b> of the first-phase cloud-native transformation of the Gov24 portal, carried out by uEngine Solutions, and explains in technical depth what changed through the adoption of <b>microservices architecture (MSA)</b>.
+                                            </p>
+                                        </blockquote>
+
+                                        <!-- Media Gallery -->
+                                        <!-- <div class="blog-media mb-40 mb-xs-30">
+                                            <div style="width: 86%; margin: 0 auto;">
+                                                <img src="../../../images/blog/cohesion.webp" alt="소프트웨어 설계의 응집도와 결합도(실생활의 예: 실, 가위, 니퍼, 전선)" decoding="async" />
+                                            </div>
+                                        </div>   -->
+
+                                        <div class="mb-50">
+                                            <p>
+                                                In particular, it compares the limitations of the legacy monolithic civil-service system with the <b>AS-IS vs. TO-BE architecture</b> that overcame them, and presents optimization strategies by service type along with real-world applications of key technical patterns (Saga, event-driven, CQRS, and more). 
+                                            </p>
+                                            <p>
+                                                Our aim is to give developers practical insight into applying MSA on a real production project, and to give general readers context on how government civil services are being transformed.
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Background: Public Cloud Migration and the Gov24 Challenge
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-30">
+                                            <p>
+                                                Under its 'Public-Sector Information Resource Cloud Migration Plan' to move every public system to the cloud by 2030, the Ministry of the Interior and Safety is accelerating digital government innovation. 
+                                                <br>With the aggressive goal of applying cloud native to more than 70% of new systems by 2026, a large-scale first-phase migration program covering 9 flagship systems across 7 agencies was launched in 2025.
+                                            </p>
+                                            <p>
+                                                At its center is the <b>Gov24 civil-service portal</b>. As the civil-service portal closest to citizens' daily lives, Gov24 must stay up even under heavy user surges. 
+                                                Through this transformation, the government set out to <b>auto-scale system capacity up to 7.6x</b>, cut service downtime by <b>81.6%</b>, and <b>shorten processing time by 36.7%</b>. 
+                                                This technical leap will ultimately provide a solid foundation for delivering faster, smoother digital administrative services to citizens.
+                                            </p>
+                                        </div>
+                                        <!-- Media Gallery -->
+                                        <div class="blog-media mb-80">
+                                            <div style="width: 86%; margin: 0 auto;">
+                                                <img src="../../../images/blog/gov24-01.webp" alt="Key points of the Gov24 cloud-native transformation" decoding="async" />
+                                            </div>
+                                            <p class="text-center mt-10">[Key points of the Gov24 cloud-native transformation]</p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Analysis of the Gov24 Cloud-Native Transformation
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p style="text-decoration: underline; margin-bottom: 10px; font-size: 110%;"><b>Problems with the legacy system (AS-IS architecture limitations)</b></p>
+                                            <p>
+                                                Gov24's cloud-native transformation began in earnest on the basis of the Information Strategy Plan (ISP) established in 2024. 
+                                                Tasked with the detailed migration design under this roadmap, <b>uEngine Solutions</b> first performed an in-depth analysis of the existing system and, in the process, uncovered the <b>limitations of its monolithic structure</b> and a critical single point of failure (SPOF).
+                                            </p>
+                                            
+                                            <p>
+                                                <b>1. Rigidity caused by tight coupling</b>
+                                            </p>
+                                            <p>
+                                                The analysis showed that the legacy Gov24 system was either a classic monolithic integrated structure or a tightly coupled set of giant applications. 
+                                                High dependencies between internal modules made maintenance and feature expansion difficult, and the coupling was so tight that a failure or change in one small part propagated immediately across the whole system, severely limiting deployment flexibility.
+                                            </p>
+
+                                            <p>
+                                                <b>2. SPOF risk in the 'Service Guide' service</b>
+                                            </p>
+                                            <p>
+                                                The bigger weakness was a structural single point of failure (SPOF). Because every civil-service application had to start by passing through the 'Service Guide (search/guidance)' module, 
+                                                an outage of that one service would paralyze every civil-service function on Gov24. 
+                                                This was a structural vulnerability in which a single failure could take down the entire citizen-facing service, and resolving it was the top priority of the cloud migration.
+                                            </p>
+                                            <p>
+                                                In summary, the legacy system's monolithic nature undermined flexibility and high availability, and carried a high risk of local failures spreading system-wide. 
+                                                It also could not respond elastically under critical load, raising serious performance concerns. 
+                                                Based on this analysis, uEngine Solutions established an architecture strategy to reduce coupling and secure stability through <b>service separation and redesign</b>.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-80">
+                                            <p style="text-decoration: underline; margin-bottom: 10px; font-size: 110%;"><b>Architecture transformation strategy by service type (TO-BE design)</b></p>
+                                            <p>
+                                                The civil services handled by the Gov24 portal fall into three broad types according to their nature.
+                                            </p>
+                                            <p>
+                                                Depending on how each service is processed and the level of performance and reliability it requires, we applied different architecture patterns — <b>synchronous vs. asynchronous, event-driven vs. API calls, dedicated domain isolation</b> — to design a flexible, efficient MSA structure tailored to each service's characteristics.
+                                            </p>
+                                            <p class="mb-30">
+                                                Below we describe the before-and-after architecture and service flows tailored to <em style="background-color: #eee; padding: 2px 5px 2px 3px;">① <b>simple-application / instant-issuance services</b>, ② <b>deadline-based / non-integrated services</b>, and ③ <b>critical services</b></em>.
+                                            </p>
+
+                                            <div class="mb-50 prose" style="border-left: 3px solid #ddd;">
+                                                <p style=" margin-left: 20px; font-weight: bold;">
+                                                    <em style="background-color: #eee; padding: 5px 10px;">① Simple-application / instant-issuance services – synchronous  REST-based MSA</em>
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    Simple-application / instant-issuance services are, as the name suggests, services whose <b>result can be issued the moment the application is submitted</b>. 
+                                                    Examples include printing a resident registration certificate or the Happy Birth one-stop service — services with no separate approval step that can be processed in real time from a simple application.
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    For these services, <b>minimizing response time to the user request</b> is the top priority, so the transformed architecture retains a <b>synchronous REST call model</b> to keep the processing flow simple.
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    In the old structure, the issuance module <b>updated the application DB directly</b> to refresh application status, or handled multiple steps inefficiently within a single process; 
+                                                    in the new design, <b></b>the issuance service calls the application service directly via REST API</b> to update the result.
+                                                     This clarifies the interfaces between services and removes <b>direct integration with another boundary service's data store</b>, lowering coupling. 
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    In other words, <b>internal integration is handled as far as possible through simple function calls or internal API calls</b>, avoiding unnecessary trips through the message broker and reducing performance overhead.
+                                                </p>
+                                            </div> 
+
+                                            <div class="mb-50 prose" style="border-left: 3px solid #ddd;">
+                                                <p style=" margin-left: 20px; font-weight: bold;">
+                                                    <em style="background-color: #eee; padding: 5px 10px;">② Deadline-based / non-integrated services – asynchronous Pub/Sub on an event store</em>
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    <b>Deadline-based services</b> deliver their result within a set period after application — <b>services that cannot be processed instantly and take several days</b> — while 
+                                                    <b>non-integrated services</b> are those that <b>do not require real-time integration with other agencies' systems</b> during processing.
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    What these two types have in common is that <b>reliability and process completeness</b> matter more than instant processing, and that <b>delayed processing on the back end</b> is common. 
+                                                    The transformed architecture therefore designs them as an <b>event-driven asynchronous structure</b>.
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    In the new flow for deadline-based/non-integrated services, <b>the user receives an immediate acknowledgment that the application has been received</b>, and the actual processing then <b>proceeds in the background, driven by events</b>. 
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    Specifically, the <b>application service (asynchronous application MSA)</b> publishes the received application as an <b>event to the event store</b>; 
+                                                    the <b>issuance service (asynchronous issuance MSA)</b> then <b>subscribes to that application event</b>, performs the processing, and, once the final output is produced, publishes a completion event in turn.
+                                                    The user later checks the result or is notified of completion through a notification (the Gukmin Biseo national notification service).
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    The biggest advantage of this <b>Pub/Sub asynchronous pattern</b> is <b>greater system robustness</b>: 
+                                                    because the event store functions as a <b>message queue</b>, <b>messages are held rather than lost</b> even if a back-end service fails temporarily. 
+                                                    Processing resumes after recovery, guaranteeing <b>continuity of service processing</b>. 
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    Key considerations in moving to the event-store-based structure were <b>transactional consistency and error handling</b>. 
+                                                    When chaining multi-step processing through events in a distributed environment, we applied the <b>Saga pattern</b> (a distributed transaction management approach that maintains data consistency across distributed systems) to preserve <b>process consistency</b>. 
+                                                    Consumer services implement <b>duplicate-message protection (idempotency)</b>, hardening the logic so that processing the same event twice has no side effects. 
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    We also put a <b>retry and DLQ (Dead Letter Queue)</b> mechanism in place: events that fail processing more than a set number of times are routed to a separate error queue for monitoring and compensating action,
+                                                    improving the reliability of asynchronous processing and letting operators <b>track and manage problem cases</b>.
+                                                </p>
+                                            </div> 
+
+                                            <div class="prose" style="border-left: 3px solid #ddd;">
+                                                <p style=" margin-left: 20px; font-weight: bold;">
+                                                    <em style="background-color: #eee; padding: 5px 10px;">③ Critical services – high-availability structure on independent namespaces</em>
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    In the Gov24 native transformation, <b>high-importance, high-traffic core services</b> received a separate, independent design. 
+                                                    Representative examples are <b>building register issuance and vehicle registration record lookup</b>. 
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    These services have high call volumes and a large impact on the public, so bundling them into the same environment as other services raised concerns about failure propagation and performance degradation. The transformation project therefore 
+                                                    designed the architecture so that these <b>critical services run independently in a dedicated execution environment</b>.
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    The core of the architecture design is the <b>independent namespace</b> strategy. In the Kubernetes-based cloud environment, an isolated <b>namespace (a separate microservice group)</b> is created exclusively for each critical service,
+                                                    and that service's microservices run only within it. 
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    For example, the <b>service guide, application, issuance, and integration</b> microservices for the building register are deployed in their own namespace, separate from other services, and vehicle registration likewise runs in a dedicated namespace. 
+                                                    This way, <b>a problem in one critical service does not propagate to other services</b>,
+                                                    and the <b>resource allocation and scaling strategy</b> for that service can be optimized independently.  
+                                                    In the actual design, each critical-service namespace applies its own <b>integration channels and microservice replica configuration</b> mapped to that service alone, maximizing <b>high availability (HA)</b>.
+                                                </p>
+                                                <p style=" margin-left: 20px;">
+                                                    This also resolved the <b>SPOF problem of the Service Guide service noted earlier, by giving each critical service its own Service Guide channel</b>. 
+                                                </p>
+                                            </div> 
+                                        </div>
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Key Design Patterns Applied in the Cloud-Native Transformation
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p>
+                                                One of the core goals of a microservices transformation is to <b>reduce coupling between services and clarify boundaries</b>. 
+                                                The Gov24 project was likewise designed to <b>eliminate legacy monolithic elements</b> and maximize each service's <b>autonomy and independence</b>. 
+                                            </p>
+                                            <p>
+                                                In particular, tight coupling caused by <b>direct database references</b> was replaced with loose, event-based coupling, 
+                                                and general services were separated from critical services so that critical services keep running unaffected even when a general service fails. 
+                                            </p>
+                                            <p>
+                                                To raise the technical maturity of the MSA, the project applied a range of design patterns across the architecture. 
+                                                From the <b>Saga pattern</b> for data consistency in distributed transactions, to <b>idempotency and transaction patterns</b> that guarantee reliable event processing, 
+                                                to a <b>CQRS design</b> that optimizes high-volume query performance, we built a dense set of technical safeguards to secure both stability and flexibility.
+                                            </p>
+                                        </div>
+                                        <!-- Media Gallery -->
+                                        <div class="blog-media mb-30">
+                                            <div style="width: 86%; margin: 0 auto;">
+                                                <img src="../../../images/blog/gov24-02.png" alt="EventStorming model for critical services, MSA-Ez" loading="lazy" decoding="async" />
+                                            </div>
+                                            <p class="text-center mt-10">[EventStorming model for critical services, MSA-Ez]</p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; <em>The choice for data consistency: Choreography Saga</em>
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p>
+                                                To guarantee data consistency across the distributed process running from application to issuance, the Gov24 native transformation adopted the <b>Saga pattern</b>, 
+                                                and two approaches were evaluated for the design.
+                                            </p>
+                                            <ul class="mb-40">
+                                                <li><b style="font-weight: bold;">Choreography Saga:</b> Each service exchanges events and autonomously handles the next step. Coupling between services is lower, but tracking the overall flow and handling complex exceptions is harder.</li>
+                                                <li><b style="font-weight: bold;">Orchestration Saga:</b> A central orchestrator controls the process. Monitoring and error control are easier, but load concentrates on the orchestrator and dependencies between services may increase.</li>
+                                            </ul>
+                                            <p>
+                                                To reduce coupling and preserve flexibility, we adopted the <b>Choreography approach</b> for the internal process (application ↔ issuance). 
+                                                External integration segments beyond our control, however, were excluded from the Saga transaction scope to protect overall system stability. 
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; <em>From subscribe to publish: atomic units of work and idempotency</em>
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p>
+                                                The key to the reliability of the Gov24 system lies in clearly defining the unit in which events are processed. 
+                                                We designed the entire sequence — fetching an event from the event store (Subscribe), executing business logic (Transaction), 
+                                                and publishing the result as a new event (Publish) — as <b>one indivisible atomic unit</b>. 
+                                            </p>
+                                            <p>
+                                                In a distributed network environment, however, messages may be resent or arrive as duplicates during failure recovery. 
+                                                As a safeguard, we built an <b>idempotency scheme from the business perspective</b>. 
+                                            </p>
+                                            <p>
+                                                Specifically, we used <b>database unique constraints</b> or checked the <b>current processing status</b> of the application before executing the logic. 
+                                                In other words, if a duplicate request arrives for an application already marked 'issued', the system detects it and performs no further work.
+                                            </p>
+                                            <p>
+                                                As a result, we enjoy the reliability of the <b>'at-least-once'</b> delivery that messaging systems such as Kafka guarantee, 
+                                                while completely eliminating data duplication and preserving data integrity.
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; <em>Traceable event design and DLQ strategy</em>
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p>
+                                                The Gov24 project also established principles and strategies for <b>event design</b>. 
+                                                First, we made <b>message naming and structure</b> consistent so that an event's meaning is clear from the event alone.
+                                            </p>
+                                            <p>
+                                                Every domain event follows a readable <b>naming convention</b>: for example, the <b>“application submitted” event is defined in domain-verb form as ApplicationSubmitted</b>. 
+                                                Where types differ, as with general services versus vehicle registration, a qualifier in the event name (GeneralApplicationSubmitted, CarApplicationSubmitted, etc.) makes them distinguishable at a glance. 
+                                                This <b>domain-based event naming</b> also helps in logs and tracing during operation, making it clear which event originated where. 
+                                            </p>
+                                            <p>
+                                                Message payloads include <b>sufficient metadata</b> — application ID, processing stage, timestamp, source service — to improve <b>traceability</b>. 
+                                                At the same time, we avoided packing large data blobs into events: files and form data are kept in a separate store, and <b>events carry only a reference link</b>, keeping message size under control. 
+                                            </p>
+                                            <p>
+                                                A <b>Dead Letter Queue (DLQ) strategy</b> for errors and exceptions was another important element. 
+                                                When a consumer <b>repeatedly fails</b> while processing a message, that message is quarantined in a separate topic so it does not disrupt the normal flow. 
+                                            </p>
+                                            <p>
+                                                In the Gov24 project, a <b>separate DLQ topic is created for each domain event type</b>: 
+                                                for example, if processing of an ApplicationSubmitted event keeps failing, the message is sent to a predefined error topic such as ApplicationSubmitted.DLQ. 
+                                            </p>
+                                            <p>
+                                                Consumers are configured to <b>publish automatically to the DLQ after a set number of retries (e.g., 3) fail</b>,
+                                                and a <b>separate consumer reprocesses events accumulated in the DLQ or takes alternative action</b>, performing <b>compensating transactions (rollback in the Saga)</b>.  
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; <em>CQRS architecture for high-volume query traffic</em>
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-80">
+                                            <p>
+                                                For a <b>read-heavy service (querying service results) like the Gov24 portal</b>, the <b>CQRS</b> (Command Query Responsibility Segregation) pattern is essential when building cloud native. 
+                                            </p>
+                                            <p>
+                                                CQRS is an architecture pattern that <b>separates write operations from read operations</b> so each can be processed in an optimized way; it is adopted mainly to <b>improve query performance and scalability</b>. 
+                                                In the Gov24 project, applying CQRS to the <b>application result lookup service</b> was discussed and reflected in the design.
+                                            </p>
+                                            <p>
+                                                In the legacy Gov24, all data — from application through issuance and lookup — was stored and used in a single integrated DB. 
+                                                In such a <b>single-database structure</b>, heavy read load can affect write transactions, and conversely, bulk inserts or updates can slow down query responses. 
+                                            </p>
+                                            <p>
+                                                To address this, the new architecture proposed a CQRS model that separates a <b>microservice dedicated to application result lookup</b> and, where needed, <b>separates the data store as well</b>. 
+                                                For example, the application/issuance services perform mostly write operations against the operational DB, while the result service runs its queries against a separate <b>read-only DB or cache</b>. 
+                                                This improves query performance while distributing the transactional load on the core system.
+                                            </p>
+                                        </div>
+                                        
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; Closing: Setting a New Standard for Public Platforms
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p>
+                                                Gov24's cloud-native transformation goes beyond a simple system migration; it is a meaningful case that improved the fundamentals of public civil services and secured technical flexibility.
+                                            </p>
+                                            <p>
+                                                In this project, uEngine Solutions clarified service boundaries on the basis of domain-driven design (DDD) and 
+                                                strategically applied MSA best practices such as the <b>Saga pattern</b> and <b>event-store-based asynchronous communication</b>. 
+                                                As a result, the Gov24 portal was able to evolve into a technically more flexible and resilient platform.
+                                            </p>
+                                            <p>
+                                                Above all, this transformation is significant because it proved that 'microservices architecture (MSA) is the answer for large-scale public services'. 
+                                                Moving past the structural limitation in which a single failure once paralyzed the entire service, service isolation now guarantees continuity of critical operations. 
+                                                The platform also gained a stable foundation that responds flexibly to traffic surges through auto-scaling and distributed processing.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Section -->
+           
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>

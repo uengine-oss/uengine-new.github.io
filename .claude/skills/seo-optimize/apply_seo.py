@@ -217,8 +217,12 @@ LAST_RESORT_OG = ("section-bg", "page-title-bg", "decoration")
 LCP_IMAGE_KB_LIMIT = 200
 
 
-def first_local_image(src: str, page: str) -> str | None:
-    """페이지가 참조하는 첫 로컬 이미지를 사이트 루트 기준 경로로."""
+def first_local_image(src: str, page: str) -> tuple[str | None, bool]:
+    """페이지가 참조하는 첫 로컬 이미지를 사이트 루트 기준 경로로.
+
+    반환값: (이미지 경로 또는 None, 콘텐츠 이미지 없이 최후 수단을 썼는지 여부).
+    두 번째 값이 True 면 og:image 가 본문과 무관한 배경/기본 이미지라는 뜻이다.
+    """
     _ = page
     last_resort = None
     for m in IMG_REF.finditer(src):
@@ -230,9 +234,9 @@ def first_local_image(src: str, page: str) -> str | None:
             if last_resort is None:
                 last_resort = p
             continue
-        return social_safe(p)
+        return social_safe(p), False
     # 콘텐츠 이미지가 없으면 최후 수단, 그것도 없으면 호출부가 기본 이미지로 처리한다.
-    return social_safe(last_resort) if last_resort else None
+    return (social_safe(last_resort), True) if last_resort else (None, True)
 
 
 # ──────────────────────────────────────────────────────────── 블록 생성
@@ -663,9 +667,13 @@ def main():
 
         meta["description"] = truncate(meta["description"], site["descMaxLen"])
         if not meta.get("image"):
-            meta["image"] = (first_local_image(src, page)
-                             or meta.get("fallbackImage")
-                             or site["defaultImage"])
+            found, is_fallback = first_local_image(src, page)
+            meta["image"] = found or meta.get("fallbackImage") or site["defaultImage"]
+            if (is_blog or is_news) and is_fallback:
+                warn(f"{page}: 본문에 콘텐츠 이미지가 없어 og:image 로 배경/기본 이미지를 "
+                     f"사용합니다 ({meta['image']}) — 페이스북 등 공유 카드에 본문과 무관한 "
+                     f"썸네일이 뜹니다. 본문에 사진을 넣거나 seo-meta.json 의 "
+                     f"pages[\"{page}\"].image 를 지정하세요.")
         meta.pop("fallbackImage", None)
         if (is_blog or is_news) and "type" not in meta:
             meta["type"] = "article"

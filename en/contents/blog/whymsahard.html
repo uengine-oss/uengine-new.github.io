@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Why Is Cloud Native So Hard? | uEngine Blog</title>
+        <meta name="description" content="Examines the design challenges of cloud-native transformation: service boundaries, data ownership, and transactions. Using the Gov24 case and the challenges at the design, implementation, operations, and deployment stages, it lays out a path through the transition.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/whymsahard.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Why Is Cloud Native So Hard? | uEngine Blog">
+        <meta property="og:description" content="Examines the design challenges of cloud-native transformation: service boundaries, data ownership, and transactions. Using the Gov24 case and the challenges at the design, implementation, operations, and deployment stages, it lays out a path through the transition.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/whymsahard.html">
+        <meta property="og:image" content="https://www.uengine.org/images/en/blog/whymsahard-sum.jpg">
+        <meta property="og:image:alt" content="Why Is Cloud Native So Hard? | uEngine Blog">
+        <meta property="article:published_time" content="2026-07-22">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Why Is Cloud Native So Hard? | uEngine Blog">
+        <meta name="twitter:description" content="Examines the design challenges of cloud-native transformation: service boundaries, data ownership, and transactions. Using the Gov24 case and the challenges at the design, implementation, operations, and deployment stages, it lays out a path through the transition.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/en/blog/whymsahard-sum.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Why Is Cloud Native So Hard?","description":"Examines the design challenges of cloud-native transformation: service boundaries, data ownership, and transactions. Using the Gov24 case and the challenges at the design, implementation, operations, and deployment stages, it lays out a path through the transition.","image":["https://www.uengine.org/images/en/blog/whymsahard-sum.jpg"],"url":"https://www.uengine.org/en/contents/blog/whymsahard.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/whymsahard.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-07-22","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Why Is Cloud Native So Hard?","item":"https://www.uengine.org/en/contents/blog/whymsahard.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/whymsahard.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/whymsahard.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/whymsahard.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/whymsahard.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/whymsahard.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+                                
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+                                        
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Why Is Cloud Native So Hard?</span>
+                                    </h1>
+                                    
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  July 22, 2026</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+                               
+                               </div>
+                               <!-- End Page Title -->
+                                
+                            </div>                            
+                        </div>
+                        <!-- End Section Content -->
+                        
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        
+                        <div class="row">
+                            
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    
+                                    <div class="blog-item-body chat-gpt">
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                "We moved to microservices, and the system got slower, outages became more frequent, and deployments became even scarier." This is a confession you hear all too easily from organizations that have been through an MSA transformation. Microservices architecture makes an attractive promise of <b>independent deployment, elastic scaling, and fault isolation</b>, but far fewer organizations than you might expect actually see that promise come true.
+                                            </p>
+                                            <p>
+                                                Why? To get straight to the point, our experience is that <b>the difficulty of microservices comes from 'design', not 'technology'</b>. Adopting Kubernetes and splitting a service into several pieces is no longer hard. What is truly hard are three design questions: <b>"Where do we draw the boundaries?"</b>, <b>"Who owns the data?"</b>, and <b>"How do we keep things consistent without transactions?"</b> In this article, we identify the three traps uEngine has seen again and again over years of MSA consulting and training, and point to the design principles that answer them, along with in-depth articles on each. We also map out <b>the hard problems you will meet at every stage of the project lifecycle</b>, from design through implementation, operations, and deployment, even after adopting those answers.
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; 1. Promise and betrayal: why splitting made things more complex
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                The reasons a monolith hits its limits are clear. Because of <b>tight coupling</b> between internal modules, a small change ripples through the whole system, load on a few features forces the entire system to scale up, and a failure in one place brings the whole service down. So we split the system.
+                                            </p>
+                                            <p>
+                                                And that is where the first misconception begins: <b>"if you split it, it becomes microservices."</b> A badly split system keeps the monolith's coupling intact and merely adds network overhead, becoming a <b>Distributed Monolith</b>. What used to be in-process function calls are now remote calls over the network, but every service is still holding on to every other. The system now has the drawbacks of a monolith (tight coupling) and the drawbacks of a distributed system (latency, partial failures, operational complexity) <b>at the same time</b>.
+                                            </p>
+                                            <p>
+                                                What separates good decomposition from bad is two long-standing concepts in software engineering: <a href="cohesion.html"><b>cohesion and coupling</b></a>. If the elements within a service are grouped around one clear purpose, cohesion is high; if services depend little on one another's data and functionality, coupling is low. <b>High cohesion, low coupling</b>: every principle of microservices design ultimately converges on this one sentence.
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; 2. Trap ①: Data-driven decomposition and the chatty microservice
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                The most common mistake in an MSA transformation is <b>splitting services along database (table) lines</b>. There is a customer table, so a 'customer service'; an order table, so an 'order service'; delivery data, so a 'delivery service'... It looks natural at first glance, but split this way, <b>every single business flow has to gather data scattered across multiple services through synchronous request/response calls, one at a time</b>.
+                                            </p>
+                                            <p>
+                                                This is the classic anti-pattern known as the <a href="cohesionmsaez.html"><b>Chatty Microservice</b></a>. To use a restaurant analogy, it is like a kitchen that stores bread, vegetables, and meat in separate warehouses by type and makes the rounds of the warehouses to fetch ingredients every time an order comes in. In terms of the <a href="msadesign.html">factory and warehouse analogy</a>, it is an assembly plant that constantly walks into the parts factory's raw-material warehouse. Inter-service traffic explodes, a slow response from any one service slows the entire flow, and a failure in one place cascades like dominoes.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                                                <div style="flex: 1 1 300px; max-width: 420px; border: 2px solid #c0392b; border-radius: 14px; background: linear-gradient(180deg, #fdf3f2 0%, #fae8e6 100%); padding: 22px 20px; box-shadow: 0 8px 24px rgba(192,57,43,0.10);">
+                                                    <div style="text-align: center; font-weight: 700; color: #c0392b; margin-bottom: 14px;">❌ Data-driven decomposition</div>
+                                                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 14px;">
+                                                        <span style="background:#fff; border:1px solid #e0b4ae; border-radius:20px; padding:5px 14px; font-size:13px;">🗄️ Customer service</span>
+                                                        <span style="background:#fff; border:1px solid #e0b4ae; border-radius:20px; padding:5px 14px; font-size:13px;">🗄️ Order service</span>
+                                                        <span style="background:#fff; border:1px solid #e0b4ae; border-radius:20px; padding:5px 14px; font-size:13px;">🗄️ Delivery service</span>
+                                                    </div>
+                                                    <div style="border: 2px dashed #c0392b; border-radius: 12px; padding: 12px; text-align: center; font-size: 13px; color: #8e2f24; background: #fff;">
+                                                        Synchronous calls (Req/Res) tangled on every request<br><b>Chatty Microservice</b> · tight coupling · cascading failures
+                                                    </div>
+                                                </div>
+                                                <div style="flex: 1 1 300px; max-width: 420px; border: 2px solid #1e8449; border-radius: 14px; background: linear-gradient(180deg, #f2faf5 0%, #e6f5ec 100%); padding: 22px 20px; box-shadow: 0 8px 24px rgba(30,132,73,0.10);">
+                                                    <div style="text-align: center; font-weight: 700; color: #1e8449; margin-bottom: 14px;">✅ Behavior-driven (business process) decomposition</div>
+                                                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 14px;">
+                                                        <span style="background:#fff; border:1px solid #aed6bc; border-radius:20px; padding:5px 14px; font-size:13px;">🛒 Place order</span>
+                                                        <span style="background:#fff; border:1px solid #aed6bc; border-radius:20px; padding:5px 14px; font-size:13px;">🍳 Cook</span>
+                                                        <span style="background:#fff; border:1px solid #aed6bc; border-radius:20px; padding:5px 14px; font-size:13px;">🛵 Deliver</span>
+                                                    </div>
+                                                    <div style="border: 2px dashed #1e8449; border-radius: 12px; padding: 12px; text-align: center; font-size: 13px; color: #145a32; background: #fff;">
+                                                        Each context owns the data it needs,<br>results flow via <b>domain event Pub/Sub</b> · independent operation
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">The same delivery application becomes a completely different architecture depending on where you draw the boundaries</p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                The solution is to draw the boundaries around <b>behavior (the steps of a business process, the value stream) rather than data</b>. For each step (concern) in the flow 'place order → cook → deliver', bundle the data and functionality that behavior needs into a <b>bounded context</b>. Each service then holds what it needs for its own job (high cohesion), and only passes the outcome of its behavior, a <b>domain event</b>, to other services asynchronously via Pub/Sub (low coupling). Only then does the ideal of microservices appear: one service fails, and the others keep running.
+                                            </p>
+                                            <ul>
+                                                <li><b style="font-weight: bold;">🔍 Go deeper:</b> <a href="cohesionmsaez.html">The Core of Microservices Design: Understanding Cohesion and Coupling</a></li>
+                                                <li><b style="font-weight: bold;">🏭 Go deeper:</b> <a href="msadesign.html">Microservices Design Principles: The Factory and Warehouse Analogy</a></li>
+                                                <li><b style="font-weight: bold;">📐 Fundamentals:</b> <a href="cohesion.html">Cohesion and Coupling in Software Design</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; 3. Trap ②: Everyone's data and the temptation of the God Table
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                Once the boundaries are drawn, the next question awaits: <b>"So whose data is this?"</b> Every monolithic system has a giant table where columns from every domain, sales, marketing, reservations, and more, are tangled together. This is the so-called <a href="godtable.html"><b>God Table</b></a>. Because every domain depends on this one table, a change in one domain spreads to all the others, and the central database becomes a bottleneck. If you leave the God Table in place and split only the application, you end up with the <b>shared database anti-pattern</b>, where every service clings to a single DB and the point of MSA is lost.
+                                            </p>
+                                            <p style="text-decoration: underline;"><b>Three principles of data separation</b></p>
+                                            <ul>
+                                                <li><b style="font-weight: bold;">📍 Data Locality:</b> each bounded context owns locally only the data it frequently reads and writes within its own problem space. Entities from other domains are referenced only by an <b>ID Value Object</b>, never pulled in wholesale.</li>
+                                                <li><b style="font-weight: bold;">📋 Common Data Duplication:</b> data that rarely changes, such as names and gender, is replicated to each service via events. The key is letting go of the monolith-era normalization instinct that "duplication is always evil." Replication is the <b>price of autonomy</b>, and it is far cheaper than the cost of synchronization.</li>
+                                                <li><b style="font-weight: bold;">📞 Remote Invocation as a Last Resort:</b> only data that changes too often to replicate is fetched at call time, and caching and the flyweight pattern reduce call cost and vulnerability to failures.</li>
+                                            </ul>
+                                            <p>
+                                                The priority among these three principles matters. <b>Localize first, then replicate, and use remote calls last.</b> Many projects apply this order in reverse (solving everything with remote calls) and slide right back into the chatty microservice of trap ①.
+                                            </p>
+                                            <ul>
+                                                <li><b style="font-weight: bold;">🗃️ Go deeper:</b> <a href="godtable.html">Effective Data Management in Microservices: Data Locality, Common Data Duplication, and Remote Invocation</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; 4. Trap ③: The vanished transaction and the tug-of-war between consistency and performance
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                Something that was taken for granted in a monolith disappears in MSA: <b>the ability to wrap everything in a single transaction</b>. The days of committing the order save and the stock deduction in one transaction are over. The moment data is distributed across services, the safety net of "all succeed or all roll back" is no longer free. This is the most fundamental fear many architects feel when facing MSA.
+                                            </p>
+                                            <p>
+                                                The answer lies in <b>redefining the scope of consistency</b>. In Domain-Driven Design (DDD), an <a href="aggregate.html"><b>Aggregate</b></a> is "a cluster of objects that must be consistent together, immediately," and it defines <b>the smallest boundary that requires strong consistency</b>. Inside an aggregate, updates are atomic so invariants hold; between aggregates and between services, you manage with <b>eventual consistency</b> — "not necessarily right now, but consistent in the end." The order service saves the order and publishes an event; the inventory service subscribes to it and updates stock at its own pace.
+                                            </p>
+                                            <p>
+                                                It isn't free, of course. The moment you adopt this style, a set of homework comes with it.
+                                            </p>
+                                            <ul>
+                                                <li><b style="font-weight: bold;">🔁 Idempotency:</b> Handlers must be designed so that receiving the same event twice causes no side effects.</li>
+                                                <li><b style="font-weight: bold;">↩️ Compensating transactions and Sagas:</b> When an intermediate step fails, the scenario for rolling back the already-completed earlier steps must be designed explicitly with the <b>Saga pattern</b>.</li>
+                                                <li><b style="font-weight: bold;">⏱️ Consistency window:</b> "How long can inconsistency be tolerated?" must be agreed with the business and monitored.</li>
+                                                <li><b style="font-weight: bold;">📏 Aggregate size:</b> Too large, and the lock contention of the monolith era comes back; too small, and coordination costs explode. Drawing the boundary is itself a design skill.</li>
+                                            </ul>
+                                            <ul>
+                                                <li><b style="font-weight: bold;">⚖️ Go deeper:</b> <a href="tradeoff.html">Balancing Data Consistency and Performance — Aggregates and Eventual Consistency</a></li>
+                                                <li><b style="font-weight: bold;">🧱 Go deeper:</b> <a href="aggregate.html">Aggregate Best Practices</a></li>
+                                                <li><b style="font-weight: bold;">🔀 Go deeper:</b> <a href="cqrs.html">A Comprehensive Guide to Implementing CQRS with Spring Boot</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; 5. The Answer: Design Principles for Getting Past the Three Traps
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                To sum up, microservices are hard because three traps — <b>wrong boundaries, ownerless data, and vanished transactions</b> — interlock with one another. And each trap has a proven remedy.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50" style="overflow-x: auto;">
+                                            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                                                <tr style="background-color: #1a1a2e; color: #fff;">
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Trap</th>
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Symptoms</th>
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Remedy Principle</th>
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Deeper Reading</th>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>① Data-oriented decomposition</b></td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Explosion of synchronous inter-service calls; one slow service slows everything; cascading failures</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Behavior (value-stream)-centered bounded contexts + domain event Pub/Sub</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><a href="cohesionmsaez.html">Cohesion and Coupling</a> · <a href="msadesign.html">Design Principles</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>② The God Table</b></td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Every service shares one DB; fear of schema changes; central DB bottleneck</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Data locality → replication of shared data → remote calls (last resort)</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><a href="godtable.html">Three Principles of Data Management</a></td>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>③ Vanished transactions</b></td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Attempts at distributed transactions, the 2PC swamp, a vicious cycle of consistency bugs and degraded performance</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Aggregate = strong-consistency boundary; outside it, eventual consistency + Saga and idempotency</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><a href="tradeoff.html">Consistency and Performance</a> · <a href="aggregate.html">Aggregates</a></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">
+                                                As you may have noticed, the three remedies join into a single sentence: <b>"Draw boundaries around business behavior, localize data inside those boundaries, and connect the boundaries loosely with events."</b> The real reason microservice design is hard is that this sentence is not a technology problem but <b>a question of how deeply you understand the domain</b>. If domain modeling is new to you, we recommend starting with <a href="blog3.html">Understanding the Domain Model Through the Three Little Pigs</a> and <a href="blog1.html">Why Business Logic Should Be Managed in Domain Classes, Not SQL</a>.
+                                            </p>
+                                        </div>
+
+                                                                                <blockquote>
+                                            <p>
+                                                &nbsp; 6. The Bill for the Answer — Challenges Across Every Stage of the Lifecycle
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                If you've read this far and concluded, "So I just draw boundaries around behavior and connect them with events," you're only half right. <b>Event-driven microservice architecture (EDMSA)</b> is an outstanding answer for scalability, decoupling, and real-time processing, but the moment you accept this remedy the difficulty doesn't disappear — <b>it changes shape and scatters across every stage of the project lifecycle.</b> As "the complexity of distributed environments" combines with "asynchronous messaging," each stage — design, implementation, operations, deployment — has its own hard problems waiting. Map them out in advance and they become a checklist instead of something to fear.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #5b6b9e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
+                                                    <div style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">📐 1. Design Stage</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>Event granularity:</b> Too fine-grained and messages explode; too coarse and coupling rises — finding the right level is the design itself</li>
+                                                        <li style="margin-bottom: 6px;"><b>Event schema versioning:</b> Without governance that evolves schemas while preserving backward compatibility (Schema Registry, Avro/Protobuf), consuming services break</li>
+                                                        <li style="margin-bottom: 6px;"><b>No 2PC:</b> Without a single ACID transaction, the time lag of eventual consistency must be reflected in UX and business logic (settlement updated some time after "order complete")</li>
+                                                        <li><b>Saga design complexity:</b> Compensating transactions must be designed one by one for every failure case, and you must also choose between orchestration and choreography</li>
+                                                    </ul>
+                                                </div>
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #7c4dbc; border-radius: 14px; background: linear-gradient(180deg, #f8f5fc 0%, #f0e9f8 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(124,77,188,0.10);">
+                                                    <div style="font-weight: 700; color: #4a2a75; margin-bottom: 10px;">🛠️ 2. Implementation Stage</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>The dual-write problem:</b> An atomicity crack where the DB write succeeds but the broker publish fails — it must be solved with a Transactional Outbox or CDC (Debezium), adding corresponding infrastructure and development effort</li>
+                                                        <li style="margin-bottom: 6px;"><b>Idempotency:</b> With at-least-once delivery, duplicate receipt is the default — every consumer must be safe against duplicate execution</li>
+                                                        <li style="margin-bottom: 6px;"><b>Ordering inversion:</b> Delays and retries can flip 'order created → cancelled', so a partitioning-key strategy is essential</li>
+                                                        <li><b>Poison pills:</b> Build DLQ isolation + backoff retries + replay mechanisms so a perpetually failing message doesn't block the queue</li>
+                                                    </ul>
+                                                </div>
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #1e8449; border-radius: 14px; background: linear-gradient(180deg, #f2faf5 0%, #e6f5ec 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(30,132,73,0.10);">
+                                                    <div style="font-weight: 700; color: #145a32; margin-bottom: 10px;">📡 3. Operations and Observability</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>Broken call stacks:</b> Asynchronous events sever the call stack; unless you propagate Correlation/Trace IDs in event headers and integrate with OpenTelemetry, Zipkin, or Jaeger, you can't tell "where it stopped"</li>
+                                                        <li style="margin-bottom: 6px;"><b>The broker itself is massive infrastructure:</b> Kafka/RabbitMQ HA, partition management, retention periods, backpressure, and consumer lag buildup</li>
+                                                        <li><b>Event reprocessing:</b> The complexity of replaying past events after a bug fix so that only data is resynchronized, without side effects (resending emails, etc.)</li>
+                                                    </ul>
+                                                </div>
+                                                <div style="flex: 1 1 280px; max-width: 400px; border: 2px solid #b9770e; border-radius: 14px; background: linear-gradient(180deg, #fdf9f0 0%, #faf0dc 100%); padding: 20px 18px; box-shadow: 0 8px 24px rgba(185,119,14,0.10);">
+                                                    <div style="font-weight: 700; color: #7e5109; margin-bottom: 10px;">🚢 4. Deployment and Evolution Stage</div>
+                                                    <ul style="font-size: 14px; margin: 0; padding-left: 18px;">
+                                                        <li style="margin-bottom: 6px;"><b>Old and new versions running simultaneously:</b> During a canary or blue-green deployment, "which version consumes this event?" — if a schema change overlaps, an old consumer may read a new event and break, requiring a non-breaking-change strategy and a carefully ordered rollout</li>
+                                                        <li><b>Partition structure changes:</b> The moment you add partitions to handle traffic growth, the ordering-key mapping breaks and event order can get scrambled</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">A map of the challenges an event-driven MSA project faces at each lifecycle stage</p>
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">
+                                                <b>"Asynchronous event-driven architecture lowers coupling, but in exchange sharply raises the difficulty of understanding and controlling the state of the system as a whole."</b> — That's why, before adopting EDMSA, at least four things should be reviewed in advance.
+                                            </p>
+                                            <ul style="margin-left: 20px;">
+                                                <li><b style="font-weight: bold;">📤 ①</b> Whether the Transactional Outbox pattern and CDC are applied as a standard</li>
+                                                <li><b style="font-weight: bold;">🔭 ②</b> An OpenTelemetry-based end-to-end distributed tracing system</li>
+                                                <li><b style="font-weight: bold;">📜 ③</b> Event schema governance through a Schema Registry</li>
+                                                <li><b style="font-weight: bold;">🧰 ④</b> Consumer idempotency handling and DLQ automation logic packaged as a shared library</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                This list isn't meant to scare you. The point is that every item is <b>a conquerable challenge for which proven standard patterns and tools already exist</b>. <a href="cqrs.html">CQRS</a>, which tames query complexity by separating the read model, is another weapon in that arsenal. And how these challenges get handled one by one in a real large-scale project is shown by the Gov24 case that follows — Saga, idempotency, retries, and DLQs all appear exactly as described.
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; 7. Do the Principles Hold Up in the Field? — The Gov24 Cloud-Native Transformation
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                The case that shows these principles aren't just textbook theory is the <a href="gov24.html"><b>cloud-native transformation of the Gov24 portal</b></a>. In this project, for which uEngine Solutions performed the design and analysis, the existing Gov24 was a classic tightly coupled monolith, and in particular it carried a <b>single point of failure (SPOF)</b>: every civil-service application had to pass through the 'Service Guide' module. If that one module stopped, every online civil service in Korea stopped with it.
+                                            </p>
+                                            <p>
+                                                The core of the transformation design was exactly the principles we've seen. The civil-service domain was divided into three types <b>according to the nature of the business behavior</b>, and a different pattern was applied to each.
+                                            </p>
+                                            <ul>
+                                                <li><b style="font-weight: bold;">⚡ Simple applications and instant issuance:</b> Since response time is everything, <b>synchronous REST calls</b> were kept, but the tight coupling of directly updating other services' databases was replaced with clear API interfaces — not turning everything into events is a design decision too.</li>
+                                                <li><b style="font-weight: bold;">📨 Deadline-based, non-integrated services:</b> Immediate acknowledgment of receipt, then background processing via <b>event-store-based Pub/Sub</b>. The Saga pattern secures process consistency, while idempotency, retries, and DLQs secure reliable message handling — the exact point where the remedy for trap ③ is applied.</li>
+                                                <li><b style="font-weight: bold;">🏛️ Major services (building registers, vehicle registration, etc.):</b> Services with heavy traffic and high public impact were isolated and deployed in <b>independent namespaces</b> with dedicated guide channels, structurally eliminating the SPOF problem.</li>
+                                            </ul>
+                                            <p>
+                                                The target figures: automatic scaling of system capacity up to <b>7.6x</b>, an <b>81.6% reduction</b> in service downtime, and <b>36.7% faster</b> processing. It's a case that shows what outcome targets a design can take on once it has confronted "why is this hard" head-on. The detailed AS-IS/TO-BE architecture analysis is available in the <a href="gov24.html">full Gov24 transformation story</a>.
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp; 8. If It's Too Steep a Climb Alone — From Design Principles to Products and Services
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                Microservice architecture is hard. But the nature of that difficulty is clear: <b>boundary setting, data ownership, and consistency strategy</b> — three design judgments, all of them mountains that can be climbed with learning and experience. And uEngine has tightly linked the entire journey up that mountain — <b>diagnosis → design → implementation → modernization → capability building</b> — into products and services. Follow along and see how each concept covered in this article is executed as a specific feature of a specific product.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50">
+                                            <div style="max-width: 760px; margin: 0 auto; border: 2px solid #1a1a2e; border-radius: 14px; background: linear-gradient(180deg, #f4f6fb 0%, #eceff7 100%); padding: 24px 22px; box-shadow: 0 8px 24px rgba(26,26,46,0.08);">
+                                                <div style="text-align: center; font-weight: 700; color: #1a1a2e; margin-bottom: 16px;">uEngine's MSA journey — from diagnosis to in-house capability</div>
+                                                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px;">
+                                                    <a href="../robolegacyanalyzer.html" style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:6px 14px; font-size:13px; white-space:nowrap;">🔎 Diagnose<br><b>Robo Legacy Analyzer</b></a>
+                                                    <span style="color:#5b6b9e; font-weight:700;">→</span>
+                                                    <a href="../roboarchitect.html" style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:6px 14px; font-size:13px; white-space:nowrap;">📐 Design and Build<br><b>Robo Architect</b></a>
+                                                    <span style="color:#5b6b9e; font-weight:700;">→</span>
+                                                    <a href="../legacymodernizer.html" style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:6px 14px; font-size:13px; white-space:nowrap;">♻️ Modernize<br><b>Robo Modernizer</b></a>
+                                                    <span style="color:#5b6b9e; font-weight:700;">→</span>
+                                                    <a href="../leaddevelopment.html" style="background:#fff; border:1px solid #c3cbe0; border-radius:20px; padding:6px 14px; font-size:13px; white-space:nowrap;">🚀 Pilot Development<br><b>Implementation Services</b></a>
+                                                    <span style="color:#5b6b9e; font-weight:700;">→</span>
+                                                    <a href="../msaacademy.html" style="background:#fff; border:2px solid #7c4dbc; border-radius:20px; padding:6px 14px; font-size:13px; white-space:nowrap;">🎓 Capability Building<br><b>CNA Consulting and Training</b></a>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">The design judgments that get past the three traps map directly onto uEngine's product and service lineup</p>
+                                        </div>
+
+                                        <div class="mb-50" style="overflow-x: auto;">
+                                            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                                                <tr style="background-color: #1a1a2e; color: #fff;">
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Concept in this article</th>
+                                                    <th style="padding: 12px 16px; border: 1px solid #ddd; text-align: left;">Product/service feature that executes it</th>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Before drawing boundaries, understand the actual cohesion structure of the current system (preventing trap ①)</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Robo Legacy Analyzer</b> — Analyzes source code and DDL as a graph and automatically clusters functions that frequently collaborate, revealing hidden bounded-context candidates.<br><a href="../robolegacyanalyzer.html#rla-cluster" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Behavior-centered bounded context and aggregate design (remedy for traps ① and ③)</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Robo Architect</b> — Performs Aggregate and EventStorming design together with AI and visually refines domain event flows.<br><a href="../roboarchitect.html#ra-eventstorming" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">From design to event-driven microservice code — reducing the burden of hand-writing idempotency and Sagas</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Robo Architect</b> — DDD-based automatic generation of code and tests turns the design model directly into runnable services.<br><a href="../roboarchitect.html#ra-codegen" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Legacy analysis results feed directly into the transformation design</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Robo Legacy Analyzer × Robo Architect integration</b> — Graph analysis becomes the transformation design as-is.<br><a href="../robolegacyanalyzer.html#rla-toarchitect" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Free business logic trapped in god tables and SQL into domain classes (dismantling trap ②; the subject of <a href="blog1.html">Part 1</a> and <a href="blog2.html">Part 2</a>)</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Robo Modernizer</b> — Analyzes stored procedures and automatically converts them into Java domain code.<br><a href="../legacymodernizer.html#rm-tojava" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">A proven first step, as with Gov24 — prove the principles work on a small scale first</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Pilot Implementation Services</b> — Rapidly prototypes the critical path to validate architecture decisions with a working artifact.<br><a href="../leaddevelopment.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See the service overview</a></td>
+                                                </tr>
+                                                <tr style="background-color: #f7f7fa;">
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;">Build boundary-design capability into the organization — you can buy tools, but judgment must be cultivated</td>
+                                                    <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>CNA/MSA Consulting and Training</b> — A consulting process spanning diagnosis to operational stabilization, plus training programs based on the CNMM maturity model.<br><a href="../msaacademy.html#consulting" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See consulting services</a> · <a href="../msaacademy.html#education" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See training programs</a></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                If you're not sure where to start, come in through either of these two doors.
+                                            </p>
+                                            <ul>
+                                                <li><b style="font-weight: bold;">🧭 CNA/MSA Consulting:</b> Drawing on experience from large-scale transformation projects including Gov24, we support the entire journey, from EventStorming-based boundary design to implementation and operations on the eGovFrame standard framework. → <a href="../msaacademy.html">CNA/MSA Consulting</a> · <a href="../casestudiesmsa.html">MSA Case Studies</a> · <a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                                <li><b style="font-weight: bold;">🎓 MSA School:</b> A dedicated microservices training site where you internalize, through hands-on practice, the cohesion and coupling, god-table decomposition, and aggregates and eventual consistency covered in this article. Discover the curriculum more than 8,000 graduates have completed. → <a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>Read next — MSA Design Series</b></p>
+                                            <ul style="font-size: 14px;">
+                                                <li><a href="cohesionmsaez.html">The Heart of Microservice Design: Understanding Cohesion and Coupling</a></li>
+                                                <li><a href="msadesign.html">Microservice Design Principles — Understood Through the Factory and Warehouse Analogy</a></li>
+                                                <li><a href="godtable.html">Effective Data Management in Microservices: Data Locality, Shared Data Replication, and Remote Calls</a></li>
+                                                <li><a href="tradeoff.html">Balancing Data Consistency and Performance: Aggregates and Eventual Consistency</a></li>
+                                                <li><a href="aggregate.html">Aggregate Best Practices</a></li>
+                                                <li><a href="cohesion.html">Cohesion and Coupling in Software Design</a></li>
+                                                <li><a href="cqrs.html">A Comprehensive Guide to Implementing CQRS with Spring Boot</a></li>
+                                                <li><a href="blog3.html">Understanding the Domain Model Easily Through the Three Little Pigs</a></li>
+                                                <li><a href="blog1.html">The Difference Between Systems That Manage Business Logic in SQL and Those That Manage It in Domain Classes, Part 1</a> · <a href="blog2.html">Part 2</a></li>
+                                                <li><a href="gov24.html">Gov24 Cloud-Native Transformation: Innovating Public Services with Microservice Architecture</a></li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Section -->
+           
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>

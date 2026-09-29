@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Business Logic in SQL vs. Business Logic in Domain Classes, Part 2 | uEngine Blog</title>
+        <meta name="description" content="We look at how to modify entities to handle, through polymorphism, a case where employees are classified as contract or full-time and the tax calculation logic differs only for contract employees.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/blog2.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Business Logic in SQL vs. Business Logic in Domain Classes, Part 2 | uEngine Blog">
+        <meta property="og:description" content="We look at how to modify entities to handle, through polymorphism, a case where employees are classified as contract or full-time and the tax calculation logic differs only for contract employees.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/blog2.html">
+        <meta property="og:image" content="https://www.uengine.org/images/portfolio/full-project-1.jpg">
+        <meta property="og:image:alt" content="Business Logic in SQL vs. Business Logic in Domain Classes, Part 2 | uEngine Blog">
+        <meta property="article:published_time" content="2024-03-21">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Business Logic in SQL vs. Business Logic in Domain Classes, Part 2 | uEngine Blog">
+        <meta name="twitter:description" content="We look at how to modify entities to handle, through polymorphism, a case where employees are classified as contract or full-time and the tax calculation logic differs only for contract employees.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/portfolio/full-project-1.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Business Logic in SQL vs. Business Logic in Domain Classes, Part 2","description":"We look at how to modify entities to handle, through polymorphism, a case where employees are classified as contract or full-time and the tax calculation logic differs only for contract employees.","image":["https://www.uengine.org/images/portfolio/full-project-1.jpg"],"url":"https://www.uengine.org/en/contents/blog/blog2.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/blog2.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2024-03-21","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Business Logic in SQL vs. Business Logic in Domain Classes, Part 2","item":"https://www.uengine.org/en/contents/blog/blog2.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/blog2.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/blog2.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/blog2.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/blog2.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/blog2.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+                                
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+                                        
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Business Logic in SQL vs. Business Logic in Domain Classes, Part 2</span>
+                                    </h1>
+                                    
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span> March 21, 2024</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+                               
+                               </div>
+                               <!-- End Page Title -->
+                                
+                            </div>                            
+                        </div>
+                        <!-- End Section Content -->
+                        
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        
+                        <div class="row">
+                            
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    
+                                    <div class="blog-item-body chat-gpt">
+                                    
+                                        <!-- Media Gallery -->
+                                        <!-- <div class="blog-media mb-40 mb-xs-30">
+                                            <div class="clearlist content-slider dark-content">
+                                                <div>
+                                                    <img src="../../../images/portfolio/full-project-1.jpg" alt="Image Description" decoding="async" />
+                                                </div>
+                                                <div>
+                                                    <img src="../../../images/portfolio/full-project-2.jpg" alt="Image Description" decoding="async" />
+                                                </div>
+                                                <div>
+                                                    <img src="../../../images/portfolio/full-project-3.jpg" alt="Image Description" loading="lazy" decoding="async" />
+                                                </div>
+                                            </div>
+                                        </div>                                         -->
+
+                                        <!-- <p>
+                                            <a href="https://medium.com/@yj0735/%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4-%EA%B5%AC%EC%A1%B0%EB%A5%BC-sql%EC%97%90-%EA%B4%80%EB%A6%AC%ED%95%98%EB%8A%94-%EC%8B%9C%EC%8A%A4%ED%85%9C%EA%B3%BC-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90%EC%84%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EB%8A%94-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%98-%EC%B0%A8%EC%9D%B4-part1-7a796e6289b9" target="_blank">medium 포스팅 테스트</a>
+                                        </p> -->
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Continuing from  &nbsp;"<a href="blog1.html"><b>Business Logic in SQL vs. Business Logic in Domain Classes, Part 1</b></a>"  &nbsp;, let's take a closer look.
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <!-- <img class="post-prev-author-img" width="30" height="30" src="../../../images/blog/author/author-gpt-gr.jpg" alt="chatGPT 로고" loading="lazy" decoding="async" /><b>ChatGPT</b> -->
+
+                                            <p class="mt-10">
+                                                Let's look at how to modify the entities to handle, through polymorphism, a case where employees are classified as contract or permanent and the tax-calculation logic differs only for contract employees. To do this, we change the Employee class to an abstract class and create subclasses for contract employees (ContractEmployee) and permanent employees (PermanentEmployee). Common logic is handled in the Employee class, and the parts that differ, such as the tax-calculation logic, are overridden and implemented in each subclass.
+                                            </p>
+                                            <p class="mid-title"><b>Employee class (abstract class)</b></p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span> {
+    <span class="hljs-keyword">protected</span> Long id;
+    <span class="hljs-keyword">protected</span> Double baseSalary;
+    <span class="hljs-keyword">protected</span> Double finalSalary;
+    <span class="hljs-comment">// Other common attributes</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Employee</span><span class="hljs-params">(Long id, Double baseSalary)</span> {
+        <span class="hljs-built_in">this</span>.id = id;
+        <span class="hljs-built_in">this</span>.baseSalary = baseSalary;
+    }
+
+    <span class="hljs-comment">// Basic payroll calculation logic (common)</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">calculatePayroll</span><span class="hljs-params">()</span> {
+        <span class="hljs-type">double</span> <span class="hljs-variable">taxDeduction</span> <span class="hljs-operator">=</span> calculateTaxDeduction();
+        finalSalary = baseSalary - taxDeduction;
+    }
+
+    <span class="hljs-comment">// Tax calculation is implemented in subclasses</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-type">double</span> <span class="hljs-title function_">calculateTaxDeduction</span><span class="hljs-params">()</span>;
+
+    <span class="hljs-comment">// Getters and Setters omitted</span>
+}
+</code>
+</div>
+    
+                                            <p class="mid-title"><b>ContractEmployee class</b></p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ContractEmployee</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Employee</span> {
+
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ContractEmployee</span><span class="hljs-params">(Long id, Double baseSalary)</span> {
+        <span class="hljs-built_in">super</span>(id, baseSalary);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-type">double</span> <span class="hljs-title function_">calculateTaxDeduction</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// Tax calculation logic for contract employees</span>
+        <span class="hljs-keyword">return</span> baseSalary * <span class="hljs-number">0.05</span>; <span class="hljs-comment">// Example: 5% of base salary</span>
+    }
+}
+</code>    
+</div>                    
+
+                                            <p class="mid-title"><b>PermanentEmployee class</b></p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PermanentEmployee</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Employee</span> {
+
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">PermanentEmployee</span><span class="hljs-params">(Long id, Double baseSalary)</span> {
+        <span class="hljs-built_in">super</span>(id, baseSalary);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-type">double</span> <span class="hljs-title function_">calculateTaxDeduction</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// Tax calculation logic for permanent employees</span>
+        <span class="hljs-keyword">return</span> baseSalary * <span class="hljs-number">0.1</span>; <span class="hljs-comment">// Example: 10% of base salary</span>
+    }
+}
+</code>    
+</div>                                      <p>
+                                                With this structure, all employees (Employee) share the basic payroll-calculation logic, while the tax-calculation logic for contract and permanent employees can be implemented differently. Using polymorphism, we define the calculateTaxDeduction method as an abstract method and implement it concretely in each subclass, thereby managing the differences in tax-calculation logic.
+                                            </p>
+                                            <p>
+                                                This approach improves code reusability and maintainability, and provides the flexibility to easily add or change the tax-calculation logic for each employee type.
+                                            </p>
+                                        </div>
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;How to get the benefits of polymorphism in stored procedures as well
+                                            </p>
+                                        </blockquote>
+                                        
+                                        <div class="mb-50">
+                                            <!-- <img class="post-prev-author-img" width="30" height="30" src="../../../images/blog/author/author-gpt-gr.jpg" alt="chatGPT 로고" loading="lazy" decoding="async" /><b>ChatGPT</b> -->
+                                            <p class="mt-10">
+                                                Implementing polymorphism directly in Stored Procedures differs somewhat from the object-oriented polymorphism supported by programming languages. However, even in procedural languages such as SQL and PL/SQL, there are ways to achieve a similar effect through conditional statements, functions, and subprograms. These techniques help improve code reusability and make maintenance easier.
+                                            </p>
+                                            <p class="mid-title"><b>The conditional-statement approach</b></p>
+                                            <p>This approach simply uses conditional statements inside the Stored Procedure to handle the differences in tax-calculation logic between contract and permanent employees. It does not directly implement the principle of polymorphism, but it can produce a similar effect by providing different logic paths.</p>
+                                            
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">PROCEDURE</span> calculate_employee_tax(employee_id <span class="hljs-keyword">IN</span> NUMBER) <span class="hljs-keyword">AS</span>
+    employee_type <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>);
+    base_salary NUMBER;
+    tax_deduction NUMBER;
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-comment">-- Look up employee type and base salary</span>
+    <span class="hljs-keyword">SELECT</span> e.type, e.base_salary <span class="hljs-keyword">INTO</span> employee_type, base_salary
+    <span class="hljs-keyword">FROM</span> employees e <span class="hljs-keyword">WHERE</span> e.id <span class="hljs-operator">=</span> employee_id;
+
+    <span class="hljs-comment">-- Calculate tax according to employee type</span>
+    IF employee_type <span class="hljs-operator">=</span> <span class="hljs-string">'C'</span> <span class="hljs-keyword">THEN</span>  <span class="hljs-comment">-- Contract employee</span>
+        tax_deduction :<span class="hljs-operator">=</span> base_salary <span class="hljs-operator">*</span> <span class="hljs-number">0.05</span>;
+    ELSIF employee_type <span class="hljs-operator">=</span> <span class="hljs-string">'P'</span> <span class="hljs-keyword">THEN</span>  <span class="hljs-comment">-- Permanent employee</span>
+        tax_deduction :<span class="hljs-operator">=</span> base_salary <span class="hljs-operator">*</span> <span class="hljs-number">0.1</span>;
+    <span class="hljs-keyword">ELSE</span>
+        tax_deduction :<span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">END</span> IF;
+
+    <span class="hljs-comment">-- Follow-up processing such as updating the tax deduction</span>
+    <span class="hljs-keyword">UPDATE</span> employees
+    <span class="hljs-keyword">SET</span> tax <span class="hljs-operator">=</span> tax_deduction
+    <span class="hljs-keyword">WHERE</span> id <span class="hljs-operator">=</span> employee_id;
+
+    <span class="hljs-keyword">COMMIT</span>;
+<span class="hljs-keyword">END</span>;
+<span class="hljs-operator">/</span>
+</code>
+</div>
+                                            
+                                            <p class="mid-title"><b>The dynamic-SQL approach</b></p>
+                                            <p>
+                                                Using dynamic SQL, you can achieve a polymorphism-like effect by calling a different procedure depending on the employee type. This approach is more flexible, but it can increase complexity and the potential for errors.
+                                            </p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">PROCEDURE</span> calculate_tax_for_employee(employee_id <span class="hljs-keyword">IN</span> NUMBER) <span class="hljs-keyword">AS</span>
+    employee_type <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>);
+    tax_calculation_sql VARCHAR2(<span class="hljs-number">1000</span>);
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-comment">-- Look up employee type</span>
+    <span class="hljs-keyword">SELECT</span> e.type <span class="hljs-keyword">INTO</span> employee_type
+    <span class="hljs-keyword">FROM</span> employees e <span class="hljs-keyword">WHERE</span> e.id <span class="hljs-operator">=</span> employee_id;
+
+    <span class="hljs-comment">-- Call different tax calculation logic depending on type</span>
+    IF employee_type <span class="hljs-operator">=</span> <span class="hljs-string">'C'</span> <span class="hljs-keyword">THEN</span>
+        tax_calculation_sql :<span class="hljs-operator">=</span> <span class="hljs-string">'CALL calculate_tax_contract(:1)'</span>;
+    ELSIF employee_type <span class="hljs-operator">=</span> <span class="hljs-string">'P'</span> <span class="hljs-keyword">THEN</span>
+        tax_calculation_sql :<span class="hljs-operator">=</span> <span class="hljs-string">'CALL calculate_tax_permanent(:1)'</span>;
+    <span class="hljs-keyword">ELSE</span>
+        RAISE_APPLICATION_ERROR(<span class="hljs-number">-20001</span>, <span class="hljs-string">'Unknown Employee Type'</span>);
+    <span class="hljs-keyword">END</span> IF;
+
+    <span class="hljs-comment">-- Execute dynamic SQL</span>
+    <span class="hljs-keyword">EXECUTE</span> IMMEDIATE tax_calculation_sql <span class="hljs-keyword">USING</span> employee_id;
+<span class="hljs-keyword">END</span>;
+<span class="hljs-operator">/</span>
+</code>
+</div>
+
+                                            <p>
+                                                These techniques can achieve a polymorphism-like effect by providing different processing paths based on conditions inside the Stored Procedure. However, they cannot fully replace the direct, declarative polymorphism offered by object-oriented programming languages. The appropriate technique should be chosen according to the situation and requirements.
+                                            </p>
+                                        </div>
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;The differences between the conditional-statement approach and the dynamic-SQL approach, and how the concept of "Separation of Concerns (SoC)" applies to them
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10 mid-title"><b>The conditional-statement approach</b></p>
+                                            <p>
+                                                In this approach, the tax-calculation logic for each employee type is implemented with IF-ELSEIF conditional statements inside a single Stored Procedure. Because all the logic is embedded in one procedure, that procedure must be modified whenever the logic changes. This approach is simple and intuitive to implement, but it has the following drawbacks:
+                                            </p>
+                                            <ol>
+                                                <li><b>Extensibility:</b> When a new employee type is added or the tax-calculation logic changes, the procedure must be modified, which can increase complexity.</li>
+                                                <li><b>Separation of concerns:</b> Because all tax-calculation logic lives in a single procedure, a change to one tax calculation can affect other parts, and concerns are not well separated.</li>
+                                            </ol>
+
+                                            <p class="mid-title"><b>The dynamic-SQL approach</b></p>
+                                            <p>In the dynamic-SQL approach, a different procedure is called dynamically depending on the employee type. This allows the tax-calculation logic for each type to be managed in a separate procedure, promoting separation of concerns. The main benefits of the dynamic-SQL approach are:</p>
+                                            <ol>
+                                                <li><b>Extensibility:</b> When a new employee type is added or the tax-calculation logic for a specific type changes, only the tax-calculation procedure for that type needs to be modified. This improves extensibility and maintainability.</li>
+                                                <li><b>Separation of concerns:</b> By separating each tax calculation into its own procedure, changes to one piece of logic have minimal impact on the others. This increases the modularity of the code and makes it easier to modify or extend specific logic.</li>
+                                            </ol>
+                                            <p><b>In conclusion</b>, the dynamic-SQL approach applies the separation-of-concerns principle more effectively, making it easier to manage and modify each tax-calculation logic independently. Through separation of concerns, one of the key principles of software design, it contributes to greater maintainability and extensibility of the system.</p>
+
+                                        </div>
+
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Conclusion
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <!-- <img class="post-prev-author-img" width="30" height="30" src="../../../images/blog/author/author-gpt-gr.jpg" alt="chatGPT 로고" loading="lazy" decoding="async" /><b>ChatGPT</b> -->
+                                            <p class="mt-10">
+                                                The following table compares the key differences between implementing business logic with Stored Procedures and with Java objects. It evaluates the two approaches in terms of leveraging polymorphism and applying Separation of Concerns (SoC).
+                                            </p>
+                                            <table class="tbl-default chat-gpt border-right-aaa">
+                                                <thead class="tbl-title-md-gray chat-gpt">
+                                                    <tr>
+                                                        <th class="border-right-white">Standard</th>
+                                                        <th class="border-right-white">Stored Procedure</th>
+                                                        <th class="border-right-white">Java objects</th>
+                                                        <th>Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Polymorphism</strong></td>
+                                                        <td>Limited. Pseudo-polymorphism via dynamic SQL or conditional statements.</td>
+                                                        <td>High. Direct polymorphism through inheritance and interfaces.</td>
+                                                        <td>Java's object-oriented nature can make it better suited to handling complex business logic.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Separation of concerns</strong></td>
+                                                        <td>Possible but complex to manage. Extra work is needed to separate and manage each piece of logic.</td>
+                                                        <td>High. Concerns are easily separated at the class and method level.</td>
+                                                        <td>In Java, classes and packages make it easier to separate concerns clearly and manage responsibilities.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Extensibility</strong></td>
+                                                        <td>Medium. Adding new logic may require modifying procedures.</td>
+                                                        <td>High. Easily extended by adding new classes or extending existing ones.</td>
+                                                        <td>The Java object model is more flexible to extend and makes it easy to follow the Open/Closed Principle.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Maintainability</strong></td>
+                                                        <td>Low. Testing and deploying logic changes can be difficult.</td>
+                                                        <td>High. Easy maintenance through unit tests and CI/CD.</td>
+                                                        <td>The Java environment makes refactoring and unit testing easy, with rich support from IDEs and a wide range of tools.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Ease of testing</strong></td>
+                                                        <td>Low. Requires a separate database setup, and isolated tests are difficult.</td>
+                                                        <td>High. Isolated tests are easy with unit tests and mock objects.</td>
+                                                        <td>Java supports isolated testing and TDD using JUnit, Mockito, and similar tools.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Database independence</strong></td>
+                                                        <td>Low. Dependent on the SQL syntax and features of a specific database.</td>
+                                                        <td>High. Database-independent development through JDBC, JPA, and similar.</td>
+                                                        <td>Java applications make it relatively easy to switch databases, and database-access code is highly reusable.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Performance optimization and tuning</strong></td>
+                                                        <td>High. Runs inside the database server, reducing network overhead.</td>
+                                                        <td>Medium. Performance optimization may be needed when using an ORM.</td>
+                                                        <td>Because Stored Procedures work closely with the database, they can offer performance advantages in certain cases.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        
+                                        <div class="mb-50">
+                                            <!-- <img class="post-prev-author-img" width="30" height="30" src="../../../images/blog/author/author-gpt-gr.jpg" alt="chatGPT 로고" loading="lazy" decoding="async" /><b>ChatGPT</b> -->
+                                            <p class="mt-10">
+                                                The OCP (Open/Closed Principle) is an object-oriented design principle stating that software entities (classes, modules, functions, etc.) should be open for extension but closed for modification. In other words, it should be possible to extend a system's functionality without changing existing code.
+                                            </p>
+
+                                            <p style="text-decoration: underline; margin-bottom: 10px;"><b>A case that violates OCP</b></p>
+                                            <ol>
+                                                <li><b>With a Stored Procedure:</b> If the tax calculation logic for contract and permanent employees is handled by conditional statements inside a single Stored Procedure, that procedure has to be modified every time a new employee type is added. For example, if a freelancer employee type is introduced and needs its own tax calculation logic, yet another conditional branch must be added to the existing Stored Procedure. This approach violates OCP: it requires changes to existing code and undermines the extensibility of the system.</li>
+                                            </ol>
+
+                                            <p style="text-decoration: underline; margin-bottom: 10px;"><b>When OCP is respected</b></p>
+                                            <ol>
+                                                <li><b>With a Java object model:</b> Consider the case described above, where Employee is defined as an abstract class and ContractEmployee and PermanentEmployee implement it. In this structure, when a new employee type (say, a freelancer) needs to be added, you simply create a new class that extends Employee (for example, FreelanceEmployee) and implement the tax calculation logic inside it. New functionality can be added to the system without touching the existing code (Employee, ContractEmployee, PermanentEmployee). This approach follows the OCP principle well: the system can be extended without modifying existing code, which improves maintainability and extensibility.</li>
+                                            </ol>
+        
+                                            <p class="mid-title"><b>Conclusion</b></p>
+                                            <p>
+                                                A design that follows the OCP principle can greatly improve the flexibility, extensibility, and maintainability of a system. With a Java object model, it is easy to apply OCP by leveraging fundamental object-oriented principles such as polymorphism and inheritance. A Stored Procedure-based approach, on the other hand, may offer performance advantages in specific situations, but it can make it difficult to follow OCP in terms of code extensibility and maintainability. It is therefore important to weigh these principles at the design stage and choose the approach that best fits the project's requirements and long-term outlook.
+                                            </p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Next:  &nbsp;"<a href="modernizer.html"><b>Legacy Modernizer (Stored Procedure to Java)</b></a>"  &nbsp;Read more
+                                            </p>
+                                        </blockquote>
+                                    </div>
+
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Section -->
+           
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>

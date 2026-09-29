@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Cohesion and Coupling in Software Design | uEngine Blog</title>
+        <meta name="description" content="Cohesion and coupling are fundamental concepts in software design. Today we use everyday objects as examples to make these concepts easy to understand, then apply them to object-oriented programming and microservices architecture.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/cohesion.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Cohesion and Coupling in Software Design | uEngine Blog">
+        <meta property="og:description" content="Cohesion and coupling are fundamental concepts in software design. Today we use everyday objects as examples to make these concepts easy to understand, then apply them to object-oriented programming and microservices architecture.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/cohesion.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/blog03.jpg">
+        <meta property="og:image:alt" content="Cohesion and Coupling in Software Design | uEngine Blog">
+        <meta property="article:published_time" content="2024-09-05">
+        <meta property="article:modified_time" content="2026-09-10">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cohesion and Coupling in Software Design | uEngine Blog">
+        <meta name="twitter:description" content="Cohesion and coupling are fundamental concepts in software design. Today we use everyday objects as examples to make these concepts easy to understand, then apply them to object-oriented programming and microservices architecture.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/blog03.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Cohesion and Coupling in Software Design","description":"Cohesion and coupling are fundamental concepts in software design. Today we use everyday objects as examples to make these concepts easy to understand, then apply them to object-oriented programming and microservices architecture.","image":["https://www.uengine.org/images/blog/blog03.jpg"],"url":"https://www.uengine.org/en/contents/blog/cohesion.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/cohesion.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2024-09-05","dateModified":"2026-09-10"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Cohesion and Coupling in Software Design","item":"https://www.uengine.org/en/contents/blog/cohesion.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/cohesion.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/cohesion.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/cohesion.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/cohesion.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontology Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/cohesion.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+            
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+                        
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+                                
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+                                        
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Cohesion and Coupling in Software Design</span>
+                                    </h1>
+                                    
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span> September 05, 2024</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+                               
+                               </div>
+                               <!-- End Page Title -->
+                                
+                            </div>                            
+                        </div>
+                        <!-- End Section Content -->
+                        
+                    </div>           
+                </section>
+                <!-- End Header Section -->
+                
+                
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+                        
+                        <div class="row">
+                            
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+                                
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+                                    
+                                    <div class="blog-item-body chat-gpt">
+                                    
+                                        <!-- Media Gallery -->
+                                        <!-- <div class="blog-media mb-40 mb-xs-30">
+                                            <div>
+                                                <img src="../../../images/blog/blog03.jpg" alt="아기 돼지 삼형제" decoding="async" />
+                                            </div>
+                                        </div>                                         -->
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Cohesion and coupling are two of the most important concepts in software design. Today we will use everyday objects to make these concepts easy to understand, and then apply them to object-oriented programming and microservices architecture.
+                                            </p>
+                                        </blockquote>
+
+                                        <!-- Media Gallery -->
+                                        <div class="blog-media mb-40 mb-xs-30">
+                                            <div style="width: 86%; margin: 0 auto;">
+                                                <img src="../../../images/blog/cohesion.webp" alt="Cohesion and coupling in software design (a real-life example: thread, scissors, nippers, wire)" decoding="async" />
+                                            </div>
+                                        </div>  
+
+                                        <div class="mb-50">
+                                            <p class="mid-title mt-10"><b>A real-life example: thread, scissors, nippers, wire</b></p>
+                                            <p>Think of the thread, scissors, nippers, and wire around us. What is the most efficient way to group them?</p>
+                                            <ol class="mt-20">
+                                                <li class="mb-10">Group by material: thread and wire / scissors and nippers</li>
+                                                <li>Group by purpose: thread and scissors / wire and nippers</li>
+                                            </ol>
+                                            <p>The first approach may look logical at first glance. But in terms of actual use, the second approach is far more efficient. Why is that?</p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;The benefits of high cohesion
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10">
+                                                Grouping thread with scissors and wire with nippers gives you the following benefits.
+                                            </p>
+                                            <ul>
+                                                <li class="mb-10"><b>Data locality:</b> The tools and materials you need are close together, making work more efficient.</li>
+                                                <li class="mb-10"><b>Ease of maintenance:</b> Related tools and materials are kept together, so they are easy to manage.</li>
+                                                <li><b>Independence:</b> Each group can operate independently, so it can be modified without affecting the other group.</li>
+                                            </ul>
+                                            <p>Let's apply these concepts to software design.</p>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Cohesion in object-oriented programming
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10">
+                                                Here is example code in Python.
+                                            </p>
+
+                                            <p class="mid-title"><b>Example of low cohesion</b></p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LowCohesion</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.thread = <span class="hljs-string">"thread"</span>
+        self.wire = <span class="hljs-string">"wire"</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_thread</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Cutting the <span class="hljs-subst">{self.thread}</span>."</span>)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_wire</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Cutting the <span class="hljs-subst">{self.wire}</span>."</span>)
+</code>
+</div>
+
+                                            <p class="mid-title mt-30"><b>Example of high cohesion</b></p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SewingKit</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.thread = <span class="hljs-string">"thread"</span>
+        self.scissors = <span class="hljs-string">"scissors"</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Cutting the <span class="hljs-subst">{self.thread}</span> with the <span class="hljs-subst">{self.scissors}</span>."</span>)
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ElectricalKit</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.wire = <span class="hljs-string">"wire"</span>
+        self.nipper = <span class="hljs-string">"nippers"</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Cutting the <span class="hljs-subst">{self.wire}</span> with the <span class="hljs-subst">{self.nipper}</span>."</span>)
+</code></div>
+                                            
+                                            
+                                            <p class="mt-10 prose">The <code>LowCohesion</code> class has low cohesion because it holds the unrelated <code>thread</code> and <code>wire</code> together. The <code>SewingKit</code> and <code>ElectricalKit</code> classes, by contrast, have high cohesion because they bundle related data and behavior together.</p>
+                                        </div>     
+
+                                        
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Cohesion in microservices
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10">
+                                                The same concept can be applied to microservices architecture.
+                                            </p>
+
+                                            <p class="mid-title"><b>Sewing microservice</b></p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SewingService</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.thread = <span class="hljs-string">"thread"</span>
+        self.scissors = <span class="hljs-string">"scissors"</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_thread</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"Cutting the <span class="hljs-subst">{self.thread}</span> with the <span class="hljs-subst">{self.scissors}</span>."</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">measure_thread</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"Measuring the length of the <span class="hljs-subst">{self.thread}</span>."</span>
+</code></div>
+
+                                            <p class="mid-title mt-30"><b>Electrical work microservice</b></p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ElectricalService</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.wire = <span class="hljs-string">"wire"</span>
+        self.nipper = <span class="hljs-string">"nippers"</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_wire</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"Cutting the <span class="hljs-subst">{self.wire}</span> with the <span class="hljs-subst">{self.nipper}</span>."</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">strip_wire</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"Stripping the insulation from the <span class="hljs-subst">{self.wire}</span>."</span>
+</code></div>
+                                        
+                                            <p class="mt-10">
+                                                Each microservice focuses on a specific domain (sewing or electrical work), so it has high cohesion. Designed this way, each service can be developed, deployed, and scaled independently.
+                                            </p>
+                                        </div>
+
+                                        
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Problems when coupling is high
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10">
+                                                A design with low cohesion and high coupling can cause the following serious problems. Returning to our real-life example, suppose we grouped the scissors and nippers together in one group, and the thread and wire together in another.
+                                            </p>
+                                            <ol>
+                                                <li class="mb-10">
+                                                    <b>Frequent API calls:</b> Dependencies between different modules or services grow, driving up unnecessary API calls. This increases network load and degrades the performance of the entire system.
+                                                    <p class="mt-10 mb-0" style="font-weight: bold;">Example:</p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">HighlyCoupledToolService</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.scissors = <span class="hljs-string">"scissors"</span>
+        self.nipper = <span class="hljs-string">"nipper"</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_thread</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"cut with <span class="hljs-subst">{self.scissors}</span>"</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_wire</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"cut with <span class="hljs-subst">{self.nipper}</span>"</span>
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">HighlyCoupledMaterialService</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.thread = <span class="hljs-string">"thread"</span>
+        self.wire = <span class="hljs-string">"wire"</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_thread</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> self.thread
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_wire</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> self.wire
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SewingTask</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.tool_service = HighlyCoupledToolService()
+        self.material_service = HighlyCoupledMaterialService()
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">perform_sewing</span>(<span class="hljs-params">self</span>):
+        thread = self.material_service.get_thread()  <span class="hljs-comment"># unnecessary API call</span>
+        cut_action = self.tool_service.cut_thread()
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"<span class="hljs-subst">{thread}</span>: <span class="hljs-subst">{cut_action}</span>"</span>
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ElectricalTask</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.tool_service = HighlyCoupledToolService()
+        self.material_service = HighlyCoupledMaterialService()
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">perform_wiring</span>(<span class="hljs-params">self</span>):
+        wire = self.material_service.get_wire()  <span class="hljs-comment"># unnecessary API call</span>
+        cut_action = self.tool_service.cut_wire()
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"<span class="hljs-subst">{wire}</span>: <span class="hljs-subst">{cut_action}</span>"</span>
+</code></div>
+                                                    
+                                                    <p class="prose">In this example, <code>SewingTask</code> and <code>ElectricalTask</code> must call both <code>HighlyCoupledToolService</code> and <code>HighlyCoupledMaterialService</code> on every operation. In a real microservices environment, this translates into unnecessary network calls.</p>
+                                                </li>
+                                                <li class="mb-10 prose"><b>Difficult maintenance:</b> A change in one part ripples out to many others, making modifications complex and risky. For example, changing how the scissors are used may require editing both <code>HighlyCoupledToolService</code> and <code>SewingTask</code>.</li>
+                                                <li class="mb-10 prose"><b>Increased testing complexity:</b> High coupling makes unit testing hard. To test <code>SewingTask</code>, you need mock objects for both <code>HighlyCoupledToolService</code> and <code>HighlyCoupledMaterialService</code>.</li>
+                                                <li class="mb-10 prose"><b>Reduced system extensibility:</b> Adding a new tool or material means modifying several services at once. For example, adding a new material such as a 'rubber band' requires changing <code>HighlyCoupledMaterialService</code> and every task class that uses it.</li>
+                                                <li class="prose"><b>Lower code reusability:</b> It becomes hard to reuse <code>HighlyCoupledToolService</code> or <code>HighlyCoupledMaterialService</code> in other projects, because each service depends heavily on the other.</li>
+                                            </ol>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Improved Design: High Cohesion, Low Coupling
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10">
+                                                To solve the problems above, let's redesign the code to raise cohesion and lower coupling.
+                                            </p>
+
+<div class="p-4 overflow-y-auto bg-gray-950 rounded-md mb-20">
+<code class="!whitespace-pre hljs language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SewingKit</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.thread = <span class="hljs-string">"thread"</span>
+        self.scissors = <span class="hljs-string">"scissors"</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_thread</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"cut <span class="hljs-subst">{self.thread}</span> with <span class="hljs-subst">{self.scissors}</span>"</span>
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ElectricalKit</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.wire = <span class="hljs-string">"wire"</span>
+        self.nipper = <span class="hljs-string">"nipper"</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cut_wire</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"cut <span class="hljs-subst">{self.wire}</span> with <span class="hljs-subst">{self.nipper}</span>"</span>
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SewingTask</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.sewing_kit = SewingKit()
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">perform_sewing</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> self.sewing_kit.cut_thread()
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ElectricalTask</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.electrical_kit = ElectricalKit()
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">perform_wiring</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> self.electrical_kit.cut_wire()
+</code></div>
+
+                                            <p style="text-decoration: underline; margin-bottom: 10px;"><b>In this improved design:</b></p>
+                                            <ol>
+                                                <li class="mb-10">Each kit (SewingKit, ElectricalKit) holds its related tools and materials together, so cohesion is high.</li>
+                                                <li class="mb-10">Each task (SewingTask, ElectricalTask) uses only the kit it needs, so coupling is low.</li>
+                                                <li class="mb-10">Unnecessary API calls have been eliminated.</li>
+                                                <li class="mb-10">Each class has a clear responsibility, making maintenance and testing easier.</li>
+                                                <li>Adding new kits or tasks is now straightforward.</li>
+                                            </ol>
+                                        </div>
+
+                                        <blockquote>
+                                            <p>
+                                                &nbsp;Conclusion
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50">
+                                            <p class="mt-10">
+                                                Pursuing high cohesion and low coupling in software design is like keeping thread with scissors and wire with nippers. It <b>improves code readability, simplifies maintenance, and raises the overall quality of the system</b>. 
+                                            </p>
+                                            <p class="mt-10">
+                                                Conversely, low cohesion and high coupling increase system complexity and make maintenance and extension difficult. It is like tossing thread, scissors, nippers, and wire into one random pile, so that you have to rummage through everything each time you need a tool.
+                                            </p>
+                                            <p class="mt-10">
+                                                Whether in object-oriented programming or microservices architecture, applying this principle well leads to more efficient, more manageable systems. <b>Designing for high cohesion and low coupling lets you build software that is more stable and easier to maintain over the long term.</b>
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p>[Source] <a href="https://www.msaschool.io/operation/design/design-cohesion/">MSA School - Cohesion and Coupling in Software Design: Lessons from Thread and Scissors</a></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- End Post -->
+                                
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+                        
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Section -->
+           
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../ontologystudio.html">Ontology Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
