@@ -476,6 +476,9 @@
                                         <a href="#videos" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10">
                                             <span style="font-size: 16px;">영상 보기</span>
                                         </a>
+                                        <a href="#install" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                            <span style="font-size: 16px;">설치하기</span>
+                                        </a>
                                         <a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
                                             <span style="font-size: 16px;">문의하기</span>
                                         </a>
@@ -1155,6 +1158,164 @@
                     </div>
                 </section>
                 <!-- End 차이점 Section -->
+
+                <!-- 설치하기 Section -->
+<section class="page-section pgpt-install" id="install" aria-labelledby="install-title">
+ <style>
+  .pgpt-install .pi-cmd { position: relative; background: #111318; color: #e9edf3; border-radius: 12px; padding: 18px 20px; margin: 0 0 14px; font: 14px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-x: auto; white-space: pre; }
+  .pgpt-install .pi-cmd .c { color: #8a93a3; }
+  .pgpt-install .pi-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0 8px; }
+  .pgpt-install .pi-steps > div { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; }
+  .pgpt-install .pi-steps b { display: block; font-size: 13px; color: var(--color-gray-1); margin-bottom: 6px; }
+  .pgpt-install .pi-steps strong { display: block; font-size: 17px; margin-bottom: 6px; }
+  .pgpt-install .pi-steps p { margin: 0; font-size: 14px; line-height: 1.55; }
+  .pgpt-install .tbl-default { width: 100%; margin: 6px 0 22px; }
+  .pgpt-install code { font-size: 0.92em; }
+  /* accordion and text styles from processgpt.html, scoped here because processgptlite.html does not define them */
+  .pgpt-install .pgpt-story-lead { font-size: 18px; line-height: 1.75; color: var(--color-dark-3, #333); max-width: 860px; margin-bottom: 28px; }
+  .pgpt-install .pgpt-story-note { font-size: 14px; line-height: 1.7; color: var(--color-gray-1, #666); margin: 0 0 8px; }
+  .pgpt-install .pgpt-acc { border: 1px solid var(--color-gray-light-3, #e6e6e6); border-radius: 14px; background: #fff; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(26,26,46,0.04); overflow: hidden; }
+  .pgpt-install .pgpt-acc > summary { cursor: pointer; padding: 18px 22px; display: flex; align-items: center; gap: 14px; list-style: none; }
+  .pgpt-install .pgpt-acc > summary::-webkit-details-marker { display: none; }
+  .pgpt-install .pgpt-acc > summary::marker { content: ""; }
+  .pgpt-install .pgpt-acc > summary:hover, .pgpt-install .pgpt-acc[open] > summary { background: var(--color-gray-light-2, #f7f7f7); }
+  .pgpt-install .pgpt-acc[open] > summary { border-bottom: 1px solid var(--color-gray-light-3, #e6e6e6); }
+  .pgpt-install .pgpt-acc[open] .pgpt-acc-caret { transform: rotate(90deg); }
+  .pgpt-install .pgpt-acc-caret { color: var(--color-primary-2, #4567ed); font-size: 12px; transition: transform .18s ease; display: inline-block; flex: 0 0 auto; }
+  .pgpt-install .pgpt-acc-head { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; }
+  .pgpt-install .pgpt-acc-title { font-size: 18px; font-weight: 700; color: var(--color-dark-1, #111); line-height: 1.4; }
+  .pgpt-install .pgpt-acc-sub { font-size: 14px; color: var(--color-gray-1, #666); margin-top: 3px; line-height: 1.45; }
+  .pgpt-install .pgpt-acc-body { padding: 22px; }
+  .pgpt-install .pgpt-acc-desc { font-size: 15px; line-height: 1.85; color: var(--color-dark-4, #444); margin: 0 0 8px; }
+  .pgpt-install .pgpt-acc-links { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .pgpt-install .tbl-default th, .pgpt-install .tbl-default td { vertical-align: top; text-align: left; padding: 8px 10px; }
+  @media (max-width: 767px) {
+   .pgpt-install .pi-steps { grid-template-columns: 1fr; }
+   .pgpt-install .pgpt-acc > summary { padding: 16px; gap: 10px; }
+   .pgpt-install .pgpt-acc-body { padding: 16px; overflow-x: auto; }
+  }
+ </style>
+ <div class="container">
+  <p class="section-caption-border mb-30">INSTALL</p>
+  <h2 class="section-title" id="install-title">설치하기</h2>
+  <p class="pgpt-story-lead">Docker가 있는 PC 한 대에 명령 한 줄로 설치합니다. 데이터베이스, 로그인, AI 에이전트, 문서 편집기까지 한 번에 올라오고, 이후에는 같은 명령으로 업그레이드합니다.</p>
+
+  <div class="pi-cmd"><span class="c"># macOS · Linux · Windows(WSL2) 터미널에서</span>
+curl -fsSL https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/main/install/get.sh | bash</div>
+  <p class="pgpt-story-note">설치 중에 LLM 주소·API 키·모델 이름과 첫 관리자 이메일을 묻습니다. 저장소를 직접 받아도 됩니다:
+   <code>git clone https://github.com/uengine-oss/process-gpt-lite.git &amp;&amp; cd process-gpt-lite/install &amp;&amp; ./install.sh</code></p>
+
+  <div class="pi-steps">
+   <div><b>1단계</b><strong>준비</strong><p>Docker Desktop(또는 Docker Engine)과 OpenAI 호환 LLM API 키를 준비합니다.</p></div>
+   <div><b>2단계</b><strong>설치</strong><p>위 명령을 실행합니다. 처음에는 이미지를 빌드하느라 20~40분, 그다음부터는 1~2분이면 시작합니다.</p></div>
+   <div><b>3단계</b><strong>첫 로그인</strong><p><code>http://localhost:18080</code>에서 관리자 이메일을 넣고, <code>http://localhost:18025</code> 메일함에 온 6자리 코드를 입력합니다.</p></div>
+  </div>
+
+  <details class="pgpt-acc" id="install-requirements" open>
+   <summary>
+    <span class="pgpt-acc-caret">&#9654;</span>
+    <span class="pgpt-acc-head">
+     <span class="pgpt-acc-title">필요 사양</span>
+     <span class="pgpt-acc-sub">Docker, 메모리·CPU·디스크, LLM 키</span>
+    </span>
+   </summary>
+   <div class="pgpt-acc-body">
+    <table class="tbl-default">
+     <thead><tr><th>항목</th><th>최소</th><th>권장</th></tr></thead>
+     <tbody>
+      <tr><td>Docker</td><td>Docker Desktop 4.x 또는 Docker Engine 24+ (Compose v2)</td><td>-</td></tr>
+      <tr><td>Docker에 할당한 메모리</td><td>6GB (실행 중 약 1.5GB 사용)</td><td>8GB 이상 (첫 빌드)</td></tr>
+      <tr><td>CPU</td><td>4코어</td><td>8코어</td></tr>
+      <tr><td>디스크</td><td>20GB (이미지 약 11GB)</td><td>30GB</td></tr>
+      <tr><td>LLM</td><td colspan="2">OpenAI 호환 API 주소·키·모델 이름 (OpenAI, 사내 LLM, vLLM 등)</td></tr>
+     </tbody>
+    </table>
+   </div>
+  </details>
+
+  <details class="pgpt-acc" id="install-profiles">
+   <summary>
+    <span class="pgpt-acc-caret">&#9654;</span>
+    <span class="pgpt-acc-head">
+     <span class="pgpt-acc-title">구성 프로필</span>
+     <span class="pgpt-acc-sub">기본 lite, 프로세스 엔진까지 넣는 full</span>
+    </span>
+   </summary>
+   <div class="pgpt-acc-body">
+    <table class="tbl-default">
+     <thead><tr><th>프로필</th><th>포함 서비스</th><th>할 수 있는 일</th></tr></thead>
+     <tbody>
+      <tr><td><b>lite</b> (기본)</td><td>웹·서버, Supabase(PostgreSQL·인증·API·스토리지), 메일함, Deep Agents + 샌드박스, 문서 생성(office-mcp), 이음오피스 편집기</td><td>채팅으로 일 맡기기, 에이전트 작업, 문서 생성·편집, 공유 폴더, 패널 앱, 보관함, 브라우저 에이전트</td></tr>
+      <tr><td><b>full</b> (미리보기)</td><td>lite + 프로세스 엔진(completion·polling) + MCP 허브</td><td>BPM 프로세스 시작·진행, MCP 서버 관리</td></tr>
+     </tbody>
+    </table>
+    <div class="pgpt-acc-desc">ㆍfull 프로필은 <code>./install.sh --profile full</code> 로 켭니다.
+     <br>ㆍ대화 맥락 라우터(판단 모델은 GPU 권장), Claude Code·Codex 실행(cli-agent), 문서 검색(memento)은 따로 띄운 뒤 <code>.env</code>에 주소를 넣어 연결합니다.</div>
+   </div>
+  </details>
+
+  <details class="pgpt-acc" id="install-manage">
+   <summary>
+    <span class="pgpt-acc-caret">&#9654;</span>
+    <span class="pgpt-acc-head">
+     <span class="pgpt-acc-title">업그레이드 · 삭제</span>
+     <span class="pgpt-acc-sub">같은 설치 스크립트로 관리</span>
+    </span>
+   </summary>
+   <div class="pgpt-acc-body">
+    <div class="pi-cmd">cd ~/process-gpt-lite/install
+./install.sh --upgrade            <span class="c"># 최신 소스 → 이미지 빌드 → DB 마이그레이션 → 재시작 (데이터·설정 유지)</span>
+./install.sh --uninstall          <span class="c"># 멈추기 (데이터 유지, 다시 시작: ./install.sh)</span>
+./install.sh --uninstall --purge  <span class="c"># 데이터·이미지·설정까지 모두 삭제</span></div>
+    <div class="pgpt-acc-desc">ㆍ설정 파일 <code>.env</code>는 설치할 때 만들어지며(권한 0600) 비밀 키는 자동으로 생성됩니다. 업그레이드해도 그대로 유지됩니다.
+     <br>ㆍ다른 PC에서 접속하려면 <code>.env</code>의 <code>PUBLIC_URL</code>을 이 PC의 주소로, <code>LITE_BIND=0.0.0.0</code>으로 바꾸고 SMTP를 설정한 뒤 <code>./install.sh</code>를 다시 실행합니다.</div>
+   </div>
+  </details>
+
+  <details class="pgpt-acc" id="install-troubleshooting">
+   <summary>
+    <span class="pgpt-acc-caret">&#9654;</span>
+    <span class="pgpt-acc-head">
+     <span class="pgpt-acc-title">문제 해결</span>
+     <span class="pgpt-acc-sub">자주 막히는 지점</span>
+    </span>
+   </summary>
+   <div class="pgpt-acc-body">
+    <table class="tbl-default">
+     <thead><tr><th>증상</th><th>해결</th></tr></thead>
+     <tbody>
+      <tr><td>포트 18080을 다른 프로그램이 사용 중</td><td><code>./install.sh --port 28080</code></td></tr>
+      <tr><td>로그인 코드가 오지 않음</td><td><code>http://localhost:18025</code> 메일함 확인, <code>docker compose logs auth</code></td></tr>
+      <tr><td>채팅에 답이 없음</td><td><code>.env</code>의 LLM 주소·키·모델 확인 후 <code>./install.sh</code>, <code>docker compose logs deepagents</code></td></tr>
+      <tr><td>에이전트 작업이 멈춤</td><td>Linux는 사용자를 docker 그룹에 추가, <code>docker ps</code>에 <code>deepagent-sandbox-*</code>가 있는지 확인</td></tr>
+      <tr><td>첫 빌드가 메모리 부족으로 실패</td><td>Docker 메모리를 8GB 이상으로 늘리고 다시 실행</td></tr>
+      <tr><td>Windows</td><td>WSL2 안에 Docker Engine을 설치해 쓰는 구성을 권장합니다</td></tr>
+     </tbody>
+    </table>
+   </div>
+  </details>
+
+  <details class="pgpt-acc" id="install-kubernetes">
+   <summary>
+    <span class="pgpt-acc-caret">&#9654;</span>
+    <span class="pgpt-acc-head">
+     <span class="pgpt-acc-title">Kubernetes</span>
+     <span class="pgpt-acc-sub">준비 중</span>
+    </span>
+   </summary>
+   <div class="pgpt-acc-body">
+    <div class="pgpt-acc-desc">ㆍ로컬 쿠버네티스(kind)와 사내 클러스터용 매니페스트를 준비하고 있습니다. 지금은 Docker Compose 설치를 이용해 주세요.
+     <br>ㆍ여러 사용자가 쓰는 운영 환경 구성은 문의해 주시면 함께 설계합니다.</div>
+   </div>
+  </details>
+
+  <div class="pgpt-acc-links">
+   <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener noreferrer" class="btn btn-mod btn-round btn-small btn-border">GitHub 저장소</a>
+   <a href="https://github.com/uengine-oss/process-gpt-lite/tree/main/install" target="_blank" rel="noopener noreferrer" class="btn btn-mod btn-round btn-small btn-border">설치 문서</a>
+  </div>
+ </div>
+</section>
+                <!-- End 설치하기 Section -->
 
                 <!-- Call Action Section -->
                 <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
