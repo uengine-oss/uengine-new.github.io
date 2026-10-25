@@ -443,6 +443,19 @@
                 .plite-vlinks { display: flex; flex-wrap: wrap; gap: 8px; }
                 .plite-vlink { font-size: 14px; padding: 6px 14px; border-radius: 20px; border: 1px solid #d5d5de; color: #333; text-decoration: none; }
                 .plite-vlink:hover { border-color: #111; color: #111; }
+                .plite-card-vlinks { margin-top: 20px; }
+                .plite-vlink { cursor: pointer; background: #fff; }
+                .plite-theme-media { position: relative; display: block; cursor: pointer; }
+                .plite-theme-media .plite-media-badge { position: absolute; left: 16px; bottom: 16px; padding: 8px 16px; border-radius: 20px; background: rgba(17,17,17,.82); color: #fff; font-size: 14px; font-weight: 600; pointer-events: none; transition: background .2s; }
+                .plite-theme-media:hover .plite-media-badge, .plite-theme-media:focus-visible .plite-media-badge { background: #f00; }
+                .plite-modal { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.78); }
+                .plite-modal.open { display: flex; }
+                .plite-modal-box { position: relative; width: min(1100px, 100%); }
+                .plite-modal-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+                .plite-modal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+                .plite-modal-title { color: #fff; font-size: 1rem; font-weight: 600; margin: 0 48px 10px 2px; }
+                .plite-modal-close { position: absolute; right: 0; top: -6px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255,255,255,.15); color: #fff; font-size: 22px; line-height: 36px; cursor: pointer; }
+                .plite-modal-close:hover { background: rgba(255,255,255,.3); }
                 .plite-gal-head { font-size: 1.3rem; font-weight: 700; margin: 10px 0 24px; padding-bottom: 12px; border-bottom: 2px solid #111; }
                 .plite-yt { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #000; cursor: pointer; box-shadow: 0 6px 20px rgba(26,26,46,.12); }
                 .plite-yt img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease, opacity .3s ease; }
@@ -552,6 +565,7 @@
                                                 <span class="feature-text">대화가 수백 개로 늘어나도 같은 방식으로 동작</span>
                                             </div>
                                         </div>
+                                        <div class="plite-vlinks plite-card-vlinks"><a href="#v-oL_mfiQBCPU" class="plite-vlink">▶ 대화 맥락 라우터</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -578,6 +592,7 @@
                                                 <span class="feature-text">날씨·주가 같은 패널도 말로 추가</span>
                                             </div>
                                         </div>
+                                        <div class="plite-vlinks plite-card-vlinks"><a href="#v-wrPlOhwYPcw" class="plite-vlink">▶ Process GPT Lite 둘러보기</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -604,6 +619,7 @@
                                                 <span class="feature-text">CAD·벡터·사진·소리·영상까지 같은 방식으로</span>
                                             </div>
                                         </div>
+                                        <div class="plite-vlinks plite-card-vlinks"><a href="#v-5J0w5A9ylN0" class="plite-vlink">▶ 이음오피스 문서 편집</a> <a href="#v-izcVNcW37J0" class="plite-vlink">▶ PhotoCraft 라이브 공동 편집</a> <a href="#v-jDbjGIMrc5o" class="plite-vlink">▶ 에이전트 작업실</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -630,6 +646,7 @@
                                                 <span class="feature-text">폴더 변형째로 업무 인계</span>
                                             </div>
                                         </div>
+                                        <div class="plite-vlinks plite-card-vlinks"><a href="#v-uam0ffMMu7U" class="plite-vlink">▶ 공유 폴더</a> <a href="#v-KKsUf4BGf7I" class="plite-vlink">▶ 스킬 공유</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -656,6 +673,7 @@
                                                 <span class="feature-text">공유 범위는 폴더 구성원 권한 그대로</span>
                                             </div>
                                         </div>
+                                        <div class="plite-vlinks plite-card-vlinks"><a href="#v-sXCp1JerNYQ" class="plite-vlink">▶ 패널 앱 만들기</a> <a href="#v-YAlt_TRWhaE" class="plite-vlink">▶ 이벤트 소싱 휴가 관리</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -682,6 +700,7 @@
                                                 <span class="feature-text">조직이 커지면 Process GPT로 자연스럽게 확장</span>
                                             </div>
                                         </div>
+                                        <div class="plite-vlinks plite-card-vlinks"><a href="#v-19Ap3J_XLHs" class="plite-vlink">▶ 대화로 프로세스 만들기</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -1464,6 +1483,51 @@ curl -fsSL https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/main/i
                             var btn = document.getElementById('contact_btn');
                             if (form && btn && form.style.display === 'none') { btn.click(); }
                         });
+                    });
+                    // feature links play the video in place instead of jumping to the gallery
+                    var modal = document.createElement('div');
+                    modal.className = 'plite-modal';
+                    modal.setAttribute('role', 'dialog');
+                    modal.setAttribute('aria-modal', 'true');
+                    modal.innerHTML = '<div class="plite-modal-box"><p class="plite-modal-title"></p><button type="button" class="plite-modal-close" aria-label="닫기">&times;</button><div class="plite-modal-frame"></div></div>';
+                    document.body.appendChild(modal);
+                    var frame = modal.querySelector('.plite-modal-frame'), lastFocus = null;
+                    function closeVideo() { modal.classList.remove('open'); frame.innerHTML = ''; if (lastFocus) lastFocus.focus(); }
+                    function openVideo(id, title) {
+                        lastFocus = document.activeElement;
+                        modal.querySelector('.plite-modal-title').textContent = title;
+                        var f = document.createElement('iframe');
+                        f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                        f.title = title;
+                        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                        f.allowFullscreen = true;
+                        frame.innerHTML = '';
+                        frame.appendChild(f);
+                        modal.classList.add('open');
+                        modal.querySelector('.plite-modal-close').focus();
+                    }
+                    modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('plite-modal-close')) closeVideo(); });
+                    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeVideo(); });
+                    function linkTitle(a) { return a.textContent.replace(/^\s*▶\s*/, ''); }
+                    document.querySelectorAll('a.plite-vlink[href^="#v-"]').forEach(function (a) {
+                        a.setAttribute('role', 'button');
+                        a.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
+                    });
+                    // the screenshot of each feature theme plays its first video
+                    document.querySelectorAll('.plite-theme').forEach(function (row) {
+                        var a = row.querySelector('a.plite-vlink[href^="#v-"]'), img = row.querySelector('.plite-theme-img');
+                        if (!a || !img) return;
+                        var w = document.createElement('a');
+                        w.href = a.getAttribute('href');
+                        w.className = 'plite-theme-media';
+                        w.setAttribute('aria-label', linkTitle(a) + ' 영상 보기');
+                        img.parentNode.insertBefore(w, img);
+                        w.appendChild(img);
+                        var badge = document.createElement('span');
+                        badge.className = 'plite-media-badge';
+                        badge.textContent = '▶ 영상 보기';
+                        w.appendChild(badge);
+                        w.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
                     });
                     document.querySelectorAll('.plite-yt').forEach(function (btn) {
                         btn.addEventListener('click', function () {
