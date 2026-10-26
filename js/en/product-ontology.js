@@ -18,14 +18,13 @@
     {id:'uenginerpa', name:'uEngine RPA', group:1, tag:'AUTOMATION', category:'ROBOTIC EXECUTION', role:'Robots that turn repetitive work into real action', pos:[235,163,0], icon:'robot', description:'Describe a repetitive task in words and AI builds the automation; the finished robot then runs it in the defined order. It plugs into human work as a step in a BPM process.', vision:'Repetition goes to robots,|more valuable work goes to people.', future:'Collaborate with AI when designing the work, then carry daily execution forward with reproducible automation.'},
     {id:'roboanalyzer', name:'Robo Analyzer', group:2, tag:'DISCOVERY', category:'LEGACY & UNDERSTANDING', role:'Grounds for new design, drawn from old systems', pos:[-82,82,95], icon:'scan', description:'Analyzes legacy source code and databases together. Explore function calls and data read/write relationships as a graph, all the way down to the original code.', vision:'Legacy that could not be read|becomes an asset that can be redesigned.', future:'By understanding how code and data connect, we turn changes once made on gut feeling into evidence-based modernization.'},
     {id:'roboarchitect', name:'Robo Architect', group:2, tag:'SPEC-DRIVEN DESIGN', category:'AI-DRIVEN DEVELOPMENT', role:'From spec to implementation, software that stays aligned', pos:[-290,65,10], icon:'layers', description:'A Spec-Driven Development platform that runs from natural-language requirements through impact analysis, implementation, verification, and rollout. It keeps spec and implementation aligned on a foundation of DDD and BDD.', vision:'Not the speed of writing code,|but the power of a design everyone understands.', future:'Planners, architects, developers, and AI continuously evolve software against a single shared spec.'},
-    {id:'dreamvibe', name:'DreamVibe', group:2, tag:'HUMAN × AI', category:'AI DEVELOPMENT EXPERIENCE', role:'A new development experience for bringing ideas to life', pos:[128,55,-55], icon:'spark', description:'Experience the possibilities of vibe coding, developing in collaboration with AI. Move beyond code-centric work toward a way of building where you shape ideas and implement them together with AI.', vision:'If there is something you want to build,|anyone should be able to start.', future:'Human imagination meets AI\'s ability to build, lowering the barrier to creating software.'},
-    {id:'dxez', name:'DX Easy', group:2, tag:'MODEL TO CODE', category:'DIGITAL TRANSFORMATION', role:'From business model to runnable service', pos:[-180,205,0], icon:'cube', description:'Flows from customer journeys, business models, and EventStorming straight into code generation. A digital transformation platform that connects Git-based development, CI, and Kubernetes deployment.', vision:'Business thinking|becomes a runnable service.', future:'We close the gaps between planning, design, development, and deployment so business change carries through to the service.'},
+    {id:'ontologicaldb', href:'../contents/ontologicaldb.html', name:'Ontological DB', group:0, tag:'GRAPH FOUNDATION', category:'ONTOLOGY DATABASE', role:'The ontology database for agentic AI', pos:[-150,-15,-75], icon:'db', description:'Turns PostgreSQL into a graph database you query with Cypher. Data in other systems is linked into the graph without copying, and every fact keeps both valid time and system time so the same query can return the answer as it was.', vision:'Where knowledge accumulates|becomes where it can be trusted.', future:'Permissions, audit and point-in-time queries are enforced by the database itself, so people and AI agents work under the same rules.'},
     {id:'uenginecloud', name:'uEngine Cloud', group:3, tag:'CLOUD OPERATIONS', category:'CLOUD-NATIVE FOUNDATION', role:'The foundation for reliably delivering the value you build', pos:[35,237,10], icon:'cloud', description:'An open-source PaaS that deploys and operates Robo Architect\'s output on Kubernetes. Handle app and resource management, staged rollouts, rollbacks, logs, and monitoring from a single portal.', vision:'So that good design never stalls,|and becomes a living service.', future:'On a cloud-native foundation that spans development to operations, we turn enterprise change into sustainable services.'}
   ];
   // Showcase flow: orchestration/agents → ontology → legacy data → development.
   // Keep graph indices stable so changing the tour cannot change its relationships.
-  const tourOrder=['processgpt','uengine6bpm','uenginerpa','ontologystudio','ontologic',
-    'roboanalyzer','roboarchitect','dreamvibe','dxez','uenginecloud']
+  const tourOrder=['processgpt','uengine6bpm','uenginerpa','ontologystudio','ontologicaldb','ontologic',
+    'roboanalyzer','roboarchitect','uenginecloud']
     .map(id=>products.findIndex(product=>product.id===id));
   const introduced=new Set();
   let tourComplete=false;
@@ -99,8 +98,8 @@
   const edges = [
     [0,1,'Meaning → Judgment'],[0,2,'Knowledge → Execution'],[1,2,'Judgment → Execution'],[2,3,'Work orchestration'],
     [3,4,'Robot task integration'],[2,4,'Repetitive task automation'],[5,0,'Legacy context'],[5,1,'Code & data understanding'],
-    [5,6,'Analysis → Design'],[6,9,'Design → Deployment'],[7,6,'Idea → Spec'],[8,6,'Model-driven design'],
-    [8,9,'Development → Operations'],[3,9,'Cloud execution foundation'],[6,3,'Service → Process'],[7,8,'Idea → Model']
+    [5,6,'Analysis → Design'],[6,8,'Design → Deployment'],[3,8,'Cloud execution foundation'],[6,3,'Service → Process'],
+    [7,0,'Graph store → Ontology'],[7,1,'Semantic layer engine'],[7,2,'Agent queries & actions'],[5,7,'Legacy DB federation']
   ];
   const icons = {
     graph:'M-9-7L9-7 0 10ZM-9-7L0 0 9-7M0 0V10 M-12-10h6v6h-6z M6-10h6v6H6z M-3 7h6v6h-6z',
@@ -111,6 +110,7 @@
     scan:'M-12-4v-8h8 M4-12h8v8 M12 4v8H4 M-4 12h-8V4 M-6-3l-4 3 4 3 M6-3l4 3-4 3 M2-5l-4 10',
     layers:'M0-12L13-5 0 2-13-5Z M-13 1L0 8 13 1 M-13 7L0 14 13 7',
     cube:'M0-13L12-6V7L0 14-12 7V-6ZM-12-6L0 1 12-6M0 1V14',
+    db:'M-11-8a11 4 0 1 0 22 0a11 4 0 1 0-22 0 M-11-8v16a11 4 0 0 0 22 0v-16 M-11 0a11 4 0 0 0 22 0',
     cloud:'M-9 9C-19 8-17-3-10-3C-10-15 9-15 10-3C20-3 19 9 10 9Z M0-4V5 M-4 1L0 5 4 1'
   };
   function make(tag, attrs, parent) {
@@ -241,7 +241,7 @@
     $('#ontology-vision-title').replaceChildren();
     p.vision.split('|').forEach((line,j)=>{if(j)$('#ontology-vision-title').appendChild(document.createElement('br'));$('#ontology-vision-title').appendChild(document.createTextNode(line));});
     $('#ontology-vision-body').textContent=p.future;
-    $('#ontology-link').href='contents/'+p.id+'.html';
+    $('#ontology-link').href=p.href||('contents/'+p.id+'.html');
     $('#ontology-link').setAttribute('aria-label',p.name+' View product details');
     const related=$('#ontology-related'); related.replaceChildren();
     edges.filter(e=>e[0]===selected||e[1]===selected).slice(0,2).forEach(([a,b,label])=>{

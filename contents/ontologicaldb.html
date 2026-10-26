@@ -442,6 +442,7 @@
                                     <h2 class="section-caption-border mb-30 mb-xs-20 wow fadeInUp" data-wow-duration="1.2s">
                                         Our Products · Ontological DB
                                     </h2>
+                                    <img src="../images/ontological-studio/ol-mark.svg" alt="Ontological DB OL 로고" width="200" height="135" class="mb-30 wow fadeInUp" style="width: 200px; max-width: 45vw; height: auto; display: block; margin: 0 auto;" decoding="async">
                                     <h1 class="hs-title-1 mb-30">
                                         <span class="wow charsAnimIn" data-splitting="chars">Ontological DB</span>
                                     </h1>
@@ -811,6 +812,39 @@ RETURN e.title, s.name, sh.shipment_no</pre>
                                 <figure class="mb-0">
                                     <img src="../images/ontological-db/odb-fabric-explain.webp" alt="EXPLAIN FABRIC 결과 — ERP에서는 조인이 원천에서 실행되고, WMS에는 지연 조건이 붙은 SQL만 내려가 2행이 넘어온 단계별 표" width="1600" height="506" style="width: 100%; height: auto; display: block; border-radius: 12px;" loading="lazy" decoding="async">
                                     <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><code>EXPLAIN FABRIC</code> — ERP는 내부에서 발주와 공급사를 조인했고, WMS는 지연 조건에 맞는 2행만 보냈습니다.</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="row mt-80 mt-sm-50 mb-40 mb-sm-30">
+                            <div class="col-lg-10 offset-lg-1 text-center">
+                                <h3 class="section-title mb-20" style="line-height: 1.4;">두 개의 시간축 — 바이템포럴</h3>
+                                <p class="mb-0" style="font-size: 1.15rem; color: #666;">모든 사실에 <b>유효 시간</b>(언제 적용되는가)과 <b>시스템 시간</b>(언제 그렇게 기록되어 있었는가)을 함께 남깁니다. 나중에 정정해도, 당시 무엇을 근거로 판단했는지 그대로 재현됩니다.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../images/ontological-db/odb-concept-bitemporal.webp" target="_blank" rel="noopener" title="크게 보기"><img src="../images/ontological-db/odb-concept-bitemporal.webp" alt="같은 상품의 적용 기간과 저장 기간 — 정정 전 저장 기록으로는 8월 15일이 SAFE, 7월 1일부터 RISK였다고 나중에 정정한 기록으로는 RISK" width="1600" height="582" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>정정 전과 후</b> — 같은 8월 15일을 물어도, 어느 시점의 기록으로 보느냐에 따라 SAFE와 RISK로 답이 갈립니다.</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../images/ontological-db/odb-concept-timequery.webp" target="_blank" rel="noopener" title="크게 보기"><img src="../images/ontological-db/odb-concept-timequery.webp" alt="시점 조회 흐름 — 같은 질문에 적용일과 저장일을 선택하면 최신 기록, 여전히 인정하는 과거 기록, 정정 전 기록 중 날짜에 맞는 기록을 찾아 그때의 정보와 관계로 답함" width="1600" height="582" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>시점 조회</b> — 질의는 그대로 두고 적용일과 저장 기준만 고릅니다. 관계도 같은 시점으로 선택해 잇습니다.</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../images/ontological-db/odb-concept-index.webp" target="_blank" rel="noopener" title="크게 보기"><img src="../images/ontological-db/odb-concept-index.webp" alt="기간별 빠른 찾기 — 조회일을 포함하는 행을 인덱스로 탐색하고, 현재 조회는 현재 행과 열린 이력만, 정정으로 대체된 닫힌 이력은 시점을 지정한 조회에서만 탐색" width="1600" height="583" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>빠른 시점 검색</b> — 현재 조회는 현재 행만 읽고, 정정 전 기록은 시점을 지정했을 때만 찾습니다.</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../images/ontological-db/odb-concept-schema-steps.webp" target="_blank" rel="noopener" title="크게 보기"><img src="../images/ontological-db/odb-concept-schema-steps.webp" alt="스키마 변경 단계 — 변경 계획, 영향 검토, 단계별 실행, 검증 통과 여부, 완료와 이력 기록. 검증에 실패하면 오류 값을 정정해 다시 검증" width="1600" height="533" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>스키마 변경 단계</b> — 계획 → 영향 검토 → 단계별 실행 → 검증 → 완료. 변환할 수 없는 값이 있으면 완료되지 않습니다.</figcaption>
                                 </figure>
                             </div>
                         </div>
