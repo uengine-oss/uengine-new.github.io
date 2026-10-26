@@ -537,6 +537,21 @@
                 .axl-story-logo { width: 120px; height: 44px; border-radius: 8px; background: repeating-linear-gradient(45deg, #f2f2f5, #f2f2f5 8px, #e9e9ee 8px, #e9e9ee 16px); margin-bottom: 16px; }
                 .axl-story-line { height: 10px; border-radius: 5px; background: #eee; margin: 10px 0; }
                 .axl-soon { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; background: #111; color: #fff; }
+                .axl-flow { list-style: none; padding: 0; margin: 0 0 30px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; counter-reset: fl; }
+                .axl-flow li { counter-increment: fl; display: flex; align-items: center; }
+                .axl-flow li a { display: inline-block; padding: 8px 14px; border-radius: 20px; background: #fff; border: 1px solid #d5d5de; color: #333; font-size: 14px; font-weight: 600; text-decoration: none; }
+                .axl-flow li a::before { content: counter(fl) ". "; color: #5b3fd6; }
+                .axl-flow li a:hover { border-color: #111; color: #111; }
+                .axl-flow li + li::before { content: "→"; color: #aaa; margin-right: 8px; }
+                .axl-steps { background: #fff; border-radius: 16px; padding: 0 26px; border: 1px solid #e5e5ea; }
+                .axl-steps .axl-mod:first-child { border-top: 0; }
+                .axl-steps .axl-mod:last-child { border-bottom: 0; }
+                .axl-step .axl-mod-no { background: #5b3fd6; }
+                .axl-step { scroll-margin-top: 90px; }
+                .axl-figs { display: grid; gap: 28px; max-width: 1000px; }
+                .axl-fig { margin: 0; }
+                .axl-fig .axl-slide span { font-weight: 500; line-height: 1.55; }
+                @media (max-width: 575px) { .axl-steps { padding: 0 16px; } .axl-flow { justify-content: flex-start; } }
                 @media (max-width: 575px) {
                     .axl-mod { grid-template-columns: 1fr; }
                     .axl-mod-no { margin-bottom: 10px; width: 44px; height: 44px; font-size: .95rem; }
@@ -565,6 +580,9 @@
                                     <div class="local-scroll wow fadeInUp" data-wow-offset="0">
                                         <a href="#curriculum" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10">
                                             <span style="font-size: 16px;">커리큘럼 보기</span>
+                                        </a>
+                                        <a href="#program" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                            <span style="font-size: 16px;">전환 프로그램</span>
                                         </a>
                                         <a href="#mentoring" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
                                             <span style="font-size: 16px;">멘토링 구독</span>
@@ -899,6 +917,195 @@
                 </section>
                 <!-- End 수료 혜택 Section -->
 
+                <!-- AX 전환 프로그램 흐름 Section -->
+                <section class="page-section bg-gray-light-1" id="program">
+                    <div class="container position-relative">
+                        <div class="row mb-40">
+                            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                                <h2 class="section-caption-border mb-20 wow fadeInUp">AX Transformation Program</h2>
+                                <h2 class="section-title mb-20 wow fadeInUp">사전 진단에서 변화관리까지 &mdash; AX 전환 프로그램의 흐름</h2>
+                                <p class="section-descr" style="font-size: 1.05rem; line-height: 1.7;">
+                                    교육만으로는 조직이 바뀌지 않습니다. 회사의 밸류 스트림을 먼저 진단하고, 병목에서 에이전트와 자동화가 맡을 일을 찾고, 프로세스와 역할을 다시 짠 뒤, 대상별 교육과 변화관리로 정착시킵니다. 멘토링 구독은 이 흐름을 매월 이어 가는 방식입니다.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="axl-wrap">
+                            <ol class="axl-flow" aria-label="AX 전환 프로그램 단계 요약">
+                                <li><a href="#p-1">진단</a></li><li><a href="#p-2">병목</a></li><li><a href="#p-3">에이전트</a></li><li><a href="#p-4">자동화</a></li><li><a href="#p-5">프로세스 혁신</a></li><li><a href="#p-6">교육</a></li><li><a href="#p-7">변화관리</a></li>
+                            </ol>
+
+                            <div class="axl-steps">
+                                <div class="axl-mod axl-step" id="p-1">
+                                    <div class="axl-mod-no">1</div>
+                                    <div class="axl-mod-body">
+                                        <span class="axl-tag s1">진단</span>
+                                        <h3>사전 진단 &mdash; 밸류 스트림 분석</h3>
+                                        <dl>
+                                            <dt>하는 일</dt><dd>고객의 요청이 들어와 가치가 전달되기까지의 흐름(밸류 스트림)을 그립니다. 단계마다 걸리는 시간과 기다리는 시간을 나눠 봅니다.</dd>
+                                            <dt>참여</dt><dd>경영진(목표·전략), 흐름에 관여하는 각 팀의 실무자, 유엔진 컨설턴트</dd>
+                                            <dt>방법</dt><dd>담당자 인터뷰, 인계·업무 기록 검토. Process GPT Lite가 설치되어 있으면 쌓인 대화·작업 기록의 프로세스 마이닝으로 실제로 반복되는 흐름을 확인합니다.</dd>
+                                            <dt>산출물</dt><dd>밸류 스트림 맵 (단계별 처리 시간 · 대기 시간 · 리드타임)</dd>
+                                            <dt>시기</dt><dd>1~2주차</dd>
+                                        </dl>
+                                        <div class="plite-vlinks"><a href="#v-RFZOcq9Pj9E" class="plite-vlink">▶ 반복 업무를 프로세스로(프로세스 마이닝)</a></div>
+                                    </div>
+                                </div>
+
+                                <div class="axl-mod axl-step" id="p-2">
+                                    <div class="axl-mod-no">2</div>
+                                    <div class="axl-mod-body">
+                                        <span class="axl-tag s1">진단</span>
+                                        <h3>병목 찾기 &mdash; 막히는 곳은 업무 사이의 전달 구간</h3>
+                                        <dl>
+                                            <dt>하는 일</dt><dd>인계·대기 지점, 재작업, 승인 대기열, 같은 내용을 여러 곳에 다시 입력하는 곳을 찾아냅니다. 전체 처리량은 가장 느린 구간이 정하므로, 병목이 아닌 곳을 빠르게 하는 일은 뒤로 미룹니다.</dd>
+                                            <dt>참여</dt><dd>팀장, 실무자, 컨설턴트</dd>
+                                            <dt>방법</dt><dd>밸류 스트림 맵 위에 대기·재작업 표시, 제약이론(ToC) 관점의 우선순위 매기기</dd>
+                                            <dt>산출물</dt><dd>우선순위가 매겨진 병목 목록</dd>
+                                            <dt>시기</dt><dd>2~3주차</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+
+                                <div class="axl-mod axl-step" id="p-3">
+                                    <div class="axl-mod-no">3</div>
+                                    <div class="axl-mod-body">
+                                        <span class="axl-tag">에이전트</span>
+                                        <h3>에이전트로 풀 수 있는 부분을 먼저</h3>
+                                        <dl>
+                                            <dt>하는 일</dt><dd>병목 안의 일 가운데 AI 에이전트가 하거나 도울 수 있는 일을 고릅니다. 초안 작성, 자료 조사, 검토·검수, 여러 도구를 넘나드는 문서 작업 등입니다. 사람은 목표와 완료 기준을 주고 결과를 승인하는 &lsquo;에이전트 보스&rsquo;가 됩니다(Human in the Loop).</dd>
+                                            <dt>참여</dt><dd>실무자, 팀장, 컨설턴트</dd>
+                                            <dt>방법</dt><dd>Process GPT Lite로 실제 자료를 넣어 바로 시험: 대화 맥락, 이음오피스 문서, Craft 앱, 메일 한 통에서 초안</dd>
+                                            <dt>산출물</dt><dd>에이전트 적용 후보 목록과 기대 효과(시간·품질), 시험 결과</dd>
+                                            <dt>시기</dt><dd>3~4주차</dd>
+                                        </dl>
+                                        <div class="plite-vlinks"><a href="#v-MgZtvTCUhpY" class="plite-vlink">▶ 메일 한 통에서 설계·제안·견적</a> <a href="#v-jDbjGIMrc5o" class="plite-vlink">▶ 에이전트 작업실</a></div>
+                                    </div>
+                                </div>
+
+                                <div class="axl-mod axl-step" id="p-4">
+                                    <div class="axl-mod-no">4</div>
+                                    <div class="axl-mod-body">
+                                        <span class="axl-tag">자동화</span>
+                                        <h3>자동화할 수 있는 부분 찾기</h3>
+                                        <dl>
+                                            <dt>하는 일</dt><dd>3회 이상 반복되고 절차가 정해진 일을 골라 자동화합니다. 반복 지시는 스킬로, 정해진 시각의 일은 예약 미션으로, 여러 단계가 이어지는 일은 등록된 프로세스로 만듭니다.</dd>
+                                            <dt>참여</dt><dd>실무자, 팀의 AX 챔피언, 컨설턴트</dd>
+                                            <dt>방법</dt><dd>스킬 · 예약 미션 · 대화로 프로세스 만들기(Process GPT의 BPMN 프로세스로 저장) · 메일 수신을 시작점으로 한 초안 작성</dd>
+                                            <dt>산출물</dt><dd>자동화 백로그 (대상 · 방식 · 담당자 · 우선순위)</dd>
+                                            <dt>시기</dt><dd>4~5주차</dd>
+                                        </dl>
+                                        <div class="plite-vlinks"><a href="#v-yVHodTrDwHg" class="plite-vlink">▶ 외부 연동 · 스킬 · 예약 미션</a> <a href="#v-19Ap3J_XLHs" class="plite-vlink">▶ 대화로 프로세스 만들기</a></div>
+                                    </div>
+                                </div>
+
+                                <div class="axl-mod axl-step" id="p-5">
+                                    <div class="axl-mod-no">5</div>
+                                    <div class="axl-mod-body">
+                                        <span class="axl-tag s3">프로세스 혁신</span>
+                                        <h3>프로세스 자체를 바꾸기 &mdash; 조직 차원</h3>
+                                        <dl>
+                                            <dt>하는 일</dt><dd>기존 흐름에 AI를 덧붙이는 데서 멈추지 않고 To-Be 프로세스를 다시 설계합니다. 인계 단계를 줄이고, 제품·마케팅·영업이 함께 움직이는 교차 기능 팀을 만들고, 하나의 공통 스펙으로 제품과 마케팅이 병렬로 움직이게 합니다. 직접 수행하던 역할(퍼포머)은 에이전트 보스로 바뀝니다.</dd>
+                                            <dt>참여</dt><dd>경영진(의사결정 권한 조정), 팀장, 컨설턴트</dd>
+                                            <dt>방법</dt><dd>To-Be 프로세스 설계, 역할·책임 재정의(RACI), 공유 폴더 권한과 담당자 알림으로 새 흐름 반영</dd>
+                                            <dt>산출물</dt><dd>To-Be 프로세스와 RACI</dd>
+                                            <dt>시기</dt><dd>5~6주차</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+
+                                <div class="axl-mod axl-step" id="p-6">
+                                    <div class="axl-mod-no">6</div>
+                                    <div class="axl-mod-body">
+                                        <span class="axl-tag s3">교육</span>
+                                        <h3>변화관리 교육 &mdash; 누구에게 무엇을 어떻게</h3>
+                                        <dl>
+                                            <dt>하는 일</dt><dd>새 프로세스를 실제로 굴릴 사람을 대상별로 나눠 교육 계획을 세웁니다.</dd>
+                                            <dt>참여</dt><dd>경영진, 팀장, 실무자, AX 챔피언</dd>
+                                            <dt>방법</dt>
+                                            <dd>
+                                                <ul class="axl-list" style="margin-top: -4px;">
+                                                    <li><b>경영진</b> &mdash; AX 비전과 KPI, 의사결정 권한 위임 (<a href="educationax.html#tracks">AX 전환 컨설팅 교육 Track A</a>)</li>
+                                                    <li><b>팀장</b> &mdash; 에이전트 보스 팀 운영, 실험 주기와 회고 운영</li>
+                                                    <li><b>실무자</b> &mdash; <a href="#curriculum">12개 모듈 실무자 과정</a></li>
+                                                    <li><b>AX 챔피언</b> &mdash; 심화 과정(스킬·프로세스 설계)과 사내 코칭 방법</li>
+                                                </ul>
+                                            </dd>
+                                            <dt>산출물</dt><dd>대상별 교육 계획 (대상 · 내용 · 일정 · 이수 기준)</dd>
+                                            <dt>시기</dt><dd>6~8주차</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+
+                                <div class="axl-mod axl-step" id="p-7">
+                                    <div class="axl-mod-no">7</div>
+                                    <div class="axl-mod-body">
+                                        <span class="axl-tag s3">변화관리</span>
+                                        <h3>전체 변화관리 프로그램 &mdash; 시범 → 측정 → 확대</h3>
+                                        <dl>
+                                            <dt>하는 일</dt><dd>병목 하나로 시범 운영하고, 전후를 측정하고, 효과가 확인되면 다음 병목과 다른 팀으로 넓힙니다. 이 주기를 매월 멘토링 세션, 부서별 AX 챔피언, 사내 공유(성과·스킬 공유), 분기 KPI 리뷰로 이어 갑니다.</dd>
+                                            <dt>참여</dt><dd>전사 (경영진 · 팀장 · AX 챔피언 · 실무자)</dd>
+                                            <dt>방법</dt><dd>멘토링 구독, 스킬 공유와 검토·병합, 리드타임·처리량·재작업 지표 리뷰</dd>
+                                            <dt>산출물</dt><dd>분기 KPI 리뷰와 다음 분기 우선과제</dd>
+                                            <dt>시기</dt><dd>3개월 차부터 분기 단위로 반복</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="mt-50 mb-20" style="font-size: 1.3rem; font-weight: 700;">멘토링 구독별 범위 <span class="axl-tag ex" style="vertical-align: middle;">제안</span></h3>
+                            <div class="axl-table-wrap">
+                                <table class="axl-table">
+                                    <thead><tr><th>단계</th><th>Starter</th><th>Growth</th><th>Enterprise</th></tr></thead>
+                                    <tbody>
+                                        <tr><td><b>1~2 진단·병목</b></td><td>팀 하나의 업무 점검</td><td>팀 2~3개 밸류 스트림 진단</td><td>전사 밸류 스트림 · 전략맵 연계</td></tr>
+                                        <tr><td><b>3~4 에이전트·자동화</b></td><td>스킬·예약 미션 개선</td><td>분기 1~2개 프로세스 자동화</td><td>여러 팀 동시 진행</td></tr>
+                                        <tr><td><b>5 프로세스 혁신</b></td><td>&mdash;</td><td>팀 단위 To-Be · RACI</td><td>부서를 넘는 흐름 재설계</td></tr>
+                                        <tr><td><b>6 교육</b></td><td>실무자 Q&amp;A · 온보딩</td><td>월 1회 팀 교육</td><td>대상별 교육 · AX 챔피언 양성</td></tr>
+                                        <tr><td><b>7 변화관리</b></td><td>월간 활용 리포트</td><td>전후 측정 결과</td><td>경영진 자문 · 분기 KPI 리뷰</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="axl-note">단계별 시기와 구독별 범위는 예시이며, 회사 규모와 우선과제에 따라 함께 정합니다.</p>
+                        </div>
+                    </div>
+                </section>
+                <!-- End AX 전환 프로그램 흐름 Section -->
+
+                <!-- 전환의 도달점 Section -->
+                <section class="page-section" id="destination">
+                    <div class="container position-relative">
+                        <div class="row mb-50 mb-sm-30">
+                            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+                                <h2 class="section-caption-border mb-20 wow fadeInUp">Where AX Leads</h2>
+                                <h2 class="section-title mb-20 wow fadeInUp">전환의 도달점: 애자일 · 마케팅 퍼스트 개발 · 그로스 해킹 기업</h2>
+                                <p class="section-descr" style="font-size: 1.05rem; line-height: 1.7;">
+                                    AX의 끝은 &lsquo;AI를 쓰는 회사&rsquo;가 아니라, 고객에게 전달할 가치에서 출발해 제품과 시장 실험을 함께 만들고, 시장의 반응을 다음 실행에 바로 반영하는 회사입니다.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="axl-wrap axl-grid-4">
+                            <div class="axl-card"><p class="axl-kicker">AGILE</p><h4>애자일 리듬</h4><p>큰 계획 한 번 대신 짧은 주기로 만들고, 내놓고, 측정하고, 고칩니다. 에이전트가 조사·제작을 맡으니 한 주기가 짧아집니다.</p></div>
+                            <div class="axl-card"><p class="axl-kicker">MARKETING FIRST</p><h4>마케팅 퍼스트 개발</h4><p>&ldquo;누구의 어떤 문제를, 어떤 가치로 풀까&rdquo;에서 시작합니다. 하나의 콘셉트가 제품 구현과 소개서·랜딩·데모 영상 준비까지 함께 이어집니다.</p></div>
+                            <div class="axl-card"><p class="axl-kicker">SPEC-DRIVEN</p><h4>하나의 스펙으로 병렬 실행</h4><p>대상 고객·사용 시나리오·핵심 기능·인수조건·전달 메시지·측정 지표를 담은 공통 스펙이 제품과 마케팅을 함께 움직입니다. 팀 사이의 재설명과 대기가 줄어듭니다.</p></div>
+                            <div class="axl-card"><p class="axl-kicker">GROWTH HACKING</p><h4>여러 가설을 시장에서 검증</h4><p>A/B 하나가 아니라 가치 제안·메시지·사용 흐름·제공 방식 여러 가설을 함께 내놓고, 전환·활성화·재방문·고객 피드백으로 측정해 다음 스펙에 반영합니다.</p></div>
+                        </div>
+
+                        <div class="axl-wrap mt-50 mt-sm-30 axl-figs">
+                            <figure class="axl-fig">
+                                <button type="button" class="axl-slide" data-img="../images/ax-lite-course/target-mfd.webp"><img src="../images/ax-lite-course/target-mfd.webp" alt="Marketing First Development: 콘셉트 입력, 에이전트의 시장·고객 조사, 가설과 범위 검토, 제품과 소개서·랜딩·데모 영상 병렬 제작, 고객 전달 준비로 이어지는 흐름" loading="lazy" decoding="async"><span>Marketing First Development &mdash; 고객에게 전달할 가치에서 시작해, 제품과 시장 실험 준비를 함께 완성한다</span></button>
+                            </figure>
+                            <figure class="axl-fig">
+                                <button type="button" class="axl-slide" data-img="../images/ax-lite-course/target-spec.webp"><img src="../images/ax-lite-course/target-spec.webp" alt="스펙이 제품과 마케팅을 함께 움직인다: 고객 문제와 가치 제안에서 공통 실행 스펙을 만들고, 제품 구현·테스트·소개서·데모 영상을 병렬로 진행해 검증된 시장 실험 패키지를 만드는 흐름" loading="lazy" decoding="async"><span>스펙이 제품과 마케팅을 함께 움직인다 &mdash; 하나의 스펙으로 병렬 실행</span></button>
+                            </figure>
+                            <figure class="axl-fig">
+                                <button type="button" class="axl-slide" data-img="../images/ax-lite-course/target-hypotheses.webp"><img src="../images/ax-lite-course/target-hypotheses.webp" alt="A/B를 넘어 여러 가설을 시장에서 검증한다: 가치 제안·메시지·사용 흐름·제공 방식 가설별로 제품과 전달물을 함께 변형하고, 고객 반응을 측정해 확대·수정·중단을 판단하고 다음 스펙에 반영하는 흐름" loading="lazy" decoding="async"><span>A/B를 넘어, 여러 가설을 시장에서 검증한다 &mdash; 고객의 반응이 다음 스펙이 된다</span></button>
+                            </figure>
+                        </div>
+                        <p class="axl-wrap axl-note text-center">그림을 누르면 크게 볼 수 있습니다.</p>
+                    </div>
+                </section>
+                <!-- End 전환의 도달점 Section -->
+
                 <!-- 멘토링 구독 Section -->
                 <section class="page-section" id="mentoring">
                     <div class="container position-relative">
@@ -951,6 +1158,7 @@
                             </div>
                         </div>
                         <div class="axl-wrap">
+                            <div class="text-center mt-40 local-scroll"><a href="#program" class="btn btn-mod btn-round btn-hover-anim"><span style="font-size: 15px;">진단부터 시작하기</span></a></div>
                             <p class="axl-note">구독 구성과 명칭은 제안안입니다. 가격은 월 200만 원 ~ 1,000만 원 범위에서 대상 인원·팀 수·지원 범위에 따라 상담 후 확정하며, 모두 VAT 별도입니다. 모든 지원은 온라인으로 진행하고, 방문이 필요한 경우 별도 협의합니다.</p>
                         </div>
 
