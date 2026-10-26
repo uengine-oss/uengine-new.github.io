@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontological Studio 튜토리얼 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="온톨로지가 무엇인지부터 시작해, 원천 데이터베이스를 잇고, Cypher로 묻고, 에이전트와 함께 온톨로지를 구축하고, 업무 시스템에 액션을 실행하고, 그 위에 앱을 만드는 데까지 차근차근 따라 하는 실습서입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ontological Studio 튜토리얼 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="온톨로지가 무엇인지부터 시작해, 원천 데이터베이스를 잇고, Cypher로 묻고, 에이전트와 함께 온톨로지를 구축하고, 업무 시스템에 액션을 실행하고, 그 위에 앱을 만드는 데까지 차근차근 따라 하는 실습서입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap"></span></div>
+    <h1>Ontological Studio 튜토리얼</h1>
+    <article>
+<blockquote>
+<p>온톨로지가 무엇인지부터 시작해, 원천 데이터베이스를 잇고, Cypher로 묻고, 에이전트와 함께 온톨로지를 구축하고, 업무 시스템에 액션을 실행하고, 그 위에 앱을 만드는 데까지 차근차근 따라 하는 실습서입니다.</p>
+</blockquote>
+<h2 id="이-튜토리얼에서-하는-일">이 튜토리얼에서 하는 일<a class="anchor" href="#이-튜토리얼에서-하는-일" title="Permanent link">#</a></h2>
+<p>Ontological Studio는 <strong>온톨로지를 만들고, 묻고, 실행하고, 앱으로 쓰는</strong> 데스크톱 프로그램입니다. 설치 파일 하나에 그래프 데이터베이스(Ontological DB), 데이터 패브릭, 온톨로지 구축 에이전트, 액션 실행기, 예제 업무 시스템이 모두 들어 있어서, 노트북 한 대로 처음부터 끝까지 실습할 수 있습니다.</p>
+<p>이 튜토리얼은 한 회사의 <strong>공급망 운영</strong> 이야기를 따라갑니다. 이 회사의 데이터는 세 시스템에 흩어져 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>시스템</th>
+<th>담고 있는 것</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>구매 ERP (<code>erp</code>)</td>
+<td>협력사, 품목, 발주, 발주 품목</td>
+<td>선전 골드라인 PCB에 PCB 기판 2,000장을 발주했다</td>
+</tr>
+<tr>
+<td>물류 WMS (<code>wms</code>)</td>
+<td>입고 선적, 일별 재고</td>
+<td>그 발주의 선적이 세관에 9일째 묶여 있다</td>
+</tr>
+<tr>
+<td>고객 CRM (<code>crm</code>)</td>
+<td>고객, 판매 주문, 클레임</td>
+<td>도쿄의 고객이 PCB 납땜 불량 클레임을 냈다</td>
+</tr>
+</tbody>
+</table>
+<p>“3일 넘게 늦은 선적은 어느 협력사의 어느 발주 건인가?”라는 질문의 답은 이 셋을 모두 이어야 나옵니다. 튜토리얼을 마치면 여러분은 이 질문을 그래프 질의 한 줄로 답하고, “그 선적을 긴급 처리해 줘”라는 지시를 승인 절차를 거쳐 실제 시스템에 실행하고, 이 모든 것을 한 화면에 모은 업무 앱을 만들 수 있게 됩니다.</p>
+<h2 id="학습-순서">학습 순서<a class="anchor" href="#학습-순서" title="Permanent link">#</a></h2>
+<div class="cards" markdown="0">
+<a href="install.html"><b>1 · 시작하기</b><span>설치, 첫 실행, 화면 둘러보기</span></a>
+<a href="ontology-basics.html"><b>2 · 온톨로지 개념</b><span>클래스·속성·관계·인스턴스, 앱의 구성</span></a>
+<a href="datasource.html"><b>3 · 데이터 연결</b><span>원천 DB를 복사 없이 가상 노드로</span></a>
+<a href="cypher-basics.html"><b>4 · Cypher 익히기</b><span>MATCH부터 집계·진단·시간 여행까지</span></a>
+<a href="golden.html"><b>5 · 온톨로지 구축</b><span>골든 퀘스천·골든 커맨드, 문서로 구축, 질의</span></a>
+<a href="systems.html"><b>6 · 액션</b><span>시스템 등록, 액션 만들기, 승인·실행·취소</span></a>
+<a href="dashboard.html"><b>7 · 애플리케이션</b><span>대시보드, 코드 앱, SDK, 액션 버튼</span></a>
+<a href="project.html"><b>8 · 마무리 과제</b><span>배운 것을 엮는 종합 실습</span></a>
+</div>
+
+<p>각 장은 <strong>개념 → 따라 하기 → 확인 문제</strong> 순서로 되어 있습니다. 확인 문제의 답은 접혀 있으니, 먼저 스스로 해 본 뒤 펼쳐 보세요.</p>
+<h2 id="누구를-위한-튜토리얼인가">누구를 위한 튜토리얼인가<a class="anchor" href="#누구를-위한-튜토리얼인가" title="Permanent link">#</a></h2>
+<ul>
+<li>데이터베이스 수업에서 SQL <code>SELECT</code>와 <code>JOIN</code>을 배워 본 대학생 수준이면 충분합니다.</li>
+<li>그래프 데이터베이스나 Cypher는 몰라도 됩니다. 4부에서 처음부터 배웁니다.</li>
+<li>프로그래밍은 7부(코드 앱)에서만 조금 필요합니다. 그것도 에이전트가 코드를 써 주므로, 읽을 수 있으면 됩니다.</li>
+</ul>
+<h2 id="준비물">준비물<a class="anchor" href="#준비물" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>컴퓨터</td>
+<td>macOS (Apple Silicon, M1 이상) 또는 Windows 10/11 (x64), 메모리 8GB 권장</td>
+</tr>
+<tr>
+<td>디스크</td>
+<td>2GB 이상 여유</td>
+</tr>
+<tr>
+<td>코딩 에이전트</td>
+<td><a href="https://claude.com/claude-code">Claude Code</a> 또는 Codex CLI — 설치하고 로그인해 두면 API 키 없이 구축·질의 에이전트가 동작합니다. 없어도 3·4부(데이터 연결, Cypher)는 그대로 실습할 수 있습니다.</td>
+</tr>
+<tr>
+<td>네트워크</td>
+<td>설치 파일을 받을 때와 에이전트(LLM)를 쓸 때만 필요합니다. 데이터베이스는 모두 내 컴퓨터 안에서 돕니다.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">먼저 영상으로 보고 싶다면</p>
+<p><a href="../../contents/ontologystudio.html#demo">제품 소개 페이지</a>에 문서로 구축하기, 골든 커맨드로 액션 만들기, 온톨로지 앱 만들기 시연 영상이 있습니다. 이 튜토리얼은 그 과정을 한 단계씩 풀어 쓴 것입니다.</p>
+</div>
+<h2 id="표기-약속">표기 약속<a class="anchor" href="#표기-약속" title="Permanent link">#</a></h2>
+<ul>
+<li><code>MATCH (s:Supplier) RETURN s.name</code> 처럼 고정폭 글자는 입력하는 문장, 화면의 버튼 이름은 「가상 노드 만들기」처럼 낫표로 씁니다.</li>
+<li>화면 사진은 낮 테마로 찍었습니다. 일부 시연 장면(밤 테마)은 사진 설명에 따로 적었습니다.</li>
+<li>숫자와 결과는 모두 예제 데이터로 실제로 실행해 얻은 값입니다. 여러분의 결과가 다르면, 앞 장에서 데이터를 바꾸는 실습(액션 실행 등)을 했는지 확인하세요.</li>
+</ul>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="install.html"><span>다음</span>설치와 첫 실행</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#이-튜토리얼에서-하는-일">이 튜토리얼에서 하는 일</a></li><li><a href="#학습-순서">학습 순서</a></li><li><a href="#누구를-위한-튜토리얼인가">누구를 위한 튜토리얼인가</a></li><li><a href="#준비물">준비물</a></li><li><a href="#표기-약속">표기 약속</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관계 따라가기와 집계 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="관계 패턴으로 노드 사이를 걸어가고, 여러 데이터베이스를 한 질의로 잇고, count·sum·collect로 묶어 셉니다. Cypher가 SQL보다 편해지는 지점입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/cypher-relations.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="관계 따라가기와 집계 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="관계 패턴으로 노드 사이를 걸어가고, 여러 데이터베이스를 한 질의로 잇고, count·sum·collect로 묶어 셉니다. Cypher가 SQL보다 편해지는 지점입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/cypher-relations.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html" class="on" aria-current="page"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Cypher 익히기<span class="chap">8</span></div>
+    <h1>관계 따라가기와 집계</h1>
+    <article>
+<blockquote>
+<p>관계 패턴으로 노드 사이를 걸어가고, 여러 데이터베이스를 한 질의로 잇고, count·sum·collect로 묶어 셉니다. Cypher가 SQL보다 편해지는 지점입니다.</p>
+</blockquote>
+<h2 id="관계-패턴">관계 패턴<a class="anchor" href="#관계-패턴" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>po.po_id</th>
+<th>po.status</th>
+<th>s.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PO-001</td>
+<td>OPEN</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>PO-002</td>
+<td>OPEN</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>PO-003</td>
+<td>CLOSED</td>
+<td>한빛정밀</td>
+</tr>
+<tr>
+<td>PO-004</td>
+<td>CLOSED</td>
+<td>대성케이블</td>
+</tr>
+<tr>
+<td>PO-005</td>
+<td>OPEN</td>
+<td>Ningbo Magnetics</td>
+</tr>
+<tr>
+<td>PO-006</td>
+<td>OPEN</td>
+<td>Hanoi Assembly</td>
+</tr>
+<tr>
+<td>PO-007</td>
+<td>OPEN</td>
+<td>Ningbo Magnetics</td>
+</tr>
+<tr>
+<td>PO-008</td>
+<td>OPEN</td>
+<td>한빛정밀</td>
+</tr>
+</tbody>
+</table>
+<p>발주는 ERP의 <code>purchase_order</code>, 협력사는 ERP의 <code>supplier</code>입니다. 관계 <code>ORDERED_FROM</code>이 <code>purchase_order.supplier_id = supplier.supplier_id</code> 조인을 대신했습니다.</p>
+<h3 id="방향">방향<a class="anchor" href="#방향" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>패턴</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(a)-[:R]-&gt;(b)</code></td>
+<td>a에서 b로</td>
+</tr>
+<tr>
+<td><code>(a)&lt;-[:R]-(b)</code></td>
+<td>b에서 a로 — 같은 관계를 반대편에서 읽기</td>
+</tr>
+<tr>
+<td><code>(a)-[:R]-(b)</code></td>
+<td>방향 상관없이</td>
+</tr>
+</tbody>
+</table>
+<p>관계는 정의된 방향이 있습니다(<code>PurchaseOrder → Supplier</code>). 협력사에서 출발하고 싶으면 화살표를 반대로 씁니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">orders</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>s.name</th>
+<th>orders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대성케이블</td>
+<td>["PO-004"]</td>
+</tr>
+<tr>
+<td>Shenzhen Goldline PCB</td>
+<td>["PO-001", "PO-002"]</td>
+</tr>
+<tr>
+<td>한빛정밀</td>
+<td>["PO-003", "PO-008"]</td>
+</tr>
+<tr>
+<td>Ningbo Magnetics</td>
+<td>["PO-005", "PO-007"]</td>
+</tr>
+<tr>
+<td>Hanoi Assembly</td>
+<td>["PO-006"]</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">노드마다 라벨을 붙이세요</p>
+<p>Ontological DB에서는 패턴의 <strong>노드마다 라벨</strong>을 적어야 빠르고 정확합니다. <code>(s:Supplier)&lt;-[:ORDERED_FROM]-(po)</code>보다 <code>(po:PurchaseOrder)</code>처럼 쓰세요. 특히 데이터 패브릭의 가상 관계는 라벨 없이 <code>-[r]-&gt;</code>(관계 이름도 없이)로 찾으면 결과가 비어 나옵니다. 관계 이름과 양쪽 라벨을 모두 적는 습관을 들이세요.</p>
+</div>
+<h2 id="여러-걸음-다른-데이터베이스를-건너서">여러 걸음 — 다른 데이터베이스를 건너서<a class="anchor" href="#여러-걸음-다른-데이터베이스를-건너서" title="Permanent link">#</a></h2>
+<p><a href="ontology-basics.html">2장</a>에서 본 질문입니다. 선적(WMS) → 발주(ERP) → 협력사(ERP).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">0</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ship_status</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>sh.shipment_no</th>
+<th>sh.ship_status</th>
+<th>sh.delay_days</th>
+<th>po.po_id</th>
+<th>s.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHP-03</td>
+<td>CUSTOMS_HOLD</td>
+<td>9</td>
+<td>PO-002</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>SHP-02</td>
+<td>IN_TRANSIT</td>
+<td>7</td>
+<td>PO-001</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>SHP-06</td>
+<td>IN_TRANSIT</td>
+<td>3</td>
+<td>PO-005</td>
+<td>Ningbo Magnetics</td>
+</tr>
+<tr>
+<td>SHP-05</td>
+<td>DELIVERED</td>
+<td>1</td>
+<td>PO-004</td>
+<td>대성케이블</td>
+</tr>
+</tbody>
+</table>
+<p>노드를 통째로 돌려주면 그래프로 볼 수 있습니다. 관계에도 변수(<code>r</code>, <code>o</code>)를 붙여 함께 돌려줍니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="n">r</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="n">o</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">,</span><span class="w"> </span><span class="n">s</span>
+</code></pre></div>
+
+<figure><a href="img/portal-graph.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결과 카드의 Graph 보기 — 늦은 선적 두 건이 각자의 발주를 거쳐 같은 협력사로 모입니다" src="img/portal-graph.webp" / loading="lazy" decoding="async"></a><figcaption>결과 카드의 Graph 보기 — 늦은 선적 두 건이 각자의 발주를 거쳐 같은 협력사로 모입니다</figcaption></figure>
+<p>선적 두 건이 서로 다른 발주를 거쳐 <strong>같은 협력사 하나로 모이는</strong> 모양이 보입니다. 표로는 잘 안 보이던 사실입니다 — 늦은 선적의 원인이 한 협력사에 몰려 있습니다.</p>
+<h3 id="고객-쪽으로">고객 쪽으로<a class="anchor" href="#고객-쪽으로" title="Permanent link">#</a></h3>
+<p>CRM 안에서 클레임 → 판매 주문 → 고객:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ABOUT</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">PLACED_BY</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">ticket_no</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">severity</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="p">.</span><span class="n">so_no</span><span class="p">,</span><span class="w"> </span><span class="n">cu</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>c.ticket_no</th>
+<th>c.severity</th>
+<th>c.subject</th>
+<th>so.so_no</th>
+<th>cu.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-1</td>
+<td>HIGH</td>
+<td>컨트롤러 전원 불량</td>
+<td>SO-01</td>
+<td>서울전자</td>
+</tr>
+<tr>
+<td>T-2</td>
+<td>LOW</td>
+<td>케이블 포장 파손</td>
+<td>SO-04</td>
+<td>Berlin Motion</td>
+</tr>
+<tr>
+<td>T-3</td>
+<td>HIGH</td>
+<td>PCB 납땜 불량</td>
+<td>SO-05</td>
+<td>Tokyo Devices</td>
+</tr>
+</tbody>
+</table>
+<h3 id="갈래가-둘인-패턴">갈래가 둘인 패턴<a class="anchor" href="#갈래가-둘인-패턴" title="Permanent link">#</a></h3>
+<p>쉼표로 패턴을 여러 개 적으면, <strong>같은 변수</strong>가 두 패턴을 묶습니다. “납땜 불량 클레임이 난 품목을 공급한 협력사는?” — CRM의 클레임에서 품목으로, 그 품목에서 ERP의 발주 품목과 협력사로. (<a href="virtual-graph.html">6장</a>에서 만든 <code>PoLine</code>이 필요합니다.)</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">FOR_ITEM</span><span class="o">]-</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ABOUT</span><span class="o">]-</span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">),</span>
+<span class="w">      </span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">OF_ITEM</span><span class="o">]-</span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">PoLine</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">IN_ORDER</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;납땜&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>i.name</th>
+<th>s.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCB 기판</td>
+<td>Hanoi Assembly</td>
+</tr>
+<tr>
+<td>PCB 기판</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+</tbody>
+</table>
+<p>세 데이터베이스(CRM·ERP)와 다섯 종류의 노드를 지나는 질문이 한 문장이 됐습니다.</p>
+<h2 id="없는-짝도-남기기-optional-match">없는 짝도 남기기 — OPTIONAL MATCH<a class="anchor" href="#없는-짝도-남기기-optional-match" title="Permanent link">#</a></h2>
+<p>SQL의 <code>LEFT JOIN</code>에 해당합니다. 짝이 없어도 행을 남기고, 없는 쪽은 <code>null</code>이 됩니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span>
+</code></pre></div>
+
+<p>8건 중 <code>SHP-08</code>만 <code>po.po_id</code>가 <code>null</code>입니다. 이 선적은 ERP에 없는 발주 <code>PO-999</code>를 가리키고 있습니다 — 일부러 넣어 둔 <strong>데이터 품질 문제</strong>입니다. 짝이 없는 것만 고르려면:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">sh</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ref_po_no</span>
+</code></pre></div>
+
+<p>결과: <code>SHP-08</code>, <code>PO-999</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">NOT EXISTS 대신</p>
+<p>Neo4j의 <code>WHERE NOT EXISTS { MATCH … }</code> 하위 질의는 아직 지원하지 않습니다. 위처럼 <code>OPTIONAL MATCH</code> + <code>IS NULL</code>로 씁니다.</p>
+</div>
+<h2 id="묶어서-세기-집계">묶어서 세기 — 집계<a class="anchor" href="#묶어서-세기-집계" title="Permanent link">#</a></h2>
+<p><code>RETURN</code>에 집계 함수와 보통 값이 함께 있으면, <strong>보통 값끼리 같은 행이 한 묶음</strong>이 됩니다(SQL의 <code>GROUP BY</code>를 따로 쓰지 않습니다).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(*)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total</span><span class="p">,</span>
+<span class="w">       </span><span class="n">avg</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">biggest</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>po.status</th>
+<th>n</th>
+<th>total</th>
+<th>average</th>
+<th>biggest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLOSED</td>
+<td>2</td>
+<td>24000</td>
+<td>12000</td>
+<td>15000</td>
+</tr>
+<tr>
+<td>OPEN</td>
+<td>6</td>
+<td>255000</td>
+<td>42500</td>
+<td>82000</td>
+</tr>
+</tbody>
+</table>
+<p>협력사별 미결 발주 금액:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">supplier</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_orders</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_amount</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">open_amount</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>supplier</th>
+<th>open_orders</th>
+<th>open_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shenzhen Goldline PCB</td>
+<td>2</td>
+<td>123000</td>
+</tr>
+<tr>
+<td>Ningbo Magnetics</td>
+<td>2</td>
+<td>72000</td>
+</tr>
+<tr>
+<td>Hanoi Assembly</td>
+<td>1</td>
+<td>33000</td>
+</tr>
+<tr>
+<td>한빛정밀</td>
+<td>1</td>
+<td>27000</td>
+</tr>
+</tbody>
+</table>
+<p>협력사별 가장 나쁜 지연:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-</span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">worst</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">worst</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<p>Shenzhen Goldline PCB 9일, Ningbo Magnetics 3일, 대성케이블 1일, 나머지 0일.</p>
+<h2 id="단계를-나누기-with">단계를 나누기 — WITH<a class="anchor" href="#단계를-나누기-with" title="Permanent link">#</a></h2>
+<p><code>WITH</code>는 질의를 두 단계로 나눕니다. 앞 단계의 결과를 다음 단계가 이어받습니다. 집계한 값으로 다시 거를 때(SQL의 <code>HAVING</code>) 씁니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">&gt;=</span><span class="w"> </span><span class="m">2</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+</code></pre></div>
+
+<p>발주가 두 건 이상인 협력사 — Ningbo Magnetics, Shenzhen Goldline PCB, 한빛정밀(각 2건).</p>
+<p><code>collect()</code>로 모은 목록의 길이는 <code>size()</code>로 잽니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">pos</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">pos</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">알려진 제약 — 금액 합계로 거르기</p>
+<p><code>WITH s, sum(po.amount_usd) AS total WHERE total &gt; 50000</code>처럼 <strong>소수 타입 컬럼의 합계로 다시 거르면</strong> 지금 판에서는 <code>invalid input syntax for type bigint</code> 오류가 납니다. <code>sum(toFloat(po.amount_usd))</code>로 실수로 바꿔 더하면 됩니다.</p>
+<p><code>cypher
+MATCH (po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)
+WITH s, sum(toFloat(po.amount_usd)) AS total
+WHERE total &gt; 50000
+RETURN s.name, total ORDER BY total DESC</code></p>
+</div>
+<h2 id="목록에서-시작하기-unwind">목록에서 시작하기 — UNWIND<a class="anchor" href="#목록에서-시작하기-unwind" title="Permanent link">#</a></h2>
+<p>목록을 행으로 펼칩니다. 여러 키를 한 번에 조회할 때 편합니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">UNWIND</span><span class="w"> </span><span class="o">[</span><span class="s">&#39;SHP-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;SHP-03&#39;</span><span class="o">]</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">no</span>
+<span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="w"> </span><span class="p">{</span><span class="n">shipment_no</span><span class="p">:</span><span class="w"> </span><span class="n">no</span><span class="p">})</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">eta</span>
+</code></pre></div>
+
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>미결(<code>OPEN</code>) 판매 주문을 고객별로 모아, 고객 이름과 주문 번호 목록을 보여 주세요.</li>
+<li>선적이 두 건 이상인 발주는 무엇인가요?</li>
+<li>심각도 <code>HIGH</code> 클레임을 낸 고객과 그 판매 주문을 찾으세요.</li>
+<li>(도전) 협력사마다 미결 발주가 몇 건인지, <strong>미결 발주가 없는 협력사도 0으로</strong> 나오게 쓰세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">PLACED_BY</span><span class="o">]-</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">so</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">cu</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="n">so</span><span class="p">.</span><span class="n">so_no</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_orders</span>
+</code></pre></div>
+
+<p>Tokyo Devices <code>["SO-03", "SO-05"]</code>, 서울전자 <code>["SO-02"]</code>.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-</span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">po</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">shipments</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">shipments</span><span class="w"> </span><span class="p">&gt;=</span><span class="w"> </span><span class="m">2</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">shipments</span>
+</code></pre></div>
+
+<p>PO-001 (SHP-01, SHP-02).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">PLACED_BY</span><span class="o">]-</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ABOUT</span><span class="o">]-</span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">severity</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;HIGH&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">cu</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="p">.</span><span class="n">so_no</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span>
+</code></pre></div>
+
+<p>서울전자 SO-01 「컨트롤러 전원 불량」, Tokyo Devices SO-05 「PCB 납땜 불량」.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_n</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">open_n</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<p>대성케이블이 0으로 나옵니다. <code>count(po)</code>는 <code>null</code>을 세지 않기 때문입니다(<code>count(*)</code>였다면 1이 됩니다).</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="cypher-basics.html"><span>이전</span>Cypher 기초 — 노드를 찾고 거르기</a><a class="next" href="cypher-advanced.html"><span>다음</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#관계-패턴">관계 패턴</a><ul><li><a href="#방향">방향</a></li></ul></li><li><a href="#여러-걸음-다른-데이터베이스를-건너서">여러 걸음 — 다른 데이터베이스를 건너서</a><ul><li><a href="#고객-쪽으로">고객 쪽으로</a></li><li><a href="#갈래가-둘인-패턴">갈래가 둘인 패턴</a></li></ul></li><li><a href="#없는-짝도-남기기-optional-match">없는 짝도 남기기 — OPTIONAL MATCH</a></li><li><a href="#묶어서-세기-집계">묶어서 세기 — 집계</a></li><li><a href="#단계를-나누기-with">단계를 나누기 — WITH</a></li><li><a href="#목록에서-시작하기-unwind">목록에서 시작하기 — UNWIND</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

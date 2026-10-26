@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데이터소스 연결하기 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 데이터 패브릭이 무엇인지 손으로 익히는 장입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/datasource.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="데이터소스 연결하기 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 데이터 패브릭이 무엇인지 손으로 익히는 장입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/datasource.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html" class="on" aria-current="page"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">데이터 연결<span class="chap">5</span></div>
+    <h1>데이터소스 연결하기</h1>
+    <article>
+<blockquote>
+<p>원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 데이터 패브릭이 무엇인지 손으로 익히는 장입니다.</p>
+</blockquote>
+<h2 id="데이터-패브릭이란">데이터 패브릭이란<a class="anchor" href="#데이터-패브릭이란" title="Permanent link">#</a></h2>
+<p>회사의 데이터는 여러 데이터베이스에 흩어져 있습니다. 보통은 이것을 데이터 웨어하우스로 <strong>복사</strong>(ETL)해 한곳에 모은 뒤 분석합니다. 복사본은 원본보다 늦고, 권한을 두 군데서 관리해야 하며, 원본이 바뀌면 다시 복사해야 합니다.</p>
+<p><strong>데이터 패브릭</strong>은 반대로 갑니다. 데이터는 원래 자리에 두고, 질의할 때마다 <strong>그 자리에서 읽습니다.</strong> Ontological DB는 원천 테이블을 그래프의 노드처럼 보이게 하는 <strong>가상 노드</strong>를 만들어 이것을 합니다. 옮기는 것은 데이터가 아니라 <strong>이름과 연결</strong>뿐입니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>복사(ETL)</th>
+<th>데이터 패브릭</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>데이터 위치</td>
+<td>웨어하우스에 사본</td>
+<td>원천 그대로</td>
+</tr>
+<tr>
+<td>신선도</td>
+<td>마지막 적재 시점</td>
+<td>질의하는 순간</td>
+</tr>
+<tr>
+<td>권한</td>
+<td>원천과 사본 두 곳</td>
+<td>원천 한 곳</td>
+</tr>
+<tr>
+<td>쓰기</td>
+<td>사본에 써도 원천은 그대로</td>
+<td>가상 노드는 읽기 전용, 쓰기는 원천 시스템으로</td>
+</tr>
+</tbody>
+</table>
+<h2 id="데이터소스-탭-열기">데이터소스 탭 열기<a class="anchor" href="#데이터소스-탭-열기" title="Permanent link">#</a></h2>
+<p>홈에서 「데이터소스」 카드를 누릅니다.</p>
+<figure><a href="img/ds-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="데이터소스 탭 — 왼쪽에 데이터소스 3개(crm·erp·wms)와 가상 그래프, 가운데 테이블 목록, 오른쪽 테이블 상세와 미리보기" src="img/ds-list.webp" / loading="lazy" decoding="async"></a><figcaption>데이터소스 탭 — 왼쪽에 데이터소스 3개(crm·erp·wms)와 가상 그래프, 가운데 테이블 목록, 오른쪽 테이블 상세와 미리보기</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>왼쪽 위 <strong>데이터소스</strong></td>
+<td>연결된 원천 DB. 예제로 <code>crm</code>, <code>erp</code>, <code>wms</code> 세 개가 이미 연결돼 있습니다.</td>
+</tr>
+<tr>
+<td>왼쪽 아래 <strong>가상 그래프</strong></td>
+<td>가상 노드가 사는 그래프. 예제는 <code>sample</code>입니다.</td>
+</tr>
+<tr>
+<td>가운데</td>
+<td>고른 데이터소스의 테이블. <code>:Claim</code>처럼 초록 라벨이 붙은 테이블은 이미 가상 노드로 노출된 것입니다.</td>
+</tr>
+<tr>
+<td>오른쪽</td>
+<td>테이블의 컬럼·타입·제약과, 가상 노드라면 미리보기 20행</td>
+</tr>
+</tbody>
+</table>
+<p>미리보기 아래의 <code>3행 · Bolt → Ontological → postgres_fdw → 원천</code>이라는 줄이 이 장의 핵심입니다. 이 행들은 어딘가에 복사된 것이 아니라, <strong>지금 원천 <code>crm.claim</code> 테이블에서 읽어 온 것</strong>입니다.</p>
+<h2 id="테이블-살펴보기">테이블 살펴보기<a class="anchor" href="#테이블-살펴보기" title="Permanent link">#</a></h2>
+<p>왼쪽에서 <code>erp</code>를 누르면 ERP의 테이블 6개가 나옵니다.</p>
+<figure><a href="img/ds-erp.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="erp 데이터소스 — 테이블 6개 중 item·purchase_order·supplier가 가상 노드로 노출돼 있습니다" src="img/ds-erp.webp" / loading="lazy" decoding="async"></a><figcaption>erp 데이터소스 — 테이블 6개 중 item·purchase_order·supplier가 가상 노드로 노출돼 있습니다</figcaption></figure>
+<p>예제 원천의 테이블을 정리하면 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th>데이터소스</th>
+<th>테이블</th>
+<th>키</th>
+<th>주요 컬럼</th>
+<th>가상 노드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>erp</code></td>
+<td><code>supplier</code></td>
+<td><code>supplier_id</code></td>
+<td>name, country, tier</td>
+<td><code>Supplier</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>item</code></td>
+<td><code>item_id</code></td>
+<td>name, safety_stock</td>
+<td><code>Item</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>purchase_order</code></td>
+<td><code>po_id</code></td>
+<td>supplier_id, order_date, amount_usd, status</td>
+<td><code>PurchaseOrder</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>po_line</code></td>
+<td><code>po_line_id</code></td>
+<td>po_id, item_id, qty</td>
+<td>(없음 — 6장에서 만듭니다)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>po_hold</code>, <code>expedite_request</code></td>
+<td></td>
+<td>액션이 남기는 기록(보류, 납기 독촉)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>wms</code></td>
+<td><code>shipment</code></td>
+<td><code>shipment_no</code></td>
+<td>ref_po_no, vendor_code, ship_status, delay_days, eta, priority</td>
+<td><code>Shipment</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>stock_daily</code></td>
+<td>(날짜, 품목, 창고)</td>
+<td>on_hand_qty</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>priority_change</code></td>
+<td></td>
+<td>액션이 남기는 기록(우선순위 변경 이력)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>crm</code></td>
+<td><code>customer</code></td>
+<td><code>cust_no</code></td>
+<td>name, country</td>
+<td><code>Customer</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>sales_order</code></td>
+<td><code>so_no</code></td>
+<td>cust_no, sku_code, qty, status</td>
+<td><code>SalesOrder</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>claim</code></td>
+<td><code>ticket_no</code></td>
+<td>so_no, severity, opened_date, subject</td>
+<td><code>Claim</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>notice</code></td>
+<td></td>
+<td>액션이 남기는 기록(고객 안내)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">컬럼 이름이 시스템마다 다릅니다</p>
+<p>같은 “발주 번호”가 ERP에서는 <code>po_id</code>, WMS에서는 <code>ref_po_no</code>입니다. 같은 “품목”이 ERP에서는 <code>item_id</code>, CRM에서는 <code>sku_code</code>입니다. 실제 회사에서도 흔한 일이고, 이 차이를 관계로 이어 주는 것이 온톨로지의 역할입니다.</p>
+</div>
+<h2 id="새-데이터소스-연결하기">새 데이터소스 연결하기<a class="anchor" href="#새-데이터소스-연결하기" title="Permanent link">#</a></h2>
+<p>왼쪽 위 「＋」를 누르면 연결 폼이 열립니다. 엔진을 고르면 그 엔진에 필요한 칸이 나옵니다.</p>
+<table>
+<thead>
+<tr>
+<th>엔진</th>
+<th>필요한 값</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>호스트·포트·DB·스키마·계정·비밀번호</td>
+<td>macOS·Windows</td>
+</tr>
+<tr>
+<td>MySQL / MariaDB</td>
+<td>호스트·포트·DB·계정·비밀번호</td>
+<td>macOS</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>호스트·포트·서비스 이름·소유자 스키마·계정·비밀번호</td>
+<td>macOS</td>
+</tr>
+<tr>
+<td>SQL Server</td>
+<td>호스트·포트·DB·스키마(기본 dbo)·계정·비밀번호</td>
+<td>macOS</td>
+</tr>
+</tbody>
+</table>
+<p>데이터소스 이름은 영문 소문자·숫자·밑줄만 씁니다. 원천은 같은 PC든 사내망이든 인터넷이든 접속만 되면 됩니다. 원천 계정은 <strong>읽기 권한만 있는 계정</strong>을 쓰기를 권합니다.</p>
+<p>화면은 문장을 미리 보여 줍니다. 예를 들어 PostgreSQL을 연결하면 실제로는 다음 문장이 실행됩니다(비밀번호는 화면에 <code>'••••'</code>로만 보입니다).</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">DATASOURCE</span><span class="w"> </span><span class="n">mydb</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;postgres&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">PARAMETERS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">host</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10.0.0.5&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="p">:</span><span class="w"> </span><span class="m">5432</span><span class="p">,</span><span class="w"> </span><span class="n">database</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;sales&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;public&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;reader&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;••••&#39;</span><span class="p">}</span>
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">학교 실습 DB를 연결해 보세요</p>
+<p>수업에서 쓰는 PostgreSQL이나 MySQL이 있다면 연결해 보세요. 연결하는 순간 테이블 목록과 컬럼 타입이 카탈로그로 들어옵니다. 데이터는 한 행도 복사되지 않습니다.</p>
+</div>
+<h2 id="화면-뒤의-문장들">화면 뒤의 문장들<a class="anchor" href="#화면-뒤의-문장들" title="Permanent link">#</a></h2>
+<p>데이터소스 탭은 모든 작업을 Ontological DB의 <strong>패브릭 문장</strong>으로 합니다. 화면 아래 「실행한 문장」에 무엇을 보냈는지 남습니다. 같은 문장을 포털에서 직접 쳐도 됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>문장</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SHOW DATASOURCES</code></td>
+<td>연결된 데이터소스 목록</td>
+</tr>
+<tr>
+<td><code>SHOW TABLES FROM erp</code></td>
+<td>데이터소스의 테이블과, 가상 노드로 노출됐는지</td>
+</tr>
+<tr>
+<td><code>SHOW COLUMNS FROM erp.po_line</code></td>
+<td>컬럼·타입·NULL 여부·키</td>
+</tr>
+<tr>
+<td><code>REFRESH DATASOURCE erp</code></td>
+<td>원천에 테이블이 늘었을 때 다시 읽기</td>
+</tr>
+<tr>
+<td><code>DROP DATASOURCE erp</code></td>
+<td>연결 해제 (가상 노드가 쓰고 있으면 엔진이 거절합니다)</td>
+</tr>
+</tbody>
+</table>
+<p>포털에서 <code>SHOW TABLES FROM erp</code>를 실행하면 이렇게 나옵니다.</p>
+<table>
+<thead>
+<tr>
+<th>table</th>
+<th>columns</th>
+<th>virtual_node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>erp.expedite_request</td>
+<td>9</td>
+<td></td>
+</tr>
+<tr>
+<td>erp.item</td>
+<td>3</td>
+<td>Item</td>
+</tr>
+<tr>
+<td>erp.po_hold</td>
+<td>8</td>
+<td></td>
+</tr>
+<tr>
+<td>erp.po_line</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>erp.purchase_order</td>
+<td>5</td>
+<td>PurchaseOrder</td>
+</tr>
+<tr>
+<td>erp.supplier</td>
+<td>4</td>
+<td>Supplier</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>데이터소스 탭에서 <code>wms</code>의 <code>shipment</code> 테이블을 열고, 미리보기에서 지연일(<code>delay_days</code>)이 가장 큰 선적을 찾으세요.</li>
+<li><code>crm.claim</code> 미리보기에는 몇 행이 있나요? 그 행들은 어디에 저장돼 있나요?</li>
+<li><code>SHOW COLUMNS FROM wms.shipment</code>가 돌려줄 컬럼 이름을 예상해 보고, 포털에서 확인하세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li><code>SHP-03</code> (9일, CUSTOMS_HOLD — 세관 보류).</li>
+<li>3행(T-1, T-2, T-3). Ontological DB가 아니라 원천 <code>crm</code> 스키마의 <code>claim</code> 테이블에 있습니다. 미리보기는 질의하는 순간 원천에서 읽어 온 것입니다.</li>
+<li><code>shipment_no</code>, <code>ref_po_no</code>, <code>vendor_code</code>, <code>ship_status</code>, <code>delay_days</code>, <code>eta</code>, <code>priority</code>. (<code>priority</code>는 액션이 고치는 컬럼입니다.)</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="architecture.html"><span>이전</span>Ontological Studio의 구성</a><a class="next" href="virtual-graph.html"><span>다음</span>가상 노드와 가상 관계</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#데이터-패브릭이란">데이터 패브릭이란</a></li><li><a href="#데이터소스-탭-열기">데이터소스 탭 열기</a></li><li><a href="#테이블-살펴보기">테이블 살펴보기</a></li><li><a href="#새-데이터소스-연결하기">새 데이터소스 연결하기</a></li><li><a href="#화면-뒤의-문장들">화면 뒤의 문장들</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

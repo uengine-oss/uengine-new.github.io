@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cypher·패브릭 치트시트 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="이 튜토리얼에서 쓴 문장을 한 장에 모았습니다. 포털 옆에 띄워 두고 쓰세요. 예제는 `sample` 그래프 기준입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/cheatsheet.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cypher·패브릭 치트시트 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="이 튜토리얼에서 쓴 문장을 한 장에 모았습니다. 포털 옆에 띄워 두고 쓰세요. 예제는 `sample` 그래프 기준입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/cheatsheet.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html" class="on" aria-current="page"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">부록<span class="chap">22</span></div>
+    <h1>Cypher·패브릭 치트시트</h1>
+    <article>
+<blockquote>
+<p>이 튜토리얼에서 쓴 문장을 한 장에 모았습니다. 포털 옆에 띄워 두고 쓰세요. 예제는 <code>sample</code> 그래프 기준입니다.</p>
+</blockquote>
+<h2 id="읽기">읽기<a class="anchor" href="#읽기" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>노드 찾기</td>
+<td><code>MATCH (s:Supplier) RETURN s</code></td>
+</tr>
+<tr>
+<td>속성 고르기</td>
+<td><code>MATCH (s:Supplier) RETURN s.name, s.country</code></td>
+</tr>
+<tr>
+<td>키로 하나</td>
+<td><code>MATCH (s:Supplier {supplier_id: 'S-CN-01'}) RETURN s</code></td>
+</tr>
+<tr>
+<td>거르기</td>
+<td><code>WHERE s.country = 'China' AND s.tier = 1</code></td>
+</tr>
+<tr>
+<td>목록 포함</td>
+<td><code>WHERE sh.ship_status IN ['IN_TRANSIT', 'CUSTOMS_HOLD']</code></td>
+</tr>
+<tr>
+<td>문자열</td>
+<td><code>WHERE s.name CONTAINS 'Gold'</code> · <code>STARTS WITH</code> · <code>ENDS WITH</code></td>
+</tr>
+<tr>
+<td>날짜</td>
+<td><code>WHERE c.opened_date &gt;= '2026-08-29'</code></td>
+</tr>
+<tr>
+<td>정렬·자르기</td>
+<td><code>ORDER BY po.amount_usd DESC SKIP 2 LIMIT 3</code></td>
+</tr>
+<tr>
+<td>이름 바꾸기</td>
+<td><code>RETURN po.po_id AS 발주</code></td>
+</tr>
+<tr>
+<td>중복 제거</td>
+<td><code>RETURN DISTINCT s.country</code></td>
+</tr>
+<tr>
+<td>조건 값</td>
+<td><code>CASE WHEN sh.delay_days &gt; 3 THEN '지연' ELSE '정상' END</code></td>
+</tr>
+<tr>
+<td>목록 펼치기</td>
+<td><code>UNWIND ['SHP-02','SHP-03'] AS no MATCH (sh:Shipment {shipment_no: no}) RETURN sh</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="관계">관계<a class="anchor" href="#관계" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>한 걸음</td>
+<td><code>MATCH (po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)</code></td>
+</tr>
+<tr>
+<td>거꾸로</td>
+<td><code>MATCH (s:Supplier)&lt;-[:ORDERED_FROM]-(po:PurchaseOrder)</code></td>
+</tr>
+<tr>
+<td>여러 걸음</td>
+<td><code>(sh:Shipment)-[:SHIPS]-&gt;(po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)</code></td>
+</tr>
+<tr>
+<td>관계도 돌려받기</td>
+<td><code>MATCH (a:Shipment)-[r:SHIPS]-&gt;(b:PurchaseOrder) RETURN a, r, b</code></td>
+</tr>
+<tr>
+<td>갈래 둘</td>
+<td><code>MATCH (i:Item)&lt;-[:FOR_ITEM]-(so:SalesOrder), (i:Item)&lt;-[:OF_ITEM]-(l:PoLine)</code></td>
+</tr>
+<tr>
+<td>짝 없어도 남기기</td>
+<td><code>OPTIONAL MATCH (sh:Shipment)-[:SHIPS]-&gt;(po:PurchaseOrder)</code></td>
+</tr>
+<tr>
+<td>짝 없는 것만</td>
+<td><code>… OPTIONAL MATCH … WITH sh, po WHERE po IS NULL RETURN sh</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="집계">집계<a class="anchor" href="#집계" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>세기</td>
+<td><code>RETURN count(s)</code> · <code>count(*)</code></td>
+</tr>
+<tr>
+<td>묶어 세기</td>
+<td><code>RETURN po.status, count(*) AS n, sum(po.amount_usd) AS total</code></td>
+</tr>
+<tr>
+<td>목록으로 모으기</td>
+<td><code>RETURN s.name, collect(po.po_id) AS orders</code></td>
+</tr>
+<tr>
+<td>집계로 다시 거르기</td>
+<td><code>WITH s, count(po) AS n WHERE n &gt;= 2 RETURN s.name, n</code></td>
+</tr>
+<tr>
+<td>소수 합계로 거르기</td>
+<td><code>WITH s, sum(toFloat(po.amount_usd)) AS total WHERE total &gt; 50000</code></td>
+</tr>
+<tr>
+<td>목록 길이</td>
+<td><code>size(collect(po.po_id))</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="쓰기-저장-그래프에서만">쓰기 (저장 그래프에서만)<a class="anchor" href="#쓰기-저장-그래프에서만" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>그래프 만들기</td>
+<td><code>CREATE GRAPH tut</code></td>
+</tr>
+<tr>
+<td>노드</td>
+<td><code>CREATE (:Employee {emp_no: 'E1', name: '김하늘'})</code></td>
+</tr>
+<tr>
+<td>관계</td>
+<td><code>MATCH (a:Employee {emp_no:'E1'}), (b:Employee {emp_no:'E2'}) CREATE (a)-[:MENTORS]-&gt;(b)</code></td>
+</tr>
+<tr>
+<td>값 바꾸기</td>
+<td><code>MATCH (e:Employee {emp_no:'E1'}) SET e.salary = 4500</code></td>
+</tr>
+<tr>
+<td>없으면 만들기</td>
+<td><code>MERGE (d:Dept {name:'구매'})</code></td>
+</tr>
+<tr>
+<td>지우기</td>
+<td><code>MATCH (e:Employee {emp_no:'E2'}) DETACH DELETE e</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="데이터-패브릭">데이터 패브릭<a class="anchor" href="#데이터-패브릭" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>문장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>데이터소스 목록</td>
+<td><code>SHOW DATASOURCES</code></td>
+</tr>
+<tr>
+<td>연결</td>
+<td><code>CREATE DATASOURCE mydb WITH ENGINE = 'postgres', PARAMETERS = {host: '…', port: 5432, database: '…', schema: 'public', user: '…', password: '…'}</code></td>
+</tr>
+<tr>
+<td>테이블</td>
+<td><code>SHOW TABLES FROM erp</code></td>
+</tr>
+<tr>
+<td>컬럼</td>
+<td><code>SHOW COLUMNS FROM erp.po_line</code></td>
+</tr>
+<tr>
+<td>다시 읽기 · 해제</td>
+<td><code>REFRESH DATASOURCE erp</code> · <code>DROP DATASOURCE erp</code></td>
+</tr>
+<tr>
+<td>가상 노드</td>
+<td><code>CREATE VIRTUAL NODE PoLine IN sample FROM erp.po_line KEY po_line_id</code></td>
+</tr>
+<tr>
+<td>속성 이름 바꾸기</td>
+<td><code>… KEY po_line_id PROPERTIES (po_line_id, po_id, item_id, qty AS quantity)</code></td>
+</tr>
+<tr>
+<td>가상 관계</td>
+<td><code>CREATE VIRTUAL RELATIONSHIP IN_ORDER IN sample FROM PoLine(po_id) TO PurchaseOrder(po_id)</code></td>
+</tr>
+<tr>
+<td>목록</td>
+<td><code>SHOW VIRTUAL NODES</code> · <code>SHOW VIRTUAL RELATIONSHIPS</code></td>
+</tr>
+<tr>
+<td>지우기</td>
+<td><code>DROP VIRTUAL RELATIONSHIP IN_ORDER IN sample</code> · <code>DROP VIRTUAL NODE PoLine IN sample</code></td>
+</tr>
+<tr>
+<td>실행 계획</td>
+<td><code>EXPLAIN FABRIC MATCH …</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="시간-여행">시간 여행<a class="anchor" href="#시간-여행" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>그때의 사실</td>
+<td>포털 ⏱ 막대의 valid at</td>
+</tr>
+<tr>
+<td>그때 알던 것</td>
+<td>포털 ⏱ 막대의 as known at</td>
+</tr>
+<tr>
+<td>시간 버전 켜기 (SQL)</td>
+<td><code>SELECT og_enable_temporal('hr', 'Employee');</code></td>
+</tr>
+<tr>
+<td>변경 기록 (SQL)</td>
+<td><code>BEGIN; SET LOCAL og.valid_from = '2024-01-01'; SELECT og_cypher('hr', $$…$$); COMMIT;</code></td>
+</tr>
+<tr>
+<td>정정 기록 (SQL)</td>
+<td><code>SET LOCAL og.valid_from = '-infinity'</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="함수">함수<a class="anchor" href="#함수" title="Permanent link">#</a></h2>
+<p><code>count</code> <code>sum</code> <code>avg</code> <code>min</code> <code>max</code> <code>collect</code> · <code>toUpper</code> <code>toLower</code> <code>trim</code> <code>substring</code> <code>replace</code> <code>split</code> <code>toString</code> · <code>abs</code> <code>ceil</code> <code>floor</code> <code>round</code> <code>sqrt</code> <code>rand</code> <code>toInteger</code> <code>toFloat</code> · <code>id</code> <code>elementId</code> <code>labels</code> <code>type</code> <code>length</code> <code>size</code> <code>keys</code> <code>exists</code> · <code>coalesce</code> <code>timestamp</code> <code>datetime</code> · <code>vector.similarity</code> <code>vector.distance</code> <code>genai.vector.encode</code></p>
+<h2 id="코드-앱-sdk">코드 앱 SDK<a class="anchor" href="#코드-앱-sdk" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">schema</span><span class="p">,</span><span class="w"> </span><span class="nx">theme</span><span class="p">,</span><span class="w"> </span><span class="nx">onTheme</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="p">,</span><span class="w"> </span><span class="nx">actions</span><span class="p">,</span><span class="w"> </span><span class="nx">act</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;MATCH (s:Supplier) WHERE s.country = $c RETURN s.name AS name&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">c</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;China&#39;</span><span class="w"> </span><span class="p">})</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">act</span><span class="p">({</span><span class="w"> </span><span class="kd">class</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Shipment&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;expediteShipment&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">ids</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;SHP-03&#39;</span><span class="p">],</span><span class="w"> </span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">reason</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;…&#39;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">})</span><span class="w">  </span><span class="c1">// 다음 배포판</span>
+</code></pre></div>
+    </article>
+    <nav class="pager"><a class="prev" href="project.html"><span>이전</span>종합 과제 — 품질 사고 대응 앱 만들기</a><a class="next" href="faq.html"><span>다음</span>자주 묻는 질문과 문제 해결</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#읽기">읽기</a></li><li><a href="#관계">관계</a></li><li><a href="#집계">집계</a></li><li><a href="#쓰기-저장-그래프에서만">쓰기 (저장 그래프에서만)</a></li><li><a href="#데이터-패브릭">데이터 패브릭</a></li><li><a href="#시간-여행">시간 여행</a></li><li><a href="#함수">함수</a></li><li><a href="#코드-앱-sdk">코드 앱 SDK</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

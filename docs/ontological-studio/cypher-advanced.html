@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="질의가 실제로 어떻게 실행되는지(SQL 번역, 패브릭 실행 계획)를 보고, 자연어로 Cypher를 만들고, 내 그래프를 만들어 노드와 관계를 직접 써 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/cypher-advanced.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="질의가 실제로 어떻게 실행되는지(SQL 번역, 패브릭 실행 계획)를 보고, 자연어로 Cypher를 만들고, 내 그래프를 만들어 노드와 관계를 직접 써 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/cypher-advanced.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html" class="on" aria-current="page"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Cypher 익히기<span class="chap">9</span></div>
+    <h1>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</h1>
+    <article>
+<blockquote>
+<p>질의가 실제로 어떻게 실행되는지(SQL 번역, 패브릭 실행 계획)를 보고, 자연어로 Cypher를 만들고, 내 그래프를 만들어 노드와 관계를 직접 써 봅니다.</p>
+</blockquote>
+<h2 id="번역된-sql-보기">번역된 SQL 보기<a class="anchor" href="#번역된-sql-보기" title="Permanent link">#</a></h2>
+<p>Ontological DB는 Cypher를 PostgreSQL SQL로 <strong>번역</strong>해서 실행합니다. 결과 카드의 <strong>SQL</strong> 탭에서 번역 결과를 볼 수 있습니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">supplier</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_orders</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_amount</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">open_amount</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<figure><a href="img/portal-sql.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="SQL 탭 — Cypher 한 문장이 PostgreSQL 질의로 번역된 모습" src="img/portal-sql.webp" / loading="lazy" decoding="async"></a><figcaption>SQL 탭 — Cypher 한 문장이 PostgreSQL 질의로 번역된 모습</figcaption></figure>
+<p>결과 카드 아래쪽의 <code>compiled SQL 668a5ee48536</code> 같은 값은 번역된 SQL의 지문입니다. 같은 Cypher면 시점(10장)을 바꿔도 지문이 같습니다 — 질의는 그대로이고 조건만 바뀐다는 뜻입니다.</p>
+<h2 id="패브릭-실행-계획-explain-fabric">패브릭 실행 계획 — EXPLAIN FABRIC<a class="anchor" href="#패브릭-실행-계획-explain-fabric" title="Permanent link">#</a></h2>
+<p>원천이 여러 DB에 걸친 질의는 <strong>어디서 무엇이 실행되는지</strong>가 성능을 좌우합니다. 질의 앞에 <code>EXPLAIN FABRIC</code>을 붙이면 단계별 계획을 보여 줍니다.</p>
+<div class="hl"><pre><span></span><code><span class="n">EXPLAIN</span><span class="w"> </span><span class="n">FABRIC</span>
+<span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>step</th>
+<th>place</th>
+<th>operation</th>
+<th>rows</th>
+<th>detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>remote:erp</td>
+<td>join</td>
+<td>8</td>
+<td><code>SELECT r10.po_id, r12.name FROM (erp.purchase_order r10 INNER JOIN erp.supplier r12 ON …)</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>remote:wms</td>
+<td>scan</td>
+<td>2</td>
+<td><code>SELECT shipment_no, ref_po_no FROM wms.shipment WHERE ((delay_days &gt; 3))</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>local</td>
+<td>Hash Join</td>
+<td>2</td>
+<td><code>(purchase_order.po_id = (shipment.ref_po_no)::text)</code></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/portal-explain.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="EXPLAIN FABRIC — 원천마다 내려 보낸 SQL과 넘어온 행 수" src="img/portal-explain.webp" / loading="lazy" decoding="async"></a><figcaption>EXPLAIN FABRIC — 원천마다 내려 보낸 SQL과 넘어온 행 수</figcaption></figure>
+<p>읽는 법:</p>
+<ol>
+<li><strong>ERP 안의 조인은 ERP에서</strong> 했습니다(발주 ⋈ 협력사). 같은 DB 안의 일은 원천에 맡깁니다.</li>
+<li><strong>WMS에는 조건을 붙여</strong> 보냈습니다(<code>delay_days &gt; 3</code>). 8행 전부가 아니라 2행만 넘어왔습니다.</li>
+<li>서로 다른 DB를 잇는 마지막 조인만 Ontological DB가 했습니다.</li>
+</ol>
+<p>원천이 크면 이 차이가 큽니다. 조건이 원천으로 내려가지 않는 질의(예: 두 DB의 값을 서로 비교하는 조건)는 계획에서 <code>local</code>로 보입니다. 그런 질의는 원천의 행을 많이 끌어오므로 조건을 바꿔 볼 만합니다.</p>
+<h2 id="말로-묻기-자연어-cypher">말로 묻기 — 자연어 → Cypher<a class="anchor" href="#말로-묻기-자연어-cypher" title="Permanent link">#</a></h2>
+<p>입력칸에 Cypher 대신 <strong>한국어 문장</strong>을 쓰고 실행하면, 에이전트가 이 그래프의 스키마를 읽고 Cypher를 만들어 줍니다(첫 낱말이 Cypher 키워드가 아니면 자연어로 봅니다. ✨ 버튼이나 ⇧⌘Enter로도 됩니다).</p>
+<div class="hl"><pre><span></span><code>3일 넘게 늦어진 입고 선적은 어느 협력사의 어느 발주 건이야?
+</code></pre></div>
+
+<figure><a href="img/portal-nl.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="자연어 질의 — 에이전트가 만든 Cypher와 설명, 그래프에서 미리 실행해 확인했다는 표시" src="img/portal-nl.webp" / loading="lazy" decoding="async"></a><figcaption>자연어 질의 — 에이전트가 만든 Cypher와 설명, 그래프에서 미리 실행해 확인했다는 표시</figcaption></figure>
+<p>에이전트가 만든 Cypher는 화면에 그대로 보이고, 실행하기 전에 그래프에서 <strong>한 번 시험 실행</strong>해 봅니다. 실패하면 엔진의 오류 메시지를 보고 한 번 고칩니다. 쓰기 문장(<code>CREATE</code>, <code>SET</code> 등)은 실행하지 않고 입력칸에만 둡니다. 이 예에서는 Claude Code가 8.7초 만에 다음을 만들었습니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">supplier</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">shipment_no</span><span class="p">,</span>
+<span class="w">       </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ship_status</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ship_status</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="m">100</span>
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">자연어는 출발점입니다</p>
+<p>만들어진 Cypher를 읽고 고쳐 쓰는 연습을 하세요. 에이전트가 어떤 관계를 골랐는지 보면 스키마를 이해하는 데도 도움이 됩니다. 이 기능은 앱 안의 포털에서만 동작합니다(코딩 에이전트가 필요합니다).</p>
+</div>
+<h2 id="직접-쓰기-내-그래프-만들기">직접 쓰기 — 내 그래프 만들기<a class="anchor" href="#직접-쓰기-내-그래프-만들기" title="Permanent link">#</a></h2>
+<p>가상 노드는 읽기 전용이지만, Ontological DB에 <strong>저장되는 노드</strong>는 Cypher로 자유롭게 쓸 수 있습니다. 예제를 건드리지 않도록 연습용 그래프를 만듭시다. 그래프 선택과 상관없이 실행됩니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">GRAPH</span><span class="w"> </span><span class="n">tut</span>
+</code></pre></div>
+
+<p>이제 그래프 선택에서 <code>tut</code>을 고르고(목록에 안 보이면 포털을 새로 고침), 노드를 만듭니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="p">(:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E1&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;김하늘&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dept</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;구매&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">salary</span><span class="p">:</span><span class="w"> </span><span class="m">4200</span><span class="p">})</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="p">(:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E2&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;박바다&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dept</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;물류&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">salary</span><span class="p">:</span><span class="w"> </span><span class="m">3900</span><span class="p">})</span>
+</code></pre></div>
+
+<p>관계를 만들려면, 먼저 양쪽 노드를 <code>MATCH</code>로 찾은 뒤 <code>CREATE</code>합니다. 관계에도 속성을 붙일 수 있습니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E1&#39;</span><span class="p">}),</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E2&#39;</span><span class="p">})</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">MENTORS</span><span class="w"> </span><span class="p">{</span><span class="n">since</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;2025-03&#39;</span><span class="p">}</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Employee</span><span class="p">)</span><span class="o">-[</span><span class="n">m</span><span class="p">:</span><span class="n">MENTORS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">:</span><span class="n">Employee</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">since</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<p>결과: <code>김하늘 · 2025-03 · 박바다</code>.</p>
+<h3 id="고치기지우기">고치기·지우기<a class="anchor" href="#고치기지우기" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>문장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>값 바꾸기</td>
+<td><code>MATCH (e:Employee {emp_no:'E1'}) SET e.salary = 4500 RETURN e.salary</code></td>
+</tr>
+<tr>
+<td>없으면 만들기</td>
+<td><code>MERGE (d:Dept {name:'구매'}) RETURN d.name</code></td>
+</tr>
+<tr>
+<td>없으면 관계 만들기</td>
+<td><code>MATCH (e:Employee), (d:Dept {name:'구매'}) WHERE e.dept = d.name MERGE (e)-[:WORKS_IN]-&gt;(d)</code></td>
+</tr>
+<tr>
+<td>노드와 그 관계 지우기</td>
+<td><code>MATCH (e:Employee {emp_no:'E2'}) DETACH DELETE e</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>MERGE</code>는 같은 모양이 이미 있으면 그것을 쓰고, 없으면 만듭니다. 두 번 실행해도 <code>Dept</code> 노드가 하나만 생깁니다. <code>DETACH DELETE</code>는 노드에 붙은 관계까지 함께 지웁니다(관계가 남아 있으면 그냥 <code>DELETE</code>는 거절됩니다).</p>
+<div class="admonition note">
+<p class="admonition-title">온톨로지 그래프는 Studio에게</p>
+<p><code>ontology</code> 그래프는 Studio가 관리합니다. 클래스 정의(<code>_OntologyClass</code> 같은 노드)와 액션 정의가 함께 들어 있으므로, 포털에서 직접 고치지 말고 「온톨로지 구축」 화면과 에이전트로 다루세요. 직접 쓰기 연습은 이렇게 따로 만든 그래프에서 합니다.</p>
+</div>
+<h2 id="저장과-기록">저장과 기록<a class="anchor" href="#저장과-기록" title="Permanent link">#</a></h2>
+<ul>
+<li>결과 카드의 ★는 질의를 <strong>저장</strong>합니다. 왼쪽 레일의 책갈피 아이콘에서 다시 꺼냅니다.</li>
+<li>입력칸에서 ↑↓로 <strong>이전 질의</strong>를 불러옵니다. 시계 아이콘 목록에는 이 그래프에 최근 일어난 쓰기(감사 기록)가 보입니다.</li>
+</ul>
+<h2 id="ontological-db의-cypher-알아-둘-차이">Ontological DB의 Cypher — 알아 둘 차이<a class="anchor" href="#ontological-db의-cypher-알아-둘-차이" title="Permanent link">#</a></h2>
+<p>Neo4j의 Cypher를 이미 안다면 다음 차이만 기억하세요.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>Ontological DB 0.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>라벨</td>
+<td>패턴의 노드마다 라벨을 적는 것이 원칙. <code>WHERE n:Label</code> 형태의 라벨 조건은 쓰지 않습니다.</td>
+</tr>
+<tr>
+<td>하위 질의</td>
+<td><code>EXISTS { … }</code>, <code>CALL { … }</code>는 아직 없습니다 → <code>OPTIONAL MATCH … IS NULL</code></td>
+</tr>
+<tr>
+<td>가변 길이 경로</td>
+<td><code>-[:R*1..3]-&gt;</code>는 저장된 관계에서만 됩니다. 가상 관계에는 아직 안 됩니다.</td>
+</tr>
+<tr>
+<td>날짜</td>
+<td><code>date()</code> 함수가 없습니다 → 날짜 컬럼과 <code>'YYYY-MM-DD'</code> 문자열을 바로 비교</td>
+</tr>
+<tr>
+<td>함수</td>
+<td><a href="cypher-basics.html#값-바꿔-보여-주기-함수와-case">7장의 목록</a>만. 없는 함수를 쓰면 오류가 지원 목록을 알려 줍니다.</td>
+</tr>
+<tr>
+<td>가상 노드</td>
+<td>읽기 전용 — 값은 원천 시스템(또는 액션)으로 바꿉니다</td>
+</tr>
+<tr>
+<td>더 있는 것</td>
+<td><code>SHOW …</code> 패브릭 문장, <code>EXPLAIN FABRIC</code>, 시간 여행(10장), 상위 라벨로 하위 타입까지 찾기</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li><code>EXPLAIN FABRIC</code>으로 “클레임 → 판매 주문 → 고객” 질의(8장)의 계획을 보세요. 이 질의는 원천을 몇 군데 건드리나요?</li>
+<li><code>tut</code> 그래프에 <code>Dept {name:'물류'}</code>를 <code>MERGE</code>로 두 번 만들고, <code>MATCH (d:Dept) RETURN d.name, count(*)</code>로 몇 개인지 확인하세요.</li>
+<li>자연어로 “납땜 불량 클레임을 낸 고객은 누구야?”라고 물어보고, 에이전트가 만든 Cypher가 8장의 답과 같은 결과를 내는지 비교하세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li>세 노드가 모두 CRM에 있으므로 원천 한 곳(<code>remote:crm</code>)에서 조인까지 끝납니다. 같은 DB 안의 일은 원천에 맡기는 것을 확인할 수 있습니다.</li>
+<li><code>MERGE</code>는 이미 있으면 새로 만들지 않으므로 <code>물류</code> 행의 개수는 1입니다(앞에서 만든 <code>구매</code>도 1).</li>
+<li>Tokyo Devices(SO-05, T-3 「PCB 납땜 불량」)가 나와야 합니다. 에이전트의 질의는 매번 조금씩 다를 수 있지만 결과는 같아야 합니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="cypher-relations.html"><span>이전</span>관계 따라가기와 집계</a><a class="next" href="time-travel.html"><span>다음</span>시간 여행 — 바이템포럴 질의</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#번역된-sql-보기">번역된 SQL 보기</a></li><li><a href="#패브릭-실행-계획-explain-fabric">패브릭 실행 계획 — EXPLAIN FABRIC</a></li><li><a href="#말로-묻기-자연어-cypher">말로 묻기 — 자연어 → Cypher</a></li><li><a href="#직접-쓰기-내-그래프-만들기">직접 쓰기 — 내 그래프 만들기</a><ul><li><a href="#고치기지우기">고치기·지우기</a></li></ul></li><li><a href="#저장과-기록">저장과 기록</a></li><li><a href="#ontological-db의-cypher-알아-둘-차이">Ontological DB의 Cypher — 알아 둘 차이</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

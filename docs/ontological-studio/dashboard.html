@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대시보드 앱 — 말로 만드는 화면 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="「온톨로지 앱」에서 클래스와 속성을 @멘션해 대시보드를 만듭니다. 엔진이 위젯을 바로 고르고, 에이전트가 문장의 나머지를 구성안으로 내면, 사람이 적용합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/dashboard.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="대시보드 앱 — 말로 만드는 화면 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="「온톨로지 앱」에서 클래스와 속성을 @멘션해 대시보드를 만듭니다. 엔진이 위젯을 바로 고르고, 에이전트가 문장의 나머지를 구성안으로 내면, 사람이 적용합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/dashboard.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html" class="on" aria-current="page"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">애플리케이션<span class="chap">17</span></div>
+    <h1>대시보드 앱 — 말로 만드는 화면</h1>
+    <article>
+<blockquote>
+<p>「온톨로지 앱」에서 클래스와 속성을 @멘션해 대시보드를 만듭니다. 엔진이 위젯을 바로 고르고, 에이전트가 문장의 나머지를 구성안으로 내면, 사람이 적용합니다.</p>
+</blockquote>
+<h2 id="두-가지-앱">두 가지 앱<a class="anchor" href="#두-가지-앱" title="Permanent link">#</a></h2>
+<p>같은 온톨로지 위에서 앱을 두 가지 방식으로 만듭니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>대시보드</th>
+<th>코드 앱</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>만드는 법</td>
+<td>위젯(차트·표)을 엮음</td>
+<td>에이전트가 HTML·JavaScript 코드를 씀</td>
+</tr>
+<tr>
+<td>빠르기</td>
+<td>위젯은 약 1초, 구성안은 수십 초</td>
+<td>1~3분</td>
+</tr>
+<tr>
+<td>자유도</td>
+<td>정해진 위젯 안에서</td>
+<td>무엇이든 (화면 구성·상호작용)</td>
+</tr>
+<tr>
+<td>고치기</td>
+<td>위젯 설정, 또는 말로</td>
+<td>말로, 또는 코드를 직접</td>
+</tr>
+<tr>
+<td>다루는 장</td>
+<td>이 장</td>
+<td><a href="code-app.html">18장</a>~<a href="sdk.html">19장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="앱-만들기-화면">앱 만들기 화면<a class="anchor" href="#앱-만들기-화면" title="Permanent link">#</a></h2>
+<p>홈의 「온톨로지 앱」 카드를 엽니다. 맨 위가 「말로 만드는 온톨로지 앱」입니다.</p>
+<figure><a href="img/app-maker.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="온톨로지 앱 — 왼쪽 자원 트리(모델 › 클래스 › 속성), 오른쪽 입력창과 골든 퀘스천 예시, 아래에 만든 앱 갤러리" src="img/app-maker.webp" / loading="lazy" decoding="async"></a><figcaption>온톨로지 앱 — 왼쪽 자원 트리(모델 › 클래스 › 속성), 오른쪽 입력창과 골든 퀘스천 예시, 아래에 만든 앱 갤러리</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>왼쪽 자원 트리</td>
+<td>발행된 온톨로지의 모델 › 클래스 › 속성. 문장 안으로 끌어다 놓을 수 있습니다.</td>
+</tr>
+<tr>
+<td>입력창</td>
+<td>만들고 싶은 화면을 설명합니다. <code>@</code>를 치면 클래스·속성 후보가 뜹니다.</td>
+</tr>
+<tr>
+<td>예시 칩</td>
+<td>이 온톨로지의 골든 퀘스천. 누르면 입력창에 들어갑니다.</td>
+</tr>
+<tr>
+<td>대시보드 / 코드 앱</td>
+<td>무엇으로 만들지 고릅니다.</td>
+</tr>
+<tr>
+<td>갤러리</td>
+<td>만든 앱들</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-공급망-현황판">따라 하기 — 공급망 현황판<a class="anchor" href="#따라-하기-공급망-현황판" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>앱 이름에 <code>공급망 현황판</code>을 적고, 「대시보드」를 고릅니다.</li>
+<li>입력창에 <code>@Purch</code>까지 치면 후보가 뜹니다. ↑↓로 <code>PurchaseOrder</code>를 고르고 Enter.</li>
+<li>이어서 <code>를 협력사별 금액 합계로 보고,</code>를 칩니다.</li>
+<li>왼쪽 트리에서 <code>Shipment</code>를 문장 안으로 끌어다 놓고, <code>는 상태별 건수로 보여 줘</code>를 칩니다.</li>
+<li>「앱 만들기」를 누릅니다.</li>
+</ol>
+<figure><a href="img/app-mention.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="@를 치면 클래스·속성 후보가 뜹니다" src="img/app-mention.webp" / loading="lazy" decoding="async"></a><figcaption>@를 치면 클래스·속성 후보가 뜹니다</figcaption></figure>
+<p>고른 자원은 <strong>칩</strong>이 되어 문장 안에 남습니다. 사람도 에이전트도 무엇을 가리키는지 헷갈리지 않습니다. 칩은 백스페이스 한 번에 통째로 지워집니다.</p>
+<figure><a href="img/app-prompt.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="칩 두 개(@PurchaseOrder, @Shipment)가 들어간 요청 문장" src="img/app-prompt.webp" / loading="lazy" decoding="async"></a><figcaption>칩 두 개(@PurchaseOrder, @Shipment)가 들어간 요청 문장</figcaption></figure>
+<h2 id="엔진이-먼저-에이전트가-다음">엔진이 먼저, 에이전트가 다음<a class="anchor" href="#엔진이-먼저-에이전트가-다음" title="Permanent link">#</a></h2>
+<p>「앱 만들기」를 누르면 두 가지가 차례로 일어납니다.</p>
+<p><strong>1. 엔진이 위젯을 바로 정합니다(약 1초).</strong> 멘션한 클래스마다 데이터를 살펴(속성의 타입, 값의 종류) 적당한 위젯을 고릅니다. 이 단계는 규칙대로 움직이므로 늘 같은 결과가 나옵니다. 처음에는 날짜별 추이 그래프가 놓였습니다.</p>
+<figure><a href="img/dash-widgets.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="위젯 두 개가 바로 놓였습니다 — 아직은 날짜별 추이 그래프" src="img/dash-widgets.webp" / loading="lazy" decoding="async"></a><figcaption>위젯 두 개가 바로 놓였습니다 — 아직은 날짜별 추이 그래프</figcaption></figure>
+<p><strong>2. 에이전트가 문장의 나머지를 구성안으로 냅니다.</strong> “협력사별 금액 합계”, “상태별 건수”는 에이전트에게 갑니다. 에이전트는 지금 구성을 읽고 무엇을 바꿀지 <strong>구성안(diff)</strong>을 냅니다(실측 약 35초). 오른쪽 「AI로 고치기」에 바뀔 내용이 취소선과 함께 보입니다.</p>
+<figure><a href="img/dash-proposal.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트의 구성안 — 축을 supplier_id와 ship_status로, 집계를 sum과 count로, 종류를 막대로. 「적용」을 기다립니다" src="img/dash-proposal.webp" / loading="lazy" decoding="async"></a><figcaption>에이전트의 구성안 — 축을 supplier_id와 ship_status로, 집계를 sum과 count로, 종류를 막대로. 「적용」을 기다립니다</figcaption></figure>
+<p><strong>3. 사람이 적용합니다.</strong> 구성안은 「적용」을 눌러야 반영됩니다. 마음에 안 들면 적용하지 않고 말로 다시 고쳐 달라고 하면 됩니다.</p>
+<figure><a href="img/dash-applied.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="적용 후 — 협력사별 발주 금액 합계 막대와 선적 상태별 건수 막대" src="img/dash-applied.webp" / loading="lazy" decoding="async"></a><figcaption>적용 후 — 협력사별 발주 금액 합계 막대와 선적 상태별 건수 막대</figcaption></figure>
+<h2 id="이어서-고치기">이어서 고치기<a class="anchor" href="#이어서-고치기" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>위젯을 멘션</strong>: 위젯 머리의 <code>@</code>를 누르면 그 위젯이 입력창에 칩으로 들어갑니다. “@Shipment 위젯을 원형 그래프로”처럼 이어 고칩니다.</li>
+<li><strong>직접 설정</strong>: 위젯을 고르면 오른쪽에 종류·축·지표 설정이 나옵니다. 「자동 추천으로 되돌리기」도 있습니다.</li>
+<li><strong>필터</strong>: 위쪽 「+ 필터 추가」로 대시보드 전체에 걸리는 조건을 겁니다.</li>
+<li><strong>선택 연동</strong>: 막대 하나를 누르면 그 값이 대시보드의 선택이 되어, 관련 위젯에 필터로 걸립니다.</li>
+<li><strong>저장</strong>: 오른쪽 위 「저장」. 「되돌리기」로 방금 적용한 구성안을 되돌립니다.</li>
+</ul>
+<p>낮/밤 테마를 바꾸면 차트의 축과 글자 색도 함께 바뀝니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">실습 과제</p>
+<ol>
+<li><code>@Claim</code>을 심각도별 건수로, <code>@SalesOrder</code>를 고객별 수량 합계로 보여 주는 「고객 품질 현황」 대시보드를 만드세요.</li>
+<li>위젯 하나를 멘션해 표(table)로 바꿔 달라고 해 보세요.</li>
+<li>「대시보드」 대신 「코드 앱」을 고르면 무엇이 달라질지 예상해 보고, 다음 장으로 가세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>도움말</summary>
+<ol>
+<li>예: “@Claim 은 severity 별 건수로, @SalesOrder 는 고객별 qty 합계로 보여 줘”. 속성도 <code>@severity</code>처럼 멘션할 수 있습니다(트리에서 클래스를 펼치면 속성이 보입니다).</li>
+<li>위젯 머리의 <code>@</code>를 누르고 “표로 바꿔 줘”. 구성안이 오면 「적용」.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="actions-run.html"><span>이전</span>액션 실행하기 — 계획·승인·실행·취소</a><a class="next" href="code-app.html"><span>다음</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#두-가지-앱">두 가지 앱</a></li><li><a href="#앱-만들기-화면">앱 만들기 화면</a></li><li><a href="#따라-하기-공급망-현황판">따라 하기 — 공급망 현황판</a></li><li><a href="#엔진이-먼저-에이전트가-다음">엔진이 먼저, 에이전트가 다음</a></li><li><a href="#이어서-고치기">이어서 고치기</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

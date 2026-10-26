@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>문서로 온톨로지 구축하기 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="협력사 품질 보고서 한 장을 올려, 에이전트가 클래스와 관계를 설계하고 사실을 인스턴스로 옮기고 골든 퀘스천으로 검증하는 과정을 따라갑니다. 마지막에 발행해서 질의에 쓸 수 있게 합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/build.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="문서로 온톨로지 구축하기 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="협력사 품질 보고서 한 장을 올려, 에이전트가 클래스와 관계를 설계하고 사실을 인스턴스로 옮기고 골든 퀘스천으로 검증하는 과정을 따라갑니다. 마지막에 발행해서 질의에 쓸 수 있게 합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/build.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html" class="on" aria-current="page"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">온톨로지 구축<span class="chap">12</span></div>
+    <h1>문서로 온톨로지 구축하기</h1>
+    <article>
+<blockquote>
+<p>협력사 품질 보고서 한 장을 올려, 에이전트가 클래스와 관계를 설계하고 사실을 인스턴스로 옮기고 골든 퀘스천으로 검증하는 과정을 따라갑니다. 마지막에 발행해서 질의에 쓸 수 있게 합니다.</p>
+</blockquote>
+<h2 id="준비-이-장에-필요한-것">준비 — 이 장에 필요한 것<a class="anchor" href="#준비-이-장에-필요한-것" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="install.html">1장</a>의 <strong>코딩 에이전트</strong>(Claude Code 또는 Codex)가 연결돼 있어야 합니다.</li>
+<li>실습 문서: <a href="files/supplier-quality-2026-09.md">협력사 품질 현황 — 2026년 9월</a> (마크다운 한 장). 내려받아 두세요.</li>
+</ul>
+<p>문서에는 이런 내용이 문장으로 적혀 있습니다.</p>
+<blockquote>
+<p><strong>골드라인 PCB</strong> — 중국 선전에 있는 1차 협력사. PCB 기판을 공급한다. 담당자는 구매팀 김민수 대리. …
+완제품 <strong>스마트 컨트롤러 SC-100</strong>은 PCB 기판, 마그넷 코어, 전원 케이블 세 부품으로 조립한다. …
+<strong>QI-0903</strong> (9월 3일, 심각도 높음) — 골드라인 PCB가 납품한 PCB 기판에서 납땜 불량이 발견됐다. …</p>
+</blockquote>
+<p>사람은 읽으면 바로 압니다. 그런데 “납땜 불량이 난 부품은 어느 완제품에 들어가고, 그 협력사의 담당자는 누구인가?”라고 물으면, 문장 여기저기를 오가며 직접 이어 붙여야 합니다. 이것을 지도로 바꾸는 것이 이 장의 목표입니다.</p>
+<h2 id="구축의-전체-흐름">구축의 전체 흐름<a class="anchor" href="#구축의-전체-흐름" title="Permanent link">#</a></h2>
+<figure><a href="../../images/ontological-studio/os-concept-build-flow.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="온톨로지 구축의 전체 흐름 — 문서·데이터소스와 구축 의도·골든 퀘스천에서 출발해 증강 카탈로그, 스키마 설계, 추출과 원천 연결, 질문 실행을 거쳐 기준을 충족하면 검수 후 발행합니다" src="../../images/ontological-studio/os-concept-build-flow.webp" / loading="lazy" decoding="async"></a><figcaption>온톨로지 구축의 전체 흐름 — 문서·데이터소스와 구축 의도·골든 퀘스천에서 출발해 증강 카탈로그, 스키마 설계, 추출과 원천 연결, 질문 실행을 거쳐 기준을 충족하면 검수 후 발행합니다</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>에이전트가 하는 일</th>
+<th>사람이 하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>소스</td>
+<td>—</td>
+<td>문서를 올리고, 데이터소스·시스템을 고른다</td>
+</tr>
+<tr>
+<td>의도</td>
+<td>문서를 읽고 구축 의도와 골든 퀘스천 <strong>초안</strong>을 쓴다</td>
+<td>초안을 읽고 고친다, 질문을 더한다</td>
+</tr>
+<tr>
+<td>설계</td>
+<td>질문에서 필요한 클래스·관계·속성을 정한다</td>
+<td>(지켜본다)</td>
+</tr>
+<tr>
+<td>추출·적재</td>
+<td>문서의 사실을 인스턴스와 관계로 옮긴다</td>
+<td>(지켜본다)</td>
+</tr>
+<tr>
+<td>검증</td>
+<td>골든 퀘스천을 직접 실행해 답이 나오는지 본다</td>
+<td>보고서를 읽는다</td>
+</tr>
+<tr>
+<td>검수·발행</td>
+<td>—</td>
+<td>품질 검수 항목을 판단하고, 발행을 결정한다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1단계-소스와-대상">1단계 — 소스와 대상<a class="anchor" href="#1단계-소스와-대상" title="Permanent link">#</a></h2>
+<p>홈의 「온톨로지 구축」 카드를 엽니다. 왼쪽이 구축 브리프, 오른쪽이 온톨로지 그래프입니다.</p>
+<figure><a href="img/build-source.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구축의 첫 단계 「소스」 — 문서 업로드, 데이터소스, 시스템(서비스)을 근거로 고릅니다. 오른쪽은 이미 있는 예제 온톨로지의 스키마" src="img/build-source.webp" / loading="lazy" decoding="async"></a><figcaption>구축의 첫 단계 「소스」 — 문서 업로드, 데이터소스, 시스템(서비스)을 근거로 고릅니다. 오른쪽은 이미 있는 예제 온톨로지의 스키마</figcaption></figure>
+<ol class="steps">
+<li><b>소스</b>: 「파일 업로드」에 실습 문서를 끌어다 놓습니다. 이번에는 문서 하나만 씁니다. (데이터소스·시스템도 함께 고를 수 있습니다 — 문서는 내용을 파싱해 인스턴스로 적재하고, 데이터소스는 복제하지 않고 조회 시점에 가져옵니다.)</li>
+<li><b>대상</b>: 「새 스키마 생성」을 고르고 이름을 <code>협력사 품질 온톨로지</code>로 적습니다. 이미 있는 온톨로지에 더하려면 목록에서 고릅니다(추가 인제스천).</li>
+</ol>
+<figure><a href="img/demo-build-upload.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="문서를 올리고 새 스키마 이름을 적은 모습 (시연 영상의 한 장면, 밤 테마)" src="img/demo-build-upload.webp" / loading="lazy" decoding="async"></a><figcaption>문서를 올리고 새 스키마 이름을 적은 모습 (시연 영상의 한 장면, 밤 테마)</figcaption></figure>
+<h2 id="2단계-의도와-골든-퀘스천">2단계 — 의도와 골든 퀘스천<a class="anchor" href="#2단계-의도와-골든-퀘스천" title="Permanent link">#</a></h2>
+<p>「의도」로 넘어가면 에이전트가 문서를 먼저 읽고 <strong>구축 의도와 골든 퀘스천 초안</strong>을 써 줍니다(실측 약 50초). 「초안」 표시가 붙어 있으니, 읽고 고친 뒤 확정합니다.</p>
+<figure><a href="img/demo-build-draft.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트가 쓴 구축 의도와 골든 퀘스천 초안 (밤 테마)" src="img/demo-build-draft.webp" / loading="lazy" decoding="async"></a><figcaption>에이전트가 쓴 구축 의도와 골든 퀘스천 초안 (밤 테마)</figcaption></figure>
+<p>여기에 정말 묻고 싶은 질문을 하나 더 넣습니다.</p>
+<div class="hl"><pre><span></span><code>납땜 불량이 난 부품은 어느 완제품에 들어가고, 그 협력사의 담당자는 누구인가?
+</code></pre></div>
+
+<figure><a href="img/demo-build-gq.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="골든 퀘스천을 추가한 브리프 (밤 테마)" src="img/demo-build-gq.webp" / loading="lazy" decoding="async"></a><figcaption>골든 퀘스천을 추가한 브리프 (밤 테마)</figcaption></figure>
+<p>이 질문은 품질 이슈 → 부품 → 완제품, 그리고 부품 → 협력사 → 담당자를 건너야 답이 나옵니다. 이런 질문이 있어야 에이전트가 그 경로를 스키마에 만듭니다(<a href="golden.html">11장</a>).</p>
+<h2 id="3단계-구축">3단계 — 구축<a class="anchor" href="#3단계-구축" title="Permanent link">#</a></h2>
+<p>「이 브리프로 구축 시작」을 누릅니다. 에이전트가 일하는 과정이 대화창에 도구 호출로 흐릅니다. 화면에 보이는 도구 호출 하나하나가 실제로 일어난 작업입니다(실측 약 6분).</p>
+<figure><a href="img/demo-build-design.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구축 중 — 설계가 잡히면 오른쪽에 개념의 지도가 그려집니다 (밤 테마)" src="img/demo-build-design.webp" / loading="lazy" decoding="async"></a><figcaption>구축 중 — 설계가 잡히면 오른쪽에 개념의 지도가 그려집니다 (밤 테마)</figcaption></figure>
+<p>에이전트가 하는 일을 순서대로 보면:</p>
+<ol>
+<li><strong>문서 구조 파악</strong> — 제목·목록·표를 읽고 무엇이 개념이고 무엇이 사실인지 나눕니다.</li>
+<li><strong>스키마 설계</strong> — 협력사(<code>Supplier</code>), 부품(<code>Component</code>), 완제품(<code>Product</code>), 품질 이슈(<code>QualityIssue</code>), 담당자(<code>Buyer</code>), 납기 실적(<code>DeliveryPerformance</code>) 같은 클래스와 그 사이의 관계를 정합니다.</li>
+<li><strong>인스턴스 적재</strong> — “골드라인 PCB가 PCB 기판을 공급한다”는 한 문장이 노드 두 개와 관계 하나가 됩니다.</li>
+<li><strong>같은 대상 맞추기</strong> — 문서 여러 곳의 “골드라인 PCB”, “골드라인 PCB 가 납품한”이 같은 협력사인지 맞춥니다(아래 「엔티티 식별」).</li>
+<li><strong>검증</strong> — 골든 퀘스천을 직접 실행해 답이 나오는지 보고, 결과를 보고합니다.</li>
+</ol>
+<figure><a href="img/demo-build-report.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구축 보고 — 골든 퀘스천별 검증 결과와, 사람이 판단할 항목 (밤 테마)" src="img/demo-build-report.webp" / loading="lazy" decoding="async"></a><figcaption>구축 보고 — 골든 퀘스천별 검증 결과와, 사람이 판단할 항목 (밤 테마)</figcaption></figure>
+<h3 id="엔티티-식별-같은-것을-같다고-알아보기">엔티티 식별 — 같은 것을 같다고 알아보기<a class="anchor" href="#엔티티-식별-같은-것을-같다고-알아보기" title="Permanent link">#</a></h3>
+<p>문서에는 같은 대상이 여러 이름으로 나옵니다. 에이전트는 이름·코드·문맥·버전을 대조해 같은 대상을 하나로 잇고, 애매하면 사람에게 묻습니다. 원문의 표현과 출처는 버리지 않고 남깁니다.</p>
+<figure><a href="../../images/ontological-studio/os-concept-entity.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="엔티티 식별과 모호성 해소 — 문서 속 표현을 정규화해 후보를 찾고 식별키·문맥·버전으로 비교해 기존 엔티티에 연결하거나, 사람의 검토로 넘기거나, 새 엔티티로 판단합니다" src="../../images/ontological-studio/os-concept-entity.webp" / loading="lazy" decoding="async"></a><figcaption>엔티티 식별과 모호성 해소 — 문서 속 표현을 정규화해 후보를 찾고 식별키·문맥·버전으로 비교해 기존 엔티티에 연결하거나, 사람의 검토로 넘기거나, 새 엔티티로 판단합니다</figcaption></figure>
+<h3 id="데이터베이스가-소스일-때-메타데이터-증강">데이터베이스가 소스일 때 — 메타데이터 증강<a class="anchor" href="#데이터베이스가-소스일-때-메타데이터-증강" title="Permanent link">#</a></h3>
+<p>이 장에서는 문서를 썼지만, 소스로 데이터소스를 고르면 에이전트는 테이블·컬럼·키를 읽고 실제 값과 쓰임새를 살펴 <strong>업무 의미를 보강</strong>합니다. <code>TB507.C041</code> 같은 코드명 컬럼도 업무 용어로 찾을 수 있게 됩니다. 데이터는 복사하지 않고, 인스턴스는 가상 노드처럼 조회 시점에 원천에서 가져옵니다.</p>
+<figure><a href="../../images/ontological-studio/os-concept-metadata.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="메타데이터 증강 — 등록된 데이터소스의 물리 카탈로그와 구문·사용 관계 분석에 업무 의미를 더해 증강 카탈로그를 만들고 스키마 설계에 씁니다" src="../../images/ontological-studio/os-concept-metadata.webp" / loading="lazy" decoding="async"></a><figcaption>메타데이터 증강 — 등록된 데이터소스의 물리 카탈로그와 구문·사용 관계 분석에 업무 의미를 더해 증강 카탈로그를 만들고 스키마 설계에 씁니다</figcaption></figure>
+<h2 id="4단계-만들어진-온톨로지-보기">4단계 — 만들어진 온톨로지 보기<a class="anchor" href="#4단계-만들어진-온톨로지-보기" title="Permanent link">#</a></h2>
+<p>구축이 끝나면 오른쪽 「그래프」 탭에 지도가 남습니다. 「스키마」는 클래스와 관계, 「엔티티」는 인스턴스입니다. 노드를 끌어 옮기고, 위쪽 목록에서 배치(Force, Circle, Tree …)를 바꿀 수 있습니다.</p>
+<figure><a href="img/demo-build-map.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="만들어진 온톨로지 — 협력사에서 부품으로, 부품에서 완제품으로, 이슈에서 부품으로 길이 나 있습니다 (밤 테마)" src="img/demo-build-map.webp" / loading="lazy" decoding="async"></a><figcaption>만들어진 온톨로지 — 협력사에서 부품으로, 부품에서 완제품으로, 이슈에서 부품으로 길이 나 있습니다 (밤 테마)</figcaption></figure>
+<p>「정보」 탭에서는 스키마를 목록으로 보고 고칠 수 있습니다. 클래스마다 인스턴스 수가 보이고, ✎로 속성을 더하거나 이름을 바꾸고, 「+ 클래스 추가」, 「+ 관계 추가」로 직접 다듬을 수 있습니다.</p>
+<figure><a href="img/build-schema.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="「정보」 탭 — 예제 온톨로지의 클래스 7개(괄호 안은 인스턴스 수)와 관계 6개" src="img/build-schema.webp" / loading="lazy" decoding="async"></a><figcaption>「정보」 탭 — 예제 온톨로지의 클래스 7개(괄호 안은 인스턴스 수)와 관계 6개</figcaption></figure>
+<h2 id="5단계-검수와-발행">5단계 — 검수와 발행<a class="anchor" href="#5단계-검수와-발행" title="Permanent link">#</a></h2>
+<p><strong>품질 검수</strong> 카드에는 구축이 남긴, 사람이 판단할 것들이 모입니다(원문과 다른 값, 확신이 낮은 추출, 원천 간 충돌 등). 맞으면 확정하고, 틀리면 고치거나 기각합니다. AI가 임의로 확정하지 않습니다.</p>
+<figure><a href="img/quality.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="품질 검수 — 판단할 항목이 없으면 0건으로 나옵니다" src="img/quality.webp" / loading="lazy" decoding="async"></a><figcaption>품질 검수 — 판단할 항목이 없으면 0건으로 나옵니다</figcaption></figure>
+<p>그리고 <strong>발행</strong>입니다. 발행해야 질의·액션·앱에서 이 온톨로지를 씁니다. 발행할지는 사람이 정합니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">지금 판에서는 대화로 발행합니다</p>
+<p>이 판의 화면에는 발행 버튼이 없습니다. 골든 커맨드 없이 문서로만 구축하면 에이전트가 스스로 발행하지 않으므로, 구축 대화창에 이렇게 지시하세요.</p>
+<p><code>text
+발행해 줘</code></p>
+<p>에이전트가 질의에서 쓸 수 있게 내보내고, 무엇이 반영됐는지 보고합니다(실측 약 50초).</p>
+</div>
+<figure><a href="img/demo-build-publish.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="대화로 발행을 지시하고 에이전트가 반영 결과를 보고한 모습 (밤 테마)" src="img/demo-build-publish.webp" / loading="lazy" decoding="async"></a><figcaption>대화로 발행을 지시하고 에이전트가 반영 결과를 보고한 모습 (밤 테마)</figcaption></figure>
+<h2 id="6단계-물어보기">6단계 — 물어보기<a class="anchor" href="#6단계-물어보기" title="Permanent link">#</a></h2>
+<p>이제 「질의·액션」 탭을 새로 열고 아까의 골든 퀘스천을 그대로 던져 봅니다. 무엇을 어떤 순서로 찾으라고는 알려 주지 않습니다.</p>
+<div class="hl"><pre><span></span><code>납땜 불량이 난 부품은 어느 완제품에 들어가고, 그 협력사의 담당자는 누구인가?
+</code></pre></div>
+
+<figure><a href="img/demo-build-answer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답 — 납땜 불량이 난 PCB 기판은 스마트 컨트롤러 SC-100에 들어가고, 골드라인 PCB의 담당자는 김민수 대리. 근거가 된 사실이 함께 적힙니다 (밤 테마)" src="img/demo-build-answer.webp" / loading="lazy" decoding="async"></a><figcaption>답 — 납땜 불량이 난 PCB 기판은 스마트 컨트롤러 SC-100에 들어가고, 골드라인 PCB의 담당자는 김민수 대리. 근거가 된 사실이 함께 적힙니다 (밤 테마)</figcaption></figure>
+<p>답과 함께 <strong>어느 사실을 근거로 삼았는지</strong>가 적힙니다. 질의 화면은 <a href="ask.html">13장</a>에서 자세히 봅니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">에이전트의 답은 매번 조금씩 다릅니다</p>
+<p>같은 문서로 다시 구축하면 클래스 이름이나 관계 이름이 조금 다르게 나올 수 있습니다. LLM이 설계하기 때문입니다. 그래서 골든 퀘스천이 중요합니다 — 이름이 달라도 <strong>질문에 같은 답을 내는지</strong>로 품질을 잽니다.</p>
+</div>
+<div class="admonition exercise">
+<p class="admonition-title">실습 과제</p>
+<ol>
+<li>실습 문서로 직접 구축하고 발행한 뒤, 골든 퀘스천에 같은 답(SC-100, 김민수 대리)이 나오는지 확인하세요.</li>
+<li>문서에 협력사 한 곳을 더 적어(예: “<strong>한빛정밀</strong> — 경기도 화성의 1차 협력사. 마그넷 코어를 공급한다. 담당자는 박서준 과장.”) 같은 스키마에 <strong>추가 인제스천</strong>하고, “마그넷 코어를 공급하는 협력사와 담당자는?”이라고 물어보세요.</li>
+<li>포털에서 그래프를 <code>ontology</code>로 바꾸고, 여러분이 만든 클래스를 Cypher로 조회해 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>도움말</summary>
+<p>2번: 대상 단계에서 앞서 만든 스키마를 고르면 「(추가 인제스천)」으로 표시됩니다. 같은 클래스 이름이 이미 있으면 그 클래스에 인스턴스가 더해집니다.</p>
+<p>3번: 클래스 이름은 에이전트가 정하므로 포털 왼쪽 ENTITY TYPES에서 확인한 뒤 씁니다. 예: <code>MATCH (s:Supplier)-[r]-&gt;(c:Component) RETURN s.name, type(r), c.name</code> — 관계 이름을 모르면 이처럼 <code>[r]</code>로 받고 <code>type(r)</code>로 확인할 수 있습니다(저장된 관계에서는 이름 없는 관계 패턴도 동작합니다).</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="golden.html"><span>이전</span>골든 퀘스천과 골든 커맨드</a><a class="next" href="ask.html"><span>다음</span>질의하기 — 근거와 함께 답 받기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#준비-이-장에-필요한-것">준비 — 이 장에 필요한 것</a></li><li><a href="#구축의-전체-흐름">구축의 전체 흐름</a></li><li><a href="#1단계-소스와-대상">1단계 — 소스와 대상</a></li><li><a href="#2단계-의도와-골든-퀘스천">2단계 — 의도와 골든 퀘스천</a></li><li><a href="#3단계-구축">3단계 — 구축</a><ul><li><a href="#엔티티-식별-같은-것을-같다고-알아보기">엔티티 식별 — 같은 것을 같다고 알아보기</a></li><li><a href="#데이터베이스가-소스일-때-메타데이터-증강">데이터베이스가 소스일 때 — 메타데이터 증강</a></li></ul></li><li><a href="#4단계-만들어진-온톨로지-보기">4단계 — 만들어진 온톨로지 보기</a></li><li><a href="#5단계-검수와-발행">5단계 — 검수와 발행</a></li><li><a href="#6단계-물어보기">6단계 — 물어보기</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

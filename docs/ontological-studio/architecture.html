@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontological Studio의 구성 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="앱 안에서 어떤 부품이 어떤 일을 하는지, 데이터가 어디에 있고 어떻게 흐르는지 그림 한 장으로 정리합니다. 이 장을 알아 두면 뒤의 실습에서 “지금 무엇을 건드리는지”가 보입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/architecture.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ontological Studio의 구성 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="앱 안에서 어떤 부품이 어떤 일을 하는지, 데이터가 어디에 있고 어떻게 흐르는지 그림 한 장으로 정리합니다. 이 장을 알아 두면 뒤의 실습에서 “지금 무엇을 건드리는지”가 보입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/architecture.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html" class="on" aria-current="page"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">온톨로지 개념<span class="chap">4</span></div>
+    <h1>Ontological Studio의 구성</h1>
+    <article>
+<blockquote>
+<p>앱 안에서 어떤 부품이 어떤 일을 하는지, 데이터가 어디에 있고 어떻게 흐르는지 그림 한 장으로 정리합니다. 이 장을 알아 두면 뒤의 실습에서 “지금 무엇을 건드리는지”가 보입니다.</p>
+</blockquote>
+<h2 id="부품-지도">부품 지도<a class="anchor" href="#부품-지도" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code> ┌──────────────────────── Ontological Studio (데스크톱 앱) ────────────────────────┐
+ │                                                                                    │
+ │  화면: 홈 · 온톨로지 구축 · 질의·액션 · 데이터소스 · 온톨로지 앱 · 시스템 등록      │
+ │        Ontological Portal (Cypher 콘솔)                                            │
+ │          │                         │                                 │             │
+ │          ▼                         ▼                                 ▼             │
+ │   Studio 백엔드·에이전트 ──Bolt──▶ Ontological DB ◀──Bolt── 포털    액션 실행기    │
+ │   (구축·질의·대시보드)          (그래프 엔진 = PostgreSQL 확장)   (kinetic-action) │
+ │                                    │   데이터 패브릭                       │       │
+ │                                    ▼                                       ▼       │
+ │                        원천 DB: ERP · WMS · CRM  ◀── 고친다 ──  예제 업무 시스템   │
+ │                        (복사하지 않고 그 자리에서 읽음)          (ERP·WMS·CRM API) │
+ └────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>부품</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ontological DB</strong></td>
+<td>온톨로지를 저장하고 Cypher를 실행하는 그래프 데이터베이스입니다. PostgreSQL의 확장이라, 그래프 질의가 PostgreSQL의 SQL로 번역되어 실행됩니다. 바이템포럴(시간 여행), 권한, 스키마 진화도 여기서 처리합니다.</td>
+</tr>
+<tr>
+<td><strong>데이터 패브릭</strong></td>
+<td>Ontological DB 안의 기능입니다. 다른 데이터베이스의 테이블을 <strong>복사하지 않고</strong> 그래프의 노드처럼 보이게 합니다(가상 노드).</td>
+</tr>
+<tr>
+<td><strong>Bolt 게이트웨이</strong></td>
+<td>Neo4j와 같은 Bolt 프로토콜 입구입니다. Studio와 포털은 모두 이 길로 그래프를 읽고 씁니다.</td>
+</tr>
+<tr>
+<td><strong>Studio</strong></td>
+<td>온톨로지 구축·질의·대시보드 화면과 그 뒤의 에이전트입니다.</td>
+</tr>
+<tr>
+<td><strong>액션 실행기</strong></td>
+<td>액션을 계획하고, 정책을 판정하고, 사람의 승인을 받아 업무 시스템 API를 부르고, 취소하면 역순으로 되돌립니다.</td>
+</tr>
+<tr>
+<td><strong>예제 업무 시스템</strong></td>
+<td>구매 ERP·물류 WMS·고객 CRM. 각자 다른 인증 방식을 쓰는 작은 REST 서비스입니다. 액션이 이들을 부르면, 원천 DB의 값이 바뀝니다.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="그래프가-두-개-있습니다">그래프가 두 개 있습니다<a class="anchor" href="#그래프가-두-개-있습니다" title="Permanent link">#</a></h2>
+<p>Ontological DB 안에는 여러 <strong>그래프</strong>(독립된 데이터 공간)를 둘 수 있습니다. 처음 설치하면 두 개가 보입니다.</p>
+<table>
+<thead>
+<tr>
+<th>그래프</th>
+<th>무엇이 들어 있나</th>
+<th>주로 쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sample</code></td>
+<td>예제 원천 DB의 테이블을 그대로 노출한 <strong>가상 노드와 가상 관계</strong></td>
+<td>데이터소스 탭, 포털의 Cypher 실습(4부)</td>
+</tr>
+<tr>
+<td><code>ontology</code></td>
+<td>Studio가 구축한 <strong>온톨로지</strong>: 클래스 정의, 인스턴스, 관계, 액션 정의</td>
+<td>질의·액션, 온톨로지 앱(5~7부)</td>
+</tr>
+</tbody>
+</table>
+<p><code>sample</code>은 “원천을 있는 그대로 비춘 거울”이고, <code>ontology</code>는 “업무 관점으로 정리한 지식”입니다. 예를 들어 <code>ontology</code>에는 원천에 없는 <code>SHIPPED_BY</code>(선적→협력사) 관계가 있고, 클래스와 속성마다 설명이 붙어 있으며, 액션이 달려 있습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">왜 나눠 두나요?</p>
+<p>원천의 테이블 이름과 온톨로지의 클래스 이름이 같은 일이 많습니다(<code>Supplier</code>). 둘을 한 그래프에 두면 읽기 전용 가상 노드와 구축한 노드가 부딪힙니다. 그래서 예제는 가상 노드를 <code>sample</code> 그래프에 따로 둡니다.</p>
+</div>
+<h2 id="질문-하나가-지나가는-길">질문 하나가 지나가는 길<a class="anchor" href="#질문-하나가-지나가는-길" title="Permanent link">#</a></h2>
+<p>“3일 넘게 늦은 선적은?”이라는 질문이 질의·액션 탭에 들어오면:</p>
+<ol>
+<li>에이전트가 발행된 온톨로지의 스키마를 읽습니다(어떤 클래스·관계·속성이 있나).</li>
+<li>Cypher를 만들어 Bolt로 Ontological DB에 보냅니다.</li>
+<li>Ontological DB가 Cypher를 SQL로 번역해 실행합니다. 데이터 패브릭이 걸린 부분은 원천 DB에 필요한 조건만 붙여 보냅니다.</li>
+<li>결과와 함께 “어느 노드의 어떤 사실을 근거로 삼았는지”를 답에 적습니다.</li>
+</ol>
+<h2 id="지시-하나가-지나가는-길">지시 하나가 지나가는 길<a class="anchor" href="#지시-하나가-지나가는-길" title="Permanent link">#</a></h2>
+<p>“그 선적을 긴급 처리해 줘”라는 지시는 다르게 흐릅니다.</p>
+<ol>
+<li>에이전트가 이 지시에 맞는 <strong>액션</strong>(<code>Shipment.expediteShipment</code>)을 찾습니다.</li>
+<li>액션 실행기에 <strong>계획</strong>을 요청합니다. 실행기는 대상 선적을 고르고, 대상마다 <strong>정책</strong>으로 허용·거부를 판정합니다. 아직 아무것도 바뀌지 않습니다.</li>
+<li><strong>사람이 계획 카드에서 승인</strong>합니다.</li>
+<li>실행기가 업무 시스템 API를 차례로 부릅니다(WMS 우선순위 변경 → ERP 납기 독촉).</li>
+<li>원천 DB 값이 바뀌고, 데이터 패브릭이 그것을 그대로 읽으므로 그래프에서도 바로 보입니다.</li>
+<li>“취소해 줘”라고 하면 성공한 단계를 <strong>역순으로 되돌립니다</strong>(보상).</li>
+</ol>
+<p>에이전트도, 앱도 업무 시스템을 직접 부르지 않습니다. 언제나 이 실행기를 거칩니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>포털에서 <code>MATCH (s:Supplier) RETURN s</code> 를 실행했는데, 그래프 선택이 <code>ontology</code>일 때와 <code>sample</code>일 때 결과가 어디서 오는지 각각 설명해 보세요.</li>
+<li>액션을 실행한 결과를 확인하려면 업무 시스템에 따로 로그인해야 할까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li><code>sample</code>이면 ERP의 <code>erp.supplier</code> 테이블을 그 자리에서 읽은 가상 노드가, <code>ontology</code>면 구축 때 온톨로지에 적재된 <code>Supplier</code> 인스턴스가 나옵니다.</li>
+<li>아니요. 업무 시스템은 원천 DB를 고치고, 데이터 패브릭은 그 원천을 질의할 때마다 읽으므로 데이터소스 탭이나 포털(<code>sample</code> 그래프)에서 바로 확인할 수 있습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="ontology-basics.html"><span>이전</span>온톨로지란 무엇인가</a><a class="next" href="datasource.html"><span>다음</span>데이터소스 연결하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#부품-지도">부품 지도</a></li><li><a href="#그래프가-두-개-있습니다">그래프가 두 개 있습니다</a></li><li><a href="#질문-하나가-지나가는-길">질문 하나가 지나가는 길</a></li><li><a href="#지시-하나가-지나가는-길">지시 하나가 지나가는 길</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

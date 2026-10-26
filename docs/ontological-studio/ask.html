@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>질의하기 — 근거와 함께 답 받기 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="「질의·액션」 탭에서 온톨로지에 말로 묻고, 답에 붙은 근거를 읽는 법을 익힙니다. 예제 온톨로지 「공급망 운영 (예제)」로 실습합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/ask.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="질의하기 — 근거와 함께 답 받기 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="「질의·액션」 탭에서 온톨로지에 말로 묻고, 답에 붙은 근거를 읽는 법을 익힙니다. 예제 온톨로지 「공급망 운영 (예제)」로 실습합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/ask.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html" class="on" aria-current="page"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">온톨로지 구축<span class="chap">13</span></div>
+    <h1>질의하기 — 근거와 함께 답 받기</h1>
+    <article>
+<blockquote>
+<p>「질의·액션」 탭에서 온톨로지에 말로 묻고, 답에 붙은 근거를 읽는 법을 익힙니다. 예제 온톨로지 「공급망 운영 (예제)」로 실습합니다.</p>
+</blockquote>
+<h2 id="질의액션-탭">질의·액션 탭<a class="anchor" href="#질의액션-탭" title="Permanent link">#</a></h2>
+<p>홈의 「질의·액션」 카드를 엽니다. 가운데에 예시 질문이, 오른쪽에 발행된 온톨로지의 그래프가 보입니다.</p>
+<figure><a href="img/qa-start.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="질의·액션 첫 화면 — 예제 온톨로지의 골든 퀘스천·골든 커맨드가 예시로 나옵니다" src="img/qa-start.webp" / loading="lazy" decoding="async"></a><figcaption>질의·액션 첫 화면 — 예제 온톨로지의 골든 퀘스천·골든 커맨드가 예시로 나옵니다</figcaption></figure>
+<p>이 탭은 <strong>질문</strong>과 <strong>지시</strong>를 함께 받습니다. 질문하면 답하고, 지시하면 액션을 계획합니다(지시는 <a href="actions-run.html">16장</a>). 질문만 했을 때는 아무것도 바뀌지 않습니다.</p>
+<h2 id="물어보기">물어보기<a class="anchor" href="#물어보기" title="Permanent link">#</a></h2>
+<p>예시 질문을 누르거나 직접 씁니다.</p>
+<div class="hl"><pre><span></span><code>3일 넘게 늦어진 입고 선적은 어떤 것이고, 어느 협력사 건이야?
+</code></pre></div>
+
+<p>에이전트는 먼저 발행된 온톨로지의 스키마를 읽고, Cypher로 그래프를 조회해 답을 만듭니다(실측 약 30초). 오른쪽 그래프에서는 답에 쓰인 노드가 강조됩니다.</p>
+<figure><a href="img/qa-answer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답 — SHP-03(9일)과 SHP-02(7일), 협력사 Shenzhen Goldline PCB. 아래에 근거가 적혀 있고, 오른쪽 그래프에 두 선적이 강조됩니다" src="img/qa-answer.webp" / loading="lazy" decoding="async"></a><figcaption>답 — SHP-03(9일)과 SHP-02(7일), 협력사 Shenzhen Goldline PCB. 아래에 근거가 적혀 있고, 오른쪽 그래프에 두 선적이 강조됩니다</figcaption></figure>
+<h2 id="답을-읽는-법">답을 읽는 법<a class="anchor" href="#답을-읽는-법" title="Permanent link">#</a></h2>
+<p>좋은 답에는 세 부분이 있습니다.</p>
+<ol>
+<li><strong>결론</strong> — “3일 넘게 늦어진 선적은 SHP-03(9일)과 SHP-02(7일)로, 모두 Shenzhen Goldline PCB의 발주 건입니다.”</li>
+<li><strong>근거</strong> — “그래프의 <code>Shipment</code> 노드 8건 중 <code>delay_days &gt; 3</code>인 노드는 2건입니다. 협력사와 발주는 <code>SHIPPED_BY → Supplier</code>, <code>SHIPS → PurchaseOrder</code> 관계를 따라가 찾았습니다.”</li>
+<li><strong>경계</strong> — “SHP-06은 정확히 3일이라 ‘3일 넘게’ 기준에서 뺐습니다. 3일 이상으로 보시면 3건입니다.”, “지금은 질문에만 답했고, 아무것도 바꾸지 않았습니다.”</li>
+</ol>
+<p>근거가 있으니 답을 <strong>검산</strong>할 수 있습니다. 같은 질문을 포털에서 Cypher로 쳐 보면 같은 결과가 나와야 합니다(8장).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">질의 화면의 데이터는 ‘발행된 온톨로지’입니다</p>
+<p>질의·액션 탭은 <code>ontology</code> 그래프의 발행된 온톨로지를 봅니다. 예제의 인스턴스는 처음 실행할 때 원천에서 읽어 적재한 것이라, 원천이 바뀐 직후에는 값이 다를 수 있습니다. 에이전트도 답에 “이 값들은 발행된 스냅숏이라 실제 시스템의 지금 상태와 다를 수 있다”고 적습니다. 액션이 바꾼 값(예: 선적 우선순위)은 실행할 때 온톨로지에도 되써 줍니다.</p>
+</div>
+<h2 id="이어서-묻기">이어서 묻기<a class="anchor" href="#이어서-묻기" title="Permanent link">#</a></h2>
+<p>같은 대화에서 이어 물으면 앞의 맥락을 씁니다.</p>
+<div class="hl"><pre><span></span><code>그 협력사의 다른 미결 발주는?
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>PCB 납땜 불량 클레임은 어느 고객의 어떤 주문에서 나왔어?
+</code></pre></div>
+
+<p>두 번째 질문은 첫 질문과 전혀 다른 관계(<code>Claim → SalesOrder → Customer</code>)를 지나지만, 새로 설계할 것이 없습니다. 이미 있는 관계를 따라갈 뿐입니다 — <a href="ontology-basics.html">3장</a>에서 말한 “다음 질문”의 힘입니다.</p>
+<h2 id="대화-관리">대화 관리<a class="anchor" href="#대화-관리" title="Permanent link">#</a></h2>
+<ul>
+<li>레일의 「워크스페이스」를 펼치면 지난 대화 목록이 있고, 새 대화를 시작할 수 있습니다.</li>
+<li>홈의 최근 항목에도 대화가 남습니다. 누르면 그 대화로 바로 갑니다.</li>
+<li>문서를 끌어다 놓으면(📎) 대화에 첨부해 함께 물을 수 있습니다.</li>
+</ul>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<p>질의·액션 탭에서 다음을 물어보고, 답의 근거를 포털의 Cypher로 검산하세요.</p>
+<ol>
+<li>“Shenzhen Goldline PCB의 미결 발주는 무엇인가?”</li>
+<li>“PCB 납땜 불량 클레임은 어느 고객의 어떤 주문에서 나왔나?”</li>
+<li>“안전재고보다 재고가 적은 품목이 있어?” — 이 질문에 답이 나오나요? 안 나온다면 왜일까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li>PO-001($82,000), PO-002($41,000). 검산: <code>MATCH (po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier {name:'Shenzhen Goldline PCB'}) WHERE po.status = 'OPEN' RETURN po.po_id, po.amount_usd</code></li>
+<li>Tokyo Devices의 판매 주문 SO-05 (클레임 T-3).</li>
+<li>예제 온톨로지에는 일별 재고(<code>wms.stock_daily</code>)가 클래스로 들어 있지 않으므로 에이전트는 “온톨로지에 재고 정보가 없다”고 답해야 맞습니다. 답에 필요한 개념이 없으면 <strong>구축 의도와 골든 퀘스천에 이 질문을 넣고 다시 구축</strong>하면 됩니다. 이것이 온톨로지가 자라는 방식입니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="build.html"><span>이전</span>문서로 온톨로지 구축하기</a><a class="next" href="systems.html"><span>다음</span>업무 시스템 등록하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#질의액션-탭">질의·액션 탭</a></li><li><a href="#물어보기">물어보기</a></li><li><a href="#답을-읽는-법">답을 읽는 법</a></li><li><a href="#이어서-묻기">이어서 묻기</a></li><li><a href="#대화-관리">대화 관리</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

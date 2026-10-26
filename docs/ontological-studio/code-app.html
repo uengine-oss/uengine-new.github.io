@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>코드 앱 — 에이전트가 코드를 쓰는 앱 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="같은 입력창에서 「코드 앱」을 고르면, 코딩 에이전트가 온톨로지에 질의를 직접 시험하며 업무 앱의 코드를 씁니다. 만들어진 코드를 읽고, 말로 고치고, 앱 탭으로 엽니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/code-app.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="코드 앱 — 에이전트가 코드를 쓰는 앱 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="같은 입력창에서 「코드 앱」을 고르면, 코딩 에이전트가 온톨로지에 질의를 직접 시험하며 업무 앱의 코드를 씁니다. 만들어진 코드를 읽고, 말로 고치고, 앱 탭으로 엽니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/code-app.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html" class="on" aria-current="page"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">애플리케이션<span class="chap">18</span></div>
+    <h1>코드 앱 — 에이전트가 코드를 쓰는 앱</h1>
+    <article>
+<blockquote>
+<p>같은 입력창에서 「코드 앱」을 고르면, 코딩 에이전트가 온톨로지에 질의를 직접 시험하며 업무 앱의 코드를 씁니다. 만들어진 코드를 읽고, 말로 고치고, 앱 탭으로 엽니다.</p>
+</blockquote>
+<h2 id="무엇이-만들어지나">무엇이 만들어지나<a class="anchor" href="#무엇이-만들어지나" title="Permanent link">#</a></h2>
+<p>코드 앱은 빌드가 필요 없는 작은 웹 앱입니다.</p>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>화면의 뼈대. 런타임(<code>/apps/_runtime/…</code>)을 불러옵니다.</td>
+</tr>
+<tr>
+<td><code>app.js</code></td>
+<td>Vue 3 앱 코드. 온톨로지 질의와 화면 로직</td>
+</tr>
+<tr>
+<td><code>style.css</code></td>
+<td>화면 꾸밈. 색은 테마 변수(<code>--og-*</code>)로만 칠합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>앱이 쓰는 라이브러리(Vue 3, ECharts)와 SDK(<code>og.js</code>)는 Ontological Studio가 싣고 있어서, 인터넷 없이도 뜹니다. 데이터는 <strong>읽기 전용 Cypher</strong>로만 가져옵니다.</p>
+<h2 id="따라-하기-지연-선적-보드">따라 하기 — 지연 선적 보드<a class="anchor" href="#따라-하기-지연-선적-보드" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>「온톨로지 앱」 화면에서 「코드 앱」을 고르고, 앱 이름을 <code>지연 선적 보드</code>로 적습니다.</li>
+<li>입력창에 이렇게 적습니다(@는 멘션으로):<br><code>@Shipment 중 지연된 것을 지연일 순으로 보여 주고, 각 행에 그 선적의 @PurchaseOrder 와 @Supplier 이름을 함께 보여 주는 보드를 만들어 줘. 위에는 지연 건수와 미결 발주 금액 합계를 카드로.</code></li>
+<li>「코드로 만들기」를 누릅니다.</li>
+</ol>
+<figure><a href="img/code-prompt.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="코드 앱 요청 — 같은 멘션 입력창에서 「코드 앱」을 고른 모습" src="img/code-prompt.webp" / loading="lazy" decoding="async"></a><figcaption>코드 앱 요청 — 같은 멘션 입력창에서 「코드 앱」을 고른 모습</figcaption></figure>
+<p>코딩 에이전트(여기서는 Claude Code)가 앱 폴더에서 일을 시작합니다. 왼쪽에 무엇을 하는지가 그대로 흐릅니다.</p>
+<ol>
+<li><strong>질의를 먼저 시험합니다</strong> — 온톨로지에 Cypher를 직접 던져 데이터 모양을 확인합니다(「질의 시험 · … 4행」).</li>
+<li><strong>파일을 씁니다</strong> — <code>index.html</code>, <code>app.js</code>, <code>style.css</code>.</li>
+<li><strong>문법을 검사합니다</strong> — <code>node --check app.js</code>.</li>
+<li><strong>보고합니다</strong> — 무엇을 만들었고, 어떤 클래스와 관계를 읽는지, 못 한 것은 무엇인지.</li>
+</ol>
+<figure><a href="img/code-preview.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="2분 뒤 — 왼쪽에 에이전트의 보고, 오른쪽 미리보기에 실제 온톨로지 데이터로 채워진 보드" src="img/code-preview.webp" / loading="lazy" decoding="async"></a><figcaption>2분 뒤 — 왼쪽에 에이전트의 보고, 오른쪽 미리보기에 실제 온톨로지 데이터로 채워진 보드</figcaption></figure>
+<p>실측으로 121초가 걸렸습니다. 보고서를 읽어 보면 에이전트가 데이터의 이상까지 짚었습니다 — “SHP-08은 PO-999를 가리키지만 그런 발주가 온톨로지에 없어 연결이 비어 있습니다.” <a href="cypher-relations.html">8장</a>에서 OPTIONAL MATCH로 찾았던 그 선적입니다.</p>
+<h2 id="코드-읽기">코드 읽기<a class="anchor" href="#코드-읽기" title="Permanent link">#</a></h2>
+<p>「파일」 탭에서 코드를 봅니다. <code>app.js</code>의 핵심은 Cypher 문자열과 <code>query()</code> 호출입니다(아래는 실제로 만들어진 코드에서 몇 줄을 줄여 옮긴 것입니다).</p>
+<figure><a href="img/code-files.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="「파일」 탭 — index.html·app.js·style.css" src="img/code-files.webp" / loading="lazy" decoding="async"></a><figcaption>「파일」 탭 — index.html·app.js·style.css</figcaption></figure>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createApp</span><span class="p">,</span><span class="w"> </span><span class="nx">ref</span><span class="p">,</span><span class="w"> </span><span class="nx">computed</span><span class="p">,</span><span class="w"> </span><span class="nx">onMounted</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/vue.js&#39;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+
+<span class="c1">// 지연된 선적 — 싣고 오는 발주(SHIPS)와 보낸 협력사(SHIPPED_BY)를 함께 읽는다.</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">Q_DELAYED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">MATCH (s:Shipment) WHERE s.delay_days &gt; 0</span>
+<span class="sb">OPTIONAL MATCH (s:Shipment)-[:SHIPS]-&gt;(p:PurchaseOrder)</span>
+<span class="sb">OPTIONAL MATCH (s:Shipment)-[:SHIPPED_BY]-&gt;(v:Supplier)</span>
+<span class="sb">OPTIONAL MATCH (p:PurchaseOrder)-[:ORDERED_FROM]-&gt;(pv:Supplier)</span>
+<span class="sb">RETURN s.shipment_no AS shipment_no, s.delay_days AS delay_days, s.eta AS eta,</span>
+<span class="sb">       s.ship_status AS ship_status, p.po_id AS po_id, p.amount_usd AS po_amount,</span>
+<span class="sb">       v.name AS supplier, pv.name AS po_supplier</span>
+<span class="sb">ORDER BY delay_days DESC`</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">Q_OPEN_PO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">MATCH (p:PurchaseOrder) WHERE p.status = $status</span>
+<span class="sb">RETURN count(p) AS n, sum(p.amount_usd) AS total`</span>
+
+<span class="c1">// …</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">delayed</span><span class="p">,</span><span class="w"> </span><span class="nx">open</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+<span class="w">  </span><span class="nx">query</span><span class="p">(</span><span class="nx">Q_DELAYED</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">query</span><span class="p">(</span><span class="nx">Q_OPEN_PO</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;OPEN&#39;</span><span class="w"> </span><span class="p">}),</span>
+<span class="p">])</span>
+</code></pre></div>
+
+<p>4부에서 배운 Cypher가 그대로 들어 있습니다. <code>OPTIONAL MATCH</code>로 짝이 없는 선적도 남기고, <code>$status</code> 같은 <strong>매개변수</strong>로 값을 따로 넘깁니다. 코드 앱은 <code>ontology</code> 그래프(발행된 온톨로지)를 읽으므로, <code>sample</code>에는 없는 <code>SHIPPED_BY</code> 관계도 씁니다.</p>
+<h2 id="말로-고치기">말로 고치기<a class="anchor" href="#말로-고치기" title="Permanent link">#</a></h2>
+<p>왼쪽 아래 입력창에 고칠 점을 말하면, <strong>같은 에이전트 세션</strong>이 이어서 고치고 미리보기가 다시 뜹니다. 멘션도 됩니다.</p>
+<div class="hl"><pre><span></span><code>지연이 3일 넘는 @Shipment 은 빨간 배지로 강조하고, 맨 위에 전체 미결 금액 합계를 크게 보여 줘
+</code></pre></div>
+
+<p>시연에서는 이런 수정이 약 70초 걸렸습니다. 상단의 「완료 · 수정 2회」처럼 몇 번 고쳤는지가 보입니다.</p>
+<h2 id="앱-탭으로-열기">앱 탭으로 열기<a class="anchor" href="#앱-탭으로-열기" title="Permanent link">#</a></h2>
+<p>오른쪽 위 「앱 탭으로 열기」를 누르면 만든 앱이 Studio 옆에 독립된 탭으로 뜹니다. 업무 화면처럼 쓰면 됩니다. 홈의 최근 항목에도 남습니다.</p>
+<h2 id="에이전트가-지키는-규칙">에이전트가 지키는 규칙<a class="anchor" href="#에이전트가-지키는-규칙" title="Permanent link">#</a></h2>
+<p>코딩 에이전트는 앱 폴더의 <code>AGENTS.md</code>(Claude Code는 <code>CLAUDE.md</code>) 규칙을 따릅니다. 주요 내용:</p>
+<ul>
+<li>이 폴더 하나가 앱 하나. 폴더 밖을 읽거나 고치지 않는다.</li>
+<li>빌드 도구(npm, Vite)와 외부 CDN을 쓰지 않는다 — 오프라인에서도 떠야 한다.</li>
+<li>데이터는 온톨로지에서만. <strong>목 데이터·하드코딩 금지</strong>, 없는 것은 없다고 화면에 쓴다.</li>
+<li>질의는 쓰기 전에 반드시 직접 시험한다.</li>
+<li>값을 바꾸는 일은 <strong>액션 버튼</strong>으로만(<a href="app-actions.html">20장</a>).</li>
+<li>낮/밤 두 테마에서 모두 읽혀야 한다. 불러오는 중·빈 결과·오류를 각각 보여 준다.</li>
+<li>끝나면 한국어로 무엇을 만들었는지 보고하고, 못 한 것은 못 했다고 쓴다.</li>
+</ul>
+<div class="admonition exercise">
+<p class="admonition-title">실습 과제</p>
+<ol>
+<li>“협력사별 미결 발주 금액과 늦어지는 선적을 한눈에 보는 협력사 리스크 보드. 협력사 카드를 누르면 그 협력사의 발주와 선적 목록이 열리게”를 코드 앱으로 만들어 보세요.</li>
+<li>만들어진 <code>app.js</code>에서 Cypher를 하나 골라 포털(그래프 <code>ontology</code>)에 붙여 넣고 실행해, 앱의 숫자와 같은지 확인하세요.</li>
+<li>말로 한 가지 고쳐 보고, 「파일」 탭에서 무엇이 바뀌었는지 찾아보세요.</li>
+</ol>
+</div>
+    </article>
+    <nav class="pager"><a class="prev" href="dashboard.html"><span>이전</span>대시보드 앱 — 말로 만드는 화면</a><a class="next" href="sdk.html"><span>다음</span>코드 앱 SDK — 직접 읽고 고치기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇이-만들어지나">무엇이 만들어지나</a></li><li><a href="#따라-하기-지연-선적-보드">따라 하기 — 지연 선적 보드</a></li><li><a href="#코드-읽기">코드 읽기</a></li><li><a href="#말로-고치기">말로 고치기</a></li><li><a href="#앱-탭으로-열기">앱 탭으로 열기</a></li><li><a href="#에이전트가-지키는-규칙">에이전트가 지키는 규칙</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

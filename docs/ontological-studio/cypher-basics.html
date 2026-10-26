@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cypher 기초 — 노드를 찾고 거르기 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="Ontological Portal을 열고, 그래프 질의 언어 Cypher의 기본 문장 MATCH·WHERE·RETURN·ORDER BY·LIMIT를 예제 데이터로 하나씩 실행해 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/cypher-basics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cypher 기초 — 노드를 찾고 거르기 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="Ontological Portal을 열고, 그래프 질의 언어 Cypher의 기본 문장 MATCH·WHERE·RETURN·ORDER BY·LIMIT를 예제 데이터로 하나씩 실행해 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/cypher-basics.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html" class="on" aria-current="page"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Cypher 익히기<span class="chap">7</span></div>
+    <h1>Cypher 기초 — 노드를 찾고 거르기</h1>
+    <article>
+<blockquote>
+<p>Ontological Portal을 열고, 그래프 질의 언어 Cypher의 기본 문장 MATCH·WHERE·RETURN·ORDER BY·LIMIT를 예제 데이터로 하나씩 실행해 봅니다.</p>
+</blockquote>
+<h2 id="cypher는-그림으로-쓰는-질의">Cypher는 그림으로 쓰는 질의<a class="anchor" href="#cypher는-그림으로-쓰는-질의" title="Permanent link">#</a></h2>
+<p>Cypher는 그래프를 <strong>그림처럼</strong> 적는 질의 언어입니다. Neo4j에서 시작해 지금은 ISO 표준 그래프 질의 언어(GQL)의 바탕이 되었습니다.</p>
+<table>
+<thead>
+<tr>
+<th>그림</th>
+<th>Cypher</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>○</td>
+<td><code>(s:Supplier)</code></td>
+<td><code>Supplier</code> 라벨을 가진 노드 하나, 이름은 <code>s</code></td>
+</tr>
+<tr>
+<td>○→○</td>
+<td><code>(po)-[:ORDERED_FROM]-&gt;(s)</code></td>
+<td><code>po</code>에서 <code>s</code>로 가는 <code>ORDERED_FROM</code> 관계</td>
+</tr>
+<tr>
+<td>속성</td>
+<td><code>s.name</code></td>
+<td>노드 <code>s</code>의 <code>name</code> 값</td>
+</tr>
+</tbody>
+</table>
+<p>SQL의 <code>SELECT … FROM … WHERE</code>에 대응시키면 쉽습니다.</p>
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FROM supplier s</code></td>
+<td><code>MATCH (s:Supplier)</code></td>
+</tr>
+<tr>
+<td><code>WHERE s.country = 'China'</code></td>
+<td><code>WHERE s.country = 'China'</code></td>
+</tr>
+<tr>
+<td><code>SELECT s.name</code></td>
+<td><code>RETURN s.name</code></td>
+</tr>
+<tr>
+<td><code>ORDER BY … LIMIT 3</code></td>
+<td><code>ORDER BY … LIMIT 3</code></td>
+</tr>
+<tr>
+<td><code>JOIN … ON …</code></td>
+<td>관계 패턴 <code>-[:REL]-&gt;</code> (<a href="cypher-relations.html">8장</a>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="포털-열기">포털 열기<a class="anchor" href="#포털-열기" title="Permanent link">#</a></h2>
+<p>홈의 「Ontological Portal」 카드를 누릅니다. 왼쪽 위의 그래프 선택에서 <strong><code>sample</code></strong>을 고르세요. 4부의 모든 예제는 <code>sample</code> 그래프에서 실행합니다.</p>
+<figure><a href="img/portal-query.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Ontological Portal — 왼쪽에 이 그래프의 노드 타입·관계 타입·속성 키, 위쪽에 질의 입력칸, 아래에 결과" src="img/portal-query.webp" / loading="lazy" decoding="async"></a><figcaption>Ontological Portal — 왼쪽에 이 그래프의 노드 타입·관계 타입·속성 키, 위쪽에 질의 입력칸, 아래에 결과</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>왼쪽 ENTITY TYPES</td>
+<td>노드 라벨. 누르면 그 라벨을 조회하는 질의가 입력됩니다.</td>
+</tr>
+<tr>
+<td>왼쪽 RELATIONSHIP TYPES / PROPERTY KEYS</td>
+<td>관계 이름과 속성 이름. 질의를 쓸 때 참고합니다.</td>
+</tr>
+<tr>
+<td>위 입력칸</td>
+<td>Cypher를 쓰고 ⌘Enter(Windows는 Ctrl+Enter) 또는 ▶ 버튼으로 실행합니다. <code>(n:</code>을 치면 라벨, <code>n.</code>을 치면 속성을 자동완성합니다.</td>
+</tr>
+<tr>
+<td>결과 카드</td>
+<td>Table·JSON·SQL 보기, 노드를 돌려주면 Graph 보기도 생깁니다. ★로 저장, ✕로 닫기.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="첫-질의">첫 질의<a class="anchor" href="#첫-질의" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">supplier_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">tier</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>s.supplier_id</th>
+<th>s.name</th>
+<th>s.country</th>
+<th>s.tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S-KR-01</td>
+<td>한빛정밀</td>
+<td>Korea</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S-KR-02</td>
+<td>대성케이블</td>
+<td>Korea</td>
+<td>2</td>
+</tr>
+<tr>
+<td>S-CN-01</td>
+<td>Shenzhen Goldline PCB</td>
+<td>China</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S-CN-02</td>
+<td>Ningbo Magnetics</td>
+<td>China</td>
+<td>2</td>
+</tr>
+<tr>
+<td>S-VN-01</td>
+<td>Hanoi Assembly</td>
+<td>Vietnam</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p><code>MATCH</code>는 “이런 모양을 찾아라”, <code>RETURN</code>은 “찾은 것 중 이것을 돌려 달라”입니다. 노드 전체를 돌려받으려면 <code>RETURN s</code>라고 씁니다. 그러면 속성이 모두 담긴 객체가 오고, 결과 카드에 Graph 보기가 생깁니다.</p>
+<h2 id="거르기-where">거르기 — WHERE<a class="anchor" href="#거르기-where" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;China&#39;</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">tier</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<p>결과는 <code>Shenzhen Goldline PCB</code> 한 곳입니다. <code>WHERE</code>에서 쓸 수 있는 것들:</p>
+<table>
+<thead>
+<tr>
+<th>쓰임</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>비교</td>
+<td><code>=</code> <code>&lt;&gt;</code> <code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code> — <code>po.amount_usd &gt;= 30000 AND po.amount_usd &lt; 70000</code></td>
+</tr>
+<tr>
+<td>논리</td>
+<td><code>AND</code> <code>OR</code> <code>NOT</code> — <code>NOT s.country = 'Korea'</code></td>
+</tr>
+<tr>
+<td>목록에 포함</td>
+<td><code>sh.ship_status IN ['IN_TRANSIT', 'CUSTOMS_HOLD']</code></td>
+</tr>
+<tr>
+<td>문자열</td>
+<td><code>s.name STARTS WITH 'S'</code>, <code>CONTAINS 'Gold'</code>, <code>ENDS WITH 'PCB'</code></td>
+</tr>
+<tr>
+<td>값 없음</td>
+<td><code>po IS NULL</code>, <code>po IS NOT NULL</code></td>
+</tr>
+</tbody>
+</table>
+<p>조건이 키 하나뿐이면 패턴 안에 지도처럼 적어도 됩니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="w"> </span><span class="p">{</span><span class="n">supplier_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;S-CN-01&#39;</span><span class="p">})</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">날짜 비교</p>
+<p>날짜 컬럼(<code>opened_date</code>, <code>eta</code> 등)은 <code>'2026-08-29'</code> 같은 문자열과 바로 비교할 수 있습니다. 엔진이 원천 타입(<code>date</code>)으로 바꿔 줍니다. <code>date()</code> 함수는 아직 없습니다.</p>
+<p><code>cypher
+MATCH (c:Claim) WHERE c.opened_date &gt;= '2026-08-29'
+RETURN c.ticket_no, c.opened_date</code></p>
+</div>
+<h2 id="정렬과-자르기-order-by-skip-limit">정렬과 자르기 — ORDER BY · SKIP · LIMIT<a class="anchor" href="#정렬과-자르기-order-by-skip-limit" title="Permanent link">#</a></h2>
+<p>금액이 큰 발주 세 건:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="m">3</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>po.po_id</th>
+<th>po.amount_usd</th>
+<th>po.status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PO-001</td>
+<td>82000</td>
+<td>OPEN</td>
+</tr>
+<tr>
+<td>PO-005</td>
+<td>60000</td>
+<td>OPEN</td>
+</tr>
+<tr>
+<td>PO-002</td>
+<td>41000</td>
+<td>OPEN</td>
+</tr>
+</tbody>
+</table>
+<p><code>ORDER BY a, b DESC</code>처럼 여러 기준을 줄 수 있고, <code>SKIP 2 LIMIT 3</code>은 “두 개 건너뛰고 세 개” — 페이지 나누기에 씁니다. <code>RETURN po.po_id AS 발주</code>처럼 <code>AS</code>로 열 이름을 바꿀 수 있습니다(한글도 됩니다).</p>
+<h2 id="중복-없애기와-세기">중복 없애기와 세기<a class="anchor" href="#중복-없애기와-세기" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">suppliers</span>
+</code></pre></div>
+
+<p>첫 질의는 Vietnam·Korea·China 세 행, 둘째는 <code>5</code>입니다.</p>
+<h2 id="값-바꿔-보여-주기-함수와-case">값 바꿔 보여 주기 — 함수와 CASE<a class="anchor" href="#값-바꿔-보여-주기-함수와-case" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span>
+<span class="w">       </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s">&#39;지연&#39;</span>
+<span class="w">            </span><span class="k">WHEN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s">&#39;주의&#39;</span>
+<span class="w">            </span><span class="n">ELSE</span><span class="w"> </span><span class="s">&#39;정상&#39;</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">상태</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>sh.shipment_no</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHP-01</td>
+<td>정상</td>
+</tr>
+<tr>
+<td>SHP-02</td>
+<td>지연</td>
+</tr>
+<tr>
+<td>SHP-03</td>
+<td>지연</td>
+</tr>
+<tr>
+<td>SHP-04</td>
+<td>정상</td>
+</tr>
+<tr>
+<td>SHP-05</td>
+<td>주의</td>
+</tr>
+<tr>
+<td>SHP-06</td>
+<td>주의</td>
+</tr>
+<tr>
+<td>SHP-07</td>
+<td>정상</td>
+</tr>
+<tr>
+<td>SHP-08</td>
+<td>정상</td>
+</tr>
+</tbody>
+</table>
+<p>Ontological DB가 지원하는 함수는 다음과 같습니다. 목록에 없는 함수를 쓰면 엔진이 이 목록을 알려 주는 오류를 냅니다.</p>
+<table>
+<thead>
+<tr>
+<th>분류</th>
+<th>함수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>집계</td>
+<td><code>count</code> <code>sum</code> <code>avg</code> <code>min</code> <code>max</code> <code>collect</code></td>
+</tr>
+<tr>
+<td>문자열</td>
+<td><code>toUpper</code> <code>toLower</code> <code>trim</code> <code>substring</code> <code>replace</code> <code>split</code> <code>toString</code></td>
+</tr>
+<tr>
+<td>숫자</td>
+<td><code>abs</code> <code>ceil</code> <code>floor</code> <code>round</code> <code>sqrt</code> <code>rand</code> <code>toInteger</code> <code>toFloat</code></td>
+</tr>
+<tr>
+<td>그래프</td>
+<td><code>id</code> <code>elementId</code> <code>labels</code> <code>type</code> <code>length</code> <code>size</code> <code>keys</code> <code>exists</code></td>
+</tr>
+<tr>
+<td>기타</td>
+<td><code>coalesce</code> <code>timestamp</code> <code>datetime</code> <code>vector.similarity</code> <code>vector.distance</code> <code>genai.vector.encode</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="결과를-보는-세-가지-방법">결과를 보는 세 가지 방법<a class="anchor" href="#결과를-보는-세-가지-방법" title="Permanent link">#</a></h2>
+<p>결과 카드 오른쪽 위에서 고릅니다.</p>
+<ul>
+<li><strong>Table</strong> — 표. 가장 자주 씁니다.</li>
+<li><strong>JSON</strong> — 노드 객체를 그대로. 앱 코드에서 받는 모양과 같습니다(<a href="sdk.html">19장</a>).</li>
+<li><strong>SQL</strong> — 이 Cypher가 번역된 PostgreSQL SQL. Ontological DB가 어떻게 실행하는지 볼 수 있습니다(<a href="cypher-advanced.html">9장</a>).</li>
+</ul>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<p><code>sample</code> 그래프에서 다음을 Cypher로 써 보세요.</p>
+<ol>
+<li>상태가 <code>OPEN</code>인 발주의 번호와 금액을, 금액이 작은 순으로.</li>
+<li>세관 보류(<code>CUSTOMS_HOLD</code>)이거나 운송 중(<code>IN_TRANSIT</code>)인 선적의 번호와 도착 예정일(<code>eta</code>).</li>
+<li>고객이 몇 곳인지.</li>
+<li>클레임 중 심각도(<code>severity</code>)가 <code>HIGH</code>인 것의 번호와 제목.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span>
+</code></pre></div>
+
+<p>PO-007(12000), PO-008(27000), PO-006(33000), PO-002(41000), PO-005(60000), PO-001(82000) — 모두 6건입니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ship_status</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="o">[</span><span class="s">&#39;IN_TRANSIT&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;CUSTOMS_HOLD&#39;</span><span class="o">]</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">eta</span>
+</code></pre></div>
+
+<p>SHP-02, SHP-03, SHP-06 세 건.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">cu</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">customers</span>
+</code></pre></div>
+
+<p>3곳.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">severity</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;HIGH&#39;</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">ticket_no</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span>
+</code></pre></div>
+
+<p>T-1 「컨트롤러 전원 불량」, T-3 「PCB 납땜 불량」.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="virtual-graph.html"><span>이전</span>가상 노드와 가상 관계</a><a class="next" href="cypher-relations.html"><span>다음</span>관계 따라가기와 집계</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#cypher는-그림으로-쓰는-질의">Cypher는 그림으로 쓰는 질의</a></li><li><a href="#포털-열기">포털 열기</a></li><li><a href="#첫-질의">첫 질의</a></li><li><a href="#거르기-where">거르기 — WHERE</a></li><li><a href="#정렬과-자르기-order-by-skip-limit">정렬과 자르기 — ORDER BY · SKIP · LIMIT</a></li><li><a href="#중복-없애기와-세기">중복 없애기와 세기</a></li><li><a href="#값-바꿔-보여-주기-함수와-case">값 바꿔 보여 주기 — 함수와 CASE</a></li><li><a href="#결과를-보는-세-가지-방법">결과를 보는 세 가지 방법</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
