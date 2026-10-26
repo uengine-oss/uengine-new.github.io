@@ -18,14 +18,13 @@
     {id:'uenginerpa', name:'uEngine RPA', group:1, tag:'AUTOMATION', category:'ROBOTIC EXECUTION', role:'반복 업무를 실제 행동으로 바꾸는 로봇', pos:[235,163,0], icon:'robot', description:'반복 업무를 말로 설명하면 AI가 자동화를 만들고, 완성된 로봇이 정해진 순서대로 실행합니다. BPM 프로세스의 한 단계로 사람의 업무와 연결됩니다.', vision:'반복은 로봇에게,|사람에게는 더 가치 있는 일.', future:'업무를 설계할 때는 AI와 협업하고, 매일의 실행은 재현 가능한 자동화로 이어갑니다.'},
     {id:'roboanalyzer', name:'Robo Analyzer', group:2, tag:'DISCOVERY', category:'LEGACY & UNDERSTANDING', role:'오래된 시스템에서 새로운 설계의 근거를', pos:[-82,82,95], icon:'scan', description:'레거시 소스 코드와 데이터베이스를 함께 분석합니다. 함수 호출과 데이터 읽기·쓰기 관계를 그래프로 탐색하고 실제 코드 원문까지 확인합니다.', vision:'읽을 수 없던 레거시가|다시 설계할 수 있는 자산으로.', future:'코드와 데이터의 연결을 이해해, 감에 의존하던 변경을 근거 있는 현대화로 바꿉니다.'},
     {id:'roboarchitect', name:'Robo Architect', group:2, tag:'SPEC-DRIVEN DESIGN', category:'AI-DRIVEN DEVELOPMENT', role:'명세에서 구현까지, 일치하는 소프트웨어', pos:[-290,65,10], icon:'layers', description:'자연어 요구사항에서 영향도 분석·구현·검증·반영으로 이어지는 Spec-Driven Development 플랫폼입니다. DDD와 BDD를 바탕으로 명세와 구현을 맞춥니다.', vision:'코드를 작성하는 속도보다,|함께 이해하는 설계의 힘.', future:'기획자·아키텍트·개발자와 AI가 하나의 명세를 기준으로 소프트웨어를 지속적으로 발전시킵니다.'},
-    {id:'dreamvibe', name:'DreamVibe', group:2, tag:'HUMAN × AI', category:'AI DEVELOPMENT EXPERIENCE', role:'아이디어를 구현하는 새로운 개발 경험', pos:[128,55,-55], icon:'spark', description:'AI와의 협업으로 개발하는 바이브 코딩의 가능성을 경험합니다. 코드 작성 중심에서 벗어나, 아이디어를 구체화하고 AI와 함께 구현하는 개발 방식으로 나아갑니다.', vision:'만들고 싶은 것이 있다면,|누구나 시작할 수 있도록.', future:'사람의 상상력과 AI의 구현 역량이 만나 소프트웨어를 만드는 경험의 문턱을 낮춥니다.'},
-    {id:'dxez', name:'DX Easy', group:2, tag:'MODEL TO CODE', category:'DIGITAL TRANSFORMATION', role:'비즈니스 모델에서 실행 가능한 서비스까지', pos:[-180,205,0], icon:'cube', description:'고객 여정과 비즈니스 모델, 이벤트 스토밍에서 코드 생성으로 이어집니다. Git 기반 개발과 CI, Kubernetes 배포를 연결하는 디지털 전환 플랫폼입니다.', vision:'비즈니스의 생각이|실행 가능한 서비스가 되다.', future:'기획과 설계, 개발과 배포 사이의 간극을 줄여 비즈니스 변화가 서비스에 이어지도록 합니다.'},
+    {id:'ontologicaldb', name:'Ontological DB', group:0, tag:'GRAPH FOUNDATION', category:'ONTOLOGY DATABASE', role:'Agentic AI를 위한 온톨로지 데이터베이스', pos:[-150,-15,-75], icon:'db', description:'PostgreSQL을 그대로 그래프 데이터베이스로 만들어 Cypher로 묻습니다. 다른 시스템의 데이터는 복사하지 않고 그래프로 잇고, 유효 시간과 시스템 시간을 함께 기록해 그때의 답을 같은 질의로 다시 얻습니다.', vision:'지식이 쌓이는 곳이|가장 믿을 수 있는 곳이 되도록.', future:'권한·감사·과거 시점 조회를 데이터베이스가 직접 지켜, 사람과 AI 에이전트가 같은 규칙 위에서 지식을 씁니다.'},
     {id:'uenginecloud', name:'uEngine Cloud', group:3, tag:'CLOUD OPERATIONS', category:'CLOUD-NATIVE FOUNDATION', role:'만들어진 가치를 안정적으로 전달하는 기반', pos:[35,237,10], icon:'cloud', description:'Robo Architect의 산출물을 Kubernetes에 배포하고 운영하는 오픈소스 PaaS입니다. 앱·자원 관리부터 단계적 배포, 롤백, 로그와 모니터링을 하나의 포털에서 다룹니다.', vision:'좋은 설계가 멈추지 않고,|살아 있는 서비스가 되도록.', future:'개발에서 운영까지 이어지는 클라우드 네이티브 기반으로 기업의 변화를 지속 가능한 서비스로 만듭니다.'}
   ];
   // Showcase flow: orchestration/agents → ontology → legacy data → development.
   // Keep graph indices stable so changing the tour cannot change its relationships.
-  const tourOrder=['processgpt','uengine6bpm','uenginerpa','ontologystudio','ontologic',
-    'roboanalyzer','roboarchitect','dreamvibe','dxez','uenginecloud']
+  const tourOrder=['processgpt','uengine6bpm','uenginerpa','ontologystudio','ontologicaldb','ontologic',
+    'roboanalyzer','roboarchitect','uenginecloud']
     .map(id=>products.findIndex(product=>product.id===id));
   const introduced=new Set();
   let tourComplete=false;
@@ -99,8 +98,8 @@
   const edges = [
     [0,1,'의미 → 판단'],[0,2,'지식 → 실행'],[1,2,'판단 → 실행'],[2,3,'업무 오케스트레이션'],
     [3,4,'로봇 업무 연결'],[2,4,'반복 업무 자동화'],[5,0,'레거시 맥락'],[5,1,'코드·데이터 이해'],
-    [5,6,'분석 → 설계'],[6,9,'설계 → 배포'],[7,6,'아이디어 → 명세'],[8,6,'모델 기반 설계'],
-    [8,9,'개발 → 운영'],[3,9,'클라우드 실행 기반'],[6,3,'서비스 → 프로세스'],[7,8,'아이디어 → 모델']
+    [5,6,'분석 → 설계'],[6,8,'설계 → 배포'],[3,8,'클라우드 실행 기반'],[6,3,'서비스 → 프로세스'],
+    [7,0,'그래프 저장 → 온톨로지'],[7,1,'시맨틱 레이어 엔진'],[7,2,'에이전트 질의 · 액션'],[5,7,'레거시 DB 연결']
   ];
   const icons = {
     graph:'M-9-7L9-7 0 10ZM-9-7L0 0 9-7M0 0V10 M-12-10h6v6h-6z M6-10h6v6H6z M-3 7h6v6h-6z',
@@ -111,6 +110,7 @@
     scan:'M-12-4v-8h8 M4-12h8v8 M12 4v8H4 M-4 12h-8V4 M-6-3l-4 3 4 3 M6-3l4 3-4 3 M2-5l-4 10',
     layers:'M0-12L13-5 0 2-13-5Z M-13 1L0 8 13 1 M-13 7L0 14 13 7',
     cube:'M0-13L12-6V7L0 14-12 7V-6ZM-12-6L0 1 12-6M0 1V14',
+    db:'M-11-8a11 4 0 1 0 22 0a11 4 0 1 0-22 0 M-11-8v16a11 4 0 0 0 22 0v-16 M-11 0a11 4 0 0 0 22 0',
     cloud:'M-9 9C-19 8-17-3-10-3C-10-15 9-15 10-3C20-3 19 9 10 9Z M0-4V5 M-4 1L0 5 4 1'
   };
   function make(tag, attrs, parent) {
