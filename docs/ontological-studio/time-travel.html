@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시간 여행 — 바이템포럴 질의 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="“그때 사실은 무엇이었나”와 “그때 우리는 무엇을 알고 있었나”는 다른 질문입니다. 두 개의 시간축을 이해하고, 같은 Cypher를 시점만 바꿔 다시 물어봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/time-travel.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="시간 여행 — 바이템포럴 질의 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="“그때 사실은 무엇이었나”와 “그때 우리는 무엇을 알고 있었나”는 다른 질문입니다. 두 개의 시간축을 이해하고, 같은 Cypher를 시점만 바꿔 다시 물어봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/time-travel.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html" class="on" aria-current="page"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Cypher 익히기<span class="chap">10</span></div>
+    <h1>시간 여행 — 바이템포럴 질의</h1>
+    <article>
+<blockquote>
+<p>“그때 사실은 무엇이었나”와 “그때 우리는 무엇을 알고 있었나”는 다른 질문입니다. 두 개의 시간축을 이해하고, 같은 Cypher를 시점만 바꿔 다시 물어봅니다.</p>
+</blockquote>
+<h2 id="왜-시간이-두-개-필요한가">왜 시간이 두 개 필요한가<a class="anchor" href="#왜-시간이-두-개-필요한가" title="Permanent link">#</a></h2>
+<p>인사팀이 김하늘 씨의 연봉을 이렇게 기록했다고 합시다.</p>
+<ol>
+<li>2021년 1월부터 4,000 — 입사.</li>
+<li>2024년 1월부터 4,600 — 인상. <strong>세상이 바뀐 것</strong>(변경)입니다.</li>
+<li>몇 달 뒤, 2024년 인상액이 사실 4,700이었다는 것을 알고 고칩니다. 세상은 그대로인데 <strong>우리가 적은 숫자가 틀렸던 것</strong>(정정)입니다.</li>
+</ol>
+<p>이제 감사에서 묻습니다. “2025년 6월의 연봉은?” 답은 4,700입니다. 그런데 “<strong>정정하기 전에 낸 보고서</strong>에는 왜 4,600이라고 적혀 있었나?”라고 물으면, 그 시점에 <strong>우리가 알던</strong> 값을 재현할 수 있어야 합니다.</p>
+<table>
+<thead>
+<tr>
+<th>시간축</th>
+<th>묻는 것</th>
+<th>Ontological DB 설정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>유효 시간</strong> (valid time)</td>
+<td>세상에서 <strong>언제</strong> 그것이 사실이었나</td>
+<td><code>valid_at</code></td>
+</tr>
+<tr>
+<td><strong>시스템 시간</strong> (system time, 기록 시간)</td>
+<td>우리가 <strong>언제부터</strong> 그렇게 기록하고 있었나</td>
+<td><code>system_at</code> (as known at)</td>
+</tr>
+</tbody>
+</table>
+<p>두 축을 모두 가진 데이터를 <strong>바이템포럴</strong>(bitemporal)이라고 합니다.</p>
+<figure><a href="../../images/ontological-db/odb-concept-bitemporal.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="같은 상품의 적용 기간과 저장 기간 — 정정 전 기록으로 보면 8월 15일은 SAFE, 7월 1일부터 RISK였다고 정정한 뒤의 기록으로 보면 RISK" src="../../images/ontological-db/odb-concept-bitemporal.webp" / loading="lazy" decoding="async"></a><figcaption>같은 상품의 적용 기간과 저장 기간 — 정정 전 기록으로 보면 8월 15일은 SAFE, 7월 1일부터 RISK였다고 정정한 뒤의 기록으로 보면 RISK</figcaption></figure>
+<h2 id="같은-질의-다른-시점">같은 질의, 다른 시점<a class="anchor" href="#같은-질의-다른-시점" title="Permanent link">#</a></h2>
+<p>Ontological DB에서 시점은 <strong>질의 문장이 아니라 설정</strong>입니다. Cypher는 그대로 두고, “언제를 기준으로 볼지”만 바꿉니다.</p>
+<figure><a href="../../images/ontological-db/odb-concept-timequery.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시점 조회 흐름 — 같은 질문에 적용일과 저장 기준을 고르면, 그 날짜에 맞는 기록(현재·과거·정정 전)을 찾아 그때의 정보와 관계로 답합니다" src="../../images/ontological-db/odb-concept-timequery.webp" / loading="lazy" decoding="async"></a><figcaption>시점 조회 흐름 — 같은 질문에 적용일과 저장 기준을 고르면, 그 날짜에 맞는 기록(현재·과거·정정 전)을 찾아 그때의 정보와 관계로 답합니다</figcaption></figure>
+<ul>
+<li>관계도 <strong>같은 시점</strong>으로 고릅니다. 2022년 기준으로 물으면 2022년에 있던 관계만 따라갑니다.</li>
+<li>현재를 물을 때는 현재 행만 읽고, 정정되기 전의 기록은 시점을 지정했을 때만 찾습니다. 그래서 이력이 많아도 평소 질의는 느려지지 않습니다.</li>
+</ul>
+<figure><a href="../../images/ontological-db/odb-concept-index.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="빠른 시점 검색 — 현재 조회는 현재 행과 열린 이력만, 정정으로 대체된 닫힌 이력은 시점을 지정한 조회에서만 탐색" src="../../images/ontological-db/odb-concept-index.webp" / loading="lazy" decoding="async"></a><figcaption>빠른 시점 검색 — 현재 조회는 현재 행과 열린 이력만, 정정으로 대체된 닫힌 이력은 시점을 지정한 조회에서만 탐색</figcaption></figure>
+<h2 id="포털의-시간-여행-막대">포털의 시간 여행 막대<a class="anchor" href="#포털의-시간-여행-막대" title="Permanent link">#</a></h2>
+<p>포털 입력칸 오른쪽의 시계 버튼(⏱)을 누르면 <strong>TIME TRAVEL</strong> 막대가 열립니다.</p>
+<table>
+<thead>
+<tr>
+<th>칸</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>valid at</td>
+<td>유효 시간. <code>2022-06-01</code>처럼 날짜를 적습니다.</td>
+</tr>
+<tr>
+<td>as known at</td>
+<td>시스템 시간. <code>now</code> 또는 이 그래프에 최근 일어난 쓰기의 “직후” 시각을 목록에서 고릅니다.</td>
+</tr>
+</tbody>
+</table>
+<p>시점을 정하면 입력칸 테두리가 노랗게 바뀌고, 결과 카드 위에 <code>⏱ valid 2022-06-01</code>처럼 시점이 붙습니다. 끄려면 「clear」.</p>
+<figure><a href="img/portal-time.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시간 여행 막대 — valid at 2022-06-01로 같은 질의를 실행하면 그때의 연봉 4000이 나옵니다" src="img/portal-time.webp" / loading="lazy" decoding="async"></a><figcaption>시간 여행 막대 — valid at 2022-06-01로 같은 질의를 실행하면 그때의 연봉 4000이 나옵니다</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">시간 버전은 타입마다 켭니다</p>
+<p>이력을 남길 노드·관계 타입마다 시간 버전을 켜야 합니다. 시간 막대 오른쪽에 <code>temporal types: Employee</code>처럼 켜진 타입이 보입니다. 켜지 않은 타입은 시점을 정해도 현재 값을 답합니다. 예제의 가상 노드(원천 DB를 비춘 것)는 원천이 이력을 갖고 있지 않으므로 시간 여행의 대상이 아닙니다.</p>
+</div>
+<h2 id="따라-하기-고급-선택-연봉-이력-만들기">따라 하기 (고급, 선택) — 연봉 이력 만들기<a class="anchor" href="#따라-하기-고급-선택-연봉-이력-만들기" title="Permanent link">#</a></h2>
+<p>시간 버전을 켜고 “언제부터”를 지정해 쓰는 일은 지금 판에서는 <strong>SQL 세션</strong>에서 합니다. 데이터베이스 수업에서 <code>psql</code>을 써 봤다면 따라 해 보세요. (macOS 기준. 건너뛰어도 다음 장을 진행하는 데 문제없습니다.)</p>
+<p><strong>1. 접속 정보 찾기.</strong> 앱 데이터 폴더(<code>~/Library/Application Support/Ontological Studio/</code>)의 <code>ports.json</code>에서 <code>pg</code> 포트를, <code>secrets.json</code>에서 <code>pgPassword</code>를 봅니다. 사용자는 <code>og</code>, 데이터베이스는 <code>ogstudio</code>입니다.</p>
+<div class="hl"><pre><span></span><code><span class="nv">APP</span><span class="o">=</span><span class="s2">&quot;/Applications/Ontological Studio.app/Contents/Resources/runtime/pg/bin/psql&quot;</span>
+<span class="nv">DATA</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/Library/Application Support/Ontological Studio&quot;</span>
+<span class="nv">PORT</span><span class="o">=</span><span class="k">$(</span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import json;print(json.load(open(&#39;</span><span class="nv">$DATA</span><span class="s2">/ports.json&#39;))[&#39;pg&#39;])&quot;</span><span class="k">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="k">$(</span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import json;print(json.load(open(&#39;</span><span class="nv">$DATA</span><span class="s2">/secrets.json&#39;))[&#39;pgPassword&#39;])&quot;</span><span class="k">)</span>
+<span class="s2">&quot;</span><span class="nv">$APP</span><span class="s2">&quot;</span><span class="w"> </span>-h<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span>-p<span class="w"> </span><span class="nv">$PORT</span><span class="w"> </span>-U<span class="w"> </span>og<span class="w"> </span>-d<span class="w"> </span>ogstudio
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">관리자 계정입니다</p>
+<p><code>og</code>는 이 앱의 데이터베이스 관리자입니다. 아래 예제 외의 문장은 실행하지 마세요. 실수로 예제를 망가뜨렸다면 <a href="install.html">1장</a>의 방법으로 처음 상태로 되돌릴 수 있습니다.</p>
+</div>
+<p><strong>2. 그래프와 타입을 만들고 시간 버전을 켭니다.</strong></p>
+<div class="hl"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">og_create_graph</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_create_type</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;entity&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_add_property</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="p">),</span>
+<span class="w">       </span><span class="n">og_add_property</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;salary&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;int&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_enable_temporal</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p><strong>3. 세 번 기록합니다.</strong> <code>SET LOCAL og.valid_from</code>이 “언제부터의 사실인가”입니다. 트랜잭션이 끝나면 사라지므로 기록마다 따로 줍니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">BEGIN</span><span class="p">;</span><span class="w">  </span><span class="c1">-- 2021년 입사</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"> </span><span class="n">og</span><span class="p">.</span><span class="n">valid_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2021-01-01&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_cypher</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">$$</span><span class="k">CREATE</span><span class="w"> </span><span class="p">(:</span><span class="n">Employee</span><span class="w"> </span><span class="err">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;김하늘&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">salary</span><span class="p">:</span><span class="w"> </span><span class="mi">4000</span><span class="err">}</span><span class="p">)</span><span class="err">$$</span><span class="p">);</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+
+<span class="k">BEGIN</span><span class="p">;</span><span class="w">  </span><span class="c1">-- 2024년부터 인상 (변경)</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"> </span><span class="n">og</span><span class="p">.</span><span class="n">valid_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_cypher</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">$$</span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="err">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;김하늘&#39;</span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4600</span><span class="err">$$</span><span class="p">);</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+
+<span class="k">BEGIN</span><span class="p">;</span><span class="w">  </span><span class="c1">-- 4600이 아니라 4700이었다 (정정)</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"> </span><span class="n">og</span><span class="p">.</span><span class="n">valid_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;-infinity&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_cypher</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">$$</span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="err">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;김하늘&#39;</span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4700</span><span class="err">$$</span><span class="p">);</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+</code></pre></div>
+
+<p>정정의 <code>'-infinity'</code>가 핵심입니다. “유효 구간(2024년부터)은 그대로 두고 값만 고친다”는 뜻입니다. 이것을 <code>'2024-01-01'</code>로 주면 또 하나의 변경이 되어 버립니다.</p>
+<p><strong>4. 포털에서 물어봅니다.</strong> 포털을 새로 고치고 그래프를 <code>hr</code>로 바꾼 뒤, 질의는 언제나 같습니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="n">Employee</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>valid at</th>
+<th>as known at</th>
+<th>결과</th>
+<th>해석</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(비움)</td>
+<td>now</td>
+<td>4700</td>
+<td>지금 알고 있는 지금의 연봉</td>
+</tr>
+<tr>
+<td>2022-06-01</td>
+<td>now</td>
+<td>4000</td>
+<td>2022년의 연봉</td>
+</tr>
+<tr>
+<td>2025-06-01</td>
+<td>now</td>
+<td>4700</td>
+<td>정정까지 반영한 2025년의 연봉</td>
+</tr>
+<tr>
+<td>2025-06-01</td>
+<td>“…SET e.salary = 4600” 직후</td>
+<td>4600</td>
+<td><strong>정정 전 보고서</strong>가 알던 2025년의 연봉</td>
+</tr>
+<tr>
+<td>2020-06-01</td>
+<td>now</td>
+<td>(없음)</td>
+<td>입사 전에는 직원이 아니었다</td>
+</tr>
+</tbody>
+</table>
+<p>네 번째 줄이 바이템포럴의 힘입니다. 값을 덮어쓰는 보통 데이터베이스에서는 “그때 왜 그렇게 판단했나”를 다시 볼 수 없습니다.</p>
+<h2 id="스키마도-이력을-남깁니다">스키마도 이력을 남깁니다<a class="anchor" href="#스키마도-이력을-남깁니다" title="Permanent link">#</a></h2>
+<p>시간은 데이터에만 있지 않습니다. 속성 타입을 바꾸는 같은 <strong>스키마 변경</strong>도 계획 → 영향 검토 → 단계별 실행 → 검증 → 완료의 단계를 밟고 이력이 남습니다. 변환할 수 없는 값이 하나라도 있으면 완료되지 않습니다. 포털의 스키마 디자이너에서 변경을 계획하고 진행 단계와 이력을 볼 수 있습니다.</p>
+<figure><a href="../../images/ontological-db/odb-concept-schema-steps.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="스키마 변경 단계 — 계획, 영향 검토, 단계별 실행, 검증, 완료와 이력 기록. 검증에 실패하면 오류 값을 정정해 다시 검증합니다" src="../../images/ontological-db/odb-concept-schema-steps.webp" / loading="lazy" decoding="async"></a><figcaption>스키마 변경 단계 — 계획, 영향 검토, 단계별 실행, 검증, 완료와 이력 기록. 검증에 실패하면 오류 값을 정정해 다시 검증합니다</figcaption></figure>
+<p>더 깊은 내용은 <a href="../../contents/ontologicaldb.html">Ontological DB 소개</a>를 참고하세요.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>다음은 변경일까요, 정정일까요? ⓐ 7월 1일부터 협력사 등급이 1에서 2로 내려갔다. ⓑ 협력사 국가를 Korea로 잘못 적었는데 사실 Vietnam이었다.</li>
+<li>“2023년 감사 보고서를 낼 때 우리가 알던 2022년 연봉”을 물으려면 두 칸을 각각 무엇으로 정해야 하나요?</li>
+<li>시간 버전을 켜지 않은 타입에 <code>valid_at</code>을 주고 질의하면 어떻게 될까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li>ⓐ 변경 — 세상이 바뀌었으므로 <code>valid_from = '2026-07-01'</code>. ⓑ 정정 — 처음부터 Vietnam이었으므로 <code>valid_from = '-infinity'</code>로 값만 고칩니다.</li>
+<li>valid at = 2022년의 날짜, as known at = 2023년 감사 보고서를 낸 시각(그 직전의 쓰기).</li>
+<li>시점과 상관없이 현재 값을 돌려줍니다. 이력을 남기지 않았으니 돌아갈 과거가 없습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="cypher-advanced.html"><span>이전</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a><a class="next" href="golden.html"><span>다음</span>골든 퀘스천과 골든 커맨드</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-시간이-두-개-필요한가">왜 시간이 두 개 필요한가</a></li><li><a href="#같은-질의-다른-시점">같은 질의, 다른 시점</a></li><li><a href="#포털의-시간-여행-막대">포털의 시간 여행 막대</a></li><li><a href="#따라-하기-고급-선택-연봉-이력-만들기">따라 하기 (고급, 선택) — 연봉 이력 만들기</a></li><li><a href="#스키마도-이력을-남깁니다">스키마도 이력을 남깁니다</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

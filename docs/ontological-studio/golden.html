@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>골든 퀘스천과 골든 커맨드 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="온톨로지를 만들기 전에 먼저 정하는 두 가지 — 이 온톨로지가 **답해야 할 질문**과 **해야 할 일**. 구축 에이전트는 이것을 기준으로 설계하고, 끝나면 이것으로 검증합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/golden.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="골든 퀘스천과 골든 커맨드 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="온톨로지를 만들기 전에 먼저 정하는 두 가지 — 이 온톨로지가 **답해야 할 질문**과 **해야 할 일**. 구축 에이전트는 이것을 기준으로 설계하고, 끝나면 이것으로 검증합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/golden.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html" class="on" aria-current="page"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">온톨로지 구축<span class="chap">11</span></div>
+    <h1>골든 퀘스천과 골든 커맨드</h1>
+    <article>
+<blockquote>
+<p>온톨로지를 만들기 전에 먼저 정하는 두 가지 — 이 온톨로지가 <strong>답해야 할 질문</strong>과 <strong>해야 할 일</strong>. 구축 에이전트는 이것을 기준으로 설계하고, 끝나면 이것으로 검증합니다.</p>
+</blockquote>
+<h2 id="무엇을-위한-온톨로지인가">무엇을 위한 온톨로지인가<a class="anchor" href="#무엇을-위한-온톨로지인가" title="Permanent link">#</a></h2>
+<p>온톨로지는 세상의 모든 것을 담으려고 하면 끝나지 않습니다. 그래서 Ontological Studio는 구축을 시작하기 전에 세 가지를 적게 합니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>질문</th>
+<th>예제 「공급망 운영」</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>구축 의도</strong></td>
+<td>누가, 무엇을 하려고 쓰나?</td>
+<td>공급망 운영 담당자가 늦어진 입고·품질 문제를 묻고, 긴급 처리·발주 보류·고객 안내를 시스템에 요청한다</td>
+</tr>
+<tr>
+<td><strong>골든 퀘스천</strong> (Golden Question)</td>
+<td>이 온톨로지로 반드시 <strong>답해야</strong> 할 질문</td>
+<td>3일 넘게 늦어진 입고 선적은 어떤 것이고, 어느 협력사의 어느 발주 건인가?</td>
+</tr>
+<tr>
+<td><strong>골든 커맨드</strong> (Golden Command)</td>
+<td>이 온톨로지로 반드시 <strong>할 수 있어야</strong> 할 지시</td>
+<td>3일 넘게 늦어진 입고 선적을 긴급 처리해 줘 (사유: 생산 차질 우려)</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/build-intent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구축 브리프 — 구축 의도, 골든 퀘스천 3개, 골든 커맨드 4개" src="img/build-intent.webp" / loading="lazy" decoding="async"></a><figcaption>구축 브리프 — 구축 의도, 골든 퀘스천 3개, 골든 커맨드 4개</figcaption></figure>
+<h2 id="골든-퀘스천-설계의-출발점-완성의-기준">골든 퀘스천 — 설계의 출발점, 완성의 기준<a class="anchor" href="#골든-퀘스천-설계의-출발점-완성의-기준" title="Permanent link">#</a></h2>
+<p>골든 퀘스천은 소프트웨어 공학의 <strong>인수 기준</strong>(acceptance criteria)과 같습니다.</p>
+<ol>
+<li><strong>설계할 때</strong> — 에이전트는 질문에서 거꾸로 필요한 것을 찾습니다. “어느 협력사의 어느 발주”라는 말에서 <code>Shipment</code>, <code>PurchaseOrder</code>, <code>Supplier</code> 클래스와 그 사이의 관계가 필요하다는 것을 압니다. 이것을 <strong>스키마 우선 설계</strong>라고 합니다.</li>
+<li><strong>검증할 때</strong> — 구축이 끝나면 에이전트가 골든 퀘스천을 직접 실행해, 기대한 답과 근거가 나오는지 확인합니다. 안 나오면 스키마나 매핑을 고쳐 다시 실행합니다.</li>
+<li><strong>쓸 때</strong> — 질의 화면과 온톨로지 앱에 예시 질문으로 붙습니다.</li>
+</ol>
+<figure><a href="../../images/ontological-studio/os-concept-gq-schema.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="스키마 우선 설계와 근거 기반 반복 검증 — 의도와 골든 퀘스천에서 후보 스키마와 질문별 탐색 경로를 만들고, 실행 결과의 미충족 원인을 분석해 보완합니다" src="../../images/ontological-studio/os-concept-gq-schema.webp" / loading="lazy" decoding="async"></a><figcaption>스키마 우선 설계와 근거 기반 반복 검증 — 의도와 골든 퀘스천에서 후보 스키마와 질문별 탐색 경로를 만들고, 실행 결과의 미충족 원인을 분석해 보완합니다</figcaption></figure>
+<h3 id="좋은-골든-퀘스천-쓰기">좋은 골든 퀘스천 쓰기<a class="anchor" href="#좋은-골든-퀘스천-쓰기" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>덜 좋은 예</th>
+<th>더 좋은 예</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>협력사 정보를 알려 줘</td>
+<td>Shenzhen Goldline PCB의 미결 발주는 무엇인가?</td>
+<td>대상과 조건이 구체적이어야 검증할 수 있습니다</td>
+</tr>
+<tr>
+<td>품질이 어때?</td>
+<td>PCB 납땜 불량 클레임은 어느 고객의 어떤 주문에서 나왔나?</td>
+<td>답의 모양(고객, 주문)이 정해져 있습니다</td>
+</tr>
+<tr>
+<td>선적, 발주, 협력사</td>
+<td>3일 넘게 늦어진 입고 선적은 어떤 것이고, 어느 협력사의 어느 발주 건인가?</td>
+<td>관계를 여러 번 건너는 질문이 스키마의 경로를 드러냅니다</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>실제 업무 담당자가 <strong>입으로 하는 질문</strong>으로 씁니다.</li>
+<li>한 개의 관계로 끝나는 질문만 있으면 스키마가 얕아집니다. <strong>두세 걸음 건너는 질문</strong>을 섞으세요.</li>
+<li>답이 하나로 정해지는 질문이 좋습니다. 검증이 쉬워집니다.</li>
+</ul>
+<h2 id="골든-커맨드-액션-설계의-출발점">골든 커맨드 — 액션 설계의 출발점<a class="anchor" href="#골든-커맨드-액션-설계의-출발점" title="Permanent link">#</a></h2>
+<p>골든 커맨드는 <strong>행위</strong>에 대한 인수 기준입니다. 구축 에이전트는 골든 커맨드마다:</p>
+<ol>
+<li>등록된 업무 시스템의 API(OpenAPI 스펙)를 살펴 이 지시를 <strong>실행할 API</strong>를 찾고,</li>
+<li>그 일을 <strong>되돌릴 API</strong>(보상)를 짝짓고,</li>
+<li>누가 어떤 대상에 쓸 수 있는지 <strong>정책</strong>을 붙여 <strong>액션</strong>을 만들고,</li>
+<li>실제로 실행하지 않고 계획만 세워 보는 <strong>드라이런</strong>으로 검증합니다.</li>
+</ol>
+<p>예제의 골든 커맨드 네 개와 그로부터 만들어진 액션:</p>
+<table>
+<thead>
+<tr>
+<th>골든 커맨드</th>
+<th>액션</th>
+<th>실행 (보상)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3일 넘게 늦어진 입고 선적을 긴급 처리해 줘 (사유: 생산 차질 우려)</td>
+<td><code>Shipment.expediteShipment</code></td>
+<td>WMS 우선순위 URGENT (이전 값으로) → ERP 납기 독촉 (철회)</td>
+</tr>
+<tr>
+<td>Shenzhen Goldline PCB의 미결 발주를 모두 보류해 줘 (사유: PCB 납땜 불량 조사)</td>
+<td><code>PurchaseOrder.holdPurchaseOrder</code></td>
+<td>ERP 발주 보류 (해제)</td>
+</tr>
+<tr>
+<td>PCB 납땜 불량 클레임을 낸 고객에게 조치 안내를 보내 줘</td>
+<td><code>Customer.notifyCustomer</code></td>
+<td>CRM 안내 발송 (철회)</td>
+</tr>
+<tr>
+<td>방금 한 처리를 취소해 줘</td>
+<td>(별도 액션 없음)</td>
+<td>위 액션들의 <strong>보상 흐름</strong>으로 충족</td>
+</tr>
+</tbody>
+</table>
+<p>마지막 줄처럼 “취소” 커맨드는 새 액션을 만들지 않습니다. 모든 액션이 되돌리는 길을 갖고 있기 때문입니다.</p>
+<h3 id="좋은-골든-커맨드-쓰기">좋은 골든 커맨드 쓰기<a class="anchor" href="#좋은-골든-커맨드-쓰기" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>대상을 고르는 조건</strong>을 담습니다: “3일 넘게 늦어진”, “Shenzhen Goldline PCB의 미결”.</li>
+<li><strong>사유</strong>를 함께 씁니다. 실행 기록과 업무 시스템에 남습니다.</li>
+<li>되돌리는 지시(“방금 한 처리를 취소해 줘”)도 하나 넣어 두면, 에이전트가 보상까지 검증합니다.</li>
+</ul>
+<h2 id="두-개념을-한-장으로">두 개념을 한 장으로<a class="anchor" href="#두-개념을-한-장으로" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>골든 퀘스천</th>
+<th>골든 커맨드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>묻는 것</td>
+<td>무엇에 <strong>답해야</strong> 하나</td>
+<td>무엇을 <strong>해야</strong> 하나</td>
+</tr>
+<tr>
+<td>만드는 것</td>
+<td>클래스·관계·속성(스키마), 인스턴스</td>
+<td>액션(단계·보상·정책)</td>
+</tr>
+<tr>
+<td>재료</td>
+<td>문서, 데이터소스</td>
+<td>등록된 업무 시스템의 API</td>
+</tr>
+<tr>
+<td>검증</td>
+<td>질문을 실행해 답과 근거 확인</td>
+<td>드라이런으로 계획·정책 확인</td>
+</tr>
+<tr>
+<td>앱에서</td>
+<td>대시보드·코드 앱이 <strong>무엇을 보여 줄지</strong></td>
+<td>앱의 버튼이 <strong>무엇을 할 수 있을지</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<p>여러분 학과의 <strong>수강 신청 시스템</strong>을 온톨로지로 만든다고 생각해 봅시다.</p>
+<ol>
+<li>구축 의도를 한 문장으로 써 보세요.</li>
+<li>골든 퀘스천 세 개를 써 보세요. 적어도 하나는 관계를 두 번 이상 건너야 합니다.</li>
+<li>골든 커맨드 두 개를 쓰고, 각각을 되돌리는 방법을 적어 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>예시 답안</summary>
+<ol>
+<li>학과 조교가 수강 현황과 정원 문제를 묻고, 대기자 승급과 분반 안내를 학사 시스템에 요청한다.</li>
+<li>「데이터베이스」 과목의 분반별 신청 인원과 정원은? / 정원을 넘긴 분반을 신청한 학생 중 졸업 예정자는 누구인가? / 김교수가 담당하는 과목 중 강의실 수용 인원보다 신청자가 많은 것은?</li>
+<li>“정원이 남은 분반의 대기자 1순위를 승급해 줘” — 보상: 승급 취소(대기 1순위로 되돌림). “폐강 과목 신청자에게 안내 메일을 보내 줘” — 보상: 안내 철회 메일.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="time-travel.html"><span>이전</span>시간 여행 — 바이템포럴 질의</a><a class="next" href="build.html"><span>다음</span>문서로 온톨로지 구축하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-위한-온톨로지인가">무엇을 위한 온톨로지인가</a></li><li><a href="#골든-퀘스천-설계의-출발점-완성의-기준">골든 퀘스천 — 설계의 출발점, 완성의 기준</a><ul><li><a href="#좋은-골든-퀘스천-쓰기">좋은 골든 퀘스천 쓰기</a></li></ul></li><li><a href="#골든-커맨드-액션-설계의-출발점">골든 커맨드 — 액션 설계의 출발점</a><ul><li><a href="#좋은-골든-커맨드-쓰기">좋은 골든 커맨드 쓰기</a></li></ul></li><li><a href="#두-개념을-한-장으로">두 개념을 한 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>코드 앱 SDK — 직접 읽고 고치기 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="코드 앱이 쓰는 SDK(`og.js`)의 함수들을 정리하고, 에이전트 없이 앱 코드를 직접 고쳐 봅니다. 프로그래밍 수업에서 JavaScript를 조금 써 봤다면 충분합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/sdk.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="코드 앱 SDK — 직접 읽고 고치기 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="코드 앱이 쓰는 SDK(`og.js`)의 함수들을 정리하고, 에이전트 없이 앱 코드를 직접 고쳐 봅니다. 프로그래밍 수업에서 JavaScript를 조금 써 봤다면 충분합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/sdk.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html" class="on" aria-current="page"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">애플리케이션<span class="chap">19</span></div>
+    <h1>코드 앱 SDK — 직접 읽고 고치기</h1>
+    <article>
+<blockquote>
+<p>코드 앱이 쓰는 SDK(<code>og.js</code>)의 함수들을 정리하고, 에이전트 없이 앱 코드를 직접 고쳐 봅니다. 프로그래밍 수업에서 JavaScript를 조금 써 봤다면 충분합니다.</p>
+</blockquote>
+<h2 id="앱-하나의-구조">앱 하나의 구조<a class="anchor" href="#앱-하나의-구조" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>&lt;데이터 폴더&gt;/codeapps/&lt;앱 id&gt;/
+  ├─ index.html     ← /apps/_runtime/og.css · echarts.min.js 를 싣고 app.js 를 모듈로 부른다
+  ├─ app.js         ← Vue 3 앱 (ES 모듈)
+  ├─ style.css
+  ├─ AGENTS.md, CLAUDE.md   ← 에이전트 규칙 (앱이 아니라 에이전트가 읽는 파일)
+</code></pre></div>
+
+<p>macOS의 데이터 폴더는 <code>~/Library/Application Support/Ontological Studio/</code>입니다. 미리보기 주소는 <code>/apps/&lt;앱 id&gt;/</code>이고, 화면 오른쪽 위에 보입니다.</p>
+<p><code>index.html</code>은 이렇게 생겼습니다. <code>/apps/_runtime/…</code> 줄은 지우지 않습니다.</p>
+<div class="hl"><pre><span></span><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;ko&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>지연 선적 보드<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/apps/_runtime/og.css&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;./style.css&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/apps/_runtime/echarts.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;./app.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h2 id="sdk-함수">SDK 함수<a class="anchor" href="#sdk-함수" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">schema</span><span class="p">,</span><span class="w"> </span><span class="nx">theme</span><span class="p">,</span><span class="w"> </span><span class="nx">onTheme</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="p">,</span><span class="w"> </span><span class="nx">actions</span><span class="p">,</span><span class="w"> </span><span class="nx">act</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>함수</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>await query(cypher, params?)</code></td>
+<td><strong>읽기 전용</strong> Cypher를 실행하고 행 배열을 돌려줍니다. 쓰기 절(<code>CREATE</code>·<code>MERGE</code>·<code>SET</code>·<code>DELETE</code>)은 서버가 거절합니다. 실패하면 엔진의 메시지로 <code>Error</code>를 던집니다.</td>
+</tr>
+<tr>
+<td><code>await schema()</code></td>
+<td>발행된 온톨로지의 클래스·속성·관계. 앱이 스스로 둘러볼 때</td>
+</tr>
+<tr>
+<td><code>theme()</code></td>
+<td><code>'light'</code> 또는 <code>'dark'</code> — Studio의 테마 설정을 따릅니다</td>
+</tr>
+<tr>
+<td><code>onTheme(fn)</code></td>
+<td>테마가 바뀌면 <code>fn</code>을 부릅니다. 차트를 다시 칠할 때. 해제 함수를 돌려줍니다</td>
+</tr>
+<tr>
+<td><code>color(name)</code></td>
+<td>테마 색 토큰의 값. <code>color('accent')</code>, <code>color('fg')</code> — 캔버스 차트에 넘길 때</td>
+</tr>
+<tr>
+<td><code>await actions(className?)</code></td>
+<td>발행된 액션 목록(<a href="app-actions.html">20장</a>) — 다음 배포판부터</td>
+</tr>
+<tr>
+<td><code>await act(opts)</code></td>
+<td>계획 → 승인 → 실행 → 취소 창을 띄웁니다(<a href="app-actions.html">20장</a>) — 다음 배포판부터</td>
+</tr>
+</tbody>
+</table>
+<h3 id="query가-돌려주는-모양">query()가 돌려주는 모양<a class="anchor" href="#query가-돌려주는-모양" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;MATCH (s:Supplier) RETURN s.name AS name, s.tier AS tier ORDER BY name&#39;</span><span class="p">)</span>
+<span class="c1">// → [{ name: &#39;Hanoi Assembly&#39;, tier: 2 }, { name: &#39;Ningbo Magnetics&#39;, tier: 2 }, …]</span>
+</code></pre></div>
+
+<ul>
+<li><code>RETURN</code>의 이름(<code>AS</code>)이 객체의 키가 됩니다. 숫자는 숫자로 옵니다.</li>
+<li>노드를 통째로 돌려주면(<code>RETURN s</code>) 속성 객체에 <code>_labels</code>·<code>_id</code>가 붙어 옵니다.</li>
+<li>값은 문자열로 이어 붙이지 말고 <strong>매개변수</strong>로 넘깁니다. 따옴표 문제와 주입 공격을 막습니다.</li>
+</ul>
+<div class="hl"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span>
+<span class="w">  </span><span class="s1">&#39;MATCH (p:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier) WHERE s.name = $name RETURN p.po_id AS po, p.status AS status&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Shenzhen Goldline PCB&#39;</span><span class="w"> </span><span class="p">})</span>
+</code></pre></div>
+
+<h3 id="테마-색">테마 색<a class="anchor" href="#테마-색" title="Permanent link">#</a></h3>
+<p><code>style.css</code>에서는 색을 이 변수들로만 칠합니다. 그러면 낮/밤이 저절로 따라갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>쓰임</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--og-bg</code> <code>--og-panel</code> <code>--og-raised</code></td>
+<td>바탕, 패널, 떠 있는 카드</td>
+</tr>
+<tr>
+<td><code>--og-line</code></td>
+<td>선, 테두리</td>
+</tr>
+<tr>
+<td><code>--og-fg</code> <code>--og-dim</code> <code>--og-mute</code></td>
+<td>글자(진함 → 흐림)</td>
+</tr>
+<tr>
+<td><code>--og-accent</code> <code>--og-on-accent</code></td>
+<td>강조색과 그 위의 글자</td>
+</tr>
+<tr>
+<td><code>--og-blue</code> <code>--og-warn</code> <code>--og-danger</code> <code>--og-ok</code> <code>--og-purple</code> <code>--og-soft</code></td>
+<td>상태 색</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-손으로-고치기">따라 하기 — 손으로 고치기<a class="anchor" href="#따라-하기-손으로-고치기" title="Permanent link">#</a></h2>
+<p>에이전트에게 맡기지 않고 직접 한 줄을 고쳐 봅시다. <a href="code-app.html">18장</a>에서 만든 「지연 선적 보드」의 지연 기준을 “1일 넘게”에서 “3일 넘게”로 바꿉니다.</p>
+<ol class="steps">
+<li>「파일」 탭에서 위치를 확인하고, 데이터 폴더의 <code>codeapps/&lt;앱 id&gt;/app.js</code>를 편집기(VS Code 등)로 엽니다.</li>
+<li><code>WHERE s.delay_days &gt; 0</code>을 <code>WHERE s.delay_days &gt; 3</code>으로 바꾸고 저장합니다.</li>
+<li>Studio의 「미리보기 새로 고침」을 누릅니다. 4건이던 표가 2건(SHP-03, SHP-02)이 됩니다.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">에이전트와 번갈아 고쳐도 됩니다</p>
+<p>손으로 고친 뒤 말로 이어서 고치라고 해도, 에이전트는 파일을 다시 읽고 이어서 작업합니다. 반대로 에이전트가 고친 코드를 손으로 다듬어도 됩니다. 코드가 곧 앱입니다.</p>
+</div>
+<h2 id="차트-하나-더하기-선택">차트 하나 더하기 (선택)<a class="anchor" href="#차트-하나-더하기-선택" title="Permanent link">#</a></h2>
+<p>ECharts는 전역 <code>echarts</code>로 있습니다. 협력사별 미결 금액을 막대로 그려 봅시다. 테마가 바뀌면 다시 칠하는 부분까지가 한 세트입니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="p">,</span><span class="w"> </span><span class="nx">onTheme</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span><span class="sb">`</span>
+<span class="sb">  MATCH (p:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier) WHERE p.status = &#39;OPEN&#39;</span>
+<span class="sb">  RETURN s.name AS supplier, sum(p.amount_usd) AS amount ORDER BY amount DESC`</span><span class="p">)</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">chart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">echarts</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chart&#39;</span><span class="p">))</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">chart</span><span class="p">.</span><span class="nx">setOption</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">textStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;dim&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">xAxis</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;category&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">supplier</span><span class="p">),</span><span class="w"> </span><span class="nx">axisLine</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">lineStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">yAxis</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">splitLine</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">lineStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">series</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">amount</span><span class="p">),</span><span class="w"> </span><span class="nx">itemStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;accent&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="p">}</span>
+<span class="nx">draw</span><span class="p">()</span>
+<span class="nx">onTheme</span><span class="p">(</span><span class="nx">draw</span><span class="p">)</span><span class="w">   </span><span class="c1">// 낮/밤이 바뀌면 다시 칠한다</span>
+</code></pre></div>
+
+<p><code>index.html</code>에 <code>&lt;div id="chart" style="height:320px"&gt;&lt;/div&gt;</code>를 하나 더해야 합니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li><code>query('MATCH (s:Supplier) SET s.tier = 1')</code>을 부르면 어떻게 될까요?</li>
+<li>사용자가 입력한 협력사 이름으로 발주를 찾을 때, Cypher 문자열에 이름을 이어 붙이면 왜 안 될까요?</li>
+<li>색을 <code>#14b8a6</code>처럼 직접 적으면 무엇이 문제일까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li>쓰기 절이 있어 서버가 거절하고, <code>query()</code>가 <code>Error</code>를 던집니다. 값을 바꾸는 일은 액션으로만 합니다.</li>
+<li>이름에 따옴표(예: <code>O'Neil</code>)가 들어가면 문장이 깨지고, 악의적인 입력이 질의를 바꿀 수 있습니다(주입). <code>$name</code> 매개변수로 넘기면 값으로만 다뤄집니다.</li>
+<li>테마가 바뀌어도 그 색은 그대로라 밤 테마에서 안 보이거나 어색해집니다. <code>--og-*</code> 변수나 <code>color()</code>를 쓰세요.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="code-app.html"><span>이전</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a><a class="next" href="app-actions.html"><span>다음</span>앱에 액션 버튼 달기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#앱-하나의-구조">앱 하나의 구조</a></li><li><a href="#sdk-함수">SDK 함수</a><ul><li><a href="#query가-돌려주는-모양">query()가 돌려주는 모양</a></li><li><a href="#테마-색">테마 색</a></li></ul></li><li><a href="#따라-하기-손으로-고치기">따라 하기 — 손으로 고치기</a></li><li><a href="#차트-하나-더하기-선택">차트 하나 더하기 (선택)</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

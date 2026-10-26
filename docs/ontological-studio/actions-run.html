@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>액션 실행하기 — 계획·승인·실행·취소 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="질의·액션 탭에서 지시를 내려 늦은 선적 두 건을 긴급 처리하고, 원천 DB에서 결과를 확인한 뒤, 취소로 원래 상태로 되돌립니다. 실제로 예제 업무 시스템의 데이터가 바뀝니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/actions-run.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="액션 실행하기 — 계획·승인·실행·취소 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="질의·액션 탭에서 지시를 내려 늦은 선적 두 건을 긴급 처리하고, 원천 DB에서 결과를 확인한 뒤, 취소로 원래 상태로 되돌립니다. 실제로 예제 업무 시스템의 데이터가 바뀝니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/actions-run.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html" class="on" aria-current="page"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">액션<span class="chap">16</span></div>
+    <h1>액션 실행하기 — 계획·승인·실행·취소</h1>
+    <article>
+<blockquote>
+<p>질의·액션 탭에서 지시를 내려 늦은 선적 두 건을 긴급 처리하고, 원천 DB에서 결과를 확인한 뒤, 취소로 원래 상태로 되돌립니다. 실제로 예제 업무 시스템의 데이터가 바뀝니다.</p>
+</blockquote>
+<h2 id="네-단계">네 단계<a class="anchor" href="#네-단계" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>지시 ──▶ ① 계획 ──▶ ② 승인 ──▶ ③ 실행 ──▶ (필요하면) ④ 취소 = 역순 보상
+        대상·정책 판정   사람이       단계별 API 호출      성공한 단계를
+        아직 안 바뀜     계획 카드에서  (사가)              거꾸로 되돌림
+</code></pre></div>
+
+<p>에이전트는 계획을 세우고 실행을 요청할 수 있지만, <strong>승인은 할 수 없습니다.</strong> 승인은 언제나 화면의 사람이 계획 카드에서 누릅니다.</p>
+<h2 id="①-계획-지시하기">① 계획 — 지시하기<a class="anchor" href="#①-계획-지시하기" title="Permanent link">#</a></h2>
+<p>질의·액션 탭에서 지시합니다. <a href="ask.html">13장</a>에서 늦은 선적을 물어본 대화에 이어서 해도 됩니다.</p>
+<div class="hl"><pre><span></span><code>3일 넘게 늦어진 입고 선적을 긴급 처리해 줘. 사유는 생산 차질 우려.
+</code></pre></div>
+
+<p>에이전트가 액션 <code>Shipment.expediteShipment</code>를 고르고, 실행기에 계획을 요청합니다(실측 약 25초).</p>
+<figure><a href="img/qa-plan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="계획 카드 — 허용 2건(SHP-02, SHP-03), 거부 0건, 사람 승인 필요, 만료 시각. 위에는 첫 호출의 미리보기가 있습니다" src="img/qa-plan.webp" / loading="lazy" decoding="async"></a><figcaption>계획 카드 — 허용 2건(SHP-02, SHP-03), 거부 0건, 사람 승인 필요, 만료 시각. 위에는 첫 호출의 미리보기가 있습니다</figcaption></figure>
+<p>계획 카드에서 볼 것:</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Shipment.expediteShipment</code> · 승인 대기</td>
+<td>어떤 액션의 계획이고 지금 상태가 무엇인지</td>
+</tr>
+<tr>
+<td>허용 2건 · 거부 0건</td>
+<td>대상마다 정책을 판정한 결과. 거부된 대상에는 사유가 붙습니다(예: “입고가 끝난 선적은 제외”)</td>
+</tr>
+<tr>
+<td>사람 승인 필요</td>
+<td>이 계획은 승인 없이 실행되지 않습니다</td>
+</tr>
+<tr>
+<td>만료</td>
+<td>계획은 일정 시간 안에 승인·실행해야 합니다. 지나면 같은 조건으로 다시 계획합니다</td>
+</tr>
+<tr>
+<td>호출 미리보기 (4건)</td>
+<td>실제로 어떤 API를 어떤 인자로 부를지(2건 × 2단계)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>아직 아무것도 바뀌지 않았습니다.</strong> 계획은 드라이런입니다.</p>
+<h2 id="②-승인">② 승인<a class="anchor" href="#②-승인" title="Permanent link">#</a></h2>
+<p>계획 카드의 「승인」을 누릅니다. 메모를 남길 수 있습니다. 카드에 “승인되었습니다 — 대화에서 ‘실행해’라고 요청하면 에이전트가 실행합니다”라고 나옵니다.</p>
+<figure><a href="img/qa-approved.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인한 계획 — 승인자와 시각이 기록됩니다" src="img/qa-approved.webp" / loading="lazy" decoding="async"></a><figcaption>승인한 계획 — 승인자와 시각이 기록됩니다</figcaption></figure>
+<h2 id="③-실행">③ 실행<a class="anchor" href="#③-실행" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>실행해
+</code></pre></div>
+
+<p>에이전트는 승인된 계획을 <strong>그대로</strong> 실행합니다(다시 계획하지 않습니다). 실행기는 대상마다 단계를 차례로 부르고, 실행 직전에 정책을 한 번 더 판정합니다.</p>
+<figure><a href="img/qa-executed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="실행 결과 — 두 선적 모두 WMS 우선순위 NORMAL → URGENT, ERP 납기 독촉 발송, 성공" src="img/qa-executed.webp" / loading="lazy" decoding="async"></a><figcaption>실행 결과 — 두 선적 모두 WMS 우선순위 NORMAL → URGENT, ERP 납기 독촉 발송, 성공</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>대상</th>
+<th>WMS 우선순위</th>
+<th>ERP 납기 독촉</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHP-02</td>
+<td>✓ NORMAL → URGENT</td>
+<td>✓ PO-001 → S-CN-01, 독촉 발송</td>
+<td>성공</td>
+</tr>
+<tr>
+<td>SHP-03</td>
+<td>✓ NORMAL → URGENT</td>
+<td>✓ PO-002 → S-CN-01, 독촉 발송</td>
+<td>성공</td>
+</tr>
+</tbody>
+</table>
+<h3 id="정말-바뀌었을까-원천에서-확인하기">정말 바뀌었을까 — 원천에서 확인하기<a class="anchor" href="#정말-바뀌었을까-원천에서-확인하기" title="Permanent link">#</a></h3>
+<p>포털(그래프 <code>sample</code>)에서 원천 WMS를 그대로 읽어 봅니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">priority</span>
+</code></pre></div>
+
+<figure><a href="img/portal-urgent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="원천 확인 — 두 선적의 priority가 URGENT로 바뀌었습니다. 복사본이 아니라 WMS 테이블을 지금 읽은 값입니다" src="img/portal-urgent.webp" / loading="lazy" decoding="async"></a><figcaption>원천 확인 — 두 선적의 priority가 URGENT로 바뀌었습니다. 복사본이 아니라 WMS 테이블을 지금 읽은 값입니다</figcaption></figure>
+<p>데이터소스 탭에서 <code>wms.shipment</code> 미리보기를 봐도 같습니다. 업무 시스템이 원천을 고쳤고, 데이터 패브릭은 그 원천을 읽기 때문입니다.</p>
+<h2 id="④-취소-역순-보상">④ 취소 — 역순 보상<a class="anchor" href="#④-취소-역순-보상" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>방금 한 긴급 처리를 취소해 줘.
+</code></pre></div>
+
+<p>에이전트가 실행 기록을 찾아 <strong>보상</strong>을 요청합니다. 실행기는 성공한 단계를 <strong>역순으로</strong> 되돌립니다 — 나중에 한 일(ERP 독촉)을 먼저 철회하고, 먼저 한 일(WMS 우선순위)을 나중에 되돌립니다.</p>
+<figure><a href="img/qa-cancelled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보상 완료 — 대상마다 ERP 독촉 철회 → WMS 우선순위 원복 순서로, 모두 보상 성공" src="img/qa-cancelled.webp" / loading="lazy" decoding="async"></a><figcaption>보상 완료 — 대상마다 ERP 독촉 철회 → WMS 우선순위 원복 순서로, 모두 보상 성공</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>대상</th>
+<th>단계</th>
+<th>시스템 · API</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SHP-02</td>
+<td>erp</td>
+<td>sample-erp · <code>withdrawExpediteRequest</code></td>
+<td>보상 성공 (200)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SHP-02</td>
+<td>wms</td>
+<td>sample-wms · <code>setShipmentPriority</code></td>
+<td>보상 성공 (200)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>SHP-03</td>
+<td>erp</td>
+<td>sample-erp · <code>withdrawExpediteRequest</code></td>
+<td>보상 성공 (200)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SHP-03</td>
+<td>wms</td>
+<td>sample-wms · <code>setShipmentPriority</code></td>
+<td>보상 성공 (200)</td>
+</tr>
+</tbody>
+</table>
+<p>포털에서 다시 확인하면 두 선적의 <code>priority</code>가 <code>NORMAL</code>로 돌아와 있습니다. WMS 우선순위의 보상은 <code>$before.priority</code> — <strong>실행 직전의 값</strong>으로 되돌리기 때문입니다. 원래 <code>HIGH</code>였다면 <code>HIGH</code>로 돌아갑니다.</p>
+<h2 id="사가-중간에-실패하면">사가 — 중간에 실패하면<a class="anchor" href="#사가-중간에-실패하면" title="Permanent link">#</a></h2>
+<p>여러 시스템을 차례로 부르다가 중간에 하나가 실패하면 어떻게 될까요? 예를 들어 SHP-03의 WMS 단계는 성공했는데 ERP 단계가 실패했다면, WMS만 URGENT인 어중간한 상태가 남습니다.</p>
+<p>실행기는 이것을 <strong>사가(saga)</strong> 패턴으로 막습니다. 어떤 대상의 단계가 실패하면 그 대상에서 <strong>이미 성공한 단계를 역순으로 자동 보상</strong>합니다. 그 대상만 원래대로 돌아가고, 다른 대상은 성공한 채로 남으며, 결과는 “일부 성공”으로 보고됩니다. 시스템마다 상태가 엇갈리는 일이 생기지 않습니다.</p>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>실행기의 처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>모든 단계 성공</td>
+<td>성공</td>
+</tr>
+<tr>
+<td>한 대상의 2단계 실패</td>
+<td>그 대상의 1단계를 자동 보상 → 그 대상은 원상태, 결과는 “일부 성공”</td>
+</tr>
+<tr>
+<td>같은 요청이 두 번 감</td>
+<td>대상마다 멱등성 키가 붙어 있어 업무 시스템이 두 번 처리하지 않음</td>
+</tr>
+<tr>
+<td>계획 뒤 데이터가 바뀜</td>
+<td>실행 직전 정책을 다시 판정해, 이제 맞지 않는 대상은 건너뜀</td>
+</tr>
+</tbody>
+</table>
+<h2 id="지시를-잘-하는-법">지시를 잘 하는 법<a class="anchor" href="#지시를-잘-하는-법" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>대상 조건</strong>을 분명히: “3일 넘게 늦은”, “Shenzhen Goldline PCB의 미결”.</li>
+<li><strong>사유</strong>를 함께: 필수 입력이면 에이전트가 물어봅니다. 실행 기록과 업무 시스템에 남습니다.</li>
+<li>계획 카드의 <strong>거부 사유</strong>를 읽으세요. 정책이 왜 막았는지가 보입니다. 정책을 바꾸고 싶다면 그것은 구축(액션 정의)의 일입니다.</li>
+</ul>
+<div class="admonition exercise">
+<p class="admonition-title">실습 과제</p>
+<ol>
+<li>“Shenzhen Goldline PCB의 미결 발주를 모두 보류해 줘 (사유: PCB 납땜 불량 조사)”를 지시하고, 계획 카드에서 허용·거부된 발주와 그 사유를 확인하세요.</li>
+<li>승인·실행한 뒤 데이터소스 탭에서 <code>erp.purchase_order</code>의 상태가 <code>ON_HOLD</code>로 바뀌었는지 보고, <code>erp.po_hold</code> 테이블에 무엇이 기록됐는지 보세요.</li>
+<li>취소하고, 상태가 <code>OPEN</code>으로 돌아왔는지 확인하세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li>허용: PO-001, PO-002 (모두 OPEN). Shenzhen Goldline PCB의 발주는 이 두 건뿐이라 거부는 0건입니다. (만약 “모든 협력사의 발주를 보류해 줘”라고 하면 CLOSED인 PO-003, PO-004가 “미결 발주만” 사유로 거부됩니다.)</li>
+<li><code>erp.purchase_order</code>의 PO-001, PO-002가 <code>ON_HOLD</code>. <code>erp.po_hold</code>에는 발주마다 사유·보류 전 상태(<code>prev_status = OPEN</code>)·요청자가 한 줄씩 생깁니다. <code>erp.po_hold</code>는 가상 노드가 아니므로 데이터소스 탭의 테이블 상세에서 컬럼만 보입니다 — 내용을 보려면 가상 노드로 노출하세요(6장).</li>
+<li>보상(<code>releasePurchaseOrder</code>)이 보류 전 상태로 되돌려 <code>OPEN</code>이 됩니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="actions-build.html"><span>이전</span>골든 커맨드로 액션 만들기</a><a class="next" href="dashboard.html"><span>다음</span>대시보드 앱 — 말로 만드는 화면</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#네-단계">네 단계</a></li><li><a href="#①-계획-지시하기">① 계획 — 지시하기</a></li><li><a href="#②-승인">② 승인</a></li><li><a href="#③-실행">③ 실행</a><ul><li><a href="#정말-바뀌었을까-원천에서-확인하기">정말 바뀌었을까 — 원천에서 확인하기</a></li></ul></li><li><a href="#④-취소-역순-보상">④ 취소 — 역순 보상</a></li><li><a href="#사가-중간에-실패하면">사가 — 중간에 실패하면</a></li><li><a href="#지시를-잘-하는-법">지시를 잘 하는 법</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>온톨로지란 무엇인가 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="클래스·속성·관계·인스턴스라는 네 낱말로 온톨로지를 이해하고, 표(테이블)로 저장된 데이터와 무엇이 다른지 예제로 비교합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/ontology-basics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="온톨로지란 무엇인가 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="클래스·속성·관계·인스턴스라는 네 낱말로 온톨로지를 이해하고, 표(테이블)로 저장된 데이터와 무엇이 다른지 예제로 비교합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/ontology-basics.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html" class="on" aria-current="page"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">온톨로지 개념<span class="chap">3</span></div>
+    <h1>온톨로지란 무엇인가</h1>
+    <article>
+<blockquote>
+<p>클래스·속성·관계·인스턴스라는 네 낱말로 온톨로지를 이해하고, 표(테이블)로 저장된 데이터와 무엇이 다른지 예제로 비교합니다.</p>
+</blockquote>
+<h2 id="한-문장으로">한 문장으로<a class="anchor" href="#한-문장으로" title="Permanent link">#</a></h2>
+<p><strong>온톨로지는 업무에 등장하는 “것”과 그것들 사이의 “관계”에 이름을 붙여 둔 지도입니다.</strong></p>
+<p>데이터베이스 수업에서 배운 ER 다이어그램을 떠올리면 가깝습니다. 다른 점은, 온톨로지는 설계도로 끝나지 않고 그 지도 위에 <strong>실제 데이터가 올라가서 질의와 실행의 기준</strong>이 된다는 점입니다.</p>
+<h2 id="네-가지-낱말">네 가지 낱말<a class="anchor" href="#네-가지-낱말" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>낱말</th>
+<th>뜻</th>
+<th>예제에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>클래스</strong> (class, 노드 타입·라벨)</td>
+<td>업무에 등장하는 것의 종류</td>
+<td><code>Supplier</code>(협력사), <code>PurchaseOrder</code>(발주), <code>Shipment</code>(선적)</td>
+</tr>
+<tr>
+<td><strong>속성</strong> (property)</td>
+<td>클래스가 가진 값</td>
+<td><code>Supplier.name</code>, <code>Shipment.delay_days</code></td>
+</tr>
+<tr>
+<td><strong>관계</strong> (relationship)</td>
+<td>두 클래스 사이의 연결, 방향과 이름이 있음</td>
+<td><code>(PurchaseOrder)-[:ORDERED_FROM]-&gt;(Supplier)</code> — 발주는 협력사에게 낸다</td>
+</tr>
+<tr>
+<td><strong>인스턴스</strong> (instance, 노드)</td>
+<td>클래스에 속한 실제 하나하나</td>
+<td>협력사 <code>S-CN-01 Shenzhen Goldline PCB</code>, 발주 <code>PO-002</code></td>
+</tr>
+</tbody>
+</table>
+<p>클래스와 관계가 <strong>스키마</strong>, 인스턴스와 그 연결이 <strong>데이터</strong>입니다. 그래프 데이터베이스에서는 인스턴스를 <strong>노드</strong>, 연결을 <strong>엣지(관계)</strong>라고 부릅니다.</p>
+<h2 id="예제-온톨로지-한눈에-보기">예제 온톨로지 한눈에 보기<a class="anchor" href="#예제-온톨로지-한눈에-보기" title="Permanent link">#</a></h2>
+<figure><a href="img/build-source.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="예제 온톨로지 「공급망 운영 (예제)」의 스키마 — 클래스 7개와 그 사이의 관계" src="img/build-source.webp" / loading="lazy" decoding="async"></a><figcaption>예제 온톨로지 「공급망 운영 (예제)」의 스키마 — 클래스 7개와 그 사이의 관계</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>클래스</th>
+<th>무엇</th>
+<th>원천</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Supplier</code></td>
+<td>협력사 (5곳)</td>
+<td>ERP</td>
+</tr>
+<tr>
+<td><code>Item</code></td>
+<td>품목 (4개)</td>
+<td>ERP</td>
+</tr>
+<tr>
+<td><code>PurchaseOrder</code></td>
+<td>구매 발주 (8건)</td>
+<td>ERP</td>
+</tr>
+<tr>
+<td><code>Shipment</code></td>
+<td>입고 선적 (8건)</td>
+<td>WMS</td>
+</tr>
+<tr>
+<td><code>Customer</code></td>
+<td>고객 (3곳)</td>
+<td>CRM</td>
+</tr>
+<tr>
+<td><code>SalesOrder</code></td>
+<td>판매 주문 (5건)</td>
+<td>CRM</td>
+</tr>
+<tr>
+<td><code>Claim</code></td>
+<td>고객 클레임 (3건)</td>
+<td>CRM</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>관계</th>
+<th>읽는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(Shipment)-[:SHIPS]-&gt;(PurchaseOrder)</code></td>
+<td>선적은 발주를 싣고 온다</td>
+</tr>
+<tr>
+<td><code>(PurchaseOrder)-[:ORDERED_FROM]-&gt;(Supplier)</code></td>
+<td>발주는 협력사에게 냈다</td>
+</tr>
+<tr>
+<td><code>(SalesOrder)-[:PLACED_BY]-&gt;(Customer)</code></td>
+<td>판매 주문은 고객이 냈다</td>
+</tr>
+<tr>
+<td><code>(SalesOrder)-[:FOR_ITEM]-&gt;(Item)</code></td>
+<td>판매 주문은 품목에 대한 것이다</td>
+</tr>
+<tr>
+<td><code>(Claim)-[:ABOUT]-&gt;(SalesOrder)</code></td>
+<td>클레임은 판매 주문에 대한 것이다</td>
+</tr>
+<tr>
+<td><code>(Shipment)-[:SHIPPED_BY]-&gt;(Supplier)</code></td>
+<td>선적은 협력사가 보냈다 (구축된 온톨로지에만 있습니다 — <a href="architecture.html">4장</a> 참고)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="표와-무엇이-다른가">표와 무엇이 다른가<a class="anchor" href="#표와-무엇이-다른가" title="Permanent link">#</a></h2>
+<p>같은 질문을 SQL과 그래프로 비교해 봅시다. <strong>“3일 넘게 늦은 선적은 어느 협력사의 어느 발주 건인가?”</strong></p>
+<p>SQL로는 세 테이블을 조인합니다. 게다가 선적은 WMS에, 발주와 협력사는 ERP에 있으니, 원래는 두 DB를 하나로 모으는 작업부터 해야 합니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">wms</span><span class="p">.</span><span class="n">shipment</span><span class="w"> </span><span class="n">sh</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">erp</span><span class="p">.</span><span class="n">purchase_order</span><span class="w"> </span><span class="n">po</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ref_po_no</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">erp</span><span class="p">.</span><span class="n">supplier</span><span class="w"> </span><span class="n">s</span><span class="w">       </span><span class="k">ON</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">supplier_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">supplier_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Cypher(그래프 질의 언어)로는 <strong>관계의 이름을 따라 걸어갑니다.</strong></p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<p>조인 조건(<code>po.po_id = sh.ref_po_no</code>)이 사라지고 <code>SHIPS</code>, <code>ORDERED_FROM</code>이라는 <strong>업무 낱말</strong>이 남았습니다. 조인 키를 아는 일은 관계를 정의할 때 한 번만 하면 되고, 그다음부터는 사람도 AI 에이전트도 관계 이름만 알면 됩니다.</p>
+<div class="admonition note">
+<p class="admonition-title">온톨로지의 가치는 ‘다음 질문’에 있습니다</p>
+<p>질문마다 SQL 뷰를 만들면 질문 수만큼 유지보수할 것이 늘어납니다. 엔티티와 관계로 모델링해 두면, 처음 받는 질문도 <strong>이미 있는 관계를 따라</strong> 답할 수 있습니다. “그 협력사의 다른 미결 발주는?”, “그 발주의 품목을 산 고객 중 클레임을 낸 곳은?” 같은 질문이 새 설계 없이 답해집니다.</p>
+</div>
+<h2 id="왜-ai-에이전트에게-온톨로지가-필요한가">왜 AI 에이전트에게 온톨로지가 필요한가<a class="anchor" href="#왜-ai-에이전트에게-온톨로지가-필요한가" title="Permanent link">#</a></h2>
+<p>LLM 에이전트에게 테이블 수백 개의 DDL을 주면, <code>TB507.C041</code> 같은 코드명이 무엇인지, 어느 컬럼으로 조인해야 하는지를 매번 추측해야 합니다. 온톨로지는 그 추측을 <strong>한 번, 사람이 검수한 형태로</strong> 고정해 둡니다.</p>
+<ol>
+<li><strong>의미</strong> — <code>Shipment.delay_days</code>는 “도착 예정일보다 늦어진 일수”라는 설명과 함께 있습니다.</li>
+<li><strong>경로</strong> — 선적에서 협력사로 가는 길이 관계로 정해져 있습니다.</li>
+<li><strong>행위</strong> — 선적에 할 수 있는 일(“긴급 처리”)과 그 일을 되돌리는 방법이 <strong>액션</strong>으로 붙어 있습니다(6부).</li>
+</ol>
+<p>그래서 Ontological Studio에서는 같은 온톨로지가 <strong>질의의 기준, 실행의 기준, 앱의 기준</strong>이 됩니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>예제에서 <code>Claim</code>에서 <code>Customer</code>로 가려면 어떤 관계를 어떤 방향으로 거쳐야 하나요?</li>
+<li>“PCB 기판을 산 고객”을 찾으려면 어떤 클래스들을 지나야 하나요?</li>
+<li>다음 중 클래스, 속성, 관계, 인스턴스는 각각 무엇인가요? — <code>Item</code>, <code>PO-005</code>, <code>FOR_ITEM</code>, <code>safety_stock</code></li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li><code>(Claim)-[:ABOUT]-&gt;(SalesOrder)-[:PLACED_BY]-&gt;(Customer)</code> — ABOUT을 따라 판매 주문으로, PLACED_BY를 따라 고객으로 갑니다.</li>
+<li><code>Item</code> ← <code>FOR_ITEM</code> — <code>SalesOrder</code> — <code>PLACED_BY</code> → <code>Customer</code></li>
+<li><code>Item</code> 클래스, <code>PO-005</code> 인스턴스(발주 하나), <code>FOR_ITEM</code> 관계, <code>safety_stock</code> 속성(품목의 안전재고)</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="tour.html"><span>이전</span>화면 둘러보기</a><a class="next" href="architecture.html"><span>다음</span>Ontological Studio의 구성</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#한-문장으로">한 문장으로</a></li><li><a href="#네-가지-낱말">네 가지 낱말</a></li><li><a href="#예제-온톨로지-한눈에-보기">예제 온톨로지 한눈에 보기</a></li><li><a href="#표와-무엇이-다른가">표와 무엇이 다른가</a></li><li><a href="#왜-ai-에이전트에게-온톨로지가-필요한가">왜 AI 에이전트에게 온톨로지가 필요한가</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

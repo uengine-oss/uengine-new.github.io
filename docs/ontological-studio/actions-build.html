@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>골든 커맨드로 액션 만들기 — Ontological Studio 튜토리얼</title>
+<meta name="description" content="골든 커맨드를 적으면 구축 에이전트가 시스템 API를 살펴 액션을 만듭니다. 액션이 무엇으로 이루어져 있는지 — 단계, 인자 매핑, 보상, 정책 — 를 예제 액션으로 뜯어봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/actions-build.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="골든 커맨드로 액션 만들기 — Ontological Studio 튜토리얼">
+<meta property="og:description" content="골든 커맨드를 적으면 구축 에이전트가 시스템 API를 살펴 액션을 만듭니다. 액션이 무엇으로 이루어져 있는지 — 단계, 인자 매핑, 보상, 정책 — 를 예제 액션으로 뜯어봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/actions-build.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 가상 노드, OPTIONAL MATCH)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">다운로드</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 실행</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">온톨로지 개념</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>온톨로지란 무엇인가</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Ontological Studio의 구성</a></li>
+</ul>
+<div class="nav-part">데이터 연결</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>데이터소스 연결하기</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>가상 노드와 가상 관계</a></li>
+</ul>
+<div class="nav-part">Cypher 익히기</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher 기초 — 노드를 찾고 거르기</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>관계 따라가기와 집계</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Cypher 심화 — 실행 들여다보기, 말로 묻기, 직접 쓰기</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>시간 여행 — 바이템포럴 질의</a></li>
+</ul>
+<div class="nav-part">온톨로지 구축</div><ul>
+<li><a href="golden.html"><span class="n">11</span>골든 퀘스천과 골든 커맨드</a></li>
+<li><a href="build.html"><span class="n">12</span>문서로 온톨로지 구축하기</a></li>
+<li><a href="ask.html"><span class="n">13</span>질의하기 — 근거와 함께 답 받기</a></li>
+</ul>
+<div class="nav-part">액션</div><ul>
+<li><a href="systems.html"><span class="n">14</span>업무 시스템 등록하기</a></li>
+<li><a href="actions-build.html" class="on" aria-current="page"><span class="n">15</span>골든 커맨드로 액션 만들기</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>액션 실행하기 — 계획·승인·실행·취소</a></li>
+</ul>
+<div class="nav-part">애플리케이션</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>대시보드 앱 — 말로 만드는 화면</a></li>
+<li><a href="code-app.html"><span class="n">18</span>코드 앱 — 에이전트가 코드를 쓰는 앱</a></li>
+<li><a href="sdk.html"><span class="n">19</span>코드 앱 SDK — 직접 읽고 고치기</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>앱에 액션 버튼 달기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">21</span>종합 과제 — 품질 사고 대응 앱 만들기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher·패브릭 치트시트</a></li>
+<li><a href="faq.html"><span class="n">23</span>자주 묻는 질문과 문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">액션<span class="chap">15</span></div>
+    <h1>골든 커맨드로 액션 만들기</h1>
+    <article>
+<blockquote>
+<p>골든 커맨드를 적으면 구축 에이전트가 시스템 API를 살펴 액션을 만듭니다. 액션이 무엇으로 이루어져 있는지 — 단계, 인자 매핑, 보상, 정책 — 를 예제 액션으로 뜯어봅니다.</p>
+</blockquote>
+<h2 id="액션이란">액션이란<a class="anchor" href="#액션이란" title="Permanent link">#</a></h2>
+<p><strong>액션</strong>은 온톨로지의 클래스에 붙은 “할 수 있는 일”입니다. 예제의 <code>Shipment</code> 클래스에는 <code>expediteShipment</code>(긴급 출하 처리)가 붙어 있습니다. 액션은 다음을 담고 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>뜻</th>
+<th><code>Shipment.expediteShipment</code>에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대상 키</td>
+<td>대상 인스턴스를 가리키는 속성</td>
+<td><code>shipment_no</code></td>
+</tr>
+<tr>
+<td>입력</td>
+<td>실행할 때 사람이(또는 에이전트가) 주는 값</td>
+<td><code>reason</code> (긴급 처리 사유, 필수)</td>
+</tr>
+<tr>
+<td>단계</td>
+<td>차례로 부를 시스템 API</td>
+<td>① WMS 우선순위 URGENT ② ERP 협력사 납기 독촉</td>
+</tr>
+<tr>
+<td>보상</td>
+<td>단계마다, 그것을 되돌리는 API</td>
+<td>① 우선순위를 실행 전 값으로 ② 납기 독촉 철회</td>
+</tr>
+<tr>
+<td>정책</td>
+<td>누가, 어떤 대상에 쓸 수 있나</td>
+<td>역할 <code>scm_operator</code>, 이미 입고된 선적(<code>DELIVERED</code>)은 제외</td>
+</tr>
+<tr>
+<td>승인</td>
+<td>사람의 승인이 필요한가</td>
+<td>예제는 모든 계획에 승인 필요</td>
+</tr>
+<tr>
+<td>되쓰기</td>
+<td>실행 뒤 온톨로지에 반영할 속성</td>
+<td><code>priority</code></td>
+</tr>
+<tr>
+<td>골든 커맨드</td>
+<td>이 액션을 만든 지시</td>
+<td>“3일 넘게 늦어진 입고 선적을 긴급 처리해 줘 (사유: 생산 차질 우려)”</td>
+</tr>
+</tbody>
+</table>
+<h2 id="정의를-뜯어보기">정의를 뜯어보기<a class="anchor" href="#정의를-뜯어보기" title="Permanent link">#</a></h2>
+<p>예제 액션의 정의입니다(설명을 줄였습니다).</p>
+<div class="hl"><pre><span></span><code><span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;Shipment&quot;</span><span class="p">,</span> <span class="n">action_name</span> <span class="o">=</span> <span class="s2">&quot;expediteShipment&quot;</span><span class="p">,</span> <span class="n">key_property</span> <span class="o">=</span> <span class="s2">&quot;shipment_no&quot;</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;긴급 처리 사유&quot;</span><span class="p">}}</span>   <span class="c1"># 필수</span>
+<span class="n">steps</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;wms&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-wms&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;setShipmentPriority&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path.shipment_no&quot;</span><span class="p">:</span> <span class="s2">&quot;$this.shipment_no&quot;</span><span class="p">,</span> <span class="s2">&quot;body.priority&quot;</span><span class="p">:</span> <span class="s2">&quot;URGENT&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$params.reason&quot;</span><span class="p">,</span> <span class="s2">&quot;body.requestedBy&quot;</span><span class="p">:</span> <span class="s2">&quot;$actor.sub&quot;</span><span class="p">},</span>
+   <span class="s2">&quot;compensation&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-wms&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;setShipmentPriority&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path.shipment_no&quot;</span><span class="p">:</span> <span class="s2">&quot;$this.shipment_no&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;body.priority&quot;</span><span class="p">:</span> <span class="s2">&quot;$before.priority&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$cancel.reason&quot;</span><span class="p">}}},</span>
+  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;erp&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-erp&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;createExpediteRequest&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;body.poId&quot;</span><span class="p">:</span> <span class="s2">&quot;$this.ref_po_no&quot;</span><span class="p">,</span> <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$params.reason&quot;</span><span class="p">},</span>
+   <span class="s2">&quot;compensation&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-erp&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;withdrawExpediteRequest&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path.request_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$steps.erp.response.id&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$cancel.reason&quot;</span><span class="p">}}},</span>
+<span class="p">]</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;roles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;scm_operator&quot;</span><span class="p">],</span> <span class="s2">&quot;when&quot;</span><span class="p">:</span> <span class="s2">&quot;target.ship_status != &#39;DELIVERED&#39;&quot;</span><span class="p">}]</span>
+<span class="n">writeback_property</span> <span class="o">=</span> <span class="s2">&quot;priority&quot;</span>
+</code></pre></div>
+
+<h3 id="인자-매핑-값은-어디서-오나">인자 매핑 — 값은 어디서 오나<a class="anchor" href="#인자-매핑-값은-어디서-오나" title="Permanent link">#</a></h3>
+<p><code>arg_mapping</code>의 왼쪽은 API 요청의 자리(<code>path.…</code>는 URL 경로, <code>body.…</code>는 본문), 오른쪽은 값의 출처입니다.</p>
+<table>
+<thead>
+<tr>
+<th>출처</th>
+<th>뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$this.&lt;속성&gt;</code></td>
+<td>대상 인스턴스의 속성</td>
+<td><code>$this.shipment_no</code> → <code>SHP-03</code></td>
+</tr>
+<tr>
+<td><code>$params.&lt;이름&gt;</code></td>
+<td>실행할 때 준 입력</td>
+<td><code>$params.reason</code> → “생산 차질 우려”</td>
+</tr>
+<tr>
+<td><code>$actor.&lt;클레임&gt;</code></td>
+<td>실행한 사람(또는 에이전트)</td>
+<td><code>$actor.sub</code> → <code>lite-agent</code></td>
+</tr>
+<tr>
+<td><code>$before.&lt;속성&gt;</code></td>
+<td><strong>실행 직전</strong>의 대상 속성 값</td>
+<td><code>$before.priority</code> → <code>NORMAL</code></td>
+</tr>
+<tr>
+<td><code>$steps.&lt;단계&gt;.response.&lt;경로&gt;</code></td>
+<td>앞 단계 API 응답의 값</td>
+<td><code>$steps.erp.response.id</code> → 납기 독촉 번호</td>
+</tr>
+<tr>
+<td><code>$cancel.reason</code></td>
+<td>취소할 때 준 사유</td>
+<td>“사용자 요청으로 긴급 처리 취소”</td>
+</tr>
+<tr>
+<td>그냥 값</td>
+<td>고정값</td>
+<td><code>"URGENT"</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>$before</code>와 <code>$steps</code>가 <strong>보상</strong>을 가능하게 합니다. 우선순위를 되돌리려면 “원래 값이 무엇이었는지”를, 납기 독촉을 철회하려면 “어느 독촉을 보냈는지”를 알아야 하기 때문입니다. 지워 버리는 것이 아니라 <strong>원래 상태로 되돌리는 것</strong>이 보상입니다.</p>
+<h3 id="정책-누가-무엇에">정책 — 누가, 무엇에<a class="anchor" href="#정책-누가-무엇에" title="Permanent link">#</a></h3>
+<p>정책은 규칙의 목록입니다. 규칙마다 <strong>역할</strong>(<code>roles</code>)과 <strong>조건</strong>(<code>when</code>)이 있고, 하나라도 맞으면 허용, 하나도 맞지 않으면 <strong>거부</strong>합니다(기본 거부). 조건은 CEL이라는 작은 표현식 언어로 씁니다.</p>
+<table>
+<thead>
+<tr>
+<th>쓸 수 있는 것</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target.&lt;속성&gt;</code></td>
+<td><code>target.status == 'OPEN'</code> — 미결 발주만</td>
+</tr>
+<tr>
+<td><code>actor.&lt;클레임&gt;</code></td>
+<td><code>target.plant == actor.plant</code> — 자기 공장의 설비만</td>
+</tr>
+<tr>
+<td><code>params.&lt;이름&gt;</code></td>
+<td><code>params.supplierName == target.approvedSupplier</code> — 승인 공급처에만 발주</td>
+</tr>
+</tbody>
+</table>
+<p>정책은 <strong>대상마다</strong> 판정됩니다. 계획을 세우면 대상 하나하나에 허용/거부와 사유가 붙습니다(16장). 그리고 실행 직전에 한 번 더 판정합니다 — 계획 뒤에 데이터가 바뀌었을 수 있으니까요.</p>
+<h2 id="따라-하기-골든-커맨드로-액션-만들기">따라 하기 — 골든 커맨드로 액션 만들기<a class="anchor" href="#따라-하기-골든-커맨드로-액션-만들기" title="Permanent link">#</a></h2>
+<p>예제에는 액션이 이미 세 개 있습니다. 시연에서는 그중 「발주 보류」를 지운 뒤, 골든 커맨드로 에이전트가 다시 만들게 했습니다. 여러분은 <strong>새 골든 커맨드</strong>로 따라 해 봅시다.</p>
+<ol class="steps">
+<li>「온톨로지 구축」을 열고 <b>소스</b>에서 시스템 <code>sample-erp</code>를 고릅니다. 문서도 데이터베이스도 아닌, 시스템의 API가 이번 구축의 재료입니다.</li>
+<li><b>대상</b>에서 기존 스키마 「공급망 운영 (예제)」를 고릅니다(추가 인제스천). 개념은 이미 있으니, 할 수 있는 일만 더합니다.</li>
+<li><b>의도</b>의 Golden Command에 새 지시를 적습니다. 예: <code>한빛정밀의 미결 발주를 모두 보류해 줘 (사유: 단가 재협상)</code></li>
+<li>「이 브리프로 구축 시작」.</li>
+</ol>
+<figure><a href="img/demo-gc-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="골든 커맨드 목록 — 두 번째 커맨드에는 아직 연결된 액션이 없습니다 (시연, 밤 테마)" src="img/demo-gc-list.webp" / loading="lazy" decoding="async"></a><figcaption>골든 커맨드 목록 — 두 번째 커맨드에는 아직 연결된 액션이 없습니다 (시연, 밤 테마)</figcaption></figure>
+<p>에이전트는 등록된 시스템의 API를 살핍니다. 발주를 보류하는 API와 보류를 푸는 API가 있다는 것을 찾아, 보류를 단계로, 해제를 보상으로 묶고, 정책을 붙입니다(시연 실측 약 4분 반).</p>
+<figure><a href="img/demo-gc-agent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구축 에이전트가 ERP의 API를 살펴 보류·해제를 단계와 보상으로 묶는 중 (시연, 밤 테마)" src="img/demo-gc-agent.webp" / loading="lazy" decoding="async"></a><figcaption>구축 에이전트가 ERP의 API를 살펴 보류·해제를 단계와 보상으로 묶는 중 (시연, 밤 테마)</figcaption></figure>
+<p>끝으로 실제로 실행하지 않고 계획만 세워 보는 <strong>드라이런</strong>으로 골든 커맨드를 검증합니다. 대상이 몇 건이고, 정책을 통과했는지, 승인이 필요한지가 보고서에 남습니다.</p>
+<figure><a href="img/demo-gc-report.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구축 보고 — 골든 커맨드마다 어떤 액션으로 충족됐고 드라이런 결과가 어땠는지 (시연, 밤 테마)" src="img/demo-gc-report.webp" / loading="lazy" decoding="async"></a><figcaption>구축 보고 — 골든 커맨드마다 어떤 액션으로 충족됐고 드라이런 결과가 어땠는지 (시연, 밤 테마)</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">이미 같은 일을 하는 액션이 있다면</p>
+<p>“한빛정밀의 미결 발주를 보류해 줘”는 사실 기존 액션 <code>holdPurchaseOrder</code>로 할 수 있습니다(대상 조건만 다름). 이럴 때 에이전트는 새 액션을 만들지 않고 “기존 액션으로 충족된다”고 보고합니다. 정말 새 액션이 생기는 걸 보고 싶다면, 기존 액션으로 할 수 없는 일을 시켜 보세요 — 예를 들어 CRM의 <code>createNotice</code>로 “납기가 늦어지는 발주의 품목을 산 고객에게 지연 안내를 보내 줘”.</p>
+</div>
+<h2 id="어떤-액션이-있는지-확인하기">어떤 액션이 있는지 확인하기<a class="anchor" href="#어떤-액션이-있는지-확인하기" title="Permanent link">#</a></h2>
+<p>질의·액션 탭에서 이렇게 물어보면 됩니다.</p>
+<div class="hl"><pre><span></span><code>어떤 액션을 쓸 수 있어?
+</code></pre></div>
+
+<p>에이전트가 지금 쓸 수 있는 액션(여러분의 역할로 허용된 것만)과 각 액션의 대상·입력·단계를 알려 줍니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li><code>PurchaseOrder.holdPurchaseOrder</code>의 보상은 무엇을 부를까요? 그 보상의 인자에 <code>$before</code>가 필요할까요?</li>
+<li>고객 안내(<code>Customer.notifyCustomer</code>)의 보상은 <code>withdrawNotice</code>입니다. 철회할 안내의 번호는 어디서 알 수 있을까요?</li>
+<li>“공장장만, 자기 공장의 설비에만, 한 번에 3대까지” 쓸 수 있는 액션의 정책 조건을 생각해 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>정답 보기</summary>
+<ol>
+<li>ERP의 <code>releasePurchaseOrder</code>(보류 해제). 예제 ERP는 보류할 때 보류 전 상태를 스스로 기록해 두고, 해제하면 그 상태로 되돌리므로 <code>$before</code>가 필요 없습니다. 시스템이 이전 상태를 기억하지 않는다면 <code>$before.status</code>를 넘겨야 합니다.</li>
+<li>앞 단계(<code>createNotice</code>)의 응답에 있는 안내 번호 — <code>$steps.crm.response.id</code>.</li>
+<li>규칙 <code>{"roles": ["plant_manager"], "when": "target.plant == actor.plant"}</code>. “한 번에 3대까지”는 정책이 아니라 액션의 최대 대상 수(max targets) 설정으로 겁니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="systems.html"><span>이전</span>업무 시스템 등록하기</a><a class="next" href="actions-run.html"><span>다음</span>액션 실행하기 — 계획·승인·실행·취소</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Ontological Studio 0.1 에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#액션이란">액션이란</a></li><li><a href="#정의를-뜯어보기">정의를 뜯어보기</a><ul><li><a href="#인자-매핑-값은-어디서-오나">인자 매핑 — 값은 어디서 오나</a></li><li><a href="#정책-누가-무엇에">정책 — 누가, 무엇에</a></li></ul></li><li><a href="#따라-하기-골든-커맨드로-액션-만들기">따라 하기 — 골든 커맨드로 액션 만들기</a></li><li><a href="#어떤-액션이-있는지-확인하기">어떤 액션이 있는지 확인하기</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
