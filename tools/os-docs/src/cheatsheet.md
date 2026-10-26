@@ -88,5 +88,5 @@
 ```javascript
 import { query, schema, theme, onTheme, color, actions, act } from '/apps/_runtime/og.js'
 const rows = await query('MATCH (s:Supplier) WHERE s.country = $c RETURN s.name AS name', { c: 'China' })
-const out = await act({ class: 'Shipment', action: 'expediteShipment', ids: ['SHP-03'], params: { reason: '…' } })  // 다음 배포판
+const out = await act({ class: 'Shipment', action: 'expediteShipment', ids: ['SHP-03'], params: { reason: '…' } })  // 0.1.1부터
 ```

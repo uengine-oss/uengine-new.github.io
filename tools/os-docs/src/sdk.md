@@ -46,8 +46,8 @@ import { query, schema, theme, onTheme, color, actions, act } from '/apps/_runti
 | `theme()` | `'light'` 또는 `'dark'` — Studio의 테마 설정을 따릅니다 |
 | `onTheme(fn)` | 테마가 바뀌면 `fn`을 부릅니다. 차트를 다시 칠할 때. 해제 함수를 돌려줍니다 |
 | `color(name)` | 테마 색 토큰의 값. `color('accent')`, `color('fg')` — 캔버스 차트에 넘길 때 |
-| `await actions(className?)` | 발행된 액션 목록([20장](app-actions.html)) — 다음 배포판부터 |
-| `await act(opts)` | 계획 → 승인 → 실행 → 취소 창을 띄웁니다([20장](app-actions.html)) — 다음 배포판부터 |
+| `await actions(className?)` | 발행된 액션 목록([20장](app-actions.html)) — 0.1.1부터 |
+| `await act(opts)` | 계획 → 승인 → 실행 → 취소 창을 띄웁니다([20장](app-actions.html)) — 0.1.1부터 |
 
 ### query()가 돌려주는 모양
 
