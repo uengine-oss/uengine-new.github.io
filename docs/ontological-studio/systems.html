@@ -146,7 +146,7 @@
 </tr>
 <tr>
 <td>정책</td>
-<td>타임아웃 5000ms, 재시도 2번, 상태 점검 경로 <code>/health</code></td>
+<td>타임아웃 5000ms, 재시도 2번, 상태 점검 경로 <code>/health</code> (비워 두면 활성 주소 자체를 점검)</td>
 </tr>
 <tr>
 <td>API (operation)</td>
@@ -161,11 +161,11 @@
 <li><b>기본 정보</b> — 이름(영문 소문자·숫자·하이픈), 표시 이름, 담당 팀, 연락처, 태그, 아이콘.</li>
 <li><b>스펙</b> — OpenAPI(Swagger) 파일을 끌어다 놓거나 스펙 주소를 적습니다. 호출할 수 있는 API 목록이 바로 읽힙니다. REST가 아닌 SOAP·gRPC·GraphQL 시스템도 등록은 되지만, 실행 어댑터가 붙기 전까지는 액션에 쓰지 못한다고 표시됩니다.</li>
 <li><b>인증</b> — API 키, Basic, Bearer, OAuth 클라이언트 자격 증명, 로그인 토큰 중에서 고르고, 비밀 값이 들어 있는 <b>환경 변수 이름</b>을 적습니다.</li>
-<li><b>연결 테스트</b> — 저장하기 전에 스펙을 읽고 상태 점검을 불러 봅니다. 통과하면 저장합니다.</li>
+<li><b>연결 테스트</b> — 저장하기 전에 스펙을 읽고 상태 점검을 불러 봅니다. 통과하면 저장합니다. 상태 점검 경로가 없는 시스템이면 경로를 비워 두세요. 서버가 응답만 하면(5xx가 아니면) <b>연결됨</b>으로 보고, 적어 둔 경로가 404·405를 돌려주면 「연결됨 · (경고 내용)」과 주황색 <code>~</code> 표시로 경로를 확인하라고 알려 줍니다.</li>
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">공개 API로 연습하기</p>
-<p>회사 시스템이 없다면 공개 API로 연습할 수 있습니다. 예를 들어 Swagger Petstore(<code>https://petstore3.swagger.io/api/v3/openapi.json</code>)를 등록하면 스펙에서 API 19개를 읽고 연결 테스트가 통과합니다. 액션을 만들 대상 시스템으로 쓰기에는 데이터가 공용이라 적당하지 않으니, 등록·조회 연습까지만 하세요.</p>
+<p>회사 시스템이 없다면 공개 API로 연습할 수 있습니다. 예를 들어 Swagger Petstore(<code>https://petstore3.swagger.io/api/v3/openapi.json</code>)를 등록하면 스펙에서 API 19개를 읽고 연결 테스트가 통과합니다. 환경의 활성 주소에 <code>https://petstore3.swagger.io/api/v3</code>을 적고, Petstore에는 <code>/health</code>가 없으니 상태 점검 경로는 비워 두세요. 액션을 만들 대상 시스템으로 쓰기에는 데이터가 공용이라 적당하지 않으니, 등록·조회 연습까지만 하세요.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">비밀 값은 어디에?</p>

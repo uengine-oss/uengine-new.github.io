@@ -56,6 +56,8 @@ const rows = await query('MATCH (s:Supplier) RETURN s.name AS name, s.tier AS ti
 // → [{ name: 'Hanoi Assembly', tier: 2 }, { name: 'Ningbo Magnetics', tier: 2 }, …]
 ```
 
+(12장 연습 2로 「한빛정밀」을 추가 인제스천했다면 `{ name: '한빛정밀', tier: 1 }`도 함께 나옵니다.)
+
 - `RETURN`의 이름(`AS`)이 객체의 키가 됩니다. 숫자는 숫자로 옵니다.
 - 노드 전체를 반환하면(`RETURN s`) 속성 객체에 `_labels`·`_id`가 붙어 옵니다.
 - 값은 문자열로 이어 붙이지 말고 **매개변수**로 넘깁니다. 따옴표 문제와 주입 공격을 막습니다.

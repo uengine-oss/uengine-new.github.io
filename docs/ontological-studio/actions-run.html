@@ -96,7 +96,7 @@
 <div class="hl"><pre><span></span><code>3일 넘게 늦어진 입고 선적을 긴급 처리해 줘. 사유는 생산 차질 우려.
 </code></pre></div>
 
-<p>에이전트가 액션 <code>Shipment.expediteShipment</code>를 고르고, 실행기에 계획을 요청합니다(실측 약 25초).</p>
+<p>에이전트가 액션 <code>Shipment.expediteShipment</code>를 고르고, 실행기에 계획을 요청합니다(실측 25~50초).</p>
 <figure><a href="img/qa-plan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="계획 카드 — 허용 2건(SHP-02, SHP-03), 거부 0건, 사람 승인 필요, 만료 시각. 위에는 첫 호출의 미리보기가 있습니다" src="img/qa-plan.webp" / loading="lazy" decoding="async"></a><figcaption>계획 카드 — 허용 2건(SHP-02, SHP-03), 거부 0건, 사람 승인 필요, 만료 시각. 위에는 첫 호출의 미리보기가 있습니다</figcaption></figure>
 <p>계획 카드에서 볼 것:</p>
 <table>
@@ -190,34 +190,35 @@
 <tbody>
 <tr>
 <td>1</td>
-<td>SHP-02</td>
+<td>SHP-03</td>
 <td>erp</td>
 <td>sample-erp · <code>withdrawExpediteRequest</code></td>
 <td>보상 성공 (200)</td>
 </tr>
 <tr>
 <td>2</td>
-<td>SHP-02</td>
+<td>SHP-03</td>
 <td>wms</td>
 <td>sample-wms · <code>setShipmentPriority</code></td>
 <td>보상 성공 (200)</td>
 </tr>
 <tr>
 <td>3</td>
-<td>SHP-03</td>
+<td>SHP-02</td>
 <td>erp</td>
 <td>sample-erp · <code>withdrawExpediteRequest</code></td>
 <td>보상 성공 (200)</td>
 </tr>
 <tr>
 <td>4</td>
-<td>SHP-03</td>
+<td>SHP-02</td>
 <td>wms</td>
 <td>sample-wms · <code>setShipmentPriority</code></td>
 <td>보상 성공 (200)</td>
 </tr>
 </tbody>
 </table>
+<p>대상 순서도 실행의 역순입니다 — 나중에 처리한 SHP-03을 먼저 되돌립니다.</p>
 <p>포털에서 다시 확인하면 두 선적의 <code>priority</code>가 <code>NORMAL</code>로 돌아와 있습니다. WMS 우선순위의 보상은 <code>$before.priority</code> — <strong>실행 직전의 값</strong>으로 되돌리기 때문입니다. 원래 <code>HIGH</code>였다면 <code>HIGH</code>로 돌아갑니다.</p>
 <h2 id="사가-중간에-실패하면">사가 — 중간에 실패하면<a class="anchor" href="#사가-중간에-실패하면" title="Permanent link">#</a></h2>
 <p>여러 시스템을 차례로 부르다가 중간에 하나가 실패하면 어떻게 될까요? 예를 들어 SHP-03의 WMS 단계는 성공했는데 ERP 단계가 실패했다면, WMS만 URGENT인 어중간한 상태가 남습니다.</p>
@@ -265,7 +266,7 @@
 <details class="answer">
 <summary>정답 보기</summary>
 <ol>
-<li>허용: PO-001, PO-002 (모두 OPEN). Shenzhen Goldline PCB의 발주는 이 두 건뿐이라 거부는 0건입니다. (만약 “모든 협력사의 발주를 보류해 줘”라고 하면 CLOSED인 PO-003, PO-004가 “미결 발주만” 사유로 거부됩니다.)</li>
+<li>허용: PO-001, PO-002 (모두 OPEN). Shenzhen Goldline PCB의 발주는 이 두 건뿐이라 거부는 0건입니다. (만약 “모든 협력사의 발주를 보류해 줘”라고 하면 CLOSED인 PO-003, PO-004가 “미결 발주만” 사유로 거부됩니다. 에이전트가 대상을 고를 때 이미 <code>status = 'OPEN'</code>으로 걸러 두면, 거부 행 없이 처음부터 대상에서 빠진 채로 계획이 나올 수도 있습니다.)</li>
 <li><code>erp.purchase_order</code>의 PO-001, PO-002가 <code>ON_HOLD</code>. <code>erp.po_hold</code>에는 발주마다 사유·보류 전 상태(<code>prev_status = OPEN</code>)·요청자가 한 줄씩 생깁니다. <code>erp.po_hold</code>는 가상 노드가 아니므로 데이터소스 탭의 테이블 상세에서 컬럼만 보입니다 — 내용을 보려면 가상 노드로 노출하세요(6장).</li>
 <li>보상(<code>releasePurchaseOrder</code>)이 보류 전 상태로 되돌려 <code>OPEN</code>이 됩니다.</li>
 </ol>
