@@ -41,7 +41,7 @@ Ontological Studio는 **온톨로지를 구축하고, 질의와 액션을 실행
 
 | 항목 | 내용 |
 |---|---|
-| 컴퓨터 | macOS (Apple Silicon, M1 이상) 또는 Windows 10/11 (x64), 메모리 8GB 권장 |
+| 컴퓨터 | macOS (Apple Silicon M1 이상, 또는 Intel) 또는 Windows 10/11 (x64), 메모리 8GB 권장 |
 | 디스크 | 2GB 이상 여유 |
 | 코딩 에이전트 | [Claude Code](https://claude.com/claude-code) 또는 Codex CLI — 설치하고 로그인해 두면 API 키 없이 구축·질의 에이전트가 동작합니다. 없어도 3·4부(데이터 연결, Cypher)는 그대로 실습할 수 있습니다. |
 | 네트워크 | 설치 파일을 받을 때와 에이전트(LLM)를 쓸 때만 필요합니다. 데이터베이스는 모두 내 컴퓨터 안에서 돕니다. |

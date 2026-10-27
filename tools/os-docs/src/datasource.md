@@ -63,9 +63,9 @@
 | 엔진 | 필요한 값 | 비고 |
 |---|---|---|
 | PostgreSQL | 호스트·포트·DB·스키마·계정·비밀번호 | macOS·Windows |
-| MySQL / MariaDB | 호스트·포트·DB·계정·비밀번호 | macOS |
-| Oracle | 호스트·포트·서비스 이름·소유자 스키마·계정·비밀번호 | macOS |
-| SQL Server | 호스트·포트·DB·스키마(기본 dbo)·계정·비밀번호 | macOS |
+| MySQL / MariaDB | 호스트·포트·DB·계정·비밀번호 | macOS (Apple Silicon·Intel) |
+| Oracle | 호스트·포트·서비스 이름·소유자 스키마·계정·비밀번호 | macOS (Apple Silicon·Intel) |
+| SQL Server | 호스트·포트·DB·스키마(기본 dbo)·계정·비밀번호 | macOS (Apple Silicon·Intel) |
 
 데이터소스 이름은 영문 소문자·숫자·밑줄만 씁니다. 원천은 같은 PC든 사내망이든 인터넷이든 접속만 되면 됩니다. 원천 계정은 **읽기 권한만 있는 계정**을 쓰기를 권합니다.
 
