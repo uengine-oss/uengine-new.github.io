@@ -41,10 +41,10 @@ import { query, schema, theme, onTheme, color, actions, act } from '/apps/_runti
 
 | 함수 | 하는 일 |
 |---|---|
-| `await query(cypher, params?)` | **읽기 전용** Cypher를 실행하고 행 배열을 돌려줍니다. 쓰기 절(`CREATE`·`MERGE`·`SET`·`DELETE`)은 서버가 거절합니다. 실패하면 엔진의 메시지로 `Error`를 던집니다. |
+| `await query(cypher, params?)` | **읽기 전용** Cypher를 실행하고 행 배열을 반환합니다. 쓰기 절(`CREATE`·`MERGE`·`SET`·`DELETE`)은 서버가 거절합니다. 실패하면 엔진의 메시지로 `Error`를 던집니다. |
 | `await schema()` | 발행된 온톨로지의 클래스·속성·관계. 앱이 스스로 둘러볼 때 |
 | `theme()` | `'light'` 또는 `'dark'` — Studio의 테마 설정을 따릅니다 |
-| `onTheme(fn)` | 테마가 바뀌면 `fn`을 부릅니다. 차트를 다시 칠할 때. 해제 함수를 돌려줍니다 |
+| `onTheme(fn)` | 테마가 바뀌면 `fn`을 부릅니다. 차트를 다시 칠할 때. 해제 함수를 반환합니다 |
 | `color(name)` | 테마 색 토큰의 값. `color('accent')`, `color('fg')` — 캔버스 차트에 넘길 때 |
 | `await actions(className?)` | 발행된 액션 목록([20장](app-actions.html)) — 0.1.1부터 |
 | `await act(opts)` | 계획 → 승인 → 실행 → 취소 창을 띄웁니다([20장](app-actions.html)) — 0.1.1부터 |
@@ -57,7 +57,7 @@ const rows = await query('MATCH (s:Supplier) RETURN s.name AS name, s.tier AS ti
 ```
 
 - `RETURN`의 이름(`AS`)이 객체의 키가 됩니다. 숫자는 숫자로 옵니다.
-- 노드를 통째로 돌려주면(`RETURN s`) 속성 객체에 `_labels`·`_id`가 붙어 옵니다.
+- 노드 전체를 반환하면(`RETURN s`) 속성 객체에 `_labels`·`_id`가 붙어 옵니다.
 - 값은 문자열로 이어 붙이지 말고 **매개변수**로 넘깁니다. 따옴표 문제와 주입 공격을 막습니다.
 
 ```javascript

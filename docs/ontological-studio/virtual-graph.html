@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>가상 노드와 가상 관계 — Ontological Studio 튜토리얼</title>
-<meta name="description" content="아직 노출되지 않은 테이블 `erp.po_line`(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 다른 데이터베이스의 테이블이 한 그래프로 이어지는 순간을 직접 만듭니다.">
+<meta name="description" content="아직 노출되지 않은 테이블 `erp.po_line`(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 서로 다른 데이터베이스의 테이블을 하나의 그래프로 연결하는 과정을 실습합니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/virtual-graph.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="가상 노드와 가상 관계 — Ontological Studio 튜토리얼">
-<meta property="og:description" content="아직 노출되지 않은 테이블 `erp.po_line`(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 다른 데이터베이스의 테이블이 한 그래프로 이어지는 순간을 직접 만듭니다.">
+<meta property="og:description" content="아직 노출되지 않은 테이블 `erp.po_line`(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 서로 다른 데이터베이스의 테이블을 하나의 그래프로 연결하는 과정을 실습합니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/virtual-graph.html">
 <meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
 <link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
@@ -82,10 +82,10 @@
     <h1>가상 노드와 가상 관계</h1>
     <article>
 <blockquote>
-<p>아직 노출되지 않은 테이블 <code>erp.po_line</code>(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 다른 데이터베이스의 테이블이 한 그래프로 이어지는 순간을 직접 만듭니다.</p>
+<p>아직 노출되지 않은 테이블 <code>erp.po_line</code>(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 서로 다른 데이터베이스의 테이블을 하나의 그래프로 연결하는 과정을 실습합니다.</p>
 </blockquote>
 <h2 id="가상-노드란">가상 노드란<a class="anchor" href="#가상-노드란" title="Permanent link">#</a></h2>
-<p><strong>가상 노드 타입</strong>은 원천 테이블 하나를 그래프의 노드 라벨 하나로 비춘 것입니다.</p>
+<p><strong>가상 노드 타입</strong>은 원천 테이블 하나를 그래프의 노드 타입으로 정의한 것입니다.</p>
 <ul>
 <li>원천 <strong>행 하나 = 노드 하나</strong>, <strong>컬럼 = 속성</strong>입니다.</li>
 <li><strong>KEY 컬럼</strong>이 노드를 구별하는 값입니다(보통 기본키).</li>
@@ -107,10 +107,10 @@
 <p>속성 이름을 바꾸면 <code>PROPERTIES (po_line_id, po_id, item_id, qty AS quantity)</code>처럼 붙습니다. 만들자마자 미리보기에 원천의 9행이 나옵니다.</p>
 <figure><a href="img/ds-created.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="가상 노드 :PoLine이 만들어지고, 원천 erp.po_line의 9행이 미리보기에 나왔습니다" src="img/ds-created.webp" / loading="lazy" decoding="async"></a><figcaption>가상 노드 :PoLine이 만들어지고, 원천 erp.po_line의 9행이 미리보기에 나왔습니다</figcaption></figure>
 <h2 id="가상-그래프-보기">가상 그래프 보기<a class="anchor" href="#가상-그래프-보기" title="Permanent link">#</a></h2>
-<p>왼쪽 아래 가상 그래프에서 <code>sample</code>을 누르면, 데이터소스별로 묶인 노드와 관계의 지도가 나옵니다. <code>PoLine</code>은 아직 아무와도 이어져 있지 않습니다.</p>
+<p>왼쪽 아래 가상 그래프에서 <code>sample</code>을 누르면, 데이터소스별로 묶인 노드와 관계의 지도가 나옵니다. <code>PoLine</code>은 아직 다른 노드와 연결되어 있지 않습니다.</p>
 <figure><a href="img/vgraph.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="가상 그래프 sample — 데이터소스별 가상 노드와 가상 관계" src="img/vgraph.webp" / loading="lazy" decoding="async"></a><figcaption>가상 그래프 sample — 데이터소스별 가상 노드와 가상 관계</figcaption></figure>
 <h2 id="따라-하기-관계로-잇기">따라 하기 — 관계로 잇기<a class="anchor" href="#따라-하기-관계로-잇기" title="Permanent link">#</a></h2>
-<p>발주 품목은 “어느 발주의” 줄이고 “어느 품목”을 산 것입니다. 이 두 사실을 관계로 만듭니다.</p>
+<p>발주 품목은 특정 발주에 포함된 특정 품목을 뜻합니다. 이 두 연결을 관계로 정의합니다.</p>
 <ol class="steps">
 <li>가상 그래프 화면 아래 관계 만들기 칸에 관계 이름 <code>IN_ORDER</code>를 적습니다.</li>
 <li>출발 노드 <code>PoLine</code>, 속성 <code>po_id</code> → 도착 노드 <code>PurchaseOrder</code>, 속성 <code>po_id</code>를 고릅니다.</li>
@@ -120,14 +120,14 @@
 <div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">IN_ORDER</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">PoLine</span><span class="p">(</span><span class="n">po_id</span><span class="p">)</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">PurchaseOrder</span><span class="p">(</span><span class="n">po_id</span><span class="p">)</span>
 </code></pre></div>
 
-<p>같은 방법으로 품목과도 잇습니다. 이번에는 포털에서 직접 문장을 쳐 봅시다(포털은 <a href="cypher-basics.html">7장</a>에서 자세히 다룹니다. 그래프 선택을 <code>sample</code>로 두세요).</p>
+<p>같은 방법으로 품목과도 잇습니다. 이번에는 포털에서 직접 문장을 입력해 봅시다(포털은 <a href="cypher-basics.html">7장</a>에서 자세히 다룹니다. 그래프 선택을 <code>sample</code>로 두세요).</p>
 <div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">OF_ITEM</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">PoLine</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">Item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
 </code></pre></div>
 
 <figure><a href="img/vgraph-after.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관계를 만든 뒤의 가상 그래프 — 실행한 문장이 아래에 남습니다" src="img/vgraph-after.webp" / loading="lazy" decoding="async"></a><figcaption>관계를 만든 뒤의 가상 그래프 — 실행한 문장이 아래에 남습니다</figcaption></figure>
 <p>관계도 복사가 아닙니다. <strong>조인 규칙</strong>(<code>PoLine.po_id = PurchaseOrder.po_id</code>)을 이름 붙여 저장해 둔 것이고, 질의할 때 그 규칙대로 원천을 조인합니다.</p>
 <h2 id="바로-써-보기">바로 써 보기<a class="anchor" href="#바로-써-보기" title="Permanent link">#</a></h2>
-<p>이제 “협력사별로 어떤 품목을 몇 개나 발주했나”를 묻는 질의를 쓸 수 있습니다. 협력사 → 발주 → 발주 품목 → 품목으로 네 노드를 걸어갑니다.</p>
+<p>이제 “협력사별로 어떤 품목을 몇 개나 발주했나”를 묻는 질의를 쓸 수 있습니다. 협력사 → 발주 → 발주 품목 → 품목으로 네 노드의 관계를 따라 조회합니다.</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">IN_ORDER</span><span class="o">]-</span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">PoLine</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">OF_ITEM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">qty</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">qty</span>
 <span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span>
@@ -174,7 +174,7 @@
 </tr>
 </tbody>
 </table>
-<p>그리고 이번에는 <strong>세 시스템을 건너는</strong> 질문입니다. “3일 넘게 늦은 선적이 싣고 오는 품목과 그 안전재고는?” — 선적은 WMS에, 발주·발주 품목·품목은 ERP에 있습니다.</p>
+<p>그리고 이번에는 <strong>두 시스템에 걸친</strong> 질문입니다. “3일 넘게 늦은 선적이 싣고 오는 품목과 그 안전재고는?” — 선적은 WMS에, 발주·발주 품목·품목은 ERP에 있습니다.</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">OF_ITEM</span><span class="o">]-</span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">PoLine</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">IN_ORDER</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-</span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">safety_stock</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span>
@@ -222,7 +222,7 @@
 <p><code>text
 'Supplier' is a virtual node type and read-only: its rows live in "erp"."supplier".
 Write to the source system, or MATERIALIZE VIRTUAL NODE Supplier to take a copy</code></p>
-<p>원천 데이터를 고치는 일은 그 데이터의 주인인 업무 시스템이 해야 합니다. 꼭 사본이 필요하면 <code>MATERIALIZE VIRTUAL NODE</code>로 복사본을 만들 수 있지만, 그 순간부터는 원천과 따로 놉니다.</p>
+<p>원천 데이터를 고치는 일은 그 데이터의 주인인 업무 시스템이 해야 합니다. 꼭 사본이 필요하면 <code>MATERIALIZE VIRTUAL NODE</code>로 복사본을 만들 수 있지만, 복사한 뒤에는 원천의 변경 사항이 자동으로 반영되지 않습니다.</p>
 </div>
 <div class="admonition exercise">
 <p class="admonition-title">확인 문제</p>
