@@ -85,7 +85,7 @@
 <p>Ontological Portal을 열고, 그래프 질의 언어 Cypher의 기본 문장 MATCH·WHERE·RETURN·ORDER BY·LIMIT를 예제 데이터로 하나씩 실행해 봅니다.</p>
 </blockquote>
 <h2 id="cypher는-그림으로-쓰는-질의">Cypher는 그림으로 쓰는 질의<a class="anchor" href="#cypher는-그림으로-쓰는-질의" title="Permanent link">#</a></h2>
-<p>Cypher는 그래프를 <strong>그림처럼</strong> 적는 질의 언어입니다. Neo4j에서 시작해 지금은 ISO 표준 그래프 질의 언어(GQL)의 바탕이 되었습니다.</p>
+<p>Cypher는 그래프의 구조를 <strong>그림을 그리듯 표현하는</strong> 질의 언어입니다. Neo4j에서 시작해 지금은 ISO 표준 그래프 질의 언어(GQL)의 바탕이 되었습니다.</p>
 <table>
 <thead>
 <tr>
@@ -112,7 +112,7 @@
 </tr>
 </tbody>
 </table>
-<p>SQL의 <code>SELECT … FROM … WHERE</code>에 대응시키면 쉽습니다.</p>
+<p>SQL의 <code>SELECT … FROM … WHERE</code>와 비교하면 이해하기 쉽습니다.</p>
 <table>
 <thead>
 <tr>
@@ -219,7 +219,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>MATCH</code>는 “이런 모양을 찾아라”, <code>RETURN</code>은 “찾은 것 중 이것을 돌려 달라”입니다. 노드 전체를 돌려받으려면 <code>RETURN s</code>라고 씁니다. 그러면 속성이 모두 담긴 객체가 오고, 결과 카드에 Graph 보기가 생깁니다.</p>
+<p><code>MATCH</code>는 “이런 모양을 찾아라”, <code>RETURN</code>은 “찾은 것 중 이것을 돌려 달라”입니다. 노드 전체를 조회하려면 <code>RETURN s</code>라고 씁니다. 그러면 모든 속성이 담긴 객체가 반환되고, 결과 카드에 Graph 보기가 생깁니다.</p>
 <h2 id="거르기-where">거르기 — WHERE<a class="anchor" href="#거르기-where" title="Permanent link">#</a></h2>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;China&#39;</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">tier</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1</span>
@@ -257,7 +257,7 @@
 </tr>
 </tbody>
 </table>
-<p>조건이 키 하나뿐이면 패턴 안에 지도처럼 적어도 됩니다.</p>
+<p>조건이 하나뿐이면 패턴 안에 속성과 값을 직접 적어도 됩니다.</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="w"> </span><span class="p">{</span><span class="n">supplier_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;S-CN-01&#39;</span><span class="p">})</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">s</span>
 </code></pre></div>
@@ -303,7 +303,7 @@ RETURN c.ticket_no, c.opened_date</code></p>
 </tr>
 </tbody>
 </table>
-<p><code>ORDER BY a, b DESC</code>처럼 여러 기준을 줄 수 있고, <code>SKIP 2 LIMIT 3</code>은 “두 개 건너뛰고 세 개” — 페이지 나누기에 씁니다. <code>RETURN po.po_id AS 발주</code>처럼 <code>AS</code>로 열 이름을 바꿀 수 있습니다(한글도 됩니다).</p>
+<p><code>ORDER BY a, b DESC</code>처럼 여러 기준을 줄 수 있고, <code>SKIP 2 LIMIT 3</code>은 “두 개 건너뛰고 세 개” — 페이지를 나눌 때 사용합니다. <code>RETURN po.po_id AS 발주</code>처럼 <code>AS</code>로 컬럼 이름을 바꿀 수 있습니다(한글도 됩니다).</p>
 <h2 id="중복-없애기와-세기">중복 없애기와 세기<a class="anchor" href="#중복-없애기와-세기" title="Permanent link">#</a></h2>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span>
 </code></pre></div>
@@ -397,17 +397,17 @@ RETURN c.ticket_no, c.opened_date</code></p>
 <h2 id="결과를-보는-세-가지-방법">결과를 보는 세 가지 방법<a class="anchor" href="#결과를-보는-세-가지-방법" title="Permanent link">#</a></h2>
 <p>결과 카드 오른쪽 위에서 고릅니다.</p>
 <ul>
-<li><strong>Table</strong> — 표. 가장 자주 씁니다.</li>
-<li><strong>JSON</strong> — 노드 객체를 그대로. 앱 코드에서 받는 모양과 같습니다(<a href="sdk.html">19장</a>).</li>
-<li><strong>SQL</strong> — 이 Cypher가 번역된 PostgreSQL SQL. Ontological DB가 어떻게 실행하는지 볼 수 있습니다(<a href="cypher-advanced.html">9장</a>).</li>
+<li><strong>Table</strong> — 결과를 테이블로 보여 줍니다. 가장 자주 사용하는 보기입니다.</li>
+<li><strong>JSON</strong> — 노드 객체를 그대로 보여 줍니다. 앱 코드에서 받는 형식과 같습니다(<a href="sdk.html">19장</a>).</li>
+<li><strong>SQL</strong> — Cypher를 변환한 PostgreSQL SQL입니다. Ontological DB가 질의를 어떻게 실행하는지 확인할 수 있습니다(<a href="cypher-advanced.html">9장</a>).</li>
 </ul>
 <div class="admonition exercise">
 <p class="admonition-title">확인 문제</p>
 <p><code>sample</code> 그래프에서 다음을 Cypher로 써 보세요.</p>
 <ol>
-<li>상태가 <code>OPEN</code>인 발주의 번호와 금액을, 금액이 작은 순으로.</li>
+<li>상태가 <code>OPEN</code>인 발주의 번호와 금액을 금액이 작은 순으로 조회하세요.</li>
 <li>세관 보류(<code>CUSTOMS_HOLD</code>)이거나 운송 중(<code>IN_TRANSIT</code>)인 선적의 번호와 도착 예정일(<code>eta</code>).</li>
-<li>고객이 몇 곳인지.</li>
+<li>고객이 몇 곳인지 확인하세요.</li>
 <li>클레임 중 심각도(<code>severity</code>)가 <code>HIGH</code>인 것의 번호와 제목.</li>
 </ol>
 </div>

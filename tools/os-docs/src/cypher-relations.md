@@ -1,6 +1,6 @@
 # 관계 따라가기와 집계
 
-> 관계 패턴으로 노드 사이를 걸어가고, 여러 데이터베이스를 한 질의로 잇고, count·sum·collect로 묶어 셉니다. Cypher가 SQL보다 편해지는 지점입니다.
+> 관계 패턴을 따라 노드를 조회하고, 여러 데이터베이스를 하나의 질의로 연결해 count·sum·collect로 집계합니다. Cypher가 SQL보다 편해지는 지점입니다.
 
 ## 관계 패턴
 
@@ -30,7 +30,7 @@ RETURN po.po_id, po.status, s.name
 | `(a)<-[:R]-(b)` | b에서 a로 — 같은 관계를 반대편에서 읽기 |
 | `(a)-[:R]-(b)` | 방향 상관없이 |
 
-관계는 정의된 방향이 있습니다(`PurchaseOrder → Supplier`). 협력사에서 출발하고 싶으면 화살표를 반대로 씁니다.
+관계에는 정의된 방향이 있습니다(`PurchaseOrder → Supplier`). 협력사에서 출발하고 싶으면 화살표를 반대로 씁니다.
 
 ```cypher
 MATCH (s:Supplier)<-[:ORDERED_FROM]-(po:PurchaseOrder)
@@ -66,7 +66,7 @@ ORDER BY sh.delay_days DESC
 | SHP-06 | IN_TRANSIT | 3 | PO-005 | Ningbo Magnetics |
 | SHP-05 | DELIVERED | 1 | PO-004 | 대성케이블 |
 
-노드를 통째로 돌려주면 그래프로 볼 수 있습니다. 관계에도 변수(`r`, `o`)를 붙여 함께 돌려줍니다.
+노드 전체를 반환하면 그래프로 볼 수 있습니다. 관계에도 변수(`r`, `o`)를 붙여 함께 반환합니다.
 
 ```cypher
 MATCH (sh:Shipment)-[r:SHIPS]->(po:PurchaseOrder)-[o:ORDERED_FROM]->(s:Supplier)
@@ -76,7 +76,7 @@ RETURN sh, r, po, o, s
 
 ![결과 카드의 Graph 보기 — 늦은 선적 두 건이 각자의 발주를 거쳐 같은 협력사로 모입니다](img/portal-graph.webp)
 
-선적 두 건이 서로 다른 발주를 거쳐 **같은 협력사 하나로 모이는** 모양이 보입니다. 표로는 잘 안 보이던 사실입니다 — 늦은 선적의 원인이 한 협력사에 몰려 있습니다.
+선적 두 건이 서로 다른 발주를 거쳐 **같은 협력사로 연결되는** 모습을 볼 수 있습니다. 테이블에서는 알아보기 어려웠던 사실입니다. 지연된 선적이 한 협력사에 집중되어 있습니다.
 
 ### 고객 쪽으로
 
@@ -109,11 +109,11 @@ RETURN DISTINCT i.name, s.name
 | PCB 기판 | Hanoi Assembly |
 | PCB 기판 | Shenzhen Goldline PCB |
 
-세 데이터베이스(CRM·ERP)와 다섯 종류의 노드를 지나는 질문이 한 문장이 됐습니다.
+두 데이터베이스(CRM·ERP)에 걸친 다섯 종류의 노드를 하나의 질의로 조회했습니다.
 
 ## 없는 짝도 남기기 — OPTIONAL MATCH
 
-SQL의 `LEFT JOIN`에 해당합니다. 짝이 없어도 행을 남기고, 없는 쪽은 `null`이 됩니다.
+SQL의 `LEFT JOIN`에 해당합니다. 연결된 데이터가 없어도 행을 유지하며, 데이터가 없는 쪽은 `null`이 됩니다.
 
 ```cypher
 MATCH (sh:Shipment)
@@ -122,7 +122,7 @@ RETURN sh.shipment_no, po.po_id
 ORDER BY sh.shipment_no
 ```
 
-8건 중 `SHP-08`만 `po.po_id`가 `null`입니다. 이 선적은 ERP에 없는 발주 `PO-999`를 가리키고 있습니다 — 일부러 넣어 둔 **데이터 품질 문제**입니다. 짝이 없는 것만 고르려면:
+8건 중 `SHP-08`만 `po.po_id`가 `null`입니다. 이 선적은 ERP에 없는 발주 `PO-999`를 가리키고 있습니다 — 일부러 넣어 둔 **데이터 품질 문제**입니다. 연결된 데이터가 없는 항목만 고르려면:
 
 ```cypher
 MATCH (sh:Shipment)
@@ -138,7 +138,7 @@ RETURN sh.shipment_no, sh.ref_po_no
 
 ## 묶어서 세기 — 집계
 
-`RETURN`에 집계 함수와 보통 값이 함께 있으면, **보통 값끼리 같은 행이 한 묶음**이 됩니다(SQL의 `GROUP BY`를 따로 쓰지 않습니다).
+`RETURN`에 집계 함수와 보통 값이 함께 있으면, **일반 컬럼의 값이 같은 행이 한 그룹**이 됩니다(SQL의 `GROUP BY`를 따로 쓰지 않습니다).
 
 ```cypher
 MATCH (po:PurchaseOrder)
@@ -167,7 +167,7 @@ ORDER BY open_amount DESC
 | Hanoi Assembly | 1 | 33000 |
 | 한빛정밀 | 1 | 27000 |
 
-협력사별 가장 나쁜 지연:
+협력사별 최장 지연 일수:
 
 ```cypher
 MATCH (s:Supplier)<-[:ORDERED_FROM]-(po:PurchaseOrder)<-[:SHIPS]-(sh:Shipment)
@@ -190,7 +190,7 @@ RETURN s.name, n
 
 발주가 두 건 이상인 협력사 — Ningbo Magnetics, Shenzhen Goldline PCB, 한빛정밀(각 2건).
 
-`collect()`로 모은 목록의 길이는 `size()`로 잽니다.
+`collect()`로 모은 목록의 길이는 `size()`로 확인합니다.
 
 ```cypher
 MATCH (po:PurchaseOrder)-[:ORDERED_FROM]->(s:Supplier)
@@ -200,7 +200,7 @@ ORDER BY n DESC
 ```
 
 !!! warning "알려진 제약 — 금액 합계로 거르기"
-    `WITH s, sum(po.amount_usd) AS total WHERE total > 50000`처럼 **소수 타입 컬럼의 합계로 다시 거르면** 지금 판에서는 `invalid input syntax for type bigint` 오류가 납니다. `sum(toFloat(po.amount_usd))`로 실수로 바꿔 더하면 됩니다.
+    `WITH s, sum(po.amount_usd) AS total WHERE total > 50000`처럼 **소수 타입 컬럼의 합계로 다시 거르면** 현재 버전에서는 `invalid input syntax for type bigint` 오류가 납니다. `sum(toFloat(po.amount_usd))`로 실수로 바꿔 더하면 됩니다.
 
     ```cypher
     MATCH (po:PurchaseOrder)-[:ORDERED_FROM]->(s:Supplier)

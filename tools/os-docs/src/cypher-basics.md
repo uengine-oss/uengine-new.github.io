@@ -4,7 +4,7 @@
 
 ## Cypher는 그림으로 쓰는 질의
 
-Cypher는 그래프를 **그림처럼** 적는 질의 언어입니다. Neo4j에서 시작해 지금은 ISO 표준 그래프 질의 언어(GQL)의 바탕이 되었습니다.
+Cypher는 그래프의 구조를 **그림을 그리듯 표현하는** 질의 언어입니다. Neo4j에서 시작해 지금은 ISO 표준 그래프 질의 언어(GQL)의 바탕이 되었습니다.
 
 | 그림 | Cypher | 뜻 |
 |---|---|---|
@@ -12,7 +12,7 @@ Cypher는 그래프를 **그림처럼** 적는 질의 언어입니다. Neo4j에�
 | ○→○ | `(po)-[:ORDERED_FROM]->(s)` | `po`에서 `s`로 가는 `ORDERED_FROM` 관계 |
 | 속성 | `s.name` | 노드 `s`의 `name` 값 |
 
-SQL의 `SELECT … FROM … WHERE`에 대응시키면 쉽습니다.
+SQL의 `SELECT … FROM … WHERE`와 비교하면 이해하기 쉽습니다.
 
 | SQL | Cypher |
 |---|---|
@@ -50,7 +50,7 @@ RETURN s.supplier_id, s.name, s.country, s.tier
 | S-CN-02 | Ningbo Magnetics | China | 2 |
 | S-VN-01 | Hanoi Assembly | Vietnam | 2 |
 
-`MATCH`는 “이런 모양을 찾아라”, `RETURN`은 “찾은 것 중 이것을 돌려 달라”입니다. 노드 전체를 돌려받으려면 `RETURN s`라고 씁니다. 그러면 속성이 모두 담긴 객체가 오고, 결과 카드에 Graph 보기가 생깁니다.
+`MATCH`는 “이런 모양을 찾아라”, `RETURN`은 “찾은 것 중 이것을 돌려 달라”입니다. 노드 전체를 조회하려면 `RETURN s`라고 씁니다. 그러면 모든 속성이 담긴 객체가 반환되고, 결과 카드에 Graph 보기가 생깁니다.
 
 ## 거르기 — WHERE
 
@@ -70,7 +70,7 @@ RETURN s.name
 | 문자열 | `s.name STARTS WITH 'S'`, `CONTAINS 'Gold'`, `ENDS WITH 'PCB'` |
 | 값 없음 | `po IS NULL`, `po IS NOT NULL` |
 
-조건이 키 하나뿐이면 패턴 안에 지도처럼 적어도 됩니다.
+조건이 하나뿐이면 패턴 안에 속성과 값을 직접 적어도 됩니다.
 
 ```cypher
 MATCH (s:Supplier {supplier_id: 'S-CN-01'})
@@ -102,7 +102,7 @@ LIMIT 3
 | PO-005 | 60000 | OPEN |
 | PO-002 | 41000 | OPEN |
 
-`ORDER BY a, b DESC`처럼 여러 기준을 줄 수 있고, `SKIP 2 LIMIT 3`은 “두 개 건너뛰고 세 개” — 페이지 나누기에 씁니다. `RETURN po.po_id AS 발주`처럼 `AS`로 열 이름을 바꿀 수 있습니다(한글도 됩니다).
+`ORDER BY a, b DESC`처럼 여러 기준을 줄 수 있고, `SKIP 2 LIMIT 3`은 “두 개 건너뛰고 세 개” — 페이지를 나눌 때 사용합니다. `RETURN po.po_id AS 발주`처럼 `AS`로 컬럼 이름을 바꿀 수 있습니다(한글도 됩니다).
 
 ## 중복 없애기와 세기
 
@@ -152,16 +152,16 @@ Ontological DB가 지원하는 함수는 다음과 같습니다. 목록에 없�
 
 결과 카드 오른쪽 위에서 고릅니다.
 
-- **Table** — 표. 가장 자주 씁니다.
-- **JSON** — 노드 객체를 그대로. 앱 코드에서 받는 모양과 같습니다([19장](sdk.html)).
-- **SQL** — 이 Cypher가 번역된 PostgreSQL SQL. Ontological DB가 어떻게 실행하는지 볼 수 있습니다([9장](cypher-advanced.html)).
+- **Table** — 결과를 테이블로 보여 줍니다. 가장 자주 사용하는 보기입니다.
+- **JSON** — 노드 객체를 그대로 보여 줍니다. 앱 코드에서 받는 형식과 같습니다([19장](sdk.html)).
+- **SQL** — Cypher를 변환한 PostgreSQL SQL입니다. Ontological DB가 질의를 어떻게 실행하는지 확인할 수 있습니다([9장](cypher-advanced.html)).
 
 !!! exercise "확인 문제"
     `sample` 그래프에서 다음을 Cypher로 써 보세요.
 
-    1. 상태가 `OPEN`인 발주의 번호와 금액을, 금액이 작은 순으로.
+    1. 상태가 `OPEN`인 발주의 번호와 금액을 금액이 작은 순으로 조회하세요.
     2. 세관 보류(`CUSTOMS_HOLD`)이거나 운송 중(`IN_TRANSIT`)인 선적의 번호와 도착 예정일(`eta`).
-    3. 고객이 몇 곳인지.
+    3. 고객이 몇 곳인지 확인하세요.
     4. 클레임 중 심각도(`severity`)가 `HIGH`인 것의 번호와 제목.
 
 <details class="answer" markdown="1"><summary>정답 보기</summary>
