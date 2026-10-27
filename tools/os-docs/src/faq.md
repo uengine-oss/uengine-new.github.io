@@ -7,6 +7,9 @@
 **macOS에서 “손상되었기 때문에 열 수 없습니다” / “확인되지 않은 개발자”라고 나옵니다.**
 : 서명되지 않은 배포판이라 그렇습니다. 앱을 오른쪽 클릭 › 열기, 또는 시스템 설정 › 개인정보 보호 및 보안 › 「그래도 열기」. 그래도 안 되면 `xattr -dr com.apple.quarantine "/Applications/Ontological Studio.app"`([1장](install.html)).
 
+**Intel Mac에서 앱이 실행되지 않습니다.**
+: Intel용 설치 파일(`Ontological-Studio-mac-x64.dmg`)을 받았는지 확인하세요. Apple Silicon용(`…-mac-arm64.dmg`)은 Intel Mac에서 열리지 않습니다. Intel용은 0.1.1부터 있으니, 0.1.0을 받았다면 [릴리스 페이지](https://github.com/uengine-oss/ontological-studio-releases/releases/latest)에서 새로 받으세요([1장](install.html)).
+
 **Windows에서 SmartScreen이 막습니다.**
 : 「추가 정보 › 실행」을 누릅니다.
 

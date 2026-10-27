@@ -9,9 +9,13 @@
 | 운영체제 | 파일 |
 |---|---|
 | macOS (Apple Silicon) | `Ontological-Studio-mac-arm64.dmg` |
+| macOS (Intel) | `Ontological-Studio-mac-x64.dmg` |
 | Windows 10/11 (x64) | `Ontological-Studio-Setup-win-x64.exe` |
 
-Intel 칩 Mac은 아직 지원하지 않습니다.
+Mac은 칩에 맞는 파일을 받아야 합니다. 화면 왼쪽 위 사과(Apple) 메뉴 › **이 Mac에 관하여**에서 「칩」이 Apple M1·M2·M3·M4…이면 **Apple Silicon**용, 「프로세서」가 Intel이면 **Intel**용입니다. 칩에 맞지 않는 DMG를 받으면 앱이 실행되지 않습니다.
+
+!!! note "Intel Mac은 0.1.1부터"
+    Intel Mac용 설치 파일은 0.1.1부터 있습니다. 앱 안의 데이터베이스와 바깥 DB 커넥터(MySQL·Oracle·SQL Server)까지 모두 Intel용으로 따로 빌드했으므로, 이 튜토리얼의 모든 실습을 Intel Mac에서도 그대로 따라 할 수 있습니다.
 
 ## macOS에 설치하기
 
@@ -37,13 +41,13 @@ Intel 칩 Mac은 아직 지원하지 않습니다.
 </ol>
 
 !!! note "Windows에서 아직 안 되는 것"
-    MySQL·Oracle·SQL Server 원천 연결은 macOS판에만 있습니다(PostgreSQL은 둘 다 됩니다). Claude Code를 Windows에서 쓰려면 Git for Windows가 먼저 설치돼 있어야 합니다.
+    MySQL·Oracle·SQL Server 원천 연결은 macOS판(Apple Silicon·Intel)에만 있습니다(PostgreSQL은 모든 판에서 됩니다). Claude Code를 Windows에서 쓰려면 Git for Windows가 먼저 설치돼 있어야 합니다.
 
 ## 첫 실행에 일어나는 일
 
 앱을 열면 부팅 화면이 단계별 진행 상황을 보여 줍니다.
 
-| 단계 | 하는 일 | 걸리는 시간(M 시리즈 기준) |
+| 단계 | 하는 일 | 걸리는 시간(Apple Silicon 기준, Intel Mac은 조금 더 걸릴 수 있습니다) |
 |---|---|---|
 | PostgreSQL | 내 컴퓨터 안에서 데이터베이스 서버를 띄웁니다 | 1초 안쪽 |
 | 첫 실행 준비 | 예제 업무 DB(ERP·WMS·CRM)를 만들고 데이터 패브릭에 등록합니다 | 처음 한 번만 |
