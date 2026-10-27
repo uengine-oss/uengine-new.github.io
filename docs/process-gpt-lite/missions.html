@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>외부 연동과 예약 미션 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="비서가 쓸 수 있는 외부 서비스(Google·YouTube·Slack·GitHub·Notion)를 연결하고, “매주 월요일 9시에 …”처럼 말로 정해진 시각에 돌아가는 작업을 만듭니다. 예약 작업은 지난번과 달라진 것이 있을 때만 채팅에 알립니다. 스킬로 만든 예약(미션)은 지금 실행·일시정지·실행 기록·실행 에이전트 선택까지 관리합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/missions.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="외부 연동과 예약 미션 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="비서가 쓸 수 있는 외부 서비스(Google·YouTube·Slack·GitHub·Notion)를 연결하고, “매주 월요일 9시에 …”처럼 말로 정해진 시각에 돌아가는 작업을 만듭니다. 예약 작업은 지난번과 달라진 것이 있을 때만 채팅에 알립니다. 스킬로 만든 예약(미션)은 지금 실행·일시정지·실행 기록·실행 에이전트 선택까지 관리합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/missions.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html" class="on" aria-current="page"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">반복 줄이기<span class="chap">11</span></div>
+    <h1>외부 연동과 예약 미션</h1>
+    <article>
+<blockquote>
+<p>비서가 쓸 수 있는 외부 서비스(Google·YouTube·Slack·GitHub·Notion)를 연결하고, “매주 월요일 9시에 …”처럼 말로 정해진 시각에 돌아가는 작업을 만듭니다. 예약 작업은 지난번과 달라진 것이 있을 때만 채팅에 알립니다. 스킬로 만든 예약(미션)은 지금 실행·일시정지·실행 기록·실행 에이전트 선택까지 관리합니다.</p>
+</blockquote>
+<p><a href="skills.html">10장</a>에서 견적서 점검 방법을 <code>quote-check</code> 스킬로 저장했습니다. 스킬은 부를 때만 돕니다. 이 장에서는 먼저 비서가 쓸 수 있는 바깥 서비스를 연결하고, 그다음 일을 정해진 시각에 저절로 돌게 합니다.</p>
+<h2 id="연결-비서가-쓸-수-있는-바깥-서비스">연결 — 비서가 쓸 수 있는 바깥 서비스<a class="anchor" href="#연결-비서가-쓸-수-있는-바깥-서비스" title="Permanent link">#</a></h2>
+<p>설정(오른쪽 위 내 이름 동그라미) › 「계정」의 <strong>연결</strong>에 다섯 가지가 있습니다. 카드마다 비서가 쓸 수 있게 되는 도구가 적혀 있습니다.</p>
+<figure><a href="img/missions-connectors.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="계정 › 연결. YouTube는 처음부터 연결됨, 나머지는 「연결」을 눌러 각자 연결합니다" src="img/missions-connectors.webp" / loading="lazy" decoding="async"></a><figcaption>계정 › 연결. YouTube는 처음부터 연결됨, 나머지는 「연결」을 눌러 각자 연결합니다</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>서비스</th>
+<th>연결 방법</th>
+<th>쓸 수 있는 일(도구)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>YouTube</strong></td>
+<td>필요 없음 — 공개 데이터</td>
+<td>채널의 최근 영상, 영상 정보, 자막</td>
+</tr>
+<tr>
+<td><strong>Google</strong> (Gmail·캘린더·Drive)</td>
+<td>「연결」 → Google 로그인 동의. 관리자가 서버에 Google 로그인 설정을 해 둬야 함(<a href="admin.html">25장</a>)</td>
+<td>메일 찾기·읽기·초안, 일정 찾기·만들기·고치기, Drive 찾기·읽기</td>
+</tr>
+<tr>
+<td><strong>Slack</strong></td>
+<td>사용자 토큰(<code>xoxp-…</code>)을 붙여 넣기</td>
+<td>채널 목록, 채널 읽기, 메시지 보내기</td>
+</tr>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Personal Access Token(repo 범위) 붙여 넣기</td>
+<td>이슈 찾기, PR 목록, 이슈 만들기</td>
+</tr>
+<tr>
+<td><strong>Notion</strong></td>
+<td>내부 통합 시크릿을 붙여 넣고, 쓸 페이지를 그 통합에 공유</td>
+<td>찾기, 페이지 읽기·만들기·덧붙이기</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">토큰은 보관함에</p>
+<p>붙여 넣은 토큰은 그 사람의 <strong>보관함</strong>에 암호화되어 저장되고(<a href="browser.html">6장</a>), 화면이나 비서(AI 모델)에게 값이 보이지 않습니다. 비서가 도구를 부르면 서버가 부른 사람의 토큰을 꺼내 대신 호출합니다. 그래서 같은 질문도 사람마다 자기 계정의 결과를 받습니다. 연결하지 않은 서비스의 도구를 비서가 부르면 “연결이 필요하다”는 답이 옵니다.</p>
+</div>
+<p>이 장은 개인 계정 연결이 필요 없는 예로 진행합니다. Google·Slack 연결을 쓰는 예(유튜브 새 영상의 일정을 캘린더에 넣기, 슬랙 주간 요약)는 <a href="https://youtu.be/yVHodTrDwHg">연동·스킬·미션 영상</a>에 있습니다.</p>
+<h2 id="따라-하기-1-말로-예약하기">따라 하기 1 — 말로 예약하기<a class="anchor" href="#따라-하기-1-말로-예약하기" title="Permanent link">#</a></h2>
+<p>달빛커피 2호점 오픈까지 매주 남은 기간과 할 일을 챙기고 싶습니다. 채팅에 적습니다.</p>
+<div class="hl"><pre><span></span><code>매주 월요일 오전 9시에 달빛커피 2호점 오픈(2027년 3월 2일)까지 몇 주 남았는지와 이번 주에 챙길 일을 세 줄로 정리해서 알려 줘.
+</code></pre></div>
+
+<p>“매일·매주·마다·정기” 같은 말이 있으면 비서는 바로 하지 않고 <strong>예약</strong>으로 받아들입니다. 답 밑에 예약 칩이 붙습니다.</p>
+<figure><a href="img/missions-chip.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="예약 칩 “예약됨 · 달빛커피 2호점 오픈 카운트다운 · 다음 실행 11월 2일 (월) 오전 9:00”" src="img/missions-chip.webp" / loading="lazy" decoding="async"></a><figcaption>예약 칩 “예약됨 · 달빛커피 2호점 오픈 카운트다운 · 다음 실행 11월 2일 (월) 오전 9:00”</figcaption></figure>
+<p><strong>확인할 것</strong>: 칩의 작업 이름과 다음 실행 시각. 비서는 매번 실행할 지시문을 스스로 완성해서 저장합니다(실습: “…남은 일수를 7로 나눈 값을 올림으로 주 수로 환산…”).</p>
+<p>「설정 › 예약된 작업」에서 목록과 상세를 봅니다.</p>
+<figure><a href="img/missions-detail.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="예약된 작업 상세 — 상태 활성, 일정 0 9 * * 1(매주 월요일 9시), 다음 실행, 결과는 채팅에 게시" src="img/missions-detail.webp" / loading="lazy" decoding="async"></a><figcaption>예약된 작업 상세 — 상태 활성, 일정 0 9 * * 1(매주 월요일 9시), 다음 실행, 결과는 채팅에 게시</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>일정</td>
+<td>한국 시간 기준의 주기(분 시 일 월 요일). <code>0 9 * * 1</code> = 매주 월요일 9:00</td>
+</tr>
+<tr>
+<td>다음 실행</td>
+<td>실제로 다음에 돌 시각</td>
+</tr>
+<tr>
+<td>전달</td>
+<td>결과가 올라갈 곳(이 대화)</td>
+</tr>
+<tr>
+<td>「삭제」</td>
+<td>예약을 지웁니다</td>
+</tr>
+</tbody>
+</table>
+<h3 id="지난번과-같으면-조용히">지난번과 같으면 조용히<a class="anchor" href="#지난번과-같으면-조용히" title="Permanent link">#</a></h3>
+<p>예약 작업은 실행할 때마다 “직전 실행에서 공유한 것과 달라진 게 없으면 ‘변동 없음’만 답하라”는 조건과 함께 돌고, 답이 “변동 없음”이면 <strong>채팅에 아무것도 남기지 않습니다</strong>(구분선도 없음). 앞 실행이 아직 도는 중이면 그 회차는 건너뜁니다. 매일 같은 내용이 쌓여 정작 중요한 알림을 놓치는 일을 막기 위해서입니다.</p>
+<div class="admonition note">
+<p class="admonition-title">조용한 회차는 실패였을까, 변동 없음이었을까</p>
+<p>현재 버전의 일반 예약은 상세 화면에 실행 기록이 없어, 채팅에 아무것도 남지 않은 회차가 “변동 없음”이었는지 실패였는지 화면에서 구분하기 어렵습니다. 첫 회차부터 조용할 수도 있으니, 결과를 꼭 확인해야 하는 일은 아래의 <strong>미션</strong>(스킬 예약)으로 만드세요. 미션은 실행마다 기록이 남습니다.</p>
+</div>
+<h2 id="따라-하기-2-스킬을-예약하기-미션">따라 하기 2 — 스킬을 예약하기 (미션)<a class="anchor" href="#따라-하기-2-스킬을-예약하기-미션" title="Permanent link">#</a></h2>
+<p><a href="skills.html">10장</a>에서 만든 스킬을 정해진 시각에 돌리면 <strong>미션</strong>이 됩니다. 미션은 일반 예약보다 관리할 것이 많습니다.</p>
+<p>「설정 › 스킬」에서 <code>quote-check</code>를 열면 아래에 주기 버튼(매일 아침 8시 · 하루 두 번 · 평일 장중 매시 · 매주 월 9시)이 있습니다. 「매주 월 9시」를 고르고 「입력값(JSON)」 칸에 점검할 견적서를 적은 뒤(칸 안의 예시처럼 <code>{"이름": "값"}</code> 모양으로 적습니다) 「매주 월 9시 예약 만들기」를 누릅니다. 스킬 초안 카드에서 저장할 때 주기를 함께 골라도 됩니다.</p>
+<p>「설정 › 예약된 작업」에서 미션을 열면 일반 예약보다 항목이 많습니다. 「지금 실행」을 눌러 바로 돌려 봅니다.</p>
+<figure><a href="img/missions-mission.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="미션 상세 — 상태 스위치, 일정, 스킬, 입력, 에이전트(Deep Agents·Claude Code·Codex), 알림 “바뀐 게 있을 때만”, 「지금 실행」과 이전 실행 기록" src="img/missions-mission.webp" / loading="lazy" decoding="async"></a><figcaption>미션 상세 — 상태 스위치, 일정, 스킬, 입력, 에이전트(Deep Agents·Claude Code·Codex), 알림 “바뀐 게 있을 때만”, 「지금 실행」과 이전 실행 기록</figcaption></figure>
+<p>실습의 수동 실행은 5분쯤 뒤 <strong>「실패」</strong>로 기록되었습니다. 점검 자체는 끝났는데도 그렇습니다. 미션은 스킬이 답의 <strong>마지막 줄</strong>에 아래 같은 결과 줄을 남겨야 “완료”와 “바뀐 것 있음”을 판단하는데, 대화용으로 만든 <code>quote-check</code>에는 그 줄이 없었기 때문입니다.</p>
+<div class="hl"><pre><span></span><code>MISSION_RESULT: {&quot;changed&quot;: true, &quot;summary&quot;: &quot;확인 필요 2건 — 유효기간 문구 오타, 저장값이 옛 합계&quot;}
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>결과 줄의 항목</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>changed</code></td>
+<td>알릴 만한 새 것이 있으면 true. 알림이 “바뀐 게 있을 때만”이면 이것이 true일 때만 채팅에 올라옵니다</td>
+</tr>
+<tr>
+<td><code>summary</code></td>
+<td>실행 기록과 채팅에 남을 한두 문장</td>
+</tr>
+<tr>
+<td><code>seen_add</code></td>
+<td>(선택) 이번에 처리한 항목 id. 다음 실행에 <code>seen</code>으로 넘어와 같은 것을 두 번 처리하지 않습니다</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">예약할 스킬은 만들 때부터</p>
+<p>스킬을 만들 때 <code>예약 미션으로 돌릴 거야. 끝에 MISSION_RESULT 한 줄(changed, summary)을 꼭 남기게 해 줘</code>라고 덧붙이거나, <a href="skills.html">10장</a>의 변형으로 그 절차를 더하세요. 기본으로 들어 있는 <code>youtube-schedule-to-calendar</code> 스킬이 이 형식을 따르는 예입니다(유튜브 채널의 새 영상에서 일정을 찾아 Google 캘린더에 넣음 — Google 연결 필요).</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>미션에만 있는 것</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>상태 스위치</td>
+<td>일시정지/다시 시작. 일시정지 중엔 정해진 시각에 돌지 않습니다</td>
+</tr>
+<tr>
+<td>「지금 실행」</td>
+<td>시각을 기다리지 않고 한 번 돌립니다(기록에 「수동」 표시)</td>
+</tr>
+<tr>
+<td>에이전트</td>
+<td>Deep Agents · Claude Code · Codex 중 누가 실행할지</td>
+</tr>
+<tr>
+<td>알림</td>
+<td>바뀐 게 있을 때만 / 매번 / 보내지 않음</td>
+</tr>
+<tr>
+<td>이전 실행</td>
+<td>실행마다 상태·시각·요약, 바뀐 것이 있었으면 「변경 있음」</td>
+</tr>
+</tbody>
+</table>
+<p>미션 결과는 <strong>설정한 사람에게만</strong> 갑니다. 스킬은 한 사람의 일을 한 에이전트가 하는 것이기 때문입니다. 여러 사람이 이어서 해야 하는 일(검토·승인)은 미션이 아니라 프로세스를 예약합니다. <code>매주 월요일 9시에 SNS 트렌드 대응 프로세스를 시작해 줘</code>처럼 말하면 실행할 때마다 프로세스가 새로 시작되고, 단계마다 담당자에게 넘어갑니다(프로세스는 <a href="process-create.html">17장</a>에서 만듭니다).</p>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>예약 미션은 결과를 나 한 사람에게 알려 줍니다. 다음 장에서는 견적 현황처럼 팀이 함께 보고 고치는 작은 표를 말 한마디로 만드는 <strong>패널 앱</strong>을 봅니다(<a href="panel-apps.html">12장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>Slack 채널을 요약하는 예약을 만들었는데 첫 실행 결과가 “연결이 필요해요”였습니다. 무엇을 해야 할까요?</li>
+<li>매일 오후 4시에 견적 현황판(다음 장에서 만드는 패널 앱)을 보는 예약을 걸었습니다. 수요일에는 아무 견적도 바뀌지 않았습니다. 채팅에는 무엇이 남을까요?</li>
+<li>박서연에게도 같은 결과를 보내고 싶습니다. 미션의 알림 범위를 넓히는 것이 맞을까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>「설정 › 계정 › 연결」에서 Slack 카드의 「연결」을 눌러 자기 사용자 토큰을 넣습니다. 예약은 설정한 사람의 연결로 실행됩니다.</li>
+<li>아무것도 남지 않습니다. 달라진 것이 없으면 비서가 “변동 없음”으로 답하고, 그 회차는 채팅에 구분선조차 남기지 않습니다.</li>
+<li>아닙니다. 미션 결과는 설정한 사람에게만 갑니다. 박서연에게도 알려야 하는 일이라면 채팅으로 결과를 공유하거나(@멘션, <a href="sharing.html">14장</a>), 여러 사람이 이어서 하는 일이라면 프로세스로 만들어 예약합니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="skills.html"><span>이전</span>스킬 — 잘된 방법을 저장하고 나누기</a><a class="next" href="panel-apps.html"><span>다음</span>패널 앱 — 말로 만드는 업무 미니앱</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#연결-비서가-쓸-수-있는-바깥-서비스">연결 — 비서가 쓸 수 있는 바깥 서비스</a></li><li><a href="#따라-하기-1-말로-예약하기">따라 하기 1 — 말로 예약하기</a><ul><li><a href="#지난번과-같으면-조용히">지난번과 같으면 조용히</a></li></ul></li><li><a href="#따라-하기-2-스킬을-예약하기-미션">따라 하기 2 — 스킬을 예약하기 (미션)</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="한 채팅창에서 달빛커피 일과 송년회 준비를 번갈아 시켜 보고, 비서가 메시지마다 어느 이야기의 후속인지 판단해 대화를 나누는 모습을 확인합니다. 대화 목록에서 한 대화만 골라 보고, 그 대화에서 만든 파일이 쌓인 산출물 더미를 펼쳐 엽니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/contexts.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="대화 맥락 — 알아서 나뉘는 대화와 산출물 더미 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="한 채팅창에서 달빛커피 일과 송년회 준비를 번갈아 시켜 보고, 비서가 메시지마다 어느 이야기의 후속인지 판단해 대화를 나누는 모습을 확인합니다. 대화 목록에서 한 대화만 골라 보고, 그 대화에서 만든 파일이 쌓인 산출물 더미를 펼쳐 엽니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/contexts.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html" class="on" aria-current="page"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">나와 AI 비서<span class="chap">4</span></div>
+    <h1>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</h1>
+    <article>
+<blockquote>
+<p>한 채팅창에서 달빛커피 일과 송년회 준비를 번갈아 시켜 보고, 비서가 메시지마다 어느 이야기의 후속인지 판단해 대화를 나누는 모습을 확인합니다. 대화 목록에서 한 대화만 골라 보고, 그 대화에서 만든 파일이 쌓인 산출물 더미를 펼쳐 엽니다.</p>
+</blockquote>
+<h2 id="왜-대화가-알아서-나뉘어야-하나">왜 대화가 알아서 나뉘어야 하나<a class="anchor" href="#왜-대화가-알아서-나뉘어야-하나" title="Permanent link">#</a></h2>
+<p>3장에서는 달빛커피 이야기 하나만 했습니다. 하지만 실제 업무는 한 가지씩 차례로 오지 않습니다. 달빛커피 체크리스트를 고치다가 송년회 장소를 알아보고, 다시 달빛커피 일정표로 돌아옵니다. 보통의 AI 채팅에서는 이럴 때 둘 중 하나를 해야 합니다.</p>
+<ul>
+<li>주제마다 <strong>새 대화방을 직접 만들고</strong> 오가며 고른다 — 번거롭고, 방을 잘못 고르기 쉽습니다.</li>
+<li>한 방에 다 섞는다 — 비서가 “그 체크리스트”가 어느 것인지 헷갈리고, 나중에 찾기 어렵습니다.</li>
+</ul>
+<p>Process GPT Lite는 세 번째 길을 씁니다. <strong>채팅창은 하나</strong>로 두고, 메시지가 올 때마다 비서 앞단의 <strong>대화 맥락 라우터</strong>(메시지를 알맞은 대화로 보내 주는 장치)가 “이 말은 어느 이야기의 후속인가, 새 주제인가”를 판단해 그 대화로 보냅니다. 여러분은 그냥 말하면 되고, 정리는 비서가 합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">라우터가 연결돼 있어야 합니다</p>
+<p>현재 설치 번들에는 대화 맥락 라우터와 판단 모델이 빠져 있으므로, 이 장을 따라 하려면 운영자에게 연결을 부탁하세요(<a href="install.html">1장</a>). 연결되지 않은 서버에서는 모든 메시지가 하나의 대화로 이어지고, 이 장의 「대화 N개」 막대와 산출물 더미가 나타나지 않습니다.</p>
+</div>
+<h2 id="판단은-어떻게-하나">판단은 어떻게 하나<a class="anchor" href="#판단은-어떻게-하나" title="Permanent link">#</a></h2>
+<p>라우터는 사용자의 최근 대화들(제목과 요약)을 후보로 놓고, 새 메시지가 어느 후보의 후속인지 고릅니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>후보 좁히기</td>
+<td>대화가 많아도 판단 모델에는 6개 이하만 넘깁니다. 가장 최근 대화 둘은 늘 남기고, 나머지는 메시지와 낱말이 겹치거나 뜻이 가까운 순으로 고릅니다</td>
+</tr>
+<tr>
+<td>작은 판단 모델</td>
+<td>빠르고 싼 전용 판단 모델이 먼저 고릅니다(답 위 줄의 “판단 모델”)</td>
+</tr>
+<tr>
+<td>큰 모델로 다시</td>
+<td>판단 모델이 확신하지 못하면 기본 AI 모델에게 다시 묻고, 그 답의 확률로 확신도를 잽니다(“판단 모델→logprob”)</td>
+</tr>
+<tr>
+<td>확신이 없으면 그대로</td>
+<td>확신도가 기준보다 낮으면 대화를 옮기지 않고 지금 있던 대화에 머뭅니다</td>
+</tr>
+</tbody>
+</table>
+<p>판단 결과는 답 위의 작은 줄에 그대로 보입니다.</p>
+<table>
+<thead>
+<tr>
+<th>표시</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>↳ 새 주제 · (제목)</td>
+<td>새 대화를 시작했습니다</td>
+</tr>
+<tr>
+<td>↳ (제목)</td>
+<td>그 제목의 대화에 이어 붙였습니다</td>
+</tr>
+<tr>
+<td>판단 모델 1.00</td>
+<td>판단 모델이 고른 것이고, 확신도는 1.00(최대)입니다</td>
+</tr>
+<tr>
+<td>판단 모델→logprob 0.99</td>
+<td>판단 모델이 망설여 기본 AI 모델에게 다시 물었고, 확신도는 0.99입니다</td>
+</tr>
+<tr>
+<td>대화에서 직접 1.00</td>
+<td>대화 안에서 보낸 말이라 판단 없이 그 대화로 갔습니다 (아래 따라 하기 2)</td>
+</tr>
+<tr>
+<td>(표시 없음)</td>
+<td>고른 근거가 따로 없는 경우(첫 메시지 등)는 표시를 생략합니다</td>
+</tr>
+</tbody>
+</table>
+<p>대화 제목은 그 대화를 시작한 메시지의 앞부분입니다. 그래서 처음 말을 꺼낼 때 “달빛커피에서…”, “사내 송년회…”처럼 <strong>무엇에 관한 일인지 앞에 밝히면</strong> 목록에서 알아보기 쉽습니다.</p>
+<h2 id="따라-하기-1-주제를-섞어-말하기">따라 하기 1 — 주제를 섞어 말하기<a class="anchor" href="#따라-하기-1-주제를-섞어-말하기" title="Permanent link">#</a></h2>
+<p><a href="first-chat.html">3장</a>에서 달빛커피 대화를 하나 만들었습니다. 이제 다른 일을 끼워 넣었다가 돌아옵니다. 각 메시지를 보내고 답이 온 뒤 다음 것을 보냅니다.</p>
+<table>
+<thead>
+<tr>
+<th>순서</th>
+<th>보낼 말</th>
+<th>기대하는 판단</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>사내 송년회 장소 후보를 세 군데 추천해 줘. 30명, 강남역 근처, 1인 5만 원 이내야.</code></td>
+<td>새 주제</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>달빛커피 체크리스트 맨 앞에 "현장 실측 일정 잡기" 항목을 넣어서 파일을 다시 만들어 줘.</code></td>
+<td>달빛커피 대화에 이어짐</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>그 송년회 후보 중 두 번째 곳에 보낼 단체 예약 문의 메일 초안을 써 줘.</code></td>
+<td>송년회 대화에 이어짐</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>달빛커피 2호점 일정표를 엑셀로 만들어 줘. 11월 6일 제안서 제출부터 내년 2월 오픈까지 역산해서. 파일 이름은 "달빛커피 2호점 일정표.xlsx".</code></td>
+<td>달빛커피 대화에 이어짐</td>
+</tr>
+</tbody>
+</table>
+<p>실습에서 나온 판단은 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th>순서</th>
+<th>판단</th>
+<th>근거 표시</th>
+<th>산출물</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>새 주제</td>
+<td>판단 모델→logprob 0.99</td>
+<td>송년회 후보 표</td>
+</tr>
+<tr>
+<td>2</td>
+<td>달빛커피 대화에 이어짐</td>
+<td>판단 모델 1.00</td>
+<td>고친 <strong>달빛커피 2호점 준비 체크리스트.docx</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>송년회 대화에 이어짐</td>
+<td>판단 모델 1.00</td>
+<td>“송년회 단체 예약 문의” 문서 카드</td>
+</tr>
+<tr>
+<td>4</td>
+<td>달빛커피 대화에 이어짐</td>
+<td>판단 모델 1.00</td>
+<td><strong>달빛커피 2호점 일정표.xlsx</strong></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/contexts-mixed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="전체 채팅에서는 주제가 섞여 보이지만, 답마다 위에 어느 대화인지가 붙어 있습니다 — 체크리스트 수정(달빛커피) 바로 다음에 송년회 메일 초안" src="img/contexts-mixed.webp" / loading="lazy" decoding="async"></a><figcaption>전체 채팅에서는 주제가 섞여 보이지만, 답마다 위에 어느 대화인지가 붙어 있습니다 — 체크리스트 수정(달빛커피) 바로 다음에 송년회 메일 초안</figcaption></figure>
+<p><strong>확인할 것</strong>: 2번 답 위에는 “↳ 달빛커피에서 2호점…”, 3번 답 위에는 “↳ 사내 송년회 장소…”가 붙어 있으면 됩니다. 2번의 “체크리스트”를 송년회가 아니라 달빛커피 이야기의 후속으로 알아듣고, 3번에서 “그 송년회 후보”를 앞의 송년회 표에서 찾았다는 뜻입니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">판단이 틀릴 때</p>
+<p>판단 모델도 틀릴 수 있습니다. 전혀 다른 주제인데 앞 대화에 이어 붙거나, 그 반대일 수 있습니다. 답 위의 줄이 기대와 다르면, 아래 따라 하기 2처럼 <strong>원하는 대화에 들어가서</strong> 다시 말하세요. 대화 안에서 보낸 메시지는 판단을 거치지 않고 그 대화로 곧장 갑니다.</p>
+</div>
+<h2 id="따라-하기-2-대화-목록에서-하나만-보기">따라 하기 2 — 대화 목록에서 하나만 보기<a class="anchor" href="#따라-하기-2-대화-목록에서-하나만-보기" title="Permanent link">#</a></h2>
+<p>채팅 맨 위로 올리면 「대화 2개 · 맥락별로 보기」 버튼이 있습니다. 누르면 판단 모델이 나눈 대화 목록이 열립니다. 각 줄에는 제목, 마지막으로 이어진 때, 메시지 수, 최근 요청 요약이 보입니다.</p>
+<figure><a href="img/contexts-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="대화 목록 — 달빛커피 대화(메시지 11개)와 송년회 대화(4개)" src="img/contexts-list.webp" / loading="lazy" decoding="async"></a><figcaption>대화 목록 — 달빛커피 대화(메시지 11개)와 송년회 대화(4개)</figcaption></figure>
+<p>달빛커피 대화를 누르면 채팅이 <strong>그 대화의 메시지만</strong> 보이도록 바뀝니다. 주소도 <code>/chat/c/…</code>로 바뀌므로, 이 주소를 북마크해 두면 나중에 그 대화로 바로 돌아옵니다.</p>
+<figure><a href="img/contexts-one.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="달빛커피 대화만 보기 — 위에 「전체 대화」, 대화 제목과 메시지 수, 「다른 대화」. 입력창은 “이 대화에 이어서 묻기”로 바뀝니다" src="img/contexts-one.webp" / loading="lazy" decoding="async"></a><figcaption>달빛커피 대화만 보기 — 위에 「전체 대화」, 대화 제목과 메시지 수, 「다른 대화」. 입력창은 “이 대화에 이어서 묻기”로 바뀝니다</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>버튼·표시</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「‹ 전체 대화」</td>
+<td>모든 메시지가 섞인 원래 채팅으로 돌아갑니다</td>
+</tr>
+<tr>
+<td>제목 아래 “이 대화의 메시지 N개 · 여기서 물으면 이 대화에 이어져요”</td>
+<td>이 화면에서 보내는 말은 판단 없이 이 대화로 갑니다</td>
+</tr>
+<tr>
+<td>「다른 대화 ▾」</td>
+<td>목록을 다시 열어 다른 대화로 옮겨 갑니다</td>
+</tr>
+<tr>
+<td>오른쪽 아래 더미와 숫자</td>
+<td>이 대화의 산출물 (아래 따라 하기 3)</td>
+</tr>
+</tbody>
+</table>
+<p>답 위의 “↳ …” 줄을 눌러도 그 대화로 바로 들어갑니다.</p>
+<h2 id="따라-하기-3-산출물-더미">따라 하기 3 — 산출물 더미<a class="anchor" href="#따라-하기-3-산출물-더미" title="Permanent link">#</a></h2>
+<p>한 대화 안에서는 그 대화가 만든 파일이 오른쪽 아래에 <strong>더미</strong>로 쌓입니다. 맨 위에는 가장 최근 파일이 보이고, 오른쪽 위 숫자가 파일 수입니다. 대화를 길게 거슬러 올라가지 않아도 산출물을 한곳에서 찾을 수 있습니다.</p>
+<p>더미를 누르면 파일들이 위로 <strong>부채꼴로 펼쳐집니다.</strong> 파일이 많아 화면에 다 들어가지 않으면(8개 넘게) 격자로 바뀌고, 「모두 공유」 버튼도 생깁니다.</p>
+<figure><a href="img/contexts-stack.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="산출물 더미를 펼친 모습 — 체크리스트(처음 만든 것과 고친 것)와 일정표. 각 줄 왼쪽은 공유 버튼" src="img/contexts-stack.webp" / loading="lazy" decoding="async"></a><figcaption>산출물 더미를 펼친 모습 — 체크리스트(처음 만든 것과 고친 것)와 일정표. 각 줄 왼쪽은 공유 버튼</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>하는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>파일 열기</td>
+<td>펼친 줄의 이름이나 아이콘을 누릅니다. 채팅의 파일 카드를 누른 것과 같은 편집기가 열립니다(워드·엑셀·한글 → 이음오피스, 도면·그림 → ArtCraft)</td>
+</tr>
+<tr>
+<td>팀원에게 보내기</td>
+<td>줄 왼쪽의 사람 모양 버튼 (<a href="sharing.html">14장</a>)</td>
+</tr>
+<tr>
+<td>접기</td>
+<td>더미를 다시 누르거나, 바깥을 누르거나, Esc</td>
+</tr>
+</tbody>
+</table>
+<p><strong>확인할 것</strong>: 달빛커피 대화의 더미 숫자가 <strong>3</strong>이고, 펼치면 <code>달빛커피 2호점 준비 체크리스트.docx</code> 두 개(3장에서 만든 것, 따라 하기 1의 2번에서 고친 것)와 <code>달빛커피 2호점 일정표.xlsx</code>가 보이면 됩니다. 송년회 대화로 옮기면 그 대화에는 파일이 없으므로 더미가 나타나지 않습니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">산출물 더미는 9장에서 진가를 발휘합니다</p>
+<p><a href="email-to-quote.html">9장</a>에서는 메일 한 통으로 평면도·제안서·견적서가 한꺼번에 만들어지고, 고칠 때마다 편집본이 쌓입니다. 그때 이 더미를 열면 한 고객의 산출물이 모두 모여 있습니다.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">영상으로 보기</p>
+<p><a href="https://youtu.be/oL_mfiQBCPU">대화 맥락 라우터</a>와 <a href="https://youtu.be/jIKYPmaAkRY">대화 맥락별로 보기</a> 영상에서 같은 흐름을 볼 수 있습니다.</p>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>지금까지는 여러분이 먼저 말을 걸었습니다. 다음 장에서는 메일함을 비서에게 맡겨, 비서가 먼저 새 메일을 읽고 할 일을 찾아 오게 합니다(<a href="mail.html">5장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>전체 채팅에서 <code>송년회 메일 초안에 원하는 날짜를 12월 18일 저녁으로 넣어 줘</code>라고 보내 보세요. 어느 대화로 갔나요? 근거 표시는 무엇인가요?</li>
+<li>이번에는 달빛커피 대화 안에 들어가서 <code>예산 1억 2천만 원 안에서 가구 비중은 보통 어느 정도야?</code>라고 물어보세요. 답 위의 줄은 어떻게 표시되나요? 전체 채팅에서 물었을 때와 무엇이 다른가요?</li>
+<li>대화 제목이 “사내 송년회 장소 후보를 세 군데…”처럼 첫 메시지의 앞부분이 되는 이유를 생각해 보고, 처음 말을 꺼낼 때 어떻게 쓰면 좋을지 적어 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>송년회 대화로 이어져야 합니다(“↳ 사내 송년회 장소…”). 실습에서는 “판단 모델 1.00”으로 이어졌고, 날짜를 넣은 메일 초안이 문서 카드로 왔습니다. 다른 대화로 갔다면 판단이 틀린 것이니, 송년회 대화에 들어가서 다시 보내세요.</li>
+<li>대화 안에서 보낸 말은 판단 모델을 거치지 않으므로 답 위 줄에 그 대화 제목과 <strong>“대화에서 직접 1.00”</strong> 이 붙습니다. 전체 채팅에서 물으면 라우터가 판단하고 “판단 모델”과 그 확신도가 붙습니다.</li>
+<li>대화를 시작한 말이 곧 제목이 되므로, 첫 문장 앞에 고객·행사 이름처럼 <strong>알아볼 수 있는 이름</strong>을 넣습니다. 예: “달빛커피 3호점 — 현장 사진 정리해 줘”.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="first-chat.html"><span>이전</span>첫 대화 — 비서에게 일 맡기기</a><a class="next" href="mail.html"><span>다음</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-대화가-알아서-나뉘어야-하나">왜 대화가 알아서 나뉘어야 하나</a></li><li><a href="#판단은-어떻게-하나">판단은 어떻게 하나</a></li><li><a href="#따라-하기-1-주제를-섞어-말하기">따라 하기 1 — 주제를 섞어 말하기</a></li><li><a href="#따라-하기-2-대화-목록에서-하나만-보기">따라 하기 2 — 대화 목록에서 하나만 보기</a></li><li><a href="#따라-하기-3-산출물-더미">따라 하기 3 — 산출물 더미</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

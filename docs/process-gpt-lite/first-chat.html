@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>첫 대화 — 비서에게 일 맡기기 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="달빛커피가 보낸 2호점 설계 요청을 비서에게 붙여 넣고, 요청 정리표와 준비 체크리스트를 받은 뒤, 그것을 워드 파일로 만들게 합니다. 비서가 일하는 동안 무엇이 보이는지, 답이 어떤 카드로 돌아오는지, 기다리는 동안 자리를 비워도 되는지를 익힙니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/first-chat.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="첫 대화 — 비서에게 일 맡기기 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="달빛커피가 보낸 2호점 설계 요청을 비서에게 붙여 넣고, 요청 정리표와 준비 체크리스트를 받은 뒤, 그것을 워드 파일로 만들게 합니다. 비서가 일하는 동안 무엇이 보이는지, 답이 어떤 카드로 돌아오는지, 기다리는 동안 자리를 비워도 되는지를 익힙니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/first-chat.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html" class="on" aria-current="page"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">나와 AI 비서<span class="chap">3</span></div>
+    <h1>첫 대화 — 비서에게 일 맡기기</h1>
+    <article>
+<blockquote>
+<p>달빛커피가 보낸 2호점 설계 요청을 비서에게 붙여 넣고, 요청 정리표와 준비 체크리스트를 받은 뒤, 그것을 워드 파일로 만들게 합니다. 비서가 일하는 동안 무엇이 보이는지, 답이 어떤 카드로 돌아오는지, 기다리는 동안 자리를 비워도 되는지를 익힙니다.</p>
+</blockquote>
+<h2 id="이-장의-상황">이 장의 상황<a class="anchor" href="#이-장의-상황" title="Permanent link">#</a></h2>
+<p>화면을 둘러봤으니 이제 첫 일을 맡깁니다. 월요일 오후, 장진영 팀장에게 달빛커피 운영팀의 요청이 들어왔습니다. 성수동에 2호점을 여는데, 매장 설계 제안서와 견적서를 11월 6일까지 달라는 내용입니다. 제안서를 쓰기 전에 먼저 <strong>요청을 빠짐없이 정리하고, 팀이 준비할 것</strong>부터 챙기려고 합니다. 이 정도 일은 비서에게 맡기면 됩니다.</p>
+<h2 id="비서는-무엇을-하나">비서는 무엇을 하나<a class="anchor" href="#비서는-무엇을-하나" title="Permanent link">#</a></h2>
+<p>입력창에 보낸 말은 먼저 <strong>어떤 종류의 일인지</strong> 가려집니다. 대부분의 일(묻기, 정리, 문서 쓰기, 분석)은 Process GPT의 AI 에이전트가 맡고, 사이트에 로그인해야 하는 일은 브라우저 에이전트(<a href="browser.html">6장</a>)가, “매일 아침 8시에…” 같은 일은 예약(<a href="missions.html">11장</a>)이, “패널 만들어 줘”는 패널 앱(<a href="panel-apps.html">12장</a>)이 맡습니다. 어디로 보낼지 고르는 일은 비서가 하므로, 여러분은 그냥 말로 시키면 됩니다.</p>
+<p>에이전트는 혼자 쓰는 작업 공간을 가지고 있어서, 답만 하는 게 아니라 <strong>파일을 직접 만들고 고칩니다.</strong> 만든 파일은 대화에 카드로 올라옵니다.</p>
+<h2 id="따라-하기-1-요청-정리와-체크리스트">따라 하기 1 — 요청 정리와 체크리스트<a class="anchor" href="#따라-하기-1-요청-정리와-체크리스트" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>홈 버튼을 눌러 홈을 접습니다(대화가 넓게 보입니다).</li>
+<li>입력창에 아래 내용을 붙여 넣고 ↑(보내기)를 누릅니다. 줄을 바꾸려면 Shift+Enter, 보내기는 Enter입니다.</li>
+</ol>
+<div class="hl"><pre><span></span><code>달빛커피에서 2호점 매장 설계 제안을 요청했어. 아래 요청 내용을 표로 정리하고, 우리 팀이 준비할 것을 체크리스트로 만들어 줘.
+
+---
+안녕하세요, 달빛커피 운영팀입니다.
+성수동에 2호점(전용 약 82㎡, 1층 단독 매장)을 내년 2월 오픈 목표로 준비하고 있습니다.
+좌석은 30석 안팎, 원두를 볶는 로스팅 쇼룸 공간과 테이크아웃 동선 분리를 원합니다.
+예산은 인테리어·가구 포함 1억 2천만 원 이내입니다.
+매장 설계 제안서와 견적서를 11월 6일까지 보내 주실 수 있을까요?
+</code></pre></div>
+
+<p>보내자마자 내 메시지 아래에 <strong>··· 읽음</strong>이 붙고, 입력창 위에 <strong>“생각하는 중”</strong>, <strong>“작업하는 중”</strong> 같은 상태 줄이 흐리게 나타납니다. 에이전트가 파일을 읽으면 “파일 살펴보는 중”, 문서를 만들면 “문서 만드는 중”, 웹을 찾으면 “찾아보는 중”처럼 지금 하는 일로 바뀝니다.</p>
+<figure><a href="img/first-chat-working.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보낸 직후 — 메시지 아래 “읽음”, 입력창 위에 “생각하는 중” 상태 줄" src="img/first-chat-working.webp" / loading="lazy" decoding="async"></a><figcaption>보낸 직후 — 메시지 아래 “읽음”, 입력창 위에 “생각하는 중” 상태 줄</figcaption></figure>
+<p>실습에서는 이 요청에 1~2분 걸렸습니다. 답이 오면 이렇게 보입니다.</p>
+<figure><a href="img/first-chat-doc.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답이 긴 문서라 제목이 붙은 문서 카드로 왔습니다. 펼치면 요청 정리표와 체크리스트가 이어집니다" src="img/first-chat-doc.webp" / loading="lazy" decoding="async"></a><figcaption>답이 긴 문서라 제목이 붙은 문서 카드로 왔습니다. 펼치면 요청 정리표와 체크리스트가 이어집니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 답 위에 “↳ 새 주제 · 달빛커피에서 2호점…” 줄이 있고, 그 아래 제목이 붙은 <strong>문서 카드</strong>(이번 실행에서는 “달빛커피 2호점 설계요청”)가 있습니다. 카드 안에 위치·면적·좌석·예산·납기가 표로 정리되어 있고, “현장·설비 확인 / 설계 방향 / 비용·일정 / 기타”처럼 묶인 체크리스트가 있으면 됩니다. 제목, 묶음 이름과 항목 수는 실행할 때마다 조금씩 다릅니다.</p>
+<h3 id="답은-세-가지-모양으로-온다">답은 세 가지 모양으로 온다<a class="anchor" href="#답은-세-가지-모양으로-온다" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>모양</th>
+<th>언제</th>
+<th>어떻게 보나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>말풍선</td>
+<td>짧은 답</td>
+<td>그대로 읽습니다</td>
+</tr>
+<tr>
+<td>문서 카드</td>
+<td>제목(<code>#</code>)으로 시작하거나, 목록이 많은 긴 답</td>
+<td>윗부분만 보이고, 아래 ⌄ 를 누르면 펼쳐집니다</td>
+</tr>
+<tr>
+<td>파일 카드</td>
+<td>에이전트가 파일을 만들었을 때</td>
+<td>누르면 편집기가 열립니다 (아래 따라 하기 2)</td>
+</tr>
+</tbody>
+</table>
+<p>답 위의 “↳ …” 줄은 이 답이 <strong>어느 대화에 속하는지</strong> 표시합니다. 처음 꺼낸 이야기라 “새 주제”로 시작했습니다. 이 줄의 뜻은 <a href="contexts.html">4장</a>에서 자세히 봅니다.</p>
+<h2 id="따라-하기-2-워드-파일로-받기">따라 하기 2 — 워드 파일로 받기<a class="anchor" href="#따라-하기-2-워드-파일로-받기" title="Permanent link">#</a></h2>
+<p>정리는 좋은데, 팀원에게 돌리려면 파일이 필요합니다. 같은 대화에 이어서 말합니다.</p>
+<div class="hl"><pre><span></span><code>이 체크리스트를 워드 문서로 만들어 줘. 파일 이름은 &quot;달빛커피 2호점 준비 체크리스트.docx&quot;로 해 줘.
+</code></pre></div>
+
+<p>“이 체크리스트”라고만 해도 됩니다. 비서가 이 말이 바로 앞 달빛커피 이야기의 후속이라는 것을 알아듣습니다.</p>
+<figure><a href="img/first-chat-result.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답 위 줄에 “판단 모델 1.00”이 붙어, 같은 대화의 후속으로 판단했음을 보여 줍니다. 답에는 문서 구성이, 그 아래에는 워드 파일 카드가 있습니다" src="img/first-chat-result.webp" / loading="lazy" decoding="async"></a><figcaption>답 위 줄에 “판단 모델 1.00”이 붙어, 같은 대화의 후속으로 판단했음을 보여 줍니다. 답에는 문서 구성이, 그 아래에는 워드 파일 카드가 있습니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 「DOC」 아이콘이 붙은 파일 카드 <strong>달빛커피 2호점 준비 체크리스트.docx</strong> 가 있고 “눌러서 바로 편집”이라고 쓰여 있으면 됩니다. 카드를 누르면 화면 안에서 이음오피스 편집기가 열립니다. 편집기에서 직접 고치거나, 열어 둔 채 “설계 방향에 조명 계획을 한 줄 추가해 줘”처럼 말로 고치는 방법은 <a href="office.html">7장</a>에서 다룹니다. 카드 옆의 사람 모양 버튼은 팀원에게 보내는 공유 버튼입니다(<a href="sharing.html">14장</a>).</p>
+<div class="admonition tip">
+<p class="admonition-title">잘 시키는 법</p>
+<ul>
+<li><strong>재료를 함께 주세요.</strong> 요청 메일 원문처럼 근거가 될 글을 붙여 넣으면 지어내지 않고 그 안에서 정리합니다. 파일은 📎 버튼이나 끌어다 놓기로 붙입니다(50MB까지).</li>
+<li><strong>결과의 모양을 말하세요.</strong> “표로”, “체크리스트로”, “워드 파일로, 이름은 …”처럼 말하면 그 모양으로 옵니다. 한글(hwpx)·엑셀(xlsx)·파워포인트(pptx)도 됩니다.</li>
+<li><strong>한 번에 다 하려 하지 마세요.</strong> 정리 → 확인 → 파일로, 처럼 나눠 시키면 중간에 방향을 바로잡기 쉽습니다.</li>
+<li>입력창의 🎙 버튼을 누르면 말로 받아쓰기도 됩니다.</li>
+</ul>
+</div>
+<h2 id="기다리는-동안">기다리는 동안<a class="anchor" href="#기다리는-동안" title="Permanent link">#</a></h2>
+<p>긴 일은 몇 분 걸립니다. 그동안 할 수 있는 것과 없는 것입니다.</p>
+<ul>
+<li><strong>자리를 비워도 됩니다.</strong> 일은 브라우저가 아니라 서버에서 돕니다. 따라 하기 1의 요청을 보낸 뒤 페이지를 새로 고쳐 보면, 상태 줄 “작업하는 중”이 그대로 남아 있고 잠시 뒤 답이 도착합니다. 탭을 닫았다가 나중에 열어도 답은 대화에 남아 있습니다.</li>
+<li><strong>다른 화면을 봐도 됩니다.</strong> 홈 카드를 보거나 설정을 열어도 일은 계속됩니다.</li>
+<li><strong>같은 이야기에 새 말을 얹지 마세요.</strong> 답을 기다리는 동안 같은 대화에 또 메시지를 보내면, 진행 중이던 일이 “(오류: turn cancelled)”로 끊기고 새 메시지의 답도 오지 않을 수 있습니다. 상태 줄이 사라진 뒤 보내세요.</li>
+<li><strong>오래 말이 없으면 비서가 기다리기를 멈춥니다.</strong> 에이전트가 15분 동안 아무 응답이 없으면 “에이전트가 한동안 응답하지 않아 기다리기를 멈췄어요. 같은 요청을 다시 보내 주세요.”라고 알려 줍니다. 그때는 같은 요청을 다시 보냅니다.</li>
+</ul>
+<figure><a href="img/first-chat-reloaded.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="같은 요청을 보낸 뒤 페이지를 새로 고친 모습 — 상태 줄이 그대로 남아 있습니다" src="img/first-chat-reloaded.webp" / loading="lazy" decoding="async"></a><figcaption>같은 요청을 보낸 뒤 페이지를 새로 고친 모습 — 상태 줄이 그대로 남아 있습니다</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">멈추기 버튼은 아직 없습니다</p>
+<p>현재 버전에는 진행 중인 답을 중간에 멈추는 버튼이 없습니다(브라우저 작업만 「작업 취소」가 있습니다 — <a href="browser.html">6장</a>). 잘못 시켰다면 답이 온 뒤 “아니, 체크리스트는 설계 방향만 다시 써 줘”처럼 이어서 고쳐 말하세요. 같은 대화의 후속으로 이어지므로 앞 내용을 다시 설명하지 않아도 됩니다.</p>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>지금까지는 달빛커피 이야기 하나만 했습니다. 다음 장에서는 같은 채팅에 전혀 다른 주제를 섞어 보내고, 비서가 메시지마다 어느 이야기의 후속인지 가려 대화를 나누는 모습을 봅니다(<a href="contexts.html">4장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>같은 대화에 이어서 <code>체크리스트 맨 앞에 "1호점 매장 사진 받기"를 넣어서 다시 정리해 줘</code>라고 보내 보세요. 답 위의 “↳” 줄은 “새 주제”인가요, 아닌가요?</li>
+<li>답이 말풍선으로 올 때와 문서 카드로 올 때는 무엇이 다른가요?</li>
+<li>이 장에서 만든 워드 파일을 박서연(재무)에게 보여 주려면 어떤 버튼을 누르면 될까요? (아직 누르지는 마세요 — 4부에서 합니다.)</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>“새 주제”가 붙지 않고 달빛커피 대화 제목이 그대로 보여야 합니다. 앞 이야기의 후속으로 판단했다는 뜻입니다(“판단 모델” 옆 숫자는 그 판단의 확신도입니다).</li>
+<li>짧은 답은 말풍선, 제목(<code>#</code>)으로 시작하거나 목록이 많은 긴 답은 제목이 붙은 문서 카드로 옵니다. 문서 카드는 처음엔 접혀 있고 ⌄ 로 펼칩니다.</li>
+<li>파일 카드 오른쪽의 사람 모양 공유 버튼입니다. 받는 사람만 열 수 있게 허가가 붙고, 받은 사람은 자기 사본으로 편집합니다(<a href="sharing.html">14장</a>).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="tour.html"><span>이전</span>화면 둘러보기</a><a class="next" href="contexts.html"><span>다음</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#이-장의-상황">이 장의 상황</a></li><li><a href="#비서는-무엇을-하나">비서는 무엇을 하나</a></li><li><a href="#따라-하기-1-요청-정리와-체크리스트">따라 하기 1 — 요청 정리와 체크리스트</a><ul><li><a href="#답은-세-가지-모양으로-온다">답은 세 가지 모양으로 온다</a></li></ul></li><li><a href="#따라-하기-2-워드-파일로-받기">따라 하기 2 — 워드 파일로 받기</a></li><li><a href="#기다리는-동안">기다리는 동안</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

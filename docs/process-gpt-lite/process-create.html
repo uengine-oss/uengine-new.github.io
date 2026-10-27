@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대화로 프로세스 만들기 — 「달빛커피 제안」 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="달빛커피는 2호점에 이어 3호점, 4호점을 열 계획입니다. 매번 같은 순서로 하는 제안 업무를 장진영 팀장이 채팅으로 설명하면, 비서가 흐름 초안을 제안하고, 확인을 받아 흐름도(BPMN)·역할·폼이 담긴 프로세스 정의를 만들어 저장합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/process-create.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="대화로 프로세스 만들기 — 「달빛커피 제안」 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="달빛커피는 2호점에 이어 3호점, 4호점을 열 계획입니다. 매번 같은 순서로 하는 제안 업무를 장진영 팀장이 채팅으로 설명하면, 비서가 흐름 초안을 제안하고, 확인을 받아 흐름도(BPMN)·역할·폼이 담긴 프로세스 정의를 만들어 저장합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/process-create.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html" class="on" aria-current="page"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로세스로 일하기<span class="chap">17</span></div>
+    <h1>대화로 프로세스 만들기 — 「달빛커피 제안」</h1>
+    <article>
+<blockquote>
+<p>달빛커피는 2호점에 이어 3호점, 4호점을 열 계획입니다. 매번 같은 순서로 하는 제안 업무를 장진영 팀장이 채팅으로 설명하면, 비서가 흐름 초안을 제안하고, 확인을 받아 흐름도(BPMN)·역할·폼이 담긴 프로세스 정의를 만들어 저장합니다.</p>
+</blockquote>
+<h2 id="왜-프로세스로-만드나">왜 프로세스로 만드나<a class="anchor" href="#왜-프로세스로-만드나" title="Permanent link">#</a></h2>
+<p><a href="email-to-quote.html">9장</a>부터 <a href="meetings.html">16장</a>까지 달빛커피 2호점 건은 그때그때 처리했습니다. 메일을 받고, 비서가 평면도·제안서·견적서를 만들고, 김민지가 디자인을 보고, 박서연이 견적을 보고, 회의를 하고, 회신했습니다. 매장이 하나 더 생길 때마다 같은 일을 다시 기억해 내야 한다면 빠뜨리기 쉽습니다.</p>
+<p>프로세스로 만들면 이렇게 바뀝니다.</p>
+<table>
+<thead>
+<tr>
+<th>그때그때</th>
+<th>프로세스로</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>다음에 누가 무엇을 할지 사람이 기억</td>
+<td>단계와 순서가 정의에 있음</td>
+</tr>
+<tr>
+<td>일을 넘길 때마다 공유·멘션</td>
+<td>단계가 끝나면 다음 역할의 담당자에게 할 일이 자동으로 감</td>
+</tr>
+<tr>
+<td>에이전트에게 매번 요청</td>
+<td>에이전트 단계는 자동 실행</td>
+</tr>
+<tr>
+<td>진행 상황을 물어봐야 앎</td>
+<td>인스턴스 화면에서 단계별로 보임(<a href="process-run.html">18장</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Lite의 프로세스 만들기는 Process GPT의 프로세스 생성 스킬을 그대로 씁니다. 결과는 <strong>BPMN</strong>으로 저장됩니다. BPMN은 업무 흐름을 단계·갈림길·담당 줄로 그리는 국제 표준 그림 표기입니다. 사람이 직접 그릴 필요는 없습니다.</p>
+<h2 id="따라-하기-1-말로-설명하기">따라 하기 1 — 말로 설명하기<a class="anchor" href="#따라-하기-1-말로-설명하기" title="Permanent link">#</a></h2>
+<p>장진영 팀장 계정의 채팅에서 “○○ 프로세스를 만들어 줘”로 시작하고, 아는 만큼 순서와 담당을 적습니다.</p>
+<div class="hl"><pre><span></span><code>달빛커피 제안 프로세스를 만들어 줘. 달빛커피에서 새 매장 설계 요청 메일이 오면 제안팀장이 요청 내용을 정리하고, 도면 에이전트가 평면도를, 제안서 에이전트가 한글 제안서를, 견적 에이전트가 엑셀 견적서를 만들어. 그다음 디자이너가 평면도와 제안서를 검토하고, 재무 담당이 견적을 승인하거나 수정을 요청해. 승인되면 제안팀장이 고객에게 회신해.
+</code></pre></div>
+
+<p>비서는 바로 정의를 만들지 않고, 먼저 <strong>흐름 초안</strong>을 실무 수준으로 정리해 확인을 받습니다. 말하지 않은 부분도 채워 넣습니다. 실습에서는 세 산출물을 <strong>병렬</strong>로 만들고, 디자이너가 반려하면 평면도·제안서 제작으로, 재무 담당이 수정 요청하면 견적서 제작으로 <strong>되돌아가는</strong> 흐름을 제안했습니다.</p>
+<figure><a href="img/process-create-proposal.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="흐름 초안 — 단계와 담당 역할, 병렬 진행, 반려·수정 요청 때 돌아가는 곳, 시작 트리거와 종료 조건, 역할 목록" src="img/process-create-proposal.webp" / loading="lazy" decoding="async"></a><figcaption>흐름 초안 — 단계와 담당 역할, 병렬 진행, 반려·수정 요청 때 돌아가는 곳, 시작 트리거와 종료 조건, 역할 목록</figcaption></figure>
+<p><strong>확인할 것</strong>: 초안에 프로세스 이름, 단계별 담당 역할, 갈림길(검토 통과/반려, 승인/수정 요청), 시작과 끝이 있습니다. 문장은 실행마다 다릅니다.</p>
+<p>바꿀 곳이 있으면 이때 말합니다. 예: <code>디자이너 검토와 견적 승인은 동시에 해도 돼</code> · <code>회신 전에 제안팀장이 회의를 한 번 하도록 넣어 줘</code>.</p>
+<h2 id="따라-하기-2-확인하고-정의-만들기">따라 하기 2 — 확인하고 정의 만들기<a class="anchor" href="#따라-하기-2-확인하고-정의-만들기" title="Permanent link">#</a></h2>
+<p>초안이 마음에 들면 답합니다.</p>
+<div class="hl"><pre><span></span><code>네, 이대로 진행해서 달빛커피 제안 프로세스 정의까지 만들어 주세요.
+</code></pre></div>
+
+<p>비서는 확인한 흐름으로 정의 파일을 쓰고, 에이전트가 쓸 스킬과 에이전트를 고르거나 만들고, 사람이 입력할 단계마다 폼을 만든 뒤 스스로 점검합니다. 끝나면 채팅에 <strong>새 프로세스 초안</strong> 카드가 뜹니다. 이 단계는 수십 분이 걸릴 수 있습니다. 현재 버전에서는 중간에 답이 멈추기도 하므로, 그럴 때는 <code>진행해 주세요</code>라고 보내 이어 가게 하세요.</p>
+<figure><a href="img/process-create-draft.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="새 프로세스 초안 — 단계와 맡는 역할, 역할·폼 수, 「프로세스로 저장」" src="img/process-create-draft.webp" / loading="lazy" decoding="async"></a><figcaption>새 프로세스 초안 — 단계와 맡는 역할, 역할·폼 수, 「프로세스로 저장」</figcaption></figure>
+<p><strong>확인할 것</strong>: 초안 카드에 프로세스 이름, 단계 7개(설계 요청 수신·정리 → 평면도·제안서·견적서 제작 → 평면도·제안서 검토 → 견적서 승인 → 고객 회신)와 각 단계의 역할이 있습니다.</p>
+<h2 id="따라-하기-3-저장하고-흐름-보기">따라 하기 3 — 저장하고 흐름 보기<a class="anchor" href="#따라-하기-3-저장하고-흐름-보기" title="Permanent link">#</a></h2>
+<p>초안 카드의 「프로세스로 저장」을 누릅니다. Process GPT의 정의 저장 경로 그대로 저장되고, 카드가 <strong>프로세스 카드</strong>로 바뀝니다. 카드의 「흐름 보기」를 누르면 목록과 BPMN 다이어그램을 오갈 수 있습니다. 나중에 <code>달빛커피 제안 프로세스 흐름 보여 줘</code>라고 해도 같은 카드가 뜹니다.</p>
+<figure><a href="img/process-create-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="저장된 프로세스의 흐름(목록) — 시작 이벤트, 병렬 분기·병합, 검토 판단·승인 판단 갈림길, 에이전트 단계마다 붙은 스킬(cafe-floor-plan-drawing 등)" src="img/process-create-list.webp" / loading="lazy" decoding="async"></a><figcaption>저장된 프로세스의 흐름(목록) — 시작 이벤트, 병렬 분기·병합, 검토 판단·승인 판단 갈림길, 에이전트 단계마다 붙은 스킬(cafe-floor-plan-drawing 등)</figcaption></figure>
+<figure><a href="img/process-create-bpmn.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="다이어그램 — 역할마다 가로 줄(레인)로 나뉜 BPMN. 「크게 보기」로 키울 수 있습니다" src="img/process-create-bpmn.webp" / loading="lazy" decoding="async"></a><figcaption>다이어그램 — 역할마다 가로 줄(레인)로 나뉜 BPMN. 「크게 보기」로 키울 수 있습니다</figcaption></figure>
+<p>카드 머리의 “11단계 · 사람 3 · 에이전트 4”는 갈림길(병렬 분기·병합, 검토·승인 판단)까지 센 수입니다. 실습에서는 첫 단계(설계 요청 수신·정리)에도 요청을 정리하는 스킬이 붙어 에이전트 단계로 세어졌습니다. 카드의 「시작」을 누르면 <a href="process-run.html">18장</a>처럼 프로세스 한 건이 시작됩니다.</p>
+<div class="admonition note">
+<p class="admonition-title">저장 결과에 폼·에이전트·스킬이 0건으로 나올 때</p>
+<p>현재 버전에서는 생성 도중 답이 끊겼다 이어지면 정의와 BPMN만 저장되고 폼·에이전트·스킬이 빠질 수 있습니다(이대로 시작하면 사람 단계는 기본 입력 칸으로, 에이전트 단계는 스킬 없이 돕니다). 초안 카드의 폼 수가 0이면 같은 이름으로 다시 만들어 저장하세요.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">생성 중에는 같은 계정으로 다른 일을 시키지 마세요</p>
+<p>프로세스 생성은 여러 단계를 한 번에 진행하므로 시간이 걸립니다. 현재 버전에서는 그사이 같은 계정의 채팅에 다른 요청을 보내면 진행 중인 작업이 “(오류: turn cancelled)”로 끝나므로, 기다리는 동안은 다른 탭(폴더, 메시지)에서 일하세요.</p>
+</div>
+<h2 id="이-장에서-만든-프로세스의-뼈대">이 장에서 만든 프로세스의 뼈대<a class="anchor" href="#이-장에서-만든-프로세스의-뼈대" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>역할</th>
+<th>종류</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>설계 요청 수신·정리</td>
+<td>제안팀장</td>
+<td>사람 + 에이전트 (실습에서는 요청 정리 스킬이 붙어, 카드에는 에이전트 단계로 셉니다)</td>
+</tr>
+<tr>
+<td>매장 평면도 제작 · 한글 제안서 제작 · 엑셀 견적서 제작 (병렬)</td>
+<td>도면·제안서·견적 에이전트</td>
+<td>에이전트</td>
+</tr>
+<tr>
+<td>평면도·제안서 검토 (통과 / 반려 → 다시 제작)</td>
+<td>디자이너</td>
+<td>사람</td>
+</tr>
+<tr>
+<td>견적서 승인 (승인 / 수정 요청 → 다시 작성)</td>
+<td>재무 담당</td>
+<td>사람</td>
+</tr>
+<tr>
+<td>고객 회신</td>
+<td>제안팀장</td>
+<td>사람</td>
+</tr>
+</tbody>
+</table>
+<p>역할의 담당자는 「설정 › 팀·역할」에서 정합니다. 이 프로세스의 디자이너는 김민지, 재무 담당은 박서연, 제안팀장은 장진영입니다. 담당자를 정하지 않은 사람 역할은 프로세스를 시작한 사람이 맡습니다(<a href="process-run.html">18장</a>).</p>
+<div class="admonition tip">
+<p class="admonition-title">좋은 설명의 조건</p>
+<ul>
+<li><strong>누가</strong>(역할)와 <strong>무엇을</strong>(산출물)을 단계마다 말하세요. “디자이너가 평면도와 제안서를 검토”처럼.</li>
+<li><strong>갈림길</strong>을 말하세요. “승인하거나 수정을 요청해”라고 하면 되돌아가는 흐름이 생깁니다.</li>
+<li><strong>시작과 끝</strong>을 말하세요. “메일이 오면”, “고객에게 회신하면 끝”.</li>
+<li>에이전트에게 맡길 단계는 “○○ 에이전트가”라고 이름을 붙이면 등록된 에이전트와 그 스킬이 연결됩니다.</li>
+</ul>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>정의는 설계도입니다. 다음 장에서는 프로세스를 실제로 <strong>시작</strong>해, 할 일이 사람과 에이전트 사이를 오가고, 역할 담당자에게 알림이 가고, 진행 상황과 산출물이 쌓이는 모습을 봅니다(<a href="process-run.html">18장</a>). 한 바퀴를 빠르게 보기 위해 단계가 짧은 예제 「출장비 정산」으로 먼저 돌려 봅니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>흐름 초안에서 “3종 산출물 제작”이 병렬로 제안된 이유는 무엇일까요? 순서대로 하도록 바꾸려면 어떻게 말하면 되나요?</li>
+<li>재무 담당이 「수정 요청」을 고르면 흐름은 어디로 돌아가나요?</li>
+<li>이 프로세스를 시작하면 「설계 요청 수신·정리」 단계는 누구에게 가나요? 「설정 › 팀·역할」에서 제안팀장을 비워 두면요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>세 산출물이 서로를 기다릴 필요가 없다고 보았기 때문입니다(요청 개요서만 있으면 각각 만들 수 있음). 순서가 필요하면 <code>견적서는 평면도가 나온 뒤에 만들어 줘</code>처럼 말하면 초안이 그 순서로 바뀝니다. 실제로 견적 면적이 평면도에서 나온다면 이렇게 바꾸는 편이 맞습니다.</li>
+<li>엑셀 견적서 제작 단계로 돌아가 견적 에이전트가 다시 작성하고, 다시 재무 담당의 승인으로 옵니다.</li>
+<li>제안팀장 역할의 담당자(실습에서는 장진영)에게 갑니다. 비워 두면 프로세스를 시작한 사람이 맡습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="meetings.html"><span>이전</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a><a class="next" href="process-run.html"><span>다음</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-프로세스로-만드나">왜 프로세스로 만드나</a></li><li><a href="#따라-하기-1-말로-설명하기">따라 하기 1 — 말로 설명하기</a></li><li><a href="#따라-하기-2-확인하고-정의-만들기">따라 하기 2 — 확인하고 정의 만들기</a></li><li><a href="#따라-하기-3-저장하고-흐름-보기">따라 하기 3 — 저장하고 흐름 보기</a></li><li><a href="#이-장에서-만든-프로세스의-뼈대">이 장에서 만든 프로세스의 뼈대</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
