@@ -131,7 +131,7 @@ WITH sh, po WHERE po IS NULL
 RETURN sh.shipment_no, sh.ref_po_no
 ```
 
-결과: `SHP-08`, `PO-999`.
+조회 결과는 `SHP-08`, `PO-999`입니다.
 
 !!! note "NOT EXISTS 대신"
     Neo4j의 `WHERE NOT EXISTS { MATCH … }` 하위 질의는 아직 지원하지 않습니다. 위처럼 `OPTIONAL MATCH` + `IS NULL`로 씁니다.

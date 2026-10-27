@@ -219,14 +219,14 @@
 </tr>
 </tbody>
 </table>
-<p><code>MATCH</code>는 “이런 모양을 찾아라”, <code>RETURN</code>은 “찾은 것 중 이것을 돌려 달라”입니다. 노드 전체를 조회하려면 <code>RETURN s</code>라고 씁니다. 그러면 모든 속성이 담긴 객체가 반환되고, 결과 카드에 Graph 보기가 생깁니다.</p>
+<p><code>MATCH</code>는 찾을 그래프 패턴을 지정하고, <code>RETURN</code>은 조회 결과에 포함할 항목을 지정합니다. 노드 전체를 조회하려면 <code>RETURN s</code>라고 씁니다. 그러면 모든 속성이 담긴 객체가 반환되고, 결과 카드에 Graph 보기가 생깁니다.</p>
 <h2 id="거르기-where">거르기 — WHERE<a class="anchor" href="#거르기-where" title="Permanent link">#</a></h2>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;China&#39;</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">tier</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
 </code></pre></div>
 
-<p>결과는 <code>Shenzhen Goldline PCB</code> 한 곳입니다. <code>WHERE</code>에서 쓸 수 있는 것들:</p>
+<p>결과는 <code>Shenzhen Goldline PCB</code> 한 곳입니다. <code>WHERE</code>에서 사용할 수 있는 조건은 다음과 같습니다.</p>
 <table>
 <thead>
 <tr>

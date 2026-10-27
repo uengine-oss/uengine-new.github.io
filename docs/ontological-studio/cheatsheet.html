@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cypher·패브릭 치트시트 — Ontological Studio 튜토리얼</title>
-<meta name="description" content="이 튜토리얼에서 쓴 문장을 한 장에 모았습니다. 포털 옆에 띄워 두고 쓰세요. 예제는 `sample` 그래프 기준입니다.">
+<meta name="description" content="이 튜토리얼에서 사용한 문장을 한곳에 모았습니다. 포털에서 실습할 때 참고하세요. 예제는 `sample` 그래프 기준입니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/cheatsheet.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cypher·패브릭 치트시트 — Ontological Studio 튜토리얼">
-<meta property="og:description" content="이 튜토리얼에서 쓴 문장을 한 장에 모았습니다. 포털 옆에 띄워 두고 쓰세요. 예제는 `sample` 그래프 기준입니다.">
+<meta property="og:description" content="이 튜토리얼에서 사용한 문장을 한곳에 모았습니다. 포털에서 실습할 때 참고하세요. 예제는 `sample` 그래프 기준입니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/cheatsheet.html">
 <meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
 <link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
@@ -82,7 +82,7 @@
     <h1>Cypher·패브릭 치트시트</h1>
     <article>
 <blockquote>
-<p>이 튜토리얼에서 쓴 문장을 한 장에 모았습니다. 포털 옆에 띄워 두고 쓰세요. 예제는 <code>sample</code> 그래프 기준입니다.</p>
+<p>이 튜토리얼에서 사용한 문장을 한곳에 모았습니다. 포털에서 실습할 때 참고하세요. 예제는 <code>sample</code> 그래프 기준입니다.</p>
 </blockquote>
 <h2 id="읽기">읽기<a class="anchor" href="#읽기" title="Permanent link">#</a></h2>
 <table>
@@ -102,7 +102,7 @@
 <td><code>MATCH (s:Supplier) RETURN s.name, s.country</code></td>
 </tr>
 <tr>
-<td>키로 하나</td>
+<td>키로 노드 찾기</td>
 <td><code>MATCH (s:Supplier {supplier_id: 'S-CN-01'}) RETURN s</code></td>
 </tr>
 <tr>
@@ -153,15 +153,15 @@
 </thead>
 <tbody>
 <tr>
-<td>한 걸음</td>
+<td>관계 한 단계 조회</td>
 <td><code>MATCH (po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)</code></td>
 </tr>
 <tr>
-<td>거꾸로</td>
+<td>반대 방향으로 조회</td>
 <td><code>MATCH (s:Supplier)&lt;-[:ORDERED_FROM]-(po:PurchaseOrder)</code></td>
 </tr>
 <tr>
-<td>여러 걸음</td>
+<td>여러 관계 조회</td>
 <td><code>(sh:Shipment)-[:SHIPS]-&gt;(po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)</code></td>
 </tr>
 <tr>
@@ -173,11 +173,11 @@
 <td><code>MATCH (i:Item)&lt;-[:FOR_ITEM]-(so:SalesOrder), (i:Item)&lt;-[:OF_ITEM]-(l:PoLine)</code></td>
 </tr>
 <tr>
-<td>짝 없어도 남기기</td>
+<td>연결된 데이터가 없어도 포함</td>
 <td><code>OPTIONAL MATCH (sh:Shipment)-[:SHIPS]-&gt;(po:PurchaseOrder)</code></td>
 </tr>
 <tr>
-<td>짝 없는 것만</td>
+<td>연결된 데이터가 없는 항목만</td>
 <td><code>… OPTIONAL MATCH … WITH sh, po WHERE po IS NULL RETURN sh</code></td>
 </tr>
 </tbody>

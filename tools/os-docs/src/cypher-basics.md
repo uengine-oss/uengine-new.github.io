@@ -50,7 +50,7 @@ RETURN s.supplier_id, s.name, s.country, s.tier
 | S-CN-02 | Ningbo Magnetics | China | 2 |
 | S-VN-01 | Hanoi Assembly | Vietnam | 2 |
 
-`MATCH`는 “이런 모양을 찾아라”, `RETURN`은 “찾은 것 중 이것을 돌려 달라”입니다. 노드 전체를 조회하려면 `RETURN s`라고 씁니다. 그러면 모든 속성이 담긴 객체가 반환되고, 결과 카드에 Graph 보기가 생깁니다.
+`MATCH`는 찾을 그래프 패턴을 지정하고, `RETURN`은 조회 결과에 포함할 항목을 지정합니다. 노드 전체를 조회하려면 `RETURN s`라고 씁니다. 그러면 모든 속성이 담긴 객체가 반환되고, 결과 카드에 Graph 보기가 생깁니다.
 
 ## 거르기 — WHERE
 
@@ -60,7 +60,7 @@ WHERE s.country = 'China' AND s.tier = 1
 RETURN s.name
 ```
 
-결과는 `Shenzhen Goldline PCB` 한 곳입니다. `WHERE`에서 쓸 수 있는 것들:
+결과는 `Shenzhen Goldline PCB` 한 곳입니다. `WHERE`에서 사용할 수 있는 조건은 다음과 같습니다.
 
 | 쓰임 | 예 |
 |---|---|

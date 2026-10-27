@@ -1,6 +1,6 @@
 # Cypher·패브릭 치트시트
 
-> 이 튜토리얼에서 쓴 문장을 한 장에 모았습니다. 포털 옆에 띄워 두고 쓰세요. 예제는 `sample` 그래프 기준입니다.
+> 이 튜토리얼에서 사용한 문장을 한곳에 모았습니다. 포털에서 실습할 때 참고하세요. 예제는 `sample` 그래프 기준입니다.
 
 ## 읽기
 
@@ -8,7 +8,7 @@
 |---|---|
 | 노드 찾기 | `MATCH (s:Supplier) RETURN s` |
 | 속성 고르기 | `MATCH (s:Supplier) RETURN s.name, s.country` |
-| 키로 하나 | `MATCH (s:Supplier {supplier_id: 'S-CN-01'}) RETURN s` |
+| 키로 노드 찾기 | `MATCH (s:Supplier {supplier_id: 'S-CN-01'}) RETURN s` |
 | 거르기 | `WHERE s.country = 'China' AND s.tier = 1` |
 | 목록 포함 | `WHERE sh.ship_status IN ['IN_TRANSIT', 'CUSTOMS_HOLD']` |
 | 문자열 | `WHERE s.name CONTAINS 'Gold'` · `STARTS WITH` · `ENDS WITH` |
@@ -23,13 +23,13 @@
 
 | 하고 싶은 일 | Cypher |
 |---|---|
-| 한 걸음 | `MATCH (po:PurchaseOrder)-[:ORDERED_FROM]->(s:Supplier)` |
-| 거꾸로 | `MATCH (s:Supplier)<-[:ORDERED_FROM]-(po:PurchaseOrder)` |
-| 여러 걸음 | `(sh:Shipment)-[:SHIPS]->(po:PurchaseOrder)-[:ORDERED_FROM]->(s:Supplier)` |
+| 관계 한 단계 조회 | `MATCH (po:PurchaseOrder)-[:ORDERED_FROM]->(s:Supplier)` |
+| 반대 방향으로 조회 | `MATCH (s:Supplier)<-[:ORDERED_FROM]-(po:PurchaseOrder)` |
+| 여러 관계 조회 | `(sh:Shipment)-[:SHIPS]->(po:PurchaseOrder)-[:ORDERED_FROM]->(s:Supplier)` |
 | 관계도 돌려받기 | `MATCH (a:Shipment)-[r:SHIPS]->(b:PurchaseOrder) RETURN a, r, b` |
 | 갈래 둘 | `MATCH (i:Item)<-[:FOR_ITEM]-(so:SalesOrder), (i:Item)<-[:OF_ITEM]-(l:PoLine)` |
-| 짝 없어도 남기기 | `OPTIONAL MATCH (sh:Shipment)-[:SHIPS]->(po:PurchaseOrder)` |
-| 짝 없는 것만 | `… OPTIONAL MATCH … WITH sh, po WHERE po IS NULL RETURN sh` |
+| 연결된 데이터가 없어도 포함 | `OPTIONAL MATCH (sh:Shipment)-[:SHIPS]->(po:PurchaseOrder)` |
+| 연결된 데이터가 없는 항목만 | `… OPTIONAL MATCH … WITH sh, po WHERE po IS NULL RETURN sh` |
 
 ## 집계
 

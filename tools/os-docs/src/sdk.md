@@ -1,6 +1,6 @@
 # 코드 앱 SDK — 직접 읽고 고치기
 
-> 코드 앱이 쓰는 SDK(`og.js`)의 함수들을 정리하고, 에이전트 없이 앱 코드를 직접 고쳐 봅니다. 프로그래밍 수업에서 JavaScript를 조금 써 봤다면 충분합니다.
+> 코드 앱에서 사용하는 SDK(`og.js`)의 함수를 살펴보고, 에이전트 없이 앱 코드를 직접 수정해 봅니다. 프로그래밍 수업에서 JavaScript를 조금 써 봤다면 충분합니다.
 
 ## 앱 하나의 구조
 
@@ -93,7 +93,7 @@ const pos = await query(
 
 ## 차트 하나 더하기 (선택)
 
-ECharts는 전역 `echarts`로 있습니다. 협력사별 미결 금액을 막대로 그려 봅시다. 테마가 바뀌면 다시 칠하는 부분까지가 한 세트입니다.
+ECharts는 전역 `echarts`로 있습니다. 협력사별 미결 금액을 막대로 그려 봅시다. 테마가 바뀔 때 차트를 다시 그리는 부분도 함께 작성합니다.
 
 ```javascript
 import { query, color, onTheme } from '/apps/_runtime/og.js'
