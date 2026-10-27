@@ -20,7 +20,7 @@
 3일 넘게 늦어진 입고 선적을 긴급 처리해 줘. 사유는 생산 차질 우려.
 ```
 
-에이전트가 액션 `Shipment.expediteShipment`를 고르고, 실행기에 계획을 요청합니다(실측 약 25초).
+에이전트가 액션 `Shipment.expediteShipment`를 고르고, 실행기에 계획을 요청합니다(실측 25~50초).
 
 ![계획 카드 — 허용 2건(SHP-02, SHP-03), 거부 0건, 사람 승인 필요, 만료 시각. 위에는 첫 호출의 미리보기가 있습니다](img/qa-plan.webp)
 
@@ -82,10 +82,12 @@ RETURN sh.shipment_no, sh.delay_days, sh.priority
 
 | # | 대상 | 단계 | 시스템 · API | 결과 |
 |---|---|---|---|---|
-| 1 | SHP-02 | erp | sample-erp · `withdrawExpediteRequest` | 보상 성공 (200) |
-| 2 | SHP-02 | wms | sample-wms · `setShipmentPriority` | 보상 성공 (200) |
-| 3 | SHP-03 | erp | sample-erp · `withdrawExpediteRequest` | 보상 성공 (200) |
-| 4 | SHP-03 | wms | sample-wms · `setShipmentPriority` | 보상 성공 (200) |
+| 1 | SHP-03 | erp | sample-erp · `withdrawExpediteRequest` | 보상 성공 (200) |
+| 2 | SHP-03 | wms | sample-wms · `setShipmentPriority` | 보상 성공 (200) |
+| 3 | SHP-02 | erp | sample-erp · `withdrawExpediteRequest` | 보상 성공 (200) |
+| 4 | SHP-02 | wms | sample-wms · `setShipmentPriority` | 보상 성공 (200) |
+
+대상 순서도 실행의 역순입니다 — 나중에 처리한 SHP-03을 먼저 되돌립니다.
 
 포털에서 다시 확인하면 두 선적의 `priority`가 `NORMAL`로 돌아와 있습니다. WMS 우선순위의 보상은 `$before.priority` — **실행 직전의 값**으로 되돌리기 때문입니다. 원래 `HIGH`였다면 `HIGH`로 돌아갑니다.
 
@@ -115,7 +117,7 @@ RETURN sh.shipment_no, sh.delay_days, sh.priority
 
 <details class="answer" markdown="1"><summary>정답 보기</summary>
 
-1. 허용: PO-001, PO-002 (모두 OPEN). Shenzhen Goldline PCB의 발주는 이 두 건뿐이라 거부는 0건입니다. (만약 “모든 협력사의 발주를 보류해 줘”라고 하면 CLOSED인 PO-003, PO-004가 “미결 발주만” 사유로 거부됩니다.)
+1. 허용: PO-001, PO-002 (모두 OPEN). Shenzhen Goldline PCB의 발주는 이 두 건뿐이라 거부는 0건입니다. (만약 “모든 협력사의 발주를 보류해 줘”라고 하면 CLOSED인 PO-003, PO-004가 “미결 발주만” 사유로 거부됩니다. 에이전트가 대상을 고를 때 이미 `status = 'OPEN'`으로 걸러 두면, 거부 행 없이 처음부터 대상에서 빠진 채로 계획이 나올 수도 있습니다.)
 2. `erp.purchase_order`의 PO-001, PO-002가 `ON_HOLD`. `erp.po_hold`에는 발주마다 사유·보류 전 상태(`prev_status = OPEN`)·요청자가 한 줄씩 생깁니다. `erp.po_hold`는 가상 노드가 아니므로 데이터소스 탭의 테이블 상세에서 컬럼만 보입니다 — 내용을 보려면 가상 노드로 노출하세요(6장).
 3. 보상(`releasePurchaseOrder`)이 보류 전 상태로 되돌려 `OPEN`이 됩니다.
 </details>
