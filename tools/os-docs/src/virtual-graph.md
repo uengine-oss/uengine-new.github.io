@@ -34,7 +34,7 @@ CREATE VIRTUAL NODE PoLine IN sample FROM erp.po_line KEY po_line_id
 
 ## 가상 그래프 보기
 
-왼쪽 아래 가상 그래프에서 `sample`을 누르면, 데이터소스별로 묶인 노드와 관계의 지도가 나옵니다. `PoLine`은 아직 다른 노드와 연결되어 있지 않습니다.
+왼쪽 아래 가상 그래프에서 `sample`을 누르면, 데이터소스별로 묶인 노드와 관계를 그래프로 볼 수 있습니다. `PoLine`은 아직 다른 노드와 연결되어 있지 않습니다.
 
 ![가상 그래프 sample — 데이터소스별 가상 노드와 가상 관계](img/vgraph.webp)
 
@@ -62,7 +62,7 @@ CREATE VIRTUAL RELATIONSHIP OF_ITEM IN sample FROM PoLine(item_id) TO Item(item_
 
 ![관계를 만든 뒤의 가상 그래프 — 실행한 문장이 아래에 남습니다](img/vgraph-after.webp)
 
-관계도 복사가 아닙니다. **조인 규칙**(`PoLine.po_id = PurchaseOrder.po_id`)을 이름 붙여 저장해 둔 것이고, 질의할 때 그 규칙대로 원천을 조인합니다.
+가상 관계는 데이터를 복사하지 않습니다. **조인 규칙**(`PoLine.po_id = PurchaseOrder.po_id`)을 이름 붙여 저장해 둔 것이고, 질의할 때 그 규칙대로 원천을 조인합니다.
 
 ## 바로 써 보기
 

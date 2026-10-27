@@ -90,7 +90,7 @@
         아직 안 바뀜     계획 카드에서  (사가)              거꾸로 되돌림
 </code></pre></div>
 
-<p>에이전트는 계획을 세우고 실행을 요청할 수 있지만, <strong>승인은 할 수 없습니다.</strong> 승인은 언제나 화면의 사람이 계획 카드에서 누릅니다.</p>
+<p>에이전트는 계획을 세우고 실행을 요청할 수 있지만, <strong>승인은 할 수 없습니다.</strong> 승인은 사용자가 계획 카드에서 직접 진행합니다.</p>
 <h2 id="①-계획-지시하기">① 계획 — 지시하기<a class="anchor" href="#①-계획-지시하기" title="Permanent link">#</a></h2>
 <p>질의·액션 탭에서 지시합니다. <a href="ask.html">13장</a>에서 늦은 선적을 물어본 대화에 이어서 해도 됩니다.</p>
 <div class="hl"><pre><span></span><code>3일 넘게 늦어진 입고 선적을 긴급 처리해 줘. 사유는 생산 차질 우려.
@@ -137,7 +137,7 @@
 <div class="hl"><pre><span></span><code>실행해
 </code></pre></div>
 
-<p>에이전트는 승인된 계획을 <strong>그대로</strong> 실행합니다(다시 계획하지 않습니다). 실행기는 대상마다 단계를 차례로 부르고, 실행 직전에 정책을 한 번 더 판정합니다.</p>
+<p>에이전트는 승인된 계획을 <strong>그대로</strong> 실행합니다(다시 계획하지 않습니다). 실행기는 대상마다 각 단계를 차례로 실행하고, 실행 직전에 정책을 한 번 더 판정합니다.</p>
 <figure><a href="img/qa-executed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="실행 결과 — 두 선적 모두 WMS 우선순위 NORMAL → URGENT, ERP 납기 독촉 발송, 성공" src="img/qa-executed.webp" / loading="lazy" decoding="async"></a><figcaption>실행 결과 — 두 선적 모두 WMS 우선순위 NORMAL → URGENT, ERP 납기 독촉 발송, 성공</figcaption></figure>
 <table>
 <thead>
@@ -170,7 +170,7 @@
 </code></pre></div>
 
 <figure><a href="img/portal-urgent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="원천 확인 — 두 선적의 priority가 URGENT로 바뀌었습니다. 복사본이 아니라 WMS 테이블을 지금 읽은 값입니다" src="img/portal-urgent.webp" / loading="lazy" decoding="async"></a><figcaption>원천 확인 — 두 선적의 priority가 URGENT로 바뀌었습니다. 복사본이 아니라 WMS 테이블을 지금 읽은 값입니다</figcaption></figure>
-<p>데이터소스 탭에서 <code>wms.shipment</code> 미리보기를 봐도 같습니다. 업무 시스템이 원천을 고쳤고, 데이터 패브릭은 그 원천을 읽기 때문입니다.</p>
+<p>데이터소스 탭에서 <code>wms.shipment</code> 미리보기를 봐도 같습니다. 업무 시스템이 원천 데이터를 변경하고, 데이터 패브릭이 변경된 데이터를 읽기 때문입니다.</p>
 <h2 id="④-취소-역순-보상">④ 취소 — 역순 보상<a class="anchor" href="#④-취소-역순-보상" title="Permanent link">#</a></h2>
 <div class="hl"><pre><span></span><code>방금 한 긴급 처리를 취소해 줘.
 </code></pre></div>

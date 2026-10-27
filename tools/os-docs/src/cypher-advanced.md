@@ -15,7 +15,7 @@ ORDER BY open_amount DESC
 
 ![SQL 탭 — Cypher 한 문장이 PostgreSQL 질의로 번역된 모습](img/portal-sql.webp)
 
-결과 카드 아래쪽의 `compiled SQL 668a5ee48536` 같은 값은 변환된 SQL을 식별하는 값입니다. 같은 Cypher면 시점(10장)을 바꿔도 지문이 같습니다 — 질의는 그대로이고 조건만 바뀐다는 뜻입니다.
+결과 카드 아래의 `compiled SQL 668a5ee48536` 같은 값은 변환된 SQL을 식별하는 값입니다. 같은 Cypher면 시점(10장)을 바꿔도 지문이 같습니다 — 질의는 그대로이고 조건만 바뀐다는 뜻입니다.
 
 ## 패브릭 실행 계획 — EXPLAIN FABRIC
 
@@ -64,7 +64,7 @@ RETURN s.name AS supplier, po.po_id AS po_id, sh.shipment_no AS shipment_no,
 ORDER BY sh.delay_days DESC LIMIT 100
 ```
 
-!!! tip "자연어는 출발점입니다"
+!!! tip "자연어 질의를 활용해 보세요"
     만들어진 Cypher를 읽고 고쳐 쓰는 연습을 하세요. 에이전트가 어떤 관계를 골랐는지 보면 스키마를 이해하는 데도 도움이 됩니다. 이 기능은 앱 안의 포털에서만 동작합니다(코딩 에이전트가 필요합니다).
 
 ## 직접 쓰기 — 내 그래프 만들기
