@@ -33,7 +33,7 @@ SQL의 `SELECT … FROM … WHERE`와 비교하면 이해하기 쉽습니다.
 | 왼쪽 ENTITY TYPES | 노드 라벨. 누르면 그 라벨을 조회하는 질의가 입력됩니다. |
 | 왼쪽 RELATIONSHIP TYPES / PROPERTY KEYS | 관계 이름과 속성 이름. 질의를 쓸 때 참고합니다. |
 | 위 입력칸 | Cypher를 쓰고 ⌘Enter(Windows는 Ctrl+Enter) 또는 ▶ 버튼으로 실행합니다. `(n:`을 치면 라벨, `n.`을 치면 속성을 자동완성합니다. |
-| 결과 카드 | Table·JSON·SQL 보기, 노드를 돌려주면 Graph 보기도 생깁니다. ★로 저장, ✕로 닫기. |
+| 결과 카드 | Table·JSON·SQL 보기, 노드를 반환하면 Graph 보기도 생깁니다. ★로 저장, ✕로 닫기. |
 
 ## 첫 질의
 

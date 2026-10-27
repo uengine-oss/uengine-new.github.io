@@ -95,7 +95,7 @@ RETURN c.ticket_no, c.severity, c.subject, so.so_no, cu.name
 
 ### 갈래가 둘인 패턴
 
-쉼표로 패턴을 여러 개 적으면, **같은 변수**가 두 패턴을 묶습니다. “납땜 불량 클레임이 난 품목을 공급한 협력사는?” — CRM의 클레임에서 품목으로, 그 품목에서 ERP의 발주 품목과 협력사로. ([6장](virtual-graph.html)에서 만든 `PoLine`이 필요합니다.)
+쉼표로 여러 패턴을 적고 **같은 변수**를 사용하면 패턴을 연결할 수 있습니다. “납땜 불량 클레임이 난 품목을 공급한 협력사는?”이라는 질문에 답하려면 CRM의 클레임에서 품목을 찾고, 그 품목을 ERP의 발주 품목과 협력사에 연결합니다. ([6장](virtual-graph.html)에서 만든 `PoLine`이 필요합니다.)
 
 ```cypher
 MATCH (i:Item)<-[:FOR_ITEM]-(so:SalesOrder)<-[:ABOUT]-(c:Claim),

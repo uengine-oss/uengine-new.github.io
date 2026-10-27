@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>데이터소스 연결하기 — Ontological Studio 튜토리얼</title>
-<meta name="description" content="원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 데이터 패브릭이 무엇인지 손으로 익히는 장입니다.">
+<meta name="description" content="원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 실습을 통해 데이터 패브릭의 동작 방식을 익힙니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/ontological-studio/datasource.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="데이터소스 연결하기 — Ontological Studio 튜토리얼">
-<meta property="og:description" content="원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 데이터 패브릭이 무엇인지 손으로 익히는 장입니다.">
+<meta property="og:description" content="원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 실습을 통해 데이터 패브릭의 동작 방식을 익힙니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/ontological-studio/datasource.html">
 <meta property="og:image" content="https://www.uengine.org/docs/ontological-studio/img/home.webp">
 <link rel="icon" href="../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
@@ -82,11 +82,11 @@
     <h1>데이터소스 연결하기</h1>
     <article>
 <blockquote>
-<p>원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 데이터 패브릭이 무엇인지 손으로 익히는 장입니다.</p>
+<p>원천 데이터베이스를 연결하고, 테이블과 컬럼을 살펴보고, 데이터를 복사하지 않고 미리보기까지 해 봅니다. 실습을 통해 데이터 패브릭의 동작 방식을 익힙니다.</p>
 </blockquote>
 <h2 id="데이터-패브릭이란">데이터 패브릭이란<a class="anchor" href="#데이터-패브릭이란" title="Permanent link">#</a></h2>
 <p>회사의 데이터는 여러 데이터베이스에 흩어져 있습니다. 보통은 이것을 데이터 웨어하우스로 <strong>복사</strong>(ETL)해 한곳에 모은 뒤 분석합니다. 복사본은 원본보다 늦고, 권한을 두 군데서 관리해야 하며, 원본이 바뀌면 다시 복사해야 합니다.</p>
-<p><strong>데이터 패브릭</strong>은 반대로 갑니다. 데이터는 원래 자리에 두고, 질의할 때마다 <strong>그 자리에서 읽습니다.</strong> Ontological DB는 원천 테이블을 그래프의 노드처럼 보이게 하는 <strong>가상 노드</strong>를 만들어 이것을 합니다. 옮기는 것은 데이터가 아니라 <strong>이름과 연결</strong>뿐입니다.</p>
+<p><strong>데이터 패브릭</strong>은 데이터를 원천에 둔 채 질의할 때마다 읽어 옵니다. Ontological DB는 원천 테이블을 그래프의 노드처럼 조회할 수 있도록 <strong>가상 노드</strong>를 정의합니다. 데이터 자체를 복사하지 않고 노드와 관계의 정의를 사용합니다.</p>
 <table>
 <thead>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 <td>왼쪽 아래 <strong>가상 그래프</strong></td>
-<td>가상 노드가 사는 그래프. 예제는 <code>sample</code>입니다.</td>
+<td>가상 노드가 속한 그래프. 예제는 <code>sample</code>입니다.</td>
 </tr>
 <tr>
 <td>가운데</td>
@@ -298,7 +298,7 @@
 <p>수업에서 쓰는 PostgreSQL이나 MySQL이 있다면 연결해 보세요. 연결하는 순간 테이블 목록과 컬럼 타입이 카탈로그로 들어옵니다. 데이터는 한 행도 복사되지 않습니다.</p>
 </div>
 <h2 id="화면-뒤의-문장들">화면 뒤의 문장들<a class="anchor" href="#화면-뒤의-문장들" title="Permanent link">#</a></h2>
-<p>데이터소스 탭은 모든 작업을 Ontological DB의 <strong>패브릭 문장</strong>으로 합니다. 화면 아래 「실행한 문장」에 무엇을 보냈는지 남습니다. 같은 문장을 포털에서 직접 쳐도 됩니다.</p>
+<p>데이터소스 탭은 모든 작업을 Ontological DB의 <strong>패브릭 문장</strong>으로 합니다. 화면 아래 「실행한 문장」에 무엇을 보냈는지 남습니다. 같은 문장을 포털에서 직접 입력해도 됩니다.</p>
 <table>
 <thead>
 <tr>
@@ -376,7 +376,7 @@
 <ol>
 <li>데이터소스 탭에서 <code>wms</code>의 <code>shipment</code> 테이블을 열고, 미리보기에서 지연일(<code>delay_days</code>)이 가장 큰 선적을 찾으세요.</li>
 <li><code>crm.claim</code> 미리보기에는 몇 행이 있나요? 그 행들은 어디에 저장돼 있나요?</li>
-<li><code>SHOW COLUMNS FROM wms.shipment</code>가 돌려줄 컬럼 이름을 예상해 보고, 포털에서 확인하세요.</li>
+<li><code>SHOW COLUMNS FROM wms.shipment</code>가 반환할 컬럼 이름을 예상해 보고, 포털에서 확인하세요.</li>
 </ol>
 </div>
 <details class="answer">

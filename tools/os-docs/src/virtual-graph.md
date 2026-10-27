@@ -1,10 +1,10 @@
 # 가상 노드와 가상 관계
 
-> 아직 노출되지 않은 테이블 `erp.po_line`(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 다른 데이터베이스의 테이블이 한 그래프로 이어지는 순간을 직접 만듭니다.
+> 아직 노출되지 않은 테이블 `erp.po_line`(발주 품목)을 가상 노드로 만들고, 발주·품목과 관계로 이어 봅니다. 서로 다른 데이터베이스의 테이블을 하나의 그래프로 연결하는 과정을 실습합니다.
 
 ## 가상 노드란
 
-**가상 노드 타입**은 원천 테이블 하나를 그래프의 노드 라벨 하나로 비춘 것입니다.
+**가상 노드 타입**은 원천 테이블 하나를 그래프의 노드 타입으로 정의한 것입니다.
 
 - 원천 **행 하나 = 노드 하나**, **컬럼 = 속성**입니다.
 - **KEY 컬럼**이 노드를 구별하는 값입니다(보통 기본키).
@@ -34,13 +34,13 @@ CREATE VIRTUAL NODE PoLine IN sample FROM erp.po_line KEY po_line_id
 
 ## 가상 그래프 보기
 
-왼쪽 아래 가상 그래프에서 `sample`을 누르면, 데이터소스별로 묶인 노드와 관계의 지도가 나옵니다. `PoLine`은 아직 아무와도 이어져 있지 않습니다.
+왼쪽 아래 가상 그래프에서 `sample`을 누르면, 데이터소스별로 묶인 노드와 관계의 지도가 나옵니다. `PoLine`은 아직 다른 노드와 연결되어 있지 않습니다.
 
 ![가상 그래프 sample — 데이터소스별 가상 노드와 가상 관계](img/vgraph.webp)
 
 ## 따라 하기 — 관계로 잇기
 
-발주 품목은 “어느 발주의” 줄이고 “어느 품목”을 산 것입니다. 이 두 사실을 관계로 만듭니다.
+발주 품목은 특정 발주에 포함된 특정 품목을 뜻합니다. 이 두 연결을 관계로 정의합니다.
 
 <ol class="steps" markdown="1">
 <li>가상 그래프 화면 아래 관계 만들기 칸에 관계 이름 <code>IN_ORDER</code>를 적습니다.</li>
@@ -54,7 +54,7 @@ CREATE VIRTUAL NODE PoLine IN sample FROM erp.po_line KEY po_line_id
 CREATE VIRTUAL RELATIONSHIP IN_ORDER IN sample FROM PoLine(po_id) TO PurchaseOrder(po_id)
 ```
 
-같은 방법으로 품목과도 잇습니다. 이번에는 포털에서 직접 문장을 쳐 봅시다(포털은 [7장](cypher-basics.html)에서 자세히 다룹니다. 그래프 선택을 `sample`로 두세요).
+같은 방법으로 품목과도 잇습니다. 이번에는 포털에서 직접 문장을 입력해 봅시다(포털은 [7장](cypher-basics.html)에서 자세히 다룹니다. 그래프 선택을 `sample`로 두세요).
 
 ```cypher
 CREATE VIRTUAL RELATIONSHIP OF_ITEM IN sample FROM PoLine(item_id) TO Item(item_id)
@@ -66,7 +66,7 @@ CREATE VIRTUAL RELATIONSHIP OF_ITEM IN sample FROM PoLine(item_id) TO Item(item_
 
 ## 바로 써 보기
 
-이제 “협력사별로 어떤 품목을 몇 개나 발주했나”를 묻는 질의를 쓸 수 있습니다. 협력사 → 발주 → 발주 품목 → 품목으로 네 노드를 걸어갑니다.
+이제 “협력사별로 어떤 품목을 몇 개나 발주했나”를 묻는 질의를 쓸 수 있습니다. 협력사 → 발주 → 발주 품목 → 품목으로 네 노드의 관계를 따라 조회합니다.
 
 ```cypher
 MATCH (s:Supplier)<-[:ORDERED_FROM]-(po:PurchaseOrder)<-[:IN_ORDER]-(l:PoLine)-[:OF_ITEM]->(i:Item)
@@ -83,7 +83,7 @@ ORDER BY s.name, i.name
 | 대성케이블 | 전원 케이블 | 1500 |
 | 한빛정밀 | 마그넷 코어 | 900 |
 
-그리고 이번에는 **세 시스템을 건너는** 질문입니다. “3일 넘게 늦은 선적이 싣고 오는 품목과 그 안전재고는?” — 선적은 WMS에, 발주·발주 품목·품목은 ERP에 있습니다.
+그리고 이번에는 **두 시스템에 걸친** 질문입니다. “3일 넘게 늦은 선적이 싣고 오는 품목과 그 안전재고는?” — 선적은 WMS에, 발주·발주 품목·품목은 ERP에 있습니다.
 
 ```cypher
 MATCH (i:Item)<-[:OF_ITEM]-(l:PoLine)-[:IN_ORDER]->(po:PurchaseOrder)<-[:SHIPS]-(sh:Shipment)
@@ -119,7 +119,7 @@ DROP VIRTUAL NODE PoLine IN sample
     Write to the source system, or MATERIALIZE VIRTUAL NODE Supplier to take a copy
     ```
 
-    원천 데이터를 고치는 일은 그 데이터의 주인인 업무 시스템이 해야 합니다. 꼭 사본이 필요하면 `MATERIALIZE VIRTUAL NODE`로 복사본을 만들 수 있지만, 그 순간부터는 원천과 따로 놉니다.
+    원천 데이터를 고치는 일은 그 데이터의 주인인 업무 시스템이 해야 합니다. 꼭 사본이 필요하면 `MATERIALIZE VIRTUAL NODE`로 복사본을 만들 수 있지만, 복사한 뒤에는 원천의 변경 사항이 자동으로 반영되지 않습니다.
 
 !!! exercise "확인 문제"
     1. `wms.stock_daily`를 `Stock` 가상 노드로 만들 수 있을까요? 무엇을 KEY로 삼아야 할지 생각해 보세요.
