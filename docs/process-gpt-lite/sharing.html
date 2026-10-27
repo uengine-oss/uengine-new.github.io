@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산출물 공유와 @멘션 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="비서가 만든 견적서를 박서연에게 공유하고, 박서연은 받은 편지함에서 「이어서 작업」을 눌러 자기 비서에게 검토를 맡깁니다. 채팅 입력창에 @를 치면 자주 일을 넘긴 팀원과 역할이 먼저 뜹니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/sharing.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="산출물 공유와 @멘션 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="비서가 만든 견적서를 박서연에게 공유하고, 박서연은 받은 편지함에서 「이어서 작업」을 눌러 자기 비서에게 검토를 맡깁니다. 채팅 입력창에 @를 치면 자주 일을 넘긴 팀원과 역할이 먼저 뜹니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/sharing.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html" class="on" aria-current="page"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">팀으로 일하기<span class="chap">14</span></div>
+    <h1>산출물 공유와 @멘션</h1>
+    <article>
+<blockquote>
+<p>비서가 만든 견적서를 박서연에게 공유하고, 박서연은 받은 편지함에서 「이어서 작업」을 눌러 자기 비서에게 검토를 맡깁니다. 채팅 입력창에 @를 치면 자주 일을 넘긴 팀원과 역할이 먼저 뜹니다.</p>
+</blockquote>
+<h2 id="왜-파일-보내기가-아니라-공유인가">왜 “파일 보내기”가 아니라 “공유”인가<a class="anchor" href="#왜-파일-보내기가-아니라-공유인가" title="Permanent link">#</a></h2>
+<p><a href="folders.html">13장</a>에서는 고객 한 건의 자료를 공유 폴더에 모았습니다. 하지만 파일 하나를 팀원에게 잠깐 봐 달라고 할 때마다 폴더를 만들 필요는 없습니다. <a href="email-to-quote.html">9장</a>에서 만든 견적서는 장진영 팀장의 채팅 안에 있습니다. 재무 담당 박서연이 숫자를 봐야 하는데, 파일을 내려받아 메일로 보내면 세 가지가 끊깁니다.</p>
+<ul>
+<li><strong>누가 볼 수 있는지</strong> 통제가 안 됩니다. 파일 주소를 아는 사람은 누구나 엽니다.</li>
+<li>박서연이 고친 내용이 <strong>어느 판인지</strong> 헷갈립니다.</li>
+<li>박서연의 비서는 <strong>무슨 맥락인지</strong> 모릅니다. 다시 설명해야 합니다.</li>
+</ul>
+<p>Lite의 공유는 이렇게 동작합니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>공유하면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>받는 사람</td>
+<td>같은 팀원(또는 역할)만. 받는 사람마다 따로 허가가 생기고, 서버가 열 때마다 확인합니다</td>
+</tr>
+<tr>
+<td>원본</td>
+<td>보낸 사람의 원본 저장 주소는 밖으로 나가지 않습니다</td>
+</tr>
+<tr>
+<td>여는 방법</td>
+<td>받는 사람은 <strong>자기 사본</strong>으로 엽니다. 고쳐도 보낸 사람의 원본은 그대로입니다</td>
+</tr>
+<tr>
+<td>알림</td>
+<td>받은 편지함, 홈 카드, 위쪽 「메시지」의 숫자에 뜹니다</td>
+</tr>
+<tr>
+<td>이어서</td>
+<td>받은 사람이 「이어서 작업」을 누르면 메모·대화 발췌·사본이 그 사람의 비서에게 넘어갑니다</td>
+</tr>
+<tr>
+<td>취소</td>
+<td>보낸 사람만 공유를 거둘 수 있습니다</td>
+</tr>
+</tbody>
+</table>
+<p>공유 버튼은 세 곳에 있습니다. 채팅의 <strong>파일 카드</strong> 옆, 대화의 <strong>산출물 더미</strong>(<a href="contexts.html">4장</a>)를 펼쳤을 때 각 파일, 그리고 열린 <strong>편집기 머리줄</strong>의 「공유」입니다. 어디서 눌러도 같은 창이 뜹니다.</p>
+<h2 id="따라-하기-1-견적서를-박서연에게-공유">따라 하기 1 — 견적서를 박서연에게 공유<a class="anchor" href="#따라-하기-1-견적서를-박서연에게-공유" title="Permanent link">#</a></h2>
+<p>장진영 팀장 계정에서 합니다.</p>
+<ol>
+<li>채팅에서 <code>달빛커피 2호점 견적서.xlsx</code> 파일 카드 옆의 사람 모양 버튼을 누릅니다. 「팀원에게 공유」 창이 뜹니다(화면 사진의 파일 이름은 띄어쓰기 대신 밑줄을 썼습니다).</li>
+<li>찾기 칸에 <code>재무</code>를 칩니다. 이름·이메일·역할로 찾습니다.</li>
+<li>「자주 전달」의 박서연(재무 담당)을 고릅니다. 「역할」의 <code>재무 담당</code>을 골라도 됩니다. 역할로 보내면 그 역할을 맡은 사람에게 갑니다.</li>
+<li>메모를 적습니다: <code>2호점 견적서예요. 부가세 포함 합계와 ㎡당 단가 가정이 맞는지 봐 주세요.</code></li>
+<li>「1명에게 보내기」를 누릅니다.</li>
+</ol>
+<figure><a href="img/sharing-picker.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팀원에게 공유 — 「자주 전달」에는 이미 대화를 주고받은 박서연이 몇 번 전달했는지와 함께 위에 뜹니다. 아래에는 역할이 있습니다" src="img/sharing-picker.webp" / loading="lazy" decoding="async"></a><figcaption>팀원에게 공유 — 「자주 전달」에는 이미 대화를 주고받은 박서연이 몇 번 전달했는지와 함께 위에 뜹니다. 아래에는 역할이 있습니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 화면 위에 “박서연님께 공유했어요 · 열기 →”가 잠깐 뜹니다.</p>
+<figure><a href="img/sharing-sent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보낸 뒤 — 파일 카드는 그대로 장진영 팀장의 원본입니다" src="img/sharing-sent.webp" / loading="lazy" decoding="async"></a><figcaption>보낸 뒤 — 파일 카드는 그대로 장진영 팀장의 원본입니다</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">팀원 목록이 길다면</p>
+<p>현재 버전에서 “팀”은 같은 설치에서 Lite에 들어온 모든 사람이므로, 사람이 많으면 찾기 칸에 이름이나 역할을 쳐서 고르세요. 역할은 「설정 › 팀·역할」에서 정합니다(<a href="process-run.html">18장</a>).</p>
+</div>
+<h2 id="따라-하기-2-받은-사람-받은-편지함">따라 하기 2 — 받은 사람: 받은 편지함<a class="anchor" href="#따라-하기-2-받은-사람-받은-편지함" title="Permanent link">#</a></h2>
+<p>박서연 계정으로 로그인합니다. 홈 맨 위에 「공유」 카드가 있고, 위쪽 「메시지」에 숫자가 붙어 있습니다. 「메시지」를 눌러 「받은 편지함」을 엽니다.</p>
+<figure><a href="img/sharing-inbox.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="박서연 화면 — 홈의 공유 카드와 받은 편지함. 누가, 무엇을, 어떤 메모와 함께 보냈는지 보입니다" src="img/sharing-inbox.webp" / loading="lazy" decoding="async"></a><figcaption>박서연 화면 — 홈의 공유 카드와 받은 편지함. 누가, 무엇을, 어떤 메모와 함께 보냈는지 보입니다</figcaption></figure>
+<p>받은 편지함의 공유마다 버튼이 세 개 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>버튼</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「편집기에서 열기」</td>
+<td>내 사본을 이음오피스로 엽니다. 박서연의 채팅에도 같은 사본 카드가 생깁니다</td>
+</tr>
+<tr>
+<td>「이어서 작업」</td>
+<td>내 비서가 메모·대화 발췌·사본을 받아 일을 시작합니다</td>
+</tr>
+<tr>
+<td>「답장」</td>
+<td>장진영 팀장과의 1:1 대화방으로 갑니다(<a href="messenger.html">15장</a>)</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/sharing-editor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="「편집기에서 열기」 — 박서연의 사본이 열렸습니다. 머리줄의 「공유」로 다시 다른 팀원에게 넘길 수도 있습니다" src="img/sharing-editor.webp" / loading="lazy" decoding="async"></a><figcaption>「편집기에서 열기」 — 박서연의 사본이 열렸습니다. 머리줄의 「공유」로 다시 다른 팀원에게 넘길 수도 있습니다</figcaption></figure>
+<h2 id="따라-하기-3-이어서-작업-내-비서가-검토하기">따라 하기 3 — 「이어서 작업」: 내 비서가 검토하기<a class="anchor" href="#따라-하기-3-이어서-작업-내-비서가-검토하기" title="Permanent link">#</a></h2>
+<p>박서연이 받은 편지함에서 「이어서 작업」을 누릅니다. 박서연의 채팅에 다음이 차례로 생깁니다.</p>
+<ul>
+<li>사본 파일 카드(“장진영님이 공유”)</li>
+<li>“장진영님이 보낸 일을 이어서 할게요: "2호점 견적서예요. …"”</li>
+<li>비서의 작업 표시(「작업하는 중」), 그리고 검토 결과</li>
+</ul>
+<figure><a href="img/sharing-continue.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="박서연의 채팅 — “장진영님이 보낸 일을 이어서 할게요: …”와 사본 파일 카드. 비서가 이 메모와 사본으로 일을 시작합니다" src="img/sharing-continue.webp" / loading="lazy" decoding="async"></a><figcaption>박서연의 채팅 — “장진영님이 보낸 일을 이어서 할게요: …”와 사본 파일 카드. 비서가 이 메모와 사본으로 일을 시작합니다</figcaption></figure>
+<figure><a href="img/sharing-review.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="검토 결과 — 비서가 사본의 수식을 다시 계산해 합계(공급가액 46,560,000원 + 부가세 4,656,000원 = 51,216,000원)와 면적 합(96㎡)을 확인하고, ‘지난 세 건의 평균’이라는 단가 가정은 확인이 필요하다고 짚었습니다" src="img/sharing-review.webp" / loading="lazy" decoding="async"></a><figcaption>검토 결과 — 비서가 사본의 수식을 다시 계산해 합계(공급가액 46,560,000원 + 부가세 4,656,000원 = 51,216,000원)와 면적 합(96㎡)을 확인하고, ‘지난 세 건의 평균’이라는 단가 가정은 확인이 필요하다고 짚었습니다</figcaption></figure>
+<p><strong>확인할 것</strong></p>
+<ul>
+<li>검토는 <strong>박서연의 계정과 비서</strong>로 합니다. 장진영 팀장의 대화에는 아무것도 생기지 않습니다.</li>
+<li>비서가 사본을 고쳤다면 그것은 박서연의 사본입니다. 장진영 팀장의 원본 견적서는 그대로입니다. 고친 판을 돌려주려면 그 파일 카드에서 다시 「공유」합니다.</li>
+</ul>
+<p>검토 문장은 실행마다 다릅니다. 합계(공급가액 + 부가세 10%)와 가정한 단가에 대한 의견이 나오면 됩니다. 실습에서는 약 3분 걸렸고, <code>달빛커피_2호점_견적서_검수.xlsx</code> 파일 카드가 함께 생겼습니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">비서가 참고하는 파일의 범위</p>
+<p>현재 버전은 사용자별로 작업 공간을 나누지 않으므로, 비서가 근거를 찾을 때 같은 설치의 다른 사람이 남긴 파일까지 읽을 수 있습니다(실습에서도 다른 계정의 예전 견적서를 단가 비교에 썼습니다). 팀원끼리만 봐야 하는 자료는 채팅 첨부가 아니라 구성원을 정한 <strong>공유 폴더</strong>(<a href="folders.html">13장</a>)에 두세요.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">한 번에 하나씩</p>
+<p>현재 버전에서는 비서가 일하는 동안 같은 계정에서 다른 「이어서 작업」이나 채팅 요청을 보내면 진행 중인 일이 “(오류: turn cancelled)”로 끝납니다. 결과가 나온 뒤 다음 일을 맡기세요.</p>
+</div>
+<h2 id="따라-하기-4-채팅에서-멘션으로-넘기기">따라 하기 4 — 채팅에서 @멘션으로 넘기기<a class="anchor" href="#따라-하기-4-채팅에서-멘션으로-넘기기" title="Permanent link">#</a></h2>
+<p>공유는 “파일을 건넨다”, @멘션은 “이 대화의 일을 사람에게 넘긴다”입니다. 장진영 팀장의 채팅 입력창에 <code>@</code>를 칩니다.</p>
+<figure><a href="img/sharing-mention-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="“@” 추천 — 자주 전달한 팀원이 먼저, 그다음 역할, 나머지 팀원 순입니다. 역할 옆에는 지금 담당자가 보입니다" src="img/sharing-mention-list.webp" / loading="lazy" decoding="async"></a><figcaption>“@” 추천 — 자주 전달한 팀원이 먼저, 그다음 역할, 나머지 팀원 순입니다. 역할 옆에는 지금 담당자가 보입니다</figcaption></figure>
+<p>추천 순서는 이렇습니다.</p>
+<ol>
+<li><strong>자주 전달</strong> — 최근 내가 자주 공유·멘션·대화한 팀원(“3번 전달”)</li>
+<li><strong>관련</strong> — 대화 맥락이 있으면 판단 모델(<a href="contexts.html">4장</a>)이 이 일과 관계있다고 본 팀원(“관련 72%”). 판단 모델이 없으면 이 칸은 비어 있습니다</li>
+<li><strong>역할</strong> — <code>#재무 담당</code>처럼 역할로 보내면 지금 그 역할의 담당자에게 갑니다</li>
+<li><strong>팀원</strong> — 나머지</li>
+</ol>
+<p>김민지를 고르면 입력창 위에 받는 사람 칩이 생깁니다. 이어서 부탁을 쓰고 보냅니다.</p>
+<div class="hl"><pre><span></span><code>@김민지 평면도에서 바 카운터를 창가 쪽으로 옮기는 안도 한번 검토해 주세요. 사장님이 창가 좌석을 원하세요.
+</code></pre></div>
+
+<figure><a href="img/sharing-mention-sent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보낸 뒤 — 비서가 아니라 김민지에게 갔습니다. “김민지님께 보냈어요 · 산출물 1개”" src="img/sharing-mention-sent.webp" / loading="lazy" decoding="async"></a><figcaption>보낸 뒤 — 비서가 아니라 김민지에게 갔습니다. “김민지님께 보냈어요 · 산출물 1개”</figcaption></figure>
+<p><strong>확인할 것</strong>: 내 채팅에 “김민지님께 보냈어요 · 산출물 1개” 칩이 남고, 김민지의 받은 편지함과 홈에 <strong>멘션</strong>(“장진영님이 나를 언급했어요”)이 대화 발췌, 이 대화의 최근 산출물(실습에서는 견적서)과 함께 들어갑니다. 김민지도 「이어서 작업」으로 자기 비서에게 넘길 수 있습니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">받는 사람 칩이 있으면 비서는 답하지 않습니다</p>
+<p>@로 사람을 고른 메시지는 <strong>그 사람에게만</strong> 갑니다. 비서에게도 같은 일을 시키려면 칩을 지우고 보내세요.</p>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>공유와 멘션이 오가면 1:1 대화방이 저절로 생깁니다. 다음 장에서는 팀원끼리 대화방에서 이야기하다가, 대화 속 부탁이 그대로 일로 이어지는 <strong>대화방 도우미</strong>를 봅니다(<a href="messenger.html">15장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>박서연 계정에서 견적서 사본을 편집기로 열어 합계 셀의 숫자를 하나 바꾸고 저장하세요. 장진영 팀장 계정에서 원본 견적서를 열면 숫자가 바뀌어 있나요?</li>
+<li>장진영 팀장 계정에서 견적서를 「역할」의 <code>재무 담당</code>으로 공유하면 누구에게 가나요? 「설정 › 팀·역할」에서 담당자를 바꾼 뒤 다시 보내면 어떻게 되나요?</li>
+<li>@ 추천의 「자주 전달」 순서는 무엇으로 정해지나요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>바뀌지 않습니다. 박서연이 연 것은 박서연의 사본이고, 저장도 박서연의 카드에 됩니다. 장진영 팀장에게 돌려주려면 박서연이 그 카드를 다시 공유합니다.</li>
+<li>보낼 때 그 역할을 맡은 사람(지금은 박서연)에게 갑니다. 담당자를 바꾼 뒤 보내면 새 담당자에게 갑니다. 이미 보낸 공유는 처음 받은 사람에게 그대로 있습니다.</li>
+<li>최근 90일 동안 <strong>내가</strong> 그 팀원이 있는 대화방에 보낸 메시지(공유도 1:1 대화방의 메시지로 쌓입니다)와 채팅에서 그 사람에게 보낸 @멘션입니다. 그룹 방의 메시지는 인원수로 나눠 세고, 오래된 것일수록 덜 칩니다. “3번 전달”은 그 횟수입니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="folders.html"><span>이전</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a><a class="next" href="messenger.html"><span>다음</span>메신저와 대화방 도우미</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-파일-보내기가-아니라-공유인가">왜 “파일 보내기”가 아니라 “공유”인가</a></li><li><a href="#따라-하기-1-견적서를-박서연에게-공유">따라 하기 1 — 견적서를 박서연에게 공유</a></li><li><a href="#따라-하기-2-받은-사람-받은-편지함">따라 하기 2 — 받은 사람: 받은 편지함</a></li><li><a href="#따라-하기-3-이어서-작업-내-비서가-검토하기">따라 하기 3 — 「이어서 작업」: 내 비서가 검토하기</a></li><li><a href="#따라-하기-4-채팅에서-멘션으로-넘기기">따라 하기 4 — 채팅에서 @멘션으로 넘기기</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

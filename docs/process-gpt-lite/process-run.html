@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="김민지가 달빛커피 2호점 현장 실측 출장비를 청구하면, 정산 검토 에이전트가 규정을 검토하고, 결재자인 장진영 팀장의 홈에 결재 카드가 뜹니다. 역할 지정, 알림, 진행 상황, 산출물, 그리고 “관계된 사람만 본다”는 규칙을 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/process-run.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="김민지가 달빛커피 2호점 현장 실측 출장비를 청구하면, 정산 검토 에이전트가 규정을 검토하고, 결재자인 장진영 팀장의 홈에 결재 카드가 뜹니다. 역할 지정, 알림, 진행 상황, 산출물, 그리고 “관계된 사람만 본다”는 규칙을 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/process-run.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html" class="on" aria-current="page"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로세스로 일하기<span class="chap">18</span></div>
+    <h1>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</h1>
+    <article>
+<blockquote>
+<p>김민지가 달빛커피 2호점 현장 실측 출장비를 청구하면, 정산 검토 에이전트가 규정을 검토하고, 결재자인 장진영 팀장의 홈에 결재 카드가 뜹니다. 역할 지정, 알림, 진행 상황, 산출물, 그리고 “관계된 사람만 본다”는 규칙을 확인합니다.</p>
+</blockquote>
+<h2 id="프로세스가-돌-때-생기는-것">프로세스가 돌 때 생기는 것<a class="anchor" href="#프로세스가-돌-때-생기는-것" title="Permanent link">#</a></h2>
+<p><a href="process-create.html">17장</a>에서 「달빛커피 제안」 프로세스 <strong>정의</strong>(설계도)를 만들었습니다. 정의를 한 번 시작할 때마다 <strong>인스턴스</strong>(실행 한 건)가 생깁니다. “출장비 정산”이 정의라면 “출장비 정산 · 달빛커피 2호점 실측”이 인스턴스입니다.</p>
+<table>
+<thead>
+<tr>
+<th>생기는 것</th>
+<th>어디서 보나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>할 일</td>
+<td>단계마다 그 역할을 맡은 사람(또는 에이전트)에게 갑니다. 사람의 할 일은 홈 카드와 알림으로 뜹니다</td>
+</tr>
+<tr>
+<td>진행 상황</td>
+<td>「프로젝트」 탭의 인스턴스 화면 — 단계 타임라인, 진행 막대, 다이어그램</td>
+</tr>
+<tr>
+<td>산출물</td>
+<td>단계가 남긴 보고서·파일. 인스턴스 화면 아래 「산출물」</td>
+</tr>
+<tr>
+<td>기록</td>
+<td>누가 언제 무엇을 제출했는지. 나중에 병목 분석(<a href="bottleneck.html">20장</a>)의 재료가 됩니다</td>
+</tr>
+</tbody>
+</table>
+<p>달빛커피 제안은 단계가 많고 에이전트 단계가 오래 걸리므로, 이 장의 실습에는 예제 정의 <strong>출장비 정산</strong>을 씁니다. 사람 → 에이전트 → 사람으로 이어지는 짧은 흐름이라 한 바퀴를 보기 좋습니다. 김민지가 달빛커피 2호점 현장 실측을 다녀온 출장비를 청구하는 상황입니다. 프로세스 목록에 출장비 정산이 없다면 <a href="process-create.html">17장</a>처럼 대화로 같은 흐름(출장비 신청 → 정산 검토 에이전트의 규정 검토 → 결재)을 만들어 써도 됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>맡는 역할</th>
+<th>종류</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>출장비 신청</td>
+<td>신청자</td>
+<td>사람 (시작 폼)</td>
+</tr>
+<tr>
+<td>규정 검토 (정산 검토 에이전트)</td>
+<td>정산 검토 에이전트</td>
+<td>에이전트</td>
+</tr>
+<tr>
+<td>결재</td>
+<td>결재자</td>
+<td>사람</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-역할-담당-정하기">따라 하기 1 — 역할 담당 정하기<a class="anchor" href="#따라-하기-1-역할-담당-정하기" title="Permanent link">#</a></h2>
+<p>단계는 “사람”이 아니라 <strong>역할</strong>에 걸려 있습니다. 누가 그 역할을 맡는지는 「설정 › 팀·역할」의 「역할 담당」에서 정합니다. 장진영 팀장 계정에서 찾기 칸에 <code>출장비</code>를 치고, 결재자를 장진영으로 고릅니다. 신청자는 「시작한 사람」으로 둡니다.</p>
+<figure><a href="img/process-run-role.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="역할 담당 — 결재자는 출장비 정산과 기안 요청·작성·결재에서 함께 쓰는 역할입니다. 비워 두면 일을 시작한 사람이 맡습니다" src="img/process-run-role.webp" / loading="lazy" decoding="async"></a><figcaption>역할 담당 — 결재자는 출장비 정산과 기안 요청·작성·결재에서 함께 쓰는 역할입니다. 비워 두면 일을 시작한 사람이 맡습니다</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">역할 담당은 회사 전체 기본값입니다</p>
+<p>여기서 정한 담당자는 <strong>같은 이름의 역할을 쓰는 모든 프로세스</strong>에 적용됩니다. 위 그림처럼 결재자를 장진영으로 정하면 “기안 요청·작성·결재”의 결재도 장진영에게 갑니다. 현재 버전의 화면에는 프로세스별로 따로 정하는 칸이 없으므로, 실습 서버를 여럿이 함께 쓴다면 다른 사람의 실행에도 영향을 준다는 점을 기억하세요.</p>
+</div>
+<h2 id="따라-하기-2-김민지가-시작하기">따라 하기 2 — 김민지가 시작하기<a class="anchor" href="#따라-하기-2-김민지가-시작하기" title="Permanent link">#</a></h2>
+<p>김민지 계정의 채팅에서 말합니다.</p>
+<div class="hl"><pre><span></span><code>출장비 정산 신청할게요
+</code></pre></div>
+
+<p>비서가 등록된 프로세스 중 맞는 것을 골라 <strong>프로세스 카드</strong>를 띄웁니다. 카드에는 설명, 단계 수(사람 2 · 에이전트 1), 「흐름 보기」, 그리고 첫 단계의 <strong>시작 폼</strong>이 있습니다.</p>
+<figure><a href="img/process-run-form.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시작 폼 — 출장지, 출장 기간, 청구 금액, 비용 구분 칸. 아래로 출장 목적과 영수증 칸이 이어집니다" src="img/process-run-form.webp" / loading="lazy" decoding="async"></a><figcaption>시작 폼 — 출장지, 출장 기간, 청구 금액, 비용 구분 칸. 아래로 출장 목적과 영수증 칸이 이어집니다</figcaption></figure>
+<p>실습에서 넣은 값:</p>
+<table>
+<thead>
+<tr>
+<th>칸</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>출장지</td>
+<td><code>서울 성수동 · 달빛커피 2호점 현장</code></td>
+</tr>
+<tr>
+<td>출장 기간</td>
+<td><code>10월 21일 ~ 22일 (1박 2일)</code></td>
+</tr>
+<tr>
+<td>청구 금액(원)</td>
+<td><code>486000</code></td>
+</tr>
+<tr>
+<td>비용 구분</td>
+<td>교통비</td>
+</tr>
+<tr>
+<td>출장 목적</td>
+<td><code>달빛커피 2호점 현장 실측과 사장님 미팅 (KTX 왕복 2인, 현장 택시)</code></td>
+</tr>
+</tbody>
+</table>
+<p>「시작」을 누르면 카드가 「시작됨 · 출장비 정산 · 달빛커피 2호점 실측」으로 바뀝니다. 이 줄을 누르면 인스턴스 화면이 열립니다. 인스턴스 이름(“출장비 정산 · 달빛커피 2호점 실측”)은 입력한 내용으로 저절로 붙습니다.</p>
+<h2 id="따라-하기-3-에이전트가-일하는-동안">따라 하기 3 — 에이전트가 일하는 동안<a class="anchor" href="#따라-하기-3-에이전트가-일하는-동안" title="Permanent link">#</a></h2>
+<figure><a href="img/process-run-agent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트 단계 — 왼쪽 목록에 「에이전트 작업 중」 스피너, 타임라인에는 규정 검토 단계와 「동작 보기」" src="img/process-run-agent.webp" / loading="lazy" decoding="async"></a><figcaption>에이전트 단계 — 왼쪽 목록에 「에이전트 작업 중」 스피너, 타임라인에는 규정 검토 단계와 「동작 보기」</figcaption></figure>
+<p>스피너는 <strong>에이전트가 실제로 일하는 동안에만</strong> 돕니다. 「동작 보기」를 누르면 에이전트가 무엇을 읽고 어떤 도구를 썼는지 볼 수 있습니다. 실습에서는 1~2분 안에 규정 검토가 끝났습니다.</p>
+<h2 id="따라-하기-4-결재자에게-간-할-일">따라 하기 4 — 결재자에게 간 할 일<a class="anchor" href="#따라-하기-4-결재자에게-간-할-일" title="Permanent link">#</a></h2>
+<p>규정 검토가 끝나면 다음 단계(결재)가 결재자 역할의 담당자, 장진영 팀장에게 갑니다. 장진영 팀장 계정의 홈 맨 위에 <strong>결정 카드</strong>가 뜹니다.</p>
+<figure><a href="img/process-run-home-card.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="장진영 팀장의 홈 — 「결정 · 결재」 카드. 어떤 인스턴스의 무슨 단계인지, 앞 단계(규정 검토)의 요지가 함께 보입니다" src="img/process-run-home-card.webp" / loading="lazy" decoding="async"></a><figcaption>장진영 팀장의 홈 — 「결정 · 결재」 카드. 어떤 인스턴스의 무슨 단계인지, 앞 단계(규정 검토)의 요지가 함께 보입니다</figcaption></figure>
+<p>인스턴스 화면에서는 그 단계가 주황색 「입력 필요」로 표시되고, 아래 「내 입력이 필요해요」에 결재 폼이 열립니다.</p>
+<figure><a href="img/process-run-waiting.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사람 단계 — 스피너 대신 주황 점과 「입력 필요」. 사람의 확인을 기다리는 동안 아무것도 돌지 않습니다" src="img/process-run-waiting.webp" / loading="lazy" decoding="async"></a><figcaption>사람 단계 — 스피너 대신 주황 점과 「입력 필요」. 사람의 확인을 기다리는 동안 아무것도 돌지 않습니다</figcaption></figure>
+<p><strong>확인할 것</strong></p>
+<ul>
+<li>사람 단계에는 스피너가 없습니다. 다른 참여자에게는 담당자 이름과 「진행 중」만 보입니다(<a href="meetings.html">16장</a> 회의 자료의 「결재 · 진행 중 · 장진영」).</li>
+<li>알림은 Process GPT의 알림을 그대로 씁니다. 같은 할 일이 Process GPT 화면의 할 일 목록에도 보입니다.</li>
+</ul>
+<p>홈 카드의 「승인」을 누르면 결재가 제출되고, 잠시 뒤 인스턴스가 「완료」가 됩니다. 「반려」를 누르면 반려로 제출되고, 「자세히」는 인스턴스 화면을 엽니다.</p>
+<div class="admonition note">
+<p class="admonition-title">16장의 회의에서 본 진행 상황</p>
+<p><a href="meetings.html">16장</a>에서 장진영 팀장이 회의 중 “출장비 정산은 어디까지 갔어요?”라고 묻자 도우미가 띄운 것이 바로 이 인스턴스입니다. 그때는 결재 단계가 「진행 중 · 장진영」이었습니다.</p>
+</div>
+<h2 id="따라-하기-5-산출물과-완료">따라 하기 5 — 산출물과 완료<a class="anchor" href="#따라-하기-5-산출물과-완료" title="Permanent link">#</a></h2>
+<p>김민지 계정에서 인스턴스를 다시 엽니다. 모든 단계가 초록색으로 바뀌고, 아래에 「산출물」이 생겼습니다.</p>
+<figure><a href="img/process-run-outputs.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="산출물 — 정산 검토 에이전트가 쓴 「규정 검토 보고서」. 펼치면 청구 내용과 규정 대조 결과가 있습니다" src="img/process-run-outputs.webp" / loading="lazy" decoding="async"></a><figcaption>산출물 — 정산 검토 에이전트가 쓴 「규정 검토 보고서」. 펼치면 청구 내용과 규정 대조 결과가 있습니다</figcaption></figure>
+<p>인스턴스 화면 아래 입력창(「이 프로세스에 대해 물어보기」)은 이 인스턴스 전용 대화입니다. 여기서 물으면 비서가 이 인스턴스의 상태와 산출물을 함께 읽고 답합니다.</p>
+<h2 id="누가-인스턴스를-볼-수-있나">누가 인스턴스를 볼 수 있나<a class="anchor" href="#누가-인스턴스를-볼-수-있나" title="Permanent link">#</a></h2>
+<p>인스턴스는 <strong>관계된 사람</strong>에게만 보입니다. 시작한 사람, 단계를 맡았거나 맡은 사람, 그리고 관리자입니다.</p>
+<table>
+<thead>
+<tr>
+<th>사람</th>
+<th>출장비 정산 · 달빛커피 2호점 실측</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>김민지 (시작)</td>
+<td>보임</td>
+</tr>
+<tr>
+<td>장진영 (결재)</td>
+<td>보임</td>
+</tr>
+<tr>
+<td>박서연 (관계없음)</td>
+<td>「프로젝트」 목록에 없고, 주소로 열어도 “이 프로세스를 볼 권한이 없어요”</td>
+</tr>
+</tbody>
+</table>
+<p>같은 규칙이 회의 자료에도 적용됩니다. 회의 중 도우미가 진행 상황을 띄워도, 그 인스턴스를 볼 수 있는 참여자에게만 보입니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">에이전트 단계와 사람 단계를 섞는 요령</p>
+<ul>
+<li>에이전트 단계 뒤에는 사람의 확인 단계를 하나 두세요. 결재·검토처럼 “사람이 고르는 일”을 에이전트에게 맡기지 않는 것이 좋습니다.</li>
+<li>사람 단계의 폼에는 앞 단계 산출물이 칩으로 붙습니다. 칩을 누르면 <strong>검토자 자신의 사본</strong>이 열려, 고쳐도 단계의 원본은 그대로입니다.</li>
+</ul>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>출장비 정산과 17장의 「달빛커피 제안」은 사람이 미리 정의를 만들어 둔 프로세스였습니다. 그런데 회사의 제안 업무는 대부분 정의 없이 메일 한 통에서 시작해 사람마다 조금씩 다르게 처리해 왔습니다. 다음 장에서는 이렇게 즉흥적으로 해 온 일의 기록에서 <strong>반복되는 흐름을 찾아내 정식 프로세스로</strong> 만드는 프로세스 마이닝을 봅니다(<a href="mining.html">19장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>결재자 역할을 비워 두고(「시작한 사람」) 김민지가 출장비 정산을 시작하면 결재는 누구에게 가나요?</li>
+<li>정산 검토 에이전트가 일하는 동안과 결재를 기다리는 동안, 인스턴스 화면의 표시는 어떻게 다른가요?</li>
+<li>박서연이 이 인스턴스를 보려면 어떻게 해야 하나요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>일을 시작한 김민지에게 갑니다. 아무도 맡지 않은 사람 역할은 시작한 사람이 맡습니다(혼자 써 볼 때의 기본값).</li>
+<li>에이전트가 일할 때는 「에이전트 작업 중」 스피너와 「동작 보기」가 보입니다. 사람을 기다릴 때는 스피너 없이 주황 점과 담당자(내 차례면 「입력 필요」)만 보입니다.</li>
+<li>인스턴스에 관계된 사람이 되어야 합니다. 예를 들어 결재자로 지정된 상태에서 새 인스턴스의 결재 단계를 맡거나, 관리자가 되면 볼 수 있습니다. 이미 끝난 인스턴스를 공유하고 싶다면 산출물(규정 검토 보고서)을 <a href="sharing.html">14장</a>처럼 공유하세요.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="process-create.html"><span>이전</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a><a class="next" href="mining.html"><span>다음</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#프로세스가-돌-때-생기는-것">프로세스가 돌 때 생기는 것</a></li><li><a href="#따라-하기-1-역할-담당-정하기">따라 하기 1 — 역할 담당 정하기</a></li><li><a href="#따라-하기-2-김민지가-시작하기">따라 하기 2 — 김민지가 시작하기</a></li><li><a href="#따라-하기-3-에이전트가-일하는-동안">따라 하기 3 — 에이전트가 일하는 동안</a></li><li><a href="#따라-하기-4-결재자에게-간-할-일">따라 하기 4 — 결재자에게 간 할 일</a></li><li><a href="#따라-하기-5-산출물과-완료">따라 하기 5 — 산출물과 완료</a></li><li><a href="#누가-인스턴스를-볼-수-있나">누가 인스턴스를 볼 수 있나</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

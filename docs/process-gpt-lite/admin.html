@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>운영과 보안 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="사내에 Process GPT Lite를 설치해 운영하는 담당자를 위한 장입니다. 팀원과 역할, 관리자, 키가 있는 곳, 데모 로그인 끄기, 보관함 암호화와 키 교체, 백업과 업그레이드, 업그레이드 전 회귀 테스트, 개인정보를 지키는 기본값을 차례로 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/admin.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="운영과 보안 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="사내에 Process GPT Lite를 설치해 운영하는 담당자를 위한 장입니다. 팀원과 역할, 관리자, 키가 있는 곳, 데모 로그인 끄기, 보관함 암호화와 키 교체, 백업과 업그레이드, 업그레이드 전 회귀 테스트, 개인정보를 지키는 기본값을 차례로 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/admin.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html" class="on" aria-current="page"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">확장과 운영<span class="chap">25</span></div>
+    <h1>운영과 보안</h1>
+    <article>
+<blockquote>
+<p>사내에 Process GPT Lite를 설치해 운영하는 담당자를 위한 장입니다. 팀원과 역할, 관리자, 키가 있는 곳, 데모 로그인 끄기, 보관함 암호화와 키 교체, 백업과 업그레이드, 업그레이드 전 회귀 테스트, 개인정보를 지키는 기본값을 차례로 봅니다.</p>
+</blockquote>
+<p>앞 장에서 본 구성 요소를 사내에서 실제로 운영할 때 챙길 것을 모았습니다. 설치 자체는 <a href="install.html">1장</a>에서 했으니, 여기서는 설치 뒤의 일 — 사람과 권한, 비밀 값, 백업과 업그레이드 — 을 다룹니다.</p>
+<h2 id="팀원과-역할">팀원과 역할<a class="anchor" href="#팀원과-역할" title="Permanent link">#</a></h2>
+<p>「설정 › 팀·역할」에서 두 가지를 정합니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>팀원</strong></td>
+<td>이름과 이메일로 추가합니다. 아직 한 번도 로그인하지 않은 사람도 계정이 먼저 만들어져, 첫 방문 전부터 일을 받을 수 있습니다. 로그인한 사람은 팀 목록을 처음 열 때 스스로 팀에 들어갑니다</td>
+</tr>
+<tr>
+<td><strong>역할 담당</strong></td>
+<td>프로세스 단계는 그 역할을 맡은 팀원에게 가고, 그 사람의 홈에 알림이 갑니다. 비워 두면 일을 시작한 사람(예약을 건 사람)이 맡습니다. 정하는 순서는 <strong>프로세스별 지정 → 전체 기본 → 시작한 사람</strong>입니다(<a href="process-run.html">18장</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>스킬 쪽에는 <strong>에이전트 담당자</strong>가 따로 있습니다. 공유된 스킬의 개선 제안은 스킬을 만든 사람과 그 스킬을 가진 에이전트의 담당자만 반영할 수 있습니다(<a href="skills.html">10장</a>).</p>
+<div class="admonition warning">
+<p class="admonition-title">팀원·역할 변경 권한</p>
+<p>현재 버전은 팀원·역할 변경 권한을 따로 나누지 않으므로, 로그인한 사람은 누구나 팀원을 더하거나 빼고 역할을 바꿀 수 있습니다. 운영에서는 사내 계정만 로그인할 수 있게 두고(아래 “데모 로그인 끄기”), 팀·역할 변경은 맡을 담당자를 정해 두세요.</p>
+</div>
+<h2 id="관리자">관리자<a class="anchor" href="#관리자" title="Permanent link">#</a></h2>
+<p>관리자는 Process GPT의 사용자 표(<code>users.is_admin</code>)로 정합니다. 설치 번들은 설치할 때 입력한 <strong>첫 관리자 이메일</strong>(<code>ADMIN_EMAIL</code>)을 관리자로 만듭니다.</p>
+<table>
+<thead>
+<tr>
+<th>관리자만 할 수 있는 것</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로세스 마이닝 추천 보기, 정식 등록, 보류</td>
+<td><a href="mining.html">19장</a></td>
+</tr>
+<tr>
+<td>모든 프로세스 인스턴스와 그 산출물 보기 (보통은 참여자·담당자만)</td>
+<td><a href="process-run.html">18장</a></td>
+</tr>
+<tr>
+<td>남의 작업실 열기 (보통은 단계 담당자·참여자·대화 주인만)</td>
+<td><a href="workroom.html">23장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="키는-어디에-있나">키는 어디에 있나<a class="anchor" href="#키는-어디에-있나" title="Permanent link">#</a></h2>
+<p>개발 설치에서 중계 서버는 설정을 <strong>환경 변수 → <code>server/.env</code> → Process GPT 폴더의 <code>.env</code></strong> 순서로 읽습니다. 비밀 값을 Lite 쪽에 다시 복사하지 않고 Process GPT의 것을 그대로 씁니다. 설치 번들은 <code>install/.env</code> 하나에 모읍니다. 이 파일은 처음 설치할 때 권한 0600으로 만들어지고 비밀 값이 자동으로 채워지며, 업그레이드해도 그대로 남습니다.</p>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>개발 설치</th>
+<th>설치 번들 (<code>install/.env</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM 주소·키·모델</td>
+<td><code>PRO_LLM_BASE_URL</code>, <code>PRO_LLM_API_KEY</code>, <code>PRO_LLM_MODEL</code>, <code>PRO_LLM_FAST_MODEL</code> (없으면 Process GPT의 키)</td>
+<td><code>LLM_BASE_URL</code>, <code>LLM_API_KEY</code>, <code>LLM_MODEL</code>, <code>LLM_FAST_MODEL</code></td>
+</tr>
+<tr>
+<td>DB·로그인 서버</td>
+<td>Process GPT <code>.env</code>의 <code>POSTGRES_PASSWORD</code>, <code>ANON_KEY</code>, <code>SERVICE_ROLE_KEY</code></td>
+<td><code>POSTGRES_PASSWORD</code>, <code>JWT_SECRET</code>, <code>ANON_KEY</code>, <code>SERVICE_ROLE_KEY</code> (자동 생성)</td>
+</tr>
+<tr>
+<td>보관함 마스터 키(KEK)</td>
+<td><code>server/.vault-keyring.json</code> (0600) 또는 <code>PRO_VAULT_KEK</code></td>
+<td><code>VAULT_KEK</code> (자동 생성)</td>
+</tr>
+<tr>
+<td>예약 콜백 비밀</td>
+<td><code>PRO_CRON_SECRET</code></td>
+<td><code>CRON_SECRET</code> (자동 생성)</td>
+</tr>
+<tr>
+<td>Google 로그인·메일 연결</td>
+<td><code>GOOGLE_CLIENT_ID</code>, <code>GOOGLE_CLIENT_SECRET</code></td>
+<td>같은 이름</td>
+</tr>
+<tr>
+<td>회의 받아쓰기</td>
+<td><code>PRO_TRANSCRIBE_API_KEY</code></td>
+<td><code>TRANSCRIBE_API_KEY</code></td>
+</tr>
+</tbody>
+</table>
+<p>사용자 각자의 비밀(커넥터 토큰, Google 메일 연결 토큰, 사이트 로그인, 카드)은 설정 파일이 아니라 <strong>그 사람의 보관함</strong>에 암호문으로 들어갑니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">개발 설정을 그대로 공유 서버에 쓰지 마세요</p>
+<p><code>PRO_CRON_SECRET</code>은 비워 두면 코드에 적힌 기본값을 씁니다. 여러 사람이 쓰는 서버라면 직접 정한 값으로 바꾸세요. 설치 번들은 설치할 때 무작위 값을 만듭니다.</p>
+</div>
+<h2 id="데모-로그인-끄기">데모 로그인 끄기<a class="anchor" href="#데모-로그인-끄기" title="Permanent link">#</a></h2>
+<p>코드 <code>000000</code>으로 아무 이메일이나 들어오는 <strong>데모 로그인</strong>은 체험용입니다.</p>
+<table>
+<thead>
+<tr>
+<th>설치</th>
+<th>기본</th>
+<th>끄는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>개발 설치</td>
+<td>켜짐</td>
+<td><code>server/.env</code>(또는 환경 변수)에 <code>PRO_DEMO_LOGIN=0</code>, 서버 재시작</td>
+</tr>
+<tr>
+<td>설치 번들</td>
+<td><strong>꺼짐</strong> (<code>DEMO_LOGIN=0</code>)</td>
+<td>그대로 두세요. <code>1</code>은 닫힌 PC에서 시연할 때만</td>
+</tr>
+</tbody>
+</table>
+<p>끄면 로그인 코드가 메일로 갑니다. 설치 번들은 SMTP를 설정하지 않으면 번들 메일함(<code>http://localhost:18025</code>, 그 PC에서만 열림)으로 보냅니다. 지금 상태는 <code>/api/config</code>의 <code>demoLogin</code>으로 확인합니다.</p>
+<h2 id="보관함-암호화와-키-교체">보관함 암호화와 키 교체<a class="anchor" href="#보관함-암호화와-키-교체" title="Permanent link">#</a></h2>
+<p>보관함은 <strong>봉투 암호화</strong>입니다. 서버에만 있는 마스터 키(KEK)가 사용자마다 하나씩인 데이터 키(DEK)를 감싸고, DEK가 각 항목을 AES-256-GCM으로 암호화합니다. 데이터베이스에는 암호문과 감싼 DEK만 있으므로, DB만 빼 가서는 열 수 없습니다. 비밀번호·카드 번호·인증 코드는 화면에도, AI 모델에도 가지 않고 브라우저 작업 때 서버가 직접 입력합니다(<a href="browser.html">6장</a>).</p>
+<figure><a href="img/admin-security.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="설정 › 보안 — 암호화 방식, KEK 식별자와 보관 위치(서버 키링 파일, 1개 버전), 사용자별 DEK, 값을 보여 주지 않는 검증" src="img/admin-security.webp" / loading="lazy" decoding="async"></a><figcaption>설정 › 보안 — 암호화 방식, KEK 식별자와 보관 위치(서버 키링 파일, 1개 버전), 사용자별 DEK, 값을 보여 주지 않는 검증</figcaption></figure>
+<p>키 작업은 서버 폴더에서 <code>node scripts/vault-admin.mjs &lt;명령&gt;</code>으로 합니다. 이 스크립트는 비밀 값이나 키를 화면에 찍지 않습니다.</p>
+<table>
+<thead>
+<tr>
+<th>명령</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td>키링, KEK별 DEK 수, 종류별 항목 수</td>
+</tr>
+<tr>
+<td><code>verify</code></td>
+<td>모든 항목을 실제로 열어 확인</td>
+</tr>
+<tr>
+<td><code>rotate-kek</code></td>
+<td>새 KEK를 만들어 현재 키로 정하고 모든 DEK를 다시 감쌈</td>
+</tr>
+<tr>
+<td><code>rewrap</code></td>
+<td>은퇴한 KEK로 감싸인 DEK를 현재 KEK로 다시 감쌈 (환경 변수로 KEK를 바꾼 뒤)</td>
+</tr>
+<tr>
+<td><code>prune-kek</code></td>
+<td>어떤 DEK도 쓰지 않는 은퇴 KEK를 키링에서 지움</td>
+</tr>
+<tr>
+<td><code>rotate-dek &lt;사용자 id \| --all&gt;</code></td>
+<td>새 DEK를 만들고 항목을 다시 암호화</td>
+</tr>
+</tbody>
+</table>
+<p><code>rotate-kek</code>·<code>prune-kek</code> 뒤에는 서버를 다시 시작합니다. KEK를 환경 변수(<code>PRO_VAULT_KEK</code>)로 주는 경우 <code>rotate-kek</code>는 거절됩니다. 새 키를 <code>PRO_VAULT_KEK</code>에, 옛 키를 <code>PRO_VAULT_KEK_RETIRED</code>에 넣고 재시작한 뒤 <code>rewrap</code>을 돌립니다.</p>
+<h2 id="백업과-업그레이드">백업과 업그레이드<a class="anchor" href="#백업과-업그레이드" title="Permanent link">#</a></h2>
+<p>Lite에는 백업 기능이 따로 들어 있지 않습니다. 아래는 <strong>권장 절차</strong>입니다. 사용이 적은 시간에 다섯 가지를 같은 시점에 함께 복사해 두세요. 특히 <strong>KEK가 들어 있는 <code>.env</code>를 잃으면 보관함은 복구할 수 없습니다.</strong></p>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>어디</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>데이터베이스 (대화·카드·프로세스·팀·보관함 암호문)</td>
+<td><code>db</code> 서비스. 예: <code>docker compose exec -T db pg_dump -U postgres postgres &gt; lite.sql</code></td>
+</tr>
+<tr>
+<td>파일 저장소 (문서·그림 카드의 원본)</td>
+<td><code>storage-data</code> 볼륨</td>
+</tr>
+<tr>
+<td>공유 폴더(git)·ArtCraft 웹 빌드</td>
+<td><code>server-data</code> 볼륨 (<code>/data/folders</code>, <code>/data/craft</code>)</td>
+</tr>
+<tr>
+<td>에이전트 작업 폴더·스킬</td>
+<td><code>LITE_DATA_DIR/deepagents/</code> (<code>workspace</code>, <code>skills</code>)</td>
+</tr>
+<tr>
+<td>비밀 값</td>
+<td><code>install/.env</code> (개발 설치는 <code>server/.vault-keyring.json</code>과 두 <code>.env</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>업그레이드는 <code>./install.sh --upgrade</code> 한 줄입니다. 소스를 받고(<code>git pull</code>), 이미지를 빌드하거나 받고, DB 마이그레이션을 돌린 뒤 다시 시작합니다. 비밀 값은 유지됩니다. 권장 순서는 <strong>백업 → 업그레이드 → 회귀 테스트</strong>입니다.</p>
+<h2 id="업그레이드-전-회귀-테스트">업그레이드 전 회귀 테스트<a class="anchor" href="#업그레이드-전-회귀-테스트" title="Permanent link">#</a></h2>
+<p>저장소의 <code>e2e/</code>에는 지금까지의 기능을 다시 확인하는 Playwright 테스트가 세 단계로 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>확인하는 것</th>
+<th>모델 호출</th>
+<th>시간</th>
+<th>명령</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>smoke</strong></td>
+<td>기동·로그인, 모든 화면이 오류 없이 뜸, 보안 울타리(남의 작업실 403, 터미널 티켓, 보관함 비밀 없음, 패널 행 보안)</td>
+<td>없음</td>
+<td>1분 안팎</td>
+<td><code>npm run test:smoke</code></td>
+</tr>
+<tr>
+<td><strong>feature</strong></td>
+<td>고정 데이터로 기능 확인(공유 폴더·스킬 공유·패널 앱·예약·팀·프로세스·편집기·라이브 편집)</td>
+<td>없음</td>
+<td>수 분</td>
+<td><code>npm run test:feature</code></td>
+</tr>
+<tr>
+<td><strong>agent</strong></td>
+<td>시연 영상의 사용자 여정을 실제 모델로 끝까지</td>
+<td>있음</td>
+<td>30~90분</td>
+<td><code>npm run test:agent</code></td>
+</tr>
+</tbody>
+</table>
+<div class="hl"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>e2e<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npx<span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium
+<span class="nv">PGPT_URL</span><span class="o">=</span>http://localhost:18080<span class="w"> </span><span class="nv">MAILPIT_URL</span><span class="o">=</span>http://localhost:18025<span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>test:smoke
+</code></pre></div>
+
+<ul>
+<li>테스트는 전용 시험 계정만 쓰고, 만든 데이터는 끝나면 지웁니다. 중간에 끊겼으면 <code>npm run cleanup</code>.</li>
+<li>결과는 <code>reports/&lt;단계&gt;/html</code>(HTML 보고서)과 <code>junit.xml</code>(CI 연결용)에 남습니다.</li>
+<li>설치 번들에는 ArtCraft·판단 서버 등이 없어 해당 시험은 실패가 아니라 이유를 단 <strong>건너뜀</strong>으로 끝납니다.</li>
+</ul>
+<p>업그레이드 때마다 smoke와 feature를, 큰 릴리스 전에는 agent까지 돌리는 것을 권합니다.</p>
+<h2 id="개인정보를-지키는-기본값">개인정보를 지키는 기본값<a class="anchor" href="#개인정보를-지키는-기본값" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>기본 동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>보관함·브라우저</td>
+<td>비밀 값은 모델에 가지 않음. 브라우저 에이전트가 보는 페이지 요약에서 비밀 칸 값을 지우고, 모델에 보내는 화면 사진에서 그 칸을 가림</td>
+</tr>
+<tr>
+<td>패널 앱</td>
+<td>항목마다 민감도(공개·사내·개인·민감). 개인 항목은 본인·작성자·폴더 주인만, 민감 항목은 본인·폴더 주인만 봄. 민감한 숫자의 팀 합계는 세 명 이상 모였을 때만. 만든 사람이 낮추면 확인과 기록이 남음(<a href="panel-apps.html">12장</a>)</td>
+</tr>
+<tr>
+<td>팀 공유</td>
+<td>받는 사람만 열 수 있게 서버가 확인하고, 받은 사람은 자기 사본을 고침(<a href="sharing.html">14장</a>)</td>
+</tr>
+<tr>
+<td>회의</td>
+<td>받아쓰기·기록에 동의한 사람의 말만 받아씀. 회의록에 “동의하지 않은 분”을 적음. 방마다 도우미를 끌 수 있음. 서버 전체에서 도우미를 끄려면 설치 번들은 <code>MEETING_AGENT=0</code>, 개발 설치는 <code>PRO_MEETING_AGENT=0</code>. 회의 기능 전체를 끄려면 개발 설치의 <code>PRO_MEETINGS=0</code>(<a href="meetings.html">16장</a>)</td>
+</tr>
+<tr>
+<td>작업실</td>
+<td>담당자·참여자·대화 주인·관리자만. 터미널은 일회용 티켓으로 열고, 서버의 비밀 환경 변수를 넘기지 않음</td>
+</tr>
+<tr>
+<td>바깥 공개</td>
+<td>개발 서버를 터널로 열면 터널 주소에는 접근 암호(<code>server/.public-access</code>)가 걸림. 설치 번들을 인터넷에 열 때는 앞에 HTTPS 리버스 프록시를 둠</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">알려진 제약</p>
+<ul>
+<li>현재 버전에서는 문서·그림 카드의 파일이 추측하기 어려운 주소의 <strong>공개 저장소</strong>에 올라가, 주소를 아는 사람은 로그인 없이 열 수 있습니다. 외부에 여는 운영에서는 이 점을 고려하세요.</li>
+<li>브라우저 에이전트 세션은 서버 메모리에 있어, 서버를 다시 시작하면 진행 중이던 작업은 “중단됨”이 됩니다. 서버 재시작은 브라우저 작업이 없을 때 하세요.</li>
+<li>무엇이 모델에 가는지 확인하려면 <code>PRO_LLM_TRACE=&lt;파일&gt;</code>로 서버를 띄웁니다(기본은 꺼짐). 중계 서버가 직접 부르는 모델 요청의 글(그림 제외)이 그 파일에 쌓이고, deepagents가 부르는 요청은 들어가지 않습니다.</li>
+</ul>
+</div>
+<p>이것으로 7부를 마칩니다. 다음 장에서는 지금까지 배운 것을 새 고객 요청 한 건에 처음부터 끝까지 써 보는 종합 과제를 합니다(<a href="project.html">26장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>박서연이 퇴사해 계정을 막고 싶습니다. 팀에서 빼는 것 말고 무엇을 확인해야 할까요?</li>
+<li>서버를 새 PC로 옮기면서 데이터베이스만 백업해 왔습니다. 무엇이 안 될까요?</li>
+<li>업그레이드 뒤 smoke는 통과했는데 feature에서 ArtCraft 시험이 모두 “건너뜀”입니다. 실패인가요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>팀에서 빼면 역할 담당에서도 빠지므로, 그 사람이 맡던 역할의 새 담당자를 정합니다(비워 두면 일을 시작한 사람이 맡습니다). 로그인 자체를 막으려면 데모 로그인이 꺼져 있는지 확인하고, 로그인 서버(Supabase Auth)에서 계정을 막습니다.</li>
+<li>KEK가 없으면 보관함 항목(로그인·카드·커넥터 토큰)을 열 수 없습니다. 파일 저장소가 없으면 카드의 문서·그림이 열리지 않고, 공유 폴더 볼륨이 없으면 폴더의 이력과 변형이 사라집니다.</li>
+<li>아닙니다. 설치 번들에는 ArtCraft 앱이 없어 그 시험은 이유를 단 건너뜀으로 끝납니다. <code>/api/config</code>의 <code>craft</code>에 앱이 있다고 나오는데도 건너뛴다면 그때 원인을 봅니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="architecture.html"><span>이전</span>구조 — Process GPT 백엔드 위의 Lite</a><a class="next" href="project.html"><span>다음</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#팀원과-역할">팀원과 역할</a></li><li><a href="#관리자">관리자</a></li><li><a href="#키는-어디에-있나">키는 어디에 있나</a></li><li><a href="#데모-로그인-끄기">데모 로그인 끄기</a></li><li><a href="#보관함-암호화와-키-교체">보관함 암호화와 키 교체</a></li><li><a href="#백업과-업그레이드">백업과 업그레이드</a></li><li><a href="#업그레이드-전-회귀-테스트">업그레이드 전 회귀 테스트</a></li><li><a href="#개인정보를-지키는-기본값">개인정보를 지키는 기본값</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

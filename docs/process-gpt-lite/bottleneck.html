@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>병목 찾기 — 어디서 시간이 새는가 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="정식 프로세스 「달빛커피 제안」이 석 달 동안 48건 돌았습니다. 그 기록으로 한 건의 리드타임이 어디에 쓰였는지 단계마다 나눠 보고, BPMN 열지도로 병목을 찾고, 한 건씩 들여다본 뒤, 비서에게 말로 물어봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/bottleneck.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="병목 찾기 — 어디서 시간이 새는가 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="정식 프로세스 「달빛커피 제안」이 석 달 동안 48건 돌았습니다. 그 기록으로 한 건의 리드타임이 어디에 쓰였는지 단계마다 나눠 보고, BPMN 열지도로 병목을 찾고, 한 건씩 들여다본 뒤, 비서에게 말로 물어봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/bottleneck.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html" class="on" aria-current="page"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로세스 개선<span class="chap">20</span></div>
+    <h1>병목 찾기 — 어디서 시간이 새는가</h1>
+    <article>
+<blockquote>
+<p>정식 프로세스 「달빛커피 제안」이 석 달 동안 48건 돌았습니다. 그 기록으로 한 건의 리드타임이 어디에 쓰였는지 단계마다 나눠 보고, BPMN 열지도로 병목을 찾고, 한 건씩 들여다본 뒤, 비서에게 말로 물어봅니다.</p>
+</blockquote>
+<h2 id="이야기-회신이-너무-늦어요">이야기 — “회신이 너무 늦어요”<a class="anchor" href="#이야기-회신이-너무-늦어요" title="Permanent link">#</a></h2>
+<p><a href="process-create.html">17장</a>에서 대화로 만들었든 <a href="mining.html">19장</a>에서 마이닝으로 찾았든, 정식 프로세스는 돌 때마다 단계별 시작·끝 시각을 남깁니다. 6부에서는 정식 프로세스 「달빛커피 제안」이 석 달 동안 돈 기록으로 실습합니다. 달빛커피 가맹점이 늘어날 때마다 한 주에 서너 건씩 요청이 왔고, 10월에는 다섯 건을 넘겼습니다. 그러자 달빛커피 담당자가 “요청하고 회신을 받기까지 너무 오래 걸린다”고 말합니다.</p>
+<p>장진영 팀장은 어디가 느린지 감으로는 짐작이 갑니다. 하지만 “누가 늦다”가 아니라 <strong>“일이 어디서 기다리는가”</strong>를 숫자로 보고 싶습니다. 이 장에서는 그 숫자를 만듭니다. 다음 <a href="value-stream.html">21장</a>에서 그 숫자로 전체 흐름과 제약을 읽고, <a href="critical-path.html">22장</a>에서 무엇을 바꿀지 미리 계산해 실제로 바꿉니다.</p>
+<div class="admonition note">
+<p class="admonition-title">이 장의 예제 데이터</p>
+<p>6부의 「달빛커피 제안」은 <a href="process-create.html">17장</a>에서 만든 것보다 단계가 단순한 예제 프로세스입니다(아래 표). 8월 초부터 10월 말까지 48건이 완료돼 있습니다. 47건은 프로세스 엔진이 남기는 기록 모양 그대로 넣은 예제 이력이고, 1건은 장진영·김민지·박서연 계정으로 실제로 처음부터 끝까지 돌린 것입니다. 진행 중인 1건(광화문 53호점)도 실제로 돌고 있습니다. 숫자는 모두 이 기록에서 계산한 결과입니다. 이런 기록이 없는 설치에서는 화면 사진과 표의 숫자를 따라 읽으면 됩니다.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>담당</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>요청 메일 접수</td>
+<td>장진영(사람)</td>
+<td>요청 메일에서 매장·면적·예산을 정리해 프로세스를 시작</td>
+</tr>
+<tr>
+<td>평면도 작성</td>
+<td>김민지(사람)</td>
+<td>매장 평면도와 실별 면적</td>
+</tr>
+<tr>
+<td>견적 초안</td>
+<td>견적 에이전트</td>
+<td>면적·예산으로 견적 초안(평면도와 <strong>동시에</strong>)</td>
+</tr>
+<tr>
+<td>제안서 작성</td>
+<td>제안서 에이전트</td>
+<td>평면도와 견적으로 제안 요약</td>
+</tr>
+<tr>
+<td>재무 검토</td>
+<td>박서연(사람)</td>
+<td>금액·조건 확인. 승인하거나 수정 요청(→ 제안서 작성으로 되돌림)</td>
+</tr>
+<tr>
+<td>고객 회신</td>
+<td>장진영(사람)</td>
+<td>제안서·견적서를 붙여 회신</td>
+</tr>
+</tbody>
+</table>
+<h2 id="리드타임은-어디에-쓰이나">리드타임은 어디에 쓰이나<a class="anchor" href="#리드타임은-어디에-쓰이나" title="Permanent link">#</a></h2>
+<p><strong>리드타임</strong>은 일이 들어와서 끝날 때까지 걸린 시간입니다. 고객이 체감하는 시간이 바로 이것입니다. 그런데 리드타임 안에서 누군가 실제로 손을 움직이는 시간은 생각보다 짧습니다. 대부분은 <strong>기다리는</strong> 시간입니다.</p>
+<p>Process GPT Lite는 단계 하나가 진행된 시간을 여섯 가지로 나눕니다.</p>
+<table>
+<thead>
+<tr>
+<th>구간</th>
+<th>언제부터 언제까지</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>큐 대기</td>
+<td>단계에 도달한 때 → 담당자가 손을 댄 때</td>
+<td>김민지 앞에 평면도 요청이 와 있지만 아직 열어 보지 않음</td>
+</tr>
+<tr>
+<td>검토 대기</td>
+<td><strong>에이전트가 만든 산출물</strong>을 사람이 열어 보기까지</td>
+<td>제안서 에이전트가 끝낸 제안서를 박서연이 열 때까지</td>
+</tr>
+<tr>
+<td>사람 판단</td>
+<td>사람이 열어서 제출하기까지</td>
+<td>박서연이 견적을 확인하고 승인</td>
+</tr>
+<tr>
+<td>에이전트 수행</td>
+<td>에이전트가 실제로 돈 시간</td>
+<td>견적 에이전트가 견적 초안을 쓰는 2~3분</td>
+</tr>
+<tr>
+<td>재작업</td>
+<td>같은 건에서 같은 단계를 두 번째 이후로 한 작업</td>
+<td>수정 요청 뒤 제안서를 다시 쓰고 다시 검토</td>
+</tr>
+<tr>
+<td>유휴</td>
+<td>어디에도 속하지 않는 틈</td>
+<td>에이전트가 일을 받아 가기까지의 몇 초</td>
+</tr>
+</tbody>
+</table>
+<p>이 나눔은 Process GPT의 분석 서비스에 있던 규칙을 그대로 가져온 것입니다. 시간은 두 기록에서만 읽습니다. 작업 항목의 <strong>상태가 바뀐 시각</strong>(할 일 → 진행 중 → 제출 → 완료)과 에이전트가 남긴 <strong>이벤트 시각</strong>입니다. 담당자가 작업 항목을 <strong>처음 연 순간</strong>을 착수로 보므로, 할 일이 와 있어도 열어 보지 않은 시간은 작업이 아니라 대기로 셉니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">검토 대기가 왜 따로 있나</p>
+<p>에이전트를 들이면 만드는 일은 몇 분 만에 끝납니다. 그 뒤 사람이 확인하기까지 기다리는 시간이 새 병목이 되기 쉽습니다. 그래서 “에이전트 산출물이 사람을 기다린 시간”을 따로 셉니다.</p>
+</div>
+<h2 id="병목을-읽는-다섯-지표">병목을 읽는 다섯 지표<a class="anchor" href="#병목을-읽는-다섯-지표" title="Permanent link">#</a></h2>
+<p>화면의 열지도는 단계마다 아래 지표 가운데 하나를 색으로 보여 줍니다. 빨갈수록 큽니다.</p>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>계산</th>
+<th>무엇을 알려 주나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>소요시간</td>
+<td>단계에 도달한 때부터 끝날 때까지(대기 포함)의 중앙값</td>
+<td>한 건이 이 단계에서 보통 얼마나 머무나</td>
+</tr>
+<tr>
+<td>실행 횟수</td>
+<td>이 단계를 거친 건수(수정 요청으로 다시 거친 것 포함)</td>
+<td>일이 얼마나 자주 지나가나</td>
+</tr>
+<tr>
+<td>병목 점수</td>
+<td>실행 횟수 × 평균 소요시간이 전체에서 차지하는 몫(합 100%)</td>
+<td>프로세스 전체가 쓴 시간 중 이 단계의 몫</td>
+</tr>
+<tr>
+<td>재작업률</td>
+<td>(반복 건수 ÷ 전체 건수) × 100</td>
+<td>한 번에 끝나지 않는 비율</td>
+</tr>
+<tr>
+<td>대기 시간</td>
+<td>도달 → 착수(큐 대기 + 검토 대기)의 중앙값</td>
+<td>일이 사람을 얼마나 기다리나</td>
+</tr>
+</tbody>
+</table>
+<p><strong>중앙값</strong>은 값을 크기순으로 줄 세웠을 때 가운데 값입니다. 평균과 달리 유난히 오래 걸린 몇 건에 끌려가지 않아 “보통”을 말할 때 씁니다. 늦을 때를 말할 때는 <strong>p80</strong>(100건 중 80번째)을 함께 봅니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<h3 id="1-알림에서-열기">1. 알림에서 열기<a class="anchor" href="#1-알림에서-열기" title="Permanent link">#</a></h3>
+<p>장진영으로 로그인하면 홈에 「제약」 알림이 와 있습니다. 프로세스에 새 병목(제약)이 나타나면 프로세스 담당자에게 한 번 알립니다. 판단은 규칙으로 합니다(가동률 75% 이상이거나 리드타임 중 대기가 40% 이상). 알림의 「개선 보기」를 누릅니다.</p>
+<figure><a href="img/bottleneck-notice.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="홈의 「제약」 알림 — 재무 검토(박서연) 단계의 가동률 88%, 이 단계 앞 대기가 리드타임의 82%" src="img/bottleneck-notice.webp" / loading="lazy" decoding="async"></a><figcaption>홈의 「제약」 알림 — 재무 검토(박서연) 단계의 가동률 88%, 이 단계 앞 대기가 리드타임의 82%</figcaption></figure>
+<p>알림이 없어도 위쪽 「프로젝트」를 누르고 왼쪽 목록의 「프로세스」 옆 「개선 분석 →」으로 들어갈 수 있습니다. 실행 기록이 있는 프로세스가 나오고, 「달빛커피 제안」을 고릅니다.</p>
+<figure><a href="img/bottleneck-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 개선 목록 — 완료 건수와 마지막으로 찾은 제약" src="img/bottleneck-list.webp" / loading="lazy" decoding="async"></a><figcaption>프로세스 개선 목록 — 완료 건수와 마지막으로 찾은 제약</figcaption></figure>
+<h3 id="2-열지도로-병목-찾기">2. 열지도로 병목 찾기<a class="anchor" href="#2-열지도로-병목-찾기" title="Permanent link">#</a></h3>
+<p>개선 화면 맨 위에는 완료 건수, 리드타임 중앙값 <strong>3.1일</strong>(p80 4.8일), 흐름 효율 <strong>3.7%</strong>, 그리고 빨간 「제약」 표시가 있습니다. 흐름 효율과 제약은 <a href="value-stream.html">21장</a>에서 다룹니다.</p>
+<p>「병목」 탭의 다이어그램은 정식 등록 때 만든 BPMN 그대로이고, 단계 뒤의 빛이 선택한 지표의 크기입니다.</p>
+<figure><a href="img/bottleneck-heatmap.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="병목 점수 열지도 — 재무 검토 83%, 평면도 작성 15%, 나머지는 0~2%" src="img/bottleneck-heatmap.webp" / loading="lazy" decoding="async"></a><figcaption>병목 점수 열지도 — 재무 검토 83%, 평면도 작성 15%, 나머지는 0~2%</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>병목 점수</th>
+<th>읽는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>재무 검토</td>
+<td><strong>83%</strong></td>
+<td>프로세스 전체가 쓴 시간의 대부분이 여기서 흘러갔습니다</td>
+</tr>
+<tr>
+<td>평면도 작성</td>
+<td>15%</td>
+<td>두 번째. 사람이 직접 그리는 단계</td>
+</tr>
+<tr>
+<td>고객 회신</td>
+<td>2%</td>
+<td></td>
+</tr>
+<tr>
+<td>견적 초안·제안서 작성</td>
+<td>0%</td>
+<td>에이전트는 몇 분 만에 끝냅니다</td>
+</tr>
+</tbody>
+</table>
+<p>오른쪽 위에서 지표를 「대기 시간」으로 바꿔 보세요. 재무 검토가 여전히 가장 빨갛습니다. 이 단계는 <strong>일하는 시간보다 기다리는 시간이 길다</strong>는 뜻입니다.</p>
+<h3 id="3-단계별-리드타임-분해">3. 단계별 리드타임 분해<a class="anchor" href="#3-단계별-리드타임-분해" title="Permanent link">#</a></h3>
+<p>아래로 내리면 단계마다 시간이 어디에 쓰였는지 막대로 보입니다. 막대의 색은 앞의 여섯 구간입니다.</p>
+<figure><a href="img/bottleneck-table.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="단계별 리드타임 분해 — 재무 검토 막대는 거의 전부 검토 대기(노란색)" src="img/bottleneck-table.webp" / loading="lazy" decoding="async"></a><figcaption>단계별 리드타임 분해 — 재무 검토 막대는 거의 전부 검토 대기(노란색)</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>실행</th>
+<th>소요 중앙값 · p80</th>
+<th>대기 중앙값</th>
+<th>작업 중앙값</th>
+<th>재작업률</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>평면도 작성</td>
+<td>49</td>
+<td>4.2시간 · 20.0시간</td>
+<td>2.6시간</td>
+<td>1.5시간</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>견적 초안</td>
+<td>49</td>
+<td>3분 · 4분</td>
+<td>0초</td>
+<td>2분</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>제안서 작성</td>
+<td>56</td>
+<td>6분 · 7분</td>
+<td>0초</td>
+<td>5분</td>
+<td>14.3%</td>
+</tr>
+<tr>
+<td><strong>재무 검토</strong></td>
+<td><strong>56</strong></td>
+<td><strong>1.9일 · 3.8일</strong></td>
+<td><strong>1.9일</strong></td>
+<td><strong>44분</strong></td>
+<td><strong>14.3%</strong></td>
+</tr>
+<tr>
+<td>고객 회신</td>
+<td>48</td>
+<td>1.7시간 · 2.3시간</td>
+<td>1.3시간</td>
+<td>22분</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<p>재무 검토는 박서연이 실제로 들여다보는 시간이 44분인데, 그 앞에서 <strong>1.9일</strong>을 기다립니다. 막대가 거의 전부 노란색(검토 대기)인 것은, 앞 단계가 제안서 에이전트라 에이전트 산출물이 사람을 기다린 시간이기 때문입니다. 실행이 56번인 것은 완료된 48건 중 8번이 수정 요청으로 되돌아가 제안서 작성과 재무 검토를 한 번 더 거쳤기 때문이고, 그래서 두 단계의 재작업률이 14.3%입니다(평면도·견적 초안이 49번인 것은 진행 중인 1건이 이미 거쳤기 때문).</p>
+<div class="admonition warning">
+<p class="admonition-title">늦는 사람을 찾는 화면이 아닙니다</p>
+<p>박서연의 판단 시간은 건당 44분으로 짧습니다. 길어지는 것은 <strong>기다림</strong>입니다. 기다림은 대개 사람의 성실함이 아니라 일이 들어오는 양과 처리할 수 있는 양의 차이에서 생깁니다. 이 차이는 <a href="value-stream.html">21장</a>의 제약 이론으로 봅니다.</p>
+</div>
+<h3 id="4-한-건-들여다보기-인스턴스-프로파일">4. 한 건 들여다보기 — 인스턴스 프로파일<a class="anchor" href="#4-한-건-들여다보기-인스턴스-프로파일" title="Permanent link">#</a></h3>
+<p>「인스턴스별 프로파일」에서 한 건을 누르면 그 건의 시간이 어디에 쓰였는지 나옵니다. 위 막대는 그 건 전체의 분해이고, 아래는 단계마다 언제부터 언제까지 무엇을 했는지입니다.</p>
+<figure><a href="img/bottleneck-profile.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="인스턴스 하나의 프로파일 — 재무 검토 앞 검토 대기가 리드타임 대부분" src="img/bottleneck-profile.webp" / loading="lazy" decoding="async"></a><figcaption>인스턴스 하나의 프로파일 — 재무 검토 앞 검토 대기가 리드타임 대부분</figcaption></figure>
+<p>막대의 합은 그 건의 리드타임과 정확히 같습니다. 평면도 작성과 견적 초안처럼 <strong>동시에</strong> 진행된 구간은 겹쳐 세지 않고, 한 순간을 사람 판단 → 에이전트 수행 → 재작업 → 검토 대기 → 큐 대기 순으로 하나에만 넣습니다. 그래서 “시간이 사라지거나 두 번 세지는” 일이 없습니다.</p>
+<h3 id="5-비서에게-묻기">5. 비서에게 묻기<a class="anchor" href="#5-비서에게-묻기" title="Permanent link">#</a></h3>
+<p>채팅에서 물어도 됩니다.</p>
+<div class="hl"><pre><span></span><code>달빛커피 제안 프로세스 어디가 병목이야? 어떻게 줄여?
+</code></pre></div>
+
+<p>비서는 위와 같은 계산을 한 뒤 그 숫자로 답하고, 개선 화면으로 가는 카드를 붙입니다.</p>
+<figure><a href="img/bottleneck-chat.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="채팅 답 — 병목은 재무 검토(박서연), 가동률·대기 비중과 줄이는 방법 세 가지의 리드타임 전→후, 그리고 개선 카드" src="img/bottleneck-chat.webp" / loading="lazy" decoding="async"></a><figcaption>채팅 답 — 병목은 재무 검토(박서연), 가동률·대기 비중과 줄이는 방법 세 가지의 리드타임 전→후, 그리고 개선 카드</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">숫자는 계산이, 말은 모델이</p>
+<p>병목·가동률·리드타임 같은 숫자는 모두 기록에서 <strong>계산</strong>한 값이고, AI 모델은 그 숫자를 받아 설명만 합니다. 모델이 25초 안에 답하지 않으면 같은 숫자를 정해진 문장으로 보여 줍니다(위 사진이 그 경우입니다). 같은 계산은 에이전트가 쓰는 도구로도 들어 있어, 에이전트도 숫자를 지어내지 않고 가져다 씁니다.</p>
+</div>
+<h2 id="정리">정리<a class="anchor" href="#정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>질문</th>
+<th>어디서 보나</th>
+<th>이 예제의 답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>리드타임은 얼마인가</td>
+<td>화면 위 숫자</td>
+<td>중앙값 3.1일, p80 4.8일</td>
+</tr>
+<tr>
+<td>시간을 가장 많이 쓰는 단계는</td>
+<td>병목 점수 열지도</td>
+<td>재무 검토(83%)</td>
+</tr>
+<tr>
+<td>그 단계는 일하나, 기다리나</td>
+<td>단계별 분해</td>
+<td>판단 44분, 앞 대기 1.9일</td>
+</tr>
+<tr>
+<td>한 번에 끝나나</td>
+<td>재작업률</td>
+<td>14.3%가 수정 요청으로 되돌아감</td>
+</tr>
+</tbody>
+</table>
+<p>재무 검토가 병목이라는 것은 찾았습니다. 다음 장에서는 한 걸음 물러나 흐름 전체에서 일한 시간과 기다린 시간을 한 장에 그리고, 전체 속도를 정하는 단계(제약)가 왜 재무 검토인지 숫자로 확인합니다(<a href="value-stream.html">21장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>평면도 작성의 소요시간 중앙값은 4.2시간인데 p80은 20.0시간입니다. 두 숫자의 차이는 무엇을 뜻할까요?</li>
+<li>재무 검토의 대기는 왜 “큐 대기”가 아니라 “검토 대기”로 잡혔을까요?</li>
+<li>병목 점수가 “소요시간”만으로 정해지지 않고 실행 횟수를 곱하는 이유는 무엇일까요? 한 해에 한 번 3일 걸리는 단계와 매일 두 시간 걸리는 단계를 비교해 설명해 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>보통은 반나절 안에 끝나지만, 다섯 건 중 한 건은 하루 가까이 걸린다는 뜻입니다. 김민지가 오후에 받은 요청은 다음 날로 넘어가는 경우가 많아, 늦을 때의 꼬리가 깁니다.</li>
+<li>재무 검토 바로 앞 단계(제안서 작성)가 에이전트이기 때문입니다. 에이전트가 끝낸 산출물이 사람을 기다린 시간은 검토 대기로 따로 셉니다.</li>
+<li>병목 점수는 프로세스 전체가 쓴 시간 중 그 단계의 몫입니다. 한 해 한 번 3일은 합계 3일, 매일 두 시간은 한 해 수백 시간이므로 뒤쪽이 전체 시간을 훨씬 많이 씁니다. 자주 지나가는 단계의 작은 지연이 큰 병목이 될 수 있습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="mining.html"><span>이전</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a><a class="next" href="value-stream.html"><span>다음</span>가치 흐름과 제약 이론</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#이야기-회신이-너무-늦어요">이야기 — “회신이 너무 늦어요”</a></li><li><a href="#리드타임은-어디에-쓰이나">리드타임은 어디에 쓰이나</a></li><li><a href="#병목을-읽는-다섯-지표">병목을 읽는 다섯 지표</a></li><li><a href="#따라-하기">따라 하기</a><ul><li><a href="#1-알림에서-열기">1. 알림에서 열기</a></li><li><a href="#2-열지도로-병목-찾기">2. 열지도로 병목 찾기</a></li><li><a href="#3-단계별-리드타임-분해">3. 단계별 리드타임 분해</a></li><li><a href="#4-한-건-들여다보기-인스턴스-프로파일">4. 한 건 들여다보기 — 인스턴스 프로파일</a></li><li><a href="#5-비서에게-묻기">5. 비서에게 묻기</a></li></ul></li><li><a href="#정리">정리</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>메일 비서 — 들어온 메일에서 할 일 찾기 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="메일을 연결해 두면 비서가 몇 분마다 새 메일을 읽고, 처리할 일이 있으면 홈에 카드를 올리고 중요한 것은 브리프로 알려 줍니다. 달빛커피가 보낸 현장 실측 미팅 문의 메일이 카드가 되고, 그 카드를 눌러 회신 초안을 받기까지 따라 합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/mail.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="메일 비서 — 들어온 메일에서 할 일 찾기 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="메일을 연결해 두면 비서가 몇 분마다 새 메일을 읽고, 처리할 일이 있으면 홈에 카드를 올리고 중요한 것은 브리프로 알려 줍니다. 달빛커피가 보낸 현장 실측 미팅 문의 메일이 카드가 되고, 그 카드를 눌러 회신 초안을 받기까지 따라 합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/mail.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html" class="on" aria-current="page"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">나와 AI 비서<span class="chap">5</span></div>
+    <h1>메일 비서 — 들어온 메일에서 할 일 찾기</h1>
+    <article>
+<blockquote>
+<p>메일을 연결해 두면 비서가 몇 분마다 새 메일을 읽고, 처리할 일이 있으면 홈에 카드를 올리고 중요한 것은 브리프로 알려 줍니다. 달빛커피가 보낸 현장 실측 미팅 문의 메일이 카드가 되고, 그 카드를 눌러 회신 초안을 받기까지 따라 합니다.</p>
+</blockquote>
+<h2 id="왜-메일을-맡기나">왜 메일을 맡기나<a class="anchor" href="#왜-메일을-맡기나" title="Permanent link">#</a></h2>
+<p>4장까지는 여러분이 먼저 비서에게 말을 걸었습니다. 이번에는 비서가 먼저 메일을 읽고 할 일을 찾아 오게 합니다. 하루에 받는 메일 가운데 정말 손이 가야 하는 것은 몇 통 안 됩니다. 문제는 그 몇 통을 찾고, 무엇을 해야 하는지 정리하고, 답장을 쓰는 데 시간이 든다는 점입니다. 메일 비서는 이 세 가지를 대신합니다.</p>
+<table>
+<thead>
+<tr>
+<th>비서가 하는 일</th>
+<th>여러분이 보는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>새 메일을 주기적으로 읽는다</td>
+<td>따로 할 일 없음</td>
+</tr>
+<tr>
+<td>처리할 일이 있는 메일을 골라 낸다</td>
+<td>홈에 <strong>할 일 카드</strong> (Reply·Pay·Book… + 한 줄 + 기한)</td>
+</tr>
+<tr>
+<td>지금 무엇이 중요한지 요약한다</td>
+<td>채팅에 <strong>브리프</strong> (모닝·오후·이브닝 브리프)</td>
+</tr>
+<tr>
+<td>카드를 누르면 그 일을 시작한다</td>
+<td>채팅에 회신 초안, 확인할 점</td>
+</tr>
+<tr>
+<td>문서를 보내 달라는 메일이면 초안부터 만든다</td>
+<td>파일 카드와 홈의 「Review」 카드 (<a href="email-to-quote.html">9장</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>광고와 뉴스레터는 건너뜁니다. 1장에서 데모 메일함의 다섯 통 가운데 뉴스레터 한 통만 카드가 생기지 않은 것도 이 때문입니다.</p>
+<h2 id="연결-방법-세-가지">연결 방법 세 가지<a class="anchor" href="#연결-방법-세-가지" title="Permanent link">#</a></h2>
+<p><a href="install.html">1장</a>의 첫 화면 안내에서 「Google에 로그인」(또는 「메일 연결하기」)을 누르면 연결 방법을 고르는 창이 떴습니다.</p>
+<figure><a href="img/mail-connect.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="메일 연결 — Google 계정, IMAP, 데모 메일함" src="img/mail-connect.webp" / loading="lazy" decoding="async"></a><figcaption>메일 연결 — Google 계정, IMAP, 데모 메일함</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>무엇이 필요한가</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google 계정</td>
+<td>관리자가 서버에 Google 연결을 설정해 두어야 합니다(<a href="install.html">1장</a>)</td>
+<td>Gmail을 읽고, 캘린더 일정을 확인·등록하고, Gmail에 답장 <strong>초안</strong>을 만들어 둘 수 있습니다. Google이 내준 접근 권한(토큰)은 보관함에 암호화해 둡니다</td>
+</tr>
+<tr>
+<td>IMAP</td>
+<td>메일 서버 주소(예: <code>imap.gmail.com</code>), 메일 주소, <strong>앱 비밀번호</strong></td>
+<td>Gmail·네이버·사내 메일 등 IMAP을 여는 곳이면 됩니다. 비밀번호는 보관함에만 암호화해 저장됩니다. 읽기만 합니다</td>
+</tr>
+<tr>
+<td>데모 메일함</td>
+<td>없음</td>
+<td>가상의 거래처 메일 다섯 통이 들어 있는 연습용 메일함. 이 튜토리얼은 이것으로 진행합니다</td>
+</tr>
+</tbody>
+</table>
+<p>Google 계정은 나중에 「설정 › 계정 › 연결」의 Google 카드에서 「연결」을 눌러도 연결됩니다. 연결하면 메일 확인도 Gmail로 바뀝니다.</p>
+<div class="admonition note">
+<p class="admonition-title">IMAP으로 바꾸는 화면</p>
+<p>현재 버전에서는 연결 방법을 고르는 창이 첫 화면 안내에서만 열리고, 데모 메일함으로 시작한 뒤 IMAP으로 바꾸는 화면은 없습니다. 실제 메일로 쓸 계정이라면 처음 연결할 때 IMAP이나 Google을 고르세요.</p>
+</div>
+<h2 id="비서는-메일을-어떻게-읽나">비서는 메일을 어떻게 읽나<a class="anchor" href="#비서는-메일을-어떻게-읽나" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>5분마다</strong> 새 메일을 확인합니다. 기다리기 싫으면 「설정 › 시스템 설정 › 메일 확인」의 「지금 확인」을 누릅니다.</li>
+<li>최근 이틀 사이의 메일 가운데 <strong>아직 읽지 않은 것만</strong> 봅니다. Gmail은 프로모션·소셜 탭을 빼고 최대 20통까지 봅니다.</li>
+<li>새 메일이 없으면 AI 모델을 부르지 않습니다. 새 메일이 있으면 그 메일들을 한 번에 모델에게 보여 주고 카드·브리프·초안을 정합니다.</li>
+<li>모델에게 가는 것은 메일의 <strong>보낸 사람, 제목, 날짜, 본문 앞부분(800자)</strong> 입니다. 첨부 파일은 보내지 않습니다.</li>
+</ul>
+<h2 id="따라-하기-1-달빛커피-메일-받기">따라 하기 1 — 달빛커피 메일 받기<a class="anchor" href="#따라-하기-1-달빛커피-메일-받기" title="Permanent link">#</a></h2>
+<p><a href="first-chat.html">3장</a>에서 정리한 달빛커피 건에 후속 메일이 옵니다. 제안서를 쓰기 전에 현장을 재 보자는 문의입니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>보낸 사람</td>
+<td><code>달빛커피 운영팀 &lt;ops@dalbit-coffee.example&gt;</code></td>
+</tr>
+<tr>
+<td>제목</td>
+<td><code>[달빛커피] 2호점 현장 실측 미팅 일정 문의</code></td>
+</tr>
+<tr>
+<td>본문</td>
+<td>안녕하세요, 달빛커피 운영팀입니다. 성수동 2호점 건으로 연락드립니다. 11월 3일 오후 2시에 매장 현장에서 실측 미팅이 가능하실지 여쭙습니다. 그 시간이 어려우시면 가능한 시간을 두세 개 알려 주세요. 현장 주소는 회신 주시면 따로 보내 드리겠습니다. 감사합니다.</td>
+</tr>
+</tbody>
+</table>
+<p>Gmail이나 IMAP을 연결했다면 이 내용으로 <strong>자기 자신에게 메일을 보내면</strong> 됩니다. 현재 버전의 데모 메일함에는 메일을 넣는 화면이 없으므로, 데모 메일함을 쓰는 실습에서는 강사나 관리자가 아래 방법으로 넣어 줍니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">강사·관리자용 (선택) — 데모 메일함에 연습 메일 넣기</p>
+<p>앱 화면에서 F12(맥은 ⌥⌘I)로 개발자 도구를 열고 「Console」 탭에 아래를 붙여 넣은 뒤 Enter를 누릅니다. <code>{fresh: 1, …}</code>이 나오면 메일이 도착한 것입니다. 데모 메일함이 아닌 계정에서는 “데모 메일함에서만 쓸 수 있어요”라며 거절됩니다. 이 방법을 쓸 수 없다면 연결한 메일함으로 위 내용을 직접 보내거나 강사에게 보내 달라고 하세요.</p>
+<p><code>javascript
+const s = JSON.parse(localStorage.getItem('pgpt-pro-session'))
+await fetch('/api/mail/demo-arrive', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + s.session.access_token },
+  body: JSON.stringify({
+    from: '달빛커피 운영팀 &lt;ops@dalbit-coffee.example&gt;',
+    subject: '[달빛커피] 2호점 현장 실측 미팅 일정 문의',
+    text: '안녕하세요, 달빛커피 운영팀입니다. 성수동 2호점 건으로 연락드립니다. 11월 3일 오후 2시에 매장 현장에서 실측 미팅이 가능하실지 여쭙습니다. 그 시간이 어려우시면 가능한 시간을 두세 개 알려 주세요. 현장 주소는 회신 주시면 따로 보내 드리겠습니다. 감사합니다.',
+  }),
+}).then((r) =&gt; r.json())</code></p>
+</div>
+<p>메일이 들어오고 1분 안팎이면 홈 맨 위에 카드가 생기고, 채팅에 오후 브리프가 붙습니다.</p>
+<figure><a href="img/mail-cards.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="달빛커피 메일이 홈 맨 위 카드가 되었습니다. 기한(11월 3일)이 카드 아래에, 채팅에는 “오후 브리프”가 붙었습니다" src="img/mail-cards.webp" / loading="lazy" decoding="async"></a><figcaption>달빛커피 메일이 홈 맨 위 카드가 되었습니다. 기한(11월 3일)이 카드 아래에, 채팅에는 “오후 브리프”가 붙었습니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 홈 맨 위에 <code>Reply</code>로 시작하는 달빛커피 카드(예: “달빛커피 2호점 실측 미팅 11월 3일 오후 2시 가능 여부 확인”)와 그 아래 기한 <strong>11월 3일</strong>이 있고, 채팅에 브리프(“달빛커피 2호점 현장 실측 미팅 일정 확인이 필요해요…”)가 있으면 됩니다. 동사는 <code>Reply</code> 대신 <code>Book</code>(예약)으로 나올 수도 있습니다.</p>
+<p>이 메일은 문서를 보내 달라는 메일이 아니므로 초안은 만들어지지 않습니다. 제안서와 견적서를 요청하는 메일이 오면 무엇이 달라지는지는 <a href="email-to-quote.html">9장</a>에서 봅니다.</p>
+<h2 id="따라-하기-2-카드로-일-시작하기">따라 하기 2 — 카드로 일 시작하기<a class="anchor" href="#따라-하기-2-카드로-일-시작하기" title="Permanent link">#</a></h2>
+<p>카드를 누르면 비서가 그 일을 바로 시작합니다. 카드 글자가 반짝이며 “진행 중”으로 바뀌고, 채팅에는 카드의 문장과 함께 <strong>비서가 카드를 만들 때 미리 적어 둔 지시</strong>가 내 메시지처럼 올라갑니다. 무엇을 시켰는지 그대로 보이므로, 의도와 다르면 바로 이어서 고쳐 말하면 됩니다.</p>
+<figure><a href="img/mail-running.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="카드를 누른 직후 — 홈의 카드가 흐려지고, 채팅에 “Reply: …”와 지시 문장이 올라갑니다" src="img/mail-running.webp" / loading="lazy" decoding="async"></a><figcaption>카드를 누른 직후 — 홈의 카드가 흐려지고, 채팅에 “Reply: …”와 지시 문장이 올라갑니다</figcaption></figure>
+<p>실습에서는 1~2분 뒤 회신 초안이 문서 카드로 왔습니다.</p>
+<figure><a href="img/mail-reply.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="회신 초안 — 이 답도 달빛커피 대화로 이어졌습니다(판단 모델 1.00)" src="img/mail-reply.webp" / loading="lazy" decoding="async"></a><figcaption>회신 초안 — 이 답도 달빛커피 대화로 이어졌습니다(판단 모델 1.00)</figcaption></figure>
+<p>실습에서 받은 초안에는 다음이 들어 있었습니다.</p>
+<ul>
+<li>제목 “RE: 2호점 매장 설계 제안 관련 — 현장 실측 일정 확인의 건”과 본문 — 11월 3일 오후 2시 참석 가능, 실측 전에 준비해 달라는 것(출입 안내, 전력 용량, 배기 위치)</li>
+<li>일정이 바뀔 때를 위한 다른 시간 세 개</li>
+<li>“Gmail이 연결되지 않아 메일 초안 등록은 못 하고, 바로 복사해 보낼 수 있게 작성했습니다”라는 안내</li>
+<li>확인할 점 — 우리 팀 캘린더가 실제로 비어 있는지, 실측 뒤 제안서 마감(11월 6일)까지 여유가 충분한지</li>
+</ul>
+<p><strong>확인할 것</strong>: 답 위의 줄이 달빛커피 대화를 가리키고, 회신 초안에 11월 3일 오후 2시와 대안 시간이 들어 있으면 됩니다. 일을 마친 카드는 홈에서 사라집니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">Google을 연결하면 한 걸음 더</p>
+<p>Google 계정을 연결해 두면 비서가 캘린더에서 그 시간이 비었는지 확인하고, Gmail에 <strong>답장 초안</strong>을 만들어 둘 수 있습니다. 메일을 <strong>보내는 것</strong>은 여전히 여러분이 Gmail에서 합니다. 비서가 맡은 일에서 무엇까지 하게 할지는 지시로 정할 수 있습니다. 예를 들어 카드를 누른 뒤 “캘린더에도 11월 3일 2시 실측 일정을 넣어 줘”처럼 이어서 말합니다.</p>
+</div>
+<h2 id="카드-다루기">카드 다루기<a class="anchor" href="#카드-다루기" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>하는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>카드의 일을 시키기</td>
+<td>카드를 누릅니다</td>
+</tr>
+<tr>
+<td>필요 없는 카드 치우기</td>
+<td>카드에 마우스를 올리면 오른쪽 위에 나타나는 ×</td>
+</tr>
+<tr>
+<td>카드 없이 알림만 받고 싶을 때</td>
+<td>채팅의 브리프만 읽고 카드는 ×로 치웁니다</td>
+</tr>
+<tr>
+<td>내가 할 일을 카드로 남기기</td>
+<td>채팅에서 <code>금요일까지 달빛커피 견적 단가 확인하기, 홈에 할 일로 남겨 줘</code>처럼 말하면 비서가 “홈에 할 일로 남겨뒀어요”라고 답하고 홈에 <code>Remind</code> 카드(기한: 그 금요일)를 만듭니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>메일은 비서가 바로 읽을 수 있는 곳에 있었습니다. 다음 장에서는 로그인해야 하는 웹사이트의 일을 브라우저 에이전트에게 맡기고, 비밀번호·카드 번호를 보관함에 안전하게 두는 법을 봅니다(<a href="browser.html">6장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>데모 메일함(또는 연결한 메일함)에 광고 메일을 하나 넣어 보세요. 보낸 사람 <code>커피머신몰 &lt;news@coffeemall.example&gt;</code>, 제목 <code>[광고] 가을 원두 그라인더 특가</code>, 본문은 아무 할인 안내나 적습니다. 홈에 카드가 생기나요?</li>
+<li>메일 비서가 AI 모델에게 보내는 것과 보내지 않는 것을 하나씩 적어 보세요.</li>
+<li>달빛커피가 다음 메일에서 “제안서와 견적서를 11월 6일까지 보내 주세요”라고만 썼다면, 이번 장과 무엇이 달라질까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>생기지 않아야 합니다. 실습에서 넣어 본 결과도 <code>{fresh: 1, actions: 0}</code> — 새 메일 한 통을 읽었지만 할 일 카드는 0장이었습니다. 비서가 광고·뉴스레터는 처리할 일이 아니라고 보고 건너뜁니다. 혹시 카드가 생기면 ×로 치우면 됩니다.</li>
+<li>보내는 것: 새 메일의 보낸 사람·제목·날짜·본문 앞부분(800자). 보내지 않는 것: 첨부 파일, 이미 읽은 메일, IMAP 비밀번호와 Google 토큰(보관함에만 있음).</li>
+<li>문서를 보내 달라는 메일이므로, 비서가 묻지 않고 제안서·견적서(설계 제안이면 평면도까지) 초안을 먼저 만들기 시작하고, 홈에는 「Review」 초안 검토 카드가 생깁니다(<a href="email-to-quote.html">9장</a>).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="contexts.html"><span>이전</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a><a class="next" href="browser.html"><span>다음</span>브라우저 에이전트와 보관함</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-메일을-맡기나">왜 메일을 맡기나</a></li><li><a href="#연결-방법-세-가지">연결 방법 세 가지</a></li><li><a href="#비서는-메일을-어떻게-읽나">비서는 메일을 어떻게 읽나</a></li><li><a href="#따라-하기-1-달빛커피-메일-받기">따라 하기 1 — 달빛커피 메일 받기</a></li><li><a href="#따라-하기-2-카드로-일-시작하기">따라 하기 2 — 카드로 일 시작하기</a></li><li><a href="#카드-다루기">카드 다루기</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

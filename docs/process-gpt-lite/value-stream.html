@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가치 흐름과 제약 이론 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="한 건이 들어와 끝나기까지 일한 시간과 기다린 시간을 한 장에 그리는 가치 흐름 지도로 흐름 효율을 재고, 제약 이론으로 전체 속도를 정하는 단 하나의 단계를 찾습니다. 그리고 제약 이론의 다섯 단계를 이 프로세스의 숫자로 채워 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/value-stream.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="가치 흐름과 제약 이론 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="한 건이 들어와 끝나기까지 일한 시간과 기다린 시간을 한 장에 그리는 가치 흐름 지도로 흐름 효율을 재고, 제약 이론으로 전체 속도를 정하는 단 하나의 단계를 찾습니다. 그리고 제약 이론의 다섯 단계를 이 프로세스의 숫자로 채워 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/value-stream.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html" class="on" aria-current="page"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로세스 개선<span class="chap">21</span></div>
+    <h1>가치 흐름과 제약 이론</h1>
+    <article>
+<blockquote>
+<p>한 건이 들어와 끝나기까지 일한 시간과 기다린 시간을 한 장에 그리는 가치 흐름 지도로 흐름 효율을 재고, 제약 이론으로 전체 속도를 정하는 단 하나의 단계를 찾습니다. 그리고 제약 이론의 다섯 단계를 이 프로세스의 숫자로 채워 봅니다.</p>
+</blockquote>
+<h2 id="가치-흐름-일하는-시간과-기다리는-시간">가치 흐름 — 일하는 시간과 기다리는 시간<a class="anchor" href="#가치-흐름-일하는-시간과-기다리는-시간" title="Permanent link">#</a></h2>
+<p><a href="bottleneck.html">20장</a>에서 재무 검토가 병목이라는 것을 찾았습니다. 이제 한 걸음 물러나 <strong>흐름 전체</strong>를 봅니다.</p>
+<p><strong>가치 흐름</strong>은 고객이 원하는 결과(여기서는 제안서와 견적서가 담긴 회신)가 만들어지기까지 거치는 모든 단계입니다. 단계마다 두 가지 시간이 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>시간</th>
+<th>뜻</th>
+<th>고객 입장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>작업 시간</td>
+<td>사람이나 에이전트가 실제로 산출물을 만드는 시간</td>
+<td>값을 치를 만한 시간</td>
+</tr>
+<tr>
+<td>대기 시간</td>
+<td>일이 다음 사람 책상(또는 받은 편지함)에서 기다리는 시간</td>
+<td>아무것도 더해지지 않는 시간</td>
+</tr>
+</tbody>
+</table>
+<p><strong>가치 흐름 지도</strong>(Value Stream Map)는 단계를 순서대로 늘어놓고 단계마다 작업 시간, 그 앞의 대기 시간, 한 번에 끝나는 비율을 적은 그림입니다. 제조업에서 시작했지만, 대기가 눈에 보이지 않는 사무 업무에서 특히 쓸모가 있습니다.</p>
+<h3 id="흐름-효율">흐름 효율<a class="anchor" href="#흐름-효율" title="Permanent link">#</a></h3>
+<p><strong>흐름 효율</strong>(flow efficiency)은 리드타임 중 실제로 일한 시간의 비율입니다.</p>
+<div class="hl"><pre><span></span><code>흐름 효율 = Σ 작업 시간 ÷ 리드타임
+</code></pre></div>
+
+<p>예를 들어 한 건의 리드타임이 3일(72시간)이고 그동안 사람과 에이전트가 일한 시간을 모두 더하면 3시간이라면, 흐름 효율은 3 ÷ 72 ≈ 4%입니다. 사무 업무의 흐름 효율은 대개 5~15%라고 알려져 있습니다. 흐름 효율이 낮다는 것은 <strong>더 빨리 일하는 것보다 덜 기다리게 하는 편이 효과가 크다</strong>는 뜻입니다.</p>
+<table>
+<thead>
+<tr>
+<th>함께 보는 지표</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>첫 통과율</td>
+<td>그 단계를 한 번에 통과한 건의 비율(수정 요청으로 되돌아오지 않음)</td>
+</tr>
+<tr>
+<td>전 단계 첫 통과율 곱</td>
+<td>처음부터 끝까지 한 번도 되돌아가지 않고 갈 확률의 추정</td>
+</tr>
+<tr>
+<td>단계 시간</td>
+<td>단계에 도달해 끝날 때까지(대기 + 작업)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-가치-흐름-지도">따라 하기 1 — 가치 흐름 지도<a class="anchor" href="#따라-하기-1-가치-흐름-지도" title="Permanent link">#</a></h2>
+<p>개선 화면에서 「가치 흐름」 탭을 엽니다.</p>
+<figure><a href="img/value-stream-map.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="가치 흐름 지도 — 상자마다 담당·작업 시간·단계 시간·첫 통과율, 상자 앞 삼각형은 그 단계 앞의 대기, 아래 사다리는 주 경로의 대기와 작업" src="img/value-stream-map.webp" / loading="lazy" decoding="async"></a><figcaption>가치 흐름 지도 — 상자마다 담당·작업 시간·단계 시간·첫 통과율, 상자 앞 삼각형은 그 단계 앞의 대기, 아래 사다리는 주 경로의 대기와 작업</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>읽을 곳</th>
+<th>이 예제</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>상자</td>
+<td>단계. 평면도 작성과 견적 초안은 동시에 하므로 위아래로 놓입니다. 주황 테두리는 주 경로(<a href="critical-path.html">22장</a>)</td>
+</tr>
+<tr>
+<td>상자 앞 삼각형</td>
+<td>그 단계 앞에서 기다린 평균 시간. 재무 검토 앞이 <strong>2.5일</strong>로 가장 크고 빨갛습니다</td>
+</tr>
+<tr>
+<td>첫 통과율</td>
+<td>제안서 작성·재무 검토 85% — 일곱 건 중 한 건꼴로 수정 요청을 받습니다</td>
+</tr>
+<tr>
+<td>사다리</td>
+<td>주 경로 단계의 대기(위)와 작업(아래). 대기 합 3.0일, 작업 합 2.8시간</td>
+</tr>
+</tbody>
+</table>
+<p>아래 합계가 핵심입니다.</p>
+<table>
+<thead>
+<tr>
+<th>건당(평균)</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>리드타임</td>
+<td>3.2일 (중앙값 3.1일, p80 4.8일)</td>
+</tr>
+<tr>
+<td>작업 합</td>
+<td>2.8시간 (사람 판단 + 에이전트 수행, 재작업 제외)</td>
+</tr>
+<tr>
+<td><strong>흐름 효율</strong></td>
+<td><strong>3.7%</strong></td>
+</tr>
+<tr>
+<td>전 단계 첫 통과율 곱</td>
+<td>73%</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">대기도 두 종류</p>
+<p>지도 아래 설명에는 재무 검토 앞 대기의 절반쯤(48%)이 <strong>차례 기다림</strong>이라고 나옵니다. 박서연이 먼저 받은 다른 건을 아직 끝내지 못해서 기다린 시간입니다. 나머지는 <strong>담당자 기다림</strong>, 즉 박서연이 이 일을 하는 시간대(오전 한 시간 남짓)가 올 때까지 기다린 시간입니다. 차례 기다림은 일이 덜 몰리면 줄지만, 담당자 기다림은 일하는 방식을 바꿔야 줄어듭니다. 이 구분은 <a href="critical-path.html">22장</a>의 미리 계산에 그대로 쓰입니다.</p>
+</div>
+<h2 id="제약-이론-사슬은-가장-약한-고리만큼-강하다">제약 이론 — 사슬은 가장 약한 고리만큼 강하다<a class="anchor" href="#제약-이론-사슬은-가장-약한-고리만큼-강하다" title="Permanent link">#</a></h2>
+<p><strong>제약 이론</strong>(Theory of Constraints, TOC)은 엘리야후 골드랫이 제안한 생각입니다. 여러 단계가 이어진 일의 전체 속도는 <strong>가장 느린 한 단계(제약)</strong>가 정합니다. 다른 단계를 아무리 빠르게 해도 제약 앞에 일이 더 쌓일 뿐 전체는 빨라지지 않습니다.</p>
+<p>제약을 찾을 때 보는 숫자는 셋입니다.</p>
+<table>
+<thead>
+<tr>
+<th>숫자</th>
+<th>뜻</th>
+<th>이 화면에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>도착(수요)</td>
+<td>하루에 그 사람에게 오는 일의 수</td>
+<td>평일 하루 평균 도착 건수</td>
+</tr>
+<tr>
+<td>처리 능력</td>
+<td>하루에 그 사람이 이 일을 끝낼 수 있는 수</td>
+<td>일이 쌓여 있던 날 실제로 쓴 시간 ÷ 건당 작업 시간</td>
+</tr>
+<tr>
+<td>가동률</td>
+<td>도착 ÷ 처리 능력</td>
+<td>100%에 가까울수록 위험</td>
+</tr>
+</tbody>
+</table>
+<p>처리 능력을 사람이 입력하지 않고 <strong>기록에서 읽는</strong> 점이 중요합니다. 박서연은 재무 검토만 하는 사람이 아닙니다. 그래서 “하루 8시간 ÷ 건당 41분”이 아니라, 일이 쌓여 있어 쉬지 않고 했어야 할 날(정오에 기다리던 건이 저녁 6시에도 시작되지 않은 날)에 <strong>실제로 이 일에 쓴 시간</strong>을 처리 능력으로 봅니다.</p>
+<h3 id="가동률이-높으면-대기가-폭발한다">가동률이 높으면 대기가 폭발한다<a class="anchor" href="#가동률이-높으면-대기가-폭발한다" title="Permanent link">#</a></h3>
+<p>가동률과 대기는 직선이 아닙니다. 대기열 이론에 따르면 대기는 대략 가동률 ÷ (1 − 가동률)에 비례합니다.</p>
+<table>
+<thead>
+<tr>
+<th>가동률</th>
+<th>가동률 ÷ (1 − 가동률)</th>
+<th>50%일 때보다</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50%</td>
+<td>1</td>
+<td>1배</td>
+</tr>
+<tr>
+<td>80%</td>
+<td>4</td>
+<td>4배</td>
+</tr>
+<tr>
+<td>88%</td>
+<td>7.3</td>
+<td>7배</td>
+</tr>
+<tr>
+<td>95%</td>
+<td>19</td>
+<td>19배</td>
+</tr>
+</tbody>
+</table>
+<p>일이 조금만 더 몰려도 대기가 몇 배로 늘어납니다. 반대로, 제약의 가동률을 조금만 낮춰도 대기가 크게 줄어듭니다.</p>
+<h2 id="따라-하기-2-제약-찾기">따라 하기 2 — 제약 찾기<a class="anchor" href="#따라-하기-2-제약-찾기" title="Permanent link">#</a></h2>
+<p>「제약」 탭을 엽니다. 위의 표는 사람과 에이전트마다 수요와 처리 능력입니다.</p>
+<figure><a href="img/value-stream-resources.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사람·에이전트별 도착·처리 능력·가동률·대기 건수 — 박서연 가동률 88%, 대기 건수 1.5 → 2.4건으로 늘어남" src="img/value-stream-resources.webp" / loading="lazy" decoding="async"></a><figcaption>사람·에이전트별 도착·처리 능력·가동률·대기 건수 — 박서연 가동률 88%, 대기 건수 1.5 → 2.4건으로 늘어남</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>담당</th>
+<th>맡은 단계</th>
+<th>도착/일</th>
+<th>처리 능력/일</th>
+<th>가동률</th>
+<th>대기 건수(전 → 최근 2주)</th>
+<th>리드타임 중 대기</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>박서연</strong></td>
+<td>재무 검토</td>
+<td>0.90</td>
+<td>1.02</td>
+<td><strong>88%</strong></td>
+<td>1.5 → <strong>2.4</strong> (늘어남)</td>
+<td><strong>82%</strong></td>
+</tr>
+<tr>
+<td>김민지</td>
+<td>평면도 작성</td>
+<td>0.79</td>
+<td>여유</td>
+<td>–</td>
+<td>0.2 → 0.3</td>
+<td>13%</td>
+</tr>
+<tr>
+<td>장진영</td>
+<td>요청 메일 접수, 고객 회신</td>
+<td>1.56</td>
+<td>여유</td>
+<td>–</td>
+<td>0.0 → 0.0</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>견적·제안서 에이전트</td>
+<td>견적 초안, 제안서 작성</td>
+<td>0.79·0.92</td>
+<td>여유</td>
+<td>–</td>
+<td>0</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<p>“여유”는 일이 쌓여 있던 날이 거의 없어 처리 능력이 한계에 닿은 적이 없다는 뜻입니다. 박서연만 가동률이 88%이고, 앞에 기다리는 건이 최근 2주에 늘고 있습니다. 10월 들어 요청이 늘면서 처리 능력에 거의 닿은 것입니다. <strong>제약은 재무 검토(박서연)</strong>입니다.</p>
+<h2 id="다섯-단계-찾기-최대-활용-종속-강화-반복">다섯 단계 — 찾기 → 최대 활용 → 종속 → 강화 → 반복<a class="anchor" href="#다섯-단계-찾기-최대-활용-종속-강화-반복" title="Permanent link">#</a></h2>
+<p>제약 이론은 제약을 다루는 순서를 다섯 단계로 정합니다. 화면 아래에 이 프로세스의 숫자로 채운 다섯 단계가 있습니다. 행동마다 붙은 “리드타임 3.2일 → 1.9일” 같은 효과는 <a href="critical-path.html">22장</a>의 미리 계산으로 낸 값입니다.</p>
+<figure><a href="img/value-stream-focus.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="제약 이론 5단계 — 1 찾기부터 4 강화까지. 행동마다 리드타임·흐름 효율·가동률의 전→후와 「개선 실행에서 보기」 버튼" src="img/value-stream-focus.webp" / loading="lazy" decoding="async"></a><figcaption>제약 이론 5단계 — 1 찾기부터 4 강화까지. 행동마다 리드타임·흐름 효율·가동률의 전→후와 「개선 실행에서 보기」 버튼</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>뜻</th>
+<th>이 프로세스에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 찾기</td>
+<td>제약이 어디인지 정한다</td>
+<td>재무 검토(박서연). 도착 하루 0.9건, 처리 능력 1.0건, 가동률 88%, 리드타임의 82%가 이 앞의 대기</td>
+</tr>
+<tr>
+<td>2. 최대 활용</td>
+<td>제약의 시간을 한 순간도 낭비하지 않는다</td>
+<td>① 에이전트가 먼저 검토 초안(계산·단가 점검)을 만들고 박서연은 확인만: 3.2일 → 1.9일 ② 보완 요청을 줄여 다시 검토하는 일 없애기(14%가 되돌아감, 박서연 시간의 6%): 3.2일 → 2.6일</td>
+</tr>
+<tr>
+<td>3. 종속</td>
+<td>나머지를 제약의 속도에 맞춘다</td>
+<td>재무 검토 앞 대기 2건 상한(WIP 제한 — 진행 중인 일의 수에 상한을 둠): 쌓여 있으면 새 요청의 평면도 작성은 급한 건부터 순서를 정해 시작</td>
+</tr>
+<tr>
+<td>4. 강화</td>
+<td>제약의 능력을 늘리거나 일을 덜어 준다</td>
+<td>① 견적 금액 4,000만 미만은 재무 검토 없이: 3.2일 → 1.6일 ② 재무 검토 담당 1명 추가: 3.2일 → 1.9일</td>
+</tr>
+<tr>
+<td>5. 반복</td>
+<td>제약이 옮겨 가면 다시 1단계로</td>
+<td>가장 효과가 큰 안을 해도 제약은 여전히 박서연(가동률 63%) — 2~4단계를 함께 쓰고, 바꾼 뒤 다시 찾는다</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/value-stream-elevate.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="5단계의 종속·강화·반복 — WIP 제한, 기준 미만 건너뛰기(지난 48건 중 29%가 4,000만 미만, 그중 보완 요청 7%), 담당 추가" src="img/value-stream-elevate.webp" / loading="lazy" decoding="async"></a><figcaption>5단계의 종속·강화·반복 — WIP 제한, 기준 미만 건너뛰기(지난 48건 중 29%가 4,000만 미만, 그중 보완 요청 7%), 담당 추가</figcaption></figure>
+<p>몇 가지를 짚어 둡니다.</p>
+<ul>
+<li><strong>최대 활용이 강화보다 먼저입니다.</strong> 사람을 더 뽑기(강화) 전에, 지금 있는 제약의 시간을 확인에만 쓰게(최대 활용) 하는 것이 싸고 빠릅니다. 에이전트 사전 초안이 바로 그 방법입니다.</li>
+<li><strong>종속(WIP 제한)은 리드타임을 줄이지 않습니다.</strong> 앞에서 서둘러 봐야 제약 앞에서 기다릴 뿐이라는 것을 받아들이고, 기다리는 사이 요청이 바뀌어 다시 만드는 일을 줄입니다. 그래서 효과 숫자가 없습니다.</li>
+<li><strong>기준 미만 건너뛰기의 근거가 기록에 있습니다.</strong> 지난 48건 중 4,000만 미만이 29%였고, 그 건들의 보완 요청률은 7%로 기준 이상(18%)보다 훨씬 낮았습니다. 작은 건은 재무 검토가 결과를 거의 바꾸지 않았다는 뜻입니다.</li>
+<li><strong>반복</strong>은 이 화면을 다시 여는 것입니다. 개선 뒤 새 인스턴스가 쌓이면 제약이 김민지(평면도 작성)로 옮겨 갈 수도 있습니다.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">AI 전환(AX) 컨설팅의 흐름과 같습니다</p>
+<p>진단(<a href="bottleneck.html">20장</a>의 분해) → 가치 흐름(이 장의 지도) → 병목(제약) → 에이전트·자동화(사전 초안·자동화) → 프로세스 재설계(<a href="critical-path.html">22장</a>의 개선 적용) 순서가 AI 전환 컨설팅 과정의 흐름 그대로입니다. 마지막 변화관리는 사람의 몫입니다 — 기준을 바꾸면 재무 담당과 제안팀이 합의해야 합니다.</p>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>제약은 재무 검토(박서연)이고, 다섯 단계에 따른 개선 후보도 나왔습니다. 다음 장에서는 전체 기간을 정하는 단계의 사슬(크리티컬 패스)을 보고, 후보를 실제로 바꾸기 전에 리드타임이 얼마나 줄지 미리 계산한 뒤, 고른 안을 새 버전으로 적용해 봅니다(<a href="critical-path.html">22장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>어떤 프로세스의 건당 리드타임이 5일(120시간)이고 작업 합이 6시간입니다. 흐름 효율은 얼마일까요? 작업을 절반으로 줄이는 것과 대기를 절반으로 줄이는 것 중 리드타임에 더 큰 영향은 무엇일까요?</li>
+<li>김민지의 처리 능력이 “여유”로 나오는 이유는 무엇일까요? 김민지가 하루에 할 수 있는 양이 무한하다는 뜻일까요?</li>
+<li>제약이 박서연인데 평면도 작성을 에이전트로 자동화하면 리드타임은 어떻게 될까요? 제약 이론으로 설명해 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>6 ÷ 120 = 5%. 작업을 절반으로 줄이면 3시간이 줄고, 대기를 절반으로 줄이면 57시간이 줍니다. 대기를 줄이는 편이 훨씬 큽니다.</li>
+<li>일이 쌓여 있던 날(정오에 기다리던 건이 저녁에도 시작되지 않은 날)이 거의 없어, 처리 능력이 한계에 닿은 기록이 없기 때문입니다. 무한하다는 뜻이 아니라 “지금 수요로는 모자란 적이 없다”는 뜻입니다.</li>
+<li>조금 줄지만(평면도는 주 경로에 있으므로 그 몇 시간만큼) 크게 줄지 않습니다. 평면도가 빨리 끝나도 제안서는 박서연 앞에서 기다리기 때문입니다. 제약이 아닌 곳의 개선은 제약 앞의 대기로 바뀔 뿐입니다. <a href="critical-path.html">22장</a>의 미리 계산으로 직접 확인할 수 있습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="bottleneck.html"><span>이전</span>병목 찾기 — 어디서 시간이 새는가</a><a class="next" href="critical-path.html"><span>다음</span>크리티컬 패스와 개선 실행</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#가치-흐름-일하는-시간과-기다리는-시간">가치 흐름 — 일하는 시간과 기다리는 시간</a><ul><li><a href="#흐름-효율">흐름 효율</a></li></ul></li><li><a href="#따라-하기-1-가치-흐름-지도">따라 하기 1 — 가치 흐름 지도</a></li><li><a href="#제약-이론-사슬은-가장-약한-고리만큼-강하다">제약 이론 — 사슬은 가장 약한 고리만큼 강하다</a><ul><li><a href="#가동률이-높으면-대기가-폭발한다">가동률이 높으면 대기가 폭발한다</a></li></ul></li><li><a href="#따라-하기-2-제약-찾기">따라 하기 2 — 제약 찾기</a></li><li><a href="#다섯-단계-찾기-최대-활용-종속-강화-반복">다섯 단계 — 찾기 → 최대 활용 → 종속 → 강화 → 반복</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

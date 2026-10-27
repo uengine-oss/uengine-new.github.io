@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>패널 앱 — 말로 만드는 업무 미니앱 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="견적이 몇 건 나갔는지, 누가 언제 현장 실측을 가는지 — 팀이 함께 보는 작은 표는 엑셀 파일로 돌리면 금세 여러 벌이 됩니다. 패널 앱은 말 한마디로 만드는 홈 위의 미니앱입니다. 데이터는 공유 폴더의 시트나 데이터베이스에 한 벌만 두고, 함께 쓰는 사람과 볼 수 있는 행·항목을 앱이 지킵니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/panel-apps.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="패널 앱 — 말로 만드는 업무 미니앱 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="견적이 몇 건 나갔는지, 누가 언제 현장 실측을 가는지 — 팀이 함께 보는 작은 표는 엑셀 파일로 돌리면 금세 여러 벌이 됩니다. 패널 앱은 말 한마디로 만드는 홈 위의 미니앱입니다. 데이터는 공유 폴더의 시트나 데이터베이스에 한 벌만 두고, 함께 쓰는 사람과 볼 수 있는 행·항목을 앱이 지킵니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/panel-apps.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html" class="on" aria-current="page"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">반복 줄이기<span class="chap">12</span></div>
+    <h1>패널 앱 — 말로 만드는 업무 미니앱</h1>
+    <article>
+<blockquote>
+<p>견적이 몇 건 나갔는지, 누가 언제 현장 실측을 가는지 — 팀이 함께 보는 작은 표는 엑셀 파일로 돌리면 금세 여러 벌이 됩니다. 패널 앱은 말 한마디로 만드는 홈 위의 미니앱입니다. 데이터는 공유 폴더의 시트나 데이터베이스에 한 벌만 두고, 함께 쓰는 사람과 볼 수 있는 행·항목을 앱이 지킵니다.</p>
+</blockquote>
+<h2 id="왜-패널-앱인가">왜 패널 앱인가<a class="anchor" href="#왜-패널-앱인가" title="Permanent link">#</a></h2>
+<p><a href="missions.html">11장</a>의 예약 미션은 결과를 나 한 사람에게 알려 줍니다. 이번에는 팀이 함께 보는 정보입니다.</p>
+<p>달빛커피 견적이 나가자 장진영 팀장은 “지금 나간 견적이 몇 건이고 총액이 얼마인지”를 매번 엑셀을 열어 셉니다. 박서연은 재무용으로 따로 표를 만들고, 김민지는 현장 실측 일정을 메신저로 묻습니다. 같은 정보가 세 군데에 있습니다.</p>
+<p>패널 앱은 이것을 한 곳에 모읍니다.</p>
+<table>
+<thead>
+<tr>
+<th>특징</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>말로 만든다</td>
+<td>“견적 현황판 패널을 만들어 줘…” — 항목·선택지·요약 숫자를 비서가 설계</td>
+</tr>
+<tr>
+<td>홈에 산다</td>
+<td>채팅 왼쪽 홈에 카드로 붙고, 요약 타일(전체 건수·총액 등)과 목록, 「추가」·「시트 열기」가 있음</td>
+</tr>
+<tr>
+<td>데이터는 한 벌</td>
+<td>시트 앱은 공유 폴더의 <code>.xlsx</code>, 보안이 필요한 앱은 데이터베이스</td>
+</tr>
+<tr>
+<td>함께 쓴다</td>
+<td>폴더 구성원과 공유. 고칠 때마다 누가 무엇을 바꿨는지 기록</td>
+</tr>
+<tr>
+<td>기본이 안전</td>
+<td>숨길 항목이 있으면 자동으로 데이터베이스에 두고, 행·항목 단위로 보이는 범위를 지킴</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-견적-현황판-시트-앱">따라 하기 1 — 견적 현황판 (시트 앱)<a class="anchor" href="#따라-하기-1-견적-현황판-시트-앱" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>견적 현황판 패널을 만들어 줘. 고객사, 건명, 견적 금액, 상태(작성 중·발송·수주·실주), 담당자, 발송일을 등록하고 관리하는 앱이고, 팀원들과 같이 쓸 거야.
+</code></pre></div>
+
+<p>1분쯤 뒤 답과 칩 “‘견적 현황판’ 패널이 Home에 올라갔어요 · 견적 현황판 폴더”가 오고, 홈에 패널이 생깁니다.</p>
+<figure><a href="img/panel-apps-home.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="홈의 견적 현황판 패널. 위에는 「보안·개인정보 기본값」 카드, 아래에는 전체 건수·견적 총액·수주 건수 타일과 「추가」·「시트 열기」가 있습니다" src="img/panel-apps-home.webp" / loading="lazy" decoding="async"></a><figcaption>홈의 견적 현황판 패널. 위에는 「보안·개인정보 기본값」 카드, 아래에는 전체 건수·견적 총액·수주 건수 타일과 「추가」·「시트 열기」가 있습니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 비서의 답에 항목 목록(<code>고객사*, 건명*, 견적 금액(숫자)*, 상태(작성 중/발송/수주/실주)*, 담당자*, 발송일(날짜)</code>)과 데이터 위치(“‘견적 현황판’ 폴더의 견적 현황판.xlsx”)가 적혀 있습니다. <code>*</code>는 필수 항목입니다.</p>
+<p>패널 위의 <strong>보안·개인정보 기본값</strong> 카드를 읽고 「확인했어요」를 누릅니다. 이 앱은 숨길 항목이 없는 시트 앱이라 “폴더 구성원만 볼 수 있어요. 구성원은 모든 항목을 봐요”라고 나옵니다. 만든 사람이 이 카드를 확인하기 전에는 공유할 수 없습니다.</p>
+<p>「추가」를 누르면 등록 양식이 열립니다. 달빛커피 견적을 넣습니다.</p>
+<figure><a href="img/panel-apps-form.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적 현황판의 새 항목 양식. 필수 항목에 * 표시가 있고, 상태는 선택 목록, 발송일은 날짜 입력입니다" src="img/panel-apps-form.webp" / loading="lazy" decoding="async"></a><figcaption>견적 현황판의 새 항목 양식. 필수 항목에 * 표시가 있고, 상태는 선택 목록, 발송일은 날짜 입력입니다</figcaption></figure>
+<p>저장하면 요약 타일이 바로 바뀝니다. 「시트 열기」를 누르면 같은 데이터가 이음오피스 시트로 열리고, 시트에서 고쳐 저장한 값도 패널에 반영됩니다. 채팅으로도 행을 넣을 수 있습니다.</p>
+<div class="hl"><pre><span></span><code>견적 현황판에 추가해 줘: 고객사 해솔베이커리, 건명 판교점 인테리어, 견적 금액 38,000,000원, 상태 작성 중, 담당자 박서연.
+</code></pre></div>
+
+<p>비서가 “견적 현황판에 넣었어요: … (모두 3건)”이라고 답하고 패널에 한 줄이 늘어납니다. 숫자 항목은 숫자로 적는 것이 안전합니다. 실습에서 금액을 <code>3,800만 원</code>으로 적었을 때는 “고치지 못했어요: ‘견적 금액’ 을(를) 적어 주세요.”라며 넣지 않았습니다. 필수 항목이 빠지면 저장하지 않는 것은 양식과 같습니다.</p>
+<h2 id="따라-하기-2-팀원과-공유">따라 하기 2 — 팀원과 공유<a class="anchor" href="#따라-하기-2-팀원과-공유" title="Permanent link">#</a></h2>
+<p>패널 메뉴(⋯)의 「공유하기」에서 김민지·박서연을 폴더 구성원으로 넣습니다(편집 권한). 패널 머리줄에 구성원 수(사람 아이콘 옆 3)가 붙고, 두 사람의 홈에도 같은 패널이 나타납니다. 누가 행을 추가하면 다른 구성원의 패널이 곧바로 새로 고쳐집니다.</p>
+<p>데이터는 공유 폴더에 있으므로 <a href="folders.html">13장</a>의 폴더 화면에서 <code>apps/견적 현황판.xlsx</code>와 정의 파일 <code>견적 현황판.panel.json</code>을 볼 수 있고, 행을 추가할 때마다 “패널: 견적 현황판 행 추가 – 달빛커피” 같은 기록이 쌓입니다.</p>
+<h2 id="따라-하기-3-현장-실측-일정-데이터베이스-앱">따라 하기 3 — 현장 실측 일정 (데이터베이스 앱)<a class="anchor" href="#따라-하기-3-현장-실측-일정-데이터베이스-앱" title="Permanent link">#</a></h2>
+<p>이번에는 고객 연락처와 현장 주소가 들어가는 앱입니다.</p>
+<div class="hl"><pre><span></span><code>현장 실측 일정 패널을 만들어 줘. 고객사, 현장 주소, 고객 담당자, 고객 연락처, 실측 날짜, 담당 디자이너를 관리해. 고객 연락처는 개인정보라 담당 디자이너와 만든 사람만 보고, 일정은 담당 디자이너 본인만 고칠 수 있어.
+</code></pre></div>
+
+<p>비서의 답이 앞의 앱과 다릅니다(실습 원문).</p>
+<div class="hl"><pre><span></span><code>데이터는 데이터베이스에 행 단위 권한으로 저장돼요.
+권한: 보기 — 만든 사람 또는 &#39;담당 디자이너&#39;이(가) 본인인 경우 / 만들기 — 구성원 모두 /
+고치기 — &#39;담당 디자이너&#39;이(가) 본인인 경우 또는 폴더 소유자 / 지우기 — (같음)
+</code></pre></div>
+
+<p>그리고 기본값 카드에는 “‘현장 주소’·‘고객 연락처’는 개인정보라 본인(기록의 대상)·기록한 사람·폴더 소유자만 봐요. 다른 구성원에게는 ‘비공개’로 보여요”, “숨겨야 할 항목이 있어 데이터는 시트가 아니라 데이터베이스에 저장돼요”가 적혀 있습니다. 패널 머리줄에는 자물쇠가 달린 「행 권한」 표시가 붙습니다.</p>
+<h3 id="왜-데이터베이스인가">왜 데이터베이스인가<a class="anchor" href="#왜-데이터베이스인가" title="Permanent link">#</a></h3>
+<p>시트 파일은 열 수 있는 사람이 <strong>파일 전체</strong>를 봅니다. 한 칸만 숨길 방법이 없습니다. 그래서 패널 앱은 숨길 항목이 있거나 “본인만 고친다” 같은 행 규칙이 있으면 데이터를 데이터베이스에 둡니다. 그러면 <strong>누가 묻든(패널·채팅의 비서·시트 사본) 데이터베이스가 같은 규칙으로 걸러서</strong> 줍니다. 앱 화면이 실수로 다 보여 주는 일이 생길 수 없습니다.</p>
+<table>
+<thead>
+<tr>
+<th>말로 한 규칙</th>
+<th>패널 앱이 만든 규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“고객 연락처는 개인정보”</td>
+<td>항목 민감도 <code>개인정보</code> — 본인·기록한 사람·소유자 외에는 가림</td>
+</tr>
+<tr>
+<td>“담당 디자이너와 만든 사람만 본다”</td>
+<td>행 보기 규칙 — 만든 사람 또는 담당 디자이너 본인</td>
+</tr>
+<tr>
+<td>“본인만 고친다”</td>
+<td>행 고치기·지우기 규칙 — 담당 디자이너 본인 또는 폴더 소유자</td>
+</tr>
+</tbody>
+</table>
+<p>규칙은 정해진 말(본인·만든 사람·역할·구성원…)로만 만들어지고, 서버가 데이터베이스 규칙으로 바꿉니다. 패널 메뉴(⋯)의 「권한 규칙」에서 직접 조정할 수 있고, 기본값보다 느슨하게 바꾸면 한 번 더 확인을 받고 기록이 남습니다.</p>
+<h3 id="세-사람의-화면">세 사람의 화면<a class="anchor" href="#세-사람의-화면" title="Permanent link">#</a></h3>
+<p>장진영 팀장이 두 건을 넣었습니다: 달빛커피(담당 디자이너 김민지), 한빛제과(담당 디자이너 장진영). 세 사람이 각자 홈을 엽니다.</p>
+<figure><a href="img/panel-apps-rows.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="같은 ‘현장 실측 일정’ 패널을 세 사람이 본 모습. 왼쪽 장진영(만든 사람)은 2건과 연락처까지, 가운데 김민지는 자기가 담당인 달빛커피 1건만, 오른쪽 박서연은 0건을 봅니다" src="img/panel-apps-rows.webp" / loading="lazy" decoding="async"></a><figcaption>같은 ‘현장 실측 일정’ 패널을 세 사람이 본 모습. 왼쪽 장진영(만든 사람)은 2건과 연락처까지, 가운데 김민지는 자기가 담당인 달빛커피 1건만, 오른쪽 박서연은 0건을 봅니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 김민지 화면의 전체 일정이 1, 박서연은 0. 견적 현황판(시트 앱)은 세 사람 모두 같은 건수를 봅니다(사진에서는 2건). 실습에서 박서연이 채팅에 <code>현장 실측 일정 보여 줘</code>라고 하자 비서는 “현장 실측 일정에 아직 행이 없어요.”라고 답했습니다. 비서도 박서연의 권한으로 데이터베이스에 묻기 때문입니다.</p>
+<h2 id="기록이-쌓이는-앱-이벤트-소싱">기록이 쌓이는 앱 (이벤트 소싱)<a class="anchor" href="#기록이-쌓이는-앱-이벤트-소싱" title="Permanent link">#</a></h2>
+<p>예산이나 휴가 일수처럼 <strong>잔액</strong>이 중요한 일은 “현재 값”을 고치는 대신 <strong>기록을 쌓는</strong> 앱이 안전합니다. “예산 배정 1,000만 원”, “지출 230만 원”, “지출 취소” 같은 기록만 추가하고, 남은 예산은 기록에서 다시 계산합니다.</p>
+<table>
+<thead>
+<tr>
+<th>일반 앱</th>
+<th>기록이 쌓이는 앱</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>잔액 칸을 고친다</td>
+<td>기록을 한 줄 더한다</td>
+</tr>
+<tr>
+<td>누가 언제 바꿨는지 따로 찾아야</td>
+<td>기록 자체가 이력</td>
+</tr>
+<tr>
+<td>잘못 고치면 원래 값을 모름</td>
+<td>지난 기록은 고치거나 지울 수 없음 — 취소도 새 기록</td>
+</tr>
+<tr>
+<td>—</td>
+<td>기록 종류마다 할 수 있는 사람(예: 배정은 재무 담당만, 스스로 배정 불가)</td>
+</tr>
+</tbody>
+</table>
+<p>요청은 이렇게 합니다: <code>2호점 공사 예산 장부 패널을 만들어 줘. 예산 배정·지출·지출 취소를 기록으로 쌓고 잔액은 기록에서 계산해. 배정은 재무 담당만, 지출은 누구나 기록해.</code></p>
+<div class="admonition note">
+<p class="admonition-title">기록이 쌓이는 앱이 만들어지지 않을 때</p>
+<p>현재 버전에서는 이런 앱의 설계가 시간 초과로 끝나 “패널을 만들지 못했어요”가 뜰 수 있습니다. 그때는 잠시 뒤 다시 요청하고, 만들어지는 모습은 <a href="https://youtu.be/YAlt_TRWhaE">이벤트 소싱 휴가 관리 영상</a>에서 확인하세요.</p>
+</div>
+<h2 id="기본-보안-쉬운-말로">기본 보안, 쉬운 말로<a class="anchor" href="#기본-보안-쉬운-말로" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>기본값</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>구성원만</td>
+<td>폴더 구성원이 아니면 앱 목록·데이터·건수 모두 보이지 않습니다</td>
+</tr>
+<tr>
+<td>항목마다 민감도</td>
+<td>일반 / 내부 / 개인정보 / 민감. 개인정보·민감 항목은 기본으로 가려집니다</td>
+</tr>
+<tr>
+<td>합계도 조심</td>
+<td>민감한 숫자의 팀 합계는 세 명 이상 모였을 때만 보여 줍니다(한 사람의 값을 역산하지 못하게)</td>
+</tr>
+<tr>
+<td>먼저 확인</td>
+<td>만든 사람이 기본값 카드를 「확인했어요」로 읽어야 공유할 수 있습니다</td>
+</tr>
+<tr>
+<td>시트 사본</td>
+<td>데이터베이스 앱을 「시트 열기」로 열면 <strong>내가 볼 수 있는 행·항목만</strong> 담긴 사본이 열립니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>여기까지가 3부 「반복 줄이기」입니다. 패널 앱의 데이터가 공유 폴더에 있었듯이, 팀으로 일하려면 자료를 한곳에 모아야 합니다. 다음 장부터 4부 「팀으로 일하기」가 시작됩니다. 먼저 공유 폴더에 달빛커피 2호점 자료를 모으고 김민지·박서연을 구성원으로 들입니다(<a href="folders.html">13장</a>).</p>
+<div class="admonition tip">
+<p class="admonition-title">영상으로 보기</p>
+<p><a href="https://youtu.be/sXCp1JerNYQ">패널 앱 만들기</a> · <a href="https://youtu.be/YAlt_TRWhaE">이벤트 소싱 휴가 관리</a> · <a href="https://youtu.be/5U4pDgw2kiU">공유 캘린더와 행 단위 보안</a></p>
+</div>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>견적 현황판에 “견적 금액은 재무 담당만 보게 해 줘”라는 규칙을 더하면 데이터는 어디에 저장될까요?</li>
+<li>박서연이 현장 실측 일정에서 아무것도 보지 못합니다. 박서연에게 달빛커피 일정만 보여 주려면 무엇을 바꾸면 될까요?</li>
+<li>공사 예산 장부에서 지출 230만 원을 잘못 넣었습니다. 기록이 쌓이는 앱에서는 어떻게 바로잡나요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>데이터베이스입니다. 숨길 항목(민감)이나 행 규칙이 생기면 시트로는 지킬 수 없으므로 데이터베이스에 둡니다.</li>
+<li>보기 규칙을 넓히거나(예: 「권한 규칙」에서 보기를 구성원 모두로), 달빛커피 행의 담당 디자이너를 박서연으로 바꿉니다. 보기를 넓혀도 현장 주소·연락처는 개인정보라 박서연에게는 ‘비공개’로 보입니다.</li>
+<li>지난 기록을 고치지 않고 “지출 취소” 기록을 새로 더합니다. 잔액은 기록에서 다시 계산되어 바로잡히고, 잘못 넣었던 사실도 이력으로 남습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="missions.html"><span>이전</span>외부 연동과 예약 미션</a><a class="next" href="folders.html"><span>다음</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-패널-앱인가">왜 패널 앱인가</a></li><li><a href="#따라-하기-1-견적-현황판-시트-앱">따라 하기 1 — 견적 현황판 (시트 앱)</a></li><li><a href="#따라-하기-2-팀원과-공유">따라 하기 2 — 팀원과 공유</a></li><li><a href="#따라-하기-3-현장-실측-일정-데이터베이스-앱">따라 하기 3 — 현장 실측 일정 (데이터베이스 앱)</a><ul><li><a href="#왜-데이터베이스인가">왜 데이터베이스인가</a></li><li><a href="#세-사람의-화면">세 사람의 화면</a></li></ul></li><li><a href="#기록이-쌓이는-앱-이벤트-소싱">기록이 쌓이는 앱 (이벤트 소싱)</a></li><li><a href="#기본-보안-쉬운-말로">기본 보안, 쉬운 말로</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

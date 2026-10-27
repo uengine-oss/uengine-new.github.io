@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이음오피스 — 한글·워드·엑셀을 대화로 고치기 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="비서가 만든 엑셀·워드·한글 문서는 내려받지 않고 그 자리의 이음오피스 편집기에서 열립니다. 열린 문서는 대화와 연결되어, 채팅창에 적은 수정이 화면의 문서에 바로 적용됩니다. 표·셀 범위·그림을 눌러 가리키고 말하는 방법, 최대화 화면의 다이얼, 저장해서 편집본을 남기는 방법까지 따라 합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/office.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="이음오피스 — 한글·워드·엑셀을 대화로 고치기 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="비서가 만든 엑셀·워드·한글 문서는 내려받지 않고 그 자리의 이음오피스 편집기에서 열립니다. 열린 문서는 대화와 연결되어, 채팅창에 적은 수정이 화면의 문서에 바로 적용됩니다. 표·셀 범위·그림을 눌러 가리키고 말하는 방법, 최대화 화면의 다이얼, 저장해서 편집본을 남기는 방법까지 따라 합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/office.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html" class="on" aria-current="page"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">문서와 도구<span class="chap">7</span></div>
+    <h1>이음오피스 — 한글·워드·엑셀을 대화로 고치기</h1>
+    <article>
+<blockquote>
+<p>비서가 만든 엑셀·워드·한글 문서는 내려받지 않고 그 자리의 이음오피스 편집기에서 열립니다. 열린 문서는 대화와 연결되어, 채팅창에 적은 수정이 화면의 문서에 바로 적용됩니다. 표·셀 범위·그림을 눌러 가리키고 말하는 방법, 최대화 화면의 다이얼, 저장해서 편집본을 남기는 방법까지 따라 합니다.</p>
+</blockquote>
+<h2 id="왜-그-자리에서-여는가">왜 “그 자리에서” 여는가<a class="anchor" href="#왜-그-자리에서-여는가" title="Permanent link">#</a></h2>
+<p>3장에서 체크리스트 워드 파일 카드를 누르면 화면 안에서 편집기가 열렸습니다. 2부의 첫 장인 이 장에서는 그 편집기에서 문서를 대화로 고치는 법을 익힙니다.</p>
+<p>보통의 AI 채팅에서는 AI가 만든 문서를 내려받아 한글이나 엑셀로 열고, 고칠 곳이 생기면 다시 AI 창으로 돌아가 설명하고, 새 파일을 또 내려받습니다. 파일이 여러 개로 늘어나고, 어느 것이 최신인지 헷갈립니다.</p>
+<p>Process GPT Lite는 문서를 <strong>원래 형식 그대로</strong> 채팅 옆의 편집기에서 엽니다. 편집기는 오픈소스 <strong>이음오피스</strong>(IeumOffice)이고, 한글(hwp·hwpx), 워드(docx), 엑셀(xlsx), 파워포인트(pptx), PDF를 다룹니다.</p>
+<table>
+<thead>
+<tr>
+<th>예전 방식</th>
+<th>Lite에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>내려받아 프로그램에서 열기</td>
+<td>카드를 누르면 채팅 옆에 바로 열림</td>
+</tr>
+<tr>
+<td>“3행 단가를 바꿔 줘” → 새 파일</td>
+<td>열린 문서가 <strong>눈앞에서</strong> 바뀜</td>
+</tr>
+<tr>
+<td>“표의 두 번째 칸…”처럼 말로 위치 설명</td>
+<td>표·셀·그림을 <strong>눌러서 가리키기</strong></td>
+</tr>
+<tr>
+<td>버전 파일이 쌓임</td>
+<td>저장하면 카드가 <strong>편집본</strong>을 가리키고, 이전 주소는 기록으로 남음</td>
+</tr>
+</tbody>
+</table>
+<p>비서는 하나입니다. 편집기 자체에도 AI 버튼(예: 선택 영역 옆의 「AI 수정 요청」)가 있지만, 누르면 같은 채팅으로 이어집니다. 문서를 고치는 대화도 다른 대화와 같은 기록에 남습니다.</p>
+<h2 id="따라-하기-1-엑셀-예산표-만들고-열기">따라 하기 1 — 엑셀 예산표 만들고 열기<a class="anchor" href="#따라-하기-1-엑셀-예산표-만들고-열기" title="Permanent link">#</a></h2>
+<p>장진영 팀장은 달빛커피 2호점 오픈 준비 비용부터 정리하기로 합니다. 채팅에 적습니다.</p>
+<div class="hl"><pre><span></span><code>달빛커피 2호점 오픈 준비 예산표를 엑셀로 만들어 줘. 항목·수량·단가·금액 열을 두고, 금액은 수식으로, 맨 아래에 합계 행을 넣어 줘.
+</code></pre></div>
+
+<p>1분 안팎이면 답과 함께 <strong>XLS 카드</strong>가 생깁니다. 카드를 누르면 채팅은 왼쪽에 남고, 오른쪽에 편집기가 열립니다.</p>
+<figure><a href="img/office-open.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="엑셀 카드를 누르면 채팅 옆에 이음오피스 시트 편집기가 열립니다. 머리줄 왼쪽에 파일 형식 타일(XLS), 오른쪽에 IeumOffice 로고가 있고, 「대화와 연결됨」 배지가 켜져 있습니다" src="img/office-open.webp" / loading="lazy" decoding="async"></a><figcaption>엑셀 카드를 누르면 채팅 옆에 이음오피스 시트 편집기가 열립니다. 머리줄 왼쪽에 파일 형식 타일(XLS), 오른쪽에 IeumOffice 로고가 있고, 「대화와 연결됨」 배지가 켜져 있습니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 채팅에 <code>…예산표.xlsx</code> 카드가 있고, 편집기 머리줄에 <code>XLS</code> 타일과 「대화와 연결됨」 배지가 보입니다. 금액 열을 눌렀을 때 수식 입력줄에 <code>=B3*C3</code> 같은 수식이 보이면 됩니다.</p>
+<p>편집기 머리줄의 버튼:</p>
+<table>
+<thead>
+<tr>
+<th>버튼</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「공유」</td>
+<td>이 문서를 팀원에게 보냅니다(<a href="sharing.html">14장</a>)</td>
+</tr>
+<tr>
+<td>「@ 가리키기」</td>
+<td>켜고 문서의 표·그림·문단·셀 범위를 누르면 입력창에 @멘션으로 들어갑니다</td>
+</tr>
+<tr>
+<td>「리본 펴기」</td>
+<td>처음엔 문서가 넓게 보이도록 리본을 접어 둡니다</td>
+</tr>
+<tr>
+<td>「최대화」·「전체 화면」</td>
+<td>문서를 크게 봅니다. 최대화하면 채팅은 다이얼로 접힙니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-2-채팅으로-바로-고치기">따라 하기 2 — 채팅으로 바로 고치기<a class="anchor" href="#따라-하기-2-채팅으로-바로-고치기" title="Permanent link">#</a></h2>
+<p>문서가 열린 채로 채팅에 적습니다.</p>
+<div class="hl"><pre><span></span><code>합계 바로 위에 &#39;인테리어 감리비&#39; 항목을 한 줄 추가해 줘. 수량 1, 단가 3,000,000원이고 금액은 수식으로.
+</code></pre></div>
+
+<p>배지가 「AI가 고치는 중」으로 바뀌고, 문서 테두리가 은은하게 빛나며 행이 끼워지는 모습이 그대로 보입니다. 아래쪽 알림에는 “에이전트가 서식·구조를 고치는 중 · 편집 1건”처럼 무슨 일을 하는지 나옵니다.</p>
+<figure><a href="img/office-live.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="채팅의 요청대로 18행에 새 행이 끼워지는 순간. 배지가 「AI가 고치는 중」으로 바뀌었습니다" src="img/office-live.webp" / loading="lazy" decoding="async"></a><figcaption>채팅의 요청대로 18행에 새 행이 끼워지는 순간. 배지가 「AI가 고치는 중」으로 바뀌었습니다</figcaption></figure>
+<p>실습에서 비서는 행을 끼운 뒤 “합계 범위가 새 행을 포함하지 못하도록 밀렸네요”라며 합계 수식을 <code>=SUM(D3:D17)</code>에서 <code>=SUM(D3:D18)</code>로 스스로 넓혔고, 합계가 182,800,000원으로 다시 계산되었습니다. 이어서 짧은 <strong>검수</strong> 메모가 붙습니다.</p>
+<div class="hl"><pre><span></span><code>검수(픽셀·개수 검사): 수식 17개 유지 ✓
+</code></pre></div>
+
+<p>검수는 고친 뒤에 “요청대로 됐는지, 빠진 것은 없는지”를 비서가 다시 확인하는 단계입니다. <a href="email-to-quote.html">9장</a>에서 자세히 봅니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">저장은 사람이 합니다</p>
+<p>대화로 고친 내용은 열린 화면에 적용된 것이지 아직 파일에 저장된 것이 아닙니다. 저장하지 않고 닫으면 다시 열었을 때 고치기 전으로 돌아가므로, 마음에 들면 편집기 도구 막대의 저장 아이콘(엑셀·워드) 또는 ⌘S(한글)로 저장하세요.</p>
+</div>
+<h2 id="따라-하기-3-눌러서-가리키기">따라 하기 3 — 눌러서 가리키기<a class="anchor" href="#따라-하기-3-눌러서-가리키기" title="Permanent link">#</a></h2>
+<p>“에스프레소 머신부터 냉장고까지 단가”를 말로 설명하는 대신 직접 가리킵니다.</p>
+<ol>
+<li>머리줄의 「@ 가리키기」를 켭니다. 「가리키는 중」으로 바뀝니다. (⌥ 키를 누른 채 클릭해도 됩니다.)</li>
+<li>시트에서 C6부터 C9까지 끌어 선택합니다. 입력창 위에 <code>@C6:C9</code> 칩이 생깁니다.</li>
+<li>이어서 적고 보냅니다.</li>
+</ol>
+<div class="hl"><pre><span></span><code>이 장비 단가들을 10% 올려 줘
+</code></pre></div>
+
+<figure><a href="img/office-mention.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="C6:C9를 가리키자 입력창에 @C6:C9 칩이 들어갔습니다. 선택 영역 옆의 「AI 수정 요청」은 편집기에 들어 있는 AI 버튼로, 눌러도 같은 채팅으로 이어집니다. 이 사진은 감리비 행을 저장하지 않고 다시 연 뒤라 18행이 합계입니다" src="img/office-mention.webp" / loading="lazy" decoding="async"></a><figcaption>C6:C9를 가리키자 입력창에 @C6:C9 칩이 들어갔습니다. 선택 영역 옆의 「AI 수정 요청」은 편집기에 들어 있는 AI 버튼로, 눌러도 같은 채팅으로 이어집니다. 이 사진은 감리비 행을 저장하지 않고 다시 연 뒤라 18행이 합계입니다</figcaption></figure>
+<p><strong>확인할 것</strong>: 보낸 메시지가 <code>@C6:C9 이 장비 단가들을…</code>으로 시작하고, 네 셀만 바뀝니다(실습: 22,000,000 → 24,200,000 등). 금액 열은 수식이라 자동으로 다시 계산됩니다.</p>
+<p>가리킬 수 있는 대상은 편집기마다 다릅니다.</p>
+<table>
+<thead>
+<tr>
+<th>편집기</th>
+<th>누르면 들어가는 멘션</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>엑셀</td>
+<td>셀 범위 <code>@C6:C9</code></td>
+</tr>
+<tr>
+<td>워드</td>
+<td>표 <code>@표 1 (번호 · 내용 · 담당 ·…)</code>, 그림, 문단</td>
+</tr>
+<tr>
+<td>한글</td>
+<td>표 <code>@표 1 (공간 구성)</code>, 그림 <code>@이미지 1</code>, 문단</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-4-최대화와-다이얼">따라 하기 4 — 최대화와 다이얼<a class="anchor" href="#따라-하기-4-최대화와-다이얼" title="Permanent link">#</a></h2>
+<p>문서를 크게 보면서도 대화는 계속할 수 있습니다. 「최대화」를 누르면 채팅이 오른쪽 아래의 둥근 <strong>다이얼</strong>로 접힙니다. 다이얼을 누르면 화면 아래에 얇은 입력창이 펼쳐지고, “보내면 문서 화면에 바로 적용돼요 · Esc 로 접기”라는 안내가 붙습니다.</p>
+<div class="hl"><pre><span></span><code>1행 제목을 16포인트로 키우고, 2행 머리글은 연한 갈색 바탕에 굵게 해 줘
+</code></pre></div>
+
+<figure><a href="img/office-dial.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="최대화한 문서 위에서 다이얼을 눌러 펼친 입력창. 여기서 보낸 말도 같은 채팅에 남고, 문서에 바로 적용됩니다" src="img/office-dial.webp" / loading="lazy" decoding="async"></a><figcaption>최대화한 문서 위에서 다이얼을 눌러 펼친 입력창. 여기서 보낸 말도 같은 채팅에 남고, 문서에 바로 적용됩니다</figcaption></figure>
+<p>보내면 입력창은 잠시 뒤 접히고, 다이얼 옆에 「작업하는 중」 → 「결과 검수하는 중」 알약이 떴다가, 비서의 답이 잠깐 겹쳐 보입니다. 실습에서는 머리글이 갈색(#D2B48C)으로 바뀌었습니다.</p>
+<h2 id="따라-하기-5-워드-표를-가리켜-채우기">따라 하기 5 — 워드 표를 가리켜 채우기<a class="anchor" href="#따라-하기-5-워드-표를-가리켜-채우기" title="Permanent link">#</a></h2>
+<p>같은 방법이 워드에서도 됩니다. 첫 미팅 메모를 워드로 만들어 달라고 합니다.</p>
+<div class="hl"><pre><span></span><code>달빛커피 2호점 첫 미팅 메모를 워드 문서로 만들어 줘. 참석자는 달빛커피 한소율 님과 우리 쪽 장진영·김민지, 논의 내용은 매장 크기(12m×9m), 좌석 40석, 우드 톤 인테리어, 다음 주 금요일까지 제안서·견적서 회신이야. 다음 할 일은 번호·내용·담당·마감 열이 있는 표로 정리해 줘.
+</code></pre></div>
+
+<p>DOC 카드를 열고, 「@ 가리키기」를 켠 뒤 “다음 할 일” 표의 칸을 누릅니다. <code>@표 1 (번호 · 내용 · 담당 ·…)</code> 칩이 들어가면 이어서 적습니다.</p>
+<div class="hl"><pre><span></span><code>이 표의 담당 칸을 1번 김민지, 2번 박서연, 3번 장진영으로 채우고, 표 아래 ※ 줄은 지워 줘.
+</code></pre></div>
+
+<figure><a href="img/office-word-table.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="담당 칸이 채워지고 ※ 줄이 지워진 표. 왼쪽 채팅 아래에 검수 메모 “표 1개 유지 · … ✓”가 붙었습니다" src="img/office-word-table.webp" / loading="lazy" decoding="async"></a><figcaption>담당 칸이 채워지고 ※ 줄이 지워진 표. 왼쪽 채팅 아래에 검수 메모 “표 1개 유지 · … ✓”가 붙었습니다</figcaption></figure>
+<p>마지막으로 도구 막대의 저장 아이콘을 누릅니다. “저장했어요. 편집본이 원본 옆에 올라갔어요.”라는 알림이 뜨고, 편집기를 닫으면 채팅의 카드가 「편집본 · 눌러서 이어 편집」으로 바뀝니다. 원본은 지워지지 않고, 카드의 이전 주소는 기록으로 남습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">한글 문서는 9장에서</p>
+<p>한글(hwpx)도 같은 방식으로 열리고 고쳐집니다. 표 칸 채우기, 글 바꾸기, 그림을 포토크래프트로 고쳐 제자리에 넣기는 <a href="email-to-quote.html">9장</a>의 설계 제안서로 따라 합니다. 이음오피스는 <a href="https://youtu.be/rItCQPQFPis">이음오피스 시연 영상</a>에서도 볼 수 있습니다.</p>
+</div>
+<h2 id="정리">정리<a class="anchor" href="#정리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>문서를 연다</td>
+<td>채팅의 문서 카드를 누른다</td>
+</tr>
+<tr>
+<td>내용을 고친다</td>
+<td>문서를 연 채 채팅(또는 최대화 다이얼)에 적는다</td>
+</tr>
+<tr>
+<td>위치를 정확히 짚는다</td>
+<td>「@ 가리키기」 → 표·셀 범위·그림을 누른다</td>
+</tr>
+<tr>
+<td>결과를 남긴다</td>
+<td>저장 → 카드가 편집본을 가리킨다</td>
+</tr>
+</tbody>
+</table>
+<p>다음 장에서는 같은 방식으로 도면·그림·소리·영상을 만들고 고치는 ArtCraft 앱 다섯 개를 봅니다(<a href="craft.html">8장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>예산표를 연 채 “합계에 부가세 10% 행을 추가해 줘”라고 했습니다. 다음 날 같은 카드를 열었더니 부가세 행이 없습니다. 무엇을 빠뜨렸을까요?</li>
+<li>엑셀의 B열 일부만 고치고 싶을 때, 말로 행 번호를 적는 것보다 나은 방법은?</li>
+<li>최대화 화면의 다이얼에 적은 요청은 채팅 기록에 남을까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>저장입니다. 대화로 고친 내용은 열린 화면에만 적용됩니다. 도구 막대의 저장 아이콘을 눌러야 편집본이 올라가고 카드가 그것을 가리킵니다.</li>
+<li>「@ 가리키기」를 켜고 그 범위를 끌어 선택합니다. 입력창에 <code>@B4:B9</code> 같은 칩이 들어가, 비서가 정확히 그 셀만 고칩니다.</li>
+<li>남습니다. 다이얼은 같은 채팅 입력창을 접어 둔 것일 뿐이라, 요청과 답, 검수 메모가 모두 채팅에 기록됩니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="browser.html"><span>이전</span>브라우저 에이전트와 보관함</a><a class="next" href="craft.html"><span>다음</span>ArtCraft — 도면·이미지·소리·영상</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-그-자리에서-여는가">왜 “그 자리에서” 여는가</a></li><li><a href="#따라-하기-1-엑셀-예산표-만들고-열기">따라 하기 1 — 엑셀 예산표 만들고 열기</a></li><li><a href="#따라-하기-2-채팅으로-바로-고치기">따라 하기 2 — 채팅으로 바로 고치기</a></li><li><a href="#따라-하기-3-눌러서-가리키기">따라 하기 3 — 눌러서 가리키기</a></li><li><a href="#따라-하기-4-최대화와-다이얼">따라 하기 4 — 최대화와 다이얼</a></li><li><a href="#따라-하기-5-워드-표를-가리켜-채우기">따라 하기 5 — 워드 표를 가리켜 채우기</a></li><li><a href="#정리">정리</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

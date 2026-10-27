@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한 장 요약 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="이 튜토리얼에서 쓴 말과 버튼을 일의 종류별로 한곳에 모았습니다. 문장은 예시일 뿐이니 그대로 외울 필요는 없습니다. 무엇을, 어떤 모양으로 원하는지만 분명하면 비서가 알아듣습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/cheatsheet.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="한 장 요약 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="이 튜토리얼에서 쓴 말과 버튼을 일의 종류별로 한곳에 모았습니다. 문장은 예시일 뿐이니 그대로 외울 필요는 없습니다. 무엇을, 어떤 모양으로 원하는지만 분명하면 비서가 알아듣습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/cheatsheet.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">26</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html" class="on" aria-current="page"><span class="n">27</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">28</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">부록<span class="chap">27</span></div>
+    <h1>한 장 요약</h1>
+    <article>
+<blockquote>
+<p>이 튜토리얼에서 쓴 말과 버튼을 일의 종류별로 한곳에 모았습니다. 문장은 예시일 뿐이니 그대로 외울 필요는 없습니다. 무엇을, 어떤 모양으로 원하는지만 분명하면 비서가 알아듣습니다.</p>
+</blockquote>
+<h2 id="화면">화면<a class="anchor" href="#화면" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>누를 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>홈(할 일 카드) 펴기·접기</td>
+<td>왼쪽 위 원형 집 버튼</td>
+</tr>
+<tr>
+<td>채팅 · 프로젝트 · 폴더 오가기</td>
+<td>위 가운데 세 칸</td>
+</tr>
+<tr>
+<td>팀원 메시지, 받은 공유·멘션</td>
+<td>오른쪽 위 「메시지」</td>
+</tr>
+<tr>
+<td>지난 대화에서 찾기</td>
+<td>오른쪽 위 「검색」</td>
+</tr>
+<tr>
+<td>설정(예약·팀·스킬·계정·지갑·보안)</td>
+<td>오른쪽 끝 이름 첫 글자 동그라미</td>
+</tr>
+<tr>
+<td>테마 자동·낮·밤, 하늘 미리보기</td>
+<td>설정 › 시스템 설정</td>
+</tr>
+<tr>
+<td>메일 지금 읽기</td>
+<td>설정 › 시스템 설정 › 메일 확인 「지금 확인」</td>
+</tr>
+<tr>
+<td>주제별 대화 목록</td>
+<td>채팅 맨 위 「대화 N개 · 맥락별로 보기」</td>
+</tr>
+<tr>
+<td>한 대화의 파일 모아 보기</td>
+<td>그 대화 안에서 오른쪽 아래 산출물 더미</td>
+</tr>
+</tbody>
+</table>
+<h2 id="키보드">키보드<a class="anchor" href="#키보드" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>키</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enter</td>
+<td>보내기</td>
+</tr>
+<tr>
+<td>Shift+Enter</td>
+<td>줄 바꾸기</td>
+</tr>
+<tr>
+<td><code>@</code></td>
+<td>팀원 고르기 (↑↓로 옮기고 Enter·Tab으로 넣기)</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>산출물 더미 접기, 검색·메신저 닫기, 팀원 고르기 닫기, 새 패널 만들기 취소</td>
+</tr>
+<tr>
+<td>Backspace (빈 입력창)</td>
+<td>마지막으로 넣은 팀원 칩 지우기</td>
+</tr>
+</tbody>
+</table>
+<h2 id="나와-ai-비서-36장">나와 AI 비서 (3~6장)<a class="anchor" href="#나와-ai-비서-36장" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>이렇게 말하거나 누르기</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>요청 정리</td>
+<td><code>아래 요청을 표로 정리하고 준비할 것을 체크리스트로 만들어 줘</code> + 원문 붙여 넣기</td>
+<td><a href="first-chat.html">3장</a></td>
+</tr>
+<tr>
+<td>파일로 받기</td>
+<td><code>이 내용을 워드 문서로 만들어 줘. 파일 이름은 "…docx"</code> (한글 hwpx·엑셀 xlsx·파워포인트 pptx도 됨)</td>
+<td><a href="first-chat.html">3장</a></td>
+</tr>
+<tr>
+<td>파일 넘겨주기</td>
+<td>📎 버튼, 끌어다 놓기, 붙여 넣기 (50MB까지)</td>
+<td><a href="first-chat.html">3장</a></td>
+</tr>
+<tr>
+<td>말로 입력</td>
+<td>입력창의 🎙</td>
+<td><a href="first-chat.html">3장</a></td>
+</tr>
+<tr>
+<td>다른 일 끼워 넣기</td>
+<td>그냥 말합니다. 비서가 새 주제인지 앞 이야기의 후속인지 판단합니다</td>
+<td><a href="contexts.html">4장</a></td>
+</tr>
+<tr>
+<td>한 대화에 이어 말하기</td>
+<td>그 대화에 들어가서 말하거나, 답 위 “↳ …” 줄을 눌러 들어갑니다</td>
+<td><a href="contexts.html">4장</a></td>
+</tr>
+<tr>
+<td>메일 연결</td>
+<td>첫 화면의 「Google에 로그인」·「메일 연결하기」 → Google 계정 / IMAP / 데모 메일함</td>
+<td><a href="mail.html">5장</a></td>
+</tr>
+<tr>
+<td>메일이 만든 할 일 처리</td>
+<td>홈의 Reply·Pay·Book… 카드를 누르기 (치우려면 ×)</td>
+<td><a href="mail.html">5장</a></td>
+</tr>
+<tr>
+<td>사이트에서 일 시키기</td>
+<td><code>○○ 사이트에 로그인해서 지난달 주문 내역을 알려 줘</code></td>
+<td><a href="browser.html">6장</a></td>
+</tr>
+<tr>
+<td>브라우저 작업 크게 보기·직접 하기</td>
+<td>작업 카드의 확장 버튼 → 「직접 제어」 → 「제어 돌려주기」</td>
+<td><a href="browser.html">6장</a></td>
+</tr>
+<tr>
+<td>비밀번호·카드 맡기기</td>
+<td>대화에 뜬 보관함 카드에 입력, 또는 설정 › 계정 「+ 로그인 추가」, 설정 › 지갑</td>
+<td><a href="browser.html">6장</a></td>
+</tr>
+<tr>
+<td>결제 전에 확인받기</td>
+<td>할 일만 말하면 결제 직전에 승인 카드가 저절로 뜸 → 「승인」 (지시에 “승인을 받아”는 넣지 않기)</td>
+<td><a href="browser.html">6장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="문서와-도구-79장">문서와 도구 (7~9장)<a class="anchor" href="#문서와-도구-79장" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>이렇게 말하거나 누르기</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>문서 열고 고치기</td>
+<td>파일 카드를 누르면 이음오피스 편집기가 열림 → 열어 둔 채 <code>합계 행을 굵게 해 줘</code>처럼 말하기</td>
+<td><a href="office.html">7장</a></td>
+</tr>
+<tr>
+<td>문서의 한 부분을 가리켜 말하기</td>
+<td>편집기에서 표·그림·셀 범위를 눌러 <code>@표 2</code>, <code>@B3:D6</code>처럼 입력창에 넣고 말하기</td>
+<td><a href="office.html">7장</a></td>
+</tr>
+<tr>
+<td>도면·그림·소리·영상</td>
+<td><code>캐드크래프트로 매장 평면도 그려 줘</code>, 열린 앱을 띄운 채 <code>벽 색을 바꿔 줘</code></td>
+<td><a href="craft.html">8장</a></td>
+</tr>
+<tr>
+<td>고객 메일에서 초안까지</td>
+<td>문서를 요청하는 메일이 오면 비서가 묻지 않고 초안을 만들고 홈에 「Review」 카드</td>
+<td><a href="email-to-quote.html">9장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="반복-줄이기-1012장">반복 줄이기 (10~12장)<a class="anchor" href="#반복-줄이기-1012장" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>이렇게 말하거나 누르기</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>잘된 방법을 스킬로 저장</td>
+<td><code>방금 한 방식을 "매장 설계 제안 초안" 스킬로 만들어 줘</code></td>
+<td><a href="skills.html">10장</a></td>
+</tr>
+<tr>
+<td>정해진 시각에 반복</td>
+<td><code>매주 월요일 9시에 진행 중인 제안 현황을 요약해 줘</code> → 채팅에 “예약됨” 칩, 관리는 설정 › 예약된 작업</td>
+<td><a href="missions.html">11장</a></td>
+</tr>
+<tr>
+<td>외부 서비스 연결</td>
+<td>설정 › 계정 › 연결 (Google·YouTube·Slack·GitHub·Notion)</td>
+<td><a href="missions.html">11장</a></td>
+</tr>
+<tr>
+<td>팀이 쓰는 미니앱</td>
+<td>홈 「새 패널 만들기」 또는 <code>제안 파이프라인 관리하는 패널 만들어 줘</code></td>
+<td><a href="panel-apps.html">12장</a></td>
+</tr>
+<tr>
+<td>미니앱에 기록</td>
+<td><code>제안 파이프라인에 달빛커피 2호점 추가해 줘</code></td>
+<td><a href="panel-apps.html">12장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="팀으로-일하기-1316장">팀으로 일하기 (13~16장)<a class="anchor" href="#팀으로-일하기-1316장" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>이렇게 말하거나 누르기</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>함께 쓰는 폴더</td>
+<td>위 「폴더」 → 새 폴더, 구성원과 권한</td>
+<td><a href="folders.html">13장</a></td>
+</tr>
+<tr>
+<td>파일 보내기</td>
+<td>파일 카드·산출물 더미·편집기의 사람 모양 공유 버튼</td>
+<td><a href="sharing.html">14장</a></td>
+</tr>
+<tr>
+<td>팀원에게 부탁</td>
+<td>입력창에 <code>@김민지 평면도 검토 부탁해요</code></td>
+<td><a href="sharing.html">14장</a></td>
+</tr>
+<tr>
+<td>받은 일 이어서 하기</td>
+<td>메시지 › 받은 편지함 › 「이어서 작업」</td>
+<td><a href="sharing.html">14장</a></td>
+</tr>
+<tr>
+<td>1:1·그룹 대화</td>
+<td>메시지 › 「+ 새 대화」</td>
+<td><a href="messenger.html">15장</a></td>
+</tr>
+<tr>
+<td>원격 회의와 회의록</td>
+<td>대화방에서 회의 시작 → 도우미가 자료를 띄우고, 끝나면 회의록이 방에 남음</td>
+<td><a href="meetings.html">16장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="프로세스로-일하기-1719장">프로세스로 일하기 (17~19장)<a class="anchor" href="#프로세스로-일하기-1719장" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>이렇게 말하거나 누르기</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로세스 만들기</td>
+<td><code>설계 제안 요청이 오면 도면·제안서·견적을 만들고 재무 검토 후 회신하는 프로세스를 만들어 줘</code></td>
+<td><a href="process-create.html">17장</a></td>
+</tr>
+<tr>
+<td>프로세스 시작·확인</td>
+<td><code>설계 제안 프로세스 시작해 줘</code>, <code>진행 중인 프로세스 보여 줘</code>, <code>내 할 일 보여 줘</code></td>
+<td><a href="process-run.html">18장</a></td>
+</tr>
+<tr>
+<td>내 단계 처리</td>
+<td>홈의 「결정」·「입력」 카드 (결재처럼 선택지가 있으면 카드에서 바로)</td>
+<td><a href="process-run.html">18장</a></td>
+</tr>
+<tr>
+<td>역할 담당자 정하기</td>
+<td>설정 › 팀·역할</td>
+<td><a href="process-run.html">18장</a></td>
+</tr>
+<tr>
+<td>반복된 일을 프로세스로</td>
+<td>관리자가 마이닝 추천을 열어 흐름·사례를 보고 「정식 등록」</td>
+<td><a href="mining.html">19장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="프로세스-개선-2022장">프로세스 개선 (20~22장)<a class="anchor" href="#프로세스-개선-2022장" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>이렇게 말하거나 누르기</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>어디서 시간이 새는지</td>
+<td>홈의 「제약」 알림 › 「개선 보기」, 또는 「프로젝트」 › 프로세스 옆 「개선 분석 →」 › 「병목」 탭(열지도, 단계별 리드타임 분해, 인스턴스별 프로파일)</td>
+<td><a href="bottleneck.html">20장</a></td>
+</tr>
+<tr>
+<td>낭비와 제약 찾기</td>
+<td>개선 화면 「가치 흐름」 탭(흐름 효율), 「제약」 탭(수요·처리 능력·가동률, 5단계)</td>
+<td><a href="value-stream.html">21장</a></td>
+</tr>
+<tr>
+<td>개선하고 효과 확인</td>
+<td>「크리티컬 패스」 탭(보통·늦을 때) → 「개선 실행」 탭에서 바꿀 단계를 「담기」(미리 계산) → 「개선안 적용」(새 버전) → 버전별 비교</td>
+<td><a href="critical-path.html">22장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="확장과-운영-2325장">확장과 운영 (23~25장)<a class="anchor" href="#확장과-운영-2325장" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>명령·위치</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>에이전트 작업실</td>
+<td>프로세스 단계의 「동작 보기」 › 「작업실 열기」, 공유 폴더·변형 화면의 「작업실」, 파일 카드의 「작업실에서 열기」</td>
+<td><a href="workroom.html">23장</a></td>
+</tr>
+<tr>
+<td>설치·시작</td>
+<td><code>./install.sh</code> (<code>--profile full</code>, <code>--with-mining</code>, <code>--port 28080</code>)</td>
+<td><a href="install.html">1장</a></td>
+</tr>
+<tr>
+<td>업그레이드</td>
+<td><code>./install.sh --upgrade</code></td>
+<td><a href="install.html">1장</a></td>
+</tr>
+<tr>
+<td>멈추기 · 모두 지우기</td>
+<td><code>./install.sh --uninstall</code> · <code>--uninstall --purge</code></td>
+<td><a href="install.html">1장</a></td>
+</tr>
+<tr>
+<td>상태·로그</td>
+<td><code>docker compose ps</code> · <code>docker compose logs -f server deepagents</code></td>
+<td><a href="install.html">1장</a></td>
+</tr>
+<tr>
+<td>데모 로그인 끄기</td>
+<td><code>.env</code>의 <code>DEMO_LOGIN=0</code> 후 <code>./install.sh</code> (개발 서버는 <code>server/.env</code>의 <code>PRO_DEMO_LOGIN=0</code>)</td>
+<td><a href="admin.html">25장</a></td>
+</tr>
+<tr>
+<td>팀원·역할 관리, 백업, 키 교체</td>
+<td>설정 › 팀·역할, 권장 백업 절차, 보관함 키 명령</td>
+<td><a href="admin.html">25장</a></td>
+</tr>
+<tr>
+<td>보관함 검증·활동</td>
+<td>설정 › 보안 「검증」</td>
+<td><a href="browser.html">6장</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="잘-시키는-다섯-가지">잘 시키는 다섯 가지<a class="anchor" href="#잘-시키는-다섯-가지" title="Permanent link">#</a></h2>
+<ol>
+<li><strong>재료를 함께</strong> — 원문, 파일, 숫자를 붙여 주면 지어내지 않습니다.</li>
+<li><strong>모양을 말하기</strong> — 표로, 체크리스트로, 엑셀로, 파일 이름은 ….</li>
+<li><strong>첫 문장에 이름을</strong> — “달빛커피 …”처럼 고객·행사 이름을 앞에 두면 대화가 잘 나뉘고 목록에서 찾기 쉽습니다.</li>
+<li><strong>나눠서</strong> — 정리 → 확인 → 파일 → 공유. 중간에 바로잡기 쉽습니다.</li>
+<li><strong>위험한 일은 승인 받게</strong> — 결제·발송·삭제 전에는 “나에게 먼저 물어봐”를 붙입니다.</li>
+</ol>
+<p>설치·비용·보안처럼 따라 하다 생기는 질문은 다음 장에 모았습니다(<a href="faq.html">28장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>장진영 팀장이 공유한 견적서를 박서연이 받아 자기 비서에게 검토를 맡기려면 어디를 누르나요?</li>
+<li>정식 프로세스에서 내 차례가 된 단계는 어디에 어떤 모양으로 뜨나요?</li>
+<li>비서에게 결제나 메일 발송처럼 되돌리기 어려운 일을 시킬 때, 지시에 무엇을 붙이면 좋을까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>박서연 계정에서 오른쪽 위 「메시지」 › 「받은 편지함」의 그 공유에서 「이어서 작업」을 누릅니다(14장).</li>
+<li>홈에 「결정」 또는 「입력」 카드로 뜹니다. 결재처럼 선택지가 있으면 카드에서 바로 고를 수 있습니다(18장).</li>
+<li>“결제 버튼을 누르기 전에 꼭 나에게 승인을 받아”처럼, 그 동작 전에 먼저 나에게 묻게 하는 말을 붙입니다(잘 시키는 다섯 가지의 5번).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="project.html"><span>이전</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a><a class="next" href="faq.html"><span>다음</span>자주 묻는 질문</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#화면">화면</a></li><li><a href="#키보드">키보드</a></li><li><a href="#나와-ai-비서-36장">나와 AI 비서 (3~6장)</a></li><li><a href="#문서와-도구-79장">문서와 도구 (7~9장)</a></li><li><a href="#반복-줄이기-1012장">반복 줄이기 (10~12장)</a></li><li><a href="#팀으로-일하기-1316장">팀으로 일하기 (13~16장)</a></li><li><a href="#프로세스로-일하기-1719장">프로세스로 일하기 (17~19장)</a></li><li><a href="#프로세스-개선-2022장">프로세스 개선 (20~22장)</a></li><li><a href="#확장과-운영-2325장">확장과 운영 (23~25장)</a></li><li><a href="#잘-시키는-다섯-가지">잘 시키는 다섯 가지</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
