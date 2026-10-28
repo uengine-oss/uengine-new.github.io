@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cypher and Fabric Cheat Sheet — Ontological Studio Tutorial</title>
+<meta name="description" content="The statements used in this tutorial, all in one place. Keep it handy when you practice in the portal. The examples use the `sample` graph.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/cheatsheet.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cypher and Fabric Cheat Sheet — Ontological Studio Tutorial">
+<meta property="og:description" content="The statements used in this tutorial, all in one place. Keep it handy when you practice in the portal. The examples use the `sample` graph.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/cheatsheet.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html" class="on" aria-current="page"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Appendix<span class="chap">22</span></div>
+    <h1>Cypher and Fabric Cheat Sheet</h1>
+    <article>
+<blockquote>
+<p>The statements used in this tutorial, all in one place. Keep it handy when you practice in the portal. The examples use the <code>sample</code> graph.</p>
+</blockquote>
+<h2 id="reading">Reading<a class="anchor" href="#reading" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Find nodes</td>
+<td><code>MATCH (s:Supplier) RETURN s</code></td>
+</tr>
+<tr>
+<td>Pick properties</td>
+<td><code>MATCH (s:Supplier) RETURN s.name, s.country</code></td>
+</tr>
+<tr>
+<td>Find a node by key</td>
+<td><code>MATCH (s:Supplier {supplier_id: 'S-CN-01'}) RETURN s</code></td>
+</tr>
+<tr>
+<td>Filter</td>
+<td><code>WHERE s.country = 'China' AND s.tier = 1</code></td>
+</tr>
+<tr>
+<td>Match a list</td>
+<td><code>WHERE sh.ship_status IN ['IN_TRANSIT', 'CUSTOMS_HOLD']</code></td>
+</tr>
+<tr>
+<td>Strings</td>
+<td><code>WHERE s.name CONTAINS 'Gold'</code> · <code>STARTS WITH</code> · <code>ENDS WITH</code></td>
+</tr>
+<tr>
+<td>Dates</td>
+<td><code>WHERE c.opened_date &gt;= '2026-08-29'</code></td>
+</tr>
+<tr>
+<td>Sort and limit</td>
+<td><code>ORDER BY po.amount_usd DESC SKIP 2 LIMIT 3</code></td>
+</tr>
+<tr>
+<td>Rename</td>
+<td><code>RETURN po.po_id AS purchase_order</code></td>
+</tr>
+<tr>
+<td>Remove duplicates</td>
+<td><code>RETURN DISTINCT s.country</code></td>
+</tr>
+<tr>
+<td>Conditional value</td>
+<td><code>CASE WHEN sh.delay_days &gt; 3 THEN 'Late' ELSE 'On time' END</code></td>
+</tr>
+<tr>
+<td>Unwind a list</td>
+<td><code>UNWIND ['SHP-02','SHP-03'] AS no MATCH (sh:Shipment {shipment_no: no}) RETURN sh</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="relationships">Relationships<a class="anchor" href="#relationships" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Follow one relationship</td>
+<td><code>MATCH (po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)</code></td>
+</tr>
+<tr>
+<td>Follow it in the other direction</td>
+<td><code>MATCH (s:Supplier)&lt;-[:ORDERED_FROM]-(po:PurchaseOrder)</code></td>
+</tr>
+<tr>
+<td>Follow several relationships</td>
+<td><code>(sh:Shipment)-[:SHIPS]-&gt;(po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)</code></td>
+</tr>
+<tr>
+<td>Return the relationship too</td>
+<td><code>MATCH (a:Shipment)-[r:SHIPS]-&gt;(b:PurchaseOrder) RETURN a, r, b</code></td>
+</tr>
+<tr>
+<td>Two branches</td>
+<td><code>MATCH (i:Item)&lt;-[:FOR_ITEM]-(so:SalesOrder), (i:Item)&lt;-[:OF_ITEM]-(l:PoLine)</code></td>
+</tr>
+<tr>
+<td>Keep rows with no connected data</td>
+<td><code>OPTIONAL MATCH (sh:Shipment)-[:SHIPS]-&gt;(po:PurchaseOrder)</code></td>
+</tr>
+<tr>
+<td>Only rows with no connected data</td>
+<td><code>… OPTIONAL MATCH … WITH sh, po WHERE po IS NULL RETURN sh</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="aggregation">Aggregation<a class="anchor" href="#aggregation" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Count</td>
+<td><code>RETURN count(s)</code> · <code>count(*)</code></td>
+</tr>
+<tr>
+<td>Group and count</td>
+<td><code>RETURN po.status, count(*) AS n, sum(po.amount_usd) AS total</code></td>
+</tr>
+<tr>
+<td>Collect into a list</td>
+<td><code>RETURN s.name, collect(po.po_id) AS orders</code></td>
+</tr>
+<tr>
+<td>Filter on an aggregate</td>
+<td><code>WITH s, count(po) AS n WHERE n &gt;= 2 RETURN s.name, n</code></td>
+</tr>
+<tr>
+<td>Filter on a decimal sum</td>
+<td><code>WITH s, sum(toFloat(po.amount_usd)) AS total WHERE total &gt; 50000</code></td>
+</tr>
+<tr>
+<td>List length</td>
+<td><code>size(collect(po.po_id))</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="writing-stored-graphs-only">Writing (stored graphs only)<a class="anchor" href="#writing-stored-graphs-only" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a graph</td>
+<td><code>CREATE GRAPH tut</code></td>
+</tr>
+<tr>
+<td>Node</td>
+<td><code>CREATE (:Employee {emp_no: 'E1', name: 'Haneul Kim'})</code></td>
+</tr>
+<tr>
+<td>Relationship</td>
+<td><code>MATCH (a:Employee {emp_no:'E1'}), (b:Employee {emp_no:'E2'}) CREATE (a)-[:MENTORS]-&gt;(b)</code></td>
+</tr>
+<tr>
+<td>Change a value</td>
+<td><code>MATCH (e:Employee {emp_no:'E1'}) SET e.salary = 4500</code></td>
+</tr>
+<tr>
+<td>Create if missing</td>
+<td><code>MERGE (d:Dept {name:'Purchasing'})</code></td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>MATCH (e:Employee {emp_no:'E2'}) DETACH DELETE e</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-fabric">Data fabric<a class="anchor" href="#data-fabric" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>Statement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>List data sources</td>
+<td><code>SHOW DATASOURCES</code></td>
+</tr>
+<tr>
+<td>Connect</td>
+<td><code>CREATE DATASOURCE mydb WITH ENGINE = 'postgres', PARAMETERS = {host: '…', port: 5432, database: '…', schema: 'public', user: '…', password: '…'}</code></td>
+</tr>
+<tr>
+<td>Tables</td>
+<td><code>SHOW TABLES FROM erp</code></td>
+</tr>
+<tr>
+<td>Columns</td>
+<td><code>SHOW COLUMNS FROM erp.po_line</code></td>
+</tr>
+<tr>
+<td>Reload · remove</td>
+<td><code>REFRESH DATASOURCE erp</code> · <code>DROP DATASOURCE erp</code></td>
+</tr>
+<tr>
+<td>Virtual node</td>
+<td><code>CREATE VIRTUAL NODE PoLine IN sample FROM erp.po_line KEY po_line_id</code></td>
+</tr>
+<tr>
+<td>Rename properties</td>
+<td><code>… KEY po_line_id PROPERTIES (po_line_id, po_id, item_id, qty AS quantity)</code></td>
+</tr>
+<tr>
+<td>Virtual relationship</td>
+<td><code>CREATE VIRTUAL RELATIONSHIP IN_ORDER IN sample FROM PoLine(po_id) TO PurchaseOrder(po_id)</code></td>
+</tr>
+<tr>
+<td>List</td>
+<td><code>SHOW VIRTUAL NODES</code> · <code>SHOW VIRTUAL RELATIONSHIPS</code></td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>DROP VIRTUAL RELATIONSHIP IN_ORDER IN sample</code> · <code>DROP VIRTUAL NODE PoLine IN sample</code></td>
+</tr>
+<tr>
+<td>Execution plan</td>
+<td><code>EXPLAIN FABRIC MATCH …</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="time-travel">Time travel<a class="anchor" href="#time-travel" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want to do</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The facts at that time</td>
+<td>valid at on the portal's ⏱ bar</td>
+</tr>
+<tr>
+<td>What was known at that time</td>
+<td>as known at on the portal's ⏱ bar</td>
+</tr>
+<tr>
+<td>Turn on time versioning (SQL)</td>
+<td><code>SELECT og_enable_temporal('hr', 'Employee');</code></td>
+</tr>
+<tr>
+<td>Record a change (SQL)</td>
+<td><code>BEGIN; SET LOCAL og.valid_from = '2024-01-01'; SELECT og_cypher('hr', $$…$$); COMMIT;</code></td>
+</tr>
+<tr>
+<td>Record a correction (SQL)</td>
+<td><code>SET LOCAL og.valid_from = '-infinity'</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="functions">Functions<a class="anchor" href="#functions" title="Permanent link">#</a></h2>
+<p><code>count</code> <code>sum</code> <code>avg</code> <code>min</code> <code>max</code> <code>collect</code> · <code>toUpper</code> <code>toLower</code> <code>trim</code> <code>substring</code> <code>replace</code> <code>split</code> <code>toString</code> · <code>abs</code> <code>ceil</code> <code>floor</code> <code>round</code> <code>sqrt</code> <code>rand</code> <code>toInteger</code> <code>toFloat</code> · <code>id</code> <code>elementId</code> <code>labels</code> <code>type</code> <code>length</code> <code>size</code> <code>keys</code> <code>exists</code> · <code>coalesce</code> <code>timestamp</code> <code>datetime</code> · <code>vector.similarity</code> <code>vector.distance</code> <code>genai.vector.encode</code></p>
+<h2 id="code-app-sdk">Code app SDK<a class="anchor" href="#code-app-sdk" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">schema</span><span class="p">,</span><span class="w"> </span><span class="nx">theme</span><span class="p">,</span><span class="w"> </span><span class="nx">onTheme</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="p">,</span><span class="w"> </span><span class="nx">actions</span><span class="p">,</span><span class="w"> </span><span class="nx">act</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;MATCH (s:Supplier) WHERE s.country = $c RETURN s.name AS name&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">c</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;China&#39;</span><span class="w"> </span><span class="p">})</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">act</span><span class="p">({</span><span class="w"> </span><span class="kd">class</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Shipment&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;expediteShipment&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">ids</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;SHP-03&#39;</span><span class="p">],</span><span class="w"> </span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">reason</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;…&#39;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">})</span><span class="w">  </span><span class="c1">// since 0.1.1</span>
+</code></pre></div>
+    </article>
+    <nav class="pager"><a class="prev" href="project.html"><span>Previous</span>Capstone Project — Build a Quality Incident Response App</a><a class="next" href="faq.html"><span>Next</span>FAQ and Troubleshooting</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#reading">Reading</a></li><li><a href="#relationships">Relationships</a></li><li><a href="#aggregation">Aggregation</a></li><li><a href="#writing-stored-graphs-only">Writing (stored graphs only)</a></li><li><a href="#data-fabric">Data fabric</a></li><li><a href="#time-travel">Time travel</a></li><li><a href="#functions">Functions</a></li><li><a href="#code-app-sdk">Code app SDK</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

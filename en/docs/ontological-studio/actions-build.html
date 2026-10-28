@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building Actions from Golden Commands — Ontological Studio Tutorial</title>
+<meta name="description" content="When you write a Golden Command, the build agent looks through the system APIs and builds an action. Using the sample actions, you see how steps, argument mapping, compensation and policy fit together.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/actions-build.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Building Actions from Golden Commands — Ontological Studio Tutorial">
+<meta property="og:description" content="When you write a Golden Command, the build agent looks through the system APIs and builds an action. Using the sample actions, you see how steps, argument mapping, compensation and policy fit together.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/actions-build.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html" class="on" aria-current="page"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Actions<span class="chap">15</span></div>
+    <h1>Building Actions from Golden Commands</h1>
+    <article>
+<blockquote>
+<p>When you write a Golden Command, the build agent looks through the system APIs and builds an action. Using the sample actions, you see how steps, argument mapping, compensation and policy fit together.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/xYENSd2WLrM" title="Building Actions from Golden Commands — video 3:22" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-is-an-action">What is an action?<a class="anchor" href="#what-is-an-action" title="Permanent link">#</a></h2>
+<p>An <strong>action</strong> is a business operation defined on a class of the ontology. In the sample, the <code>Shipment</code> class has <code>expediteShipment</code> (expedite an inbound shipment). An action contains the following:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+<th>In <code>Shipment.expediteShipment</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target key</td>
+<td>The property that identifies the target instance</td>
+<td><code>shipment_no</code></td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Values a person (or the agent) gives when executing</td>
+<td><code>reason</code> (reason for expediting, required)</td>
+</tr>
+<tr>
+<td>Steps</td>
+<td>The system APIs to call, in order</td>
+<td>① WMS priority URGENT ② ERP expedite request to the supplier</td>
+</tr>
+<tr>
+<td>Compensation</td>
+<td>For each step, the API that undoes it</td>
+<td>① priority back to the value before execution ② withdraw the expedite request</td>
+</tr>
+<tr>
+<td>Policy</td>
+<td>Who can use it, on which targets</td>
+<td>Role <code>scm_operator</code>; shipments already received (<code>DELIVERED</code>) are excluded</td>
+</tr>
+<tr>
+<td>Approval</td>
+<td>Does it need a person's approval?</td>
+<td>In the sample, every plan needs approval</td>
+</tr>
+<tr>
+<td>Writeback</td>
+<td>The property written back to the ontology after execution</td>
+<td><code>priority</code></td>
+</tr>
+<tr>
+<td>Golden Command</td>
+<td>The instruction this action was built from</td>
+<td>“Expedite the inbound shipments that are more than 3 days late (reason: risk of production disruption)”</td>
+</tr>
+</tbody>
+</table>
+<h2 id="taking-a-definition-apart">Taking a definition apart<a class="anchor" href="#taking-a-definition-apart" title="Permanent link">#</a></h2>
+<p>Here is the definition of the sample action (descriptions shortened).</p>
+<div class="hl"><pre><span></span><code><span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;Shipment&quot;</span><span class="p">,</span> <span class="n">action_name</span> <span class="o">=</span> <span class="s2">&quot;expediteShipment&quot;</span><span class="p">,</span> <span class="n">key_property</span> <span class="o">=</span> <span class="s2">&quot;shipment_no&quot;</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Reason for expediting&quot;</span><span class="p">}}</span>   <span class="c1"># required</span>
+<span class="n">steps</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;wms&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-wms&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;setShipmentPriority&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path.shipment_no&quot;</span><span class="p">:</span> <span class="s2">&quot;$this.shipment_no&quot;</span><span class="p">,</span> <span class="s2">&quot;body.priority&quot;</span><span class="p">:</span> <span class="s2">&quot;URGENT&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$params.reason&quot;</span><span class="p">,</span> <span class="s2">&quot;body.requestedBy&quot;</span><span class="p">:</span> <span class="s2">&quot;$actor.sub&quot;</span><span class="p">},</span>
+   <span class="s2">&quot;compensation&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-wms&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;setShipmentPriority&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path.shipment_no&quot;</span><span class="p">:</span> <span class="s2">&quot;$this.shipment_no&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;body.priority&quot;</span><span class="p">:</span> <span class="s2">&quot;$before.priority&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$cancel.reason&quot;</span><span class="p">}}},</span>
+  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;erp&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-erp&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;createExpediteRequest&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;body.poId&quot;</span><span class="p">:</span> <span class="s2">&quot;$this.ref_po_no&quot;</span><span class="p">,</span> <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$params.reason&quot;</span><span class="p">},</span>
+   <span class="s2">&quot;compensation&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;sample-erp&quot;</span><span class="p">,</span> <span class="s2">&quot;operation_id&quot;</span><span class="p">:</span> <span class="s2">&quot;withdrawExpediteRequest&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arg_mapping&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path.request_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$steps.erp.response.id&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;body.reason&quot;</span><span class="p">:</span> <span class="s2">&quot;$cancel.reason&quot;</span><span class="p">}}},</span>
+<span class="p">]</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;roles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;scm_operator&quot;</span><span class="p">],</span> <span class="s2">&quot;when&quot;</span><span class="p">:</span> <span class="s2">&quot;target.ship_status != &#39;DELIVERED&#39;&quot;</span><span class="p">}]</span>
+<span class="n">writeback_property</span> <span class="o">=</span> <span class="s2">&quot;priority&quot;</span>
+</code></pre></div>
+
+<h3 id="argument-mapping-where-do-the-values-come-from">Argument mapping — where do the values come from?<a class="anchor" href="#argument-mapping-where-do-the-values-come-from" title="Permanent link">#</a></h3>
+<p>On the left of <code>arg_mapping</code> is a slot in the API request (<code>path.…</code> is the URL path, <code>body.…</code> is the request body). On the right is where the value comes from.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$this.&lt;property&gt;</code></td>
+<td>A property of the target instance</td>
+<td><code>$this.shipment_no</code> → <code>SHP-03</code></td>
+</tr>
+<tr>
+<td><code>$params.&lt;name&gt;</code></td>
+<td>An input given at execution</td>
+<td><code>$params.reason</code> → “risk of production disruption”</td>
+</tr>
+<tr>
+<td><code>$actor.&lt;claim&gt;</code></td>
+<td>The person (or agent) who executed it</td>
+<td><code>$actor.sub</code> → <code>lite-agent</code></td>
+</tr>
+<tr>
+<td><code>$before.&lt;property&gt;</code></td>
+<td>The target's property value <strong>just before execution</strong></td>
+<td><code>$before.priority</code> → <code>NORMAL</code></td>
+</tr>
+<tr>
+<td><code>$steps.&lt;step&gt;.response.&lt;path&gt;</code></td>
+<td>A value from an earlier step's API response</td>
+<td><code>$steps.erp.response.id</code> → the expedite request number</td>
+</tr>
+<tr>
+<td><code>$cancel.reason</code></td>
+<td>The reason given when canceling</td>
+<td>“Expedite canceled at the user's request”</td>
+</tr>
+<tr>
+<td>A plain value</td>
+<td>A fixed value</td>
+<td><code>"URGENT"</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>$before</code> and <code>$steps</code> are what make <strong>compensation</strong> possible. To put the priority back, you need to know “what the original value was”; to withdraw an expedite request, you need to know “which request was sent”. Compensation doesn't erase things — it <strong>puts them back the way they were</strong>.</p>
+<h3 id="policy-who-and-on-what">Policy — who, and on what<a class="anchor" href="#policy-who-and-on-what" title="Permanent link">#</a></h3>
+<p>A policy is a list of rules. Each rule has <strong>roles</strong> (<code>roles</code>) and a <strong>condition</strong> (<code>when</code>). If any rule matches, the action is allowed; if none match, it is <strong>denied</strong> (deny by default). Conditions are written in a small expression language called CEL.</p>
+<table>
+<thead>
+<tr>
+<th>What you can use</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target.&lt;property&gt;</code></td>
+<td><code>target.status == 'OPEN'</code> — open purchase orders only</td>
+</tr>
+<tr>
+<td><code>actor.&lt;claim&gt;</code></td>
+<td><code>target.plant == actor.plant</code> — only equipment in your own plant</td>
+</tr>
+<tr>
+<td><code>params.&lt;name&gt;</code></td>
+<td><code>params.supplierName == target.approvedSupplier</code> — order only from approved suppliers</td>
+</tr>
+</tbody>
+</table>
+<p>The policy is checked <strong>for each target</strong>. When a plan is made, every target gets an allowed/denied result and a reason (Chapter 16). It is checked once more just before execution, because the data may have changed after the plan was made.</p>
+<h2 id="try-it-build-an-action-from-a-golden-command">Try it — build an action from a Golden Command<a class="anchor" href="#try-it-build-an-action-from-a-golden-command" title="Permanent link">#</a></h2>
+<p>The sample already has three actions. In the demo, we deleted one of them, <strong>Put purchase order on hold</strong>, and had the agent build it again from its Golden Command. You'll follow along with a <strong>new Golden Command</strong>.</p>
+<ol class="steps">
+<li>Open <b>Build Ontology</b>, and under <b>Sources</b> choose the system <code>sample-erp</code>. This build is made not from a document or a database, but from the system's APIs.</li>
+<li>Under <b>Target</b>, choose the existing schema <b>Supply Chain Operations (Sample) (ingest more)</b>. The concepts are already there, so you add only things it can do.</li>
+<li>Under <b>Intent</b>, write a new instruction in Golden Command. For example: <code>Put all of Hanbit Precision's open purchase orders on hold (reason: renegotiating unit prices)</code></li>
+<li>Click <b>Start building with this brief</b>.</li>
+</ol>
+<figure><a href="img/demo-gc-list.webp" target="_blank" rel="noopener" title="View larger"><img alt="Golden Command list — the second command has no linked action yet (demo, dark theme)" src="img/demo-gc-list.webp" / loading="lazy" decoding="async"></a><figcaption>Golden Command list — the second command has no linked action yet (demo, dark theme)</figcaption></figure>
+<p>The agent looks through the APIs of the registered systems. It finds that there is an API to put a purchase order on hold and an API to release the hold, ties the hold in as a step and the release as its compensation, and adds a policy (about 4.5 minutes in the demo).</p>
+<figure><a href="img/demo-gc-agent.webp" target="_blank" rel="noopener" title="View larger"><img alt="The build agent looking through the ERP's APIs and tying hold and release together as a step and its compensation (demo, dark theme)" src="img/demo-gc-agent.webp" / loading="lazy" decoding="async"></a><figcaption>The build agent looking through the ERP's APIs and tying hold and release together as a step and its compensation (demo, dark theme)</figcaption></figure>
+<p>Finally, it validates the Golden Command with a <strong>dry run</strong>, which only makes a plan without actually executing anything. The report shows how many targets there are, whether they passed the policy and whether approval is needed.</p>
+<figure><a href="img/demo-gc-report.webp" target="_blank" rel="noopener" title="View larger"><img alt="Build report — which action meets each Golden Command, and the dry run results (demo, dark theme)" src="img/demo-gc-report.webp" / loading="lazy" decoding="async"></a><figcaption>Build report — which action meets each Golden Command, and the dry run results (demo, dark theme)</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">If an action already does the same thing</p>
+<p>“Put Hanbit Precision's open purchase orders on hold” can actually be done with the existing action <code>holdPurchaseOrder</code> (only the target condition is different). In that case, the agent doesn't build a new action and reports that “an existing action meets it”. If you really want to see a new action appear, ask for something no existing action can do — for example, using the CRM's <code>createNotice</code>: “Send a delay notice to customers who bought items on late purchase orders”.</p>
+</div>
+<h2 id="checking-which-actions-exist">Checking which actions exist<a class="anchor" href="#checking-which-actions-exist" title="Permanent link">#</a></h2>
+<p>Just ask in the Ask &amp; Act tab:</p>
+<div class="hl"><pre><span></span><code>Which actions can I use?
+</code></pre></div>
+
+<p>The agent lists the actions you can use right now (only those your role allows), with each action's targets, inputs and steps.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>What does the compensation of <code>PurchaseOrder.holdPurchaseOrder</code> call? Do its arguments need <code>$before</code>?</li>
+<li>The compensation of the customer notice (<code>Customer.notifyCustomer</code>) is <code>withdrawNotice</code>. Where can it get the number of the notice to withdraw?</li>
+<li>Think of the policy condition for an action that “only plant managers can use, only on equipment in their own plant, up to 3 units at a time”.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>The ERP's <code>releasePurchaseOrder</code> (release the hold). The sample ERP records the status before the hold by itself and restores it on release, so <code>$before</code> isn't needed. If the system didn't remember the previous status, you would have to pass <code>$before.status</code>.</li>
+<li>The notice number in the earlier step's (<code>createNotice</code>) response — <code>$steps.crm.response.id</code>.</li>
+<li>The rule <code>{"roles": ["plant_manager"], "when": "target.plant == actor.plant"}</code>. “Up to 3 units at a time” isn't a policy; you set it with the action's maximum number of targets (max targets).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="systems.html"><span>Previous</span>Registering Business Systems</a><a class="next" href="actions-run.html"><span>Next</span>Running Actions — Plan, Approve, Execute, Cancel</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-is-an-action">What is an action?</a></li><li><a href="#taking-a-definition-apart">Taking a definition apart</a><ul><li><a href="#argument-mapping-where-do-the-values-come-from">Argument mapping — where do the values come from?</a></li><li><a href="#policy-who-and-on-what">Policy — who, and on what</a></li></ul></li><li><a href="#try-it-build-an-action-from-a-golden-command">Try it — build an action from a Golden Command</a></li><li><a href="#checking-which-actions-exist">Checking which actions exist</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

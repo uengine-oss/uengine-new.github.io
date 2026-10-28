@@ -58,7 +58,7 @@
       sel = -1;
       box.innerHTML = hits.length ? hits.slice(0, 12).map(function (h) {
         return '<a href="' + h.p.u + '"><b>' + hi(h.p.t, words) + '</b><small>' + esc(h.p.p) + ' · …' + hi(h.snip, words) + '…</small></a>';
-      }).join('') : '<div class="none">찾는 내용이 없습니다. 다른 낱말로 찾아 보세요.</div>';
+      }).join('') : (document.documentElement.lang === 'en' ? '<div class="none">Nothing found. Try other words.</div>' : '<div class="none">찾는 내용이 없습니다. 다른 낱말로 찾아 보세요.</div>');
       box.hidden = false;
     });
   }

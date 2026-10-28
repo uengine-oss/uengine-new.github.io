@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virtual Nodes and Virtual Relationships — Ontological Studio Tutorial</title>
+<meta name="description" content="Turn `erp.po_line` (purchase order lines), a table that is not exposed yet, into a virtual node and connect it to purchase orders and items with relationships. You will practice linking tables from different databases into a single graph.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/virtual-graph.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Virtual Nodes and Virtual Relationships — Ontological Studio Tutorial">
+<meta property="og:description" content="Turn `erp.po_line` (purchase order lines), a table that is not exposed yet, into a virtual node and connect it to purchase orders and items with relationships. You will practice linking tables from different databases into a single graph.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/virtual-graph.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html" class="on" aria-current="page"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Connecting data<span class="chap">6</span></div>
+    <h1>Virtual Nodes and Virtual Relationships</h1>
+    <article>
+<blockquote>
+<p>Turn <code>erp.po_line</code> (purchase order lines), a table that is not exposed yet, into a virtual node and connect it to purchase orders and items with relationships. You will practice linking tables from different databases into a single graph.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/PuFb_bh6Tyg" title="Virtual Nodes and Virtual Relationships — video 3:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-is-a-virtual-node">What is a virtual node?<a class="anchor" href="#what-is-a-virtual-node" title="Permanent link">#</a></h2>
+<p>A <strong>virtual node type</strong> defines one source table as a node type in the graph.</p>
+<ul>
+<li><strong>One source row = one node</strong>, and <strong>columns = properties</strong>.</li>
+<li>The <strong>KEY column</strong> is the value that tells nodes apart (usually the primary key).</li>
+<li>No data is copied. Every time you run <code>MATCH (n:PoLine)</code>, the source <code>erp.po_line</code> is read.</li>
+<li>It is <strong>read-only</strong>. If you <code>CREATE</code> or <code>SET</code> on a virtual node, the engine refuses. To change values you have to change them in the source system, and in Ontological Studio that is the job of <strong>actions</strong> (Part 6).</li>
+</ul>
+<h2 id="try-it-order-lines-as-nodes">Try it — order lines as nodes<a class="anchor" href="#try-it-order-lines-as-nodes" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In the Data Sources tab, select <code>erp</code> and click <code>po_line</code> in the table list. It still shows <b>Not exposed</b>.</li>
+<li>In the <b>Expose as a virtual node</b> box at the bottom right, set the node type name to <code>PoLine</code>, the graph to <code>sample</code> and the KEY column to <code>po_line_id</code>.</li>
+<li>If you leave the properties as they are, every column becomes a property with the same name. To rename one, edit the box on the right (for example, <code>qty</code> → <code>quantity</code>).</li>
+<li>Check <b>Statement to run</b> and click <b>Create virtual node</b>.</li>
+</ol>
+<figure><a href="img/ds-form.webp" target="_blank" rel="noopener" title="View larger"><img alt="Expose as a virtual node — choose the node type name, graph, KEY column and properties, and the statement to run is previewed below" src="img/ds-form.webp" / loading="lazy" decoding="async"></a><figcaption>Expose as a virtual node — choose the node type name, graph, KEY column and properties, and the statement to run is previewed below</figcaption></figure>
+<p>This is the statement that runs.</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">NODE</span><span class="w"> </span><span class="n">PoLine</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">erp</span><span class="p">.</span><span class="n">po_line</span><span class="w"> </span><span class="n">KEY</span><span class="w"> </span><span class="n">po_line_id</span>
+</code></pre></div>
+
+<p>If you rename properties, a clause such as <code>PROPERTIES (po_line_id, po_id, item_id, qty AS quantity)</code> is added. As soon as the node type is created, the preview shows the 9 rows from the source.</p>
+<figure><a href="img/ds-created.webp" target="_blank" rel="noopener" title="View larger"><img alt="The virtual node :PoLine has been created, and the preview shows the 9 rows of the source erp.po_line" src="img/ds-created.webp" / loading="lazy" decoding="async"></a><figcaption>The virtual node :PoLine has been created, and the preview shows the 9 rows of the source erp.po_line</figcaption></figure>
+<h2 id="viewing-the-virtual-graph">Viewing the virtual graph<a class="anchor" href="#viewing-the-virtual-graph" title="Permanent link">#</a></h2>
+<p>Click <code>sample</code> under the virtual graphs at the bottom left to see the nodes and relationships, grouped by data source, as a graph. <code>PoLine</code> is not connected to any other node yet.</p>
+<figure><a href="img/vgraph.webp" target="_blank" rel="noopener" title="View larger"><img alt="The virtual graph sample — virtual nodes and virtual relationships by data source" src="img/vgraph.webp" / loading="lazy" decoding="async"></a><figcaption>The virtual graph sample — virtual nodes and virtual relationships by data source</figcaption></figure>
+<h2 id="try-it-connecting-with-relationships">Try it — connecting with relationships<a class="anchor" href="#try-it-connecting-with-relationships" title="Permanent link">#</a></h2>
+<p>An order line means a particular item in a particular purchase order. Define these two connections as relationships.</p>
+<ol class="steps">
+<li>In the relationship form at the bottom of the virtual graph view, enter the relationship name <code>IN_ORDER</code>.</li>
+<li>Choose start node <code>PoLine</code>, property <code>po_id</code> → end node <code>PurchaseOrder</code>, property <code>po_id</code>.</li>
+<li>Click <b>Create relationship</b>.</li>
+</ol>
+<figure><a href="img/vrel-form.webp" target="_blank" rel="noopener" title="View larger"><img alt="Creating a virtual relationship — when a property of the start node has the same value as a property of the end node, the two are connected" src="img/vrel-form.webp" / loading="lazy" decoding="async"></a><figcaption>Creating a virtual relationship — when a property of the start node has the same value as a property of the end node, the two are connected</figcaption></figure>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">IN_ORDER</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">PoLine</span><span class="p">(</span><span class="n">po_id</span><span class="p">)</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">PurchaseOrder</span><span class="p">(</span><span class="n">po_id</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Connect it to items the same way. This time, type the statement directly in the Portal (the Portal is covered in detail in <a href="cypher-basics.html">Chapter 7</a>; set the graph selector to <code>sample</code>).</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">OF_ITEM</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">PoLine</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">Item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+</code></pre></div>
+
+<figure><a href="img/vgraph-after.webp" target="_blank" rel="noopener" title="View larger"><img alt="The virtual graph after creating the relationships — the executed statements are listed below" src="img/vgraph-after.webp" / loading="lazy" decoding="async"></a><figcaption>The virtual graph after creating the relationships — the executed statements are listed below</figcaption></figure>
+<p>A virtual relationship copies no data. It is a <strong>join rule</strong> (<code>PoLine.po_id = PurchaseOrder.po_id</code>) saved under a name, and at query time the sources are joined by that rule.</p>
+<h2 id="using-it-right-away">Using it right away<a class="anchor" href="#using-it-right-away" title="Permanent link">#</a></h2>
+<p>Now you can write a query that asks “Which items, and how many, did we order from each supplier?” It follows the relationships across four nodes: supplier → purchase order → order line → item.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">IN_ORDER</span><span class="o">]-</span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">PoLine</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">OF_ITEM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">qty</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">qty</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>s.name</th>
+<th>i.name</th>
+<th>qty</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Daesung Cable</td>
+<td>Power cable</td>
+<td>1500</td>
+</tr>
+<tr>
+<td>Hanbit Precision</td>
+<td>Magnet core</td>
+<td>900</td>
+</tr>
+<tr>
+<td>Hanoi Assembly</td>
+<td>PCB board</td>
+<td>500</td>
+</tr>
+<tr>
+<td>Hanoi Assembly</td>
+<td>Power cable</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>Ningbo Magnetics</td>
+<td>Magnet core</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>Shenzhen Goldline PCB</td>
+<td>PCB board</td>
+<td>3000</td>
+</tr>
+</tbody>
+</table>
+<p>Next, a question that <strong>spans two systems</strong>: “Which items are the shipments more than 3 days late carrying, and what is their safety stock?” Shipments are in WMS; purchase orders, order lines and items are in ERP.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">OF_ITEM</span><span class="o">]-</span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">PoLine</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">IN_ORDER</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-</span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">safety_stock</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>i.name</th>
+<th>i.safety_stock</th>
+<th>sh.shipment_no</th>
+<th>sh.delay_days</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCB board</td>
+<td>500</td>
+<td>SHP-02</td>
+<td>7</td>
+</tr>
+<tr>
+<td>PCB board</td>
+<td>500</td>
+<td>SHP-03</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>Both shipments are carrying PCB boards. Now you know which item to flag to the inventory manager first.</p>
+<h2 id="removing-what-you-made">Removing what you made<a class="anchor" href="#removing-what-you-made" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="n">DROP</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">OF_ITEM</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span>
+<span class="n">DROP</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">IN_ORDER</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span>
+<span class="n">DROP</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">NODE</span><span class="w"> </span><span class="n">PoLine</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">sample</span>
+</code></pre></div>
+
+<p>You can't drop a node that still has relationships. The engine refuses with <code>virtual relationships still join on 'PoLine' (IN_ORDER, OF_ITEM); drop them first</code>, and the Data Sources tab restates this reason in plain language. Drop the relationships first. The source tables are not affected at all.</p>
+<div class="admonition tip">
+<p class="admonition-title">Later chapters use PoLine</p>
+<p>Some examples in Chapters 7–9 use <code>PoLine</code> and its two relationships. Keep them; don't drop them.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">If you try to write to a virtual node</p>
+<p>Writing to a virtual node type, as in <code>CREATE (x:Supplier {supplier_id:'S-XX'})</code>, is refused like this.</p>
+<p><code>text
+'Supplier' is a virtual node type and read-only: its rows live in "erp"."supplier".
+Write to the source system, or MATERIALIZE VIRTUAL NODE Supplier to take a copy</code></p>
+<p>Changing source data is the job of the business system that owns that data. If you really need a copy, <code>MATERIALIZE VIRTUAL NODE</code> makes one, but after copying, changes in the source are no longer reflected automatically.</p>
+</div>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>Can you make <code>wms.stock_daily</code> into a <code>Stock</code> virtual node? Think about what to use as the KEY.</li>
+<li>Which two properties does the <code>FOR_ITEM</code> relationship between <code>SalesOrder</code> and <code>Item</code> connect? Check with <code>SHOW VIRTUAL RELATIONSHIPS</code>.</li>
+<li>Change the “ordered quantity per supplier and item” query above so it counts only open (<code>OPEN</code>) purchase orders.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>This table's primary key is three columns: (snapshot_date, sku_code, warehouse_cd). But <code>KEY</code> takes only one column (<code>KEY (a, b, c)</code> gives an <code>expected the key column</code> error). With <code>KEY sku_code</code> the node type is created, but the same item appears in several of the table's 10 rows (one per date and warehouse), so the key can't single out one node. The right fix is to add an identifier column in the source (for example, in a view) that joins the three values into one. This shows why “identifiers” matter in data modeling.</li>
+<li><code>SalesOrder.sku_code</code> → <code>Item.item_id</code>. CRM calls an item <code>sku_code</code>, and ERP calls it <code>item_id</code>.</li>
+<li>Put <code>WHERE po.status = 'OPEN'</code> before <code>RETURN</code>.</li>
+</ol>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">IN_ORDER</span><span class="o">]-</span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">PoLine</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">OF_ITEM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">qty</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">qty</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="datasource.html"><span>Previous</span>Connecting Data Sources</a><a class="next" href="cypher-basics.html"><span>Next</span>Cypher Basics — Finding and Filtering Nodes</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-is-a-virtual-node">What is a virtual node?</a></li><li><a href="#try-it-order-lines-as-nodes">Try it — order lines as nodes</a></li><li><a href="#viewing-the-virtual-graph">Viewing the virtual graph</a></li><li><a href="#try-it-connecting-with-relationships">Try it — connecting with relationships</a></li><li><a href="#using-it-right-away">Using it right away</a></li><li><a href="#removing-what-you-made">Removing what you made</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

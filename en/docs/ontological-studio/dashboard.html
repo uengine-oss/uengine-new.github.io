@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Apps — Build Screens by Describing Them — Ontological Studio Tutorial</title>
+<meta name="description" content="In **Ontology Apps**, you build a dashboard by @mentioning classes and properties. The engine picks default widgets, the agent proposes changes that fit your request, and you review and apply them.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/dashboard.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dashboard Apps — Build Screens by Describing Them — Ontological Studio Tutorial">
+<meta property="og:description" content="In **Ontology Apps**, you build a dashboard by @mentioning classes and properties. The engine picks default widgets, the agent proposes changes that fit your request, and you review and apply them.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/dashboard.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html" class="on" aria-current="page"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Applications<span class="chap">17</span></div>
+    <h1>Dashboard Apps — Build Screens by Describing Them</h1>
+    <article>
+<blockquote>
+<p>In <strong>Ontology Apps</strong>, you build a dashboard by @mentioning classes and properties. The engine picks default widgets, the agent proposes changes that fit your request, and you review and apply them.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/tnZY4FX4pyc" title="Dashboard Apps — Build Screens by Describing Them — video 3:25" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="two-kinds-of-apps">Two kinds of apps<a class="anchor" href="#two-kinds-of-apps" title="Permanent link">#</a></h2>
+<p>You can build apps on the same ontology in two ways.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Dashboard</th>
+<th>Code app</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>How you build it</td>
+<td>Combine widgets (charts, tables)</td>
+<td>The agent writes HTML and JavaScript code</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>About 1 second for widgets, tens of seconds for a proposal</td>
+<td>1–3 minutes</td>
+</tr>
+<tr>
+<td>Freedom</td>
+<td>Within the available widgets</td>
+<td>Anything (layout, interaction)</td>
+</tr>
+<tr>
+<td>Editing</td>
+<td>Widget settings, or in plain words</td>
+<td>In plain words, or edit the code directly</td>
+</tr>
+<tr>
+<td>Covered in</td>
+<td>This chapter</td>
+<td><a href="code-app.html">Chapter 18</a>–<a href="sdk.html">Chapter 19</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-app-builder-screen">The app builder screen<a class="anchor" href="#the-app-builder-screen" title="Permanent link">#</a></h2>
+<p>Open the <strong>Ontology Apps</strong> card on Home. At the top is <strong>Ontology apps you describe in words</strong>.</p>
+<figure><a href="img/app-maker.webp" target="_blank" rel="noopener" title="View larger"><img alt="Ontology Apps — resource tree on the left (model › class › property), input box and Golden Question examples on the right, gallery of your apps below" src="img/app-maker.webp" / loading="lazy" decoding="async"></a><figcaption>Ontology Apps — resource tree on the left (model › class › property), input box and Golden Question examples on the right, gallery of your apps below</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resource tree (left)</td>
+<td>The published ontology's model › class › property. You can drag items into your sentence.</td>
+</tr>
+<tr>
+<td>Input box</td>
+<td>Describe the screen you want. Type <code>@</code> to see class and property suggestions.</td>
+</tr>
+<tr>
+<td>Example chips</td>
+<td>This ontology's Golden Questions. Click one to put it in the input box.</td>
+</tr>
+<tr>
+<td>Dashboard / Code app</td>
+<td>Choose what to build.</td>
+</tr>
+<tr>
+<td>Gallery</td>
+<td>The apps you have made</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-supply-chain-overview">Try it — Supply Chain Overview<a class="anchor" href="#try-it-supply-chain-overview" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Enter <code>Supply Chain Overview</code> as the app name and choose <b>Dashboard</b>.</li>
+<li>In the input box, type <code>Show</code> and then <code>@Purch</code>. Suggestions appear. Use ↑↓ to pick <code>PurchaseOrder</code> and press Enter.</li>
+<li>Continue with <code>as the total amount by supplier, and show</code>.</li>
+<li>Drag <code>Shipment</code> from the tree on the left into the sentence, then type <code>as a count by status</code>.</li>
+<li>Click <b>Create app</b>.</li>
+</ol>
+<figure><a href="img/app-mention.webp" target="_blank" rel="noopener" title="View larger"><img alt="Type @ to see class and property suggestions" src="img/app-mention.webp" / loading="lazy" decoding="async"></a><figcaption>Type @ to see class and property suggestions</figcaption></figure>
+<p>Each resource you pick stays in the sentence as a <strong>chip</strong>. Neither you nor the agent can mistake what it refers to. One Backspace deletes the whole chip.</p>
+<figure><a href="img/app-prompt.webp" target="_blank" rel="noopener" title="View larger"><img alt="A request sentence with two chips (@PurchaseOrder, @Shipment)" src="img/app-prompt.webp" / loading="lazy" decoding="async"></a><figcaption>A request sentence with two chips (@PurchaseOrder, @Shipment)</figcaption></figure>
+<h2 id="engine-first-then-the-agent">Engine first, then the agent<a class="anchor" href="#engine-first-then-the-agent" title="Permanent link">#</a></h2>
+<p>When you click <strong>Create app</strong>, two things happen in order.</p>
+<p><strong>1. The engine picks widgets right away (about 1 second).</strong> For each class you mentioned, it looks at the data (property types, kinds of values) and picks a suitable widget. This step follows rules, so it always gives the same result. Here, it first placed charts of trends by date.</p>
+<figure><a href="img/dash-widgets.webp" target="_blank" rel="noopener" title="View larger"><img alt="Two widgets placed right away — still trend-by-date charts" src="img/dash-widgets.webp" / loading="lazy" decoding="async"></a><figcaption>Two widgets placed right away — still trend-by-date charts</figcaption></figure>
+<p><strong>2. The agent turns the rest of the sentence into a proposal.</strong> “Total amount by supplier” and “count by status” go to the agent. The agent reads the current layout and suggests what to change as a <strong>proposal (diff)</strong> (under a minute in our tests). The <strong>Edit with AI</strong> panel on the right shows the changes, with old values struck through.</p>
+<figure><a href="img/dash-proposal.webp" target="_blank" rel="noopener" title="View larger"><img alt="The agent's proposal — axes to supplier_id and ship_status, aggregation to sum and count, type to bar. Waiting for “Apply”" src="img/dash-proposal.webp" / loading="lazy" decoding="async"></a><figcaption>The agent's proposal — axes to supplier_id and ship_status, aggregation to sum and count, type to bar. Waiting for “Apply”</figcaption></figure>
+<p><strong>3. You apply it.</strong> A proposal takes effect only when you click <strong>Apply</strong>. If you don't like it, don't apply it — just ask in plain words for a different change.</p>
+<figure><a href="img/dash-applied.webp" target="_blank" rel="noopener" title="View larger"><img alt="After applying — bars for total purchase order amount by supplier and for shipment count by status" src="img/dash-applied.webp" / loading="lazy" decoding="async"></a><figcaption>After applying — bars for total purchase order amount by supplier and for shipment count by status</figcaption></figure>
+<h2 id="keep-editing">Keep editing<a class="anchor" href="#keep-editing" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Mention a widget</strong>: Click <code>@</code> at the top of a widget to add it to the input box as a chip. Then continue, for example “Make the @Shipment widget a pie chart”.</li>
+<li><strong>Set it yourself</strong>: Select a widget to see its type, axis and metric settings on the right. There is also <strong>Revert to automatic recommendation</strong>.</li>
+<li><strong>Filters</strong>: Use <strong>+ Add filter</strong> at the top to set a condition for the whole dashboard.</li>
+<li><strong>Linked selection</strong>: Click a bar and its value becomes the dashboard's selection, applied as a filter to related widgets.</li>
+<li><strong>Save</strong>: <strong>Save</strong> at the top right. <strong>Undo</strong> reverts the proposal you just applied.</li>
+</ul>
+<p>When you switch between the light and dark themes, the chart axes and text colors change too.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Exercises</p>
+<ol>
+<li>Build a <strong>Customer Quality Overview</strong> dashboard that shows <code>@Claim</code> as a count by severity and <code>@SalesOrder</code> as total quantity by customer.</li>
+<li>Mention one widget and ask to change it into a table.</li>
+<li>Guess what would change if you chose <strong>Code app</strong> instead of <strong>Dashboard</strong>, then go on to the next chapter.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Hints</summary>
+<ol>
+<li>For example: “Show @Claim as a count by severity, and @SalesOrder as total qty by customer”. You can mention properties too, like <code>@severity</code> (expand a class in the tree to see its properties).</li>
+<li>Click <code>@</code> at the top of the widget and type “Change it to a table”. When the proposal appears, click <strong>Apply</strong>.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="actions-run.html"><span>Previous</span>Running Actions — Plan, Approve, Execute, Cancel</a><a class="next" href="code-app.html"><span>Next</span>Code Apps — Apps the Agent Writes as Code</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#two-kinds-of-apps">Two kinds of apps</a></li><li><a href="#the-app-builder-screen">The app builder screen</a></li><li><a href="#try-it-supply-chain-overview">Try it — Supply Chain Overview</a></li><li><a href="#engine-first-then-the-agent">Engine first, then the agent</a></li><li><a href="#keep-editing">Keep editing</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside Ontological Studio — Ontological Studio Tutorial</title>
+<meta name="description" content="Learn what each part of the app does and how data flows between them. This will help you see which parts you are using in the exercises that follow.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/architecture.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inside Ontological Studio — Ontological Studio Tutorial">
+<meta property="og:description" content="Learn what each part of the app does and how data flows between them. This will help you see which parts you are using in the exercises that follow.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/architecture.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html" class="on" aria-current="page"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Ontology concepts<span class="chap">4</span></div>
+    <h1>Inside Ontological Studio</h1>
+    <article>
+<blockquote>
+<p>Learn what each part of the app does and how data flows between them. This will help you see which parts you are using in the exercises that follow.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/_LG_gr2IVQs" title="Inside Ontological Studio — video 3:34" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="component-map">Component map<a class="anchor" href="#component-map" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code> ┌─────────────────────────────── Ontological Studio (desktop app) ────────────────────────────────┐
+ │                                                                                                 │
+ │  Screens: Home · Build Ontology · Ask &amp; Act · Data Sources · Ontology Apps · Systems            │
+ │           Ontological Portal (Cypher console)                                                   │
+ │              │                             │                                      │             │
+ │              ▼                             ▼                                      ▼             │
+ │   Studio backend + agents ──Bolt──▶ Ontological DB ◀──Bolt── Portal        Action executor      │
+ │   (build · query · dashboards)  (graph engine = PostgreSQL extension)     (kinetic-action)      │
+ │                                            │  data fabric                         │             │
+ │                                            ▼                                      ▼             │
+ │                                Sources: ERP · WMS · CRM ◀── updates ── Sample business systems  │
+ │                               (read in place, not copied)              (ERP · WMS · CRM APIs)   │
+ └─────────────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ontological DB</strong></td>
+<td>The graph database that stores ontologies and runs Cypher. It is a PostgreSQL extension, so graph queries are translated into PostgreSQL SQL and run there. It also handles bitemporal data (time travel), permissions and schema evolution.</td>
+</tr>
+<tr>
+<td><strong>Data fabric</strong></td>
+<td>A feature inside Ontological DB. It makes tables in other databases look like graph nodes <strong>without copying them</strong> (virtual nodes).</td>
+</tr>
+<tr>
+<td><strong>Bolt gateway</strong></td>
+<td>Supports Bolt, the protocol Neo4j uses. Studio and the Portal read and write the graph through it.</td>
+</tr>
+<tr>
+<td><strong>Studio</strong></td>
+<td>The ontology build, query and dashboard screens, and the agents behind them.</td>
+</tr>
+<tr>
+<td><strong>Action executor</strong></td>
+<td>Plans actions, evaluates policies, gets a person's approval, then calls the business system APIs. On cancel, it undoes the steps in reverse order.</td>
+</tr>
+<tr>
+<td><strong>Sample business systems</strong></td>
+<td>Purchasing ERP, Logistics WMS and Customer CRM: small REST services, each with its own authentication method. When an action calls them, values in the source databases change.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="there-are-two-graphs">There are two graphs<a class="anchor" href="#there-are-two-graphs" title="Permanent link">#</a></h2>
+<p>Ontological DB can hold several <strong>graphs</strong> (separate data spaces). After a fresh install you will see two.</p>
+<table>
+<thead>
+<tr>
+<th>Graph</th>
+<th>What it holds</th>
+<th>Mainly used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sample</code></td>
+<td><strong>Virtual nodes and virtual relationships</strong> that expose the sample source tables as they are</td>
+<td>The Data Sources tab, Cypher exercises in the Portal (Part 4)</td>
+</tr>
+<tr>
+<td><code>ontology</code></td>
+<td>The <strong>ontology</strong> Studio built: class definitions, instances, relationships, action definitions</td>
+<td>Ask &amp; Act, Ontology Apps (Parts 5–7)</td>
+</tr>
+</tbody>
+</table>
+<p><code>sample</code> is “a mirror that shows the sources as they are”, and <code>ontology</code> is “knowledge organized from the business point of view”. For example, <code>ontology</code> has a <code>SHIPPED_BY</code> relationship (shipment → supplier) that the sources don't have, every class and property has a description, and actions are attached.</p>
+<div class="admonition note">
+<p class="admonition-title">Why keep them apart?</p>
+<p>Source table names and ontology class names are often the same (<code>Supplier</code>). If both lived in one graph, the read-only virtual nodes and the built nodes would collide. That's why the sample keeps its virtual nodes in a separate <code>sample</code> graph.</p>
+</div>
+<h2 id="the-path-of-a-question">The path of a question<a class="anchor" href="#the-path-of-a-question" title="Permanent link">#</a></h2>
+<p>When the question “Which inbound shipments are more than 3 days late?” arrives in the Ask &amp; Act tab:</p>
+<ol>
+<li>The agent reads the schema of the published ontology (which classes, relationships and properties exist).</li>
+<li>It writes Cypher and sends it to Ontological DB over Bolt.</li>
+<li>Ontological DB translates the Cypher into SQL and runs it. The data fabric passes the needed conditions down to the source databases.</li>
+<li>Along with the results, the answer states “which facts on which nodes it used as evidence”.</li>
+</ol>
+<h2 id="the-path-of-a-command">The path of a command<a class="anchor" href="#the-path-of-a-command" title="Permanent link">#</a></h2>
+<p>The command “Expedite those shipments” flows differently.</p>
+<ol>
+<li>The agent finds the <strong>action</strong> that fits this command (<code>Shipment.expediteShipment</code>).</li>
+<li>It asks the action executor for a <strong>plan</strong>. The executor picks the target shipments and, for each target, a <strong>policy</strong> decides whether to allow or deny it. Nothing has changed yet.</li>
+<li><strong>A person approves it on the plan card.</strong></li>
+<li>The executor calls the business system APIs in turn (change the priority in WMS → send an expedite request in ERP).</li>
+<li>The values in the source databases change, and because the data fabric reads them directly, the graph shows the change right away.</li>
+<li>If you say “Cancel what you just did”, the steps that succeeded are <strong>undone in reverse order</strong> (compensation).</li>
+</ol>
+<p>Neither agents nor apps call business systems directly. They always go through this executor.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>You run <code>MATCH (s:Supplier) RETURN s</code> in the Portal. Explain where the results come from when the graph selector is set to <code>ontology</code> and when it is set to <code>sample</code>.</li>
+<li>To check the result of an action, do you need to log in to the business system separately?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>With <code>sample</code>, you get virtual nodes read in place from ERP's <code>erp.supplier</code> table. With <code>ontology</code>, you get the <code>Supplier</code> instances that were loaded into the ontology during the build.</li>
+<li>No. The business systems change the source databases, and the data fabric reads those sources on every query, so you can check right away in the Data Sources tab or the Portal (<code>sample</code> graph).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="ontology-basics.html"><span>Previous</span>What Is an Ontology?</a><a class="next" href="datasource.html"><span>Next</span>Connecting Data Sources</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#component-map">Component map</a></li><li><a href="#there-are-two-graphs">There are two graphs</a></li><li><a href="#the-path-of-a-question">The path of a question</a></li><li><a href="#the-path-of-a-command">The path of a command</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

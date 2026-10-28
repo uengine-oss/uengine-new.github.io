@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code App SDK — Read and Edit the Code Yourself — Ontological Studio Tutorial</title>
+<meta name="description" content="Look at the functions of the SDK (`og.js`) that code apps use, and edit app code yourself without the agent. A little JavaScript from a programming class is enough.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/sdk.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Code App SDK — Read and Edit the Code Yourself — Ontological Studio Tutorial">
+<meta property="og:description" content="Look at the functions of the SDK (`og.js`) that code apps use, and edit app code yourself without the agent. A little JavaScript from a programming class is enough.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/sdk.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html" class="on" aria-current="page"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Applications<span class="chap">19</span></div>
+    <h1>Code App SDK — Read and Edit the Code Yourself</h1>
+    <article>
+<blockquote>
+<p>Look at the functions of the SDK (<code>og.js</code>) that code apps use, and edit app code yourself without the agent. A little JavaScript from a programming class is enough.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/g2YEMYjpids" title="Code App SDK — Read and Edit the Code Yourself — video 3:37" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="the-structure-of-an-app">The structure of an app<a class="anchor" href="#the-structure-of-an-app" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>&lt;data folder&gt;/codeapps/&lt;app id&gt;/
+  ├─ index.html     ← loads /apps/_runtime/og.css and echarts.min.js, and loads app.js as a module
+  ├─ app.js         ← Vue 3 app (ES module)
+  ├─ style.css
+  ├─ AGENTS.md, CLAUDE.md   ← agent rules (files the agent reads, not the app)
+</code></pre></div>
+
+<p>On macOS, the data folder is <code>~/Library/Application Support/Ontological Studio/</code>. The preview address is <code>/apps/&lt;app id&gt;/</code>, shown at the top right of the screen.</p>
+<p><code>index.html</code> looks like this. Do not delete the <code>/apps/_runtime/…</code> lines.</p>
+<div class="hl"><pre><span></span><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Delayed Shipments Board<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/apps/_runtime/og.css&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;./style.css&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/apps/_runtime/echarts.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;./app.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h2 id="sdk-functions">SDK functions<a class="anchor" href="#sdk-functions" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">schema</span><span class="p">,</span><span class="w"> </span><span class="nx">theme</span><span class="p">,</span><span class="w"> </span><span class="nx">onTheme</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="p">,</span><span class="w"> </span><span class="nx">actions</span><span class="p">,</span><span class="w"> </span><span class="nx">act</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>await query(cypher, params?)</code></td>
+<td>Runs <strong>read-only</strong> Cypher and returns an array of rows. The server rejects write clauses (<code>CREATE</code>, <code>MERGE</code>, <code>SET</code>, <code>DELETE</code>). On failure, it throws an <code>Error</code> with the engine's message.</td>
+</tr>
+<tr>
+<td><code>await schema()</code></td>
+<td>The published ontology's classes, properties and relationships. For apps that explore the schema on their own</td>
+</tr>
+<tr>
+<td><code>theme()</code></td>
+<td><code>'light'</code> or <code>'dark'</code> — follows Studio's theme setting</td>
+</tr>
+<tr>
+<td><code>onTheme(fn)</code></td>
+<td>Calls <code>fn</code> when the theme changes. Use it to redraw charts. Returns a function that removes the listener</td>
+</tr>
+<tr>
+<td><code>color(name)</code></td>
+<td>The value of a theme color token, such as <code>color('accent')</code> or <code>color('fg')</code> — for passing to canvas charts</td>
+</tr>
+<tr>
+<td><code>await actions(className?)</code></td>
+<td>The list of published actions (<a href="app-actions.html">Chapter 20</a>) — since 0.1.1</td>
+</tr>
+<tr>
+<td><code>await act(opts)</code></td>
+<td>Opens the plan → approve → execute → cancel dialog (<a href="app-actions.html">Chapter 20</a>) — since 0.1.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-query-returns">What query() returns<a class="anchor" href="#what-query-returns" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;MATCH (s:Supplier) RETURN s.name AS name, s.tier AS tier ORDER BY name&#39;</span><span class="p">)</span>
+<span class="c1">// → [{ name: &#39;Daesung Cable&#39;, tier: 2 }, { name: &#39;Hanbit Precision&#39;, tier: 1 }, …]</span>
+</code></pre></div>
+
+<p>(If you added Hanbit Precision with an additional ingestion in exercise 2 of Chapter 12, <code>{ name: 'Hanbit Precision', tier: 1 }</code> also appears.)</p>
+<ul>
+<li>The names in <code>RETURN</code> (<code>AS</code>) become the object keys. Numbers come back as numbers.</li>
+<li>If you return a whole node (<code>RETURN s</code>), you get its property object with <code>_labels</code> and <code>_id</code> added.</li>
+<li>Do not join values into the query string; pass them as <strong>parameters</strong>. This avoids quoting problems and injection attacks.</li>
+</ul>
+<div class="hl"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span>
+<span class="w">  </span><span class="s1">&#39;MATCH (p:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier) WHERE s.name = $name RETURN p.po_id AS po, p.status AS status&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Shenzhen Goldline PCB&#39;</span><span class="w"> </span><span class="p">})</span>
+</code></pre></div>
+
+<h3 id="theme-colors">Theme colors<a class="anchor" href="#theme-colors" title="Permanent link">#</a></h3>
+<p>In <code>style.css</code>, use only these variables for colors. Then the light and dark themes work automatically.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--og-bg</code> <code>--og-panel</code> <code>--og-raised</code></td>
+<td>Background, panels, raised cards</td>
+</tr>
+<tr>
+<td><code>--og-line</code></td>
+<td>Lines, borders</td>
+</tr>
+<tr>
+<td><code>--og-fg</code> <code>--og-dim</code> <code>--og-mute</code></td>
+<td>Text (strong → faint)</td>
+</tr>
+<tr>
+<td><code>--og-accent</code> <code>--og-on-accent</code></td>
+<td>Accent color, and text on top of it</td>
+</tr>
+<tr>
+<td><code>--og-blue</code> <code>--og-warn</code> <code>--og-danger</code> <code>--og-ok</code> <code>--og-purple</code> <code>--og-soft</code></td>
+<td>Status colors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-edit-by-hand">Try it — edit by hand<a class="anchor" href="#try-it-edit-by-hand" title="Permanent link">#</a></h2>
+<p>Let's change one line yourself instead of asking the agent. In the <strong>Delayed Shipments Board</strong> from <a href="code-app.html">Chapter 18</a>, change the delay threshold from “at least 1 day” to “more than 3 days”.</p>
+<ol class="steps">
+<li>Check the location in the <b>Files</b> tab, then open <code>codeapps/&lt;app id&gt;/app.js</code> in the data folder with an editor (VS Code or similar).</li>
+<li>Change <code>WHERE s.delay_days &gt; 0</code> to <code>WHERE s.delay_days &gt; 3</code> and save.</li>
+<li>Click <b>Refresh preview</b> in Studio. The table goes from 4 rows to 2 (SHP-03, SHP-02).</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">You can take turns with the agent</p>
+<p>If you edit by hand and then ask for more changes in plain words, the agent rereads the files and continues from there. You can also polish the agent's code by hand. The code is the app.</p>
+</div>
+<h2 id="add-a-chart-optional">Add a chart (optional)<a class="anchor" href="#add-a-chart-optional" title="Permanent link">#</a></h2>
+<p>ECharts is available as the global <code>echarts</code>. Let's draw the open amount per supplier as bars. We also redraw the chart when the theme changes.</p>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="p">,</span><span class="w"> </span><span class="nx">onTheme</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">query</span><span class="p">(</span><span class="sb">`</span>
+<span class="sb">  MATCH (p:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier) WHERE p.status = &#39;OPEN&#39;</span>
+<span class="sb">  RETURN s.name AS supplier, sum(p.amount_usd) AS amount ORDER BY amount DESC`</span><span class="p">)</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">chart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">echarts</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chart&#39;</span><span class="p">))</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">chart</span><span class="p">.</span><span class="nx">setOption</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">textStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;dim&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">xAxis</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;category&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">supplier</span><span class="p">),</span><span class="w"> </span><span class="nx">axisLine</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">lineStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">yAxis</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">splitLine</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">lineStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">series</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">amount</span><span class="p">),</span><span class="w"> </span><span class="nx">itemStyle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="nx">color</span><span class="p">(</span><span class="s1">&#39;accent&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="p">}</span>
+<span class="nx">draw</span><span class="p">()</span>
+<span class="nx">onTheme</span><span class="p">(</span><span class="nx">draw</span><span class="p">)</span><span class="w">   </span><span class="c1">// redraw when the theme switches between light and dark</span>
+</code></pre></div>
+
+<p>You also need to add <code>&lt;div id="chart" style="height:320px"&gt;&lt;/div&gt;</code> to <code>index.html</code>.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>What happens if you call <code>query('MATCH (s:Supplier) SET s.tier = 1')</code>?</li>
+<li>When you look up purchase orders by a supplier name the user typed, why shouldn't you join the name into the Cypher string?</li>
+<li>What is wrong with writing a color directly, like <code>#14b8a6</code>?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>It has a write clause, so the server rejects it and <code>query()</code> throws an <code>Error</code>. Values are changed only through actions.</li>
+<li>If the name contains a quote (e.g. <code>O'Neil</code>), the query breaks, and malicious input could change the query (injection). If you pass it as the <code>$name</code> parameter, it is treated only as a value.</li>
+<li>The color stays the same when the theme changes, so it can be hard to see or look wrong in the dark theme. Use the <code>--og-*</code> variables or <code>color()</code>.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="code-app.html"><span>Previous</span>Code Apps — Apps the Agent Writes as Code</a><a class="next" href="app-actions.html"><span>Next</span>Adding Action Buttons to Apps</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#the-structure-of-an-app">The structure of an app</a></li><li><a href="#sdk-functions">SDK functions</a><ul><li><a href="#what-query-returns">What query() returns</a></li><li><a href="#theme-colors">Theme colors</a></li></ul></li><li><a href="#try-it-edit-by-hand">Try it — edit by hand</a></li><li><a href="#add-a-chart-optional">Add a chart (optional)</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

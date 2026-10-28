@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Apps — Apps the Agent Writes as Code — Ontological Studio Tutorial</title>
+<meta name="description" content="Choose **Code app** in the same input box, and a coding agent writes the app code while testing ontology queries. You review the generated code, change it in plain words, and open it as an app tab.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/code-app.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Code Apps — Apps the Agent Writes as Code — Ontological Studio Tutorial">
+<meta property="og:description" content="Choose **Code app** in the same input box, and a coding agent writes the app code while testing ontology queries. You review the generated code, change it in plain words, and open it as an app tab.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/code-app.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html" class="on" aria-current="page"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Applications<span class="chap">18</span></div>
+    <h1>Code Apps — Apps the Agent Writes as Code</h1>
+    <article>
+<blockquote>
+<p>Choose <strong>Code app</strong> in the same input box, and a coding agent writes the app code while testing ontology queries. You review the generated code, change it in plain words, and open it as an app tab.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/gAZZTiakdAA" title="Code Apps — Apps the Agent Writes as Code — video 3:32" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-you-get">What you get<a class="anchor" href="#what-you-get" title="Permanent link">#</a></h2>
+<p>A code app is a small web app that needs no build step.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>The page skeleton. Loads the runtime (<code>/apps/_runtime/…</code>).</td>
+</tr>
+<tr>
+<td><code>app.js</code></td>
+<td>Vue 3 app code: ontology queries and screen logic</td>
+</tr>
+<tr>
+<td><code>style.css</code></td>
+<td>Styling. Colors use only theme variables (<code>--og-*</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>The libraries the app uses (Vue 3, ECharts) and the SDK (<code>og.js</code>) ship with Ontological Studio, so apps run without internet access. Data comes only through <strong>read-only Cypher</strong>.</p>
+<h2 id="try-it-delayed-shipments-board">Try it — Delayed Shipments Board<a class="anchor" href="#try-it-delayed-shipments-board" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>On the <b>Ontology Apps</b> screen, choose <b>Code app</b> and enter <code>Delayed Shipments Board</code> as the app name.</li>
+<li>Type this in the input box (insert each @ as a mention):<br><code>Build a board that lists the delayed @Shipment records by delay days, showing the @PurchaseOrder and @Supplier name for each shipment in its row. At the top, show cards for the number of delayed shipments and the total amount of open purchase orders.</code></li>
+<li>Click <b>Create app as code</b>.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Picking the right mention</p>
+<p>When you type <code>@Supplier</code>, the class with exactly that name comes first. If the schema you built in the Chapter 12 exercise has a similar class (such as <code>QualitySupplier</code>), it shows up too, so pick the one labeled <strong>Supply Chain Operations (Sample)</strong> on the right.</p>
+</div>
+<figure><a href="img/code-prompt.webp" target="_blank" rel="noopener" title="View larger"><img alt="A code app request — Code app selected in the same mention input box" src="img/code-prompt.webp" / loading="lazy" decoding="async"></a><figcaption>A code app request — Code app selected in the same mention input box</figcaption></figure>
+<p>The coding agent (Claude Code here) starts working in the app folder. The left side shows what it is doing as it happens.</p>
+<ol>
+<li><strong>It tests the queries first</strong> — it runs Cypher directly on the ontology to check the data format (<strong>Test query · … 4 rows</strong>).</li>
+<li><strong>It writes the files</strong> — <code>index.html</code>, <code>app.js</code>, <code>style.css</code>.</li>
+<li><strong>It checks the syntax</strong> — <code>node --check app.js</code>.</li>
+<li><strong>It reports</strong> — what it built, which classes and relationships it reads, and what it could not do.</li>
+</ol>
+<figure><a href="img/code-preview.webp" target="_blank" rel="noopener" title="View larger"><img alt="Two minutes later — the agent's report on the left, and the preview on the right showing the board filled with real ontology data" src="img/code-preview.webp" / loading="lazy" decoding="async"></a><figcaption>Two minutes later — the agent's report on the left, and the preview on the right showing the board filled with real ontology data</figcaption></figure>
+<p>It took a minute or two in our tests. The report can even point out problems in the data — for example that SHP-08 points to PO-999, a purchase order that does not exist, which is the same shipment you found with OPTIONAL MATCH in <a href="cypher-relations.html">Chapter 8</a>.</p>
+<h2 id="reading-the-code">Reading the code<a class="anchor" href="#reading-the-code" title="Permanent link">#</a></h2>
+<p>View the code in the <strong>Files</strong> tab. The core of <code>app.js</code> is the Cypher strings and the <code>query()</code> calls (below is a shortened excerpt of the code that was actually generated).</p>
+<figure><a href="img/code-files.webp" target="_blank" rel="noopener" title="View larger"><img alt="The Files tab — index.html, app.js, style.css" src="img/code-files.webp" / loading="lazy" decoding="async"></a><figcaption>The Files tab — index.html, app.js, style.css</figcaption></figure>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createApp</span><span class="p">,</span><span class="w"> </span><span class="nx">ref</span><span class="p">,</span><span class="w"> </span><span class="nx">computed</span><span class="p">,</span><span class="w"> </span><span class="nx">onMounted</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/vue.js&#39;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+
+<span class="c1">// Delayed shipments — also read the purchase order each one carries (SHIPS) and the supplier that sent it (SHIPPED_BY).</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">Q_DELAYED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">MATCH (s:Shipment) WHERE s.delay_days &gt; 0</span>
+<span class="sb">OPTIONAL MATCH (s:Shipment)-[:SHIPS]-&gt;(p:PurchaseOrder)</span>
+<span class="sb">OPTIONAL MATCH (s:Shipment)-[:SHIPPED_BY]-&gt;(v:Supplier)</span>
+<span class="sb">OPTIONAL MATCH (p:PurchaseOrder)-[:ORDERED_FROM]-&gt;(pv:Supplier)</span>
+<span class="sb">RETURN s.shipment_no AS shipment_no, s.delay_days AS delay_days, s.eta AS eta,</span>
+<span class="sb">       s.ship_status AS ship_status, p.po_id AS po_id, p.amount_usd AS po_amount,</span>
+<span class="sb">       v.name AS supplier, pv.name AS po_supplier</span>
+<span class="sb">ORDER BY delay_days DESC`</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">Q_OPEN_PO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">MATCH (p:PurchaseOrder) WHERE p.status = $status</span>
+<span class="sb">RETURN count(p) AS n, sum(p.amount_usd) AS total`</span>
+
+<span class="c1">// …</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">delayed</span><span class="p">,</span><span class="w"> </span><span class="nx">open</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+<span class="w">  </span><span class="nx">query</span><span class="p">(</span><span class="nx">Q_DELAYED</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">query</span><span class="p">(</span><span class="nx">Q_OPEN_PO</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;OPEN&#39;</span><span class="w"> </span><span class="p">}),</span>
+<span class="p">])</span>
+</code></pre></div>
+
+<p>It is the same Cypher you learned in Part 4. <code>OPTIONAL MATCH</code> keeps shipments that have no match, and values are passed separately as <strong>parameters</strong> such as <code>$status</code>. Code apps read the <code>ontology</code> graph (the published ontology), so they can also use the <code>SHIPPED_BY</code> relationship, which <code>sample</code> does not have.</p>
+<h2 id="editing-in-plain-words">Editing in plain words<a class="anchor" href="#editing-in-plain-words" title="Permanent link">#</a></h2>
+<p>Describe what to change in the input box at the bottom left. The <strong>same agent session</strong> continues the work, and the preview reloads. Mentions work here too.</p>
+<div class="hl"><pre><span></span><code>Highlight @Shipment rows delayed more than 3 days with a red badge, and show the total open amount in large type at the top
+</code></pre></div>
+
+<p>In the demo, an edit like this took about 70 seconds. The top bar shows how many times you have edited, as in <strong>Done · revisions: 2</strong>.</p>
+<h2 id="opening-in-an-app-tab">Opening in an app tab<a class="anchor" href="#opening-in-an-app-tab" title="Permanent link">#</a></h2>
+<p>Click <strong>Open in an app tab</strong> at the top right, and the app opens in its own tab next to Studio. Use it like any work screen. It also stays under Recent on Home.</p>
+<h2 id="rules-the-agent-follows">Rules the agent follows<a class="anchor" href="#rules-the-agent-follows" title="Permanent link">#</a></h2>
+<p>The coding agent follows the rules in <code>AGENTS.md</code> in the app folder (<code>CLAUDE.md</code> for Claude Code). The main points:</p>
+<ul>
+<li>One folder is one app. Do not read or change anything outside the folder.</li>
+<li>No build tools (npm, Vite) and no external CDNs — the app must load offline.</li>
+<li>Data comes only from the ontology. <strong>No mock or hard-coded data</strong>; if something is missing, say so on screen.</li>
+<li>Always test a query yourself before using it.</li>
+<li>Change values only through <strong>action buttons</strong> (<a href="app-actions.html">Chapter 20</a>).</li>
+<li>The app must be readable in both the light and dark themes. Show loading, empty results and errors separately.</li>
+<li>When finished, report what was built, and say plainly what could not be done.</li>
+</ul>
+<div class="admonition exercise">
+<p class="admonition-title">Exercises</p>
+<ol>
+<li>Build this as a code app: “A supplier risk board that shows each supplier's open purchase order amount and late shipments at a glance. Clicking a supplier card opens that supplier's purchase orders and shipments.”</li>
+<li>Pick one Cypher query from the generated <code>app.js</code>, paste it into the portal (graph <code>ontology</code>) and run it, and check that the numbers match the app.</li>
+<li>Make one change in plain words, then find what changed in the <strong>Files</strong> tab.</li>
+</ol>
+</div>
+    </article>
+    <nav class="pager"><a class="prev" href="dashboard.html"><span>Previous</span>Dashboard Apps — Build Screens by Describing Them</a><a class="next" href="sdk.html"><span>Next</span>Code App SDK — Read and Edit the Code Yourself</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-you-get">What you get</a></li><li><a href="#try-it-delayed-shipments-board">Try it — Delayed Shipments Board</a></li><li><a href="#reading-the-code">Reading the code</a></li><li><a href="#editing-in-plain-words">Editing in plain words</a></li><li><a href="#opening-in-an-app-tab">Opening in an app tab</a></li><li><a href="#rules-the-agent-follows">Rules the agent follows</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

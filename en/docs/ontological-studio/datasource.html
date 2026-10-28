@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting Data Sources — Ontological Studio Tutorial</title>
+<meta name="description" content="Connect a source database, explore its tables and columns, and preview its data without copying it. Along the way you will learn how the data fabric works.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/datasource.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Connecting Data Sources — Ontological Studio Tutorial">
+<meta property="og:description" content="Connect a source database, explore its tables and columns, and preview its data without copying it. Along the way you will learn how the data fabric works.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/datasource.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html" class="on" aria-current="page"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Connecting data<span class="chap">5</span></div>
+    <h1>Connecting Data Sources</h1>
+    <article>
+<blockquote>
+<p>Connect a source database, explore its tables and columns, and preview its data without copying it. Along the way you will learn how the data fabric works.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/C3uLv6vfkBI" title="Connecting Data Sources — video 3:42" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-is-a-data-fabric">What is a data fabric?<a class="anchor" href="#what-is-a-data-fabric" title="Permanent link">#</a></h2>
+<p>A company's data is spread across many databases. Usually it is <strong>copied</strong> (ETL) into a data warehouse, gathered in one place and analyzed there. A copy lags behind the original, permissions must be managed in two places, and whenever the original changes you have to copy it again.</p>
+<p>A <strong>data fabric</strong> leaves the data in the source and reads it each time you query. Ontological DB defines <strong>virtual nodes</strong> so you can query source tables as if they were graph nodes. It uses only definitions of nodes and relationships; the data itself is not copied.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Copy (ETL)</th>
+<th>Data fabric</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where the data is</td>
+<td>A copy in the warehouse</td>
+<td>Stays in the source</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>As of the last load</td>
+<td>As of the moment you query</td>
+</tr>
+<tr>
+<td>Permissions</td>
+<td>Two places: source and copy</td>
+<td>One place: the source</td>
+</tr>
+<tr>
+<td>Writes</td>
+<td>Writing to the copy leaves the source unchanged</td>
+<td>Virtual nodes are read-only; writes go to the source system</td>
+</tr>
+</tbody>
+</table>
+<h2 id="opening-the-data-sources-tab">Opening the Data Sources tab<a class="anchor" href="#opening-the-data-sources-tab" title="Permanent link">#</a></h2>
+<p>On Home, click the <strong>Data Sources</strong> card.</p>
+<figure><a href="img/ds-list.webp" target="_blank" rel="noopener" title="View larger"><img alt="The Data Sources tab — three data sources (crm, erp, wms) and the virtual graphs on the left, the table list in the middle, table details and preview on the right" src="img/ds-list.webp" / loading="lazy" decoding="async"></a><figcaption>The Data Sources tab — three data sources (crm, erp, wms) and the virtual graphs on the left, the table list in the middle, table details and preview on the right</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top left: <strong>Data Sources</strong></td>
+<td>Connected source databases. Three sample sources are already connected: <code>crm</code>, <code>erp</code> and <code>wms</code>.</td>
+</tr>
+<tr>
+<td>Bottom left: <strong>Virtual graphs</strong></td>
+<td>Graphs that hold virtual nodes. The sample uses <code>sample</code>. Stored graphs created by builds (such as <code>ontology</code>) are listed too, but they have no virtual nodes, so they show “Nodes 0 · relationships 0”.</td>
+</tr>
+<tr>
+<td>Middle</td>
+<td>Tables of the selected data source. A table with a green label such as <code>:Claim</code> is already exposed as a virtual node.</td>
+</tr>
+<tr>
+<td>Right</td>
+<td>The table's columns, types and constraints, plus a 20-row preview if it is a virtual node</td>
+</tr>
+</tbody>
+</table>
+<p>The line under the preview, <code>3 rows · Bolt → Ontological → postgres_fdw → source</code>, is the key point of this chapter. These rows were not copied anywhere. They were <strong>just read from the source table <code>crm.claim</code></strong>.</p>
+<h2 id="exploring-tables">Exploring tables<a class="anchor" href="#exploring-tables" title="Permanent link">#</a></h2>
+<p>Click <code>erp</code> on the left to see ERP's 6 tables.</p>
+<figure><a href="img/ds-erp.webp" target="_blank" rel="noopener" title="View larger"><img alt="The erp data source — of its 6 tables, item, purchase_order and supplier are exposed as virtual nodes" src="img/ds-erp.webp" / loading="lazy" decoding="async"></a><figcaption>The erp data source — of its 6 tables, item, purchase_order and supplier are exposed as virtual nodes</figcaption></figure>
+<p>Here is a summary of the sample source tables.</p>
+<table>
+<thead>
+<tr>
+<th>Data source</th>
+<th>Table</th>
+<th>Key</th>
+<th>Main columns</th>
+<th>Virtual node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>erp</code></td>
+<td><code>supplier</code></td>
+<td><code>supplier_id</code></td>
+<td>name, country, tier</td>
+<td><code>Supplier</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>item</code></td>
+<td><code>item_id</code></td>
+<td>name, safety_stock</td>
+<td><code>Item</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>purchase_order</code></td>
+<td><code>po_id</code></td>
+<td>supplier_id, order_date, amount_usd, status</td>
+<td><code>PurchaseOrder</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>po_line</code></td>
+<td><code>po_line_id</code></td>
+<td>po_id, item_id, qty</td>
+<td>(none — you create it in Chapter 6)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>po_hold</code>, <code>expedite_request</code></td>
+<td></td>
+<td>Records left by actions (holds, expedite requests)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>wms</code></td>
+<td><code>shipment</code></td>
+<td><code>shipment_no</code></td>
+<td>ref_po_no, vendor_code, ship_status, delay_days, eta, priority</td>
+<td><code>Shipment</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>stock_daily</code></td>
+<td>(date, item, warehouse)</td>
+<td>on_hand_qty</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>priority_change</code></td>
+<td></td>
+<td>Records left by actions (priority change history)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>crm</code></td>
+<td><code>customer</code></td>
+<td><code>cust_no</code></td>
+<td>name, country</td>
+<td><code>Customer</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>sales_order</code></td>
+<td><code>so_no</code></td>
+<td>cust_no, sku_code, qty, status</td>
+<td><code>SalesOrder</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>claim</code></td>
+<td><code>ticket_no</code></td>
+<td>so_no, severity, opened_date, subject</td>
+<td><code>Claim</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>notice</code></td>
+<td></td>
+<td>Records left by actions (customer notices)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Column names differ from system to system</p>
+<p>The same “purchase order number” is <code>po_id</code> in ERP and <code>ref_po_no</code> in WMS. The same “item” is <code>item_id</code> in ERP and <code>sku_code</code> in CRM. This is common in real companies too, and linking these differences with relationships is the ontology's job.</p>
+</div>
+<h2 id="connecting-a-new-data-source">Connecting a new data source<a class="anchor" href="#connecting-a-new-data-source" title="Permanent link">#</a></h2>
+<p>Click <strong>＋</strong> at the top left to open the connection form. When you pick an engine, the fields that engine needs appear.</p>
+<table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Required values</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>Host, port, database, schema, user, password</td>
+<td>macOS, Windows</td>
+</tr>
+<tr>
+<td>MySQL / MariaDB</td>
+<td>Host, port, database, user, password</td>
+<td>macOS (Apple Silicon, Intel)</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>Host, port, service name, owner schema, user, password</td>
+<td>macOS (Apple Silicon, Intel)</td>
+</tr>
+<tr>
+<td>SQL Server</td>
+<td>Host, port, database, schema (default dbo), user, password</td>
+<td>macOS (Apple Silicon, Intel)</td>
+</tr>
+</tbody>
+</table>
+<p>Data source names may use only lowercase English letters, digits and underscores. The source can be on the same PC, the company network or the internet, as long as you can connect to it. We recommend a <strong>read-only account</strong> for the source.</p>
+<p>You can check the statement before it runs. For example, connecting PostgreSQL actually runs the following statement (on screen, the password shows only as <code>'••••'</code>).</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">DATASOURCE</span><span class="w"> </span><span class="n">mydb</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;postgres&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">PARAMETERS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="n">host</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;10.0.0.5&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="p">:</span><span class="w"> </span><span class="m">5432</span><span class="p">,</span><span class="w"> </span><span class="n">database</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;sales&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;public&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;reader&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;••••&#39;</span><span class="p">}</span>
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">Try connecting your course database</p>
+<p>If you have a PostgreSQL or MySQL database from a class, try connecting it. The moment you connect, its table list and column types come into the catalog. Not a single row of data is copied.</p>
+</div>
+<h2 id="the-statements-behind-the-screen">The statements behind the screen<a class="anchor" href="#the-statements-behind-the-screen" title="Permanent link">#</a></h2>
+<p>The Data Sources tab does all of its work with Ontological DB <strong>fabric statements</strong>. You can see what ran under <strong>Executed statement</strong> at the bottom of the screen. You can also type the same statements directly in the Portal.</p>
+<table>
+<thead>
+<tr>
+<th>Statement</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SHOW DATASOURCES</code></td>
+<td>Lists the connected data sources</td>
+</tr>
+<tr>
+<td><code>SHOW TABLES FROM erp</code></td>
+<td>Lists a data source's tables and whether each is exposed as a virtual node</td>
+</tr>
+<tr>
+<td><code>SHOW COLUMNS FROM erp.po_line</code></td>
+<td>Columns, types, nullability, keys</td>
+</tr>
+<tr>
+<td><code>REFRESH DATASOURCE erp</code></td>
+<td>Reads the source again when it has new tables</td>
+</tr>
+<tr>
+<td><code>DROP DATASOURCE erp</code></td>
+<td>Disconnects (the engine refuses if a virtual node uses it)</td>
+</tr>
+</tbody>
+</table>
+<p>Running <code>SHOW TABLES FROM erp</code> in the Portal gives this result.</p>
+<table>
+<thead>
+<tr>
+<th>table</th>
+<th>columns</th>
+<th>virtual_node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>erp.expedite_request</td>
+<td>9</td>
+<td></td>
+</tr>
+<tr>
+<td>erp.item</td>
+<td>3</td>
+<td>Item</td>
+</tr>
+<tr>
+<td>erp.po_hold</td>
+<td>8</td>
+<td></td>
+</tr>
+<tr>
+<td>erp.po_line</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>erp.purchase_order</td>
+<td>5</td>
+<td>PurchaseOrder</td>
+</tr>
+<tr>
+<td>erp.supplier</td>
+<td>4</td>
+<td>Supplier</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>In the Data Sources tab, open the <code>shipment</code> table in <code>wms</code> and find the shipment with the largest delay (<code>delay_days</code>) in the preview.</li>
+<li>How many rows does the <code>crm.claim</code> preview show? Where are those rows stored?</li>
+<li>Guess the column names that <code>SHOW COLUMNS FROM wms.shipment</code> will return, then check in the Portal.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li><code>SHP-03</code> (9 days, CUSTOMS_HOLD — held at customs).</li>
+<li>3 rows (T-1, T-2, T-3). They are not in Ontological DB but in the <code>claim</code> table of the source <code>crm</code> schema. The preview was read from the source at the moment you queried.</li>
+<li><code>shipment_no</code>, <code>ref_po_no</code>, <code>vendor_code</code>, <code>ship_status</code>, <code>delay_days</code>, <code>eta</code>, <code>priority</code>. (<code>priority</code> is the column that actions change.)</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="architecture.html"><span>Previous</span>Inside Ontological Studio</a><a class="next" href="virtual-graph.html"><span>Next</span>Virtual Nodes and Virtual Relationships</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-is-a-data-fabric">What is a data fabric?</a></li><li><a href="#opening-the-data-sources-tab">Opening the Data Sources tab</a></li><li><a href="#exploring-tables">Exploring tables</a></li><li><a href="#connecting-a-new-data-source">Connecting a new data source</a></li><li><a href="#the-statements-behind-the-screen">The statements behind the screen</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

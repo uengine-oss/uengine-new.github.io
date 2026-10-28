@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adding Action Buttons to Apps — Ontological Studio Tutorial</title>
+<meta name="description" content="If your ontology has actions, dashboard widgets and code apps get buttons that run them. Running an action from a button goes through the same plan → approve → execute → cancel steps as in chat. Golden Questions decide **what an app shows**, and Golden Commands decide **what an app can do**.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/app-actions.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Adding Action Buttons to Apps — Ontological Studio Tutorial">
+<meta property="og:description" content="If your ontology has actions, dashboard widgets and code apps get buttons that run them. Running an action from a button goes through the same plan → approve → execute → cancel steps as in chat. Golden Questions decide **what an app shows**, and Golden Commands decide **what an app can do**.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/app-actions.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html" class="on" aria-current="page"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Applications<span class="chap">20</span></div>
+    <h1>Adding Action Buttons to Apps</h1>
+    <article>
+<blockquote>
+<p>If your ontology has actions, dashboard widgets and code apps get buttons that run them. Running an action from a button goes through the same plan → approve → execute → cancel steps as in chat. Golden Questions decide <strong>what an app shows</strong>, and Golden Commands decide <strong>what an app can do</strong>.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/vhtwVqoRlF8" title="Adding Action Buttons to Apps — video 3:36" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition note">
+<p class="admonition-title">New in 0.1.1</p>
+<p>The features in this chapter (action buttons on widgets, and <code>actions()</code> and <code>act()</code> in the SDK) are available from Ontological Studio 0.1.1. If you are on 0.1.0, download the new version from the <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest">releases page</a>. The screenshots come from the demo video (dark theme).</p>
+</div>
+<h2 id="why-apps-need-buttons">Why apps need buttons<a class="anchor" href="#why-apps-need-buttons" title="Permanent link">#</a></h2>
+<p>If you spot a late shipment on a dashboard, the next step is to “expedite that shipment”. Instead of switching to the Ask &amp; Act tab and giving the command again, you should be able to do it <strong>right on the screen you are looking at</strong>. But an app must not call business systems however it likes. So buttons use <strong>the same path</strong> as the plan card in chat (the action executor).</p>
+<table>
+<thead>
+<tr>
+<th>What stays protected</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apps never call business systems directly</td>
+<td>Buttons call only the action executor's plan, approve and execute</td>
+</tr>
+<tr>
+<td>Policy</td>
+<td>Checked for each target, with denial reasons shown</td>
+</tr>
+<tr>
+<td>Human approval</td>
+<td>Approve, execute and cancel happen only when a person clicks in the dialog</td>
+</tr>
+<tr>
+<td>Undo</td>
+<td>Cancel (reverse compensation) in the same dialog</td>
+</tr>
+</tbody>
+</table>
+<h2 id="action-buttons-on-dashboards">Action buttons on dashboards<a class="anchor" href="#action-buttons-on-dashboards" title="Permanent link">#</a></h2>
+<p>If the class a widget shows has published actions, an <strong>Actions N</strong> button appears at the top of the widget. You only see the actions that the person using this screen has permission to use.</p>
+<figure><a href="img/demo-act-widget.webp" target="_blank" rel="noopener" title="View larger"><img alt="A dashboard with action buttons at the top of its widgets" src="img/demo-act-widget.webp" / loading="lazy" decoding="async"></a><figcaption>A dashboard with action buttons at the top of its widgets</figcaption></figure>
+<ol class="steps">
+<li>Keep the purchase order widget as bars of amount by supplier, but <b>split it into series by status</b> (just ask the AI to “color the bars by status”. With the plain total bars from Chapter 17, the change from OPEN → ON_HOLD would not show in the bars). Click the bar for supplier <code>S-KR-01</code>. This value becomes the dashboard's <b>selection</b>.</li>
+<li>Click the <b>Actions</b> button, and a drawer opens on the right. It shows the <b>Put purchase order on hold</b> action together with the <b>Golden Command</b> that created it, and the target condition is already filled in with the supplier you just picked. Just enter a reason for the hold.</li>
+<li><b>Make a plan</b> — the policy checks each target. PO-008, which is open, is allowed. PO-003, which is already closed, is denied by the “Open purchase orders only” policy.</li>
+<li><b>Approve</b> → <b>Execute</b> — the ERP puts the purchase order on hold, and the bars next to the drawer are redrawn right away (OPEN → ON_HOLD).</li>
+<li><b>Cancel</b> — the compensation (releasing the hold in the ERP) runs, and the bar goes back to OPEN.</li>
+</ol>
+<figure><a href="img/demo-act-drawer.webp" target="_blank" rel="noopener" title="View larger"><img alt="Action drawer — the Put purchase order on hold action, the Golden Command that created it, the target condition (the selected bar), and inputs" src="img/demo-act-drawer.webp" / loading="lazy" decoding="async"></a><figcaption>Action drawer — the Put purchase order on hold action, the Golden Command that created it, the target condition (the selected bar), and inputs</figcaption></figure>
+<figure><a href="img/demo-act-plan.webp" target="_blank" rel="noopener" title="View larger"><img alt="Plan — PO-008 allowed, PO-003 denied (open purchase orders only). Waiting for human approval" src="img/demo-act-plan.webp" / loading="lazy" decoding="async"></a><figcaption>Plan — PO-008 allowed, PO-003 denied (open purchase orders only). Waiting for human approval</figcaption></figure>
+<figure><a href="img/demo-act-run.webp" target="_blank" rel="noopener" title="View larger"><img alt="After approval and execution — the bar is redrawn as ON_HOLD" src="img/demo-act-run.webp" / loading="lazy" decoding="async"></a><figcaption>After approval and execution — the bar is redrawn as ON_HOLD</figcaption></figure>
+<h2 id="action-buttons-in-code-apps">Action buttons in code apps<a class="anchor" href="#action-buttons-in-code-apps" title="Permanent link">#</a></h2>
+<p>When you build a code app, the agent's prompt also includes the ontology's <strong>list of actions and Golden Commands</strong>. So the agent knows which buttons to add to which rows.</p>
+<div class="hl"><pre><span></span><code>Show the @Shipment records that are more than 3 days late, longest delay first, and add an Expedite button to each row
+</code></pre></div>
+
+<figure><a href="img/demo-act-codeapp.webp" target="_blank" rel="noopener" title="View larger"><img alt="A code app with an “Expedite” button on each row" src="img/demo-act-codeapp.webp" / loading="lazy" decoding="async"></a><figcaption>A code app with an “Expedite” button on each row</figcaption></figure>
+<p>Clicking a button opens a <strong>confirmation dialog shown by the SDK</strong>. It is the SDK's dialog, not one drawn by the app code, so it looks the same in every app and an app cannot fake it. Check the Golden Command, the targets and the reason, then plan → approve → execute.</p>
+<figure><a href="img/demo-act-dialog.webp" target="_blank" rel="noopener" title="View larger"><img alt="SDK confirmation dialog — action, targets, policy result, awaiting approval" src="img/demo-act-dialog.webp" / loading="lazy" decoding="async"></a><figcaption>SDK confirmation dialog — action, targets, policy result, awaiting approval</figcaption></figure>
+<figure><a href="img/demo-act-dialog-run.webp" target="_blank" rel="noopener" title="View larger"><img alt="Execution result — both steps, the WMS priority change and the ERP expedite request, succeeded in order. You can cancel from the same dialog" src="img/demo-act-dialog-run.webp" / loading="lazy" decoding="async"></a><figcaption>Execution result — both steps, the WMS priority change and the ERP expedite request, succeeded in order. You can cancel from the same dialog</figcaption></figure>
+<p>When you close the dialog, the app reloads its data, and you can see that the shipment's priority is now “urgent”.</p>
+<h3 id="in-code">In code<a class="anchor" href="#in-code" title="Permanent link">#</a></h3>
+<p>The button calls the SDK's <code>act()</code> function.</p>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">actions</span><span class="p">,</span><span class="w"> </span><span class="nx">act</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;/apps/_runtime/og.js&#39;</span>
+
+<span class="c1">// Draw the button only if this class has a usable action (empty array if the executor is off)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">canExpedite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">actions</span><span class="p">(</span><span class="s1">&#39;Shipment&#39;</span><span class="p">)).</span><span class="nx">some</span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">a</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;expediteShipment&#39;</span><span class="p">)</span>
+
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">expedite</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">act</span><span class="p">({</span>
+<span class="w">    </span><span class="kd">class</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Shipment&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;expediteShipment&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">ids</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">row</span><span class="p">.</span><span class="nx">shipment_no</span><span class="p">],</span><span class="w">                 </span><span class="c1">// key values of the action&#39;s targets (you can pass several at once)</span>
+<span class="w">    </span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">reason</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Risk of production disruption&#39;</span><span class="w"> </span><span class="p">},</span><span class="w">  </span><span class="c1">// leave out required inputs you don&#39;t know; the dialog shows fields for them</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">out</span><span class="p">.</span><span class="nx">executed</span><span class="p">)</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">load</span><span class="p">()</span><span class="w">             </span><span class="c1">// reload the data after an execute or cancel</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<figure><a href="img/demo-act-code.webp" target="_blank" rel="noopener" title="View larger"><img alt="Code written by the agent — the button is wired to a single act() call" src="img/demo-act-code.webp" / loading="lazy" decoding="async"></a><figcaption>Code written by the agent — the button is wired to a single act() call</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th><code>act()</code> argument</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class</code>, <code>action</code></td>
+<td>The action to run</td>
+</tr>
+<tr>
+<td><code>ids</code></td>
+<td>Array of target key values (e.g. shipment numbers)</td>
+</tr>
+<tr>
+<td><code>where</code></td>
+<td>Pick targets by condition instead of <code>ids</code>: <code>[{prop: 'delay_days', op: '&gt;', value: 3}]</code></td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>Input values. If you leave out a required input, the dialog shows a field for it</td>
+</tr>
+<tr>
+<td>Return value</td>
+<td>When the dialog closes, <code>{ executed, cancelled, plan, run }</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">The agent does not test the execution path</p>
+<p>The coding agent tests queries itself, but it <strong>does not test</strong> plan, approve or execute — that would change the real business systems. It only checks the list of actions and adds the buttons. Approval requests are accepted only from the browser screen; calls from the agent's terminal are rejected.</p>
+</div>
+<h2 id="summary-how-questions-and-commands-become-apps">Summary — how questions and commands become apps<a class="anchor" href="#summary-how-questions-and-commands-become-apps" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you wrote when building</th>
+<th>What was created</th>
+<th>In apps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Golden Question</td>
+<td>Classes, relationships, properties</td>
+<td>Dashboard widgets, code app queries</td>
+</tr>
+<tr>
+<td>Golden Command</td>
+<td>Actions (steps, compensation, policy)</td>
+<td>Action buttons on widgets, <code>act()</code> buttons in code apps</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition exercise">
+<p class="admonition-title">Exercises</p>
+<ol>
+<li>On the purchase order widget of your <strong>Supply Chain Overview</strong> dashboard, use the action button to put one supplier's open purchase orders on hold, then cancel.</li>
+<li>Build a code app with “a list of customers who filed a PCB soldering defect claim, with a Send remediation notice button on each row”. Which action does it use?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li><code>Customer.notifyCustomer</code> (Golden Command “Send a remediation notice to the customer who filed the PCB soldering defect claim”). It has two required inputs, a subject and a body, so if the app does not know them, the confirmation dialog shows fields for them. The compensation is withdrawing the notice in the CRM.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="sdk.html"><span>Previous</span>Code App SDK — Read and Edit the Code Yourself</a><a class="next" href="project.html"><span>Next</span>Capstone Project — Build a Quality Incident Response App</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-apps-need-buttons">Why apps need buttons</a></li><li><a href="#action-buttons-on-dashboards">Action buttons on dashboards</a></li><li><a href="#action-buttons-in-code-apps">Action buttons in code apps</a><ul><li><a href="#in-code">In code</a></li></ul></li><li><a href="#summary-how-questions-and-commands-become-apps">Summary — how questions and commands become apps</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

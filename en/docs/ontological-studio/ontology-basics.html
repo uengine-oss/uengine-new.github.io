@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Is an Ontology? — Ontological Studio Tutorial</title>
+<meta name="description" content="Learn the four core concepts — class, property, relationship and instance — and use the sample to compare an ontology with handling data in tables.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/ontology-basics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What Is an Ontology? — Ontological Studio Tutorial">
+<meta property="og:description" content="Learn the four core concepts — class, property, relationship and instance — and use the sample to compare an ontology with handling data in tables.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/ontology-basics.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html" class="on" aria-current="page"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Ontology concepts<span class="chap">3</span></div>
+    <h1>What Is an Ontology?</h1>
+    <article>
+<blockquote>
+<p>Learn the four core concepts — class, property, relationship and instance — and use the sample to compare an ontology with handling data in tables.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/IfZ0_tsyj_0" title="What Is an Ontology? — video 3:34" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="in-one-sentence">In one sentence<a class="anchor" href="#in-one-sentence" title="Permanent link">#</a></h2>
+<p><strong>An ontology is a model that defines the concepts your business needs and the relationships between them.</strong></p>
+<p>Like an ER diagram, it describes the things in your business and how they relate. On top of that, you can connect real data to it and use it as <strong>the basis for queries and for carrying out work</strong>.</p>
+<h2 id="four-core-concepts">Four core concepts<a class="anchor" href="#four-core-concepts" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Class</strong> (node type, label)</td>
+<td>A kind of thing that appears in your business</td>
+<td><code>Supplier</code>, <code>PurchaseOrder</code>, <code>Shipment</code></td>
+</tr>
+<tr>
+<td><strong>Property</strong></td>
+<td>A value a class has</td>
+<td><code>Supplier.name</code>, <code>Shipment.delay_days</code></td>
+</tr>
+<tr>
+<td><strong>Relationship</strong></td>
+<td>A connection between two classes, with a direction and a name</td>
+<td><code>(PurchaseOrder)-[:ORDERED_FROM]-&gt;(Supplier)</code> — a purchase order is placed with a supplier</td>
+</tr>
+<tr>
+<td><strong>Instance</strong> (node)</td>
+<td>One piece of data that belongs to a class</td>
+<td>Supplier <code>S-CN-01 Shenzhen Goldline PCB</code>, purchase order <code>PO-002</code></td>
+</tr>
+</tbody>
+</table>
+<p>Classes and relationships are the <strong>schema</strong>; instances and their connections are the <strong>data</strong>. In a graph database, instances are called <strong>nodes</strong> and connections are called <strong>edges (relationships)</strong>.</p>
+<h2 id="the-sample-ontology-at-a-glance">The sample ontology at a glance<a class="anchor" href="#the-sample-ontology-at-a-glance" title="Permanent link">#</a></h2>
+<figure><a href="img/build-source.webp" target="_blank" rel="noopener" title="View larger"><img alt="Schema of the sample ontology “Supply Chain Operations (Sample)” — 7 classes and the relationships between them" src="img/build-source.webp" / loading="lazy" decoding="async"></a><figcaption>Schema of the sample ontology “Supply Chain Operations (Sample)” — 7 classes and the relationships between them</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+<th>Source system</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Supplier</code></td>
+<td>Suppliers (5)</td>
+<td>ERP</td>
+</tr>
+<tr>
+<td><code>Item</code></td>
+<td>Items (4)</td>
+<td>ERP</td>
+</tr>
+<tr>
+<td><code>PurchaseOrder</code></td>
+<td>Purchase orders (8)</td>
+<td>ERP</td>
+</tr>
+<tr>
+<td><code>Shipment</code></td>
+<td>Inbound shipments (8)</td>
+<td>WMS</td>
+</tr>
+<tr>
+<td><code>Customer</code></td>
+<td>Customers (3)</td>
+<td>CRM</td>
+</tr>
+<tr>
+<td><code>SalesOrder</code></td>
+<td>Sales orders (5)</td>
+<td>CRM</td>
+</tr>
+<tr>
+<td><code>Claim</code></td>
+<td>Customer claims (3)</td>
+<td>CRM</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Relationship</th>
+<th>How to read it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(Shipment)-[:SHIPS]-&gt;(PurchaseOrder)</code></td>
+<td>A shipment carries a purchase order</td>
+</tr>
+<tr>
+<td><code>(PurchaseOrder)-[:ORDERED_FROM]-&gt;(Supplier)</code></td>
+<td>A purchase order was placed with a supplier</td>
+</tr>
+<tr>
+<td><code>(SalesOrder)-[:PLACED_BY]-&gt;(Customer)</code></td>
+<td>A sales order was placed by a customer</td>
+</tr>
+<tr>
+<td><code>(SalesOrder)-[:FOR_ITEM]-&gt;(Item)</code></td>
+<td>A sales order is for an item</td>
+</tr>
+<tr>
+<td><code>(Claim)-[:ABOUT]-&gt;(SalesOrder)</code></td>
+<td>A claim is about a sales order</td>
+</tr>
+<tr>
+<td><code>(Shipment)-[:SHIPPED_BY]-&gt;(Supplier)</code></td>
+<td>A shipment was sent by a supplier (only in the built ontology — see <a href="architecture.html">Chapter 4</a>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-is-it-different-from-tables">How is it different from tables?<a class="anchor" href="#how-is-it-different-from-tables" title="Permanent link">#</a></h2>
+<p>Let's compare SQL and a graph on the same question: <strong>“Which inbound shipments are more than 3 days late, and which supplier and purchase order are they for?”</strong></p>
+<p>In SQL you join three tables. What's more, shipments live in WMS while purchase orders and suppliers live in ERP, so you would normally have to bring the two databases together first.</p>
+<div class="hl"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">wms</span><span class="p">.</span><span class="n">shipment</span><span class="w"> </span><span class="n">sh</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">erp</span><span class="p">.</span><span class="n">purchase_order</span><span class="w"> </span><span class="n">po</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ref_po_no</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">erp</span><span class="p">.</span><span class="n">supplier</span><span class="w"> </span><span class="n">s</span><span class="w">       </span><span class="k">ON</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">supplier_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">supplier_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</code></pre></div>
+
+<p>In Cypher (a graph query language), <strong>you query connected data by relationship name.</strong></p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<p>The join condition (<code>po.po_id = sh.ref_po_no</code>) is gone. What remains are <code>SHIPS</code> and <code>ORDERED_FROM</code>, <strong>the relationship names your business uses</strong>. You need to know the join keys only once, when you define the relationship. After that, people and AI agents alike only need to know the relationship names.</p>
+<div class="admonition note">
+<p class="admonition-title">An ontology pays off on the next question</p>
+<p>If you create a SQL view for each question, you get one more thing to maintain for every question. If you model entities and relationships instead, you can answer even a brand-new question <strong>by following relationships that already exist</strong>. Questions like “What are that supplier's other open purchase orders?” or “Which customers who bought that order's items filed a claim?” can be answered without any new design work.</p>
+</div>
+<h2 id="why-ai-agents-need-an-ontology">Why AI agents need an ontology<a class="anchor" href="#why-ai-agents-need-an-ontology" title="Permanent link">#</a></h2>
+<p>Give an LLM agent the DDL for hundreds of tables, and every time it has to guess what a code name like <code>TB507.C041</code> means and which columns to join on. An ontology settles those guesses <strong>once, in a form people have reviewed</strong>.</p>
+<ol>
+<li><strong>Meaning</strong> — <code>Shipment.delay_days</code> comes with a description: “number of days past the expected arrival date”.</li>
+<li><strong>Paths</strong> — the way from a shipment to its supplier is fixed by relationships.</li>
+<li><strong>Behavior</strong> — what you can do to a shipment (“expedite”) and how to undo it are attached as <strong>actions</strong> (Part 6).</li>
+</ol>
+<p>That's why, in Ontological Studio, the same ontology is <strong>the basis for queries, for execution and for apps</strong>.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>In the sample, which relationships, in which direction, do you follow to connect <code>Claim</code> and <code>Customer</code>?</li>
+<li>To find “customers who bought PCB boards”, which classes do you pass through?</li>
+<li>Which of these is a class, a property, a relationship and an instance? — <code>Item</code>, <code>PO-005</code>, <code>FOR_ITEM</code>, <code>safety_stock</code></li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li><code>(Claim)-[:ABOUT]-&gt;(SalesOrder)-[:PLACED_BY]-&gt;(Customer)</code> — follow ABOUT to the sales order, then PLACED_BY to the customer.</li>
+<li><code>Item</code> ← <code>FOR_ITEM</code> — <code>SalesOrder</code> — <code>PLACED_BY</code> → <code>Customer</code></li>
+<li><code>Item</code> is a class, <code>PO-005</code> an instance (one purchase order), <code>FOR_ITEM</code> a relationship, and <code>safety_stock</code> a property (the item's safety stock).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="tour.html"><span>Previous</span>A Tour of the App</a><a class="next" href="architecture.html"><span>Next</span>Inside Ontological Studio</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#in-one-sentence">In one sentence</a></li><li><a href="#four-core-concepts">Four core concepts</a></li><li><a href="#the-sample-ontology-at-a-glance">The sample ontology at a glance</a></li><li><a href="#how-is-it-different-from-tables">How is it different from tables?</a></li><li><a href="#why-ai-agents-need-an-ontology">Why AI agents need an ontology</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
