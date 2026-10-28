@@ -84,6 +84,7 @@
 <blockquote>
 <p>관계 패턴을 따라 노드를 조회하고, 여러 데이터베이스를 하나의 질의로 연결해 count·sum·collect로 집계합니다. Cypher가 SQL보다 편해지는 지점입니다.</p>
 </blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/iPnPTb-6QA0" title="관계 따라가기와 집계 — 영상 3:53" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <h2 id="관계-패턴">관계 패턴<a class="anchor" href="#관계-패턴" title="Permanent link">#</a></h2>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
