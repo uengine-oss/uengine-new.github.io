@@ -4,8 +4,11 @@
 
 ## 설치와 실행
 
-**macOS에서 “손상되었기 때문에 열 수 없습니다” / “확인되지 않은 개발자”라고 나옵니다.**
-: 서명되지 않은 배포판이라 그렇습니다. 앱을 오른쪽 클릭 › 열기, 또는 시스템 설정 › 개인정보 보호 및 보안 › 「그래도 열기」. 그래도 안 되면 `xattr -dr com.apple.quarantine "/Applications/Ontological Studio.app"`([1장](install.html)).
+**macOS에서 “악성 코드가 없음을 확인할 수 없습니다” / “확인되지 않은 개발자”라고 나옵니다.**
+: 공증되지 않은 배포판이라 그렇습니다. 창을 닫고 시스템 설정 › 개인정보 보호 및 보안 › 「그래도 열기」를 누르세요. macOS 14 이하라면 앱을 오른쪽 클릭 › 열기도 됩니다([1장](install.html#macos에-설치하기)).
+
+**macOS에서 “손상되었기 때문에 열 수 없습니다. 해당 항목을 휴지통으로 이동해야 합니다”라고 나옵니다.**
+: 앱 서명이 덜 된 채 올라갔던 0.1.1 Apple Silicon용 초기 배포본입니다. 휴지통으로 옮기지 말고, 터미널에서 `xattr -dr com.apple.quarantine "/Applications/Ontological Studio.app"`을 실행한 뒤 다시 여세요([1장](install.html#macos에-설치하기)).
 
 **Intel Mac에서 앱이 실행되지 않습니다.**
 : Intel용 설치 파일(`Ontological-Studio-mac-x64.dmg`)을 받았는지 확인하세요. Apple Silicon용(`…-mac-arm64.dmg`)은 Intel Mac에서 열리지 않습니다. Intel용은 0.1.1부터 있으니, 0.1.0을 받았다면 [릴리스 페이지](https://github.com/uengine-oss/ontological-studio-releases/releases/latest)에서 새로 받으세요([1장](install.html)).
