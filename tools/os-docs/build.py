@@ -5,6 +5,7 @@
 
 src/*.md (장마다 하나) → docs/ontological-studio/*.html. 목차·순서는 아래 CHAPTERS 가 정한다.
 이미지는 docs/ontological-studio/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
+videos.json 에 장의 유튜브 영상({"<slug>": {"id": …, "len": "2:51"}})이 있으면 장 요약 아래에 넣는다.
 """
 import html
 import json
@@ -18,6 +19,7 @@ from pygments.formatters import HtmlFormatter
 HERE = Path(__file__).resolve().parent
 SRC = HERE / "src"
 OUT = HERE.parents[1] / "docs" / "ontological-studio"
+VIDEOS = HERE / "videos.json"
 SITE = "https://www.uengine.org/docs/ontological-studio/"
 
 # (파일, 파트) — 제목은 각 md 의 첫 줄(# …)에서 읽는다.
@@ -81,6 +83,16 @@ def figures(body):
     return re.sub(r"<p><img([^>]*)></p>", fig, body)
 
 
+def video(body, v, title):
+    # 장 요약(첫 인용문) 바로 아래, 없으면 맨 위
+    frame = (f'<div class="video"><iframe src="https://www.youtube.com/embed/{v["id"]}" '
+             f'title="{html.escape(title)} — 영상 {v.get("len", "")}" loading="lazy" allow="accelerometer; clipboard-write; '
+             f'encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" '
+             f'allowfullscreen></iframe></div>')
+    i = body.find("</blockquote>")
+    return body[:i + 13] + "\n" + frame + body[i + 13:] if i >= 0 else frame + body
+
+
 def text_of(body):
     t = re.sub(r"<pre.*?</pre>", " ", body, flags=re.S)
     t = re.sub(r'<a class="anchor"[^>]*>.*?</a>', "", t)
@@ -90,6 +102,7 @@ def text_of(body):
 
 def main():
     tpl = (HERE / "template.html").read_text(encoding="utf-8")
+    videos = json.loads(VIDEOS.read_text(encoding="utf-8")) if VIDEOS.exists() else {}
     pages = []
     for slug, part in CHAPTERS:
         raw = (SRC / f"{slug}.md").read_text(encoding="utf-8")
@@ -99,7 +112,10 @@ def main():
         m = re.match(r"\s*>\s*(.+?)\n\n", rest)  # 첫 인용문 = 장 요약(설명 메타)
         summary = m.group(1).strip() if m else ""
         body, toc = render(rest)
-        pages.append(dict(slug=slug, part=part, title=title, summary=summary, body=figures(body), toc=toc))
+        body = figures(body)
+        if slug in videos:
+            body = video(body, videos[slug], title)
+        pages.append(dict(slug=slug, part=part, title=title, summary=summary, body=body, toc=toc))
 
     # 사이드바 — 파트별, 장 번호는 index 를 0 으로.
     def sidebar(cur):
