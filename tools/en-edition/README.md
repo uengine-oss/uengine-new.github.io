@@ -28,6 +28,13 @@ python3 tools/en-edition/batch.py merge     # fold the finished packets into tm.
 python3 tools/en-edition/batch.py apply     # write the en/ tree
 ```
 
+`apply` rewrites every page, and a segment missing from `tm.json` stays Korean. When `status`
+shows untranslated text on pages you are not working on, build just your page instead:
+
+```bash
+python3 -c "import json,importlib.util as u,os; s=u.spec_from_file_location('ap','tools/en-edition/apply.py'); ap=u.module_from_spec(s); s.loader.exec_module(ap); ap.SITE_ROOT=os.getcwd(); p='contents/ontologystudio.html'; h,m,_=ap.build(p,open(p).read(),json.load(open('tools/en-edition/seg/'+p.replace('/','__')+'.json')),json.load(open('tools/en-edition/tm.json'))); open('en/'+p,'w').write(h); print('missing',len(m))"
+```
+
 `extract` must be re-run after **any** edit to a Korean page — the offsets are position-based,
 and a stale offset makes `apply` stop with a "segment drift" error rather than corrupt a file.
 
@@ -52,7 +59,12 @@ node render_check.mjs en/index.html en/contents/processgpt.html   # SITE_URL ove
   the Korean screenshot — including the absolute `og:image` / `twitter:image` URLs. Dropping a
   file into `images/en/...` is all that's needed; no page edit.
 - **English videos**: `VIDEO_OVERRIDES` in `apply.py` maps a YouTube id to a locally hosted
-  English recording, which replaces that embed on the English side only.
+  English recording, which replaces that embed on the English side only. `YOUTUBE_OVERRIDES` maps a
+  Korean YouTube id to an English YouTube id of the same walkthrough (embeds and links).
+- **Docs with an English edition** (`en/docs/...`, e.g. the Ontological Studio tutorial): links stay
+  inside `en/` instead of gaining `../`. Heading anchors that differ are mapped in `DOC_ANCHORS`.
+- **Pages without an English edition yet** (no `en/<page>` on disk): links to them open the Korean
+  page instead of a 404.
 - A KO/EN language switch is inserted into the nav on both sides.
 - Links written as `en/contents/x.html` on Korean pages are rewritten to stay inside `en/`.
 

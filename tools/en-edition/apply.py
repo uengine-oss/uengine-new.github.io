@@ -56,6 +56,12 @@ def fix_asset_paths(s, root):
 
     def repl(m):
         d, rest = m.group('dir'), m.group('rest')
+        if d == 'docs' and root:
+            # a doc site with its own English edition (en/docs/...) stays inside en/
+            path, _, anchor = rest.partition('#')
+            if os.path.exists(os.path.join(root, 'en', 'docs', path.split('?')[0])):
+                anchor = DOC_ANCHORS.get(anchor, anchor)
+                return m.group('q') + m.group('rel') + 'docs/' + path + ('#' + anchor if anchor else '')
         if d == 'images' and root:
             candidate = os.path.join(root, 'images', 'en', rest.split('?')[0].split('#')[0])
             if os.path.isfile(candidate):
@@ -63,6 +69,12 @@ def fix_asset_paths(s, root):
         return m.group('q') + m.group('rel') + '../' + d + '/' + rest
 
     return pat.sub(repl, s)
+
+
+# Heading anchors differ between a Korean doc page and its English edition.
+DOC_ANCHORS = {
+    'macos에-설치하기': 'installing-on-macos',
+}
 
 
 def rel_prefix(page):
@@ -177,8 +189,19 @@ VIDEO_OVERRIDES = {
 }
 
 
+# Korean-narrated YouTube video -> an English-narrated YouTube video of the same walkthrough.
+YOUTUBE_OVERRIDES = {
+    'qRZ8bE8Ffsg': 'ckduR9oRtuE',  # Ontological Studio: build from a document (tutorial ch. 12)
+    'np3Q9484lYo': 'ajoW9Oxf83g',  # Ontological Studio: run actions (tutorial ch. 16)
+    'Lq4ZL_8vMtk': 'gAZZTiakdAA',  # Ontological Studio: code apps (tutorial ch. 18)
+}
+
+
 def swap_videos(s, page):
-    """Swap a Korean-narrated YouTube embed for a locally hosted English recording."""
+    """Swap a Korean-narrated YouTube video for its English counterpart (on YouTube or hosted here)."""
+    for vid, en in YOUTUBE_OVERRIDES.items():
+        s = re.sub(r'(youtube(?:-nocookie)?\.com/embed/|youtu\.be/|youtube\.com/watch\?v=)' + re.escape(vid) + r'\b',
+                   lambda m: m.group(1) + en, s)
     up = '../' * (page.count('/') + 1)
     for vid, local in VIDEO_OVERRIDES.items():
         src = up + local
@@ -198,6 +221,22 @@ def swap_js(s):
     return s
 
 
+def link_untranslated(s, page, root):
+    """A linked page that has no English edition yet opens in Korean instead of a 404."""
+    if not root:
+        return s
+    here = os.path.dirname(page)
+    up = '../' * (page.count('/') + 1)
+
+    def repl(m):
+        target = os.path.normpath(os.path.join(here, m.group(2)))
+        if os.path.isfile(os.path.join(root, target)) and not os.path.isfile(os.path.join(root, 'en', target)):
+            return m.group(1) + up + target + m.group(3)
+        return m.group(0)
+
+    return re.sub(r'(href=")((?!https?:|/|#|\.\./|mailto:)[A-Za-z0-9_./-]+\.html)((?:#[^"]*)?")', repl, s)
+
+
 STRIP_SWITCH = (re.compile(r'<li class="pc-chat lang-switch">.*?</li>\s*'), re.compile(r'<a [^>]*class="[^"]*lang-switch"[^>]*>[^<]*</a>\s*'))
 
 
@@ -215,6 +254,7 @@ def build(page, src, segs, tm):
     # Korean pages link into the English tree as "en/contents/x.html"; inside that tree the
     # same link must stay relative to en/ itself, or it would resolve to /en/en/contents/.
     s = re.sub(r'((?:\.\./)*)en/(contents/|index\.html)', lambda m: m.group(1) + m.group(2), s)
+    s = link_untranslated(s, page, SITE_ROOT)
     s = seo_fixes(s, page)
     s, n1, n2 = add_lang_switch(s, page, to_en=False)
     return s, missing, (n1, n2)
