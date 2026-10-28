@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cypher Basics — Finding and Filtering Nodes — Ontological Studio Tutorial</title>
+<meta name="description" content="Open Ontological Portal and run the basic Cypher clauses — MATCH, WHERE, RETURN, ORDER BY and LIMIT — one at a time on the sample data.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/cypher-basics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cypher Basics — Finding and Filtering Nodes — Ontological Studio Tutorial">
+<meta property="og:description" content="Open Ontological Portal and run the basic Cypher clauses — MATCH, WHERE, RETURN, ORDER BY and LIMIT — one at a time on the sample data.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/cypher-basics.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html" class="on" aria-current="page"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Learning Cypher<span class="chap">7</span></div>
+    <h1>Cypher Basics — Finding and Filtering Nodes</h1>
+    <article>
+<blockquote>
+<p>Open Ontological Portal and run the basic Cypher clauses — MATCH, WHERE, RETURN, ORDER BY and LIMIT — one at a time on the sample data.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/8ryujKWpKN8" title="Cypher Basics — Finding and Filtering Nodes — video 3:02" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="cypher-queries-you-draw">Cypher: queries you draw<a class="anchor" href="#cypher-queries-you-draw" title="Permanent link">#</a></h2>
+<p>Cypher is a query language that <strong>describes graph structure the way you would draw it</strong>. It started in Neo4j and is now the basis of GQL, the ISO standard graph query language.</p>
+<table>
+<thead>
+<tr>
+<th>Picture</th>
+<th>Cypher</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>○</td>
+<td><code>(s:Supplier)</code></td>
+<td>One node with the <code>Supplier</code> label, named <code>s</code></td>
+</tr>
+<tr>
+<td>○→○</td>
+<td><code>(po)-[:ORDERED_FROM]-&gt;(s)</code></td>
+<td>An <code>ORDERED_FROM</code> relationship from <code>po</code> to <code>s</code></td>
+</tr>
+<tr>
+<td>Property</td>
+<td><code>s.name</code></td>
+<td>The <code>name</code> value of node <code>s</code></td>
+</tr>
+</tbody>
+</table>
+<p>It is easy to understand if you compare it with SQL's <code>SELECT … FROM … WHERE</code>.</p>
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>Cypher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FROM supplier s</code></td>
+<td><code>MATCH (s:Supplier)</code></td>
+</tr>
+<tr>
+<td><code>WHERE s.country = 'China'</code></td>
+<td><code>WHERE s.country = 'China'</code></td>
+</tr>
+<tr>
+<td><code>SELECT s.name</code></td>
+<td><code>RETURN s.name</code></td>
+</tr>
+<tr>
+<td><code>ORDER BY … LIMIT 3</code></td>
+<td><code>ORDER BY … LIMIT 3</code></td>
+</tr>
+<tr>
+<td><code>JOIN … ON …</code></td>
+<td>Relationship pattern <code>-[:REL]-&gt;</code> (<a href="cypher-relations.html">Chapter 8</a>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="opening-the-portal">Opening the Portal<a class="anchor" href="#opening-the-portal" title="Permanent link">#</a></h2>
+<p>On Home, click the <strong>Ontological Portal</strong> card. In the graph selector at the top left, choose <strong><code>sample</code></strong>. Every example in Part 4 runs on the <code>sample</code> graph.</p>
+<figure><a href="img/portal-query.webp" target="_blank" rel="noopener" title="View larger"><img alt="Ontological Portal — this graph's node types, relationship types and property keys on the left, the query box at the top, results below" src="img/portal-query.webp" / loading="lazy" decoding="async"></a><figcaption>Ontological Portal — this graph's node types, relationship types and property keys on the left, the query box at the top, results below</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Left: ENTITY TYPES</td>
+<td>Node labels. Click one to insert a query for that label.</td>
+</tr>
+<tr>
+<td>Left: RELATIONSHIP TYPES / PROPERTY KEYS</td>
+<td>Relationship names and property names. Use them as a reference while writing queries.</td>
+</tr>
+<tr>
+<td>Query box (top)</td>
+<td>Write Cypher and run it with ⌘Enter (Ctrl+Enter on Windows) or the ▶ button. Type <code>(n:</code> to autocomplete labels, or <code>n.</code> to autocomplete properties.</td>
+</tr>
+<tr>
+<td>Result card</td>
+<td>Table, JSON and SQL views, plus a Graph view when you return nodes. ★ saves the query, ✕ closes the card.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="your-first-query">Your first query<a class="anchor" href="#your-first-query" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">supplier_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">tier</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>s.supplier_id</th>
+<th>s.name</th>
+<th>s.country</th>
+<th>s.tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S-KR-01</td>
+<td>Hanbit Precision</td>
+<td>Korea</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S-KR-02</td>
+<td>Daesung Cable</td>
+<td>Korea</td>
+<td>2</td>
+</tr>
+<tr>
+<td>S-CN-01</td>
+<td>Shenzhen Goldline PCB</td>
+<td>China</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S-CN-02</td>
+<td>Ningbo Magnetics</td>
+<td>China</td>
+<td>2</td>
+</tr>
+<tr>
+<td>S-VN-01</td>
+<td>Hanoi Assembly</td>
+<td>Vietnam</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p><code>MATCH</code> specifies the graph pattern to find, and <code>RETURN</code> specifies what to include in the results. To get whole nodes, write <code>RETURN s</code>. That returns an object with all of the node's properties, and the result card gets a Graph view.</p>
+<h2 id="filtering-where">Filtering — WHERE<a class="anchor" href="#filtering-where" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;China&#39;</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">tier</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<p>The result is one supplier, <code>Shenzhen Goldline PCB</code>. These are the conditions you can use in <code>WHERE</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Use</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comparison</td>
+<td><code>=</code> <code>&lt;&gt;</code> <code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code> — <code>po.amount_usd &gt;= 30000 AND po.amount_usd &lt; 70000</code></td>
+</tr>
+<tr>
+<td>Logic</td>
+<td><code>AND</code> <code>OR</code> <code>NOT</code> — <code>NOT s.country = 'Korea'</code></td>
+</tr>
+<tr>
+<td>In a list</td>
+<td><code>sh.ship_status IN ['IN_TRANSIT', 'CUSTOMS_HOLD']</code></td>
+</tr>
+<tr>
+<td>Strings</td>
+<td><code>s.name STARTS WITH 'S'</code>, <code>CONTAINS 'Gold'</code>, <code>ENDS WITH 'PCB'</code></td>
+</tr>
+<tr>
+<td>Missing values</td>
+<td><code>po IS NULL</code>, <code>po IS NOT NULL</code></td>
+</tr>
+</tbody>
+</table>
+<p>If there is only one condition, you can write the property and value directly in the pattern.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="w"> </span><span class="p">{</span><span class="n">supplier_id</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;S-CN-01&#39;</span><span class="p">})</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Comparing dates</p>
+<p>You can compare date columns (<code>opened_date</code>, <code>eta</code> and so on) directly with strings such as <code>'2026-08-29'</code>. The engine converts them to the source type (<code>date</code>). There is no <code>date()</code> function yet.</p>
+<p><code>cypher
+MATCH (c:Claim) WHERE c.opened_date &gt;= '2026-08-29'
+RETURN c.ticket_no, c.opened_date</code></p>
+</div>
+<h2 id="sorting-and-limiting-order-by-skip-limit">Sorting and limiting — ORDER BY · SKIP · LIMIT<a class="anchor" href="#sorting-and-limiting-order-by-skip-limit" title="Permanent link">#</a></h2>
+<p>The three largest purchase orders:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="m">3</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>po.po_id</th>
+<th>po.amount_usd</th>
+<th>po.status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PO-001</td>
+<td>82000</td>
+<td>OPEN</td>
+</tr>
+<tr>
+<td>PO-005</td>
+<td>60000</td>
+<td>OPEN</td>
+</tr>
+<tr>
+<td>PO-002</td>
+<td>41000</td>
+<td>OPEN</td>
+</tr>
+</tbody>
+</table>
+<p>You can sort by several keys, as in <code>ORDER BY a, b DESC</code>. <code>SKIP 2 LIMIT 3</code> means “skip two, then take three”, which is how you split results into pages. Use <code>AS</code> to rename a column, as in <code>RETURN po.po_id AS po_number</code> (non-English names work too).</p>
+<h2 id="removing-duplicates-and-counting">Removing duplicates and counting<a class="anchor" href="#removing-duplicates-and-counting" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">country</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">suppliers</span>
+</code></pre></div>
+
+<p>The first query returns three rows (Vietnam, Korea, China), and the second returns <code>5</code>.</p>
+<h2 id="transforming-values-functions-and-case">Transforming values — functions and CASE<a class="anchor" href="#transforming-values-functions-and-case" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span>
+<span class="w">       </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s">&#39;Delayed&#39;</span>
+<span class="w">            </span><span class="k">WHEN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s">&#39;Watch&#39;</span>
+<span class="w">            </span><span class="n">ELSE</span><span class="w"> </span><span class="s">&#39;OK&#39;</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">status</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>sh.shipment_no</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHP-01</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>SHP-02</td>
+<td>Delayed</td>
+</tr>
+<tr>
+<td>SHP-03</td>
+<td>Delayed</td>
+</tr>
+<tr>
+<td>SHP-04</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>SHP-05</td>
+<td>Watch</td>
+</tr>
+<tr>
+<td>SHP-06</td>
+<td>Watch</td>
+</tr>
+<tr>
+<td>SHP-07</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>SHP-08</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<p>These are the functions Ontological DB supports. If you use a function that is not on this list, the engine returns an error that shows the list.</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aggregation</td>
+<td><code>count</code> <code>sum</code> <code>avg</code> <code>min</code> <code>max</code> <code>collect</code></td>
+</tr>
+<tr>
+<td>String</td>
+<td><code>toUpper</code> <code>toLower</code> <code>trim</code> <code>substring</code> <code>replace</code> <code>split</code> <code>toString</code></td>
+</tr>
+<tr>
+<td>Numeric</td>
+<td><code>abs</code> <code>ceil</code> <code>floor</code> <code>round</code> <code>sqrt</code> <code>rand</code> <code>toInteger</code> <code>toFloat</code></td>
+</tr>
+<tr>
+<td>Graph</td>
+<td><code>id</code> <code>elementId</code> <code>labels</code> <code>type</code> <code>length</code> <code>size</code> <code>keys</code> <code>exists</code></td>
+</tr>
+<tr>
+<td>Other</td>
+<td><code>coalesce</code> <code>timestamp</code> <code>datetime</code> <code>vector.similarity</code> <code>vector.distance</code> <code>genai.vector.encode</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="three-ways-to-view-results">Three ways to view results<a class="anchor" href="#three-ways-to-view-results" title="Permanent link">#</a></h2>
+<p>Choose a view at the top right of the result card.</p>
+<ul>
+<li><strong>Table</strong> — shows the results as a table. This is the view you will use most.</li>
+<li><strong>JSON</strong> — shows node objects as they are. This is the same format your app code receives (<a href="sdk.html">Chapter 19</a>).</li>
+<li><strong>SQL</strong> — the PostgreSQL SQL your Cypher was translated into. It shows how Ontological DB runs the query (<a href="cypher-advanced.html">Chapter 9</a>).</li>
+</ul>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<p>Write the following in Cypher on the <code>sample</code> graph.</p>
+<ol>
+<li>The number and amount of purchase orders with status <code>OPEN</code>, smallest amount first.</li>
+<li>The number and expected arrival date (<code>eta</code>) of shipments that are held at customs (<code>CUSTOMS_HOLD</code>) or in transit (<code>IN_TRANSIT</code>).</li>
+<li>How many customers there are.</li>
+<li>The number and subject of claims whose severity (<code>severity</code>) is <code>HIGH</code>.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span>
+</code></pre></div>
+
+<p>PO-007 (12000), PO-008 (27000), PO-006 (33000), PO-002 (41000), PO-005 (60000), PO-001 (82000) — 6 in total.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ship_status</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="o">[</span><span class="s">&#39;IN_TRANSIT&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;CUSTOMS_HOLD&#39;</span><span class="o">]</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">eta</span>
+</code></pre></div>
+
+<p>Three: SHP-02, SHP-03 and SHP-06.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">cu</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">customers</span>
+</code></pre></div>
+
+<p>3.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">severity</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;HIGH&#39;</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">ticket_no</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span>
+</code></pre></div>
+
+<p>T-1 “Controller power failure” and T-3 “PCB soldering defect”.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="virtual-graph.html"><span>Previous</span>Virtual Nodes and Virtual Relationships</a><a class="next" href="cypher-relations.html"><span>Next</span>Following Relationships and Aggregating</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#cypher-queries-you-draw">Cypher: queries you draw</a></li><li><a href="#opening-the-portal">Opening the Portal</a></li><li><a href="#your-first-query">Your first query</a></li><li><a href="#filtering-where">Filtering — WHERE</a></li><li><a href="#sorting-and-limiting-order-by-skip-limit">Sorting and limiting — ORDER BY · SKIP · LIMIT</a></li><li><a href="#removing-duplicates-and-counting">Removing duplicates and counting</a></li><li><a href="#transforming-values-functions-and-case">Transforming values — functions and CASE</a></li><li><a href="#three-ways-to-view-results">Three ways to view results</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

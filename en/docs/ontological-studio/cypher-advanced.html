@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data — Ontological Studio Tutorial</title>
+<meta name="description" content="Look at how a query actually runs (its SQL translation and the fabric execution plan), generate Cypher from plain language, and create your own graph to write nodes and relationships yourself.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/cypher-advanced.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data — Ontological Studio Tutorial">
+<meta property="og:description" content="Look at how a query actually runs (its SQL translation and the fabric execution plan), generate Cypher from plain language, and create your own graph to write nodes and relationships yourself.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/cypher-advanced.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html" class="on" aria-current="page"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Learning Cypher<span class="chap">9</span></div>
+    <h1>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</h1>
+    <article>
+<blockquote>
+<p>Look at how a query actually runs (its SQL translation and the fabric execution plan), generate Cypher from plain language, and create your own graph to write nodes and relationships yourself.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/hTO3Ligh_HQ" title="Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data — video 3:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="see-the-translated-sql">See the translated SQL<a class="anchor" href="#see-the-translated-sql" title="Permanent link">#</a></h2>
+<p>Ontological DB <strong>translates</strong> Cypher into PostgreSQL SQL and runs that. You can see the translation in the <strong>SQL</strong> tab of the result card.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">supplier</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_orders</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_amount</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">open_amount</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<figure><a href="img/portal-sql.webp" target="_blank" rel="noopener" title="View larger"><img alt="SQL tab — one Cypher statement translated into a PostgreSQL query" src="img/portal-sql.webp" / loading="lazy" decoding="async"></a><figcaption>SQL tab — one Cypher statement translated into a PostgreSQL query</figcaption></figure>
+<p>A value such as <code>compiled SQL 668a5ee48536</code> under the result card identifies the translated SQL. For the same Cypher, this fingerprint stays the same even if you change the point in time (Chapter 10) — the query is the same, and only the conditions change.</p>
+<h2 id="the-fabric-execution-plan-explain-fabric">The fabric execution plan — EXPLAIN FABRIC<a class="anchor" href="#the-fabric-execution-plan-explain-fabric" title="Permanent link">#</a></h2>
+<p>When a query reaches sources in several databases, performance depends on <strong>which system runs which part of the work</strong>. Put <code>EXPLAIN FABRIC</code> in front of a query to see the plan step by step.</p>
+<div class="hl"><pre><span></span><code><span class="n">EXPLAIN</span><span class="w"> </span><span class="n">FABRIC</span>
+<span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>step</th>
+<th>place</th>
+<th>operation</th>
+<th>rows</th>
+<th>detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>remote:erp</td>
+<td>join</td>
+<td>8</td>
+<td><code>SELECT r10.po_id, r12.name FROM (erp.purchase_order r10 INNER JOIN erp.supplier r12 ON …)</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>remote:wms</td>
+<td>scan</td>
+<td>2</td>
+<td><code>SELECT shipment_no, ref_po_no FROM wms.shipment WHERE ((delay_days &gt; 3))</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>local</td>
+<td>Hash Join</td>
+<td>2</td>
+<td><code>(purchase_order.po_id = (shipment.ref_po_no)::text)</code></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/portal-explain.webp" target="_blank" rel="noopener" title="View larger"><img alt="EXPLAIN FABRIC — the SQL sent to each source and the number of rows that came back" src="img/portal-explain.webp" / loading="lazy" decoding="async"></a><figcaption>EXPLAIN FABRIC — the SQL sent to each source and the number of rows that came back</figcaption></figure>
+<p>How to read it:</p>
+<ol>
+<li><strong>The join inside the ERP ran in the ERP</strong> (purchase order ⋈ supplier). Work within one database is left to that source.</li>
+<li><strong>The WMS got the query with its condition</strong> (<code>delay_days &gt; 3</code>). Only 2 rows came back, not all 8.</li>
+<li>Ontological DB did only the last join, the one that links the two different databases.</li>
+</ol>
+<p>The more source data you have, the bigger this difference gets. If a condition cannot be pushed down to a source (for example, a condition that compares values from two databases), it shows up as <code>local</code> in the plan. Such a query can pull many rows from the source, so try adjusting the condition.</p>
+<h2 id="asking-in-plain-language-natural-language-cypher">Asking in plain language — natural language → Cypher<a class="anchor" href="#asking-in-plain-language-natural-language-cypher" title="Permanent link">#</a></h2>
+<p>Type a <strong>plain-English sentence</strong> instead of Cypher in the input box and run it. The agent reads this graph's schema and writes the Cypher for you. (If the first word is not a Cypher keyword, the input is treated as natural language. You can also use the ✨ button or ⇧⌘Enter.)</p>
+<div class="hl"><pre><span></span><code>Which inbound shipments are more than 3 days late, and which supplier and purchase order are they for?
+</code></pre></div>
+
+<figure><a href="img/portal-nl.webp" target="_blank" rel="noopener" title="View larger"><img alt="Natural-language query — the Cypher the agent wrote, its explanation, and a mark showing it was test-run on the graph" src="img/portal-nl.webp" / loading="lazy" decoding="async"></a><figcaption>Natural-language query — the Cypher the agent wrote, its explanation, and a mark showing it was test-run on the graph</figcaption></figure>
+<p>The Cypher the agent writes is shown on screen as is, and the agent <strong>test-runs it on the graph first</strong>. If that fails, it fixes the query once, using the engine's error message. Write statements (<code>CREATE</code>, <code>SET</code> and so on) are not run; they are only placed in the input box. In our test, Claude Code wrote something like the following in about eight seconds.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">supplier</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">shipment_no</span><span class="p">,</span>
+<span class="w">       </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ship_status</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ship_status</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="m">100</span>
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">Make use of natural-language queries</p>
+<p>Practice reading the generated Cypher and rewriting it. Seeing which relationships the agent picked also helps you understand the schema. This feature works only in the portal inside the app (it needs a coding agent).</p>
+</div>
+<h2 id="writing-data-make-your-own-graph">Writing data — make your own graph<a class="anchor" href="#writing-data-make-your-own-graph" title="Permanent link">#</a></h2>
+<p>Virtual nodes are read-only, but nodes <strong>stored in</strong> Ontological DB can be created and changed directly with Cypher. Make a practice graph so you don't touch the sample. This statement runs no matter which graph is selected.</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">GRAPH</span><span class="w"> </span><span class="n">tut</span>
+</code></pre></div>
+
+<p>Now select <code>tut</code> in the graph selector (if it isn't in the list, refresh the portal) and create nodes.</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="p">(:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E1&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Haneul Kim&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dept</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Purchasing&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">salary</span><span class="p">:</span><span class="w"> </span><span class="m">4200</span><span class="p">})</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="p">(:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E2&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Bada Park&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">dept</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Logistics&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">salary</span><span class="p">:</span><span class="w"> </span><span class="m">3900</span><span class="p">})</span>
+</code></pre></div>
+
+<p>To create a relationship, first find the nodes on both ends with <code>MATCH</code>, then <code>CREATE</code> it. Relationships can have properties too.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E1&#39;</span><span class="p">}),</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="p">{</span><span class="n">emp_no</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;E2&#39;</span><span class="p">})</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">MENTORS</span><span class="w"> </span><span class="p">{</span><span class="n">since</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;2025-03&#39;</span><span class="p">}</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Employee</span><span class="p">)</span><span class="o">-[</span><span class="n">m</span><span class="p">:</span><span class="n">MENTORS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">:</span><span class="n">Employee</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">since</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<p>Result: <code>Haneul Kim · 2025-03 · Bada Park</code>.</p>
+<h3 id="updating-and-deleting">Updating and deleting<a class="anchor" href="#updating-and-deleting" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>What you want</th>
+<th>Statement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change a value</td>
+<td><code>MATCH (e:Employee {emp_no:'E1'}) SET e.salary = 4500 RETURN e.salary</code></td>
+</tr>
+<tr>
+<td>Create if missing</td>
+<td><code>MERGE (d:Dept {name:'Purchasing'}) RETURN d.name</code></td>
+</tr>
+<tr>
+<td>Create a relationship if missing</td>
+<td><code>MATCH (e:Employee), (d:Dept {name:'Purchasing'}) WHERE e.dept = d.name MERGE (e)-[:WORKS_IN]-&gt;(d)</code></td>
+</tr>
+<tr>
+<td>Delete a node and its relationships</td>
+<td><code>MATCH (e:Employee {emp_no:'E2'}) DETACH DELETE e</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>MERGE</code> uses the same pattern if it already exists, and creates it if not. Run it twice and you still get only one <code>Dept</code> node. <code>DETACH DELETE</code> also deletes the relationships attached to the node (if relationships remain, <code>DELETE</code> alone cannot delete it).</p>
+<div class="admonition note">
+<p class="admonition-title">Leave the ontology graph to Studio</p>
+<p>The <code>ontology</code> graph is managed by Studio. It holds class definitions (nodes such as <code>_OntologyClass</code>) and action definitions, so don't edit it directly in the portal; work with it through the <strong>Build Ontology</strong> screen and the agent. Practice writing data in a separate graph like this one.</p>
+</div>
+<h2 id="saving-and-history">Saving and history<a class="anchor" href="#saving-and-history" title="Permanent link">#</a></h2>
+<ul>
+<li>The ★ on a result card <strong>saves</strong> the query. Open it again from the bookmark icon in the left rail.</li>
+<li>Press ↑↓ in the input box to bring back <strong>previous queries</strong>. The clock icon list shows the write operations recently run on this graph (the audit log).</li>
+</ul>
+<h2 id="cypher-in-ontological-db-differences-to-know">Cypher in Ontological DB — differences to know<a class="anchor" href="#cypher-in-ontological-db-differences-to-know" title="Permanent link">#</a></h2>
+<p>If you already know Neo4j's Cypher, just remember these differences.</p>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Ontological DB 0.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Labels</td>
+<td>As a rule, write a label on every node in a pattern. Don't use label conditions of the form <code>WHERE n:Label</code>.</td>
+</tr>
+<tr>
+<td>Subqueries</td>
+<td>No <code>EXISTS { … }</code> or <code>CALL { … }</code> yet → <code>OPTIONAL MATCH … IS NULL</code></td>
+</tr>
+<tr>
+<td>Variable-length paths</td>
+<td><code>-[:R*1..3]-&gt;</code> works only on stored relationships, not yet on virtual relationships.</td>
+</tr>
+<tr>
+<td>Dates</td>
+<td>No <code>date()</code> function → compare date columns directly with <code>'YYYY-MM-DD'</code> strings</td>
+</tr>
+<tr>
+<td>Functions</td>
+<td>Only <a href="cypher-basics.html#transforming-values-functions-and-case">the list in Chapter 7</a>. If you use a function that isn't there, the error tells you the supported list.</td>
+</tr>
+<tr>
+<td>Virtual nodes</td>
+<td>Read-only — change values through the source system (or an action)</td>
+</tr>
+<tr>
+<td>Extras</td>
+<td><code>SHOW …</code> fabric statements, <code>EXPLAIN FABRIC</code>, time travel (Chapter 10), matching a parent label to find subtypes too</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>Use <code>EXPLAIN FABRIC</code> to look at the plan of the “claim → sales order → customer” query (Chapter 8). How many sources does this query reach?</li>
+<li>In the <code>tut</code> graph, create <code>Dept {name:'Logistics'}</code> twice with <code>MERGE</code>, and check how many there are with <code>MATCH (d:Dept) RETURN d.name, count(*)</code>.</li>
+<li>Ask in plain language, “Which customer filed the soldering defect claim?”, and check that the agent's Cypher gives the same result as the answer in Chapter 8.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>All three nodes are in the CRM, so everything, including the joins, is done in one source (<code>remote:crm</code>). This shows that work within one database is left to that source.</li>
+<li><code>MERGE</code> doesn't create a new node if one already exists, so the count for <code>Logistics</code> is 1 (and <code>Purchasing</code>, created earlier, is also 1).</li>
+<li>You should get Tokyo Devices (SO-05, T-3 “PCB soldering defect”). The agent's query may differ a little each time, but the result should be the same.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="cypher-relations.html"><span>Previous</span>Following Relationships and Aggregating</a><a class="next" href="time-travel.html"><span>Next</span>Time Travel — Bitemporal Queries</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#see-the-translated-sql">See the translated SQL</a></li><li><a href="#the-fabric-execution-plan-explain-fabric">The fabric execution plan — EXPLAIN FABRIC</a></li><li><a href="#asking-in-plain-language-natural-language-cypher">Asking in plain language — natural language → Cypher</a></li><li><a href="#writing-data-make-your-own-graph">Writing data — make your own graph</a><ul><li><a href="#updating-and-deleting">Updating and deleting</a></li></ul></li><li><a href="#saving-and-history">Saving and history</a></li><li><a href="#cypher-in-ontological-db-differences-to-know">Cypher in Ontological DB — differences to know</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

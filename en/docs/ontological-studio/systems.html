@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registering Business Systems — Ontological Studio Tutorial</title>
+<meta name="description" content="Register the business systems (microservices) that actions call. Data is read from data sources, and work is carried out through the APIs of registered systems. This chapter covers OpenAPI specs, authentication and connection tests.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/systems.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Registering Business Systems — Ontological Studio Tutorial">
+<meta property="og:description" content="Register the business systems (microservices) that actions call. Data is read from data sources, and work is carried out through the APIs of registered systems. This chapter covers OpenAPI specs, authentication and connection tests.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/systems.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html" class="on" aria-current="page"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Actions<span class="chap">14</span></div>
+    <h1>Registering Business Systems</h1>
+    <article>
+<blockquote>
+<p>Register the business systems (microservices) that actions call. Data is read from data sources, and work is carried out through the APIs of registered systems. This chapter covers OpenAPI specs, authentication and connection tests.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/iBFy0WfjD2M" title="Registering Business Systems — video 3:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-register-systems-separately">Why register systems separately?<a class="anchor" href="#why-register-systems-separately" title="Permanent link">#</a></h2>
+<p>The data fabric only <strong>reads</strong> sources (Chapter 6). Putting a purchase order on hold or raising a shipment's priority must be done by the <strong>business system</strong> that owns that data. That way the system's business rules (validation, approval, history) are respected.</p>
+<p>So actions in Ontological Studio don't write to databases directly; they <strong>call the APIs of registered systems.</strong> This chapter shows how to register those APIs.</p>
+<h2 id="the-systems-screen">The Systems screen<a class="anchor" href="#the-systems-screen" title="Permanent link">#</a></h2>
+<p>Open the <strong>Systems</strong> card on the home screen. Three sample systems are already registered.</p>
+<figure><a href="img/systems.webp" target="_blank" rel="noopener" title="View larger"><img alt="Systems — three systems shown as cards: Customer CRM, Purchasing ERP and Logistics WMS" src="img/systems.webp" / loading="lazy" decoding="async"></a><figcaption>Systems — three systems shown as cards: Customer CRM, Purchasing ERP and Logistics WMS</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>What it does (operationId)</th>
+<th>Authentication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sample-erp</code> Purchasing ERP</td>
+<td>Hold and release purchase orders (<code>holdPurchaseOrder</code>, <code>releasePurchaseOrder</code>), send and withdraw expedite requests to suppliers (<code>createExpediteRequest</code>, <code>withdrawExpediteRequest</code>)</td>
+<td>API key (<code>X-API-Key</code> header)</td>
+</tr>
+<tr>
+<td><code>sample-wms</code> Logistics WMS</td>
+<td>Look up shipments, change priority (<code>setShipmentPriority</code>)</td>
+<td>Basic authentication</td>
+</tr>
+<tr>
+<td><code>sample-crm</code> Customer CRM</td>
+<td>Send and withdraw customer notices (<code>createNotice</code>, <code>withdrawNotice</code>)</td>
+<td>Bearer token</td>
+</tr>
+</tbody>
+</table>
+<p>Just like in a real company, each system uses a different authentication method. Each system changes <strong>only its own schema</strong> in the sample business database (<code>erp</code> for the ERP, <code>wms</code> for the WMS).</p>
+<h2 id="a-closer-look-at-one-system">A closer look at one system<a class="anchor" href="#a-closer-look-at-one-system" title="Permanent link">#</a></h2>
+<p>Click the <strong>Purchasing ERP</strong> card.</p>
+<figure><a href="img/system-erp.webp" target="_blank" rel="noopener" title="View larger"><img alt="Purchasing ERP details — status OK with its response time, gateway, spec URL, authentication, call policy, and the 6 APIs read from the spec" src="img/system-erp.webp" / loading="lazy" decoding="async"></a><figcaption>Purchasing ERP details — status OK with its response time, gateway, spec URL, authentication, call policy, and the 6 APIs read from the spec</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gateway</td>
+<td>The name the action executor uses to call this system (<code>/svc/sample-erp</code>)</td>
+</tr>
+<tr>
+<td>Active address</td>
+<td>The actual service address</td>
+</tr>
+<tr>
+<td>Spec</td>
+<td>The URL of the OpenAPI document. The list of APIs is read from here.</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td><code>API key · X-API-Key ← $ERP_API_KEY</code> — <strong>secret values are not stored in the registration</strong>; only the environment variable name is kept. Only the executor holds the value, and it attaches it at the moment of the call.</td>
+</tr>
+<tr>
+<td>Policy</td>
+<td>Timeout 5000 ms, 2 retries, health check path <code>/health</code> (if left empty, the active URL itself is checked)</td>
+</tr>
+<tr>
+<td>APIs (operations)</td>
+<td>The APIs read from the spec: method, path, operationId and description</td>
+</tr>
+</tbody>
+</table>
+<p>Use <strong>Check status</strong> to see the current connection status, and <strong>Reload spec</strong> to fetch the spec again after it changes. If an API is missing from the spec, you can enter its method and path yourself with <strong>Add API</strong>.</p>
+<h2 id="registering-a-new-system">Registering a new system<a class="anchor" href="#registering-a-new-system" title="Permanent link">#</a></h2>
+<p>Click <strong>＋ Register system</strong> in the system list. You go through steps, just as when you register a data source.</p>
+<ol class="steps">
+<li><b>Basics</b> — name (lowercase letters, digits and hyphens), display name, owning team, contact, tags, icon.</li>
+<li><b>Spec</b> — drag in an OpenAPI (Swagger) file or enter the spec URL. The list of APIs you can call is read right away. Non-REST systems (SOAP, gRPC, GraphQL) can be registered too, but they are marked as not usable in actions until an execution adapter is added.</li>
+<li><b>Authentication</b> — choose API key, Basic, Bearer, OAuth client credentials or login token, and enter the <b>name of the environment variable</b> that holds the secret value.</li>
+<li><b>Test connection</b> — before saving, the spec is read and the health check is called. If it passes, save. If the system has no health check path, leave the path empty. As long as the server responds (anything other than a 5xx), it counts as <b>connected</b>; if the path you entered returns 404 or 405, you see <b>Connected · (warning)</b> with an orange <code>~</code> mark, telling you to check the path.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Practice with a public API</p>
+<p>If you don't have a company system, you can practice with a public API. For example, if you register Swagger Petstore (<code>https://petstore3.swagger.io/api/v3/openapi.json</code>), 19 APIs are read from the spec and the connection test passes. Enter <code>https://petstore3.swagger.io/api/v3</code> as the environment's active URL, and leave the health check path empty because Petstore has no <code>/health</code>. Its data is shared by everyone, so it isn't a good target system for building actions — use it only to practice registering and browsing.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Where do the secret values go?</p>
+<p>Only a <strong>name</strong> such as <code>$ERP_API_KEY</code> is kept in the registration. The real secret values of the sample systems are generated at random during installation, stored in <code>secrets.json</code> in the data folder, and passed to the executor only as environment variables. For systems you register yourself, write the secret values in <code>studio.env</code>, as in <code>ERP_API_KEY=...</code>.</p>
+</div>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>Open the Logistics WMS system and find the method and path of the API that changes priority.</li>
+<li>What authentication method does the Customer CRM use, and where does the secret value appear in its registration?</li>
+<li>Give two reasons why an action calls an API instead of running <code>UPDATE</code> directly on the ERP database.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li><code>POST /shipments/{shipment_no}/priority</code> (operationId <code>setShipmentPriority</code>).</li>
+<li>Bearer token. The secret value itself never appears; you see only the environment variable name.</li>
+<li>ⓐ To respect the business system's rules, such as validation, approval and history. ⓑ Because authority and responsibility lie with that system (who changed what, and when, is kept in that system's own records). Also, ⓒ the API stays the same even if the system's internal structure (its tables) changes, so actions break less often.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="ask.html"><span>Previous</span>Asking Questions — Answers with Evidence</a><a class="next" href="actions-build.html"><span>Next</span>Building Actions from Golden Commands</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-register-systems-separately">Why register systems separately?</a></li><li><a href="#the-systems-screen">The Systems screen</a></li><li><a href="#a-closer-look-at-one-system">A closer look at one system</a></li><li><a href="#registering-a-new-system">Registering a new system</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

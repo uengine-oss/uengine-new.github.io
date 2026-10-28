@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running Actions — Plan, Approve, Execute, Cancel — Ontological Studio Tutorial</title>
+<meta name="description" content="In the Ask &amp; Act tab, you give a command to expedite two late shipments, check the result in the source database, and then cancel to restore the original state. This really changes data in the sample business systems.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/actions-run.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Running Actions — Plan, Approve, Execute, Cancel — Ontological Studio Tutorial">
+<meta property="og:description" content="In the Ask &amp; Act tab, you give a command to expedite two late shipments, check the result in the source database, and then cancel to restore the original state. This really changes data in the sample business systems.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/actions-run.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html" class="on" aria-current="page"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Actions<span class="chap">16</span></div>
+    <h1>Running Actions — Plan, Approve, Execute, Cancel</h1>
+    <article>
+<blockquote>
+<p>In the Ask &amp; Act tab, you give a command to expedite two late shipments, check the result in the source database, and then cancel to restore the original state. This really changes data in the sample business systems.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/ajoW9Oxf83g" title="Running Actions — Plan, Approve, Execute, Cancel — video 3:39" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="four-steps">Four steps<a class="anchor" href="#four-steps" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>command ──▶ ① plan ─────────▶ ② approve ──────▶ ③ execute ────────▶ (if needed) ④ cancel = reverse compensation
+            targets &amp; policy  by a person,      API calls step      undoes the successful
+            checked; nothing  on the plan card  by step (saga)      steps in reverse
+            changed yet
+</code></pre></div>
+
+<p>The agent can make a plan and request execution, but it <strong>cannot approve</strong>. You approve on the plan card yourself.</p>
+<h2 id="①-plan-give-the-command">① Plan — give the command<a class="anchor" href="#①-plan-give-the-command" title="Permanent link">#</a></h2>
+<p>Give the command in the Ask &amp; Act tab. You can continue the conversation from <a href="ask.html">Chapter 13</a>, where you asked about late shipments.</p>
+<div class="hl"><pre><span></span><code>Expedite the inbound shipments that are more than 3 days late (reason: risk of production disruption)
+</code></pre></div>
+
+<p>The agent picks the action <code>Shipment.expediteShipment</code> and asks the action executor for a plan (25–50 seconds in our tests).</p>
+<figure><a href="img/qa-plan.webp" target="_blank" rel="noopener" title="View larger"><img alt="Plan card — Allowed 2 (SHP-02, SHP-03), denied 0, needs human approval, expiry time. Above it is a preview of the first call" src="img/qa-plan.webp" / loading="lazy" decoding="async"></a><figcaption>Plan card — Allowed 2 (SHP-02, SHP-03), denied 0, needs human approval, expiry time. Above it is a preview of the first call</figcaption></figure>
+<p>What to look at on the plan card:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Shipment.expediteShipment</code> · Awaiting approval</td>
+<td>Which action the plan is for, and its current state</td>
+</tr>
+<tr>
+<td>Allowed 2 · denied 0</td>
+<td>The policy result for each target. Denied targets come with a reason (e.g. “Shipments already received are excluded”)</td>
+</tr>
+<tr>
+<td>Needs human approval</td>
+<td>This plan does not run without approval</td>
+</tr>
+<tr>
+<td>Expires</td>
+<td>You must approve and execute the plan within a set time. After that, plan again with the same conditions</td>
+</tr>
+<tr>
+<td>Call preview (4)</td>
+<td>Exactly which APIs will be called with which arguments (2 targets × 2 steps)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nothing has changed yet.</strong> A plan is a dry run.</p>
+<h2 id="②-approve">② Approve<a class="anchor" href="#②-approve" title="Permanent link">#</a></h2>
+<p>Click <strong>Approve</strong> on the plan card. You can leave a note. The card then says “Approved — Say “run it” in the conversation and the agent will run it.” (Any instruction to run works, such as the one below.)</p>
+<figure><a href="img/qa-approved.webp" target="_blank" rel="noopener" title="View larger"><img alt="Approved plan — the approver and the time are recorded" src="img/qa-approved.webp" / loading="lazy" decoding="async"></a><figcaption>Approved plan — the approver and the time are recorded</figcaption></figure>
+<h2 id="③-execute">③ Execute<a class="anchor" href="#③-execute" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>Execute it
+</code></pre></div>
+
+<p>The agent executes the approved plan <strong>as is</strong> (it does not plan again). The executor runs the steps in order for each target, and checks the policy once more just before executing.</p>
+<figure><a href="img/qa-executed.webp" target="_blank" rel="noopener" title="View larger"><img alt="Execution result — for both shipments, WMS priority NORMAL → URGENT and an ERP expedite request sent; succeeded" src="img/qa-executed.webp" / loading="lazy" decoding="async"></a><figcaption>Execution result — for both shipments, WMS priority NORMAL → URGENT and an ERP expedite request sent; succeeded</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>WMS priority</th>
+<th>ERP expedite request</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHP-02</td>
+<td>✓ NORMAL → URGENT</td>
+<td>✓ PO-001 → S-CN-01, request sent</td>
+<td>Succeeded</td>
+</tr>
+<tr>
+<td>SHP-03</td>
+<td>✓ NORMAL → URGENT</td>
+<td>✓ PO-002 → S-CN-01, request sent</td>
+<td>Succeeded</td>
+</tr>
+</tbody>
+</table>
+<h3 id="did-it-really-change-check-the-source">Did it really change? — check the source<a class="anchor" href="#did-it-really-change-check-the-source" title="Permanent link">#</a></h3>
+<p>In the portal (graph <code>sample</code>), read the source WMS directly.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">priority</span>
+</code></pre></div>
+
+<figure><a href="img/portal-urgent.webp" target="_blank" rel="noopener" title="View larger"><img alt="Checking the source — both shipments now have priority URGENT. These values are read from the WMS table right now, not from a copy" src="img/portal-urgent.webp" / loading="lazy" decoding="async"></a><figcaption>Checking the source — both shipments now have priority URGENT. These values are read from the WMS table right now, not from a copy</figcaption></figure>
+<p>The <code>wms.shipment</code> preview in the Data Sources tab shows the same thing. The business system changes the source data, and the data fabric reads the changed data.</p>
+<h2 id="④-cancel-compensation-in-reverse-order">④ Cancel — compensation in reverse order<a class="anchor" href="#④-cancel-compensation-in-reverse-order" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>Cancel what you just did
+</code></pre></div>
+
+<p>The agent finds the execution record and requests <strong>compensation</strong>. The executor undoes the successful steps <strong>in reverse order</strong> — it withdraws the last thing it did (the ERP expedite request) first, and restores the first thing it did (the WMS priority) last.</p>
+<figure><a href="img/qa-cancelled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Compensation done — for each target, ERP request withdrawn → WMS priority restored, in that order; all compensations succeeded" src="img/qa-cancelled.webp" / loading="lazy" decoding="async"></a><figcaption>Compensation done — for each target, ERP request withdrawn → WMS priority restored, in that order; all compensations succeeded</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Target</th>
+<th>Step</th>
+<th>System · API</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SHP-03</td>
+<td>erp</td>
+<td>sample-erp · <code>withdrawExpediteRequest</code></td>
+<td>Compensated (200)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SHP-03</td>
+<td>wms</td>
+<td>sample-wms · <code>setShipmentPriority</code></td>
+<td>Compensated (200)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>SHP-02</td>
+<td>erp</td>
+<td>sample-erp · <code>withdrawExpediteRequest</code></td>
+<td>Compensated (200)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SHP-02</td>
+<td>wms</td>
+<td>sample-wms · <code>setShipmentPriority</code></td>
+<td>Compensated (200)</td>
+</tr>
+</tbody>
+</table>
+<p>The targets are also handled in reverse order — SHP-03, processed last, is undone first.</p>
+<p>If you check the portal again, both shipments have <code>priority</code> back at <code>NORMAL</code>. That is because the WMS priority compensation restores <code>$before.priority</code> — <strong>the value just before execution</strong>. If it had been <code>HIGH</code>, it would go back to <code>HIGH</code>.</p>
+<h2 id="saga-when-something-fails-midway">Saga — when something fails midway<a class="anchor" href="#saga-when-something-fails-midway" title="Permanent link">#</a></h2>
+<p>What happens if you call several systems in turn and one of them fails partway? For example, if the WMS step for SHP-03 succeeds but the ERP step fails, you are left in a half-done state where only the WMS says URGENT.</p>
+<p>The executor prevents this with the <strong>saga</strong> pattern. If a step fails for a target, it <strong>automatically compensates the steps that already succeeded for that target, in reverse order</strong>. Only that target goes back to its original state; the other targets stay successful, and the result is reported as “partial success”. The systems never end up disagreeing with each other.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>What the executor does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All steps succeed</td>
+<td>Success</td>
+</tr>
+<tr>
+<td>Step 2 fails for one target</td>
+<td>Automatically compensates step 1 for that target → that target is back to its original state; the result is “partial success”</td>
+</tr>
+<tr>
+<td>The same request is sent twice</td>
+<td>Each target carries an idempotency key, so the business system does not process it twice</td>
+</tr>
+<tr>
+<td>Data changes after planning</td>
+<td>The policy is checked again just before execution, and targets that no longer match are skipped</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-give-good-commands">How to give good commands<a class="anchor" href="#how-to-give-good-commands" title="Permanent link">#</a></h2>
+<ul>
+<li>Make the <strong>target condition</strong> clear: “more than 3 days late”, “Shenzhen Goldline PCB's open purchase orders”.</li>
+<li>Include a <strong>reason</strong>: if it is a required input, the agent asks for it. It is kept in the execution record and in the business system.</li>
+<li>Read the <strong>denial reasons</strong> on the plan card. They show why the policy blocked a target. If you want to change the policy, that is a build task (the action definition).</li>
+</ul>
+<div class="admonition exercise">
+<p class="admonition-title">Exercises</p>
+<ol>
+<li>Give the command “Put all of Shenzhen Goldline PCB's open purchase orders on hold (reason: investigating the PCB soldering defect)”, and check on the plan card which purchase orders were allowed or denied, and why.</li>
+<li>Approve and execute, then check in the Data Sources tab that the status in <code>erp.purchase_order</code> changed to <code>ON_HOLD</code>, and see what was recorded in the <code>erp.po_hold</code> table.</li>
+<li>Cancel, and check that the status is back to <code>OPEN</code>.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>Allowed: PO-001, PO-002 (both OPEN). These are Shenzhen Goldline PCB's only purchase orders, so 0 are denied. (If you say “Put all suppliers' purchase orders on hold”, PO-003 and PO-004, which are CLOSED, are denied with the reason “Open purchase orders only”. If the agent already filters by <code>status = 'OPEN'</code> when it picks the targets, the plan may have no denied rows, because those orders were never targets.)</li>
+<li>PO-001 and PO-002 in <code>erp.purchase_order</code> are <code>ON_HOLD</code>. <code>erp.po_hold</code> gets one row per purchase order with the reason, the status before the hold (<code>prev_status = OPEN</code>) and the requester. <code>erp.po_hold</code> is not a virtual node, so the table details in the Data Sources tab show only its columns — to see its contents, expose it as a virtual node (Chapter 6).</li>
+<li>The compensation (<code>releasePurchaseOrder</code>) restores the status from before the hold, so it becomes <code>OPEN</code>.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="actions-build.html"><span>Previous</span>Building Actions from Golden Commands</a><a class="next" href="dashboard.html"><span>Next</span>Dashboard Apps — Build Screens by Describing Them</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#four-steps">Four steps</a></li><li><a href="#①-plan-give-the-command">① Plan — give the command</a></li><li><a href="#②-approve">② Approve</a></li><li><a href="#③-execute">③ Execute</a><ul><li><a href="#did-it-really-change-check-the-source">Did it really change? — check the source</a></li></ul></li><li><a href="#④-cancel-compensation-in-reverse-order">④ Cancel — compensation in reverse order</a></li><li><a href="#saga-when-something-fails-midway">Saga — when something fails midway</a></li><li><a href="#how-to-give-good-commands">How to give good commands</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

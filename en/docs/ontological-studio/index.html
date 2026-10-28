@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontological Studio Tutorial — Ontological Studio Tutorial</title>
+<meta name="description" content="A hands-on, step-by-step guide. You start with what an ontology is, then connect source databases, query data with Cypher, build an ontology with an agent, run actions on business systems, and finally build apps on top of it all.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ontological Studio Tutorial — Ontological Studio Tutorial">
+<meta property="og:description" content="A hands-on, step-by-step guide. You start with what an ontology is, then connect source databases, query data with Cypher, build an ontology with an agent, run actions on business systems, and finally build apps on top of it all.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Getting started<span class="chap"></span></div>
+    <h1>Ontological Studio Tutorial</h1>
+    <article>
+<blockquote>
+<p>A hands-on, step-by-step guide. You start with what an ontology is, then connect source databases, query data with Cypher, build an ontology with an agent, run actions on business systems, and finally build apps on top of it all.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/MvwogpjH5M0" title="Ontological Studio Tutorial — video 3:15" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-you-will-do-in-this-tutorial">What you will do in this tutorial<a class="anchor" href="#what-you-will-do-in-this-tutorial" title="Permanent link">#</a></h2>
+<p>Ontological Studio is a desktop program for <strong>building ontologies, running queries and actions, and building business apps</strong>. A single installer includes a graph database (Ontological DB), a data fabric, an ontology-building agent, an action executor and sample business systems, so you can do every exercise from start to finish on one laptop.</p>
+<p>This tutorial follows the <strong>supply chain operations</strong> of one company. The company's data is spread across three systems.</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Data</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purchasing ERP (<code>erp</code>)</td>
+<td>Suppliers, items, purchase orders, order lines</td>
+<td>We ordered 2,000 PCB boards from Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>Logistics WMS (<code>wms</code>)</td>
+<td>Inbound shipments, daily stock</td>
+<td>A shipment for that order has been held at customs for 9 days</td>
+</tr>
+<tr>
+<td>Customer CRM (<code>crm</code>)</td>
+<td>Customers, sales orders, claims</td>
+<td>A customer in Tokyo filed a PCB soldering defect claim</td>
+</tr>
+</tbody>
+</table>
+<p>To answer “Which inbound shipments are more than 3 days late, and which supplier and purchase order are they for?”, you have to connect data from all three systems. By the end of the tutorial you will answer this question with a graph query, carry out the instruction “Expedite those shipments” on the real systems after an approval step, and build a business app that brings all of this together on one screen.</p>
+<h2 id="learning-path">Learning path<a class="anchor" href="#learning-path" title="Permanent link">#</a></h2>
+<div class="cards" markdown="0">
+<a href="install.html"><b>1 · Getting started</b><span>Install, first run, a tour of the app</span></a>
+<a href="ontology-basics.html"><b>2 · Ontology concepts</b><span>Classes, properties, relationships, instances; how the app is built</span></a>
+<a href="datasource.html"><b>3 · Connecting data</b><span>Source databases as virtual nodes, without copying</span></a>
+<a href="cypher-basics.html"><b>4 · Learning Cypher</b><span>From MATCH to aggregation, diagnostics and time travel</span></a>
+<a href="golden.html"><b>5 · Building the ontology</b><span>Golden Questions and Golden Commands, building from documents, querying</span></a>
+<a href="systems.html"><b>6 · Actions</b><span>Registering systems, creating actions, approve, execute, cancel</span></a>
+<a href="dashboard.html"><b>7 · Applications</b><span>Dashboards, code apps, the SDK, action buttons</span></a>
+<a href="project.html"><b>8 · Final project</b><span>A hands-on project that uses everything you learned</span></a>
+</div>
+
+<p>Each chapter goes <strong>concept → Try it → Check yourself</strong>. The answers to the Check yourself questions are folded, so try them on your own first, then open the answers.</p>
+<h2 id="who-this-tutorial-is-for">Who this tutorial is for<a class="anchor" href="#who-this-tutorial-is-for" title="Permanent link">#</a></h2>
+<ul>
+<li>If you have learned SQL <code>SELECT</code> and <code>JOIN</code> in a university database course, you are ready.</li>
+<li>You don't need to know graph databases or Cypher. Part 4 teaches them from scratch.</li>
+<li>You need a little programming only in Part 7 (code apps). Even there the agent writes the code, so being able to read it is enough.</li>
+</ul>
+<h2 id="what-you-need">What you need<a class="anchor" href="#what-you-need" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Computer</td>
+<td>macOS (Apple Silicon M1 or later, or Intel) or Windows 10/11 (x64), 8 GB of memory recommended</td>
+</tr>
+<tr>
+<td>Disk</td>
+<td>At least 2 GB free</td>
+</tr>
+<tr>
+<td>Coding agent</td>
+<td><a href="https://claude.com/claude-code">Claude Code</a> or Codex CLI. If you install one and sign in, the build and query agents work without an API key. Without one, you can still do Parts 3 and 4 (connecting data, Cypher) as written.</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Needed only to download the installer and to use the agent (LLM). All databases run on your own computer.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Prefer to watch first?</p>
+<p>The <a href="https://www.uengine.org/en/contents/ontologystudio.html#demo">product page</a> has demo videos of building from documents, creating actions from Golden Commands, and building ontology apps. This tutorial walks through those same steps one at a time.</p>
+</div>
+<h2 id="conventions">Conventions<a class="anchor" href="#conventions" title="Permanent link">#</a></h2>
+<ul>
+<li>Text you type is in monospace, like <code>MATCH (s:Supplier) RETURN s.name</code>. Button names on screen are in bold, like <strong>Create virtual node</strong>.</li>
+<li>Screenshots use the light theme. A few demo shots in the dark theme are noted in their captions.</li>
+<li>Every number and result comes from actually running the sample data. If your results differ, check whether you did an exercise in an earlier chapter that changes data (such as running an action).</li>
+</ul>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="install.html"><span>Next</span>Installation and First Run</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-you-will-do-in-this-tutorial">What you will do in this tutorial</a></li><li><a href="#learning-path">Learning path</a></li><li><a href="#who-this-tutorial-is-for">Who this tutorial is for</a></li><li><a href="#what-you-need">What you need</a></li><li><a href="#conventions">Conventions</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

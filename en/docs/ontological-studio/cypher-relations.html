@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Following Relationships and Aggregating — Ontological Studio Tutorial</title>
+<meta name="description" content="Find nodes by following relationship patterns, connect several databases in one query, and summarize with count, sum and collect. This is where Cypher starts to feel easier than SQL.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/cypher-relations.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Following Relationships and Aggregating — Ontological Studio Tutorial">
+<meta property="og:description" content="Find nodes by following relationship patterns, connect several databases in one query, and summarize with count, sum and collect. This is where Cypher starts to feel easier than SQL.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/cypher-relations.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html" class="on" aria-current="page"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Learning Cypher<span class="chap">8</span></div>
+    <h1>Following Relationships and Aggregating</h1>
+    <article>
+<blockquote>
+<p>Find nodes by following relationship patterns, connect several databases in one query, and summarize with count, sum and collect. This is where Cypher starts to feel easier than SQL.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/gagR8T_aqz4" title="Following Relationships and Aggregating — video 3:43" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="relationship-patterns">Relationship patterns<a class="anchor" href="#relationship-patterns" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>po.po_id</th>
+<th>po.status</th>
+<th>s.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PO-001</td>
+<td>OPEN</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>PO-002</td>
+<td>OPEN</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>PO-003</td>
+<td>CLOSED</td>
+<td>Hanbit Precision</td>
+</tr>
+<tr>
+<td>PO-004</td>
+<td>CLOSED</td>
+<td>Daesung Cable</td>
+</tr>
+<tr>
+<td>PO-005</td>
+<td>OPEN</td>
+<td>Ningbo Magnetics</td>
+</tr>
+<tr>
+<td>PO-006</td>
+<td>OPEN</td>
+<td>Hanoi Assembly</td>
+</tr>
+<tr>
+<td>PO-007</td>
+<td>OPEN</td>
+<td>Ningbo Magnetics</td>
+</tr>
+<tr>
+<td>PO-008</td>
+<td>OPEN</td>
+<td>Hanbit Precision</td>
+</tr>
+</tbody>
+</table>
+<p>Purchase orders come from <code>purchase_order</code> in the ERP, and suppliers from <code>supplier</code> in the ERP. The relationship <code>ORDERED_FROM</code> replaces the join <code>purchase_order.supplier_id = supplier.supplier_id</code>.</p>
+<h3 id="direction">Direction<a class="anchor" href="#direction" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(a)-[:R]-&gt;(b)</code></td>
+<td>From a to b</td>
+</tr>
+<tr>
+<td><code>(a)&lt;-[:R]-(b)</code></td>
+<td>From b to a — the same relationship, read from the other end</td>
+</tr>
+<tr>
+<td><code>(a)-[:R]-(b)</code></td>
+<td>Either direction</td>
+</tr>
+</tbody>
+</table>
+<p>Every relationship has a defined direction (<code>PurchaseOrder → Supplier</code>). To start from the supplier, reverse the arrow.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">orders</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>s.name</th>
+<th>orders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Daesung Cable</td>
+<td>["PO-004"]</td>
+</tr>
+<tr>
+<td>Shenzhen Goldline PCB</td>
+<td>["PO-001", "PO-002"]</td>
+</tr>
+<tr>
+<td>Hanbit Precision</td>
+<td>["PO-003", "PO-008"]</td>
+</tr>
+<tr>
+<td>Ningbo Magnetics</td>
+<td>["PO-005", "PO-007"]</td>
+</tr>
+<tr>
+<td>Hanoi Assembly</td>
+<td>["PO-006"]</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Put a label on every node</p>
+<p>In Ontological DB, queries are faster and more accurate when you write a <strong>label on every node</strong> in the pattern. Write <code>(po:PurchaseOrder)</code> instead of <code>(s:Supplier)&lt;-[:ORDERED_FROM]-(po)</code>. In particular, if you look for a virtual relationship in the data fabric without labels, as <code>-[r]-&gt;</code> (with no relationship name either), the result comes back empty. Make it a habit to write the relationship name and the labels on both ends.</p>
+</div>
+<h2 id="several-hops-across-databases">Several hops — across databases<a class="anchor" href="#several-hops-across-databases" title="Permanent link">#</a></h2>
+<p>This is the question you saw in <a href="ontology-basics.html">Chapter 3</a>: shipment (WMS) → purchase order (ERP) → supplier (ERP).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">0</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ship_status</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>sh.shipment_no</th>
+<th>sh.ship_status</th>
+<th>sh.delay_days</th>
+<th>po.po_id</th>
+<th>s.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHP-03</td>
+<td>CUSTOMS_HOLD</td>
+<td>9</td>
+<td>PO-002</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>SHP-02</td>
+<td>IN_TRANSIT</td>
+<td>7</td>
+<td>PO-001</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>SHP-06</td>
+<td>IN_TRANSIT</td>
+<td>3</td>
+<td>PO-005</td>
+<td>Ningbo Magnetics</td>
+</tr>
+<tr>
+<td>SHP-05</td>
+<td>DELIVERED</td>
+<td>1</td>
+<td>PO-004</td>
+<td>Daesung Cable</td>
+</tr>
+</tbody>
+</table>
+<p>If you return whole nodes, you can view the result as a graph. Give the relationships variables too (<code>r</code>, <code>o</code>) and return them as well.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="n">r</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="n">o</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">,</span><span class="w"> </span><span class="n">s</span>
+</code></pre></div>
+
+<figure><a href="img/portal-graph.webp" target="_blank" rel="noopener" title="View larger"><img alt="Graph view of the result card — two late shipments, each through its own purchase order, meet at the same supplier" src="img/portal-graph.webp" / loading="lazy" decoding="async"></a><figcaption>Graph view of the result card — two late shipments, each through its own purchase order, meet at the same supplier</figcaption></figure>
+<p>You can see two shipments <strong>lead to the same supplier</strong> through different purchase orders. This was hard to spot in a table: the delayed shipments are concentrated on one supplier.</p>
+<h3 id="toward-the-customer">Toward the customer<a class="anchor" href="#toward-the-customer" title="Permanent link">#</a></h3>
+<p>Inside the CRM, claim → sales order → customer:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ABOUT</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">PLACED_BY</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">ticket_no</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">severity</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="p">.</span><span class="n">so_no</span><span class="p">,</span><span class="w"> </span><span class="n">cu</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>c.ticket_no</th>
+<th>c.severity</th>
+<th>c.subject</th>
+<th>so.so_no</th>
+<th>cu.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-1</td>
+<td>HIGH</td>
+<td>Controller power failure</td>
+<td>SO-01</td>
+<td>Seoul Electronics</td>
+</tr>
+<tr>
+<td>T-2</td>
+<td>LOW</td>
+<td>Damaged cable packaging</td>
+<td>SO-04</td>
+<td>Berlin Motion</td>
+</tr>
+<tr>
+<td>T-3</td>
+<td>HIGH</td>
+<td>PCB soldering defect</td>
+<td>SO-05</td>
+<td>Tokyo Devices</td>
+</tr>
+</tbody>
+</table>
+<h3 id="patterns-with-two-branches">Patterns with two branches<a class="anchor" href="#patterns-with-two-branches" title="Permanent link">#</a></h3>
+<p>You can connect patterns by writing several of them separated by commas and using <strong>the same variable</strong>. To answer “Which suppliers supplied the item in the soldering defect claim?”, you find the item from the claim in the CRM, then connect that item to purchase order lines and suppliers in the ERP. (You need the <code>PoLine</code> you made in <a href="virtual-graph.html">Chapter 6</a>.)</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">FOR_ITEM</span><span class="o">]-</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ABOUT</span><span class="o">]-</span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">),</span>
+<span class="w">      </span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="n">Item</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">OF_ITEM</span><span class="o">]-</span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">PoLine</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">IN_ORDER</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;soldering&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>i.name</th>
+<th>s.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCB board</td>
+<td>Hanoi Assembly</td>
+</tr>
+<tr>
+<td>PCB board</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+</tbody>
+</table>
+<p>One query read five kinds of nodes across two databases (CRM and ERP).</p>
+<h2 id="keep-rows-without-a-match-optional-match">Keep rows without a match — OPTIONAL MATCH<a class="anchor" href="#keep-rows-without-a-match-optional-match" title="Permanent link">#</a></h2>
+<p>This is the Cypher version of SQL's <code>LEFT JOIN</code>. The row stays even when there is no connected data, and the missing side becomes <code>null</code>.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span>
+</code></pre></div>
+
+<p>Of the 8 rows, only <code>SHP-08</code> has <code>null</code> for <code>po.po_id</code>. This shipment points to purchase order <code>PO-999</code>, which does not exist in the ERP — a <strong>data quality problem</strong> we put there on purpose. To pick only the rows with no connected data:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">sh</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">ref_po_no</span>
+</code></pre></div>
+
+<p>The result is <code>SHP-08</code>, <code>PO-999</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Instead of NOT EXISTS</p>
+<p>Neo4j's <code>WHERE NOT EXISTS { MATCH … }</code> subquery is not supported yet. Use <code>OPTIONAL MATCH</code> + <code>IS NULL</code> as shown above.</p>
+</div>
+<h2 id="grouping-and-counting-aggregation">Grouping and counting — aggregation<a class="anchor" href="#grouping-and-counting-aggregation" title="Permanent link">#</a></h2>
+<p>When <code>RETURN</code> has both aggregate functions and plain values, <strong>rows with the same values in the plain columns form one group</strong> (you don't write a separate <code>GROUP BY</code> as in SQL).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(*)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total</span><span class="p">,</span>
+<span class="w">       </span><span class="n">avg</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">biggest</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>po.status</th>
+<th>n</th>
+<th>total</th>
+<th>average</th>
+<th>biggest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLOSED</td>
+<td>2</td>
+<td>24000</td>
+<td>12000</td>
+<td>15000</td>
+</tr>
+<tr>
+<td>OPEN</td>
+<td>6</td>
+<td>255000</td>
+<td>42500</td>
+<td>82000</td>
+</tr>
+</tbody>
+</table>
+<p>Open purchase order amount by supplier:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">supplier</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_orders</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">amount_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_amount</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">open_amount</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>supplier</th>
+<th>open_orders</th>
+<th>open_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shenzhen Goldline PCB</td>
+<td>2</td>
+<td>123000</td>
+</tr>
+<tr>
+<td>Ningbo Magnetics</td>
+<td>2</td>
+<td>72000</td>
+</tr>
+<tr>
+<td>Hanoi Assembly</td>
+<td>1</td>
+<td>33000</td>
+</tr>
+<tr>
+<td>Hanbit Precision</td>
+<td>1</td>
+<td>27000</td>
+</tr>
+</tbody>
+</table>
+<p>Longest delay by supplier:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-</span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">worst</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">worst</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<p>Shenzhen Goldline PCB 9 days, Ningbo Magnetics 3 days, Daesung Cable 1 day, the rest 0 days.</p>
+<h2 id="splitting-into-stages-with">Splitting into stages — WITH<a class="anchor" href="#splitting-into-stages-with" title="Permanent link">#</a></h2>
+<p><code>WITH</code> splits a query into two stages. The next stage takes over the result of the previous one. Use it when you filter again on an aggregated value (like SQL's <code>HAVING</code>).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">&gt;=</span><span class="w"> </span><span class="m">2</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">n</span>
+</code></pre></div>
+
+<p>Suppliers with two or more purchase orders — Ningbo Magnetics, Shenzhen Goldline PCB and Hanbit Precision (2 each).</p>
+<p>Use <code>size()</code> to get the length of a list built with <code>collect()</code>.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">pos</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">pos</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">Known limitation — filtering on an amount total</p>
+<p>If you <strong>filter again on the sum of a decimal column</strong>, as in <code>WITH s, sum(po.amount_usd) AS total WHERE total &gt; 50000</code>, the current version fails with <code>invalid input syntax for type bigint</code>. Convert to a floating-point number before adding: <code>sum(toFloat(po.amount_usd))</code>.</p>
+<p><code>cypher
+MATCH (po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier)
+WITH s, sum(toFloat(po.amount_usd)) AS total
+WHERE total &gt; 50000
+RETURN s.name, total ORDER BY total DESC</code></p>
+</div>
+<h2 id="starting-from-a-list-unwind">Starting from a list — UNWIND<a class="anchor" href="#starting-from-a-list-unwind" title="Permanent link">#</a></h2>
+<p><code>UNWIND</code> turns a list into rows. It is handy when you look up several keys at once.</p>
+<div class="hl"><pre><span></span><code><span class="k">UNWIND</span><span class="w"> </span><span class="o">[</span><span class="s">&#39;SHP-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;SHP-03&#39;</span><span class="o">]</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">no</span>
+<span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="w"> </span><span class="p">{</span><span class="n">shipment_no</span><span class="p">:</span><span class="w"> </span><span class="n">no</span><span class="p">})</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">eta</span>
+</code></pre></div>
+
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>Group open (<code>OPEN</code>) sales orders by customer, and show each customer's name with a list of order numbers.</li>
+<li>Which purchase orders have two or more shipments?</li>
+<li>Find the customers who filed <code>HIGH</code> severity claims, and their sales orders.</li>
+<li>(Challenge) Show how many open purchase orders each supplier has, <strong>including suppliers with no open purchase orders, shown as 0</strong>.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">PLACED_BY</span><span class="o">]-</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">so</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">cu</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="n">so</span><span class="p">.</span><span class="n">so_no</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_orders</span>
+</code></pre></div>
+
+<p>Tokyo Devices <code>["SO-03", "SO-05"]</code>, Seoul Electronics <code>["SO-02"]</code>.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">SHIPS</span><span class="o">]-</span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">po</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">shipments</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">shipments</span><span class="w"> </span><span class="p">&gt;=</span><span class="w"> </span><span class="m">2</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">shipments</span>
+</code></pre></div>
+
+<p>PO-001 (SHP-01, SHP-02).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">cu</span><span class="p">:</span><span class="n">Customer</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">PLACED_BY</span><span class="o">]-</span><span class="p">(</span><span class="n">so</span><span class="p">:</span><span class="n">SalesOrder</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ABOUT</span><span class="o">]-</span><span class="p">(</span><span class="n">c</span><span class="p">:</span><span class="n">Claim</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">severity</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;HIGH&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">cu</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="p">.</span><span class="n">so_no</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">subject</span>
+</code></pre></div>
+
+<p>Seoul Electronics SO-01 “Controller power failure”, Tokyo Devices SO-05 “PCB soldering defect”.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span><span class="o">&lt;-[</span><span class="p">:</span><span class="n">ORDERED_FROM</span><span class="o">]-</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;OPEN&#39;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">po</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">open_n</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">open_n</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+
+<p>Daesung Cable shows 0, because <code>count(po)</code> does not count <code>null</code> (with <code>count(*)</code> it would be 1).</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="cypher-basics.html"><span>Previous</span>Cypher Basics — Finding and Filtering Nodes</a><a class="next" href="cypher-advanced.html"><span>Next</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#relationship-patterns">Relationship patterns</a><ul><li><a href="#direction">Direction</a></li></ul></li><li><a href="#several-hops-across-databases">Several hops — across databases</a><ul><li><a href="#toward-the-customer">Toward the customer</a></li><li><a href="#patterns-with-two-branches">Patterns with two branches</a></li></ul></li><li><a href="#keep-rows-without-a-match-optional-match">Keep rows without a match — OPTIONAL MATCH</a></li><li><a href="#grouping-and-counting-aggregation">Grouping and counting — aggregation</a></li><li><a href="#splitting-into-stages-with">Splitting into stages — WITH</a></li><li><a href="#starting-from-a-list-unwind">Starting from a list — UNWIND</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

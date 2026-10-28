@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time Travel — Bitemporal Queries — Ontological Studio Tutorial</title>
+<meta name="description" content="“What was true back then?” and “What did we know back then?” are different questions. Learn the two time axes, and ask the same Cypher again with only the point in time changed.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/time-travel.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Time Travel — Bitemporal Queries — Ontological Studio Tutorial">
+<meta property="og:description" content="“What was true back then?” and “What did we know back then?” are different questions. Learn the two time axes, and ask the same Cypher again with only the point in time changed.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/time-travel.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html" class="on" aria-current="page"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">22</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">23</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Learning Cypher<span class="chap">10</span></div>
+    <h1>Time Travel — Bitemporal Queries</h1>
+    <article>
+<blockquote>
+<p>“What was true back then?” and “What did we know back then?” are different questions. Learn the two time axes, and ask the same Cypher again with only the point in time changed.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/V-8SGK7-83M" title="Time Travel — Bitemporal Queries — video 3:46" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-you-need-two-times">Why you need two times<a class="anchor" href="#why-you-need-two-times" title="Permanent link">#</a></h2>
+<p>Say HR recorded Haneul Kim's salary like this:</p>
+<ol>
+<li>4,000 from January 2021 — she joins the company.</li>
+<li>4,600 from January 2024 — a raise. <strong>Her actual salary changed</strong> (a change).</li>
+<li>A few months later, HR finds that the 2024 raise was actually to 4,700 and fixes it. Her actual salary didn't change; <strong>the recorded number was wrong</strong> (a correction).</li>
+</ol>
+<p>Now an auditor asks: “What was her salary in June 2025?” The answer is 4,700. But if they ask, “Why did <strong>the report written before the correction</strong> say 4,600?”, you must be able to reproduce the value <strong>we knew</strong> at that time.</p>
+<table>
+<thead>
+<tr>
+<th>Time axis</th>
+<th>What it asks</th>
+<th>Ontological DB setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Valid time</strong></td>
+<td><strong>When</strong> was it true in the real world?</td>
+<td><code>valid_at</code></td>
+</tr>
+<tr>
+<td><strong>System time</strong> (record time)</td>
+<td><strong>Since when</strong> have we recorded it that way?</td>
+<td><code>system_at</code> (as known at)</td>
+</tr>
+</tbody>
+</table>
+<p>Data that has both axes is called <strong>bitemporal</strong>.</p>
+<figure><a href="../../../images/ontological-db/en/odb-concept-bitemporal.webp" target="_blank" rel="noopener" title="View larger"><img alt="Valid period and stored period for the same product — in the records before the correction, August 15 is SAFE; in the records after it was corrected to RISK from July 1, it is RISK" src="../../../images/ontological-db/en/odb-concept-bitemporal.webp" / loading="lazy" decoding="async"></a><figcaption>Valid period and stored period for the same product — in the records before the correction, August 15 is SAFE; in the records after it was corrected to RISK from July 1, it is RISK</figcaption></figure>
+<h2 id="same-query-different-point-in-time">Same query, different point in time<a class="anchor" href="#same-query-different-point-in-time" title="Permanent link">#</a></h2>
+<p>In Ontological DB, you set the point in time <strong>separately from the query statement.</strong> You keep the Cypher as it is and change only “as of when” you look.</p>
+<figure><a href="../../../images/ontological-db/en/odb-concept-timequery.webp" target="_blank" rel="noopener" title="View larger"><img alt="Point-in-time query flow — for the same question, choose a valid date and a recorded-as-of time; the query finds the records that fit those dates (current, past, before correction) and answers with the information and relationships of that time" src="../../../images/ontological-db/en/odb-concept-timequery.webp" / loading="lazy" decoding="async"></a><figcaption>Point-in-time query flow — for the same question, choose a valid date and a recorded-as-of time; the query finds the records that fit those dates (current, past, before correction) and answers with the information and relationships of that time</figcaption></figure>
+<ul>
+<li><strong>The same point in time</strong> applies to relationships too. If you ask as of 2022, the query follows only the relationships that existed in 2022.</li>
+<li>When you ask about the present, only current rows are read; records from before a correction are searched only when you set a point in time. So everyday queries don't slow down even with a lot of history.</li>
+</ul>
+<figure><a href="../../../images/ontological-db/en/odb-concept-index.webp" target="_blank" rel="noopener" title="View larger"><img alt="Fast point-in-time search — a current query reads only current rows and open history; closed history replaced by corrections is searched only by queries with a point in time" src="../../../images/ontological-db/en/odb-concept-index.webp" / loading="lazy" decoding="async"></a><figcaption>Fast point-in-time search — a current query reads only current rows and open history; closed history replaced by corrections is searched only by queries with a point in time</figcaption></figure>
+<h2 id="the-time-travel-bar-in-the-portal">The time travel bar in the portal<a class="anchor" href="#the-time-travel-bar-in-the-portal" title="Permanent link">#</a></h2>
+<p>Click the clock button (⏱) to the right of the portal's input box to open the <strong>TIME TRAVEL</strong> bar.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>valid at</td>
+<td>Valid time. Enter a date such as <code>2022-06-01</code>.</td>
+</tr>
+<tr>
+<td>as known at</td>
+<td>System time. Choose <code>now</code>, or the moment “right after” a recent write to this graph from the list.</td>
+</tr>
+</tbody>
+</table>
+<p>When you set a point in time, the input box border turns yellow, and the result card is marked with the point in time, such as <code>⏱ valid 2022-06-01</code>. To turn it off, click <strong>clear</strong>.</p>
+<figure><a href="img/portal-time.webp" target="_blank" rel="noopener" title="View larger"><img alt="Time travel bar — running the same query with valid at 2022-06-01 returns the salary at that time, 4000" src="img/portal-time.webp" / loading="lazy" decoding="async"></a><figcaption>Time travel bar — running the same query with valid at 2022-06-01 returns the salary at that time, 4000</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Time versioning is turned on per type</p>
+<p>You turn on time versioning for each node or relationship type whose history you want to keep. The types that have it on are shown to the right of the time bar, as in <code>temporal types: Employee</code>. For types without it, you get the current value whatever point in time you set. The sample's virtual nodes (views of the source databases) can't be time-traveled, because the sources don't keep history.</p>
+</div>
+<h2 id="try-it-advanced-optional-build-a-salary-history">Try it (advanced, optional) — build a salary history<a class="anchor" href="#try-it-advanced-optional-build-a-salary-history" title="Permanent link">#</a></h2>
+<p>In the current version, turning on time versioning and writing data with a “valid from” date is done in an <strong>SQL session</strong>. If you have used <code>psql</code> in a database course, give it a try. (These steps are for macOS. You can skip this section and still continue with the next chapter.)</p>
+<p><strong>1. Find the connection details.</strong> In the app's data folder (<code>~/Library/Application Support/Ontological Studio/</code>), look up the <code>pg</code> port in <code>ports.json</code> and <code>pgPassword</code> in <code>secrets.json</code>. The user is <code>og</code> and the database is <code>ogstudio</code>.</p>
+<div class="hl"><pre><span></span><code><span class="nv">APP</span><span class="o">=</span><span class="s2">&quot;/Applications/Ontological Studio.app/Contents/Resources/runtime/pg/bin/psql&quot;</span>
+<span class="nv">DATA</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/Library/Application Support/Ontological Studio&quot;</span>
+<span class="nv">PORT</span><span class="o">=</span><span class="k">$(</span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import json;print(json.load(open(&#39;</span><span class="nv">$DATA</span><span class="s2">/ports.json&#39;))[&#39;pg&#39;])&quot;</span><span class="k">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PGPASSWORD</span><span class="o">=</span><span class="k">$(</span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import json;print(json.load(open(&#39;</span><span class="nv">$DATA</span><span class="s2">/secrets.json&#39;))[&#39;pgPassword&#39;])&quot;</span><span class="k">)</span>
+<span class="s2">&quot;</span><span class="nv">$APP</span><span class="s2">&quot;</span><span class="w"> </span>-h<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span>-p<span class="w"> </span><span class="nv">$PORT</span><span class="w"> </span>-U<span class="w"> </span>og<span class="w"> </span>-d<span class="w"> </span>ogstudio
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">This is an admin account</p>
+<p><code>og</code> is the database administrator of this app. Don't run any statements other than the examples below. If you break the sample by mistake, you can reset it as described in <a href="install.html">Chapter 1</a>.</p>
+</div>
+<p><strong>2. Create a graph and a type, and turn on time versioning.</strong></p>
+<div class="hl"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">og_create_graph</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_create_type</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;entity&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_add_property</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="p">),</span>
+<span class="w">       </span><span class="n">og_add_property</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;salary&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;int&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_enable_temporal</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Employee&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p><strong>3. Write three records.</strong> <code>SET LOCAL og.valid_from</code> says “from when this is true”. It disappears when the transaction ends, so set it for each record.</p>
+<div class="hl"><pre><span></span><code><span class="k">BEGIN</span><span class="p">;</span><span class="w">  </span><span class="c1">-- joined in 2021</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"> </span><span class="n">og</span><span class="p">.</span><span class="n">valid_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2021-01-01&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_cypher</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">$$</span><span class="k">CREATE</span><span class="w"> </span><span class="p">(:</span><span class="n">Employee</span><span class="w"> </span><span class="err">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Haneul Kim&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">salary</span><span class="p">:</span><span class="w"> </span><span class="mi">4000</span><span class="err">}</span><span class="p">)</span><span class="err">$$</span><span class="p">);</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+
+<span class="k">BEGIN</span><span class="p">;</span><span class="w">  </span><span class="c1">-- raise from 2024 (change)</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"> </span><span class="n">og</span><span class="p">.</span><span class="n">valid_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_cypher</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">$$</span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="err">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Haneul Kim&#39;</span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4600</span><span class="err">$$</span><span class="p">);</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+
+<span class="k">BEGIN</span><span class="p">;</span><span class="w">  </span><span class="c1">-- it was 4700, not 4600 (correction)</span>
+<span class="k">SET</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"> </span><span class="n">og</span><span class="p">.</span><span class="n">valid_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;-infinity&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">og_cypher</span><span class="p">(</span><span class="s1">&#39;hr&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">$$</span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="n">Employee</span><span class="w"> </span><span class="err">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Haneul Kim&#39;</span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4700</span><span class="err">$$</span><span class="p">);</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+</code></pre></div>
+
+<p>The <code>'-infinity'</code> in the correction is the key. It means “keep the valid period (from 2024) as it is and fix only the value”. If you set it to <code>'2024-01-01'</code>, it becomes another change instead.</p>
+<p><strong>4. Ask in the portal.</strong> Refresh the portal and switch the graph to <code>hr</code>. The query is always the same:</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="n">Employee</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>valid at</th>
+<th>as known at</th>
+<th>Result</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(empty)</td>
+<td>now</td>
+<td>4700</td>
+<td>Today's salary, as we know it now</td>
+</tr>
+<tr>
+<td>2022-06-01</td>
+<td>now</td>
+<td>4000</td>
+<td>The salary in 2022</td>
+</tr>
+<tr>
+<td>2025-06-01</td>
+<td>now</td>
+<td>4700</td>
+<td>The 2025 salary, including the correction</td>
+</tr>
+<tr>
+<td>2025-06-01</td>
+<td>right after “…SET e.salary = 4600”</td>
+<td>4600</td>
+<td>The 2025 salary as known by <strong>the report written before the correction</strong></td>
+</tr>
+<tr>
+<td>2020-06-01</td>
+<td>now</td>
+<td>(none)</td>
+<td>She wasn't an employee before she joined</td>
+</tr>
+</tbody>
+</table>
+<p>The fourth result shows the strength of bitemporal data. In an ordinary database that overwrites values, you can't go back and see “why we decided that way back then”.</p>
+<h2 id="the-schema-keeps-history-too">The schema keeps history too<a class="anchor" href="#the-schema-keeps-history-too" title="Permanent link">#</a></h2>
+<p>Not only data but also the schema keeps history. A <strong>schema change</strong>, such as changing a property's type, also goes through plan → impact review → staged execution → validation → completion, and leaves a history. If even one value can't be converted, the change doesn't complete. You can plan a change and see its progress and history in the portal's schema designer.</p>
+<figure><a href="../../../images/ontological-db/en/odb-concept-schema-steps.webp" target="_blank" rel="noopener" title="View larger"><img alt="Schema change stages — plan, impact review, staged execution, validation, completion and a history record. If validation fails, you fix the bad values and validate again" src="../../../images/ontological-db/en/odb-concept-schema-steps.webp" / loading="lazy" decoding="async"></a><figcaption>Schema change stages — plan, impact review, staged execution, validation, completion and a history record. If validation fails, you fix the bad values and validate again</figcaption></figure>
+<p>For more, see the <a href="../../../contents/ontologicaldb.html">Ontological DB introduction</a>.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>Is each of these a change or a correction? ⓐ From July 1, a supplier's grade went down from 1 to 2. ⓑ A supplier's country was entered as Korea by mistake; it was actually Vietnam.</li>
+<li>To ask for “the 2022 salary as we knew it when we filed the 2023 audit report”, what do you set in each of the two fields?</li>
+<li>What happens if you query a type without time versioning and give it a <code>valid_at</code>?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>ⓐ A change — the actual grade changed, so <code>valid_from = '2026-07-01'</code>. ⓑ A correction — it was Vietnam from the start, so fix only the value with <code>valid_from = '-infinity'</code>.</li>
+<li>valid at = a date in 2022; as known at = the time the 2023 audit report was filed (the write just before it).</li>
+<li>You get the current value regardless of the point in time. No history was kept, so there is no past to go back to.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="cypher-advanced.html"><span>Previous</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a><a class="next" href="golden.html"><span>Next</span>Golden Questions and Golden Commands</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-you-need-two-times">Why you need two times</a></li><li><a href="#same-query-different-point-in-time">Same query, different point in time</a></li><li><a href="#the-time-travel-bar-in-the-portal">The time travel bar in the portal</a></li><li><a href="#try-it-advanced-optional-build-a-salary-history">Try it (advanced, optional) — build a salary history</a></li><li><a href="#the-schema-keeps-history-too">The schema keeps history too</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
