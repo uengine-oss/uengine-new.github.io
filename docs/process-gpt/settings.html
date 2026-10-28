@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설정 — 동료를 들이고 화면을 바꾸기 — Process GPT 튜토리얼</title>
+<meta name="description" content="위쪽 막대의 ⚙ 설정에서 내 계정과 테마를 바꾸고, 영업 담당 김민지를 이 회사의 사용자로 들입니다. 화면 언어를 영어로 바꿨다가 되돌려 보고, 앞 장에서 쓴 지식 베이스·MCP 서버·환경변수 탭이 어디 있는지 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt/settings.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="설정 — 동료를 들이고 화면을 바꾸기 — Process GPT 튜토리얼">
+<meta property="og:description" content="위쪽 막대의 ⚙ 설정에서 내 계정과 테마를 바꾸고, 영업 담당 김민지를 이 회사의 사용자로 들입니다. 화면 언어를 영어로 바꿨다가 되돌려 보고, 앞 장에서 쓴 지식 베이스·MCP 서버·환경변수 탭이 어디 있는지 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt/settings.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 게이트웨이, 에이전트, 폼)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 가입하기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로세스 기본</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>대화로 프로세스 만들기</a></li>
+<li><a href="definition.html"><span class="n">04</span>정의 들여다보기와 버전</a></li>
+<li><span class="soon"><span class="n">05</span>조직도와 역할 담당자<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">06</span>실행하고 할 일 처리하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>승인과 반려 — 갈림길과 되돌아가기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">AI 에이전트</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></li>
+<li><a href="agents.html"><span class="n">09</span>에이전트 동료 만들기</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>에이전트와 대화하기</a></li>
+<li><span class="soon"><span class="n">11</span>스킬로 일하는 방법 가르치기<em>준비 중</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>문서로 프로세스 만들기</a></li>
+<li><span class="soon"><span class="n">13</span>에이전트가 맡는 단계 실행하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">도구와 규칙</div><ul>
+<li><span class="soon"><span class="n">14</span>MCP로 외부 도구 연결하기<em>준비 중</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a></li>
+</ul>
+<div class="nav-part">분석과 개선</div><ul>
+<li><span class="soon"><span class="n">16</span>실행 분석 — 리드타임과 병목<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">17</span>전략 보드와 KPI<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="settings.html" class="on" aria-current="page"><span class="n">18</span>설정 — 동료를 들이고 화면을 바꾸기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">19</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>한눈에 보기</a></li>
+<li><a href="faq.html"><span class="n">21</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">운영<span class="chap">18</span></div>
+    <h1>설정 — 동료를 들이고 화면을 바꾸기</h1>
+    <article>
+<blockquote>
+<p>위쪽 막대의 ⚙ 설정에서 내 계정과 테마를 바꾸고, 영업 담당 김민지를 이 회사의 사용자로 들입니다. 화면 언어를 영어로 바꿨다가 되돌려 보고, 앞 장에서 쓴 지식 베이스·MCP 서버·환경변수 탭이 어디 있는지 확인합니다.</p>
+</blockquote>
+<h2 id="설정-화면">설정 화면<a class="anchor" href="#설정-화면" title="Permanent link">#</a></h2>
+<p>위쪽 막대 오른쪽 끝의 ⚙을 누르면 설정이 열립니다. 위에 탭이 한 줄로 있고, 줄 끝에 화면 언어(「🇰🇷 한국어」)가 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>탭</th>
+<th>하는 일</th>
+<th>이 튜토리얼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>계정 설정</td>
+<td>이름·이메일·프로필 사진, 2단계 인증(OTP)</td>
+<td>이 장</td>
+</tr>
+<tr>
+<td>테마 설정</td>
+<td>색상 테마(라이트·스카이·다크), 화면 간소화</td>
+<td>이 장</td>
+</tr>
+<tr>
+<td>사용자 관리</td>
+<td>같은 회사 사람 목록과 역할</td>
+<td>이 장</td>
+</tr>
+<tr>
+<td>지식 베이스</td>
+<td>위쪽 막대의 지식 베이스와 같은 화면</td>
+<td><a href="knowledge.html">8장</a></td>
+</tr>
+<tr>
+<td>MCP 서버 · 환경변수</td>
+<td>에이전트에게 붙일 도구 서버와 그 비밀값</td>
+<td>14장(준비 중)</td>
+</tr>
+<tr>
+<td>구글 드라이브 설정 · Git 설정 · 데이터소스 · 코드 편집 · 용어집 관리 · 카탈로그 · 조직 그룹 · 테넌트 관리</td>
+<td>바깥 저장소·데이터 연동과 관리 기능</td>
+<td>쓰지 않음</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/set-account.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="설정 — 계정 설정 탭(프로필 이미지, 이름·이메일, 2단계 인증), 탭 줄 끝의 「🇰🇷 한국어」" src="img/set-account.webp" / loading="lazy" decoding="async"></a><figcaption>설정 — 계정 설정 탭(프로필 이미지, 이름·이메일, 2단계 인증), 탭 줄 끝의 「🇰🇷 한국어」</figcaption></figure>
+<h2 id="따라-하기-1-계정과-테마">따라 하기 1 — 계정과 테마<a class="anchor" href="#따라-하기-1-계정과-테마" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>「계정 설정」에서 이름과 프로필 사진을 바꿀 수 있습니다. 바꾸면 「저장」을 누릅니다.</li>
+<li>「2단계 인증 (OTP)」의 「2단계 인증 사용」을 켜면 로그인할 때마다 인증 앱의 6자리 코드를 한 번 더 넣습니다. 실습에서는 켜지 않습니다.</li>
+<li>「테마 설정」에서 색상 테마를 골라 봅니다. 「화면 간소화」를 켜면 정의 체계도와 인스턴스 화면이 목록 · 대화 · 산출물 세 칸으로만 보입니다.</li>
+</ol>
+<figure><a href="img/set-theme.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="테마 설정 — 색상 테마 라이트·스카이·다크, 화면 간소화" src="img/set-theme.webp" / loading="lazy" decoding="async"></a><figcaption>테마 설정 — 색상 테마 라이트·스카이·다크, 화면 간소화</figcaption></figure>
+<h2 id="따라-하기-2-동료-들이기">따라 하기 2 — 동료 들이기<a class="anchor" href="#따라-하기-2-동료-들이기" title="Permanent link">#</a></h2>
+<p>「사용자 관리」에는 지금 나(장진영, superAdmin) 한 사람만 있습니다. 「사용자 초대」는 초대 메일을 보내는 기능인데, 로컬 설치본은 메일을 보내지 않습니다. 로컬에서는 동료가 <strong>같은 주소에서 직접 가입</strong>하면 이 회사의 사용자로 들어옵니다.</p>
+<figure><a href="img/set-users.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사용자 관리 — 「사용자 초대」 단추와 장진영(나, superAdmin)" src="img/set-users.webp" / loading="lazy" decoding="async"></a><figcaption>사용자 관리 — 「사용자 초대」 단추와 장진영(나, superAdmin)</figcaption></figure>
+<ol class="steps">
+<li>다른 브라우저(또는 시크릿 창)로 http://localhost:8088 을 열고 「사용해 보기」 › 「계정 생성」으로 영업 담당 <strong>김민지</strong>(<code>minji@hanbit.example</code>)를 가입시킵니다(<a href="install.html">1장</a>과 같습니다).</li>
+<li>“회원가입에 성공했습니다”와 함께 김민지로 바로 로그인되어 프로세스 체계도가 열립니다.</li>
+<li>장진영 쪽 「사용자 관리」를 새로고침하면 김민지(<code>user</code>)가 목록에 들어와 있습니다.</li>
+</ol>
+<figure><a href="img/in-minji-register.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="김민지 가입 — 계정 생성 화면" src="img/in-minji-register.webp" / loading="lazy" decoding="async"></a><figcaption>김민지 가입 — 계정 생성 화면</figcaption></figure>
+<figure><a href="img/set-users-after.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="가입 뒤 사용자 관리 — 장진영(superAdmin)과 김민지" src="img/set-users-after.webp" / loading="lazy" decoding="async"></a><figcaption>가입 뒤 사용자 관리 — 장진영(superAdmin)과 김민지</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">처음 가입한 사람만 관리자</p>
+<p>로컬 설치본은 회사 하나(테넌트 <code>localhost</code>)만 둡니다. 처음 가입한 사람이 관리자(superAdmin), 그 뒤에 가입한 사람은 일반 사용자(user)로 바로 들어옵니다.</p>
+</div>
+<h2 id="따라-하기-3-화면-언어-바꾸기">따라 하기 3 — 화면 언어 바꾸기<a class="anchor" href="#따라-하기-3-화면-언어-바꾸기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>탭 줄 끝의 「🇰🇷 한국어」를 누르고 <strong>🇺🇸 English</strong>를 고릅니다. 탭 이름이 Account Settings, Appearance, Manage Users …로 바뀝니다.</li>
+<li>홈으로 가 보면 사이드바(Conversations, Agent Colleagues)와 채팅 상자(「How can I help you?」, Deep Agent)도 영어입니다. 내가 만든 프로세스·에이전트 이름은 그대로입니다.</li>
+<li>다시 설정의 「English」를 눌러 <strong>한국어</strong>로 되돌립니다.</li>
+</ol>
+<figure><a href="img/set-lang.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="언어 메뉴" src="img/set-lang.webp" / loading="lazy" decoding="async"></a><figcaption>언어 메뉴</figcaption></figure>
+<figure><a href="img/set-english-home.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="English로 바꾼 홈" src="img/set-english-home.webp" / loading="lazy" decoding="async"></a><figcaption>English로 바꾼 홈</figcaption></figure>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>여기까지가 이번에 공개한 장입니다. 「준비 중」으로 표시된 장(조직도와 역할 담당자, 실행하고 할 일 처리하기, 승인과 반려 등)은 현재 버전에서 고치는 부분이 반영되면 차례로 공개합니다. 한눈에 보는 정리는 <a href="cheatsheet.html">부록</a>에 있습니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>로컬 설치본에서 동료를 이 회사의 사용자로 들이려면 어떻게 하나요?</li>
+<li>두 번째로 가입한 김민지는 관리자인가요?</li>
+<li>화면을 영어로 바꾼 뒤 한국어로 되돌리려면 어디를 누르나요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>같은 주소(http://localhost:8088)에서 「계정 생성」으로 직접 가입하게 합니다. 로컬 설치본은 초대 메일을 보내지 않습니다.</li>
+<li>아닙니다. 처음 가입한 장진영만 관리자이고, 김민지는 일반 사용자로 들어옵니다.</li>
+<li>⚙ 설정의 탭 줄 끝 「English」를 누르고 「한국어」를 고릅니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="dmn.html"><span>이전</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a><a class="next" href="cheatsheet.html"><span>다음</span>한눈에 보기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT를 로컬에 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#설정-화면">설정 화면</a></li><li><a href="#따라-하기-1-계정과-테마">따라 하기 1 — 계정과 테마</a></li><li><a href="#따라-하기-2-동료-들이기">따라 하기 2 — 동료 들이기</a></li><li><a href="#따라-하기-3-화면-언어-바꾸기">따라 하기 3 — 화면 언어 바꾸기</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

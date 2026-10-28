@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>비즈니스 규칙(DMN) — 결정을 표로 맡기기 — Process GPT 튜토리얼</title>
+<meta name="description" content="가격표의 수량 할인 기준을 말로 설명해 **결정표(DMN)**로 만들고, 버전으로 저장한 뒤 추론 모드로 시험합니다. 규칙이 붙은 「한빛오피스 견적 상담가」에게 물으면 그 규칙대로 할인율을 답합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt/dmn.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="비즈니스 규칙(DMN) — 결정을 표로 맡기기 — Process GPT 튜토리얼">
+<meta property="og:description" content="가격표의 수량 할인 기준을 말로 설명해 **결정표(DMN)**로 만들고, 버전으로 저장한 뒤 추론 모드로 시험합니다. 규칙이 붙은 「한빛오피스 견적 상담가」에게 물으면 그 규칙대로 할인율을 답합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt/dmn.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 게이트웨이, 에이전트, 폼)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 가입하기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로세스 기본</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>대화로 프로세스 만들기</a></li>
+<li><a href="definition.html"><span class="n">04</span>정의 들여다보기와 버전</a></li>
+<li><span class="soon"><span class="n">05</span>조직도와 역할 담당자<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">06</span>실행하고 할 일 처리하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>승인과 반려 — 갈림길과 되돌아가기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">AI 에이전트</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></li>
+<li><a href="agents.html"><span class="n">09</span>에이전트 동료 만들기</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>에이전트와 대화하기</a></li>
+<li><span class="soon"><span class="n">11</span>스킬로 일하는 방법 가르치기<em>준비 중</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>문서로 프로세스 만들기</a></li>
+<li><span class="soon"><span class="n">13</span>에이전트가 맡는 단계 실행하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">도구와 규칙</div><ul>
+<li><span class="soon"><span class="n">14</span>MCP로 외부 도구 연결하기<em>준비 중</em></span></li>
+<li><a href="dmn.html" class="on" aria-current="page"><span class="n">15</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a></li>
+</ul>
+<div class="nav-part">분석과 개선</div><ul>
+<li><span class="soon"><span class="n">16</span>실행 분석 — 리드타임과 병목<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">17</span>전략 보드와 KPI<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="settings.html"><span class="n">18</span>설정 — 동료를 들이고 화면을 바꾸기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">19</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>한눈에 보기</a></li>
+<li><a href="faq.html"><span class="n">21</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">도구와 규칙<span class="chap">15</span></div>
+    <h1>비즈니스 규칙(DMN) — 결정을 표로 맡기기</h1>
+    <article>
+<blockquote>
+<p>가격표의 수량 할인 기준을 말로 설명해 <strong>결정표(DMN)</strong>로 만들고, 버전으로 저장한 뒤 추론 모드로 시험합니다. 규칙이 붙은 「한빛오피스 견적 상담가」에게 물으면 그 규칙대로 할인율을 답합니다.</p>
+</blockquote>
+<h2 id="왜-결정표인가">왜 결정표인가<a class="anchor" href="#왜-결정표인가" title="Permanent link">#</a></h2>
+<p>“같은 제품 20~49개면 5%, 50~99개면 8%…” 같은 기준은 문서에 글로 있으면 사람도 AI도 매번 다시 읽고 해석해야 합니다. <strong>결정표</strong>는 이런 기준을 「조건(When) → 결과(Then)」 줄로 정리한 표입니다. 표준 이름은 DMN(Decision Model and Notation)이고, Process GPT에서는 <strong>비즈니스 규칙</strong>이라고 부릅니다.</p>
+<table>
+<thead>
+<tr>
+<th>글로 된 기준</th>
+<th>결정표</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>읽는 사람마다 해석이 다를 수 있음</td>
+<td>조건마다 결과가 한 줄로 정해짐</td>
+</tr>
+<tr>
+<td>바꾸면 어디를 고쳤는지 찾기 어려움</td>
+<td>버전으로 저장하고 비교</td>
+</tr>
+<tr>
+<td>에이전트가 문서를 찾아 읽어야 함</td>
+<td>에이전트가 규칙을 바로 찾아 씀</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-말로-결정표-만들기">따라 하기 1 — 말로 결정표 만들기<a class="anchor" href="#따라-하기-1-말로-결정표-만들기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>사이드바 「에이전트 동료」에서 「한빛오피스 견적 상담가」를 엽니다(<a href="agent-chat.html">10장</a>).</li>
+<li>왼쪽 프로필 맨 아래 <strong>「비즈니스 규칙」 옆의 ＋</strong>를 누릅니다. 오른쪽에 DMN 편집기와 채팅 상자가 열리고, 채팅 상자 왼쪽 아래 모드가 「생성」입니다.</li>
+<li>아래처럼 적고 보냅니다.</li>
+</ol>
+<figure><a href="img/dmn-editor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="비즈니스 규칙 ＋ — 에이전트 프로필 아래의 「비즈니스 규칙 ＋」, 오른쪽에 열린 DMN 편집기(DRD)와 「생성」 모드 채팅 상자" src="img/dmn-editor.webp" / loading="lazy" decoding="async"></a><figcaption>비즈니스 규칙 ＋ — 에이전트 프로필 아래의 「비즈니스 규칙 ＋」, 오른쪽에 열린 DMN 편집기(DRD)와 「생성」 모드 채팅 상자</figcaption></figure>
+<div class="hl"><pre><span></span><code>한빛오피스 수량 할인 규칙을 결정표로 만들어 줘. 입력은 같은 제품의 주문 수량(숫자), 출력은 할인율(%)이야. 1~19개는 0%, 20~49개는 5%, 50~99개는 8%, 100개 이상은 12%.
+</code></pre></div>
+
+<p>실습에서는 3초 만에 “한빛오피스 수량 할인 결정표를 생성했습니다”와 함께 수정 내역(의사결정 이름, 입력 「수량」(숫자형), 출력 「할인율」(숫자형), 규칙 4개)이 왔고, 편집기의 결정 상자 이름이 「한빛오피스 수량 할인 결정」으로 바뀌었습니다.</p>
+<figure><a href="img/dmn-generated.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="생성 결과 — DRD의 「한빛오피스 수량 할인 결정」 상자와 채팅의 수정 내역" src="img/dmn-generated.webp" / loading="lazy" decoding="async"></a><figcaption>생성 결과 — DRD의 「한빛오피스 수량 할인 결정」 상자와 채팅의 수정 내역</figcaption></figure>
+<h2 id="따라-하기-2-표-열어-보기">따라 하기 2 — 표 열어 보기<a class="anchor" href="#따라-하기-2-표-열어-보기" title="Permanent link">#</a></h2>
+<p>결정 상자 왼쪽 위의 파란 표 아이콘을 누르면 결정표가 열립니다.</p>
+<figure><a href="img/dmn-table.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정표 — Hit policy 「Unique」, When 「수량」(number), Then 「할인율」(number), 규칙 4줄" src="img/dmn-table.webp" / loading="lazy" decoding="async"></a><figcaption>결정표 — Hit policy 「Unique」, When 「수량」(number), Then 「할인율」(number), 규칙 4줄</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>When 수량</th>
+<th>Then 할인율</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&gt;= 1 and &lt; 20</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&gt;= 20 and &lt; 50</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&gt;= 50 and &lt; 100</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&gt;= 100</code></td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hit policy 「Unique」</strong>는 어떤 입력에도 맞는 줄이 딱 하나여야 한다는 뜻입니다. 구간이 겹치지 않게 만들어졌는지 표에서 확인합니다. 칸을 눌러 직접 고칠 수도 있고, 표 아래 ＋로 줄을 더합니다. 왼쪽 위 「‹」(View DRD)로 돌아갑니다.</p>
+<h2 id="따라-하기-3-버전으로-저장하기">따라 하기 3 — 버전으로 저장하기<a class="anchor" href="#따라-하기-3-버전으로-저장하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>편집기 오른쪽 위 「New DMN Decision」 옆의 💾를 누릅니다. <strong>DMN 저장</strong> 창이 뜹니다.</li>
+<li>「이름」에 <code>한빛오피스 수량 할인</code>, 「설명」에 무엇의 규칙인지 적습니다. 「버전 태그」는 「마이너 업데이트」 그대로(v0.0 → v0.1).</li>
+<li>「저장」을 누르면 “저장되었습니다.”가 뜨고, 프로필의 「비즈니스 규칙」 아래에 「한빛오피스 수량 할인」이 생깁니다.</li>
+</ol>
+<figure><a href="img/dmn-save.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="DMN 저장 창 — 이름 「한빛오피스 수량 할인」, 버전 태그 마이너 업데이트(v0.0 → v0.1), 설명" src="img/dmn-save.webp" / loading="lazy" decoding="async"></a><figcaption>DMN 저장 창 — 이름 「한빛오피스 수량 할인」, 버전 태그 마이너 업데이트(v0.0 → v0.1), 설명</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">이름을 적어야 저장됩니다</p>
+<p>「이름」이 비어 있으면 「저장」 단추가 눌리지 않습니다. 프로세스 정의처럼(<a href="definition.html">4장</a>) 저장할 때마다 버전이 하나씩 올라갑니다.</p>
+</div>
+<h2 id="따라-하기-4-추론-모드로-시험하기">따라 하기 4 — 추론 모드로 시험하기<a class="anchor" href="#따라-하기-4-추론-모드로-시험하기" title="Permanent link">#</a></h2>
+<p>채팅 상자 왼쪽 아래 모드를 「생성」에서 <strong>「추론」</strong>으로 바꾸고 묻습니다.</p>
+<div class="hl"><pre><span></span><code>주문 수량이 40개일 때 할인율은 얼마야?
+</code></pre></div>
+
+<p>실습에서는 약 12초 뒤, 규칙마다 40이 조건에 맞는지 따져 본 표(rule_2 「20 이상 50 미만」만 ✅)와 Hit policy 설명, <strong>최종 결과 「수량이 40개인 경우 적용되는 할인율은 5%입니다」</strong>가 왔습니다.</p>
+<figure><a href="img/dmn-infer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="추론 모드 — 모드 「추론」, Hit Policy 설명과 최종 결과 「수량이 40개인 경우 적용되는 할인율은 5%입니다」" src="img/dmn-infer.webp" / loading="lazy" decoding="async"></a><figcaption>추론 모드 — 모드 「추론」, Hit Policy 설명과 최종 결과 「수량이 40개인 경우 적용되는 할인율은 5%입니다」</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">경계값으로 시험하세요</p>
+<p>19와 20, 49와 50, 99와 100처럼 구간이 바뀌는 수량을 물어보면 표의 「이상·미만」이 의도대로인지 빨리 확인됩니다.</p>
+</div>
+<h2 id="따라-하기-5-에이전트에게-규칙으로-묻기">따라 하기 5 — 에이전트에게 규칙으로 묻기<a class="anchor" href="#따라-하기-5-에이전트에게-규칙으로-묻기" title="Permanent link">#</a></h2>
+<p>에이전트를 다시 열면 프로필의 「비즈니스 규칙」 아래에 「한빛오피스 수량 할인」이 보입니다. 오른쪽 「새 채팅」에서 묻습니다.</p>
+<figure><a href="img/dmn-listed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="규칙이 붙은 에이전트 — 프로필 맨 아래 「비즈니스 규칙」의 「한빛오피스 수량 할인」" src="img/dmn-listed.webp" / loading="lazy" decoding="async"></a><figcaption>규칙이 붙은 에이전트 — 프로필 맨 아래 「비즈니스 규칙」의 「한빛오피스 수량 할인」</figcaption></figure>
+<div class="hl"><pre><span></span><code>등록된 비즈니스 규칙 「한빛오피스 수량 할인」을 찾아서, 메쉬 의자 에어 60개를 주문하면 할인율이 몇 %인지 알려 줘.
+</code></pre></div>
+
+<p>실습에서는 약 25초 뒤 “비즈니스 규칙 「한빛오피스 수량 할인」의 DMN(의사결정 표)에 따르면 … 메쉬 의자 에어를 60개 주문하면 적용되는 할인율은 8%입니다.”라고 답했습니다. 지식 베이스의 가격표를 고르지 않았는데도 규칙을 찾아 답합니다.</p>
+<figure><a href="img/dmn-agent-answer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트의 답 — 규칙의 네 구간과 「60개를 주문하면 적용되는 할인율은 8%」" src="img/dmn-agent-answer.webp" / loading="lazy" decoding="async"></a><figcaption>에이전트의 답 — 규칙의 네 구간과 「60개를 주문하면 적용되는 할인율은 8%」</figcaption></figure>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>결정표로 할인율을 맡겼습니다. 견적 승인 규정의 「3,000만 원 미만은 영업팀장, 이상은 재무 담당까지」 같은 승인 기준도 같은 방법으로 표로 만들 수 있습니다. 다음은 지금까지 만든 것을 관리하는 설정 화면입니다(<a href="settings.html">18장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>결정표의 Hit policy 「Unique」는 무슨 뜻인가요?</li>
+<li>추론 모드에 「수량이 50개면?」이라고 물으면 몇 %가 나와야 하나요? 표의 몇 번째 줄인가요?</li>
+<li>견적 승인 규정 「제5조」의 승인자 기준을 결정표로 만든다면 입력과 출력은 무엇이 될까요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>어떤 입력에도 맞는 줄이 하나만 있어야 한다는 뜻입니다. 구간이 겹치면 안 됩니다.</li>
+<li>8%, 3번째 줄(<code>&gt;= 50 and &lt; 100</code>)입니다. 50은 2번째 줄의 <code>&lt; 50</code>에 들지 않습니다.</li>
+<li>입력은 「견적 총액(부가세 별도, 숫자)」, 출력은 「승인자」(예: <code>영업팀장</code>, <code>영업팀장 + 재무 담당</code>)입니다. 줄은 <code>&lt; 30000000</code> → 영업팀장, <code>&gt;= 30000000</code> → 영업팀장 + 재무 담당.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="document-process.html"><span>이전</span>문서로 프로세스 만들기</a><a class="next" href="settings.html"><span>다음</span>설정 — 동료를 들이고 화면을 바꾸기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT를 로컬에 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-결정표인가">왜 결정표인가</a></li><li><a href="#따라-하기-1-말로-결정표-만들기">따라 하기 1 — 말로 결정표 만들기</a></li><li><a href="#따라-하기-2-표-열어-보기">따라 하기 2 — 표 열어 보기</a></li><li><a href="#따라-하기-3-버전으로-저장하기">따라 하기 3 — 버전으로 저장하기</a></li><li><a href="#따라-하기-4-추론-모드로-시험하기">따라 하기 4 — 추론 모드로 시험하기</a></li><li><a href="#따라-하기-5-에이전트에게-규칙으로-묻기">따라 하기 5 — 에이전트에게 규칙으로 묻기</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
