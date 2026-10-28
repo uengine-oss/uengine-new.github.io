@@ -344,19 +344,20 @@ LLM_API_KEY=… LLM_BASE_URL=… LLM_MODEL=… ADMIN_EMAIL=… ./install.sh --ye
 <p class="admonition-title">데모 로그인은 닫힌 PC에서만</p>
 <p><code>DEMO_LOGIN=1</code>로 두면 <strong>아무 이메일</strong>이나 코드 <code>000000</code>으로 로그인됩니다. 시연이나 혼자 써 보는 PC에서만 켜고, 다른 사람이 접속할 수 있는 서버에서는 반드시 <code>DEMO_LOGIN=0</code>(기본값)으로 두세요. 끄려면 <code>.env</code>의 값을 <code>0</code>으로 바꾸고 <code>./install.sh</code>를 다시 실행합니다. 소스에서 직접 띄운 개발용 서버는 반대로 데모 로그인이 <strong>기본으로 켜져</strong> 있으므로, <code>server/.env</code>에 <code>PRO_DEMO_LOGIN=0</code>을 넣어 끕니다. 이 튜토리얼의 사진은 데모 로그인을 켠 개발용 서버에서 연습용 계정으로 찍었습니다.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">표시 이름</p>
-<p>Google로 로그인하면 Google 계정의 이름이, 이메일 코드로 로그인하면 주소의 <code>@</code> 앞부분이 화면과 팀원 목록에 쓰이는 이름이 됩니다. 현재 버전에는 이름을 바꾸는 화면이 없으므로, 사진 속 “장진영” 자리에 여러분의 이름이 보여도 그대로 따라 하면 됩니다.</p>
-</div>
 <h2 id="처음-한-번-첫-화면-안내">처음 한 번 — 첫 화면 안내<a class="anchor" href="#처음-한-번-첫-화면-안내" title="Permanent link">#</a></h2>
 <p>처음 로그인하면 세 화면이 차례로 나옵니다. 한 번만 나오고, 다음부터는 바로 채팅 화면이 열립니다.</p>
-<p><strong>① 생년월일.</strong> 연령에 맞는 서비스를 위해 묻는 것이고 다른 사람에게 보이지 않습니다. 연도·월·일을 고르고 「계속」을 누릅니다.</p>
-<figure><a href="img/install-age.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="생년월일 묻기" src="img/install-age.webp" / loading="lazy" decoding="async"></a><figcaption>생년월일 묻기</figcaption></figure>
+<p><strong>① 이름과 생년월일.</strong> 이메일 코드로 로그인했다면 먼저 “어떻게 불러 드릴까요?”라고 이름을 묻습니다. 팀원 목록과 인사에 보이는 이름이므로 실제 이름(이 튜토리얼에서는 <code>장진영</code>)을 적습니다. Google로 로그인해 이름이 이미 있으면 이 칸은 나오지 않습니다. 생년월일은 연령에 맞는 서비스를 위해 묻는 것이고 다른 사람에게 보이지 않습니다. 연도·월·일을 고르고 「계속」을 누릅니다.</p>
+<figure><a href="img/install-age.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이름과 생년월일 묻기 — 이름 칸은 이메일 코드로 처음 로그인할 때 한 번만 나옵니다" src="img/install-age.webp" / loading="lazy" decoding="async"></a><figcaption>이름과 생년월일 묻기 — 이름 칸은 이메일 코드로 처음 로그인할 때 한 번만 나옵니다</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">이름은 나중에도 바꿀 수 있습니다</p>
+<p>「설정 › 계정」 맨 위 「내 정보」의 이름 칸을 고치고 「저장」을 누르면 됩니다. 팀원 목록에도 바뀐 이름이 보입니다.</p>
+</div>
+<figure><a href="img/install-account.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="설정 › 계정 — 맨 위 「내 정보」의 이름 칸. 그 아래 「연결」에서 메일 연결을 바꾸고, 데모 메일함이면 연습 메일을 받습니다(5장)" src="img/install-account.webp" / loading="lazy" decoding="async"></a><figcaption>설정 › 계정 — 맨 위 「내 정보」의 이름 칸. 그 아래 「연결」에서 메일 연결을 바꾸고, 데모 메일함이면 연습 메일을 받습니다(5장)</figcaption></figure>
 <p><strong>② 인사.</strong> “process gpt, 저는 당신만의 업무 운영체제처럼 생각하시면 돼요.”라는 문장이 써진 뒤 저절로 채팅 화면으로 넘어갑니다.</p>
 <figure><a href="img/install-intro.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="첫 인사 — 몇 초 뒤 저절로 넘어갑니다" src="img/install-intro.webp" / loading="lazy" decoding="async"></a><figcaption>첫 인사 — 몇 초 뒤 저절로 넘어갑니다</figcaption></figure>
 <p><strong>③ 비서의 자기소개와 메일 연결.</strong> 채팅에 비서가 세 문장으로 자기소개를 하고, 메일을 연결하자고 제안합니다. Google 로그인을 설정한 서버에서는 버튼이 「Google에 로그인」, 아니면 「메일 연결하기」로 보입니다.</p>
 <figure><a href="img/install-welcome.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="비서의 자기소개와 메일 연결 버튼" src="img/install-welcome.webp" / loading="lazy" decoding="async"></a><figcaption>비서의 자기소개와 메일 연결 버튼</figcaption></figure>
-<p>버튼을 누르면 연결 방법을 고르는 창이 뜹니다. <strong>이 튜토리얼에서는 「데모 메일함」을 고릅니다.</strong> 가상의 거래처 메일 다섯 통이 들어 있는 연습용 메일함이라, 실제 메일을 연결하지 않고도 다음 장들을 그대로 따라 할 수 있습니다. Gmail과 IMAP 연결은 <a href="mail.html">5장</a>에서 자세히 다룹니다.</p>
+<p>버튼을 누르면 연결 방법을 고르는 창이 뜹니다. <strong>이 튜토리얼에서는 「데모 메일함」을 고릅니다.</strong> 가상의 거래처 메일 다섯 통이 들어 있는 연습용 메일함이라, 실제 메일을 연결하지 않고도 다음 장들을 그대로 따라 할 수 있습니다. 실습에 쓸 메일은 나중에 「연습 메일 받기」로 더 받습니다(<a href="mail.html">5장</a>). Gmail과 IMAP 연결은 <a href="mail.html">5장</a>에서 자세히 다룹니다.</p>
 <figure><a href="img/install-connected.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="연결되면 “데모 메일함 연결됨”으로 바뀌고, 비서가 메일을 살펴본 뒤 돌아오겠다고 합니다" src="img/install-connected.webp" / loading="lazy" decoding="async"></a><figcaption>연결되면 “데모 메일함 연결됨”으로 바뀌고, 비서가 메일을 살펴본 뒤 돌아오겠다고 합니다</figcaption></figure>
 <p>연결하고 1분쯤 지나면 비서가 메일을 읽고 채팅에 <strong>오후 브리프</strong>(아침이면 모닝 브리프)를 남기고, 홈에 할 일 카드 네 장을 올립니다.</p>
 <h2 id="멈추기업그레이드지우기">멈추기·업그레이드·지우기<a class="anchor" href="#멈추기업그레이드지우기" title="Permanent link">#</a></h2>

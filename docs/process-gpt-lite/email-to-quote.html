@@ -118,17 +118,7 @@
 매장 평면도와 설계 제안서(한글), 견적서(엑셀)를 다음 주 금요일까지 보내 주실 수 있을까요?
 </code></pre></div>
 
-<p>실제 메일함(Gmail 또는 회사 메일)을 연결했다면 위 내용을 자기 주소로 보내면 됩니다. <a href="mail.html">5장</a>의 <strong>데모 메일함</strong>을 쓰고 있어 직접 보낼 수 없다면 강사나 관리자에게 이 메일을 넣어 달라고 하세요.</p>
-<div class="admonition tip">
-<p class="admonition-title">강사·관리자용 (선택) — 데모 메일함에 연습 메일 넣기</p>
-<p>데모 메일함을 쓰는 설치에서는 브라우저 개발자 도구 콘솔에서 아래처럼 연습 메일을 넣을 수 있습니다(데모 메일함에서만 동작합니다).</p>
-<p><code>js
-const s = JSON.parse(localStorage['pgpt-pro-session']).session
-fetch('/api/mail/demo-arrive', { method: 'POST',
-  headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + s.access_token },
-  body: JSON.stringify({ from: '한소율 &lt;soyul.han@dalbit-coffee.example&gt;',
-    subject: '달빛커피 2호점 매장 설계 제안 및 견적 요청', text: '(위 본문)' }) })</code></p>
-</div>
+<p>실제 메일함(Gmail 또는 회사 메일)을 연결했다면 위 내용을 자기 주소로 보내면 됩니다. <a href="mail.html">5장</a>의 <strong>데모 메일함</strong>을 쓰고 있다면 「설정 › 시스템 설정」(또는 「설정 › 계정」)의 「연습 메일 받기」에서 <strong>달빛커피 2호점 제안·견적 요청</strong>을 고르고 「연습 메일 받기」를 누릅니다. 위와 같은 메일이 도착합니다.</p>
 <p>메일을 읽은 비서는 채팅에 구분선과 함께 알립니다.</p>
 <figure><a href="img/email-to-quote-arrive.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="“메일 · 달빛커피 평면도·설계 제안서·견적서 요청” 구분선 아래로 초안 작업이 시작됩니다. 왼쪽 홈 맨 위에 「Review … 초안 검토하고 회신하기」 카드가 생겼습니다" src="img/email-to-quote-arrive.webp" / loading="lazy" decoding="async"></a><figcaption>“메일 · 달빛커피 평면도·설계 제안서·견적서 요청” 구분선 아래로 초안 작업이 시작됩니다. 왼쪽 홈 맨 위에 「Review … 초안 검토하고 회신하기」 카드가 생겼습니다</figcaption></figure>
 <p>실습에서 걸린 시간은 다음과 같습니다. 모델과 서버 상태에 따라 몇 분씩 달라질 수 있으니 기다리면 됩니다.</p>
@@ -162,7 +152,7 @@ fetch('/api/mail/demo-arrive', { method: 'POST',
 <figure><a href="img/email-to-quote-drafts.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적서와 설계 제안서 카드까지 도착한 모습(평면도 카드는 위쪽에 있습니다). 견적서 답에는 가정한 단가(홀 ㎡당 32만 원 등)가 적혀 있어 검토할 곳을 알려 줍니다" src="img/email-to-quote-drafts.webp" / loading="lazy" decoding="async"></a><figcaption>견적서와 설계 제안서 카드까지 도착한 모습(평면도 카드는 위쪽에 있습니다). 견적서 답에는 가정한 단가(홀 ㎡당 32만 원 등)가 적혀 있어 검토할 곳을 알려 줍니다</figcaption></figure>
 <h2 id="따라-하기-2-평면도와-제안서-훑어보기">따라 하기 2 — 평면도와 제안서 훑어보기<a class="anchor" href="#따라-하기-2-평면도와-제안서-훑어보기" title="Permanent link">#</a></h2>
 <p>CAD 카드를 누르면 <a href="craft.html">8장</a>의 캐드크래프트가 열립니다. 12m × 9m 외곽, 다섯 개 실, 테이블과 의자, 출입문, 치수가 그려져 있습니다.</p>
-<figure><a href="img/email-to-quote-plan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="메일 내용으로 그린 평면도. 실 이름과 면적, 테이블·의자, 출입문, 12 × 9 치수가 들어 있습니다" src="img/email-to-quote-plan.webp" / loading="lazy" decoding="async"></a><figcaption>메일 내용으로 그린 평면도. 실 이름과 면적, 테이블·의자, 출입문, 12 × 9 치수가 들어 있습니다</figcaption></figure>
+<figure><a href="img/email-to-quote-plan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="메일 내용으로 그린 평면도. 실 이름과 면적, 테이블·의자, 출입문, 12 × 9 치수가 들어 있습니다. 이 사진은 면적을 m²로 적도록 바뀌기 전에 찍어 단위 자리가 □로 보입니다(지금은 “56m²”처럼 보입니다)" src="img/email-to-quote-plan.webp" / loading="lazy" decoding="async"></a><figcaption>메일 내용으로 그린 평면도. 실 이름과 면적, 테이블·의자, 출입문, 12 × 9 치수가 들어 있습니다. 이 사진은 면적을 m²로 적도록 바뀌기 전에 찍어 단위 자리가 □로 보입니다(지금은 “56m²”처럼 보입니다)</figcaption></figure>
 <p>한글 카드를 누르면 설계 제안서가 이음오피스 한글 편집기에서 열립니다. 제안 개요는 메일 내용으로 쓰였고, “2. 설계 평면도”에는 방금 그린 도면이 <strong>종이 문서에 맞게 흰 바탕·짙은 선</strong>으로 바뀌어 들어가 있으며, “3. 공간 구성” 표는 도면의 실별 면적으로 채워져 있습니다.</p>
 <figure><a href="img/email-to-quote-proposal.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="설계 제안서의 평면도 그림과 공간 구성 표. 도면의 면적(홀 56, 바 16 …)이 표에 그대로 들어갔습니다" src="img/email-to-quote-proposal.webp" / loading="lazy" decoding="async"></a><figcaption>설계 제안서의 평면도 그림과 공간 구성 표. 도면의 면적(홀 56, 바 16 …)이 표에 그대로 들어갔습니다</figcaption></figure>
 <p>초안이므로 손볼 곳이 보입니다. 실습에서는 양식의 표가 네 줄이라 “원두 창고·직원 휴게실”이 한 칸에 합쳐졌습니다. 이런 곳은 표를 가리켜 고치면 됩니다(확인 문제 1).</p>
