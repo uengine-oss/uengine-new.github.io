@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정의 들여다보기와 버전 — Process GPT 튜토리얼</title>
+<meta name="description" content="3장에서 만든 「영업 제안서 작성」 정의를 열어 BPMN 흐름도의 레인과 단계, 단계마다 붙은 폼을 살펴보고, 단계 이름을 고쳐 버전으로 저장한 뒤 두 버전을 나란히 비교합니다. 정의를 파일로 내보내는 법도 익힙니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt/definition.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="정의 들여다보기와 버전 — Process GPT 튜토리얼">
+<meta property="og:description" content="3장에서 만든 「영업 제안서 작성」 정의를 열어 BPMN 흐름도의 레인과 단계, 단계마다 붙은 폼을 살펴보고, 단계 이름을 고쳐 버전으로 저장한 뒤 두 버전을 나란히 비교합니다. 정의를 파일로 내보내는 법도 익힙니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt/definition.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 게이트웨이, 에이전트, 폼)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 가입하기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로세스 기본</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>대화로 프로세스 만들기</a></li>
+<li><a href="definition.html" class="on" aria-current="page"><span class="n">04</span>정의 들여다보기와 버전</a></li>
+<li><span class="soon"><span class="n">05</span>조직도와 역할 담당자<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">06</span>실행하고 할 일 처리하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>승인과 반려 — 갈림길과 되돌아가기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">AI 에이전트</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></li>
+<li><a href="agents.html"><span class="n">09</span>에이전트 동료 만들기</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>에이전트와 대화하기</a></li>
+<li><span class="soon"><span class="n">11</span>스킬로 일하는 방법 가르치기<em>준비 중</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>문서로 프로세스 만들기</a></li>
+<li><span class="soon"><span class="n">13</span>에이전트가 맡는 단계 실행하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">도구와 규칙</div><ul>
+<li><span class="soon"><span class="n">14</span>MCP로 외부 도구 연결하기<em>준비 중</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a></li>
+</ul>
+<div class="nav-part">분석과 개선</div><ul>
+<li><span class="soon"><span class="n">16</span>실행 분석 — 리드타임과 병목<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">17</span>전략 보드와 KPI<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="settings.html"><span class="n">18</span>설정 — 동료를 들이고 화면을 바꾸기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">19</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>한눈에 보기</a></li>
+<li><a href="faq.html"><span class="n">21</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로세스 기본<span class="chap">4</span></div>
+    <h1>정의 들여다보기와 버전</h1>
+    <article>
+<blockquote>
+<p>3장에서 만든 「영업 제안서 작성」 정의를 열어 BPMN 흐름도의 레인과 단계, 단계마다 붙은 폼을 살펴보고, 단계 이름을 고쳐 버전으로 저장한 뒤 두 버전을 나란히 비교합니다. 정의를 파일로 내보내는 법도 익힙니다.</p>
+</blockquote>
+<h2 id="정의-화면">정의 화면<a class="anchor" href="#정의-화면" title="Permanent link">#</a></h2>
+<p>프로세스 정의 체계도에서 「영업 제안서 작성」을 누르면 정의가 <strong>읽기 모드</strong>로 열립니다. 가운데에 흐름도, 오른쪽 위에 정의를 다루는 아이콘이 있습니다.</p>
+<figure><a href="img/def-view.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="정의 화면(읽기 모드) — 레인 「고객」·「영업 담당자」, 흐름도, 오른쪽 위의 아이콘들" src="img/def-view.webp" / loading="lazy" decoding="async"></a><figcaption>정의 화면(읽기 모드) — 레인 「고객」·「영업 담당자」, 흐름도, 오른쪽 위의 아이콘들</figcaption></figure>
+<p>흐름도의 기호는 이렇게 읽습니다.</p>
+<table>
+<thead>
+<tr>
+<th>기호</th>
+<th>이름</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>가로로 긴 띠</td>
+<td>레인</td>
+<td>한 역할이 맡는 영역. 「고객」, 「영업 담당자」</td>
+</tr>
+<tr>
+<td>동그라미</td>
+<td>시작·종료 이벤트</td>
+<td>프로세스의 처음과 끝</td>
+</tr>
+<tr>
+<td>둥근 사각형(사람 모양)</td>
+<td>사용자 작업</td>
+<td>사람이 폼을 채워 끝내는 단계</td>
+</tr>
+<tr>
+<td>화살표</td>
+<td>흐름</td>
+<td>다음 단계로 넘어가는 순서</td>
+</tr>
+</tbody>
+</table>
+<p>오른쪽 위 아이콘에 마우스를 올리면 이름이 나옵니다. 「BPMN 가져오기」, 「편집하려면 연필 아이콘을 누르세요」, 「버전 히스토리」, 「XML 보기」, 「시뮬레이션」, 「마켓플레이스 등록」, 「컴포넌트 내보내기 (.zip)」, 그리고 「프로세스 삭제」(빨간 휴지통)가 있습니다.</p>
+<h2 id="따라-하기-1-단계와-폼-보기">따라 하기 1 — 단계와 폼 보기<a class="anchor" href="#따라-하기-1-단계와-폼-보기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>연필 아이콘을 눌러 <strong>편집 모드</strong>로 바꿉니다. 왼쪽 위에 그리기 도구(이벤트, 게이트웨이, 작업, 레인 등)가 나타납니다.</li>
+<li>흐름도의 「제안서 작성 및 전달」을 <strong>두 번 누릅니다</strong>. 오른쪽에 단계 패널이 열립니다.</li>
+<li>패널의 탭을 훑어봅니다 — 「설정」, 「에이전트」, 「참조 정보」, 「폼 편집」, 「폼 미리보기」, 「단위 테스트」, 「PI Flag」.</li>
+<li>「폼 미리보기」를 눌러 이 단계에서 담당자가 채울 폼을 봅니다.</li>
+</ol>
+<figure><a href="img/def-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="단계 패널 — 이름, 설정·에이전트·참조 정보·폼 편집·폼 미리보기·단위 테스트·PI Flag 탭, 개요·지침·관련자료 링크·체크포인트" src="img/def-panel.webp" / loading="lazy" decoding="async"></a><figcaption>단계 패널 — 이름, 설정·에이전트·참조 정보·폼 편집·폼 미리보기·단위 테스트·PI Flag 탭, 개요·지침·관련자료 링크·체크포인트</figcaption></figure>
+<figure><a href="img/def-form-preview.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="폼 미리보기 — 「요청사항」(앞 단계에서 받은 값)과 「제안서」 파일 칸" src="img/def-form-preview.webp" / loading="lazy" decoding="async"></a><figcaption>폼 미리보기 — 「요청사항」(앞 단계에서 받은 값)과 「제안서」 파일 칸</figcaption></figure>
+<p>「설정」 탭에는 이 단계의 개요와 <strong>지침</strong>(담당자나 에이전트가 따를 설명), 관련자료 링크, <strong>체크포인트</strong>(끝내기 전에 확인할 항목)를 적습니다. 「에이전트」 탭에서는 이 단계를 AI 에이전트에게 맡길 수 있습니다.</p>
+<h2 id="따라-하기-2-고치고-버전으로-저장하기">따라 하기 2 — 고치고 버전으로 저장하기<a class="anchor" href="#따라-하기-2-고치고-버전으로-저장하기" title="Permanent link">#</a></h2>
+<p>고객에게 보내는 것까지 한 단계라는 뜻이 드러나게, 두 번째 단계 이름을 바꿔 봅니다.</p>
+<ol class="steps">
+<li>단계 패널 「설정」 탭 위의 「이름」을 <code>제안서 작성 및 발송</code>으로 바꿉니다.</li>
+<li>패널 오른쪽 위의 💾(패널 저장)를 누르고, ✕로 패널을 닫습니다.</li>
+<li>정의 화면 오른쪽 위의 💾(저장)를 누릅니다. <strong>버전 업</strong> 창이 뜹니다.</li>
+<li>「버전 태그」는 「마이너 업데이트」 그대로 두고(v0.0 → v0.1), 「설명」에 무엇을 바꿨는지 적어 「저장」합니다.</li>
+</ol>
+<figure><a href="img/def-version-up.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="버전 업 창 — 버전 태그(마이너 업데이트), 현재 버전 v0.0 → 다음 버전 v0.1, 설명" src="img/def-version-up.webp" / loading="lazy" decoding="async"></a><figcaption>버전 업 창 — 버전 태그(마이너 업데이트), 현재 버전 v0.0 → 다음 버전 v0.1, 설명</figcaption></figure>
+<p>정의를 다시 열면 바뀐 이름이 흐름도에 보입니다. 같은 방법으로 첫 단계 「요청사항 입력」을 <code>고객 요청사항 입력</code>으로 바꿔 한 번 더 저장합니다(v0.2).</p>
+<div class="admonition note">
+<p class="admonition-title">패널 저장과 정의 저장</p>
+<p>단계 패널의 💾는 그 단계의 변경을 흐름도에 반영할 뿐입니다. 오른쪽 위 💾로 <strong>정의를 저장</strong>해야 버전이 만들어집니다. 패널만 닫고 정의를 저장하지 않으면 바꾼 내용이 사라집니다.</p>
+</div>
+<h2 id="따라-하기-3-두-버전-비교하기">따라 하기 3 — 두 버전 비교하기<a class="anchor" href="#따라-하기-3-두-버전-비교하기" title="Permanent link">#</a></h2>
+<p>버전이 둘 이상 생기면 편집 모드의 「버전 히스토리」 아이콘이 켜집니다.</p>
+<ol class="steps">
+<li>편집 모드에서 「버전 히스토리」를 누릅니다. <strong>버전 비교</strong> 화면이 열립니다.</li>
+<li>왼쪽 「프로세스 계층」에서 「미분류」를 펼쳐 「영업 제안서 작성」을 고릅니다.</li>
+<li>위쪽 「버전 A (신규)」에 v0.2, 아래쪽 「버전 B (이전)」에 v0.1을 고릅니다.</li>
+</ol>
+<figure><a href="img/def-compare.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="버전 비교 — 위 v0.2, 아래 v0.1, 바뀐 단계가 주황색으로 강조되고 오른쪽 「시각적 비교」에 「태스크 1개 수정: Name &quot;요청사항 입력&quot; → &quot;고객 요청사항 입력&quot;」" src="img/def-compare.webp" / loading="lazy" decoding="async"></a><figcaption>버전 비교 — 위 v0.2, 아래 v0.1, 바뀐 단계가 주황색으로 강조되고 오른쪽 「시각적 비교」에 「태스크 1개 수정: Name &quot;요청사항 입력&quot; → &quot;고객 요청사항 입력&quot;」</figcaption></figure>
+<p>오른쪽 「시각적 비교」에는 추가됨(초록)·변경됨(주황)·삭제됨(빨강)으로 무엇이 바뀌었는지 나옵니다. 잘못 고쳤다면 위의 「이전 버전으로 되돌리기」로 돌아가고, 「비교 내보내기」로 비교 결과를 파일로 남깁니다.</p>
+<div class="admonition note">
+<p class="admonition-title">프로세스 계층에 「unknown」이 보일 때</p>
+<p>현재 버전에서는 버전 비교의 프로세스 계층에 「미분류 › unknown › 미분류 › 영업 제안서 작성」처럼 이름 없는 중간 단계가 「unknown」으로 보입니다. 끝까지 펼쳐 프로세스를 고르면 됩니다.</p>
+</div>
+<h2 id="따라-하기-4-정의를-파일로-내보내기">따라 하기 4 — 정의를 파일로 내보내기<a class="anchor" href="#따라-하기-4-정의를-파일로-내보내기" title="Permanent link">#</a></h2>
+<p>정의 화면의 「컴포넌트 내보내기 (.zip)」를 누르면 정의와 폼이 담긴 zip 파일이 내려받아집니다(실습에서는 <code>…-0.2.zip</code>, 15KB). 다른 Process GPT의 홈에서 「컴포넌트 가져오기」로 이 파일을 올리면 같은 프로세스가 설치됩니다. 회사 안의 다른 설치본으로 옮기거나 백업할 때 씁니다.</p>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>여기까지 사람이 하는 단계만 있는 프로세스를 만들고 다뤘습니다. 실행하고 할 일을 처리하는 장(5~7장)은 준비 중이니, 다음은 AI 에이전트 쪽으로 넘어갑니다. 먼저 에이전트가 근거로 쓸 회사 문서를 <strong>지식 베이스</strong>에 올립니다(<a href="knowledge.html">8장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>단계 패널에서 이름을 바꾸고 패널만 닫았습니다. 정의를 다시 열면 이름이 바뀌어 있을까요?</li>
+<li>버전 비교 화면에서 변경된 단계는 어떻게 표시되나요?</li>
+<li>만든 프로세스를 다른 회사의 Process GPT로 옮기려면 어떻게 하나요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>아닙니다. 패널의 💾는 흐름도에만 반영합니다. 정의 화면 오른쪽 위 💾로 저장해 버전을 만들어야 남습니다.</li>
+<li>흐름도에서 주황색 테두리로 강조되고, 오른쪽 「시각적 비교」에 「modified」와 바뀐 속성(이름 등)이 나옵니다.</li>
+<li>정의 화면의 「컴포넌트 내보내기 (.zip)」로 파일을 받고, 옮길 곳의 홈에서 「컴포넌트 가져오기」로 올립니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="process-create.html"><span>이전</span>대화로 프로세스 만들기</a><a class="next" href="knowledge.html"><span>다음</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT를 로컬에 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#정의-화면">정의 화면</a></li><li><a href="#따라-하기-1-단계와-폼-보기">따라 하기 1 — 단계와 폼 보기</a></li><li><a href="#따라-하기-2-고치고-버전으로-저장하기">따라 하기 2 — 고치고 버전으로 저장하기</a></li><li><a href="#따라-하기-3-두-버전-비교하기">따라 하기 3 — 두 버전 비교하기</a></li><li><a href="#따라-하기-4-정의를-파일로-내보내기">따라 하기 4 — 정의를 파일로 내보내기</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

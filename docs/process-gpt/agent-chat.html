@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>에이전트와 대화하기 — Process GPT 튜토리얼</title>
+<meta name="description" content="9장에서 만든 「한빛오피스 견적 상담가」를 열어 무엇을 할 수 있는지 묻고, 그 대화방을 대화목록에서 다시 열어 지식 베이스의 가격표를 붙인 뒤 고객에게 보낼 견적 초안을 받습니다. 받은 초안은 가격표와 대조해 고칠 곳을 찾습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt/agent-chat.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="에이전트와 대화하기 — Process GPT 튜토리얼">
+<meta property="og:description" content="9장에서 만든 「한빛오피스 견적 상담가」를 열어 무엇을 할 수 있는지 묻고, 그 대화방을 대화목록에서 다시 열어 지식 베이스의 가격표를 붙인 뒤 고객에게 보낼 견적 초안을 받습니다. 받은 초안은 가격표와 대조해 고칠 곳을 찾습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt/agent-chat.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 게이트웨이, 에이전트, 폼)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 가입하기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로세스 기본</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>대화로 프로세스 만들기</a></li>
+<li><a href="definition.html"><span class="n">04</span>정의 들여다보기와 버전</a></li>
+<li><span class="soon"><span class="n">05</span>조직도와 역할 담당자<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">06</span>실행하고 할 일 처리하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>승인과 반려 — 갈림길과 되돌아가기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">AI 에이전트</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></li>
+<li><a href="agents.html"><span class="n">09</span>에이전트 동료 만들기</a></li>
+<li><a href="agent-chat.html" class="on" aria-current="page"><span class="n">10</span>에이전트와 대화하기</a></li>
+<li><span class="soon"><span class="n">11</span>스킬로 일하는 방법 가르치기<em>준비 중</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>문서로 프로세스 만들기</a></li>
+<li><span class="soon"><span class="n">13</span>에이전트가 맡는 단계 실행하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">도구와 규칙</div><ul>
+<li><span class="soon"><span class="n">14</span>MCP로 외부 도구 연결하기<em>준비 중</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a></li>
+</ul>
+<div class="nav-part">분석과 개선</div><ul>
+<li><span class="soon"><span class="n">16</span>실행 분석 — 리드타임과 병목<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">17</span>전략 보드와 KPI<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="settings.html"><span class="n">18</span>설정 — 동료를 들이고 화면을 바꾸기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">19</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>한눈에 보기</a></li>
+<li><a href="faq.html"><span class="n">21</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">AI 에이전트<span class="chap">10</span></div>
+    <h1>에이전트와 대화하기</h1>
+    <article>
+<blockquote>
+<p>9장에서 만든 「한빛오피스 견적 상담가」를 열어 무엇을 할 수 있는지 묻고, 그 대화방을 대화목록에서 다시 열어 지식 베이스의 가격표를 붙인 뒤 고객에게 보낼 견적 초안을 받습니다. 받은 초안은 가격표와 대조해 고칠 곳을 찾습니다.</p>
+</blockquote>
+<h2 id="에이전트-화면">에이전트 화면<a class="anchor" href="#에이전트-화면" title="Permanent link">#</a></h2>
+<p>사이드바 「에이전트 동료」에서 「한빛오피스 견적 상담가」를 누르면 에이전트 화면이 열립니다. 왼쪽은 <strong>프로필</strong>, 오른쪽은 이 에이전트와의 <strong>새 채팅</strong>입니다.</p>
+<figure><a href="img/ac-open.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트 화면 — 왼쪽 프로필(목표, 페르소나, 도구 목록, 스킬, 모델, 대화 모드·학습 모드·질의 모드·지식 관리, 비즈니스 규칙), 오른쪽 「새 채팅」" src="img/ac-open.webp" / loading="lazy" decoding="async"></a><figcaption>에이전트 화면 — 왼쪽 프로필(목표, 페르소나, 도구 목록, 스킬, 모델, 대화 모드·학습 모드·질의 모드·지식 관리, 비즈니스 규칙), 오른쪽 「새 채팅」</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>프로필 칸</th>
+<th>보이는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>목표 · 페르소나 · 도구 목록</td>
+<td>9장에서 저장한 내용. 「더보기」로 펼칩니다</td>
+</tr>
+<tr>
+<td>스킬 · 모델</td>
+<td>「할당된 스킬이 없습니다」, 「할당된 모델이 없습니다」(기본 모델)</td>
+</tr>
+<tr>
+<td>대화 모드</td>
+<td>지금 켜진 모드. 에이전트와 대화합니다</td>
+</tr>
+<tr>
+<td>학습 모드 · 질의 모드 · 지식 관리 · 비즈니스 규칙</td>
+<td>에이전트를 가르치고 규칙을 붙이는 기능. 이 장에서는 대화 모드만 씁니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-먼저-말-걸기">따라 하기 1 — 먼저 말 걸기<a class="anchor" href="#따라-하기-1-먼저-말-걸기" title="Permanent link">#</a></h2>
+<p>오른쪽 「메시지 입력」에 아래처럼 적고 보냅니다.</p>
+<div class="hl"><pre><span></span><code>안녕하세요. 어떤 일을 도와줄 수 있는지, 견적을 쓰려면 무엇이 필요한지 짧게 알려 주세요.
+</code></pre></div>
+
+<p>에이전트는 9장의 목표와 페르소나대로 자기를 소개하고, 견적에 필요한 정보(설치 공간, 가구 종류와 수량, 예산, <strong>설치 위치</strong> — 지역마다 설치비가 다르다는 것까지)를 묻습니다. 이 대화는 사이드바 <strong>대화목록</strong> 맨 위에 「새 채팅」으로 남습니다.</p>
+<figure><a href="img/ac-intro.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트의 첫 답 — 도와줄 수 있는 일과 견적에 필요한 정보" src="img/ac-intro.webp" / loading="lazy" decoding="async"></a><figcaption>에이전트의 첫 답 — 도와줄 수 있는 일과 견적에 필요한 정보</figcaption></figure>
+<h2 id="따라-하기-2-대화방에서-가격표를-붙여-견적-받기">따라 하기 2 — 대화방에서 가격표를 붙여 견적 받기<a class="anchor" href="#따라-하기-2-대화방에서-가격표를-붙여-견적-받기" title="Permanent link">#</a></h2>
+<p>에이전트 화면의 ＋에는 「파일 첨부」만 있습니다. 지식 베이스의 가격표를 붙이려면 방금 대화를 <strong>대화목록에서 다시 엽니다.</strong></p>
+<ol class="steps">
+<li>사이드바 <strong>대화목록</strong>의 맨 위 「새 채팅」을 누릅니다. 머리에 「👥 2 · 한빛오피스 견적 상담가 · 딥 에이전트」가 보이면 그 에이전트와의 대화방입니다.</li>
+<li>채팅 상자의 ＋ › <strong>「지식 베이스」</strong>를 누르고, 「모두 펼치기」 → <code>한빛오피스-제품가격표.pdf</code> 체크 → 「파일 1 사용」을 누릅니다(<a href="knowledge.html">8장</a>과 같습니다).</li>
+<li>아래 질문을 보냅니다.</li>
+</ol>
+<figure><a href="img/ac-room.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="대화목록에서 다시 연 대화방 — 머리의 「2 · 한빛오피스 견적 상담가 · 딥 에이전트」, 첫 답" src="img/ac-room.webp" / loading="lazy" decoding="async"></a><figcaption>대화목록에서 다시 연 대화방 — 머리의 「2 · 한빛오피스 견적 상담가 · 딥 에이전트」, 첫 답</figcaption></figure>
+<div class="hl"><pre><span></span><code>선택한 지식 베이스의 가격표 문서를 찾아보고, 한빛물산이 메쉬 의자 에어 25개와 3단 이동 서랍 25개를 서울 본사로 주문하려고 해. 고객에게 보낼 견적 초안을 표로 써 줘. 할인율, 설치비, 총액, 납기, 제안 유효기간도 넣어 줘.
+</code></pre></div>
+
+<figure><a href="img/ac-typed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="질문을 적은 모습 — 채팅 상자 위의 「한빛오피스-제품가격표.pdf」 칩, 오른쪽 「지식 베이스 1」" src="img/ac-typed.webp" / loading="lazy" decoding="async"></a><figcaption>질문을 적은 모습 — 채팅 상자 위의 「한빛오피스-제품가격표.pdf」 칩, 오른쪽 「지식 베이스 1」</figcaption></figure>
+<p>실습에서는 약 26초 뒤 이런 초안이 왔습니다.</p>
+<table>
+<thead>
+<tr>
+<th>제품명</th>
+<th>단가(원)</th>
+<th>수량</th>
+<th>수량 할인율</th>
+<th>할인 적용 단가(원)</th>
+<th>공급가(원)</th>
+<th>납기</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>메쉬 의자 에어</td>
+<td>180,000</td>
+<td>25</td>
+<td>5%</td>
+<td>171,000</td>
+<td>4,275,000</td>
+<td>5영업일</td>
+</tr>
+<tr>
+<td>3단 이동 서랍</td>
+<td>95,000</td>
+<td>25</td>
+<td>5%</td>
+<td>90,250</td>
+<td>2,256,250</td>
+<td>5영업일</td>
+</tr>
+</tbody>
+</table>
+<p>표 아래에는 할인 기준(각 품목 20~49개 구간 5%), 설치비(서울 본사 무료), 총 공급가 <strong>6,531,250원</strong>(부가세 별도), 예상 납기(주문 확정일로부터 5영업일), 제안 유효기간(견적서 발송일로부터 30일)이 붙었습니다.</p>
+<figure><a href="img/ac-answer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트의 견적 초안 — 제품별 표, 할인 기준, 설치비 무료, 총 공급가 6,531,250원, 납기 5영업일, 유효기간 30일. 오른쪽에 쓴 문서 「한빛오피스-제품가격표.pdf」" src="img/ac-answer.webp" / loading="lazy" decoding="async"></a><figcaption>에이전트의 견적 초안 — 제품별 표, 할인 기준, 설치비 무료, 총 공급가 6,531,250원, 납기 5영업일, 유효기간 30일. 오른쪽에 쓴 문서 「한빛오피스-제품가격표.pdf」</figcaption></figure>
+<h2 id="따라-하기-3-가격표와-대조하기">따라 하기 3 — 가격표와 대조하기<a class="anchor" href="#따라-하기-3-가격표와-대조하기" title="Permanent link">#</a></h2>
+<p>고객에게 보내기 전에 초안을 가격표와 맞춰 봅니다.</p>
+<table>
+<thead>
+<tr>
+<th>확인할 것</th>
+<th>가격표</th>
+<th>초안</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1개 가격</td>
+<td>메쉬 의자 에어 180,000원, 3단 이동 서랍 95,000원</td>
+<td>같음</td>
+</tr>
+<tr>
+<td>할인율</td>
+<td>같은 제품 20~49개 → 5%</td>
+<td>같음</td>
+</tr>
+<tr>
+<td>금액</td>
+<td>180,000×25×0.95 = 4,275,000원, 95,000×25×0.95 = 2,256,250원</td>
+<td>같음</td>
+</tr>
+<tr>
+<td>설치비</td>
+<td>서울·경기 배송·설치 무료</td>
+<td>같음</td>
+</tr>
+<tr>
+<td>납기</td>
+<td>가장 긴 제품의 납기 — 둘 다 5영업일</td>
+<td>같음</td>
+</tr>
+<tr>
+<td>제안 유효기간</td>
+<td>제안일로부터 30일</td>
+<td>같음</td>
+</tr>
+<tr>
+<td>부가세를 더한 금액</td>
+<td>6,531,250 + 653,125 = 7,184,375원은 <strong>부가세 포함</strong></td>
+<td>「합계(부가세 10% 별도)」라고 잘못 붙음</td>
+</tr>
+</tbody>
+</table>
+<p>숫자는 모두 맞았지만, 부가세를 더한 줄의 이름이 「별도」로 되어 있습니다. 고객에게 그대로 보내면 오해를 삽니다. 이럴 때는 대화를 이어 고쳐 달라고 하거나, 초안을 받아 직접 고칩니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">초안은 사람이 확인하고 보냅니다</p>
+<p>에이전트는 가격표를 근거로 계산하지만, 낱말 하나나 조건 하나를 틀리게 쓸 수 있습니다. 같은 질문에도 매번 답이 조금씩 다릅니다. 숫자와 조건은 늘 원문과 대조합니다. 확인하고 승인하는 일을 프로세스의 한 단계로 넣는 방법은 <a href="document-process.html">12장</a>에서 봅니다.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">에이전트 화면의 「파일 첨부」</p>
+<p>현재 버전에서는 에이전트 화면에서 「파일 첨부」로 붙인 파일이 에이전트에게 전달되지 않습니다. 문서를 근거로 물을 때는 이 장처럼 지식 베이스에 올려 두고, 대화목록에서 연 대화방에서 「지식 베이스」로 고릅니다.</p>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>에이전트가 가격표로 견적 초안을 쓰는 것까지 확인했습니다. 다음은 이 일을 회사의 견적 승인 규정에 맞춘 <strong>프로세스</strong>로 만들고, 단계 일부를 에이전트에게 맡깁니다(<a href="document-process.html">12장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>에이전트 화면에서 지식 베이스의 가격표를 붙이려면 어떻게 하나요?</li>
+<li>초안의 「합계(부가세 10% 별도) 7,184,375원」은 무엇이 틀렸나요?</li>
+<li>같은 고객이 메쉬 의자 에어를 50개로 늘리면 의자 금액은 얼마가 되나요? 에이전트에게 묻고, 가격표로 직접 계산해 맞춰 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>에이전트와 한 번 대화한 뒤 사이드바 대화목록에서 그 대화방을 다시 열고, ＋ › 「지식 베이스」에서 가격표 파일에 체크해 「파일 1 사용」을 누릅니다.</li>
+<li>6,531,250원에 부가세 10%(653,125원)를 더한 금액이니 「부가세 포함」입니다. 이름만 틀렸습니다.</li>
+<li>50개는 50~99개 구간이라 8% 할인입니다. 180,000 × 50 × 0.92 = 8,280,000원.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="agents.html"><span>이전</span>에이전트 동료 만들기</a><a class="next" href="document-process.html"><span>다음</span>문서로 프로세스 만들기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT를 로컬에 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#에이전트-화면">에이전트 화면</a></li><li><a href="#따라-하기-1-먼저-말-걸기">따라 하기 1 — 먼저 말 걸기</a></li><li><a href="#따라-하기-2-대화방에서-가격표를-붙여-견적-받기">따라 하기 2 — 대화방에서 가격표를 붙여 견적 받기</a></li><li><a href="#따라-하기-3-가격표와-대조하기">따라 하기 3 — 가격표와 대조하기</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

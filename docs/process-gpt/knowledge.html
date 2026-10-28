@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지식 베이스 — 회사 문서를 근거로 답하게 하기 — Process GPT 튜토리얼</title>
+<meta name="description" content="한빛오피스의 제품 가격표와 견적 승인 규정을 지식 베이스에 폴더째 올리고, 채팅에서 가격표를 골라 견적을 물으면 Process GPT가 문서의 표와 규정을 근거로 계산합니다. 고르지 않고 물으면 무엇이 달라지는지도 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt/knowledge.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="지식 베이스 — 회사 문서를 근거로 답하게 하기 — Process GPT 튜토리얼">
+<meta property="og:description" content="한빛오피스의 제품 가격표와 견적 승인 규정을 지식 베이스에 폴더째 올리고, 채팅에서 가격표를 골라 견적을 물으면 Process GPT가 문서의 표와 규정을 근거로 계산합니다. 고르지 않고 물으면 무엇이 달라지는지도 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt/knowledge.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 게이트웨이, 에이전트, 폼)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 가입하기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로세스 기본</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>대화로 프로세스 만들기</a></li>
+<li><a href="definition.html"><span class="n">04</span>정의 들여다보기와 버전</a></li>
+<li><span class="soon"><span class="n">05</span>조직도와 역할 담당자<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">06</span>실행하고 할 일 처리하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>승인과 반려 — 갈림길과 되돌아가기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">AI 에이전트</div><ul>
+<li><a href="knowledge.html" class="on" aria-current="page"><span class="n">08</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></li>
+<li><a href="agents.html"><span class="n">09</span>에이전트 동료 만들기</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>에이전트와 대화하기</a></li>
+<li><span class="soon"><span class="n">11</span>스킬로 일하는 방법 가르치기<em>준비 중</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>문서로 프로세스 만들기</a></li>
+<li><span class="soon"><span class="n">13</span>에이전트가 맡는 단계 실행하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">도구와 규칙</div><ul>
+<li><span class="soon"><span class="n">14</span>MCP로 외부 도구 연결하기<em>준비 중</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a></li>
+</ul>
+<div class="nav-part">분석과 개선</div><ul>
+<li><span class="soon"><span class="n">16</span>실행 분석 — 리드타임과 병목<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">17</span>전략 보드와 KPI<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="settings.html"><span class="n">18</span>설정 — 동료를 들이고 화면을 바꾸기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">19</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>한눈에 보기</a></li>
+<li><a href="faq.html"><span class="n">21</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">AI 에이전트<span class="chap">8</span></div>
+    <h1>지식 베이스 — 회사 문서를 근거로 답하게 하기</h1>
+    <article>
+<blockquote>
+<p>한빛오피스의 제품 가격표와 견적 승인 규정을 지식 베이스에 폴더째 올리고, 채팅에서 가격표를 골라 견적을 물으면 Process GPT가 문서의 표와 규정을 근거로 계산합니다. 고르지 않고 물으면 무엇이 달라지는지도 봅니다.</p>
+</blockquote>
+<h2 id="왜-지식-베이스인가">왜 지식 베이스인가<a class="anchor" href="#왜-지식-베이스인가" title="Permanent link">#</a></h2>
+<p>AI에게 “메쉬 의자 프로 40개면 얼마야?”라고 물어도, 한빛오피스의 가격과 할인 기준을 모르면 답할 수 없습니다. 아는 척 지어내는 답은 더 위험합니다. <strong>지식 베이스</strong>는 회사 문서를 올려 두는 곳이고, 채팅에서 그 문서를 고르면 에이전트가 문서를 찾아 읽고 그 내용을 근거로 답합니다.</p>
+<table>
+<thead>
+<tr>
+<th>지식 베이스 없이</th>
+<th>지식 베이스와 함께</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>회사 가격·규정을 모름 → 자료를 달라고 하거나 일반론</td>
+<td>고른 문서의 표·조항을 찾아 계산하고 출처를 밝힘</td>
+</tr>
+<tr>
+<td>문서를 매번 채팅에 붙여야 함</td>
+<td>한 번 올려 두면 누구나 골라 씀</td>
+</tr>
+</tbody>
+</table>
+<h2 id="실습-파일">실습 파일<a class="anchor" href="#실습-파일" title="Permanent link">#</a></h2>
+<p><a href="files/hanbit-sales-docs.zip">한빛오피스 영업자료(zip)</a>를 내려받아 압축을 풉니다. <code>한빛오피스-영업자료</code> 폴더 안에 두 문서가 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>한빛오피스-제품가격표.pdf</td>
+<td>제품 6종의 1개 가격·납기, 수량 할인(20~49개 5% 등), 지역별 설치비</td>
+</tr>
+<tr>
+<td>한빛오피스-견적승인규정.pdf</td>
+<td>대량 주문 견적의 접수 → 재고 확인 → 견적 산출 → 금액별 승인 → 회신 순서(<a href="document-process.html">12장</a>에서 씁니다)</td>
+</tr>
+</tbody>
+</table>
+<p>지식 베이스가 받는 형식은 PDF, HWP, HWPX, DOC, DOCX, PPTX, TXT, CSV, XLSX입니다.</p>
+<h2 id="따라-하기-1-폴더째-올리기">따라 하기 1 — 폴더째 올리기<a class="anchor" href="#따라-하기-1-폴더째-올리기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>위쪽 막대의 「지식 베이스」(책 모양)를 누릅니다.</li>
+<li>「폴더를 통째로 올려 시작하기」 칸의 <strong>「폴더째 올리기」</strong>를 누르고, 압축을 푼 <code>한빛오피스-영업자료</code> 폴더를 고릅니다. 폴더를 그 칸에 끌어다 놓아도 됩니다.</li>
+<li>“2개를 접수했습니다. 본문 저장과 카드 생성은 백그라운드로 진행됩니다.”가 뜹니다. 잠시 뒤 오른쪽 위 「새로고침」을 누르면 왼쪽 「폴더」에 <code>한빛오피스-영업자료</code>가, 오른쪽 <strong>지식 지도</strong>에 「읽을 수 있음 2」와 폴더 카드가 보입니다.</li>
+</ol>
+<figure><a href="img/kb-uploaded.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="지식 베이스 — 왼쪽 폴더 목록의 「한빛오피스-영업자료」, 지식 지도의 「읽을 수 있음 2」와 폴더 카드(폴더 내용 요약), 「2 / 2 접수」" src="img/kb-uploaded.webp" / loading="lazy" decoding="async"></a><figcaption>지식 베이스 — 왼쪽 폴더 목록의 「한빛오피스-영업자료」, 지식 지도의 「읽을 수 있음 2」와 폴더 카드(폴더 내용 요약), 「2 / 2 접수」</figcaption></figure>
+<p><strong>지식 지도</strong>의 폴더 카드에는 폴더에 무엇이 있는지 AI가 읽고 쓴 요약이 붙습니다. 에이전트는 이 지도를 보고 어느 문서부터 읽을지 정합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">낱개 파일은 폴더를 먼저</p>
+<p>파일 하나만 올리려면 왼쪽 「폴더」에서 폴더를 먼저 고른 뒤 올립니다. 지원하지 않는 형식(예: .md)이 섞여 있으면 “지원하지 않는 형식 1개 제외”처럼 알려 주고 나머지만 올립니다.</p>
+</div>
+<h2 id="따라-하기-2-가격표를-골라-묻기">따라 하기 2 — 가격표를 골라 묻기<a class="anchor" href="#따라-하기-2-가격표를-골라-묻기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>홈(연필 아이콘)의 채팅 상자에서 ＋ › <strong>「지식 베이스」</strong>를 누릅니다. 「채팅에 활용할 자료를 선택하세요」 창이 뜹니다.</li>
+<li>「모두 펼치기」를 누르고 <code>한빛오피스-제품가격표.pdf</code>에 체크한 뒤 <strong>「파일 1 사용」</strong>을 누릅니다. 채팅 상자 위에 파일 이름 칩이 붙습니다.</li>
+<li>에이전트는 「딥 에이전트」 그대로 두고 아래처럼 묻습니다.</li>
+</ol>
+<figure><a href="img/kb-pick.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="지식 베이스 선택 창 — 폴더를 펼쳐 「한빛오피스-제품가격표.pdf」에 체크, 「파일 1 사용」" src="img/kb-pick.webp" / loading="lazy" decoding="async"></a><figcaption>지식 베이스 선택 창 — 폴더를 펼쳐 「한빛오피스-제품가격표.pdf」에 체크, 「파일 1 사용」</figcaption></figure>
+<div class="hl"><pre><span></span><code>선택한 지식 베이스의 가격표 문서를 찾아보고, 메쉬 의자 프로 40개와 모션 데스크 1600 40개를 부산 사무실로 주문할 때 할인율, 설치비, 총액을 계산해 줘. 근거도 알려줘.
+</code></pre></div>
+
+<p>실습에서는 약 25초 뒤 이런 답이 왔습니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>답</th>
+<th>가격표의 근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1개 가격</td>
+<td>메쉬 의자 프로 260,000원, 모션 데스크 1600 520,000원</td>
+<td>1. 제품 가격</td>
+</tr>
+<tr>
+<td>할인율</td>
+<td>5% (각 40개 → 20~49개 구간)</td>
+<td>2. 수량 할인</td>
+</tr>
+<tr>
+<td>할인 후 금액</td>
+<td>29,640,000원</td>
+<td></td>
+</tr>
+<tr>
+<td>설치비</td>
+<td>889,200원 (부산 = 서울·경기 밖 → 할인 후 금액의 3%, 최소 5만 원보다 큼)</td>
+<td>3. 설치비와 배송</td>
+</tr>
+<tr>
+<td>총액</td>
+<td><strong>30,529,200원</strong> (부가세 별도)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/kb-answer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답 — 설치비 889,200원, 총액 30,529,200원(부가세 별도), 근거 「한빛오피스-제품가격표.pdf 1페이지 표와 규정」. 오른쪽 「지식 베이스」에 쓴 문서" src="img/kb-answer.webp" / loading="lazy" decoding="async"></a><figcaption>답 — 설치비 889,200원, 총액 30,529,200원(부가세 별도), 근거 「한빛오피스-제품가격표.pdf 1페이지 표와 규정」. 오른쪽 「지식 베이스」에 쓴 문서</figcaption></figure>
+<p>오른쪽 패널의 「지식 베이스」에는 이번 답에 쓴 문서가 보입니다. 직접 계산해 보면(260,000×40 + 520,000×40 = 31,200,000원 → 5% 할인 → 29,640,000원 → 3% 설치비 889,200원) 답과 같습니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">「선택한 문서를 찾아보고」라고 말하세요</p>
+<p>문서를 골랐어도 질문이 짧으면 에이전트가 문서를 찾지 않고 자료를 달라고 되묻는 경우가 있습니다. 질문 앞에 “선택한 지식 베이스의 ○○ 문서를 찾아보고”를 붙이면 문서를 먼저 읽습니다.</p>
+</div>
+<h2 id="따라-하기-3-고르지-않고-같은-질문">따라 하기 3 — 고르지 않고 같은 질문<a class="anchor" href="#따라-하기-3-고르지-않고-같은-질문" title="Permanent link">#</a></h2>
+<p>새 대화(연필 아이콘)에서 지식 베이스를 고르지 않고 같은 질문을 보내 봅니다.</p>
+<figure><a href="img/kb-nokb.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="지식 베이스를 고르지 않은 답 — 「지식 베이스에 아직 자료가 선택되어 있지 않아 가격표 문서를 찾을 수 없습니다」" src="img/kb-nokb.webp" / loading="lazy" decoding="async"></a><figcaption>지식 베이스를 고르지 않은 답 — 「지식 베이스에 아직 자료가 선택되어 있지 않아 가격표 문서를 찾을 수 없습니다」</figcaption></figure>
+<p>“지식 베이스에 아직 자료가 선택되어 있지 않아 가격표 문서를 찾을 수 없습니다.”라며 자료를 올리거나 골라 달라고 합니다. 숫자를 지어내지 않고, 근거가 없으면 없다고 말합니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">폴더째 고르기</p>
+<p>선택 창에서 파일 대신 <strong>폴더</strong>에 체크하면 「폴더 1 사용」이 되지만, 현재 버전에서는 폴더 선택이 에이전트에게 전달되지 않아 문서를 찾지 못합니다. 폴더를 펼쳐 <strong>파일</strong>에 체크하세요.</p>
+</div>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>가격표를 근거로 계산하는 일은 매번 반복됩니다. 다음 장에서는 이 일을 맡을 AI 동료 「한빛오피스 견적 상담가」를 조직도에서 만듭니다(<a href="agents.html">9장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>지식 베이스에 <code>가격표.md</code>를 올렸더니 「지원하지 않는 형식」이라고 나왔습니다. 어떻게 하나요?</li>
+<li>같은 질문에 지식 베이스를 골랐을 때와 고르지 않았을 때 답이 어떻게 달랐나요?</li>
+<li>회의 테이블 8인 10개를 서울 본사로 주문하면 총액은 얼마일까요? 지식 베이스에 묻고, 가격표로 직접 계산해 맞춰 보세요.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>PDF·DOCX·TXT 등 지원하는 형식으로 바꿔 올립니다. 문서 편집기에서 PDF로 저장하거나, 내용을 .txt로 저장하면 됩니다.</li>
+<li>고르면 가격표의 표와 규정을 찾아 할인율 5%, 설치비 889,200원, 총액 30,529,200원을 근거와 함께 냈습니다. 고르지 않으면 “자료가 선택되어 있지 않아 찾을 수 없다”며 자료를 요청했습니다.</li>
+<li>1,150,000원 × 10 = 11,500,000원, 10개는 할인 없음(0%). 서울은 배송·설치 무료지만 회의 테이블은 지역과 관계없이 1개당 설치비 30,000원 → 300,000원. 총액 11,800,000원(부가세 별도).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="definition.html"><span>이전</span>정의 들여다보기와 버전</a><a class="next" href="agents.html"><span>다음</span>에이전트 동료 만들기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT를 로컬에 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-지식-베이스인가">왜 지식 베이스인가</a></li><li><a href="#실습-파일">실습 파일</a></li><li><a href="#따라-하기-1-폴더째-올리기">따라 하기 1 — 폴더째 올리기</a></li><li><a href="#따라-하기-2-가격표를-골라-묻기">따라 하기 2 — 가격표를 골라 묻기</a></li><li><a href="#따라-하기-3-고르지-않고-같은-질문">따라 하기 3 — 고르지 않고 같은 질문</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
