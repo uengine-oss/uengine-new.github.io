@@ -86,8 +86,10 @@
 </blockquote>
 <h2 id="설치와-실행">설치와 실행<a class="anchor" href="#설치와-실행" title="Permanent link">#</a></h2>
 <dl>
-<dt><strong>macOS에서 “손상되었기 때문에 열 수 없습니다” / “확인되지 않은 개발자”라고 나옵니다.</strong></dt>
-<dd>서명되지 않은 배포판이라 그렇습니다. 앱을 오른쪽 클릭 › 열기, 또는 시스템 설정 › 개인정보 보호 및 보안 › 「그래도 열기」. 그래도 안 되면 <code>xattr -dr com.apple.quarantine "/Applications/Ontological Studio.app"</code>(<a href="install.html">1장</a>).</dd>
+<dt><strong>macOS에서 “악성 코드가 없음을 확인할 수 없습니다” / “확인되지 않은 개발자”라고 나옵니다.</strong></dt>
+<dd>공증되지 않은 배포판이라 그렇습니다. 창을 닫고 시스템 설정 › 개인정보 보호 및 보안 › 「그래도 열기」를 누르세요. macOS 14 이하라면 앱을 오른쪽 클릭 › 열기도 됩니다(<a href="install.html#macos에-설치하기">1장</a>).</dd>
+<dt><strong>macOS에서 “손상되었기 때문에 열 수 없습니다. 해당 항목을 휴지통으로 이동해야 합니다”라고 나옵니다.</strong></dt>
+<dd>앱 서명이 덜 된 채 올라갔던 0.1.1 Apple Silicon용 초기 배포본입니다. 휴지통으로 옮기지 말고, 터미널에서 <code>xattr -dr com.apple.quarantine "/Applications/Ontological Studio.app"</code>을 실행한 뒤 다시 여세요(<a href="install.html#macos에-설치하기">1장</a>).</dd>
 <dt><strong>Intel Mac에서 앱이 실행되지 않습니다.</strong></dt>
 <dd>Intel용 설치 파일(<code>Ontological-Studio-mac-x64.dmg</code>)을 받았는지 확인하세요. Apple Silicon용(<code>…-mac-arm64.dmg</code>)은 Intel Mac에서 열리지 않습니다. Intel용은 0.1.1부터 있으니, 0.1.0을 받았다면 <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest">릴리스 페이지</a>에서 새로 받으세요(<a href="install.html">1장</a>).</dd>
 <dt><strong>Windows에서 SmartScreen이 막습니다.</strong></dt>
