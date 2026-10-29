@@ -50,7 +50,7 @@ cd process-gpt-lite/install
 |---|---|---|
 | LLM 주소(OpenAI 호환) | `https://api.openai.com/v1` | 사내 모델 서버나 다른 OpenAI 호환 주소도 됩니다 |
 | LLM API 키 | (입력해도 화면에 보이지 않습니다) | 비워 두면 채팅이 답하지 않습니다 |
-| 기본 모델 | `gpt-4.1` | 에이전트가 일할 때 쓰는 모델 |
+| 기본 모델 | `gpt-6-luna` | 에이전트가 일할 때 쓰는 모델 |
 | 빠른 모델(라우팅·분류) | 기본 모델과 같게 | 메시지 분류, 메일 분석처럼 짧은 판단에 쓰는 모델 |
 | 첫 관리자 이메일 | `admin@pgpt-lite.local` | 설치가 끝나면 이 주소가 관리자 계정이 됩니다 |
 
@@ -78,9 +78,10 @@ cd process-gpt-lite/install
 | `lite` (기본) | 채팅·에이전트·문서 생성과 편집·공유 폴더·패널 앱·보관함·브라우저 에이전트 | 1~4부(혼자, 문서, 반복 줄이기, 팀)를 따라 할 때 |
 | `full` (실험) | lite + 프로세스 엔진 + 외부 도구 연결 허브(MCP 허브) | 5부(프로세스) — 프로세스를 시작하고 진행할 때 `./install.sh --profile full` |
 | `mining` (선택) | 위에 더해 프로세스 마이닝 | 반복된 일에서 프로세스를 추천받을 때 `./install.sh --with-mining` |
+| `craft` (선택) | ArtCraft 앱 다섯 개(도면·벡터·이미지·소리·영상)의 웹 편집기와 명령줄 도구 | [8장](craft.html)을 따라 할 때 `./install.sh --with-craft`. 미리 빌드된 이미지(약 660MB)를 받아 넣습니다. 소스에서 직접 빌드하려면 `.env`에 `LITE_CRAFT_IMAGE=`(빈 값)를 넣습니다(처음 약 50분, Docker 메모리 12GB 이상) |
 
 !!! note "설치 번들에 빠진 것"
-    현재 설치 번들에는 대화를 주제별로 나누는 **대화 맥락 라우터**와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 `.env`에 주소(`CONTEXT_ROUTER_URL`, `JUDGE_URL`)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 [4장](contexts.html)의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, [8장](craft.html))와 Claude Code 작업실([23장](workroom.html))도 따로 설치합니다.
+    현재 설치 번들에는 대화를 주제별로 나누는 **대화 맥락 라우터**와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 `.env`에 주소(`CONTEXT_ROUTER_URL`, `JUDGE_URL`)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 [4장](contexts.html)의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, [8장](craft.html))는 `--with-craft`로 함께 설치하고, Claude Code 작업실([23장](workroom.html))은 따로 설치합니다.
 
 ## 설정 파일 `.env`
 
@@ -91,7 +92,8 @@ cd process-gpt-lite/install
 | 키 | 기본값 | 뜻 |
 |---|---|---|
 | `LLM_BASE_URL`, `LLM_API_KEY` | OpenAI 주소, 빈 값 | 모든 AI 기능이 쓰는 LLM |
-| `LLM_MODEL`, `LLM_FAST_MODEL` | `gpt-4.1`, `gpt-4.1-mini` | 일하는 모델과 빠른 판단용 모델 |
+| `LLM_MODEL`, `LLM_FAST_MODEL` | `gpt-6-luna`, `gpt-4.1-mini` | 일하는 모델과 빠른 판단용 모델 |
+| `LLM_USE_RESPONSES_API` | `true` | 에이전트가 OpenAI의 Responses API로 부름(추론 모델이 도구를 쓰려면 필요). OpenAI가 아닌 주소로 처음 설치하면 `false` |
 | `LLM_EMBEDDING_MODEL` | `text-embedding-3-small` | 문서 검색용 임베딩 |
 | `TRANSCRIBE_API_KEY` | 빈 값 | 원격 회의 받아쓰기(OpenAI 음성 API 키). 비우면 화상 회의만 되고 자막·회의록 글은 없습니다 ([16장](meetings.html)) |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | 빈 값 | Google 로그인과 Gmail 연결 ([5장](mail.html)) |
@@ -175,7 +177,7 @@ cd process-gpt-lite/install
 | 채팅이 답하지 않음 | `.env`의 `LLM_*` 값, `docker compose logs deepagents` |
 | 에이전트가 파일 작업에서 멈춤 | Docker 소켓 권한 (Linux는 사용자가 `docker` 그룹에 있어야 합니다) |
 | 문서가 편집기에서 빈 화면 | `docker compose logs office-host` |
-| 빌드가 메모리 부족으로 실패 | Docker 메모리를 8GB 이상으로 늘리고, 다른 컨테이너를 잠시 멈춥니다 |
+| 빌드가 메모리 부족으로 실패 | Docker 메모리를 8GB 이상(ArtCraft를 소스에서 빌드하면 12GB 이상)으로 늘리고, 다른 컨테이너를 잠시 멈춥니다 |
 
 ## 다음 장으로
 

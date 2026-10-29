@@ -203,7 +203,7 @@
 
 <div class="admonition tip">
 <p class="admonition-title">강사·관리자용 (선택) — 연습용 사례 넣기</p>
-<p>서버 폴더를 다룰 수 있는 관리자는 Lite에 들어 있는 연습용 데이터 스크립트로 지난 사례 3건(요청 메일 접수 → 평면도·제안서·견적서 작성 → 재무 검토 → 고객 회신)과 관리자 지정을 넣을 수 있습니다: <code>node server/scripts/seed-mining-demo.mjs &lt;영업 담당 계정 메일&gt; &lt;재무 담당 계정 메일&gt; &lt;관리자 계정 메일&gt;</code>. 여기에 <a href="email-to-quote.html">9장</a>에서 직접 처리한 메일 한 건을 더하면 4건이 됩니다. 이 스크립트로 넣은 사례는 단계가 6개이므로, 디자인 검토·견적 검토·제안 회의까지 기록된 이 장의 화면(8단계)과는 흐름이 조금 다릅니다. 스크립트를 쓸 수 없다면 이 장은 화면 사진을 따라 읽으며 흐름을 익히세요.</p>
+<p>서버 폴더를 다룰 수 있는 관리자는 Lite에 들어 있는 연습용 데이터 스크립트로 지난 사례 3건(요청 메일 접수 → 평면도·제안서·견적서 작성 → 재무 검토 → 고객 회신)과 관리자 지정을 넣을 수 있습니다: <code>node server/scripts/seed-mining-demo.mjs &lt;영업 담당 계정 메일&gt; &lt;재무 담당 계정 메일&gt; &lt;관리자 계정 메일&gt;</code>(설치 번들에서는 <code>install/</code> 폴더에서 <code>docker compose exec -w /app/server server node scripts/seed-mining-demo.mjs …</code>). 여기에 <a href="email-to-quote.html">9장</a>에서 직접 처리한 메일 한 건을 더하면 4건이 됩니다. 이 스크립트로 넣은 사례는 단계가 6개이므로, 디자인 검토·견적 검토·제안 회의까지 기록된 이 장의 화면(8단계)과는 흐름이 조금 다릅니다. 스크립트를 쓸 수 없다면 이 장은 화면 사진을 따라 읽으며 흐름을 익히세요.</p>
 </div>
 <h2 id="따라-하기-2-마이너가-패턴을-찾는다">따라 하기 2 — 마이너가 패턴을 찾는다<a class="anchor" href="#따라-하기-2-마이너가-패턴을-찾는다" title="Permanent link">#</a></h2>
 <p>Lite 서버는 1분마다 Process GPT의 프로세스 마이너(반복 흐름을 찾는 계산 서비스)에게 “반복되는 흐름이 있나?”를 묻습니다. 마이너는 AI 모델 없이 정해진 계산으로 찾으므로, 같은 기록이면 늘 같은 답이 나옵니다.</p>

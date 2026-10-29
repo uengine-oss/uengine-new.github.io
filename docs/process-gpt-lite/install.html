@@ -195,7 +195,7 @@
 </tr>
 <tr>
 <td>기본 모델</td>
-<td><code>gpt-4.1</code></td>
+<td><code>gpt-6-luna</code></td>
 <td>에이전트가 일할 때 쓰는 모델</td>
 </tr>
 <tr>
@@ -249,11 +249,16 @@ LLM_API_KEY=… LLM_BASE_URL=… LLM_MODEL=… ADMIN_EMAIL=… ./install.sh --ye
 <td>위에 더해 프로세스 마이닝</td>
 <td>반복된 일에서 프로세스를 추천받을 때 <code>./install.sh --with-mining</code></td>
 </tr>
+<tr>
+<td><code>craft</code> (선택)</td>
+<td>ArtCraft 앱 다섯 개(도면·벡터·이미지·소리·영상)의 웹 편집기와 명령줄 도구</td>
+<td><a href="craft.html">8장</a>을 따라 할 때 <code>./install.sh --with-craft</code>. 미리 빌드된 이미지(약 660MB)를 받아 넣습니다. 소스에서 직접 빌드하려면 <code>.env</code>에 <code>LITE_CRAFT_IMAGE=</code>(빈 값)를 넣습니다(처음 약 50분, Docker 메모리 12GB 이상)</td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">설치 번들에 빠진 것</p>
-<p>현재 설치 번들에는 대화를 주제별로 나누는 <strong>대화 맥락 라우터</strong>와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 <code>.env</code>에 주소(<code>CONTEXT_ROUTER_URL</code>, <code>JUDGE_URL</code>)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 <a href="contexts.html">4장</a>의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, <a href="craft.html">8장</a>)와 Claude Code 작업실(<a href="workroom.html">23장</a>)도 따로 설치합니다.</p>
+<p>현재 설치 번들에는 대화를 주제별로 나누는 <strong>대화 맥락 라우터</strong>와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 <code>.env</code>에 주소(<code>CONTEXT_ROUTER_URL</code>, <code>JUDGE_URL</code>)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 <a href="contexts.html">4장</a>의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, <a href="craft.html">8장</a>)는 <code>--with-craft</code>로 함께 설치하고, Claude Code 작업실(<a href="workroom.html">23장</a>)은 따로 설치합니다.</p>
 </div>
 <h2 id="설정-파일-env">설정 파일 <code>.env</code><a class="anchor" href="#설정-파일-env" title="Permanent link">#</a></h2>
 <p>설치 폴더(<code>install/</code>)의 <code>.env</code>가 모든 설정을 담습니다. 처음 실행할 때 만들어지고, 권한은 본인만 읽을 수 있는 <code>0600</code>입니다. 데이터베이스 비밀번호, 로그인 토큰 서명 키, <strong>보관함 마스터 키</strong> 같은 비밀 값은 스크립트가 무작위로 만들어 채우며 화면이나 로그에 찍지 않습니다. 업그레이드해도 그대로 유지됩니다.</p>
@@ -274,8 +279,13 @@ LLM_API_KEY=… LLM_BASE_URL=… LLM_MODEL=… ADMIN_EMAIL=… ./install.sh --ye
 </tr>
 <tr>
 <td><code>LLM_MODEL</code>, <code>LLM_FAST_MODEL</code></td>
-<td><code>gpt-4.1</code>, <code>gpt-4.1-mini</code></td>
+<td><code>gpt-6-luna</code>, <code>gpt-4.1-mini</code></td>
 <td>일하는 모델과 빠른 판단용 모델</td>
+</tr>
+<tr>
+<td><code>LLM_USE_RESPONSES_API</code></td>
+<td><code>true</code></td>
+<td>에이전트가 OpenAI의 Responses API로 부름(추론 모델이 도구를 쓰려면 필요). OpenAI가 아닌 주소로 처음 설치하면 <code>false</code></td>
 </tr>
 <tr>
 <td><code>LLM_EMBEDDING_MODEL</code></td>
@@ -422,7 +432,7 @@ LLM_API_KEY=… LLM_BASE_URL=… LLM_MODEL=… ADMIN_EMAIL=… ./install.sh --ye
 </tr>
 <tr>
 <td>빌드가 메모리 부족으로 실패</td>
-<td>Docker 메모리를 8GB 이상으로 늘리고, 다른 컨테이너를 잠시 멈춥니다</td>
+<td>Docker 메모리를 8GB 이상(ArtCraft를 소스에서 빌드하면 12GB 이상)으로 늘리고, 다른 컨테이너를 잠시 멈춥니다</td>
 </tr>
 </tbody>
 </table>

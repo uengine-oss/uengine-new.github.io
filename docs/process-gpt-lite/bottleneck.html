@@ -96,7 +96,7 @@
 <p>장진영 팀장은 어디가 느린지 감으로는 짐작이 갑니다. 하지만 “누가 늦다”가 아니라 <strong>“일이 어디서 기다리는가”</strong>를 숫자로 보고 싶습니다. 이 장에서는 그 숫자를 만듭니다. 다음 <a href="value-stream.html">21장</a>에서 그 숫자로 전체 흐름과 제약을 읽고, <a href="critical-path.html">22장</a>에서 무엇을 바꿀지 미리 계산해 실제로 바꿉니다.</p>
 <div class="admonition note">
 <p class="admonition-title">이 장의 예제 데이터</p>
-<p>6부의 「달빛커피 제안」은 <a href="process-create.html">17장</a>에서 만든 것보다 단계가 단순한 예제 프로세스입니다(아래 표). 8월 초부터 10월 말까지 48건이 완료돼 있습니다. 47건은 프로세스 엔진이 남기는 기록 모양 그대로 넣은 예제 이력이고, 1건은 장진영·김민지·박서연 계정으로 실제로 처음부터 끝까지 돌린 것입니다. 진행 중인 1건(광화문 53호점)도 실제로 돌고 있습니다. 숫자는 모두 이 기록에서 계산한 결과입니다. 이런 기록이 없는 설치에서는 화면 사진과 표의 숫자를 따라 읽으면 됩니다.</p>
+<p>6부의 「달빛커피 제안」은 <a href="process-create.html">17장</a>에서 만든 것보다 단계가 단순한 예제 프로세스입니다(아래 표). 8월 초부터 10월 말까지 48건이 완료돼 있습니다. 47건은 프로세스 엔진이 남기는 기록 모양 그대로 넣은 예제 이력이고, 1건은 장진영·김민지·박서연 계정으로 실제로 처음부터 끝까지 돌린 것입니다. 진행 중인 1건(광화문 53호점)도 실제로 돌고 있습니다. 숫자는 모두 이 기록에서 계산한 결과입니다. 서버 폴더를 다룰 수 있는 관리자는 Lite에 들어 있는 연습용 데이터 스크립트로 이 기록과 장진영·김민지·박서연 계정(<code>pro-tut-d-jang</code>·<code>pro-tut-d-minji</code>·<code>pro-tut-d-seoyeon@uengine.org</code>)을 넣을 수 있습니다: <code>node server/scripts/seed-improve-demo.mjs</code>(설치 번들에서는 <code>install/</code> 폴더에서 <code>docker compose exec -w /app/server server node scripts/seed-improve-demo.mjs</code>). 스크립트를 쓸 수 없다면 화면 사진과 표의 숫자를 따라 읽으면 됩니다.</p>
 </div>
 <table>
 <thead>
@@ -235,6 +235,10 @@
 <figure><a href="img/bottleneck-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 개선 목록 — 완료 건수와 마지막으로 찾은 제약" src="img/bottleneck-list.webp" / loading="lazy" decoding="async"></a><figcaption>프로세스 개선 목록 — 완료 건수와 마지막으로 찾은 제약</figcaption></figure>
 <h3 id="2-열지도로-병목-찾기">2. 열지도로 병목 찾기<a class="anchor" href="#2-열지도로-병목-찾기" title="Permanent link">#</a></h3>
 <p>개선 화면 맨 위에는 완료 건수, 리드타임 중앙값 <strong>3.1일</strong>(p80 4.8일), 흐름 효율 <strong>3.7%</strong>, 그리고 빨간 「제약」 표시가 있습니다. 흐름 효율과 제약은 <a href="value-stream.html">21장</a>에서 다룹니다.</p>
+<div class="admonition note">
+<p class="admonition-title">숫자가 조금 다르면</p>
+<p>실습 데이터는 시드를 넣은 날까지의 석 달로 만들어지므로, 화면의 숫자는 이 장의 숫자와 조금 다를 수 있습니다. 어느 단계가 병목인지는 같습니다.</p>
+</div>
 <p>「병목」 탭의 다이어그램은 정식 등록 때 만든 BPMN 그대로이고, 단계 뒤의 빛이 선택한 지표의 크기입니다.</p>
 <figure><a href="img/bottleneck-heatmap.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="병목 점수 열지도 — 재무 검토 83%, 평면도 작성 15%, 나머지는 0~2%" src="img/bottleneck-heatmap.webp" / loading="lazy" decoding="async"></a><figcaption>병목 점수 열지도 — 재무 검토 83%, 평면도 작성 15%, 나머지는 0~2%</figcaption></figure>
 <table>
