@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Messenger and the room helper — Process GPT Lite Tutorial</title>
+<meta name="description" content="While you talk with teammates in one-on-one and group rooms, when someone asks for a piece of work, the room helper shows a &quot;Want me to help with this?&quot; card only to the person who was asked. When they click **Start**, their agent does the work and posts the result in the room. A teammate who writes in another language reads everything in their own language, and you read them in yours.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/messenger.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Messenger and the room helper — Process GPT Lite Tutorial">
+<meta property="og:description" content="While you talk with teammates in one-on-one and group rooms, when someone asks for a piece of work, the room helper shows a &quot;Want me to help with this?&quot; card only to the person who was asked. When they click **Start**, their agent does the work and posts the result in the room. A teammate who writes in another language reads everything in their own language, and you read them in yours.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/messenger.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html" class="on" aria-current="page"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Working as a team<span class="chap">15</span></div>
+    <h1>Messenger and the room helper</h1>
+    <article>
+<blockquote>
+<p>While you talk with teammates in one-on-one and group rooms, when someone asks for a piece of work, the room helper shows a "Want me to help with this?" card only to the person who was asked. When they click <strong>Start</strong>, their agent does the work and posts the result in the room. A teammate who writes in another language reads everything in their own language, and you read them in yours.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/vMn43xq5wI8" title="Messenger and the room helper — video 4:02" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-the-messenger-is-inside-the-app">Why the messenger is inside the app<a class="anchor" href="#why-the-messenger-is-inside-the-app" title="Permanent link">#</a></h2>
+<p>Up to <a href="sharing.html">Chapter 14</a>, team lead Jinyoung Jang shared outputs and handed work over with @mentions. But work always moves in short back-and-forths like "Could you take a look? → I fixed it → How about this?" If you do this back-and-forth in an outside messenger, two things break.</p>
+<ul>
+<li>Requests in the conversation <strong>don't turn into work.</strong> The person asked has to explain it all over again to their own assistant.</li>
+<li>Files and decisions exchanged in the room <strong>aren't kept in the work record.</strong></li>
+</ul>
+<p>The Lite messenger connects these two. Rooms use Process GPT's chat rooms as they are, so messages written on the Process GPT screen show up in the same room too.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One-on-one conversation</td>
+<td>A conversation with one teammate. You always have the same room with the same person. Shares and mentions pile up in this room too</td>
+</tr>
+<tr>
+<td>Group conversation</td>
+<td>Pick several people and it becomes a group conversation (up to 8 people)</td>
+</tr>
+<tr>
+<td>Attach outputs</td>
+<td>Pick one of your outputs with the paper clip button and send it. Only room members open it, each as their own copy</td>
+</tr>
+<tr>
+<td>Unread count</td>
+<td>Shown on the <strong>Messages</strong> button at the top and in the conversation list</td>
+</tr>
+<tr>
+<td>Room helper</td>
+<td>Notices requests in the conversation and shows a suggestion card to the person asked</td>
+</tr>
+<tr>
+<td>Start meeting</td>
+<td>Opens an online meeting right from the room (<a href="meetings.html">Chapter 16</a>)</td>
+</tr>
+<tr>
+<td>Translation</td>
+<td>Messages, agent replies and suggestion cards in another language than yours read in your <strong>main language</strong>, with <strong>Show original</strong> one click away</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-1-make-a-group-room">Try it 1 — make a group room<a class="anchor" href="#try-it-1-make-a-group-room" title="Permanent link">#</a></h2>
+<p>Do this from team lead Jinyoung Jang's account.</p>
+<ol>
+<li>Click <strong>Messages</strong> at the top right. A window opens with <strong>Inbox</strong> and <strong>Conversation</strong> tabs on the left.</li>
+<li>Click <strong>+ New conversation</strong> and pick the teammates to talk with. Pick Minji Kim (designer) and Seoyeon Park (Finance). Picking two or more makes it a group conversation. Teammates you message often come first.</li>
+<li>Click <strong>Start conversation</strong> and send the first message.</li>
+</ol>
+<div class="hl"><pre><span></span><code>This room is for the Moonlight Coffee Store #2 proposal. Our meeting with the owner is on Thursday morning.
+</code></pre></div>
+
+<p>Open the same room from Seoyeon Park's account and reply (<code>Sure, sounds good! I'll look at the numbers in the quote.</code>). It shows up on team lead Jinyoung Jang's screen in real time, and the unread count goes up.</p>
+<div class="admonition note">
+<p class="admonition-title">Room names</p>
+<p>Group rooms don't get a separate name. The list shows the names of the members other than you. In our run, team lead Jinyoung Jang's screen showed "Seoyeon Park, Minji Kim", and Minji Kim's screen showed "Seoyeon Park, Jinyoung Jang".</p>
+</div>
+<h2 id="try-it-2-from-a-request-in-the-conversation-to-work">Try it 2 — from a request in the conversation to work<a class="anchor" href="#try-it-2-from-a-request-in-the-conversation-to-work" title="Permanent link">#</a></h2>
+<p>Now team lead Jinyoung Jang asks Minji Kim for some work. Instead of an instruction to an assistant, write it just the way you'd normally talk to a colleague.</p>
+<div class="hl"><pre><span></span><code>Minji, could you put together a draft notice about the Store #2 design concept that we can send the owner in advance? Warm wood tones, with the evening lighting front and center.
+</code></pre></div>
+
+<figure><a href="img/messenger-room.webp" target="_blank" rel="noopener" title="View larger"><img alt="Team lead Jinyoung Jang's screen — the request has been sent to the room. The person who asked doesn't get a suggestion card" src="img/messenger-room.webp" / loading="lazy" decoding="async"></a><figcaption>Team lead Jinyoung Jang's screen — the request has been sent to the room. The person who asked doesn't get a suggestion card</figcaption></figure>
+<p>Open the same room from Minji Kim's account. A suggestion card is right below the request.</p>
+<figure><a href="img/messenger-suggest.webp" target="_blank" rel="noopener" title="View larger"><img alt="Minji Kim's screen — &quot;Want me to help with this? · Draft the notice&quot;. It also shows who asked for what, and how confident the routing model is" src="img/messenger-suggest.webp" / loading="lazy" decoding="async"></a><figcaption>Minji Kim's screen — &quot;Want me to help with this? · Draft the notice&quot;. It also shows who asked for what, and how confident the routing model is</figcaption></figure>
+<p><strong>Check</strong>: The card is <strong>only on Minji Kim's screen</strong>. It isn't on the screen of team lead Jinyoung Jang, who asked, or of Seoyeon Park, who wasn't named.</p>
+<h3 id="how-the-helper-notices">How the helper notices<a class="anchor" href="#how-the-helper-notices" title="Permanent link">#</a></h3>
+<p>Calling a big working AI model for every message would be slow and expensive. So the helper filters in three stages.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① Rules</td>
+<td>Short messages, emoji, greetings, chitchat and anything that isn't phrased as a request are skipped right away</td>
+<td>"lol nice", "What should we get for lunch?"</td>
+</tr>
+<tr>
+<td>② Routing model</td>
+<td>A small model just for decisions picks "Is this asking for work?" and "What kind of work?" (document, table, summary, schedule, reply, process…). In our run, judging one message took about 3 seconds on a busy server</td>
+<td>"Could you put together a draft notice?" → write a document</td>
+</tr>
+<tr>
+<td>③ Recipient</td>
+<td>Shows the card only to the person named in the message. If nobody is named, it shows the card to everyone except the sender</td>
+<td>"Minji" → Minji Kim</td>
+</tr>
+</tbody>
+</table>
+<p>If the request matches a registered process ("Please file my travel expense settlement" and so on), the card changes to <strong>Start ○○</strong>. The process candidates are the registered processes that share a word with the request, so in a tenant that already has processes such as "Moonlight Coffee proposal", a request can come back as <strong>Start Moonlight Coffee proposal</strong>. Click <strong>No</strong> if that isn't what was meant. No big model is used to notice requests. The big model works only after a person clicks <strong>Start</strong>.</p>
+<h2 id="try-it-3-when-you-click-start">Try it 3 — when you click Start<a class="anchor" href="#try-it-3-when-you-click-start" title="Permanent link">#</a></h2>
+<p>Minji Kim clicks <strong>Start</strong> on the card. The room gets "Handed to the agent · Draft the notice", and the card turns into a progress indicator.</p>
+<figure><a href="img/messenger-working.webp" target="_blank" rel="noopener" title="View larger"><img alt="“Minji Kim's agent is working on: Draft the notice” — with the elapsed time shown" src="img/messenger-working.webp" / loading="lazy" decoding="async"></a><figcaption>“Minji Kim's agent is working on: Draft the notice” — with the elapsed time shown</figcaption></figure>
+<p>The work is done <strong>with the account and agent of the person who clicked</strong>. Minji Kim's agent gets the room's recent conversation too, makes the document, and posts the result in the room. In our run it took under 3 minutes.</p>
+<figure><a href="img/messenger-result.webp" target="_blank" rel="noopener" title="View larger"><img alt="The result — Minji Kim's agent posted a Word file to the room along with a summary of the notice. Other members open it as their own copies" src="img/messenger-result.webp" / loading="lazy" decoding="async"></a><figcaption>The result — Minji Kim's agent posted a Word file to the room along with a summary of the notice. Other members open it as their own copies</figcaption></figure>
+<p><strong>Check</strong></p>
+<ul>
+<li>The room has a <strong>✦ Minji Kim's agent · Draft the notice</strong> message and a <code>.docx</code> file chip (in our run, <code>Moonlight Coffee Store 2 Design Concept Notice.docx</code>).</li>
+<li>When Jinyoung Jang or Seoyeon Park clicks the file chip, <strong>their own copy</strong> opens. Even if they edit it, Minji Kim's original stays the same.</li>
+</ul>
+<p>The wording differs from run to run. Even if the concept wording differs from the screenshot, it worked as long as a file chip appeared.</p>
+<h2 id="try-it-4-a-teammate-who-writes-in-another-language">Try it 4 — a teammate who writes in another language<a class="anchor" href="#try-it-4-a-teammate-who-writes-in-another-language" title="Permanent link">#</a></h2>
+<p>Not everyone on a team works in the same language. For the Store #2 evening lighting, the team works with <strong>Yuki Sato</strong>, a lighting designer at a partner studio in Tokyo, who writes and speaks Japanese. (People and companies in this tutorial are examples.)</p>
+<p>Everyone has a <strong>main language</strong>: the language you read messages in and speak in meetings. You set it in <strong>Settings › Accounts › About me › Main language</strong> (it's separate from <strong>Language</strong>, the screen language). The screens come in Korean and English only, so Yuki, whose main language is 日本語, works with English screens.</p>
+<ol>
+<li>From team lead Jinyoung Jang's account, click <strong>+ New conversation</strong>, pick Minji Kim and Yuki Sato, and click <strong>Start conversation</strong>. Send a welcome (<code>Yuki, welcome! This room is for the Moonlight Coffee Store #2 lighting. Minji is our designer.</code>).</li>
+<li>Yuki answers from her account, in Japanese:</li>
+</ol>
+<div class="hl"><pre><span></span><code>はじめまして、佐藤です。2号店の夜の照明を担当します。よろしくお願いします！
+</code></pre></div>
+
+<p>On Jinyoung Jang's screen, her message reads in English, with <strong>AI translation · 日本語</strong> and <strong>Show original</strong> below it. <strong>Show original</strong> shows the Japanese; <strong>Show translation</strong> goes back.</p>
+<figure><a href="img/messenger-translate.webp" target="_blank" rel="noopener" title="View larger"><img alt="Team lead Jinyoung Jang's screen — Yuki Sato's Japanese message reads in English, with &quot;AI translation · 日本語&quot; and &quot;Show original&quot;. Jinyoung's own messages aren't translated on her screen" src="img/messenger-translate.webp" / loading="lazy" decoding="async"></a><figcaption>Team lead Jinyoung Jang's screen — Yuki Sato's Japanese message reads in English, with &quot;AI translation · 日本語&quot; and &quot;Show original&quot;. Jinyoung's own messages aren't translated on her screen</figcaption></figure>
+<ol>
+<li>With the paper clip, Jinyoung attaches the Store #2 quote and floor plan (<code>Here are the Store #2 quote and floor plan for Thursday's meeting.</code>), then asks in English:</li>
+</ol>
+<div class="hl"><pre><span></span><code>Yuki, could you put together a short lighting plan for the bar counter before Thursday&#39;s meeting?
+</code></pre></div>
+
+<ol>
+<li>On Yuki Sato's screen, Jinyoung's messages read in Japanese, and so does the suggestion card under the request (its title and the request quoted in it). Yuki clicks <strong>Start</strong>. Her agent reads the room, writes the plan and posts it. In our run it made a Word plan and a lighting drawing (<code>.dxf</code>) in about 12 minutes, kept inside the quote's lighting line.</li>
+</ol>
+<figure><a href="img/messenger-translate-yuki.webp" target="_blank" rel="noopener" title="View larger"><img alt="Yuki Sato's screen (English screens, main language Japanese) — Jinyoung's request and Yuki's own agent's reply both read in Japanese, each with &quot;AI translation · English&quot; and &quot;Show original&quot;" src="img/messenger-translate-yuki.webp" / loading="lazy" decoding="async"></a><figcaption>Yuki Sato's screen (English screens, main language Japanese) — Jinyoung's request and Yuki's own agent's reply both read in Japanese, each with &quot;AI translation · English&quot; and &quot;Show original&quot;</figcaption></figure>
+<p>Her agent writes in the language of her screens, English. So Jinyoung and Minji read the reply as it was written, and Yuki reads it in Japanese.</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>How it reads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A teammate's message in another language</td>
+<td>In your main language, with <strong>AI translation</strong> and the original's language and <strong>Show original</strong> / <strong>Show translation</strong></td>
+</tr>
+<tr>
+<td>Agents' replies and the helper's rows in the room</td>
+<td>Translated the same way when you open them</td>
+</tr>
+<tr>
+<td>Suggestion cards</td>
+<td>Their title and reason in your main language</td>
+</tr>
+<tr>
+<td>Your own messages, and messages already in your language</td>
+<td>As written, no translation</td>
+</tr>
+<tr>
+<td>Meeting and material cards</td>
+<td>Drawn by the screen in its own language</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Check</strong></p>
+<ul>
+<li>On Jinyoung Jang's screen, Yuki's message shows <strong>AI translation · 日本語</strong>. On Minji Kim's screen (English) it reads in English too.</li>
+<li>On Yuki Sato's screen, Jinyoung's messages show <strong>AI translation · English</strong>.</li>
+</ul>
+<p>How it works: each message is translated once for each language it's read in, by a small, fast model on the server's OpenAI key, and kept. Opening the room again doesn't call the model again. Only the room's members get translations.</p>
+<div class="admonition note">
+<p class="admonition-title">Limits of translation</p>
+<ul>
+<li>It needs the OpenAI key on the server (the same one as meeting transcription, <a href="install.html">Chapter 1</a>). Without it, or when the operator has turned messenger translation off, messages show as written.</li>
+<li>A translation can word things a little differently. For amounts, dates and names, check <strong>Show original</strong>.</li>
+<li>The helper's first filter (① Rules) reads Korean and English words. A request written only in Japanese (or another language) doesn't get a suggestion card yet. Requests in English or Korean do, whoever they're for. In meetings, requests are read through their translation (<a href="meetings.html">Chapter 16</a>).</li>
+</ul>
+</div>
+<h2 id="handling-suggestion-cards">Handling suggestion cards<a class="anchor" href="#handling-suggestion-cards" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ignore just this suggestion</td>
+<td><strong>No</strong> — it disappears only from your screen</td>
+</tr>
+<tr>
+<td>Stop getting suggestions in this room</td>
+<td>Click <strong>AI suggestions on</strong> in the room header to switch it to <strong>AI suggestions off</strong></td>
+</tr>
+<tr>
+<td>Handle a request you made yourself</td>
+<td>The person who asked doesn't get a card. Ask in your own assistant chat directly</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">When no suggestion appears</p>
+<ul>
+<li>Check that you wrote it as a request. "Could you put together a draft notice?" gets picked up better than "A draft notice would be good."</li>
+<li>It needs a word for what the work is (quote, document, summary, schedule, reply, process and so on).</li>
+<li>On an install with no routing model connected, only the rules run and no suggestions appear. The operator sets up the connection (<a href="install.html">Chapter 1</a>).</li>
+</ul>
+</div>
+<h2 id="how-one-on-one-conversations-relate-to-the-inbox">How one-on-one conversations relate to the inbox<a class="anchor" href="#how-one-on-one-conversations-relate-to-the-inbox" title="Permanent link">#</a></h2>
+<p>If you shared the quote with Seoyeon Park in <a href="sharing.html">Chapter 14</a>, the <strong>Conversation</strong> tab already has a one-on-one room with Seoyeon Park. Shares and @mentions also show in the inbox, but they actually pile up as messages in the two people's one-on-one room. That's why "Could you look at the quote? → Checked it, just fix the VAT" continues in one room.</p>
+<p>In the next chapter, you open an online meeting right from this group room (<a href="meetings.html">Chapter 16</a>). Requests during the meeting also lead to suggestion cards like these, and what was said in the meeting stays in this room on its own.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>In the group room, send <code>Jinyoung, could you summarize what we've discussed so far before Thursday's meeting?</code> from Seoyeon Park's account. Whose screen does the suggestion card appear on? What kind of work is on the card?</li>
+<li>What happens if you send <code>What should we have for lunch today?</code> in the same room? Why?</li>
+<li>From Minji Kim's account, click <strong>AI suggestions on</strong> in the room to turn it off, then send Minji Kim a request again from Jinyoung Jang's account. What's different?</li>
+<li>In the room with Yuki Sato, Jinyoung Jang writes <code>Thanks, Yuki!</code>. What do Yuki Sato and Minji Kim each see?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>Only on team lead Jinyoung Jang's screen (the person named). The kind of work is <strong>Summary · Summarize this conversation</strong>. The routing model picks it, so once in a while a different kind may come up. If the request has a word that overlaps with a registered process name (for example, quote), it can also become a <strong>Start ○○</strong> card.</li>
+<li>No card appears. It has a chitchat word (lunch) and no word pointing to work, so it's filtered out at the ① Rules stage. The routing model isn't called either.</li>
+<li>It's a per-room setting, so no one gets suggestion cards in that room. Messages still go back and forth as usual. If you turn it back on, it suggests again from the next message.</li>
+<li>Yuki Sato sees it in Japanese, with <strong>AI translation · English</strong> and <strong>Show original</strong>. Minji Kim sees it as written, because her main language is English. On Jinyoung Jang's own screen it isn't translated either.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="sharing.html"><span>Previous</span>Sharing outputs and @mentions</a><a class="next" href="meetings.html"><span>Next</span>Online meetings — the helper listens, shows materials and keeps minutes</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-the-messenger-is-inside-the-app">Why the messenger is inside the app</a></li><li><a href="#try-it-1-make-a-group-room">Try it 1 — make a group room</a></li><li><a href="#try-it-2-from-a-request-in-the-conversation-to-work">Try it 2 — from a request in the conversation to work</a><ul><li><a href="#how-the-helper-notices">How the helper notices</a></li></ul></li><li><a href="#try-it-3-when-you-click-start">Try it 3 — when you click Start</a></li><li><a href="#try-it-4-a-teammate-who-writes-in-another-language">Try it 4 — a teammate who writes in another language</a></li><li><a href="#handling-suggestion-cards">Handling suggestion cards</a></li><li><a href="#how-one-on-one-conversations-relate-to-the-inbox">How one-on-one conversations relate to the inbox</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

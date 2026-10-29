@@ -11,6 +11,7 @@
 """
 import hashlib
 import base64
+import importlib.util
 import re, json, sys, os, html as htmlmod
 
 ASSET_DIRS = ('images', 'css', 'js', 'webfonts', 'php', 'docs', 'fonts', 'learning', 'newsletters')
@@ -59,7 +60,7 @@ def fix_asset_paths(s, root):
         if d == 'docs' and root:
             # a doc site with its own English edition (en/docs/...) stays inside en/
             path, _, anchor = rest.partition('#')
-            if os.path.exists(os.path.join(root, 'en', 'docs', path.split('?')[0])):
+            if path.split('/')[0] in EN_DOCS or os.path.exists(os.path.join(root, 'en', 'docs', path.split('?')[0])):
                 anchor = DOC_ANCHORS.get(anchor, anchor)
                 return m.group('q') + m.group('rel') + 'docs/' + path + ('#' + anchor if anchor else '')
         if d == 'images' and root:
@@ -70,6 +71,10 @@ def fix_asset_paths(s, root):
 
     return pat.sub(repl, s)
 
+
+# Doc sites whose English edition (en/docs/<name>/) ships together with the English pages that
+# link to it, even while it is still being built and is not on disk yet.
+EN_DOCS = {'process-gpt-lite'}
 
 # Heading anchors differ between a Korean doc page and its English edition.
 DOC_ANCHORS = {
@@ -215,6 +220,35 @@ def swap_videos(s, page):
     return s
 
 
+def pgl_rules(s, page):
+    """English Process GPT Lite page (see tools/pgl-en-images.md and tools/pgl-en-videos.json).
+
+    - screenshots: images/processgptlite/en/<name>.jpg, falling back to the Korean capture until the
+      English one exists
+    - the Lite practitioner AX course has no English page: its links open the English AX training page
+    - the in-place player shows YouTube's chrome and captions in English
+    - Korean videos are swapped for their English re-recordings as tools/pgl-en-videos.json fills up
+    """
+    s = re.sub(r'src="((?:\.\./)*)images/processgptlite/([A-Za-z0-9_-]+\.jpg)"',
+               lambda m: (f'src="{m.group(1)}images/processgptlite/en/{m.group(2)}" '
+                          f'onerror="this.onerror=null;this.src=\'{m.group(1)}images/processgptlite/{m.group(2)}\'"'), s)
+    s = re.sub(r'href="ax-lite-course\.html(?:#[^"]*)?"', 'href="educationax.html"', s)
+    s = s.replace("'?autoplay=1&rel=0'", "'?autoplay=1&rel=0&hl=en&cc_lang_pref=en'")
+    tool = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'pgl-en-videos.py')
+    if os.path.isfile(tool):
+        spec = importlib.util.spec_from_file_location('pgl_en_videos', tool)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        s, _ = mod.rewrite(s, mod.load_map())
+    return s
+
+
+# Page-specific rules, applied after the generic passes and before links are resolved.
+PAGE_RULES = {
+    'contents/processgptlite.html': pgl_rules,
+}
+
+
 def swap_js(s):
     for js in JS_EN:
         s = re.sub(r'((?:\.\./)*)' + re.escape(js), lambda m: m.group(1) + js.replace('js/', 'js/en/'), s)
@@ -254,6 +288,8 @@ def build(page, src, segs, tm):
     # Korean pages link into the English tree as "en/contents/x.html"; inside that tree the
     # same link must stay relative to en/ itself, or it would resolve to /en/en/contents/.
     s = re.sub(r'((?:\.\./)*)en/(contents/|index\.html)', lambda m: m.group(1) + m.group(2), s)
+    if page in PAGE_RULES:
+        s = PAGE_RULES[page](s, page)
     s = link_untranslated(s, page, SITE_ROOT)
     s = seo_fixes(s, page)
     s, n1, n2 = add_lang_switch(s, page, to_en=False)

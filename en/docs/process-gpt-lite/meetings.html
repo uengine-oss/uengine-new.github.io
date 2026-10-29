@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Online meetings — the helper listens, shows materials and keeps minutes — Process GPT Lite Tutorial</title>
+<meta name="description" content="Open a video meeting right from a group room. The helper joins as a participant, shows captions for each speaker, finds and shows materials that match what&#x27;s said, like &quot;Shall we look at the quote again?&quot;, and turns requests made during the meeting into work. When people speak different languages, each speaks their own and hears the others interpreted into theirs. When the meeting ends, the minutes stay in the room without anyone clicking anything.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/meetings.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Online meetings — the helper listens, shows materials and keeps minutes — Process GPT Lite Tutorial">
+<meta property="og:description" content="Open a video meeting right from a group room. The helper joins as a participant, shows captions for each speaker, finds and shows materials that match what&#x27;s said, like &quot;Shall we look at the quote again?&quot;, and turns requests made during the meeting into work. When people speak different languages, each speaks their own and hears the others interpreted into theirs. When the meeting ends, the minutes stay in the room without anyone clicking anything.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/meetings.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html" class="on" aria-current="page"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Working as a team<span class="chap">16</span></div>
+    <h1>Online meetings — the helper listens, shows materials and keeps minutes</h1>
+    <article>
+<blockquote>
+<p>Open a video meeting right from a group room. The helper joins as a participant, shows captions for each speaker, finds and shows materials that match what's said, like "Shall we look at the quote again?", and turns requests made during the meeting into work. When people speak different languages, each speaks their own and hears the others interpreted into theirs. When the meeting ends, the minutes stay in the room without anyone clicking anything.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/uA8kqtm4Fj8" title="Online meetings — the helper listens, shows materials and keeps minutes — video 3:58" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-meet-in-a-room">Why meet in a room<a class="anchor" href="#why-meet-in-a-room" title="Permanent link">#</a></h2>
+<p>In <a href="messenger.html">Chapter 15</a>, you talked by text in a group room. This time, you meet face to face in the same room.</p>
+<p>When someone says "the quote from last time," "let's look at the floor plan again," or "how far along is the travel expense settlement?" in a meeting, someone shares their screen and goes hunting for the file. But those materials are already inside Lite: files shared in the room, each person's outputs, processes in progress, and documents in shared folders.</p>
+<p>And requests made in the meeting ("Please redo it with the amount 5% lower") get forgotten once the meeting ends, or someone has to write them down again. A Lite meeting opens inside a room, so what was said stays in that room as is, and requests lead to suggestion cards.</p>
+<table>
+<thead>
+<tr>
+<th>During the meeting</th>
+<th>What the helper does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>When you speak</td>
+<td>Each person's browser sends <strong>only its own microphone audio</strong>, one utterance at a time, and the server transcribes it and shows it as captions for each speaker</td>
+</tr>
+<tr>
+<td>Words that point to materials</td>
+<td>Finds materials you have permission to see and shows them in the <strong>Materials</strong> panel (files, progress, panel app data, folder documents)</td>
+</tr>
+<tr>
+<td><strong>Show to everyone</strong></td>
+<td>The same material opens on every participant's stage, <strong>each as their own copy</strong></td>
+</tr>
+<tr>
+<td>Words that ask for something</td>
+<td>Shows a <strong>Start / No</strong> suggestion card. The agent of the person who clicks does the work and posts the result to the Materials panel and the room</td>
+</tr>
+<tr>
+<td>Someone speaks another language</td>
+<td>Shows the translation with the original under it, and speaks it in each listener's language (<strong>AI interpretation</strong>)</td>
+</tr>
+<tr>
+<td>When the meeting ends</td>
+<td>Leaves minutes in the room with a summary, decisions, to-dos, participants, time and the materials shown, and shows to-dos as suggestion cards to whoever is responsible</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-you-need">What you need<a class="anchor" href="#what-you-need" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser</td>
+<td>The latest Chrome or Edge, with a camera and microphone (you can still join without them)</td>
+</tr>
+<tr>
+<td>People</td>
+<td>Up to 6 in one meeting. Participants' browsers connect to each other directly, so the more people there are, the busier each computer and connection gets</td>
+</tr>
+<tr>
+<td>Transcription</td>
+<td>The server needs a transcription key for captions, finding materials and minutes to work (<a href="install.html">Chapter 1</a>). Without it, you get video meetings only</td>
+</tr>
+<tr>
+<td>Room</td>
+<td>Meetings are opened from a room. Only room members can join, and captions and materials go only to members</td>
+</tr>
+<tr>
+<td>Materials</td>
+<td>In our run, team lead Jinyoung Jang had posted the quote and floor plan to the group room in advance (<code>Here are the Store #2 quote and floor plan to look at together in Thursday's meeting.</code>)</td>
+</tr>
+<tr>
+<td>Interpretation</td>
+<td>Optional. When people with different main languages meet, the server interprets with the same OpenAI key (<a href="#try-it-6-a-meeting-in-two-languages">Try it 6</a>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-1-start-the-meeting-and-consent">Try it 1 — start the meeting and consent<a class="anchor" href="#try-it-1-start-the-meeting-and-consent" title="Permanent link">#</a></h2>
+<ol>
+<li>Open the group room from <a href="messenger.html">Chapter 15</a> (Jinyoung Jang, Minji Kim, Seoyeon Park).</li>
+<li>Click <strong>Start meeting</strong> in the room header. On the screen before you join, you can turn the camera and microphone on or off.</li>
+<li>Turn on <strong>I consent to transcription and saving to the room</strong> and click <strong>Join</strong>.</li>
+</ol>
+<p>Each person consents separately. For anyone who doesn't consent, <strong>the browser doesn't send their audio to the server, and the server doesn't accept it either.</strong> What they say doesn't appear in captions or minutes, and the minutes list them as someone who didn't consent.</p>
+<p>The other two also join by clicking <strong>Start meeting</strong> in the same room (<strong>Join meeting · n</strong> if it's already in progress).</p>
+<figure><a href="img/meetings-tiles.webp" target="_blank" rel="noopener" title="View larger"><img alt="The meeting screen — three people and a &quot;Process GPT Lite helper&quot; tile. &quot;Transcribing and recording&quot; at the top, and the &quot;Captions&quot; and &quot;Materials&quot; tabs on the right" src="img/meetings-tiles.webp" / loading="lazy" decoding="async"></a><figcaption>The meeting screen — three people and a &quot;Process GPT Lite helper&quot; tile. &quot;Transcribing and recording&quot; at the top, and the &quot;Captions&quot; and &quot;Materials&quot; tabs on the right</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">The screenshots in this chapter</p>
+<p>We opened a real meeting with three accounts to take them. Name pictures appear where the camera video would be. Transcription, finding materials, suggestions and minutes are all results of it actually running.</p>
+</div>
+<h2 id="try-it-2-speak-and-materials-appear">Try it 2 — speak, and materials appear<a class="anchor" href="#try-it-2-speak-and-materials-appear" title="Permanent link">#</a></h2>
+<p>What was said in the meeting (the script from our run):</p>
+<table>
+<thead>
+<tr>
+<th>Speaker</th>
+<th>What they said</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jinyoung Jang</td>
+<td>All right, let's get started on the Moonlight Coffee Seongsu proposal.</td>
+</tr>
+<tr>
+<td>Minji Kim</td>
+<td>Shall we look at the Moonlight Coffee quote we sent last time again?</td>
+</tr>
+<tr>
+<td>Seoyeon Park</td>
+<td>Sure. Let's look at the floor plan too. They asked us to move the bar counter.</td>
+</tr>
+<tr>
+<td>Jinyoung Jang</td>
+<td>And how far along is last week's Busan travel expense settlement?</td>
+</tr>
+<tr>
+<td>Minji Kim</td>
+<td>The policy review is done. Only the team lead's approval is left.</td>
+</tr>
+</tbody>
+</table>
+<p>A few seconds after Minji Kim's words appeared in the captions, a quote appeared in the <strong>Materials</strong> panel. Next came the floor plan, and then the progress of the travel expense settlement in progress. Minji Kim claimed this travel expense settlement after a site trip ("Moonlight Coffee Store #2 site, Busan"), and you'll start and approve one yourself in <a href="process-run.html">Chapter 18</a>. If there's no process in progress yet, this material doesn't appear. The helper picks among everything you may see, so the quote it finds can be one of your own files (in our run, <strong>My file</strong> <code>Moonlight Coffee quote.xlsx</code>) rather than the one shared in the room.</p>
+<figure><a href="img/meetings-materials.webp" target="_blank" rel="noopener" title="View larger"><img alt="The Materials panel — progress (status of each step and chips for step outputs), the floor plan and the quote. Each card says whose words it was found from" src="img/meetings-materials.webp" / loading="lazy" decoding="async"></a><figcaption>The Materials panel — progress (status of each step and chips for step outputs), the floor plan and the quote. Each card says whose words it was found from</figcaption></figure>
+<p><strong>Check</strong></p>
+<ul>
+<li>Each material card shows the words it was based on, like "Helper found it · Minji Kim: "Shall we look at the Moonlight Coffee qu…"".</li>
+<li>The progress card shows the status of each step (Submit travel expenses · Done, Policy review (expense review agent) · Done, Approval · In progress · Jinyoung Jang) and the step output (Policy review report).</li>
+<li>Materials appear <strong>only to people who can see them</strong>. Files shared in the room are visible to all members, and process progress only to people involved in that case (<a href="process-run.html">Chapter 18</a>).</li>
+</ul>
+<h3 id="how-materials-are-found">How materials are found<a class="anchor" href="#how-materials-are-found" title="Permanent link">#</a></h3>
+<p>It works the same way as the room helper in <a href="messenger.html">Chapter 15</a>. From the rolling captions, ① rules filter out chitchat, and ② a small routing model picks "Do these words point to materials, and to what?" Only the last few lines of speech go to the routing model. In our run's meeting, the routing model took about 0.4 seconds per call (median), and no big AI model was used even once to notice things.</p>
+<h2 id="try-it-3-show-it-to-everyone">Try it 3 — show it to everyone<a class="anchor" href="#try-it-3-show-it-to-everyone" title="Permanent link">#</a></h2>
+<p>Team lead Jinyoung Jang clicks <strong>Show to everyone</strong> on the quote card. The quote opens on every participant's stage (the big screen in the middle).</p>
+<figure><a href="img/meetings-present.webp" target="_blank" rel="noopener" title="View larger"><img alt="Minji Kim's screen — &quot;Jinyoung Jang showed this to everyone&quot;. Minji Kim gets her own copy of the shared file. She can enlarge it with &quot;Expand in editor&quot;" src="img/meetings-present.webp" / loading="lazy" decoding="async"></a><figcaption>Minji Kim's screen — &quot;Jinyoung Jang showed this to everyone&quot;. Minji Kim gets her own copy of the shared file. She can enlarge it with &quot;Expand in editor&quot;</figcaption></figure>
+<p>Each person sees <strong>their own copy</strong>, so even if Minji Kim edits a cell, it doesn't change the others' screens or team lead Jinyoung Jang's original. Note that this isn't co-editing, where everyone edits the same document at the same time. Click <strong>Take down</strong> to remove it from the stage.</p>
+<h2 id="try-it-4-requests-during-the-meeting">Try it 4 — requests during the meeting<a class="anchor" href="#try-it-4-requests-during-the-meeting" title="Permanent link">#</a></h2>
+<p>The conversation continues:</p>
+<table>
+<thead>
+<tr>
+<th>Speaker</th>
+<th>What they said</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jinyoung Jang</td>
+<td>Then let's all look at the quote together.</td>
+</tr>
+<tr>
+<td>Seoyeon Park</td>
+<td>The owner said the budget is a little tight.</td>
+</tr>
+<tr>
+<td>Minji Kim</td>
+<td>Then let's ask the AI to redo the quote 5% lower.</td>
+</tr>
+</tbody>
+</table>
+<p>Minji Kim's request appears as a suggestion card at the top of the <strong>Materials</strong> panel.</p>
+<div class="admonition tip">
+<p class="admonition-title">Say it to the AI</p>
+<p>In an English meeting, the helper offers a card for words addressed to the AI, like "let's ask the AI to…" or "could the assistant…". "Please redo the quote" on its own reads as work given to someone at the meeting, and in our tests it got no card.</p>
+</div>
+<figure><a href="img/meetings-suggestion.webp" target="_blank" rel="noopener" title="View larger"><img alt="A suggestion during the meeting — &quot;Want me to help with this? · Draft the quote&quot;, with the words it came from and the routing model's confidence. The agent of whoever clicks does the work, and the result goes to the Materials panel and the room" src="img/meetings-suggestion.webp" / loading="lazy" decoding="async"></a><figcaption>A suggestion during the meeting — &quot;Want me to help with this? · Draft the quote&quot;, with the words it came from and the routing model's confidence. The agent of whoever clicks does the work, and the result goes to the Materials panel and the room</figcaption></figure>
+<p>When team lead Jinyoung Jang clicks <strong>Start</strong>, her agent gets the meeting captions and the quote that was shown, and starts working. The room gets "Handed to the agent · Draft the quote".</p>
+<p><strong>Check</strong>: When the result is ready, an <strong>Agent result</strong> card appears in the Materials panel, the card turns into "✓ Draft the quote — the result is in the materials", and a "Jinyoung Jang's agent · …" message and the file are posted in the room. In our run, it produced <code>Moonlight Coffee Store 2 quote (revised -5%).xlsx</code>: the same items and quantities with <strong>every unit price 5% lower</strong> (total 149,600,000 → 142,120,000 KRW, VAT included). It can take ten minutes or more for the result to come, but even if you end the meeting first, the work continues and the result is posted to the room.</p>
+<h2 id="try-it-5-after-the-meeting-the-record-stays-in-the-room">Try it 5 — after the meeting, the record stays in the room<a class="anchor" href="#try-it-5-after-the-meeting-the-record-stays-in-the-room" title="Permanent link">#</a></h2>
+<p>The meeting ends when someone clicks <strong>End meeting</strong> (<strong>Leave</strong> only takes you out). Open the room, and even though nobody wrote anything down, the following are there.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meeting card</td>
+<td>"📹 The meeting has ended · 13:01–13:03 · 3 attended" — during the meeting, the same card shows <strong>Join</strong> and changes in place</td>
+</tr>
+<tr>
+<td>Minutes block</td>
+<td>"🎙 Meeting minutes 1 · 13:02–13:03 · 10 lines" — one message grouping the turns of speech, updated in place. It doesn't pile up one line per sentence (<strong>Show 4 earlier lines</strong> opens the rest)</td>
+</tr>
+<tr>
+<td>Meeting materials</td>
+<td>One card for each material shown — who showed it and which words it was found from</td>
+</tr>
+<tr>
+<td>Handed-off work</td>
+<td>"Handed to the agent · …" and its result</td>
+</tr>
+<tr>
+<td>Final minutes</td>
+<td>Summary, decisions, to-dos, participants, time, materials shown, and work handed off during the meeting</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/meetings-room.webp" target="_blank" rel="noopener" title="View larger"><img alt="The room — the minutes block by speaker, the finished suggestion, meeting material cards and &quot;Handed to the agent · Draft the quote&quot;, in order" src="img/meetings-room.webp" / loading="lazy" decoding="async"></a><figcaption>The room — the minutes block by speaker, the finished suggestion, meeting material cards and &quot;Handed to the agent · Draft the quote&quot;, in order</figcaption></figure>
+<figure><a href="img/meetings-minutes.webp" target="_blank" rel="noopener" title="View larger"><img alt="The final minutes — time, attendees, summary, decision, to-do (with who's responsible: Minji Kim), materials shown, and the task handed off during the meeting" src="img/meetings-minutes.webp" / loading="lazy" decoding="async"></a><figcaption>The final minutes — time, attendees, summary, decision, to-do (with who's responsible: Minji Kim), materials shown, and the task handed off during the meeting</figcaption></figure>
+<p>To-dos in the minutes that have someone responsible appear <strong>to that person</strong> as a <strong>Start / No</strong> card. If no one is responsible, they appear to all participants.</p>
+<figure><a href="img/meetings-actions.webp" target="_blank" rel="noopener" title="View larger"><img alt="Minji Kim's screen — her to-do &quot;Send the revised quote to the owner by Friday&quot; appears below the minutes as a suggestion card (&quot;Action item from the minutes · Minji Kim&quot;)" src="img/meetings-actions.webp" / loading="lazy" decoding="async"></a><figcaption>Minji Kim's screen — her to-do &quot;Send the revised quote to the owner by Friday&quot; appears below the minutes as a suggestion card (&quot;Action item from the minutes · Minji Kim&quot;)</figcaption></figure>
+<p>This record looks exactly the same when you open the room on the Process GPT screen. People who joined the meeting late, or who join the room later, can read what was decided.</p>
+<div class="admonition note">
+<p class="admonition-title">When you see "Summarized by rules" below the minutes</p>
+<p>The current version uses an AI model <strong>once</strong>, after the meeting ends, to put together the summary, decisions and to-dos in the final minutes. If the model doesn't respond in time, it leaves minutes put together by rules instead (who spoke how many times, handed-off work, materials shown). In that case, decisions and to-dos are empty, so look at the minutes blocks left in the room (what was transcribed) and put them together yourself. Minutes the model put together get "Summarized from what the helper transcribed", as in the picture above.</p>
+</div>
+<h2 id="try-it-6-a-meeting-in-two-languages">Try it 6 — a meeting in two languages<a class="anchor" href="#try-it-6-a-meeting-in-two-languages" title="Permanent link">#</a></h2>
+<p>In <a href="messenger.html">Chapter 15</a>, the team started a room with <strong>Yuki Sato</strong>, the lighting designer at the partner studio in Tokyo (an example person). She speaks Japanese; team lead Jinyoung Jang and Minji Kim speak English. Nobody needs a human interpreter: each person speaks their own language and listens in theirs.</p>
+<ol>
+<li><strong>Set your main language.</strong> It's in <strong>Settings › Accounts › About me › Main language</strong>, and also on the screen before you join, as <strong>The language I speak</strong>. What you pick there is saved for your account.</li>
+</ol>
+<figure><a href="img/meetings-lang.webp" target="_blank" rel="noopener" title="View larger"><img alt="The screen before you join — &quot;The language I speak: English&quot;. What others say in another language is interpreted into it, and the subtitles show the original with its translation" src="img/meetings-lang.webp" / loading="lazy" decoding="async"></a><figcaption>The screen before you join — &quot;The language I speak: English&quot;. What others say in another language is interpreted into it, and the subtitles show the original with its translation</figcaption></figure>
+<ol>
+<li>Open the room "Yuki Sato, Minji Kim" and click <strong>Start meeting</strong>. The other two join from the same room.</li>
+<li>Because the main languages differ, interpretation turns on by itself. The top of the screen shows <strong>AI interpretation · English ⇄ 日本語</strong> and an <strong>Interpretation on</strong> switch, and each tile shows the person's language.</li>
+</ol>
+<p>What was said (the script from our run, with what Jinyoung Jang read):</p>
+<table>
+<thead>
+<tr>
+<th>Speaker</th>
+<th>What they said</th>
+<th>On Jinyoung Jang's screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jinyoung Jang</td>
+<td>Thanks for joining, Yuki. Let's go over the evening lighting for Store #2.</td>
+<td>(as said)</td>
+</tr>
+<tr>
+<td>Yuki Sato</td>
+<td>よろしくお願いします。夜はバーカウンターの上の照明を少し暗くしたいと思います。</td>
+<td>Thank you. In the evening, I'd like to dim the lighting above the bar counter a bit.</td>
+</tr>
+<tr>
+<td>Minji Kim</td>
+<td>Good idea. Shall we look at the quote again?</td>
+<td>(as said)</td>
+</tr>
+<tr>
+<td>Yuki Sato</td>
+<td>照明工事の金額が少し高いので、AIに見積書を5%下げて作り直してもらいましょう。</td>
+<td>The cost for the consumption work is a bit high, so let's have AI redo the estimate with a 5% reduction.</td>
+</tr>
+<tr>
+<td>Jinyoung Jang</td>
+<td>Okay. My agent is on it now.</td>
+<td>(as said)</td>
+</tr>
+<tr>
+<td>Yuki Sato</td>
+<td>ありがとうございます。照明の図面は金曜日までにお送りします。</td>
+<td>Thank you. We'll send the lighting plans by Friday.</td>
+</tr>
+</tbody>
+</table>
+<p>In our run, transcription heard 照明 (lighting) in Yuki's request as 消費 (consumption), and the translation followed what was written down. The request still came through as a <strong>Draft the quote</strong> card.</p>
+<p>When Yuki finishes a sentence and pauses, this happens on Jinyoung Jang's and Minji Kim's screens:</p>
+<table>
+<thead>
+<tr>
+<th>You hear and see</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Her words in English</td>
+<td>The interpreter speaks them in your main language. Yuki's tile shows <strong>AI interpretation</strong> while it does</td>
+</tr>
+<tr>
+<td>Her own voice, lower</td>
+<td>While the interpretation plays, her voice is turned down (not cut), and it comes back up afterwards</td>
+</tr>
+<tr>
+<td>Captions with both</td>
+<td>The English translation, and the Japanese original under it with its language. <strong>Original first</strong> puts the original on top</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/meetings-interp.webp" target="_blank" rel="noopener" title="View larger"><img alt="Team lead Jinyoung Jang's screen — &quot;AI interpretation · English ⇄ 日本語&quot; at the top, &quot;AI interpretation&quot; on Yuki Sato's tile while the interpreter speaks for her, and in Captions her line in English with the Japanese original under it" src="img/meetings-interp.webp" / loading="lazy" decoding="async"></a><figcaption>Team lead Jinyoung Jang's screen — &quot;AI interpretation · English ⇄ 日本語&quot; at the top, &quot;AI interpretation&quot; on Yuki Sato's tile while the interpreter speaks for her, and in Captions her line in English with the Japanese original under it</figcaption></figure>
+<p>You never hear your own words interpreted, and between two people with the same main language nothing is translated or interpreted. On Yuki's screen, it's the other way round: Jinyoung's and Minji's English reads and sounds in Japanese.</p>
+<p>The helper works across languages too. Yuki's request in Japanese was read through its English translation and became a <strong>Draft the quote</strong> card on Jinyoung Jang's screen, and <strong>Start</strong> handed it to her agent as in <a href="#try-it-4-requests-during-the-meeting">Try it 4</a>.</p>
+<h3 id="switches-for-interpretation">Switches for interpretation<a class="anchor" href="#switches-for-interpretation" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Switch</th>
+<th>Who</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Interpretation on / off</strong> (top)</td>
+<td>Anyone in the meeting, for the whole meeting</td>
+<td>Off: the interpreter's voice stops for everyone. Captions keep their translations</td>
+</tr>
+<tr>
+<td><strong>🎧 Hearing the interpretation / 🔊 Hearing the original voices</strong> (bottom)</td>
+<td>Each listener</td>
+<td>Original: you hear everyone's own voice at full volume, and no interpreted voice is made or sent for you. Captions stay translated</td>
+</tr>
+<tr>
+<td><strong>The language I speak</strong> / Main language</td>
+<td>Each person</td>
+<td>What you speak and what you read and hear in</td>
+</tr>
+</tbody>
+</table>
+<h3 id="after-the-meeting-in-each-persons-language">After the meeting, in each person's language<a class="anchor" href="#after-the-meeting-in-each-persons-language" title="Permanent link">#</a></h3>
+<p>The room keeps the minutes blocks with each line's language and its translations. Jinyoung Jang reads Yuki's lines in English, and <strong>Show original</strong> shows them as said.</p>
+<figure><a href="img/meetings-room-lang.webp" target="_blank" rel="noopener" title="View larger"><img alt="The room after the meeting — the minutes block on team lead Jinyoung Jang's screen: Yuki Sato's lines in English with the Japanese under them, &quot;AI translation&quot; and &quot;Show original&quot;" src="img/meetings-room-lang.webp" / loading="lazy" decoding="async"></a><figcaption>The room after the meeting — the minutes block on team lead Jinyoung Jang's screen: Yuki Sato's lines in English with the Japanese under them, &quot;AI translation&quot; and &quot;Show original&quot;</figcaption></figure>
+<p>The final minutes are written once, in the meeting's language (the language of the person who started it, here English), and translated into each member's main language. Yuki reads the summary, decisions and to-dos in Japanese, with <strong>AI translation · English</strong> and <strong>Show original</strong>.</p>
+<figure><a href="img/meetings-minutes-lang.webp" target="_blank" rel="noopener" title="View larger"><img alt="Yuki Sato's screen — the same minutes in Japanese, with &quot;AI translation · English&quot; and &quot;Show original&quot;. Her to-do (send the lighting plans by Friday) is assigned to her" src="img/meetings-minutes-lang.webp" / loading="lazy" decoding="async"></a><figcaption>Yuki Sato's screen — the same minutes in Japanese, with &quot;AI translation · English&quot; and &quot;Show original&quot;. Her to-do (send the lighting plans by Friday) is assigned to her</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Limits of interpretation</p>
+<ul>
+<li><strong>It starts after a pause.</strong> Your browser sends speech a phrase at a time, when you stop for about a second. In our runs the interpreted voice began 0.8 seconds (median; 1.1 seconds for 9 in 10) after a phrase reached the server, so take turns rather than talking over each other. If someone speaks while an interpretation is playing, the browser's echo canceller can turn their microphone down and that phrase can be lost.</li>
+<li><strong>Consent.</strong> Only people who consented to transcription are transcribed, and so only they are translated and interpreted. Someone who didn't consent is heard as they speak, without captions or interpretation.</li>
+<li><strong>The key.</strong> Interpretation and translation use the OpenAI key on the server. Without it, when the operator has turned interpretation off, or when the usage limit is reached, the meeting says so and shows the original only.</li>
+<li><strong>Two separate results.</strong> The interpreter's voice and the caption translation are made separately, so their wording can differ a little. Transcription can also mishear words, and the translation follows what was written down.</li>
+<li><strong>Screens.</strong> The screens come in Korean and English only. A main language other than Korean gets the English screens.</li>
+</ul>
+</div>
+<h2 id="consent-and-switches">Consent and switches<a class="anchor" href="#consent-and-switches" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Switch</th>
+<th>Scope</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I consent to transcription and saving to the room</strong></td>
+<td>Per person, per meeting</td>
+<td>When off, your audio doesn't go to the server. You can change it during the meeting with the <strong>✓ Consented to recording</strong> button at the bottom</td>
+</tr>
+<tr>
+<td><strong>You can type instead of speaking</strong></td>
+<td>Input box in the Captions tab</td>
+<td>What you type without a microphone also goes into captions and minutes (only if you consented)</td>
+</tr>
+<tr>
+<td>Helper per room</td>
+<td>Per room</td>
+<td>When off, you get only a video meeting, and the room keeps only the start and end cards. The current version has no button for this on screen, so the operator changes it</td>
+</tr>
+<tr>
+<td>Server-wide helper</td>
+<td>Whole server</td>
+<td>When off, every room gets video meetings only, with no helper or transcription</td>
+</tr>
+<tr>
+<td>Server-wide meetings</td>
+<td>Whole server</td>
+<td>When off, the whole meeting feature disappears</td>
+</tr>
+</tbody>
+</table>
+<p>The operator sets the server-wide switches in the server settings (<a href="admin.html">Chapter 25</a>).</p>
+<h2 id="known-limits">Known limits<a class="anchor" href="#known-limits" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Up to 6 people</strong>: participants' browsers connect to each other directly, so the current version allows up to 6 people per meeting. For bigger meetings, use another video meeting tool.</li>
+<li><strong>Behind a company firewall</strong>: on some company networks, direct connections between browsers are blocked, so the meeting can't connect. The current version has no relay server to connect them instead, so use it on the same company network or the regular internet.</li>
+<li><strong>Not co-editing</strong>: <strong>Show to everyone</strong> opens the same material as each person's own copy.</li>
+<li><strong>Transcription errors</strong>: transcription can get words wrong (in our run, it wrote "Seongsu" as "Seong-su"). Finding materials judges words together with what comes before and after, so it's usually not affected.</li>
+</ul>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>That's the end of Part 4, "Working as a team." You're starting to see that the same flow — receiving the email, the floor plan, proposal and quote, the design review, the quote review, the proposal meeting and the reply — repeats even when the customer changes. In Part 5, you make this flow into a <strong>process</strong>. First, you design one yourself by chatting (<a href="process-create.html">Chapter 17</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>If Seoyeon Park turns off transcription consent when she joins the meeting, what happens to what she says? How is she listed in the minutes?</li>
+<li>During the meeting, Minji Kim changed an amount in her copy of the quote that was shown. Does team lead Jinyoung Jang's original quote change?</li>
+<li>If the person responsible for the to-do "Send the revised quote" in the minutes is Minji Kim, whose screen does that suggestion card appear on?</li>
+<li>In the meeting with Yuki Sato, Minji Kim switches to <strong>🔊 Hearing the original voices</strong>. What does she hear when Yuki speaks, and what do her captions show?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>Seoyeon Park's browser doesn't send her audio to the server, so it doesn't go into captions, finding materials, or the body of the minutes. Her video and voice still reach the other participants as usual. The final minutes list Seoyeon Park under "Didn't consent to transcription."</li>
+<li>No. What Minji Kim opened is her own copy.</li>
+<li>Only on Minji Kim's screen. Only to-dos with no one responsible appear to all participants.</li>
+<li>She hears Yuki's own Japanese voice at full volume and no interpreter. Her captions still show the English translation with the Japanese original under it. Jinyoung Jang's choice isn't affected.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="messenger.html"><span>Previous</span>Messenger and the room helper</a><a class="next" href="process-create.html"><span>Next</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-meet-in-a-room">Why meet in a room</a></li><li><a href="#what-you-need">What you need</a></li><li><a href="#try-it-1-start-the-meeting-and-consent">Try it 1 — start the meeting and consent</a></li><li><a href="#try-it-2-speak-and-materials-appear">Try it 2 — speak, and materials appear</a><ul><li><a href="#how-materials-are-found">How materials are found</a></li></ul></li><li><a href="#try-it-3-show-it-to-everyone">Try it 3 — show it to everyone</a></li><li><a href="#try-it-4-requests-during-the-meeting">Try it 4 — requests during the meeting</a></li><li><a href="#try-it-5-after-the-meeting-the-record-stays-in-the-room">Try it 5 — after the meeting, the record stays in the room</a></li><li><a href="#try-it-6-a-meeting-in-two-languages">Try it 6 — a meeting in two languages</a><ul><li><a href="#switches-for-interpretation">Switches for interpretation</a></li><li><a href="#after-the-meeting-in-each-persons-language">After the meeting, in each person&#x27;s language</a></li></ul></li><li><a href="#consent-and-switches">Consent and switches</a></li><li><a href="#known-limits">Known limits</a></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

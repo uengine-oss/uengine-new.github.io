@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture — Lite on the Process GPT backend — Process GPT Lite Tutorial</title>
+<meta name="description" content="Process GPT Lite is made of a screen (Vue) and a small relay server, and the real work is done by the Process GPT backend, left untouched. In this chapter you&#x27;ll see the components in a single diagram, follow where one message and one document travel, and look at which model decides what.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/architecture.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Architecture — Lite on the Process GPT backend — Process GPT Lite Tutorial">
+<meta property="og:description" content="Process GPT Lite is made of a screen (Vue) and a small relay server, and the real work is done by the Process GPT backend, left untouched. In this chapter you&#x27;ll see the components in a single diagram, follow where one message and one document travel, and look at which model decides what.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/architecture.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html" class="on" aria-current="page"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Extending and operating<span class="chap">24</span></div>
+    <h1>Architecture — Lite on the Process GPT backend</h1>
+    <article>
+<blockquote>
+<p>Process GPT Lite is made of a screen (Vue) and a small relay server, and the real work is done by the Process GPT backend, left untouched. In this chapter you'll see the components in a single diagram, follow where one message and one document travel, and look at which model decides what.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/8PaHm196hec" title="Architecture — Lite on the Process GPT backend — video 3:26" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="a-thin-screen-on-a-backend-used-as-is">A thin screen on a backend used as is<a class="anchor" href="#a-thin-screen-on-a-backend-used-as-is" title="Permanent link">#</a></h2>
+<p>In the previous chapter you opened an agent's working folder directly in the Workroom. In this chapter you step back further and see how that folder, chat and the editor are connected inside the server. This chapter is for the people who install and run it in-house, so component names and ports appear as they are.</p>
+<p>Most of the features you've used so far weren't newly built for Lite. Agent runs, skills, the process engine, document generation and storage call the services of the open-source <a href="https://github.com/uengine-oss/process-gpt">Process GPT</a> <strong>without modifying them</strong>. Lite itself owns just two things.</p>
+<table>
+<thead>
+<tr>
+<th>Part of Lite</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Screen</strong> (Vue 3)</td>
+<td>Chat, Home, Projects, Folders, Settings, Workroom. The sky background and glass cards</td>
+</tr>
+<tr>
+<td><strong>Relay server</strong> (Express. A server that calls the backend on behalf of one particular screen, often called a BFF — Backend for Frontend)</td>
+<td>Login, saving conversations and cards, backend calls, the MCP gateway (MCP is the standard protocol agents use to call outside tools) for connectors, documents and ArtCraft, Vault encryption, scheduled runs, the browser agent</td>
+</tr>
+</tbody>
+</table>
+<p>So if you already run Process GPT, Lite simply adds one more screen on top of it, and when Process GPT gets better, Lite gets better with it.</p>
+<h2 id="component-diagram">Component diagram<a class="anchor" href="#component-diagram" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>Browser / Android app (UI :5180)
+  │  /api  /office  /craft
+  ▼
+Lite relay server (:8787)
+  ├─ Chat ──────▶ context-router (:8895) ── which conversation?
+  │                 │  └─▶ routing model (:8896) small model · embeddings
+  │                 ▼
+  │               deepagents (:8888) ── agents · skills ─▶ sandbox
+  │                 │ MCP tools
+  │                 ├─▶ office-mcp (:1192)  create documents
+  │                 ├─▶ office-host (:5390) editor · live editing
+  │                 ├─▶ mcp-hub (:8500)     connector registry
+  │                 └─▶ Lite /mcp/*         connectors, folders, panel apps
+  │                                         ArtCraft CLI (per user)
+  ├─ Process ───▶ completion (:8099) + polling-service
+  ├─ Workroom ──▶ cli-agent (:8890)  Claude Code · Codex
+  ├─ Mining ────▶ process-miner (:8014)
+  ├─ Improve      (relay server) lead time · bottleneck · critical path
+  ├─ Storage ───▶ Supabase  Postgres · login · file storage
+  └─ Schedule ◀── pg_cron ─▶ pg_net ─▶ /api/cron/fire
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Source</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>deepagents</strong></td>
+<td>Process GPT</td>
+<td>The real work of one conversation turn. It picks skills, calls tools (MCP) and runs code in a sandbox to make files</td>
+</tr>
+<tr>
+<td><strong>context-router</strong></td>
+<td>Process GPT</td>
+<td>Decides which conversation a message follows up on and splits conversations (<a href="contexts.html">Chapter 4</a>). It also handles short multiple-choice decisions (<code>/decide</code>)</td>
+</tr>
+<tr>
+<td><strong>Routing model server</strong></td>
+<td>Process GPT (reference implementation)</td>
+<td>A small open model (Qwen3-4B) picks one of the options by probability. The same server also produces embeddings for semantic search (bge-m3)</td>
+</tr>
+<tr>
+<td><strong>completion + polling-service</strong></td>
+<td>Process GPT</td>
+<td>Starting and submitting processes, and moving on to the next step (<a href="process-create.html">Chapter 17</a>–<a href="process-run.html">Chapter 18</a>)</td>
+</tr>
+<tr>
+<td><strong>office-mcp</strong></td>
+<td>Process GPT</td>
+<td><strong>Creates</strong> Word, Excel and Hangul documents (in English mode a proposal is made as a Word document unless you ask for Hangul)</td>
+</tr>
+<tr>
+<td><strong>office-host</strong></td>
+<td>Process GPT (IeumOffice)</td>
+<td><strong>Opens and edits</strong> documents in their original formats. Provides the <code>office_live_*</code> tools that edit an open document (<a href="office.html">Chapter 7</a>)</td>
+</tr>
+<tr>
+<td><strong>mcp-hub</strong></td>
+<td>Process GPT</td>
+<td>Manages the list of MCP servers and each user's connections (<a href="missions.html">Chapter 11</a>)</td>
+</tr>
+<tr>
+<td><strong>cli-agent</strong></td>
+<td>Process GPT</td>
+<td>Runs Claude Code and Codex in a working folder (<a href="workroom.html">Chapter 23</a>)</td>
+</tr>
+<tr>
+<td><strong>process-miner</strong></td>
+<td>Process GPT</td>
+<td>Finds recurring flows in handover records (<a href="mining.html">Chapter 19</a>)</td>
+</tr>
+<tr>
+<td><strong>Improve analysis</strong></td>
+<td>Lite relay server (ports the lead-time breakdown rules of Process GPT's analytic service)</td>
+<td>Reads process run records straight from the source tables to calculate lead time, waiting, bottlenecks, constraints and the critical path for each step, and gives them to agents as the <code>/mcp/improve</code> tool. Every number is a calculated result; the model only explains it (<a href="bottleneck.html">Chapter 20</a>–<a href="critical-path.html">Chapter 22</a>)</td>
+</tr>
+<tr>
+<td><strong>Supabase</strong></td>
+<td>Same as Process GPT uses</td>
+<td>Postgres (conversation, card, process and team data), login, file storage, scheduling (pg_cron)</td>
+</tr>
+<tr>
+<td><strong>ArtCraft CLI</strong></td>
+<td>storytold open source</td>
+<td>MCP for the CAD, vector, photo, sound and video apps. Lite keeps one process running per user (<a href="craft.html">Chapter 8</a>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Storage Lite adds on its own</p>
+<p>Lite's own data lives in tables starting with <code>pro_</code> in the same Postgres (conversations, cards, schedules, Vault, panel apps …). Shared folders are git repositories on the server (<code>PRO_FOLDERS_ROOT</code>, default <code>~/pgpt-folders/&lt;tenant&gt;/&lt;folder&gt;</code>), so an agent's sandbox can't see their history or other variations.</p>
+</div>
+<h2 id="the-path-of-one-message">The path of one message<a class="anchor" href="#the-path-of-one-message" title="Permanent link">#</a></h2>
+<p>When you send <code>Make the Moonlight Coffee Store #2 budget sheet in Excel</code> in chat:</p>
+<ol>
+<li><strong>Screen → relay server</strong>: the message is saved, and the reply comes back as a stream (SSE — the server pushes the text out a little at a time).</li>
+<li><strong>Shortcut decision</strong>: the relay server first uses rules to see where it should go. Requests to make a skill, a panel, a shared folder, an ArtCraft app or a document go straight to the agent. For everything else, a <strong>small model</strong> chooses: "Is it a browser task, a schedule, a handoff to a teammate, or work for the agent?"</li>
+<li><strong>Pick the conversation</strong>: in the main chat, it goes through context-router. The router narrows recent conversations down to 6 candidates or fewer and asks the routing model server, "Which conversation is this a follow-up to, or is it a new topic?" If confidence is low, it moves on to the next method (the language model's probabilities → a JSON answer).</li>
+<li><strong>Agent run</strong>: deepagents does the work with skills and MCP tools. For Excel, it runs code in the sandbox to make the file.</li>
+<li><strong>Card</strong>: the relay server finds the documents produced in this run, uploads them to file storage and attaches them to the conversation as <strong>file cards</strong>. Above the answer, a "↳ …" line shows which conversation it went to.</li>
+</ol>
+<p>Long jobs like drawings or skills taking several minutes is normal. But if the agent doesn't send a single character for 15 minutes (<code>PRO_STREAM_IDLE_MS</code>), the relay server stops waiting and asks you to send it again.</p>
+<h2 id="the-path-of-one-document">The path of one document<a class="anchor" href="#the-path-of-one-document" title="Permanent link">#</a></h2>
+<p>When you click a file card:</p>
+<ol>
+<li>The screen brings up the IeumOffice editor at <code>/office/&lt;editor&gt;/?src=…</code> on the same origin. Excel opens in the <code>sheets</code> editor, Word in <code>docs</code>, and Hangul in <code>hwp</code>.</li>
+<li>When the editor is ready, the screen opens a <strong>live connection</strong> to the relay server (a WebSocket opened with a one-time ticket) and reports "this person opened this document." <strong>Linked to the conversation</strong> appears in the header.</li>
+<li>From then on, chat messages carry <strong>tools that edit the open document</strong> (<code>office_live_*</code>). These tools are visible only while the document is open and for a while afterward (30 minutes from the last message sent while it was open), because there's a limit (110) on how many tools an agent can use at once.</li>
+<li>When the agent calls a tool, the relay server attaches <strong>that user's login token</strong> and passes it to office-host, which finds the editor open on that person's screen and edits it in place. The person watches the edits happen.</li>
+<li>After editing, a <strong>review</strong> runs. It compares before and after (text length, tables and rows, formulas, the lines in pictures) to check nothing went missing, and leaves a short note (<a href="email-to-quote.html">Chapter 9</a>).</li>
+<li>When the person saves, the edited copy is uploaded next to the original and the card points to the edited copy.</li>
+</ol>
+<p>ArtCraft apps work the same way. The difference is that the app's CLI connects to a local port the relay server opened, and requests are passed to the app on the screen. Only the CLI process the relay server started can connect to that port.</p>
+<h2 id="which-model-is-called-for-what">Which model is called for what<a class="anchor" href="#which-model-is-called-for-what" title="Permanent link">#</a></h2>
+<p>Calling a big model for everything is slow and expensive. Lite uses three tiers, depending on the kind of work.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Setting</th>
+<th>What it handles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Routing model server</strong> (a small open model that only computes the probabilities of options — it doesn't write text)</td>
+<td><code>PRO_JUDGE_URL</code>, the router's <code>DECIDE_JUDGE_URL</code></td>
+<td>Which conversation a message follows up on (router); whether a browser page is still loading or the goal has been reached (<code>/decide</code>); spotting work requests in team conversations and their type; which material to show when someone in a meeting says "let's look at that quote again"; the teammates related to the current work when you type "@"; the type of a meeting to-do</td>
+</tr>
+<tr>
+<td><strong>Fast model</strong></td>
+<td><code>PRO_LLM_FAST_MODEL</code> (default <code>gpt-4.1-mini</code>)</td>
+<td>The first split of a message, titles for long answers, picking a process, summary and change cards for folder documents, test scenarios and scoring before a skill is merged, short questions in panels, explaining process improvement results (if there's no answer within 25 seconds, the same numbers are shown in a fixed template)</td>
+</tr>
+<tr>
+<td><strong>Big model</strong></td>
+<td><code>PRO_LLM_MODEL</code> (default <code>gpt-6-luna</code>)</td>
+<td>Sorting emails and deciding on drafts, deciding floor plan layouts, designing panel apps, operating the browser agent, summarizing meeting minutes, naming mining results, comparing pictures in the review after editing</td>
+</tr>
+<tr>
+<td><strong>Agent model</strong></td>
+<td>deepagents' and cli-agent's own settings</td>
+<td>The real work of one conversation turn (making documents, drawings, skills and processes)</td>
+</tr>
+<tr>
+<td>Transcription</td>
+<td><code>PRO_TRANSCRIBE_MODEL</code> (default <code>gpt-4o-mini-transcribe</code>)</td>
+<td>Transcribing online meetings (only for people who consented)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Frequent decisions don't call a big model</p>
+<p>Team messenger and meetings need a decision every time someone speaks. These use only rules → the routing model server, and detection calls a big model zero times (the server counts those calls separately). If there's no routing model server, only these suggestion features quietly turn off, and everything else keeps working.</p>
+</div>
+<p>The model address and key can be anything OpenAI-compatible (<code>PRO_LLM_BASE_URL</code>, <code>PRO_LLM_API_KEY</code>). Switch to an in-house model and the screens and flow stay the same.</p>
+<div class="admonition note">
+<p class="admonition-title">The install bundle includes only part of this</p>
+<p>The install bundle's default Docker <code>lite</code> profile doesn't include context-router and the routing model server, cli-agent, the ArtCraft apps or the process engine. Without them, only those features are missing and the rest works. To turn them on with a profile, see "Profiles" in <a href="install.html">Chapter 1</a>; to attach them separately, see "I installed it, but a chapter's feature doesn't show up" in <a href="faq.html">Chapter 28</a>.</p>
+</div>
+<p>In the next chapter you'll go through what to look after when running this setup in-house — teammates and roles, where the keys live, Vault encryption, backups and upgrades (<a href="admin.html">Chapter 25</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>When Minji Kim sends "Could you sort out the quote by tomorrow?" in the messenger, how many times is a big model called to decide whether it's a work request? What happens if the routing model server is off?</li>
+<li>If you send <code>Add a total for column B</code> without opening the Excel card, can the agent edit the document on the screen right away? Look for the reason in the path of one document.</li>
+<li>Which settings do you change to switch to an in-house LLM?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>Zero. After the rules (very short messages, small talk and messages with no request wording are skipped), the routing model server picks "is it a work request?" and "what kind of work?" by probability. Without the routing model server, the suggestion card just doesn't appear, and the messenger works as usual.</li>
+<li>No. The <code>office_live_*</code> tools are visible to the agent only while the document is open in the editor with a live connection (and for a while afterward), and what they edit is the editor open on the screen. With no open document, the agent sees only a small tool that tells you to open it from the card.</li>
+<li>Change the relay server's <code>PRO_LLM_BASE_URL</code>, <code>PRO_LLM_API_KEY</code>, <code>PRO_LLM_MODEL</code> and <code>PRO_LLM_FAST_MODEL</code>, together with the model settings on the deepagents side (and the router's <code>DECIDE_LLM_*</code>). Any OpenAI-compatible address works.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="workroom.html"><span>Previous</span>Agent Workroom — Claude Code and Codex</a><a class="next" href="admin.html"><span>Next</span>Operations and security</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#a-thin-screen-on-a-backend-used-as-is">A thin screen on a backend used as is</a></li><li><a href="#component-diagram">Component diagram</a></li><li><a href="#the-path-of-one-message">The path of one message</a></li><li><a href="#the-path-of-one-document">The path of one document</a></li><li><a href="#which-model-is-called-for-what">Which model is called for what</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

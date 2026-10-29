@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mail assistant — find to-dos in incoming mail — Process GPT Lite Tutorial</title>
+<meta name="description" content="Once your mail is connected, the assistant reads new mail every few minutes, puts a card on Home when there&#x27;s something to handle, and tells you about the important things in a brief. You&#x27;ll follow along as Moonlight Coffee&#x27;s email about a site measurement meeting becomes a card, and clicking that card gets you a reply draft.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/mail.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mail assistant — find to-dos in incoming mail — Process GPT Lite Tutorial">
+<meta property="og:description" content="Once your mail is connected, the assistant reads new mail every few minutes, puts a card on Home when there&#x27;s something to handle, and tells you about the important things in a brief. You&#x27;ll follow along as Moonlight Coffee&#x27;s email about a site measurement meeting becomes a card, and clicking that card gets you a reply draft.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/mail.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html" class="on" aria-current="page"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">You and your AI assistant<span class="chap">5</span></div>
+    <h1>Mail assistant — find to-dos in incoming mail</h1>
+    <article>
+<blockquote>
+<p>Once your mail is connected, the assistant reads new mail every few minutes, puts a card on Home when there's something to handle, and tells you about the important things in a brief. You'll follow along as Moonlight Coffee's email about a site measurement meeting becomes a card, and clicking that card gets you a reply draft.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/iMuEdS-2HP0" title="Mail assistant — find to-dos in incoming mail — video 3:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-hand-over-your-mail">Why hand over your mail<a class="anchor" href="#why-hand-over-your-mail" title="Permanent link">#</a></h2>
+<p>Up to Chapter 4, you started every conversation with the assistant. This time, the assistant reads your mail first and comes to you with to-dos. Of the mail you get each day, only a few really need your hands. The trouble is that finding those few, working out what to do, and writing replies all take time. The mail assistant does these three things for you.</p>
+<table>
+<thead>
+<tr>
+<th>What the assistant does</th>
+<th>What you see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reads new mail regularly</td>
+<td>Nothing for you to do</td>
+</tr>
+<tr>
+<td>Picks out mail that needs action</td>
+<td><strong>To-do cards</strong> on Home (Reply, Pay, Book… + one line + due date)</td>
+</tr>
+<tr>
+<td>Sums up what matters now</td>
+<td>A <strong>brief</strong> in Chat (Morning, Afternoon or Evening brief)</td>
+</tr>
+<tr>
+<td>Starts the work when you click a card</td>
+<td>A reply draft and points to check, in Chat</td>
+</tr>
+<tr>
+<td>Makes drafts first when an email asks for documents</td>
+<td>File cards and a <strong>Review</strong> card on Home (<a href="email-to-quote.html">Chapter 9</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>It skips ads and newsletters. That's also why, of the five emails in the demo mailbox in Chapter 1, only the newsletter didn't get a card.</p>
+<h2 id="three-ways-to-connect">Three ways to connect<a class="anchor" href="#three-ways-to-connect" title="Permanent link">#</a></h2>
+<p>In the first-run guide in <a href="install.html">Chapter 1</a>, clicking <strong>Sign in with Google</strong> (or <strong>Connect mail</strong>) opened a window where you chose how to connect.</p>
+<figure><a href="img/mail-connect.webp" target="_blank" rel="noopener" title="View larger"><img alt="Connect mail — Google account, IMAP, Demo mailbox" src="img/mail-connect.webp" / loading="lazy" decoding="async"></a><figcaption>Connect mail — Google account, IMAP, Demo mailbox</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>What you need</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google account</td>
+<td>An administrator must have set up Google connection on the server (<a href="install.html">Chapter 1</a>)</td>
+<td>Reads Gmail, checks and adds calendar events, and can create reply <strong>drafts</strong> in Gmail. The access permission (token) Google issues is kept encrypted in the Vault</td>
+</tr>
+<tr>
+<td>IMAP</td>
+<td>The mail server address (for example, <code>imap.gmail.com</code>), your email address and an <strong>app password</strong></td>
+<td>Works anywhere that opens IMAP, such as Gmail, Naver or company mail. The password is stored encrypted only in the Vault. Read only</td>
+</tr>
+<tr>
+<td>Demo mailbox</td>
+<td>Nothing</td>
+<td>A practice mailbox with five fictional client emails. This tutorial uses it</td>
+</tr>
+</tbody>
+</table>
+<p>You can change the connection later. In <strong>Settings › Accounts › Connections</strong>, click <strong>Change connection</strong> on the mail row and the same window opens again. Choose Google account, IMAP or Demo mailbox and you switch to that mailbox. Use this when you move from practicing with the demo mailbox to your real mail. You can also connect a Google account with <strong>Connect</strong> on the Google card lower on the same screen, and once it's connected, mail checking switches to Gmail too.</p>
+<figure><a href="img/mail-change.webp" target="_blank" rel="noopener" title="View larger"><img alt="Clicking Change connection in Settings › Accounts — the same Connect mail window as the first time (Google account, IMAP, Demo mailbox) opens" src="img/mail-change.webp" / loading="lazy" decoding="async"></a><figcaption>Clicking Change connection in Settings › Accounts — the same Connect mail window as the first time (Google account, IMAP, Demo mailbox) opens</figcaption></figure>
+<h2 id="how-the-assistant-reads-your-mail">How the assistant reads your mail<a class="anchor" href="#how-the-assistant-reads-your-mail" title="Permanent link">#</a></h2>
+<ul>
+<li>It checks for new mail <strong>every 5 minutes</strong>. If you don't want to wait, click <strong>Check now</strong> under <strong>Settings › System › Check mail</strong>.</li>
+<li>It looks only at <strong>unread mail</strong> from the last two days. For Gmail, it leaves out the Promotions and Social tabs and looks at up to 20 emails.</li>
+<li>If there's no new mail, it doesn't call the AI model. If there is, it shows those emails to the model in one go and decides on cards, the brief and drafts.</li>
+<li>What goes to the model is each email's <strong>sender, subject, date and the start of the body (800 characters)</strong>. Attachments aren't sent.</li>
+</ul>
+<h2 id="try-it-1-receive-the-moonlight-coffee-email">Try it 1 — receive the Moonlight Coffee email<a class="anchor" href="#try-it-1-receive-the-moonlight-coffee-email" title="Permanent link">#</a></h2>
+<p>A follow-up email arrives on the Moonlight Coffee job you organized in <a href="first-chat.html">Chapter 3</a>. Before you write the proposal, they're asking to measure the site.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>From</td>
+<td><code>Moonlight Coffee Operations &lt;ops@dalbit-coffee.example&gt;</code></td>
+</tr>
+<tr>
+<td>Subject</td>
+<td><code>[Moonlight Coffee] Scheduling the on-site measurement for Store #2</code></td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Hello, this is the Moonlight Coffee operations team, writing about Store #2 in Seongsu-dong. Would an on-site measurement meeting at the store on November 3 at 2 PM work for you? If that time doesn't work, please suggest two or three times that do. We'll send the site address separately once you reply. Thank you.</td>
+</tr>
+</tbody>
+</table>
+<p>If you connected Gmail or IMAP, just <strong>send yourself an email</strong> with this content. If you're using the demo mailbox, you receive this email from the screen.</p>
+<ol class="steps">
+<li>Open <b>Settings › System</b>. <b>Get practice email</b> is at the very bottom (the same section is also under <b>Connections</b> in <b>Settings › Accounts</b>).</li>
+<li>Choose <b>Moonlight Coffee site measurement scheduling</b> from the list. Below it you see the sender and subject, and what happens ("A reply to-do card appears on Home").</li>
+<li>Click <b>Get practice email</b>. You're done when "Mail arrived. Check it on Home and in Chat." appears.</li>
+</ol>
+<figure><a href="img/mail-practice.webp" target="_blank" rel="noopener" title="View larger"><img alt="Get practice email — choosing and receiving Moonlight Coffee site measurement scheduling" src="img/mail-practice.webp" / loading="lazy" decoding="async"></a><figcaption>Get practice email — choosing and receiving Moonlight Coffee site measurement scheduling</figcaption></figure>
+<p>The assistant reads practice email right away, just like real mail. Besides this one, the list has "Moonlight Coffee Store #2 proposal &amp; quote request," used in <a href="email-to-quote.html">Chapter 9</a>, "Hanbit Events year-end party refreshments cost sheet," which asks for an Excel cost sheet, and "Northwind tax invoice request." This section appears only with the demo mailbox, so on an account connected to real mail, practice by sending mail to your own address.</p>
+<p>About a minute after the email arrives, a card appears at the top of Home, and a brief (a Morning, Afternoon or Evening brief, depending on the time) is added to Chat.</p>
+<figure><a href="img/mail-cards.webp" target="_blank" rel="noopener" title="View larger"><img alt="The Moonlight Coffee email became the top card on Home. The due date (November 3) is under the card, and a brief was added to Chat. Cards from the demo mailbox show a first-letter tile instead of the sender's logo" src="img/mail-cards.webp" / loading="lazy" decoding="async"></a><figcaption>The Moonlight Coffee email became the top card on Home. The due date (November 3) is under the card, and a brief was added to Chat. Cards from the demo mailbox show a first-letter tile instead of the sender's logo</figcaption></figure>
+<p><strong>Check</strong>: At the top of Home there's a Moonlight Coffee card starting with <code>Reply</code> (in our run, "Confirm the Store #2 measurement for November 3 at 2 PM, or propose two alternate times."), with the due date <strong>November 3</strong> under it, and Chat has a brief ("Moonlight Coffee wants to confirm the Store #2 measurement for November 3 at 2 PM…"). The verb may come up as <code>Book</code> instead of <code>Reply</code>.</p>
+<p>This email doesn't ask for documents, so no drafts are made. You'll see what changes when an email asks for a proposal and a quote in <a href="email-to-quote.html">Chapter 9</a>.</p>
+<h2 id="try-it-2-start-work-from-a-card">Try it 2 — start work from a card<a class="anchor" href="#try-it-2-start-work-from-a-card" title="Permanent link">#</a></h2>
+<p>Click a card and the assistant starts that work right away. The card's text shimmers while the work runs, and in Chat, the card's sentence goes up as if it were your message, together with <strong>the instruction the assistant wrote down when it made the card</strong>. You can see exactly what you asked for, so if it isn't what you meant, correct it right after.</p>
+<figure><a href="img/mail-running.webp" target="_blank" rel="noopener" title="View larger"><img alt="Right after clicking the card — the card on Home dims, and &quot;Reply: …&quot; and the instruction go up in Chat" src="img/mail-running.webp" / loading="lazy" decoding="async"></a><figcaption>Right after clicking the card — the card on Home dims, and &quot;Reply: …&quot; and the instruction go up in Chat</figcaption></figure>
+<p>In our run, the reply draft came as a speech bubble after about a minute.</p>
+<figure><a href="img/mail-reply.webp" target="_blank" rel="noopener" title="View larger"><img alt="The reply draft — this answer also continued the Moonlight Coffee conversation (routing model 1.00)" src="img/mail-reply.webp" / loading="lazy" decoding="async"></a><figcaption>The reply draft — this answer also continued the Moonlight Coffee conversation (routing model 1.00)</figcaption></figure>
+<p>The draft from our run had these parts.</p>
+<ul>
+<li>A subject, "Confirmation: Store #2 site measurement — Tuesday, Nov 3, 2:00 PM," and a body — confirming November 3 at 2 PM (about 90 minutes), and what to have ready for the visit (access to the ceiling area and the electrical panel, to check the roaster's ventilation and power)</li>
+<li>Two other times, in case that time doesn't work (Wednesday, November 4, 10:00 AM and Thursday, November 5, 3:00 PM), and a request for the exact site address</li>
+<li>A note on the alternates — both stay in the first week so the November 6 deadline is protected — and that Gmail isn't connected, so you send the draft yourself once you have the recipient's address (it was also saved as a text file)</li>
+<li>A closing line promising the proposal and quote by Friday, November 6</li>
+</ul>
+<p><strong>Check</strong>: The line above the answer points to the Moonlight Coffee conversation, and the reply draft includes November 3 at 2 PM and alternative times. A card whose work is done disappears from Home.</p>
+<div class="admonition tip">
+<p class="admonition-title">Go one step further by connecting Google</p>
+<p>With a Google account connected, the assistant can check your calendar to see whether that time is free, and create a <strong>reply draft</strong> in Gmail. <strong>Sending</strong> the email is still up to you, in Gmail. You decide in your instructions how far the assistant goes with the work it takes on. For example, after clicking the card, follow up with "Put the Nov 3, 2 PM site measurement in the calendar too."</p>
+</div>
+<h2 id="working-with-cards">Working with cards<a class="anchor" href="#working-with-cards" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What you want</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Have the assistant do a card's work</td>
+<td>Click the card</td>
+</tr>
+<tr>
+<td>Clear a card you don't need</td>
+<td>The × that appears at the card's top right when you hover over it</td>
+</tr>
+<tr>
+<td>Get notified without cards</td>
+<td>Read only the briefs in Chat and clear cards with ×</td>
+</tr>
+<tr>
+<td>Leave your own to-do as a card</td>
+<td>Say something in Chat like <code>Check the Moonlight Coffee quote unit prices by Friday. Leave it on Home as a to-do</code>. The assistant replies something like "I've added a to-do on Home to review the Moonlight Coffee quote unit prices, due Friday, October 30" and creates a card on Home (in our run, <code>Review</code>, due: that Friday)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>Your mail was somewhere the assistant could read right away. In the next chapter, you hand work on websites that need a login to the browser agent, and see how to keep passwords and card numbers safe in the Vault (<a href="browser.html">Chapter 6</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check questions</p>
+<ol>
+<li>Of the five emails in the demo mailbox, the WeeklyTech newsletter ("This week's AI news roundup") didn't get a card on Home. Why? If you connected Gmail or IMAP, send an ad email to your own address and check.</li>
+<li>Write down one thing the mail assistant sends to the AI model and one thing it doesn't.</li>
+<li>If Moonlight Coffee's next email only said "Please send us a proposal and a quote by November 6," what would be different from this chapter?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>Because the assistant decides ads and newsletters aren't work to handle and skips them. It reads the mail but doesn't make cards. When we added an ad email in our run, it read one new email and made 0 to-do cards. If a card does appear, just clear it with ×.</li>
+<li>Sent: each new email's sender, subject, date and the start of the body (800 characters). Not sent: attachments, mail you've already read, IMAP passwords and Google tokens (they're only in the Vault).</li>
+<li>It's an email asking for documents, so the assistant starts making drafts of the proposal and quote first without asking (plus a floor plan if it's a design proposal), and a <strong>Review</strong> draft review card appears on Home (<a href="email-to-quote.html">Chapter 9</a>).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="contexts.html"><span>Previous</span>Conversation context — conversations that split on their own, and the output stack</a><a class="next" href="browser.html"><span>Next</span>Browser agent and the Vault</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-hand-over-your-mail">Why hand over your mail</a></li><li><a href="#three-ways-to-connect">Three ways to connect</a></li><li><a href="#how-the-assistant-reads-your-mail">How the assistant reads your mail</a></li><li><a href="#try-it-1-receive-the-moonlight-coffee-email">Try it 1 — receive the Moonlight Coffee email</a></li><li><a href="#try-it-2-start-work-from-a-card">Try it 2 — start work from a card</a></li><li><a href="#working-with-cards">Working with cards</a></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

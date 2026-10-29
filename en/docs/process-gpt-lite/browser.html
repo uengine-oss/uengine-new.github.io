@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browser agent and the Vault — Process GPT Lite Tutorial</title>
+<meta name="description" content="Hand the assistant work on sites that need a login. You watch the assistant operate a browser in real time, check its plan, and take over to type yourself when needed. You&#x27;ll also see that the Vault holds passwords, card numbers and verification codes so the AI model never sees them, and how two layers of keys protect them.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/browser.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Browser agent and the Vault — Process GPT Lite Tutorial">
+<meta property="og:description" content="Hand the assistant work on sites that need a login. You watch the assistant operate a browser in real time, check its plan, and take over to type yourself when needed. You&#x27;ll also see that the Vault holds passwords, card numbers and verification codes so the AI model never sees them, and how two layers of keys protect them.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/browser.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html" class="on" aria-current="page"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">You and your AI assistant<span class="chap">6</span></div>
+    <h1>Browser agent and the Vault</h1>
+    <article>
+<blockquote>
+<p>Hand the assistant work on sites that need a login. You watch the assistant operate a browser in real time, check its plan, and take over to type yourself when needed. You'll also see that the Vault holds passwords, card numbers and verification codes so the AI model never sees them, and how two layers of keys protect them.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/ToaROZMtIFI" title="Browser agent and the Vault — video 3:46" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-a-browser-agent">Why a browser agent<a class="anchor" href="#why-a-browser-agent" title="Permanent link">#</a></h2>
+<p>The assistant could read the mail in Chapter 5 right away. But issuing a tax invoice on a client portal, checking order history on a supplies site, or changing settings in an admin console can only be done in a <strong>logged-in browser</strong>, because there's no channel for programs to connect directly. The browser agent operates a browser on the server for you. It reads pages, clicks, types and sums up the results.</p>
+<p>Two worries come up. <strong>Is it safe to give my password to the AI?</strong> And <strong>what if the AI pays for something on its own?</strong> Process GPT Lite answers like this.</p>
+<table>
+<thead>
+<tr>
+<th>Worry</th>
+<th>Safeguard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Passwords and card numbers reach the AI</td>
+<td>The Vault holds the values, and the server types them in itself. The model can only say "put the password here"</td>
+</tr>
+<tr>
+<td>Secrets get caught in screenshots</td>
+<td>Secret field values are erased from the page content the model sees, and secret fields are blacked out in screenshots. In the live view, card fields show as dots too</td>
+</tr>
+<tr>
+<td>It pays, sends or deletes on its own</td>
+<td>Right before any such action, it always shows an <strong>approval card</strong>, and goes ahead only when a person clicks <strong>Approve</strong></td>
+</tr>
+<tr>
+<td>The work goes off track</td>
+<td>Watch the live view and the plan, and take over anytime with <strong>Take control</strong> or stop with <strong>Cancel task</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-practice-site-the-test-shop">A practice site — the test shop<a class="anchor" href="#a-practice-site-the-test-shop" title="Permanent link">#</a></h2>
+<p>This chapter uses the <strong>test shop</strong> included in the repository. It's a small practice site with email and password login, a phone verification code and a card payment screen, and no real money changes hands. Open it like this from the repository folder you got during installation (you need Node.js).</p>
+<div class="hl"><pre><span></span><code>node<span class="w"> </span>server/test/fixtures/shop.mjs<span class="w"> </span><span class="m">8811</span>
+<span class="c1"># test shop on http://127.0.0.1:8811  (login demo@shop.test / otp 246810)</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Address</td>
+<td><code>http://127.0.0.1:8811</code></td>
+</tr>
+<tr>
+<td>Login</td>
+<td><code>demo@shop.test</code> / <code>Correct-Horse-42</code></td>
+</tr>
+<tr>
+<td>Phone verification code</td>
+<td><code>246810</code></td>
+</tr>
+<tr>
+<td>Practice card</td>
+<td><code>4242 4242 4242 4242</code>, expiry <code>12/30</code>, CVC <code>123</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">With the install bundle (Docker)</p>
+<p>In the install bundle, the browser runs inside the server container, and the test shop opens only on <code>127.0.0.1</code>, so run the shop inside the server container too. From the <code>install/</code> folder, run <code>docker compose cp ../server/test/fixtures/shop.mjs server:/tmp/shop.mjs</code> and then <code>docker compose exec -d server node /tmp/shop.mjs 8811</code>, and you can use this chapter's address (<code>127.0.0.1:8811</code>) as it is. When you use it on real sites in your company network, the server must also be able to reach those addresses.</p>
+</div>
+<h2 id="try-it-1-log-in-to-a-site-for-the-first-time">Try it 1 — log in to a site for the first time<a class="anchor" href="#try-it-1-log-in-to-a-site-for-the-first-time" title="Permanent link">#</a></h2>
+<p>Send this in the input box.</p>
+<div class="hl"><pre><span></span><code>Log in to the test shop (http://127.0.0.1:8811/login) and tell me my recent orders.
+</code></pre></div>
+
+<p>The assistant says it'll log in and check your recent orders, and a <strong>task card</strong> appears in Chat. The card shows the server browser's screen in real time. The status line above the input box shows what it's doing now, like "Opening 127.0.0.1" or "Reading the page."</p>
+<p>When the agent reaches the password field, it stops and puts up a <strong>login card</strong>. This is a site it hasn't visited before, so there's no login saved in the Vault. An orange <strong>Action needed</strong> appears on the task card, and an orange warning button appears at the left of the input box. Click the warning button to jump to the card you need to answer.</p>
+<figure><a href="img/browser-login-request.webp" target="_blank" rel="noopener" title="View larger"><img alt="The login card — what you enter here goes to neither the chat nor the model, only to the Vault" src="img/browser-login-request.webp" / loading="lazy" decoding="async"></a><figcaption>The login card — what you enter here goes to neither the chat nor the model, only to the Vault</figcaption></figure>
+<ol class="steps">
+<li>Enter <code>demo@shop.test</code> and <code>Correct-Horse-42</code> on the login card and click <b>Login</b>.</li>
+<li>The card changes to "127.0.0.1 login saved," and the server puts the saved values into the page itself to log in.</li>
+<li>When the site asks for a phone verification code, a <b>verification code card</b> appears this time: "What you enter is used only for this step and isn't saved." One-time values aren't kept in the Vault. Enter <code>246810</code> and click <b>Enter code</b>.</li>
+</ol>
+<figure><a href="img/browser-otp-card2.webp" target="_blank" rel="noopener" title="View larger"><img alt="The verification code card — one-time values go straight into the page and are thrown away" src="img/browser-otp-card2.webp" / loading="lazy" decoding="async"></a><figcaption>The verification code card — one-time values go straight into the page and are thrown away</figcaption></figure>
+<p>When the task finishes (a few minutes in our run), click the pill at the bottom of the card (the task title) to see the <strong>plan</strong>. You see the steps the agent set at the start, green dots on the finished steps, and the notes it left at each step. Below that comes a summary of the result, and at the end of the summary is a <strong>What I actually did</strong> list ("Fill in the username from the Vault," "Click 'Sign in'," "Open 127.0.0.1"…). This list isn't the agent's own words. It's the browser actions the server recorded, so you can compare it with the summary. If the agent came across a button that would buy something you didn't ask for, a <strong>Not pressed — a purchase you didn't ask for</strong> list follows it (in our run, "Click 'Order again'").</p>
+<figure><a href="img/browser-plan.webp" target="_blank" rel="noopener" title="View larger"><img alt="Task progress — the first step is done (green), with the agent's note about order #A-1001. Below, &quot;6-digit verification code sent to your phone passed on · not saved&quot; and the summary" src="img/browser-plan.webp" / loading="lazy" decoding="async"></a><figcaption>Task progress — the first step is done (green), with the agent's note about order #A-1001. Below, &quot;6-digit verification code sent to your phone passed on · not saved&quot; and the summary</figcaption></figure>
+<p><strong>Check</strong>: The summary includes order <strong>#A-1001, Wireless earbuds, ₩89,000, Shipping</strong>, plus the line "6-digit verification code sent to your phone passed on · not saved", and a <strong>What I actually did</strong> list. If the order is missing from the summary, look for it in the plan's notes. (The test shop has no separate order-history page. In our run, the agent tried several addresses for one, left the remaining plan steps open, and reported the order shown on the account page.) Send the same request once more, and this time it logs in <strong>automatically from the Vault</strong> with no login card, asking only for the verification code.</p>
+<h2 id="try-it-2-view-it-large-and-take-control">Try it 2 — view it large and take control<a class="anchor" href="#try-it-2-view-it-large-and-take-control" title="Permanent link">#</a></h2>
+<p>Click the expand button (↗) on the task card, or <strong>Action needed</strong>, to view it full screen.</p>
+<figure><a href="img/browser-handoff.webp" target="_blank" rel="noopener" title="View larger"><img alt="The large view — Plan 0/5, Take control and Cancel task at the bottom, with the reason it stopped below them. The verification code card to answer is at the bottom right" src="img/browser-handoff.webp" / loading="lazy" decoding="async"></a><figcaption>The large view — Plan 0/5, Take control and Cancel task at the bottom, with the reason it stopped below them. The verification code card to answer is at the bottom right</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Button</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Plan n/m</strong></td>
+<td>Expands the list of steps</td>
+</tr>
+<tr>
+<td><strong>Take control</strong></td>
+<td>You take over. The screen border turns orange, and whatever you click or type on the screen goes straight to the server browser</td>
+</tr>
+<tr>
+<td><strong>Give control back</strong></td>
+<td>Hands it back to the agent. The agent reads the page again and continues</td>
+</tr>
+<tr>
+<td><strong>Cancel task</strong></td>
+<td>Stops the task. "I canceled the task." is left in the chat</td>
+</tr>
+</tbody>
+</table>
+<p>Use Take control for screens a person has to solve, like a CAPTCHA, or when the agent keeps wandering around the same spot. Send the same request once more, click <strong>Take control</strong> on the verification code screen, then type <code>246810</code> yourself into the code field on the screen.</p>
+<figure><a href="img/browser-takeover.webp" target="_blank" rel="noopener" title="View larger"><img alt="During Take control — an orange border, and the button changed to Give control back. Characters in the code field are hidden as dots" src="img/browser-takeover.webp" / loading="lazy" decoding="async"></a><figcaption>During Take control — an orange border, and the button changed to Give control back. Characters in the code field are hidden as dots</figcaption></figure>
+<p>Confirm with Enter and click <strong>Give control back</strong>. The unused verification code card changes to "Request expired," and the agent carries on. In our runs, the page was already at <strong>My account</strong>, but the agent opened the login page again, signed in from the Vault and asked for a new verification code on a fresh card. Enter it there, and the task finishes.</p>
+<div class="admonition tip">
+<p class="admonition-title">Logins you type yourself go to the Vault too</p>
+<p>If you fill in and submit a login form or card form during Take control, the Vault notices those values and puts up a card asking you to confirm whether to save them. Click <strong>Save</strong> and the agent uses those values from then on. If you don't save them, they're thrown away.</p>
+</div>
+<h3 id="when-a-task-is-already-running-the-queue">When a task is already running — the queue<a class="anchor" href="#when-a-task-is-already-running-the-queue" title="Permanent link">#</a></h3>
+<p>There's one browser per user, so tasks run one at a time. If you ask for another browser task before the previous one finishes, the new task <strong>waits in line</strong>. The task card gets <strong>Waiting · (task title)</strong>, and Chat shows a notice: "The browser does one task at a time. When the task ahead, '…', is done or canceled, I'll start '…'." When the previous task finishes, it starts on its own.</p>
+<figure><a href="img/browser-queued.webp" target="_blank" rel="noopener" title="View larger"><img alt="Asking for a payment while a task is waiting on a login card — the new task card shows Waiting · Purchase wireless earbuds and &quot;Starts when the task ahead, 'Report recent shop orders', is done&quot;. The × at the bottom right cancels only this task" src="img/browser-queued.webp" / loading="lazy" decoding="async"></a><figcaption>Asking for a payment while a task is waiting on a login card — the new task card shows Waiting · Purchase wireless earbuds and &quot;Starts when the task ahead, 'Report recent shop orders', is done&quot;. The × at the bottom right cancels only this task</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>What you want</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Finish the previous task</td>
+<td>Answer the previous task's card (login, verification code). It gets through regardless of the waiting task</td>
+</tr>
+<tr>
+<td>Drop only the waiting task</td>
+<td>The × (Cancel task) on the waiting card. It changes to "Canceled before it started." and the previous task continues</td>
+</tr>
+<tr>
+<td>Drop the previous task</td>
+<td>The × or <strong>Cancel task</strong> on the previous task's card. Then the next waiting task starts</td>
+</tr>
+</tbody>
+</table>
+<p>If the agent tries to finish without doing anything in the browser, the server sends it back once. If there's still no action, no recorded fact and no page change, the task is left as <strong>Needs confirmation</strong> instead of <strong>Done</strong>, with the notice "The task ended without doing anything in the browser." When that happens, send the same request again or check with Take control.</p>
+<h2 id="try-it-3-pay-by-card-and-approve">Try it 3 — pay by card and approve<a class="anchor" href="#try-it-3-pay-by-card-and-approve" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>At the test shop (http://127.0.0.1:8811/checkout), buy 1 pair of wireless earbuds with my card.
+</code></pre></div>
+
+<p>There's no card in the Vault, so this time a <strong>Payment card</strong> card appears. Enter the cardholder name, card number <code>4242 4242 4242 4242</code>, <code>12/30</code> and <code>123</code>, then click <strong>Save card</strong>. The card changes to "Card saved · Visa •••• 4242," and the server fills in the payment form.</p>
+<p>Right before clicking the pay button, the agent always stops and puts up an <strong>approval card</strong>. It says what it's buying, for how much, and with which card. The next time you pay, the card is already in the Vault, so no <strong>Payment card</strong> card appears and it goes straight to this approval.</p>
+<figure><a href="img/browser-approve.webp" target="_blank" rel="noopener" title="View larger"><img alt="The approval card — ₩89,000, Visa •••• 4242. In the live view above, the card fields are all hidden as dots" src="img/browser-approve.webp" / loading="lazy" decoding="async"></a><figcaption>The approval card — ₩89,000, Visa •••• 4242. In the live view above, the card fields are all hidden as dots</figcaption></figure>
+<p>Click <strong>Approve</strong> and it completes the payment and tells you the order number. Click <strong>Cancel</strong> and it doesn't pay.</p>
+<figure><a href="img/browser-paid.webp" target="_blank" rel="noopener" title="View larger"><img alt="Payment complete — approved, and a summary of order #A-2002 paid with •••• 4242. What I actually did shows the card fields filled in from the Vault, the approval and the click on Pay ₩89,000" src="img/browser-paid.webp" / loading="lazy" decoding="async"></a><figcaption>Payment complete — approved, and a summary of order #A-2002 paid with •••• 4242. What I actually did shows the card fields filled in from the Vault, the approval and the click on Pay ₩89,000</figcaption></figure>
+<p><strong>Check</strong>: The approval card shows the amount and <strong>Visa •••• 4242</strong>, and after approval the summary has a new order number (#A-2002 in this run). The full card number must not appear anywhere in the chat.</p>
+<div class="admonition tip">
+<p class="admonition-title">Approve on the approval card</p>
+<p>Approval right before paying, sending or deleting is on by default, even if you don't put it in your instructions. If you write "get my approval" in your instructions, the agent sometimes tries to just report "I'll go ahead once you approve" without going as far as the payment screen (and when it ends like that without any action, the task card is left as <strong>Needs confirmation</strong>). Say only what to do, as above, and approve on the approval card.</p>
+</div>
+<h2 id="quick-decisions-calling-the-big-model-less">Quick decisions — calling the big model less<a class="anchor" href="#quick-decisions-calling-the-big-model-less" title="Permanent link">#</a></h2>
+<p>A browser task calls the big model for every action (it reads screenshots too, so it's expensive). So for short decisions, it asks the small <strong>routing model</strong> first (the same model as the conversation context decisions in <a href="contexts.html">Chapter 4</a>).</p>
+<table>
+<thead>
+<tr>
+<th>What it asks</th>
+<th>If it's sure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Is this page still loading?</td>
+<td>It waits a moment without asking the big model (status line "Waiting for the page")</td>
+</tr>
+<tr>
+<td>Is it a login wall or a CAPTCHA?</td>
+<td>For a task with no person around, it warns ahead of time not to force it</td>
+</tr>
+<tr>
+<td>Can the facts noted so far fully answer the goal?</td>
+<td>It stops browsing and wraps up right away</td>
+</tr>
+</tbody>
+</table>
+<p>It does this only when the routing model is sure. Otherwise, the big model decides as usual. By the development team's measurements, the number of big-model calls per task dropped by about 21%. This feature turns on only on servers with the context router connected, so it's off by default in the current install bundle.</p>
+<h2 id="the-vault-where-secrets-live-and-how">The Vault — where secrets live, and how<a class="anchor" href="#the-vault-where-secrets-live-and-how" title="Permanent link">#</a></h2>
+<p>Logins and cards you saved during browser tasks are in the <strong>Vault</strong>. You can also add them yourself.</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Settings › Accounts</td>
+<td>Connections (Google and others), site logins, API keys. <strong>+ Add login</strong>, <strong>+ Add API key</strong></td>
+</tr>
+<tr>
+<td>Settings › Wallet</td>
+<td>Payment cards. The screen shows only the card brand and last four digits, the date saved and the number of uses</td>
+</tr>
+<tr>
+<td>Settings › Security</td>
+<td>The encryption method, master key info, <strong>Check</strong>, the Vault activity log</td>
+</tr>
+</tbody>
+</table>
+<p>Saved passwords are never shown again. When you click a login in <strong>Settings › Accounts</strong>, you can only <strong>replace it with a new value</strong>.</p>
+<h3 id="a-safe-inside-a-safe-the-master-key-and-data-keys">A safe inside a safe — the master key and data keys<a class="anchor" href="#a-safe-inside-a-safe-the-master-key-and-data-keys" title="Permanent link">#</a></h3>
+<p>The Vault uses <strong>envelope encryption</strong>. Here's how it looks as a safe.</p>
+<ol>
+<li><strong>Items</strong> such as passwords and cards are locked with a key made separately for each user, a <strong>data key</strong> (DEK on screen).</li>
+<li>That data key is locked again with a <strong>master key</strong> (KEK on screen) and kept in the database.</li>
+<li>The master key lives <strong>outside</strong> the database — in a key file on the server, or, with the install bundle, in the settings file <code>.env</code> in the install folder (<a href="install.html">Chapter 1</a>).</li>
+</ol>
+<p>So even if a whole database backup leaks, nothing can be opened without the master key. Each item is locked to that user and that site, so it won't open even if it's moved to another user's or another site's slot. Rotating the master key or creating new data keys is the operator's job (<a href="admin.html">Chapter 25</a>).</p>
+<p>Click <strong>Check</strong> in <strong>Settings › Security</strong> and the server actually opens your items to confirm how they react to tampering and moving. It doesn't show the values.</p>
+<figure><a href="img/browser-security.webp" target="_blank" rel="noopener" title="View larger"><img alt="Security — the encryption method, the master key (KEK) and data key (DEK) explained, and the check result &quot;All items passed&quot;" src="img/browser-security.webp" / loading="lazy" decoding="async"></a><figcaption>Security — the encryption method, the master key (KEK) and data key (DEK) explained, and the check result &quot;All items passed&quot;</figcaption></figure>
+<p>Below the check results, <strong>Vault activity</strong> records who did what and when. In entries like "127.0.0.1 login saved · Me" and "127.0.0.1 Login Username · entered in a browser task · Browser agent," you can confirm that whoever used the value was <strong>the browser agent (the server), not the model</strong>.</p>
+<figure><a href="img/browser-audit.webp" target="_blank" rel="noopener" title="View larger"><img alt="Check items (Opens only with my DEK; Doesn't open if moved to another site or user; Detects a 1-bit tamper; Can't be opened directly with the KEK; No plaintext in DB rows) and the Vault activity log" src="img/browser-audit.webp" / loading="lazy" decoding="async"></a><figcaption>Check items (Opens only with my DEK; Doesn't open if moved to another site or user; Detects a 1-bit tamper; Can't be opened directly with the KEK; No plaintext in DB rows) and the Vault activity log</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">Watch the video</p>
+<p>The <a href="https://youtu.be/n5SBj_iRbig">Vault</a> video shows the login, verification code and payment approval flow in under 2 minutes.</p>
+</div>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>In Part 1, you asked the assistant questions, split conversations, and handed it mail and website work. From the next chapter, in Part 2 <strong>Documents and tools</strong>, you open the Hangul, Word and Excel documents the assistant made in the editor beside the chat and edit them by talking (<a href="office.html">Chapter 7</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check questions</p>
+<ol>
+<li>Delete the test shop login in <strong>Settings › Accounts</strong>, then send the request from Try it 1 again. Which card appears again?</li>
+<li>Why isn't the verification code saved in the Vault?</li>
+<li>Using the master key and data keys, explain why someone who has only a database backup file can't find out the card numbers in the Vault.</li>
+<li>In <strong>Settings › Security › Vault activity</strong>, find the entry where the card went into the payment form. Who does it say entered it?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>There's no saved login, so the login card appears again. The deletion is recorded in Vault activity as "127.0.0.1 login deleted · Me."</li>
+<li>A verification code is a value that's done once it's used, so there's no reason to keep it, and keeping it only adds risk. The card says "What you enter is used only for this step and isn't saved."</li>
+<li>All the backup holds is items locked with data keys, and data keys locked with the master key. The master key lives outside the database (in a server key file or <code>.env</code>), so the backup alone can't unlock the data keys, and so it can't unlock the items either.</li>
+<li>It's recorded like "Card Number · entered in a browser task," and the actor is "Browser agent." The model never received the value.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="mail.html"><span>Previous</span>Mail assistant — find to-dos in incoming mail</a><a class="next" href="office.html"><span>Next</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-a-browser-agent">Why a browser agent</a></li><li><a href="#a-practice-site-the-test-shop">A practice site — the test shop</a></li><li><a href="#try-it-1-log-in-to-a-site-for-the-first-time">Try it 1 — log in to a site for the first time</a></li><li><a href="#try-it-2-view-it-large-and-take-control">Try it 2 — view it large and take control</a><ul><li><a href="#when-a-task-is-already-running-the-queue">When a task is already running — the queue</a></li></ul></li><li><a href="#try-it-3-pay-by-card-and-approve">Try it 3 — pay by card and approve</a></li><li><a href="#quick-decisions-calling-the-big-model-less">Quick decisions — calling the big model less</a></li><li><a href="#the-vault-where-secrets-live-and-how">The Vault — where secrets live, and how</a><ul><li><a href="#a-safe-inside-a-safe-the-master-key-and-data-keys">A safe inside a safe — the master key and data keys</a></li></ul></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

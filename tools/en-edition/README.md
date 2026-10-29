@@ -35,6 +35,9 @@ shows untranslated text on pages you are not working on, build just your page in
 python3 -c "import json,importlib.util as u,os; s=u.spec_from_file_location('ap','tools/en-edition/apply.py'); ap=u.module_from_spec(s); s.loader.exec_module(ap); ap.SITE_ROOT=os.getcwd(); p='contents/ontologystudio.html'; h,m,_=ap.build(p,open(p).read(),json.load(open('tools/en-edition/seg/'+p.replace('/','__')+'.json')),json.load(open('tools/en-edition/tm.json'))); open('en/'+p,'w').write(h); print('missing',len(m))"
 ```
 
+A page built for the first time links to itself through the Korean page (its English file does not
+exist yet when links are resolved), so build a new page twice.
+
 `extract` must be re-run after **any** edit to a Korean page — the offsets are position-based,
 and a stale offset makes `apply` stop with a "segment drift" error rather than corrupt a file.
 
@@ -63,6 +66,13 @@ node render_check.mjs en/index.html en/contents/processgpt.html   # SITE_URL ove
   Korean YouTube id to an English YouTube id of the same walkthrough (embeds and links).
 - **Docs with an English edition** (`en/docs/...`, e.g. the Ontological Studio tutorial): links stay
   inside `en/` instead of gaining `../`. Heading anchors that differ are mapped in `DOC_ANCHORS`.
+  A docs site listed in `EN_DOCS` (the Process GPT Lite tutorial) is treated the same way before its
+  English edition is on disk, because it ships together with the English pages that link to it.
+- **Page-specific rules** (`PAGE_RULES`): the Process GPT Lite page loads its screenshots from
+  `images/processgptlite/en/` and falls back to the Korean capture until the English one exists
+  (`tools/pgl-en-images.md`), sends the Lite AX course links to `educationax.html`, and swaps each Korean
+  video for its English re-recording once `tools/pgl-en-videos.json` has an `en_id` for it
+  (`tools/pgl-en-videos.py` does the same swap on the built page without a rebuild).
 - **Pages without an English edition yet** (no `en/<page>` on disk): links to them open the Korean
   page instead of a 404.
 - A KO/EN language switch is inserted into the nav on both sides.
