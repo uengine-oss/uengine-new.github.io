@@ -52,6 +52,8 @@ In our run, this draft came back after about 26 seconds, titled "Draft Quote: Ha
 | Mesh Chair Air (HB-C01) | 25 | 180,000 | 4,500,000 | 5% | 4,275,000 |
 | 3-Drawer Mobile Pedestal (HB-S30) | 25 | 95,000 | 2,375,000 | 5% | 2,256,250 |
 
+The table’s columns can vary between runs.
+
 The table went on with **Subtotal After Discount** 6,531,250, **Installation & Delivery (Seoul)** Free and **Total (excl. VAT): KRW 6,531,250**. Under **Further Details** came the lead time (5 business days from order confirmation), the quote validity (30 days from the quote date), "Prices exclude VAT", the source (Hanbit Office Price List (H2 2026)) and free delivery and installation in the Seoul area.
 
 ![The agent's draft quote — the 3-Drawer Mobile Pedestal (HB-S30) row, Subtotal After Discount 6,531,250, Installation & Delivery (Seoul) Free, Total (excl. VAT) KRW 6,531,250, Further Details with lead time 5 business days and validity 30 days, and “Hanbit-Office-Price-List.pdf” under Knowledge Base on the right](img/ac-answer.webp)
@@ -70,7 +72,7 @@ Before sending it to the customer, check the draft against the price list.
 | Quote validity | 30 days from the quote date | Same |
 | Total | 4,275,000 + 2,256,250 = KRW 6,531,250 (VAT not included) | Same |
 
-In our run, every line matched the price list. If something doesn't match, continue the chat and ask for a fix, or take the draft and fix it yourself.
+In our run, every line matched the price list. If something doesn't match, continue the chat and ask for a fix, or take the draft and fix it yourself. In another run, the agent counted the 30-day validity from a wrong date for “today”, so check the starting date as well as the duration.
 
 !!! tip "A person checks the draft before it goes out"
     The agent calculates from the price list, but it can still get a word or a condition wrong. Its answer also varies a little each time, even for the same question. Always check numbers and conditions against the source. [Chapter 12](document-process.html) shows how to make checking and approving a step of a process.

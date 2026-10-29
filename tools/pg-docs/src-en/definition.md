@@ -56,7 +56,7 @@ Open the definition again and you'll see the new name in the flow diagram. In th
 
 ## Try it 3 — Compare two versions
 
-Once there are two or more versions, the **Version History** icon in edit mode becomes active. Before that, its tooltip says "No other saved versions available".
+Once there are two or more versions, the **Version History** icon in edit mode becomes active. Before that, its tooltip says "No other saved versions available". A current-version defect can leave the tooltip reporting no saved versions even after v0.1 is saved; don’t use the tooltip alone to judge whether saving worked.
 
 <ol class="steps" markdown="1">
 <li markdown="1">In edit mode, click **Version History**. The **Version Comparison** screen opens.</li>
@@ -73,7 +73,7 @@ Once there are two or more versions, the **Version History** icon in edit mode b
 
 ## Try it 4 — Export the definition as a file
 
-Click **Export Component (.zip)** on the definition screen to download a zip file containing the definition and its forms (in our run, `…-0.2.zip`, about 15 KB). Upload this file with **Import Component** on the home screen of another Process GPT, and the same process is installed. Use it to move a process to another install in your company or to back it up.
+Click **Export Component (.zip)** on the definition screen to download a zip file containing the definition and its forms (in our run, `…-0.2.zip`, about 15 KB; another run exported about 17 KB). Upload this file with **Import Component** on the home screen of another Process GPT, and the same process is installed. Use it to move a process to another install in your company or to back it up.
 
 ## Next chapter
 

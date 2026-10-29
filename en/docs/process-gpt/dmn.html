@@ -115,7 +115,7 @@
 <div class="hl"><pre><span></span><code>Make the Hanbit Office volume discount rule as a decision table. Input: order quantity of the same product (number). Output: discount (%). 1–19 → 0%, 20–49 → 5%, 50–99 → 8%, 100 or more → 12%.
 </code></pre></div>
 
-<p>In our run, after about 12 seconds the decision box was renamed <strong>Hanbit Office Volume Discount</strong>, and the chat below the editor said: “Created a Hanbit Office volume discount decision table: input is order quantity (number), output is discount (%). The table includes four rules covering all specified quantity ranges.”, followed by a list of the changes it made. Scroll down below the editor to see the chat.</p>
+<p>In our run, after about 12 seconds the decision box was renamed <strong>Hanbit Office Volume Discount</strong>, and the chat below the editor said: “Created a Hanbit Office volume discount decision table: input is order quantity (number), output is discount (%). The table includes four rules covering all specified quantity ranges.”, followed by a list of the changes it made. Scroll down below the editor to see the chat. Decision and input/output names can differ between runs.</p>
 <figure><a href="img/dmn-generated.webp" target="_blank" rel="noopener" title="View larger"><img alt="After sending — the decision box in the DRD is now named “Hanbit Office Volume Discount”" src="img/dmn-generated.webp" / loading="lazy" decoding="async"></a><figcaption>After sending — the decision box in the DRD is now named “Hanbit Office Volume Discount”</figcaption></figure>
 <h2 id="try-it-2-open-the-table">Try it 2 — Open the table<a class="anchor" href="#try-it-2-open-the-table" title="Permanent link">#</a></h2>
 <p>Click the blue table icon at the top left of the decision box to open the decision table.</p>
@@ -151,6 +151,7 @@
 </tr>
 </tbody>
 </table>
+<p>Expressions can also differ: for example, <code>&gt;= 20 and &lt; 50</code> covers the same whole-number order quantities as <code>&gt;= 20 and &lt;= 49</code>. Check that the quantity bands and discount rates match.</p>
 <p>Hit policy <strong>Unique</strong> means exactly one row must match any input. Check in the table that the ranges don't overlap. You can click a cell to edit it, and add a row with the ＋ below the table. Go back with <strong>‹</strong> (View DRD) at the top left.</p>
 <h2 id="try-it-3-save-as-a-version">Try it 3 — Save as a version<a class="anchor" href="#try-it-3-save-as-a-version" title="Permanent link">#</a></h2>
 <ol class="steps">
@@ -168,11 +169,11 @@
 <div class="hl"><pre><span></span><code>What is the discount for an order quantity of 40?
 </code></pre></div>
 
-<p>In our run, after about 12 seconds the answer came back. It first walked through the table and its hit policy, then gave a <strong>Final Result</strong>: “For an order quantity of 40, the discount applied is 5%.”, a small table (Order Quantity 40, Discount Rate 5%), “This is because 40 falls within the range 20–49, as specified by Rule 2.”, a practical note and a summary.</p>
+<p>In our run, after about 12 seconds the answer came back. It first walked through the table and its hit policy, then gave a <strong>Final Result</strong>: “For an order quantity of 40, the discount applied is 5%.”, a small table (Order Quantity 40, Discount Rate 5%), “This is because 40 falls within the range 20–49, as specified by Rule 2.”, a practical note and a summary. Another run may simply give the 5% result without the explanation.</p>
 <figure><a href="img/dmn-infer.webp" target="_blank" rel="noopener" title="View larger"><img alt="Inference mode — mode Inference and “5. Final Result”: for an order quantity of 40 the discount is 5%, matched by Rule 2, with a practical note and a summary" src="img/dmn-infer.webp" / loading="lazy" decoding="async"></a><figcaption>Inference mode — mode Inference and “5. Final Result”: for an order quantity of 40 the discount is 5%, matched by Rule 2, with a practical note and a summary</figcaption></figure>
 <div class="admonition tip">
 <p class="admonition-title">Test with boundary values</p>
-<p>Ask about quantities where the range changes, such as 19 and 20, 49 and 50, or 99 and 100. You'll quickly see whether the table's “or more” and “less than” work as intended.</p>
+<p>Ask about quantities where the range changes, such as 19 and 20, 49 and 50, or 99 and 100. You'll quickly see whether the table's range boundaries work as intended.</p>
 </div>
 <h2 id="try-it-5-ask-the-agent-using-the-rule">Try it 5 — Ask the agent using the rule<a class="anchor" href="#try-it-5-ask-the-agent-using-the-rule" title="Permanent link">#</a></h2>
 <p>Open the agent again, and <strong>Hanbit Office Volume Discount</strong> appears under <strong>Business Rule</strong> in the profile (scroll the profile down to see it). Ask in <strong>New Chat</strong> on the right.</p>
@@ -188,7 +189,7 @@
 <p class="admonition-title">Check your understanding</p>
 <ol>
 <li>What does the decision table's hit policy <strong>Unique</strong> mean?</li>
-<li>If you ask in inference mode “What if the quantity is 50?”, what percentage should you get? Which row of the table is it?</li>
+<li>If you ask in inference mode “What if the quantity is 50?”, what percentage should you get? Which quantity band is it?</li>
 <li>If you turned the approver rule in Article 5 of the quote approval policy into a decision table, what would the input and output be?</li>
 </ol>
 </div>
@@ -196,7 +197,7 @@
 <summary>Answers</summary>
 <ol>
 <li>Exactly one row must match any input. The ranges must not overlap.</li>
-<li>8%, row 3 (<code>&gt;= 50 and &lt;= 99</code>). 50 doesn't fall under row 2's <code>&lt;= 49</code>.</li>
+<li>8%, the 50–99 quantity band. 50 is outside the 20–49 band.</li>
 <li>The input is “quote total (excluding VAT, number)” and the output is “approver” (e.g. <code>sales team lead</code>, <code>sales team lead + finance officer</code>). The rows are <code>&lt; 30000000</code> → sales team lead and <code>&gt;= 30000000</code> → sales team lead + finance officer.</li>
 </ol>
 </details>

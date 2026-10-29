@@ -26,7 +26,7 @@ When a rule like “20–49 of the same product get 5%, 50–99 get 8% …” si
 Make the Hanbit Office volume discount rule as a decision table. Input: order quantity of the same product (number). Output: discount (%). 1–19 → 0%, 20–49 → 5%, 50–99 → 8%, 100 or more → 12%.
 ```
 
-In our run, after about 12 seconds the decision box was renamed **Hanbit Office Volume Discount**, and the chat below the editor said: “Created a Hanbit Office volume discount decision table: input is order quantity (number), output is discount (%). The table includes four rules covering all specified quantity ranges.”, followed by a list of the changes it made. Scroll down below the editor to see the chat.
+In our run, after about 12 seconds the decision box was renamed **Hanbit Office Volume Discount**, and the chat below the editor said: “Created a Hanbit Office volume discount decision table: input is order quantity (number), output is discount (%). The table includes four rules covering all specified quantity ranges.”, followed by a list of the changes it made. Scroll down below the editor to see the chat. Decision and input/output names can differ between runs.
 
 ![After sending — the decision box in the DRD is now named “Hanbit Office Volume Discount”](img/dmn-generated.webp)
 
@@ -42,6 +42,8 @@ Click the blue table icon at the top left of the decision box to open the decisi
 | 2 | `>= 20 and <= 49` | 5 |
 | 3 | `>= 50 and <= 99` | 8 |
 | 4 | `>= 100` | 12 |
+
+Expressions can also differ: for example, `>= 20 and < 50` covers the same whole-number order quantities as `>= 20 and <= 49`. Check that the quantity bands and discount rates match.
 
 Hit policy **Unique** means exactly one row must match any input. Check in the table that the ranges don't overlap. You can click a cell to edit it, and add a row with the ＋ below the table. Go back with **‹** (View DRD) at the top left.
 
@@ -66,12 +68,12 @@ Switch the mode at the bottom left of the chat box from **Creation** to **Infere
 What is the discount for an order quantity of 40?
 ```
 
-In our run, after about 12 seconds the answer came back. It first walked through the table and its hit policy, then gave a **Final Result**: “For an order quantity of 40, the discount applied is 5%.”, a small table (Order Quantity 40, Discount Rate 5%), “This is because 40 falls within the range 20–49, as specified by Rule 2.”, a practical note and a summary.
+In our run, after about 12 seconds the answer came back. It first walked through the table and its hit policy, then gave a **Final Result**: “For an order quantity of 40, the discount applied is 5%.”, a small table (Order Quantity 40, Discount Rate 5%), “This is because 40 falls within the range 20–49, as specified by Rule 2.”, a practical note and a summary. Another run may simply give the 5% result without the explanation.
 
 ![Inference mode — mode Inference and “5. Final Result”: for an order quantity of 40 the discount is 5%, matched by Rule 2, with a practical note and a summary](img/dmn-infer.webp)
 
 !!! tip "Test with boundary values"
-    Ask about quantities where the range changes, such as 19 and 20, 49 and 50, or 99 and 100. You'll quickly see whether the table's “or more” and “less than” work as intended.
+    Ask about quantities where the range changes, such as 19 and 20, 49 and 50, or 99 and 100. You'll quickly see whether the table's range boundaries work as intended.
 
 ## Try it 5 — Ask the agent using the rule
 
@@ -93,12 +95,12 @@ The decision table now handles the discount rate. Approval rules in the quote ap
 
 !!! exercise "Check your understanding"
     1. What does the decision table's hit policy **Unique** mean?
-    2. If you ask in inference mode “What if the quantity is 50?”, what percentage should you get? Which row of the table is it?
+    2. If you ask in inference mode “What if the quantity is 50?”, what percentage should you get? Which quantity band is it?
     3. If you turned the approver rule in Article 5 of the quote approval policy into a decision table, what would the input and output be?
 
 <details class="answer" markdown="1"><summary>Answers</summary>
 
 1. Exactly one row must match any input. The ranges must not overlap.
-2. 8%, row 3 (`>= 50 and <= 99`). 50 doesn't fall under row 2's `<= 49`.
+2. 8%, the 50–99 quantity band. 50 is outside the 20–49 band.
 3. The input is “quote total (excluding VAT, number)” and the output is “approver” (e.g. `sales team lead`, `sales team lead + finance officer`). The rows are `< 30000000` → sales team lead and `>= 30000000` → sales team lead + finance officer.
 </details>

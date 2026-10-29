@@ -51,7 +51,7 @@ The folder card in the **Knowledge map** carries a summary the AI wrote after re
 Search the selected knowledge base price list, then calculate the discount, installation fee and total for 40 Mesh Chair Pro and 40 Motion Desk 1600 delivered to our Busan office. Show your sources.
 ```
 
-In our run, this answer came back after about 54 seconds.
+In our run, this answer came back after about 54 seconds (39 seconds in another run).
 
 | Item | Answer | Source in the price list |
 |---|---|---|
@@ -74,7 +74,7 @@ In a new chat (the pencil icon), send the same question without picking anything
 
 ![Answer with no knowledge base pick — the agent says there is no selected knowledge base or price list document and asks you to upload or select it](img/kb-nokb.webp)
 
-In our run, the answer came after about 33 seconds. It says there is no selected knowledge base or price list document to search, and asks you to upload or select the price list. It doesn't make up numbers; with no source, it says so.
+In our run, the answer came after about 33 seconds. It says there is no selected knowledge base or price list document to search, and asks you to upload or select the price list. It didn't make up numbers in our run. In another run, it may incorrectly say the uploaded price list is not registered; select the price list file in the chat and ask again.
 
 !!! warning "Picking a whole folder"
     If you check a **folder** instead of a file in the picker, the button becomes **Use 1 folder**, but in the current version the folder selection isn't passed to the agent, so it can't find the document. Expand the folder and check the **file**.
@@ -91,6 +91,6 @@ You'll calculate from the price list again and again. In the next chapter you'll
 <details class="answer" markdown="1"><summary>Answers</summary>
 
 1. Convert it to a supported format such as PDF, DOCX or TXT and upload it again. Save it as PDF from a document editor, or save the contents as .txt.
-2. With the pick, it found the tables and rules in the price list and gave a 5% discount, a KRW 889,200 installation fee and a KRW 30,529,200 total, with sources. Without it, it said there was no selected knowledge base or price list document and asked you to upload or select the price list.
+2. With the pick, it found the tables and rules in the price list and gave a 5% discount, a KRW 889,200 installation fee and a KRW 30,529,200 total, with sources. Without it, it said there was no selected knowledge base or price list document and asked you to upload or select the price list. The wording can differ, but uploading alone is not enough: select the file in chat.
 3. KRW 1,150,000 × 10 = KRW 11,500,000; 10 units get no discount (0%). Delivery and installation are free in Seoul, but Meeting Tables cost KRW 30,000 per unit to install in every region → KRW 300,000. Total KRW 11,800,000 (excluding VAT).
 </details>

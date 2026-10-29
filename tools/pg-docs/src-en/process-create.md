@@ -55,7 +55,7 @@ Choose "Create the process as is", then click **Submit response**. Choosing alon
 
 ## Try it 3 — Confirm it was created
 
-After you submit, "Selected: Create the process as is" and then "Created a work item to generate the process from the consultation." appear. Soon **"✅ BPMN process generation complete — 1 process has been created. The process definition has been saved. You can find it in the left menu."** arrives. In our run, it took about 24 seconds from sending the description to the saved definition. Below the message is the **BPMN process generation result** card (**Saved**, plus the process name "Sales Proposal Creation" and its ID). A process created by Basic Agent is saved without you saving it separately.
+After you submit, "Selected: Create the process as is" and then "Created a work item to generate the process from the consultation." appear. Soon **"✅ BPMN process generation complete — 1 process has been created. The process definition has been saved. You can find it in the left menu."** arrives. In our run, it took about 24 seconds from sending the description to the saved definition. Below the message is the **BPMN process generation result** card (**Saved**, plus the process name "Sales Proposal Creation" and its ID). A process created by Basic Agent is saved without you saving it separately. In other runs it took about 15–25 seconds after submitting the response.
 
 ![Created — the “BPMN process generation complete” message and the result card marked “Saved”](img/pc-done.webp)
 
@@ -73,6 +73,8 @@ Click the name to open the definition. The Customer lane has "Submit Request" an
 |---|---|---|
 | Submit Request | Customer | The customer's request |
 | Write and Send Proposal | Sales Representative | The sales proposal |
+
+Form fields vary by run: another run produced five fields for this step—customer requirements, proposal content, quote, schedule and a proposal file attachment.
 
 !!! tip "What makes a good description"
     - Say **who** (the role) and **what** (the output) for each step, like "a sales representative writes the proposal".
