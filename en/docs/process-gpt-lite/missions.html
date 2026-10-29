@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integrations and scheduled missions — Process GPT Lite Tutorial</title>
+<meta name="description" content="Connect outside services the assistant can use (Google, YouTube, Slack, GitHub and Notion), and create tasks that run at a set time just by saying something like &quot;Every Monday at 9…&quot;. Scheduled tasks post to the chat only when something has changed since last time. For schedules made from a skill (missions), you manage running now, pausing, run history and which agent runs them.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/missions.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Integrations and scheduled missions — Process GPT Lite Tutorial">
+<meta property="og:description" content="Connect outside services the assistant can use (Google, YouTube, Slack, GitHub and Notion), and create tasks that run at a set time just by saying something like &quot;Every Monday at 9…&quot;. Scheduled tasks post to the chat only when something has changed since last time. For schedules made from a skill (missions), you manage running now, pausing, run history and which agent runs them.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/missions.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html" class="on" aria-current="page"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Less repetition<span class="chap">11</span></div>
+    <h1>Integrations and scheduled missions</h1>
+    <article>
+<blockquote>
+<p>Connect outside services the assistant can use (Google, YouTube, Slack, GitHub and Notion), and create tasks that run at a set time just by saying something like "Every Monday at 9…". Scheduled tasks post to the chat only when something has changed since last time. For schedules made from a skill (missions), you manage running now, pausing, run history and which agent runs them.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/SLGxaj5fksk" title="Integrations and scheduled missions — video 3:39" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p>In <a href="skills.html">Chapter 10</a>, you saved the quote check method as the <code>quote-check</code> skill. A skill runs only when you call it. In this chapter, you first connect outside services the assistant can use, and then make work run on its own at a set time.</p>
+<h2 id="connections-outside-services-the-assistant-can-use">Connections — outside services the assistant can use<a class="anchor" href="#connections-outside-services-the-assistant-can-use" title="Permanent link">#</a></h2>
+<p>In Settings (the circle with your name at the top right) › <strong>Accounts</strong>, <strong>Connections</strong> has five services. Each card lists the tools the assistant gets to use.</p>
+<figure><a href="img/missions-connectors.webp" target="_blank" rel="noopener" title="View larger"><img alt="Accounts › Connections. YouTube is connected from the start; for the others, each person clicks &quot;Connect&quot;" src="img/missions-connectors.webp" / loading="lazy" decoding="async"></a><figcaption>Accounts › Connections. YouTube is connected from the start; for the others, each person clicks &quot;Connect&quot;</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>How to connect</th>
+<th>What it can do (tools)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>YouTube</strong></td>
+<td>Nothing needed — public data</td>
+<td>A channel's recent videos, video details, captions</td>
+</tr>
+<tr>
+<td><strong>Google</strong> (Gmail, Calendar, Drive)</td>
+<td><strong>Connect</strong> → agree in the Google sign-in. An admin must set up Google sign-in on the server first (<a href="admin.html">Chapter 25</a>)</td>
+<td>Find, read and draft mail; find, create and change events; find and read Drive files</td>
+</tr>
+<tr>
+<td><strong>Slack</strong></td>
+<td>Paste a user token (<code>xoxp-…</code>)</td>
+<td>List channels, read channels, send messages</td>
+</tr>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Paste a Personal Access Token (repo scope)</td>
+<td>Find issues, list PRs, create issues</td>
+</tr>
+<tr>
+<td><strong>Notion</strong></td>
+<td>Paste the internal integration secret and share the pages you want to use with that integration</td>
+<td>Search, read and create pages, append to pages</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Tokens go in the Vault</p>
+<p>A token you paste is encrypted and stored in that person's <strong>Vault</strong> (<a href="browser.html">Chapter 6</a>), and its value is never shown on screen or to the assistant (the AI model). When the assistant calls a tool, the server takes out the token of the person who called it and makes the call on their behalf. That's why the same question gets each person the results from their own account. If the assistant calls a tool for a service you haven't connected, it answers that a connection is needed.</p>
+</div>
+<p>This chapter uses examples that don't need personal account connections. Examples that use Google and Slack connections (putting events from new YouTube videos on the calendar, a weekly Slack summary) are in the <a href="https://youtu.be/yVHodTrDwHg">integrations, skills and missions video</a>.</p>
+<h2 id="try-it-1-schedule-it-by-saying-so">Try it 1 — schedule it by saying so<a class="anchor" href="#try-it-1-schedule-it-by-saying-so" title="Permanent link">#</a></h2>
+<p>You want to keep track every week of the time left and the to-dos until Moonlight Coffee Store #2 opens. Type in chat:</p>
+<div class="hl"><pre><span></span><code>Every Monday at 9 AM, tell me in three lines how many weeks are left until Moonlight Coffee Store #2 opens (March 2, 2027) and what to take care of this week.
+</code></pre></div>
+
+<p>When your message has words like "every, daily, weekly, monthly, on a schedule, recurring", the assistant doesn't do it right away and takes it as a <strong>schedule</strong>. A schedule chip is attached below the answer.</p>
+<figure><a href="img/missions-chip.webp" target="_blank" rel="noopener" title="View larger"><img alt="The schedule chip &quot;Scheduled · Moonlight Coffee #2 opening countdown · next run Mon, November 2 at 9:00 AM&quot;" src="img/missions-chip.webp" / loading="lazy" decoding="async"></a><figcaption>The schedule chip &quot;Scheduled · Moonlight Coffee #2 opening countdown · next run Mon, November 2 at 9:00 AM&quot;</figcaption></figure>
+<p><strong>Check</strong>: The task name and next run time on the chip. The assistant names the task and writes the instruction it will run each time on its own (in our run: "I'll set a Monday 9 AM reminder that counts down the weeks to the March 2, 2027 opening and flags what to focus on that week.").</p>
+<p>See the list and details in <strong>Settings › Scheduled tasks</strong>.</p>
+<figure><a href="img/missions-detail.webp" target="_blank" rel="noopener" title="View larger"><img alt="Scheduled task details — the status switch, the schedule &quot;Custom schedule (0 9 * * 1)&quot; and the next run, Delivery &quot;Post to chat&quot;, &quot;Run now&quot; and &quot;Delete&quot;, and below them the record of a &quot;Run now&quot; run (Completed · Deep Agents · Manual · Changed). In our run it posted &quot;About 17 weeks left until the opening (120 days)…&quot; to the chat" src="img/missions-detail.webp" / loading="lazy" decoding="async"></a><figcaption>Scheduled task details — the status switch, the schedule &quot;Custom schedule (0 9 * * 1)&quot; and the next run, Delivery &quot;Post to chat&quot;, &quot;Run now&quot; and &quot;Delete&quot;, and below them the record of a &quot;Run now&quot; run (Completed · Deep Agents · Manual · Changed). In our run it posted &quot;About 17 weeks left until the opening (120 days)…&quot; to the chat</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status</td>
+<td>Pause and resume with the switch. While paused, it doesn't run at the set time</td>
+</tr>
+<tr>
+<td>Schedule</td>
+<td>The cycle in Korea Standard Time (KST) (minute hour day month weekday). <code>0 9 * * 1</code> = every Monday at 9:00</td>
+</tr>
+<tr>
+<td>Next run</td>
+<td>The time it will actually run next</td>
+</tr>
+<tr>
+<td>Delivery</td>
+<td>Where the results go (<strong>Post to chat</strong>)</td>
+</tr>
+<tr>
+<td><strong>Run now</strong></td>
+<td>Runs it once without waiting for the time (marked <strong>Manual</strong> in the record)</td>
+</tr>
+<tr>
+<td><strong>Delete</strong></td>
+<td>Deletes the schedule</td>
+</tr>
+<tr>
+<td>Previous runs</td>
+<td>Each run's status (Completed or Failed), time and summary. Runs that posted results to the chat show <strong>Changed</strong>, and runs that passed quietly show <strong>No change</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="quiet-when-nothing-has-changed">Quiet when nothing has changed<a class="anchor" href="#quiet-when-nothing-has-changed" title="Permanent link">#</a></h3>
+<p>Each time a scheduled task runs, it runs with the condition "if nothing differs from what the last run shared, answer only 'No change'", and if the answer is "No change", <strong>nothing is left in the chat</strong> (not even a divider). If the previous run is still going, that run is skipped. This keeps the same content from piling up every day and making you miss the alerts that matter. Runs that passed quietly still show as <strong>No change</strong> under <strong>Previous runs</strong> on the details screen.</p>
+<div class="admonition note">
+<p class="admonition-title">Failures don't pass quietly</p>
+<p>It goes quiet only when it ran properly and nothing changed. If a run fails, the chat gets one line, "The scheduled run failed: …", a <strong>Scheduled run failed</strong> card appears on Home, and <strong>Previous runs</strong> records it as <strong>Failed</strong>. If the server or database didn't respond for a moment and the run couldn't even start, it runs again on its own a few minutes later.</p>
+</div>
+<h2 id="try-it-2-schedule-a-skill-mission">Try it 2 — schedule a skill (mission)<a class="anchor" href="#try-it-2-schedule-a-skill-mission" title="Permanent link">#</a></h2>
+<p>When you run a skill from <a href="skills.html">Chapter 10</a> at a set time, it becomes a <strong>mission</strong>. Missions have more to manage than ordinary schedules.</p>
+<p>Open <code>quote-check</code> in <strong>Settings › Skills</strong>, and below it there are schedule buttons (Every morning at 8 · Twice a day (12:00, 21:00) · Hourly during weekday market hours · Every Monday at 9). Choose <strong>Every Monday at 9</strong>, write the quote to check in the <strong>Input values (JSON)</strong> box (write it as <code>{"name": "value"}</code>, like the example in the box), and click <strong>Schedule Every Monday at 9</strong>. You can also choose the schedule when you save from the skill draft card.</p>
+<p>When you open the mission in <strong>Settings › Scheduled tasks</strong>, it has more items than an ordinary schedule. Click <strong>Run now</strong> to try it right away.</p>
+<figure><a href="img/missions-mission.webp" target="_blank" rel="noopener" title="View larger"><img alt="Mission details — status switch, schedule, skill, input, agent (Deep Agents, Claude Code, Codex), notification &quot;Only when something changed&quot;, &quot;Run now&quot;, and two manual runs: Deep Agents (Completed · Changed) and Claude Code (Completed · No change)" src="img/missions-mission.webp" / loading="lazy" decoding="async"></a><figcaption>Mission details — status switch, schedule, skill, input, agent (Deep Agents, Claude Code, Codex), notification &quot;Only when something changed&quot;, &quot;Run now&quot;, and two manual runs: Deep Agents (Completed · Changed) and Claude Code (Completed · No change)</figcaption></figure>
+<p>A mission decides "whether anything changed" from a result line like the one below that the skill leaves on the <strong>last line</strong> of its answer. Every time the mission runs, it tells the assistant to leave this line. If there's no result line, a run that ended normally is still recorded as <strong>Completed</strong>, but since it can't tell whether anything changed, it's marked <strong>Unknown if changed</strong> and the notification is sent. It's <strong>Failed</strong> only when it ended with an error or gave no answer at all. In the shot above, both runs left a result line: the Deep Agents run checked the quote ("all 8 pre-send items passed …", <strong>Changed</strong>), and the Claude Code run found the skill but not the input file (<strong>No change</strong>, see the note below).</p>
+<div class="hl"><pre><span></span><code>MISSION_RESULT: {&quot;changed&quot;: true, &quot;summary&quot;: &quot;2 need checking — typo in the validity wording, stored value is the old total&quot;}
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Result line item</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>changed</code></td>
+<td>true if there's something new worth reporting. If the notification is set to "Only when something changed", it's posted to the chat only when this is true</td>
+</tr>
+<tr>
+<td><code>summary</code></td>
+<td>One or two sentences left in the run record and the chat</td>
+</tr>
+<tr>
+<td><code>seen_add</code></td>
+<td>(Optional) IDs of the items handled this time. They're passed to the next run as <code>seen</code>, so the same item isn't handled twice</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Plan for scheduling when you make the skill</p>
+<p>If you choose a schedule when saving from the skill draft card and SKILL.md has no result line, a "Scheduled run result" step is added on its own. If the skill is already saved, add that procedure through a variation as in <a href="skills.html">Chapter 10</a>, or add this when you make it: <code>I'll run this as a scheduled mission. Make sure it always leaves one MISSION_RESULT line (changed, summary) at the end</code>. The built-in <code>youtube-schedule-to-calendar</code> skill is an example that follows this format (it finds events in a YouTube channel's new videos and puts them on Google Calendar — needs a Google connection).</p>
+</div>
+<p>The status switch, <strong>Run now</strong> and <strong>Previous runs</strong> are the same as for ordinary schedules. Missions also have the following.</p>
+<table>
+<thead>
+<tr>
+<th>Only in missions</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skill and input</td>
+<td>The skill to run and the input values to pass</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>Who runs it: Deep Agents, Claude Code or Codex</td>
+</tr>
+<tr>
+<td>Notification</td>
+<td>Only when something changed / Every time / Don't send</td>
+</tr>
+<tr>
+<td><strong>Unknown if changed</strong></td>
+<td>In previous runs, marks runs that ended normally without a result line</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Claude Code and Codex get the skill, not your chat's files</p>
+<p>A mission run by Claude Code or Codex gets the skill from its skill folder (the same files Deep Agents uses). But a file path from the chat, like the attached quote under <code>/workspace/uploads/…</code>, is in Deep Agents' work folder, which Claude Code and Codex runs can't see. That's why the Claude Code run in the shot answered that the file was not found. For those agents, give input they can reach (a link, or text in the input values), or keep the mission on Deep Agents.</p>
+</div>
+<p>Mission results go <strong>only to the person who set it up</strong>. That's because a skill is one person's work done by one agent. For work that several people do in turn (review, approval), you schedule a process instead of a mission. Say something like <code>Start the SNS trend response process every Monday at 9</code>, and a new process starts each time it runs, passing to the assignee at each step (you make processes in <a href="process-create.html">Chapter 17</a>).</p>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>A scheduled mission reports its results to just you. In the next chapter, you'll see <strong>panel apps</strong>, small tables the team views and edits together, like a quote tracker, made with a single request (<a href="panel-apps.html">Chapter 12</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>You made a schedule that summarizes a Slack channel, and the first run's result was "a connection is needed." What should you do?</li>
+<li>You set up a schedule to look at the quote tracker (the panel app you make in the next chapter) every day at 4 PM. On Wednesday, no quotes changed. What's left in the chat?</li>
+<li>You want to send the same results to Seoyeon Park too. Is widening the mission's notification scope the right move?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>In <strong>Settings › Accounts › Connections</strong>, click <strong>Connect</strong> on the Slack card and enter your own user token. A schedule runs with the connections of the person who set it up.</li>
+<li>Nothing. If nothing changed, the assistant answers "No change", and that run doesn't leave even a divider in the chat.</li>
+<li>No. Mission results go only to the person who set it up. If Seoyeon Park also needs to know, share the results through chat (@mention, <a href="sharing.html">Chapter 14</a>), or if it's work several people do in turn, make it a process and schedule that.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="skills.html"><span>Previous</span>Skills — save what worked and share it</a><a class="next" href="panel-apps.html"><span>Next</span>Panel apps — work mini apps you make by asking</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#connections-outside-services-the-assistant-can-use">Connections — outside services the assistant can use</a></li><li><a href="#try-it-1-schedule-it-by-saying-so">Try it 1 — schedule it by saying so</a><ul><li><a href="#quiet-when-nothing-has-changed">Quiet when nothing has changed</a></li></ul></li><li><a href="#try-it-2-schedule-a-skill-mission">Try it 2 — schedule a skill (mission)</a></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

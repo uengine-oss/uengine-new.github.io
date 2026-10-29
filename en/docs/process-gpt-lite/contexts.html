@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversation context — conversations that split on their own, and the output stack — Process GPT Lite Tutorial</title>
+<meta name="description" content="In one chat window, alternate between Moonlight Coffee work and planning the year-end party, and watch the assistant split the conversation by working out, for each message, which story it follows up on. Then pick a single conversation from the conversation list, and expand and open the output stack where the files made in that conversation pile up.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/contexts.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Conversation context — conversations that split on their own, and the output stack — Process GPT Lite Tutorial">
+<meta property="og:description" content="In one chat window, alternate between Moonlight Coffee work and planning the year-end party, and watch the assistant split the conversation by working out, for each message, which story it follows up on. Then pick a single conversation from the conversation list, and expand and open the output stack where the files made in that conversation pile up.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/contexts.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html" class="on" aria-current="page"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">You and your AI assistant<span class="chap">4</span></div>
+    <h1>Conversation context — conversations that split on their own, and the output stack</h1>
+    <article>
+<blockquote>
+<p>In one chat window, alternate between Moonlight Coffee work and planning the year-end party, and watch the assistant split the conversation by working out, for each message, which story it follows up on. Then pick a single conversation from the conversation list, and expand and open the output stack where the files made in that conversation pile up.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/6b8CkIXfP04" title="Conversation context — conversations that split on their own, and the output stack — video 3:47" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-conversations-should-split-on-their-own">Why conversations should split on their own<a class="anchor" href="#why-conversations-should-split-on-their-own" title="Permanent link">#</a></h2>
+<p>In Chapter 3, you only talked about Moonlight Coffee. But real work doesn't arrive one thing at a time. You look up venues for the year-end party while editing the Moonlight Coffee checklist, then come back to the Moonlight Coffee schedule. In a typical AI chat, you'd have to do one of two things.</p>
+<ul>
+<li><strong>Make a new chat room yourself</strong> for each topic and pick the right one as you go — it's tedious, and easy to pick the wrong room.</li>
+<li>Mix everything in one room — the assistant gets confused about which one "that checklist" is, and things are hard to find later.</li>
+</ul>
+<p>Process GPT Lite takes a third path. It keeps <strong>one chat window</strong>, and each time a message comes in, the <strong>context router</strong> in front of the assistant (a component that sends a message to the right conversation) decides "which story does this follow up on, or is it a new topic?" and sends it to that conversation. You just talk, and the assistant does the sorting.</p>
+<div class="admonition note">
+<p class="admonition-title">The router must be connected</p>
+<p>The current install bundle leaves out the context router and the routing model, so ask your operator to connect them before you follow this chapter (<a href="install.html">Chapter 1</a>). On a server without them, every message continues in a single conversation, and the <strong>N conversations</strong> bar and the output stack in this chapter don't appear.</p>
+</div>
+<h2 id="how-it-decides">How it decides<a class="anchor" href="#how-it-decides" title="Permanent link">#</a></h2>
+<p>The router takes your recent conversations (their titles and summaries) as candidates and picks which one the new message follows up on.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Narrow the candidates</td>
+<td>Even with many conversations, it passes no more than 6 to the routing model. It always keeps the two most recent conversations, and picks the rest by how much they share words with the message or how close they are in meaning</td>
+</tr>
+<tr>
+<td>Small routing model</td>
+<td>A fast, cheap, dedicated routing model chooses first ("routing model" on the line above the answer)</td>
+</tr>
+<tr>
+<td>Ask a bigger model again</td>
+<td>If the routing model isn't sure, it asks the default AI model again and measures confidence from the probability of that answer ("routing model→logprob")</td>
+</tr>
+<tr>
+<td>Stay put if unsure</td>
+<td>If confidence is below the threshold, it doesn't move the message and stays in the conversation you were in</td>
+</tr>
+</tbody>
+</table>
+<p>The decision shows on the small line above the answer.</p>
+<table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>↳ New topic · (title)</td>
+<td>A new conversation was started</td>
+</tr>
+<tr>
+<td>↳ (title)</td>
+<td>It was added to the conversation with that title</td>
+</tr>
+<tr>
+<td>routing model 1.00</td>
+<td>The routing model chose it, with confidence 1.00 (the maximum)</td>
+</tr>
+<tr>
+<td>routing model→logprob 0.99</td>
+<td>The routing model hesitated and asked the default AI model again, with confidence 0.99</td>
+</tr>
+<tr>
+<td>Directly in the conversation 1.00</td>
+<td>You sent it from inside the conversation, so it went there without a decision (Try it 2 below)</td>
+</tr>
+<tr>
+<td>(nothing)</td>
+<td>When there's no particular basis for the choice (such as the first message), the mark is left out</td>
+</tr>
+</tbody>
+</table>
+<p>A conversation's title is the start of the message that began it. So when you bring something up for the first time, <strong>say what it's about at the start</strong>, like "Moonlight Coffee…" or "Company year-end party…", and it's easy to recognize in the list.</p>
+<h2 id="try-it-1-mix-topics-as-you-talk">Try it 1 — mix topics as you talk<a class="anchor" href="#try-it-1-mix-topics-as-you-talk" title="Permanent link">#</a></h2>
+<p>In <a href="first-chat.html">Chapter 3</a>, you made a Moonlight Coffee conversation. Now you slip in other work and come back. To make each decision easy to check, send each message and wait for its answer before sending the next. You can also send without waiting. A follow-up to a conversation that's already in progress goes to that conversation, shows as <strong>Waiting</strong>, and is answered after the previous answer finishes. A message that goes to a different conversation doesn't wait and runs side by side.</p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>What to send</th>
+<th>Expected decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>Company year-end party: suggest three venues. 30 people, near Gangnam Station, under ₩50,000 per person.</code></td>
+<td>New topic</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>Add "Schedule the site measurement" to the top of the Moonlight Coffee checklist and make the file again.</code></td>
+<td>Continues the Moonlight Coffee conversation</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>Draft an email to the second venue on that year-end party list asking about a group booking.</code></td>
+<td>Continues the year-end party conversation</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>Make a Moonlight Coffee Store #2 schedule in Excel, working back from submitting the proposal on November 6 to opening next February. Name the file "Moonlight Coffee Store 2 schedule.xlsx".</code></td>
+<td>Continues the Moonlight Coffee conversation</td>
+</tr>
+</tbody>
+</table>
+<p>These are the decisions from our run.</p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Decision</th>
+<th>Basis shown</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>New topic</td>
+<td>routing model→logprob 1.00</td>
+<td>A "Gangnam Team Dinner Venue Options" document card with three venue options</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Continues the Moonlight Coffee conversation</td>
+<td>routing model 1.00</td>
+<td>The edited <strong>Moonlight Coffee Store 2 prep checklist.docx</strong> (in our run, the four summary files from Chapter 3 were made again too)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Continues the year-end party conversation</td>
+<td>routing model 1.00</td>
+<td>A group booking inquiry email draft, as a speech bubble</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Continues the Moonlight Coffee conversation</td>
+<td>routing model 1.00</td>
+<td><strong>Moonlight Coffee Store 2 schedule.xlsx</strong></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/contexts-mixed.webp" target="_blank" rel="noopener" title="View larger"><img alt="In the full chat, topics look mixed, but each answer has a line above it saying which conversation it belongs to — the party email draft (&quot;↳ Company year-end party: suggest three…&quot;, routing model 1.00) comes right after the files of the checklist edit (Moonlight Coffee)" src="img/contexts-mixed.webp" / loading="lazy" decoding="async"></a><figcaption>In the full chat, topics look mixed, but each answer has a line above it saying which conversation it belongs to — the party email draft (&quot;↳ Company year-end party: suggest three…&quot;, routing model 1.00) comes right after the files of the checklist edit (Moonlight Coffee)</figcaption></figure>
+<p><strong>Check</strong>: Answer 2 has "↳ Moonlight Coffee asked us for…" above it, and answer 3 has "↳ Company year-end party: suggest…" above it. That means it took "checklist" in message 2 as a follow-up to the Moonlight Coffee story, not the party, and in message 3 it found "that year-end party list" in the earlier party table. (In our run, the list held three kinds of venue rather than named restaurants, so the draft for the second one came with placeholders for the restaurant name and date.)</p>
+<div class="admonition warning">
+<p class="admonition-title">When the decision is wrong</p>
+<p>The routing model can be wrong too. A completely different topic might be added to an earlier conversation, or the other way around. If the line above the answer isn't what you expected, <strong>go into the conversation you want</strong> and say it again, as in Try it 2 below. A message sent from inside a conversation skips the decision and goes straight to that conversation.</p>
+</div>
+<h2 id="try-it-2-view-just-one-conversation-from-the-list">Try it 2 — view just one conversation from the list<a class="anchor" href="#try-it-2-view-just-one-conversation-from-the-list" title="Permanent link">#</a></h2>
+<p>Scroll to the top of Chat and you'll find the <strong>2 conversations · view by context</strong> button. Click it to open the list of conversations the routing model split. Each row shows the title, when it last continued, the number of messages and a summary of the latest request.</p>
+<figure><a href="img/contexts-list.webp" target="_blank" rel="noopener" title="View larger"><img alt="The conversation list — the Moonlight Coffee conversation (25 messages) and the year-end party conversation (4)" src="img/contexts-list.webp" / loading="lazy" decoding="async"></a><figcaption>The conversation list — the Moonlight Coffee conversation (25 messages) and the year-end party conversation (4)</figcaption></figure>
+<p>Click the Moonlight Coffee conversation and Chat changes to show <strong>only that conversation's messages</strong>. The address also changes to <code>/chat/c/…</code>, so if you bookmark it, you can come straight back to that conversation later.</p>
+<figure><a href="img/contexts-one.webp" target="_blank" rel="noopener" title="View larger"><img alt="Viewing only the Moonlight Coffee conversation — All conversations at the top, the conversation title and message count, and Other conversations. The input box changes to &quot;Continue this conversation&quot;" src="img/contexts-one.webp" / loading="lazy" decoding="async"></a><figcaption>Viewing only the Moonlight Coffee conversation — All conversations at the top, the conversation title and message count, and Other conversations. The input box changes to &quot;Continue this conversation&quot;</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Button or mark</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>‹ All conversations</strong></td>
+<td>Goes back to the original chat with all messages mixed</td>
+</tr>
+<tr>
+<td>"N messages in this conversation · ask here to continue it" under the title</td>
+<td>What you send from this screen goes to this conversation without a decision</td>
+</tr>
+<tr>
+<td><strong>Other conversations ▾</strong></td>
+<td>Opens the list again to move to another conversation</td>
+</tr>
+<tr>
+<td>The stack and number at the bottom right</td>
+<td>This conversation's outputs (Try it 3 below)</td>
+</tr>
+</tbody>
+</table>
+<p>You can also click the "↳ …" line above an answer to go straight into that conversation.</p>
+<h2 id="try-it-3-the-output-stack">Try it 3 — the output stack<a class="anchor" href="#try-it-3-the-output-stack" title="Permanent link">#</a></h2>
+<p>Inside a conversation, the files that conversation made pile up as a <strong>stack</strong> at the bottom right. The most recent file shows on top, and the number at its top right is the file count. You can find outputs in one place without scrolling far back through the conversation.</p>
+<p>Click the stack and the files <strong>fan out</strong> upward. If there are too many files to fit on screen (more than 8), they switch to a grid, and a <strong>Share all</strong> button appears.</p>
+<figure><a href="img/contexts-stack.webp" target="_blank" rel="noopener" title="View larger"><img alt="The output stack expanded — 15 files in our run, so they open as a grid with Share all: the two prep checklists, the schedule, and the Word, PowerPoint, Excel and PDF files the agent made on its own and remade at each edit" src="img/contexts-stack.webp" / loading="lazy" decoding="async"></a><figcaption>The output stack expanded — 15 files in our run, so they open as a grid with Share all: the two prep checklists, the schedule, and the Word, PowerPoint, Excel and PDF files the agent made on its own and remade at each edit</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>What you want</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open a file</td>
+<td>Click a row's name or icon. The same editor opens as when you click a file card in Chat (Word, Excel and Hangul → IeumOffice; drawings and pictures → ArtCraft)</td>
+</tr>
+<tr>
+<td>Send it to a teammate</td>
+<td>The person-shaped button at the left of the row, or <strong>Share all</strong> in the grid (<a href="sharing.html">Chapter 14</a>)</td>
+</tr>
+<tr>
+<td>Fold it</td>
+<td>Click the stack again, click outside, or press Esc</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Check</strong>: When you expand the Moonlight Coffee stack you see two <code>Moonlight Coffee Store 2 prep checklist.docx</code> files (the one you made in Chapter 3 and the one edited in step 2 of Try it 1) and <code>Moonlight Coffee Store 2 schedule.xlsx</code>. In our run, the number was <strong>15</strong>, because the agent had also made Word, PowerPoint, Excel and PDF versions of the summary on its own in Chapter 3 and remade them at each edit. If you move to the year-end party conversation, it has no files, so no stack appears.</p>
+<div class="admonition tip">
+<p class="admonition-title">The output stack really shines in Chapter 9</p>
+<p>In <a href="email-to-quote.html">Chapter 9</a>, one email produces a floor plan, a proposal and a quote all at once, and an edited copy piles up each time you edit. Open this stack then and you'll find all of one customer's outputs together.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Watch the videos</p>
+<p>The <a href="https://youtu.be/oL_mfiQBCPU">Context router</a> and <a href="https://youtu.be/jIKYPmaAkRY">View by conversation context</a> videos show the same flow.</p>
+</div>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>So far, you've started every conversation. In the next chapter, you hand your mailbox to the assistant so it reads new mail first and comes to you with to-dos (<a href="mail.html">Chapter 5</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check questions</p>
+<ol>
+<li>In the full chat, send <code>Put the evening of December 18 as our preferred date in the year-end party email draft</code>. Which conversation did it go to? What basis is shown?</li>
+<li>This time, go into the Moonlight Coffee conversation and ask <code>With a ₩120 million budget, how much usually goes to furniture?</code> How is the line above the answer shown? How is it different from asking in the full chat?</li>
+<li>Think about why a conversation's title is the start of its first message, like "Company year-end party: suggest three…", and write down how best to phrase things when you first bring them up.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>It should continue the year-end party conversation ("↳ Company year-end party: suggest…"). In our run, it continued with "routing model 1.00", and the updated draft with "Evening of Friday, December 18" came back as a speech bubble. If it went to another conversation, the decision was wrong, so go into the year-end party conversation and send it again.</li>
+<li>A message sent from inside a conversation skips the routing model, so the line above the answer shows that conversation's title and <strong>"Directly in the conversation 1.00"</strong>. If you ask in the full chat, the router decides, and "routing model" and its confidence appear.</li>
+<li>The words that start a conversation become its title, so put a <strong>recognizable name</strong>, such as a customer or event name, at the start of your first sentence. For example: "Moonlight Coffee Store #3 — organize the site photos."</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="first-chat.html"><span>Previous</span>First conversation — hand work to the assistant</a><a class="next" href="mail.html"><span>Next</span>Mail assistant — find to-dos in incoming mail</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-conversations-should-split-on-their-own">Why conversations should split on their own</a></li><li><a href="#how-it-decides">How it decides</a></li><li><a href="#try-it-1-mix-topics-as-you-talk">Try it 1 — mix topics as you talk</a></li><li><a href="#try-it-2-view-just-one-conversation-from-the-list">Try it 2 — view just one conversation from the list</a></li><li><a href="#try-it-3-the-output-stack">Try it 3 — the output stack</a></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Workroom — Claude Code and Codex — Process GPT Lite Tutorial</title>
+<meta name="description" content="Chat is enough for most work. But when an agent creates dozens of files and runs commands (code, data cleanup, making videos), you&#x27;ll want to look inside its working folder and get your hands on it. The Workroom is the screen that opens an agent&#x27;s working folder with a file list, a file viewer and a terminal. For steps handled by Claude Code or Codex, that agent&#x27;s session carries on right in the terminal&#x27;s main view.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/workroom.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agent Workroom — Claude Code and Codex — Process GPT Lite Tutorial">
+<meta property="og:description" content="Chat is enough for most work. But when an agent creates dozens of files and runs commands (code, data cleanup, making videos), you&#x27;ll want to look inside its working folder and get your hands on it. The Workroom is the screen that opens an agent&#x27;s working folder with a file list, a file viewer and a terminal. For steps handled by Claude Code or Codex, that agent&#x27;s session carries on right in the terminal&#x27;s main view.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/workroom.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html" class="on" aria-current="page"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Extending and operating<span class="chap">23</span></div>
+    <h1>Agent Workroom — Claude Code and Codex</h1>
+    <article>
+<blockquote>
+<p>Chat is enough for most work. But when an agent creates dozens of files and runs commands (code, data cleanup, making videos), you'll want to look inside its working folder and get your hands on it. The Workroom is the screen that opens an agent's working folder with a file list, a file viewer and a terminal. For steps handled by Claude Code or Codex, that agent's session carries on right in the terminal's main view.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/v0Fb1Ixh6gY" title="Agent Workroom — Claude Code and Codex — video 3:36" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p>Up to Chapter 22, team lead Jinyoung Jang turned the Moonlight Coffee work into a process and fixed it, using nothing but chat, the editor and the Improve screen. In Part 7 you widen your view to growing and running this system. The first chapter is the <strong>Workroom</strong>, which opens the working folder where agents work.</p>
+<h2 id="chat-or-workroom-which-to-use-when">Chat or Workroom — which to use when<a class="anchor" href="#chat-or-workroom-which-to-use-when" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>When you want to</th>
+<th>Chat</th>
+<th>Workroom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fix one document or one table</td>
+<td>✓ Editor + conversation (<a href="office.html">Chapter 7</a>)</td>
+<td></td>
+</tr>
+<tr>
+<td>Get a result that's just a few files</td>
+<td>✓ Comes as cards</td>
+<td></td>
+</tr>
+<tr>
+<td>See the <strong>intermediate files and scripts</strong> an agent made</td>
+<td></td>
+<td>✓ File list</td>
+</tr>
+<tr>
+<td><strong>Edit by hand</strong> a file an agent wrote and pass it to the next step</td>
+<td></td>
+<td>✓ Edit and save in the file viewer</td>
+</tr>
+<tr>
+<td>Tell a running agent to <strong>change direction</strong></td>
+<td></td>
+<td>✓ Steering box</td>
+</tr>
+<tr>
+<td>Run commands yourself (view the change history, move files)</td>
+<td></td>
+<td>✓ Terminal</td>
+</tr>
+<tr>
+<td><strong>Continue together</strong> on a step handled by Claude Code or Codex</td>
+<td></td>
+<td>✓ That session is the main view</td>
+</tr>
+</tbody>
+</table>
+<p>The Workroom opens a window (a shell) that really runs commands on the server. So who can get in is restricted: the step's owner and the process participants, the owner of that conversation, members with edit access or higher for a shared folder (run access or higher for a variation), and admins. The terminal connects with a one-time ticket each time it opens, and secret settings hidden on the server aren't passed to the terminal.</p>
+<h2 id="where-to-open-the-workroom">Where to open the Workroom<a class="anchor" href="#where-to-open-the-workroom" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>What opens</th>
+<th>Terminal main view</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>View actions</strong> on a process step → <strong>Open Workroom</strong></td>
+<td>The working folder of the agent that ran that step</td>
+<td><strong>That Claude Code session</strong> if Claude Code handled the step; otherwise a shell</td>
+</tr>
+<tr>
+<td><strong>Workroom</strong> on a shared folder screen</td>
+<td>The folder's baseline (main). Edit and save, and one change record is left</td>
+<td>Shell</td>
+</tr>
+<tr>
+<td><strong>Workroom</strong> on a variation screen</td>
+<td>My working copy of that variation</td>
+<td>Shell</td>
+</tr>
+<tr>
+<td>A file card left in a conversation folder (<strong>Open in Workroom</strong>)</td>
+<td>That conversation's working folder, with the file open</td>
+<td>Shell + steering</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-1-open-a-shared-folder-in-the-workroom">Try it 1 — Open a shared folder in the Workroom<a class="anchor" href="#try-it-1-open-a-shared-folder-in-the-workroom" title="Permanent link">#</a></h2>
+<p>The data for the Quote Tracker you made in <a href="panel-apps.html">Chapter 12</a> is in the shared folder <code>Quote Tracker</code>. Click <strong>Folders</strong> at the top → <code>Quote Tracker</code> → <strong>Workroom</strong> in the header.</p>
+<p>The screen is split into three parts.</p>
+<ul>
+<li><strong>Center — Terminal</strong>: a shell that starts in that folder. If several people open the same Workroom, they see the same screen together.</li>
+<li><strong>Right — Working files</strong>: the folder's file list and search. Click a file and it opens where the terminal is (<strong>✕ Terminal</strong> takes you back). IeumOffice documents, images and Markdown open in the same viewers as in shared folders.</li>
+<li><strong>Bottom — Steering</strong>: sends a running agent a message like "from the next step on, do it this way" (it only matters while an agent is running).</li>
+</ul>
+<p>In <strong>Working files</strong>, open <code>apps</code> and click <code>Quote Tracker.xlsx</code>. The sheet opens in the IeumOffice viewer where the terminal was, with the two quotes you added in Chapter 12.</p>
+<figure><a href="img/workroom-folder.webp" target="_blank" rel="noopener" title="View larger"><img alt="The Workroom for the shared folder &quot;Quote Tracker&quot; with apps/Quote Tracker.xlsx open in the file viewer: the Moonlight Coffee and Haesol Bakery rows. &quot;Original&quot; and &quot;✕ Terminal&quot; are above the viewer. In our capture the terminal itself didn't open (the header shows &quot;Can't open&quot;; see the note below)" src="img/workroom-folder.webp" / loading="lazy" decoding="async"></a><figcaption>The Workroom for the shared folder &quot;Quote Tracker&quot; with apps/Quote Tracker.xlsx open in the file viewer: the Moonlight Coffee and Haesol Bakery rows. &quot;Original&quot; and &quot;✕ Terminal&quot; are above the viewer. In our capture the terminal itself didn't open (the header shows &quot;Can't open&quot;; see the note below)</figcaption></figure>
+<p>In the terminal, type the line below. The first part lists the files in the <code>apps</code> folder, and the second shows the last five lines of this folder's change history (inside, a shared folder is a git repository — <a href="folders.html">Chapter 13</a>). Type <code>which claude codex</code> to see whether this server has the Claude Code and Codex commands.</p>
+<div class="hl"><pre><span></span><code>ls<span class="w"> </span>apps<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5
+</code></pre></div>
+
+<p><strong>Check</strong>: under <code>apps/</code> there are <code>Quote Tracker.panel.json</code> and <code>Quote Tracker.xlsx</code>, and the history has "Panel app created: Quote Tracker" and a "Panel: Quote Tracker row added — …" record for each row (in our run: "— Seongsu Store #2 interior desi…" and "— Pangyo store interior"; you can see the same records in <strong>History</strong> on the folder screen). If you edit and save in the file viewer, one more record, "Edited in the workroom: …", appears. If an agent changed the same file in the meantime, it says "The agent changed this file in the meantime. Please reopen it to check." and doesn't overwrite it.</p>
+<div class="admonition note">
+<p class="admonition-title">When the terminal says Can't open</p>
+<p>The terminal opens only for the step's owner and participants, the owner of the conversation, members with edit access or higher (run access for a variation) and admins; anyone else sees "You can't open this Workroom's terminal — only this run's assignees, participants or admins can." In the current version, the same message also appears on a server that serves several workspaces on their own addresses, for every workspace except the default one (our English capture ran that way, so the shot above shows the file viewer). The file list, the file viewer and steering still work there.</p>
+</div>
+<h2 id="continue-a-step-handled-by-claude-code-or-codex">Continue a step handled by Claude Code or Codex<a class="anchor" href="#continue-a-step-handled-by-claude-code-or-codex" title="Permanent link">#</a></h2>
+<p>The default agent working behind the assistant in Lite's chat is Deep Agents. But some steps of a process can be handed to coding agents like <strong>Claude Code</strong> or <strong>Codex</strong> (for example, a step that implements a feature responding to a social media trend in a real repository, or a step that makes a demo video). These steps are run by Process GPT's coding agent service (cli-agent), and the results are kept separately in that step's working folder.</p>
+<p>Click <strong>Open Workroom</strong> under that step's <strong>View actions</strong>, and:</p>
+<ol>
+<li>The terminal's main view opens <strong>the Claude Code session that ran the step, picking up where it left off</strong>. You see what the agent did, exactly as in its conversation history, and you can keep giving it instructions.</li>
+<li>On the right are the files that session made (code, documents, videos).</li>
+<li>Switch to the <strong>Shell</strong> tab to run commands yourself in the same folder.</li>
+</ol>
+<p>Scheduled missions can also pick their agent from Deep Agents, Claude Code and Codex (<a href="missions.html">Chapter 11</a>).</p>
+<div class="admonition note">
+<p class="admonition-title">The screens in this tutorial</p>
+<p>A Workroom with Claude Code as the main view opens only when there's a process step handled by Claude Code. The picture above is a shared folder Workroom (shell); you can see a Workroom for a Claude Code step in the <a href="https://youtu.be/jDbjGIMrc5o">Workroom demo video</a>. To use Claude Code or Codex on the server, the coding agent service and each CLI's login have to be set up separately (<a href="install.html">Chapter 1</a>).</p>
+</div>
+<h2 id="open-a-conversation-file-in-the-workroom">Open a conversation file in the Workroom<a class="anchor" href="#open-a-conversation-file-in-the-workroom" title="Permanent link">#</a></h2>
+<p>Among the files the assistant leaves in a conversation folder in chat, those the editor can't open (scripts, text) get <strong>Open in Workroom</strong> on their card. Click it and that conversation's working folder opens with the file open. If that conversation's agent is still working, you can send it direction in the box at the bottom ("Sent to the running agent — it takes effect from the next step.").</p>
+<div class="admonition note">
+<p class="admonition-title">Files saved outside the conversation folder</p>
+<p>The assistant puts new files in the conversation folder, but some files may be saved elsewhere in the workspace. Those files' cards get <strong>Click to open</strong> instead of <strong>Open in Workroom</strong>. Click it, and the server checks that it's your card and that the file is inside the workspace, then makes a copy and opens it. Documents open in the editor, and text files open in a new tab.</p>
+</div>
+<p>In the next chapter, you'll see in a single diagram how chat, the editor and the Workroom are connected inside the server — the structure of Process GPT Lite (<a href="architecture.html">Chapter 24</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Seoyeon Park wants to open the Workroom of the Quote Tracker folder. If she only has view access to the folder, will it open?</li>
+<li>You want to change one unit price in <code>make_quote.py</code>, which an agent made, and have the next run use it. Where do you change it?</li>
+<li>Is opening the Workroom a good choice for fixing a typo in a single document?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>No. The Workroom of a shared folder's main needs edit access or higher (because it opens a real shell). A variation's Workroom needs run access or higher.</li>
+<li>Open the file in that conversation's (or step's) Workroom, edit it and save. "Saved — the agent will pick up the change the next time it reads this file."</li>
+<li>No. For a document, it's faster to click the card and fix it in the editor or fix it through chat, and that also keeps the edited copy and the review record. Use the Workroom to look into and work on an agent's work at the level of files and commands.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="critical-path.html"><span>Previous</span>Critical path and running improvements</a><a class="next" href="architecture.html"><span>Next</span>Architecture — Lite on the Process GPT backend</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#chat-or-workroom-which-to-use-when">Chat or Workroom — which to use when</a></li><li><a href="#where-to-open-the-workroom">Where to open the Workroom</a></li><li><a href="#try-it-1-open-a-shared-folder-in-the-workroom">Try it 1 — Open a shared folder in the Workroom</a></li><li><a href="#continue-a-step-handled-by-claude-code-or-codex">Continue a step handled by Claude Code or Codex</a></li><li><a href="#open-a-conversation-file-in-the-workroom">Open a conversation file in the Workroom</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

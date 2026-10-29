@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critical path and running improvements — Process GPT Lite Tutorial</title>
+<meta name="description" content="You&#x27;ll use BPMN and a Gantt chart to see the chain of steps that sets the total duration (the critical path) and the slack — how late a step can be without delaying the whole. You&#x27;ll estimate when a case in progress will finish. Then you&#x27;ll calculate in advance how much changing a step would shorten the lead time, apply the option you like as a new version, and run it for real.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/critical-path.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Critical path and running improvements — Process GPT Lite Tutorial">
+<meta property="og:description" content="You&#x27;ll use BPMN and a Gantt chart to see the chain of steps that sets the total duration (the critical path) and the slack — how late a step can be without delaying the whole. You&#x27;ll estimate when a case in progress will finish. Then you&#x27;ll calculate in advance how much changing a step would shorten the lead time, apply the option you like as a new version, and run it for real.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/critical-path.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html" class="on" aria-current="page"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Improving processes<span class="chap">22</span></div>
+    <h1>Critical path and running improvements</h1>
+    <article>
+<blockquote>
+<p>You'll use BPMN and a Gantt chart to see the chain of steps that sets the total duration (the critical path) and the slack — how late a step can be without delaying the whole. You'll estimate when a case in progress will finish. Then you'll calculate in advance how much changing a step would shorten the lead time, apply the option you like as a new version, and run it for real.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/58AatX_a1zk" title="Critical path and running improvements — video 3:54" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="the-critical-path-the-chain-that-sets-the-total-duration">The critical path — the chain that sets the total duration<a class="anchor" href="#the-critical-path-the-chain-that-sets-the-total-duration" title="Permanent link">#</a></h2>
+<p>In <a href="value-stream.html">Chapter 21</a> you found the constraint (Finance review) and candidates for improvement. In this chapter you'll see which steps set the total duration, calculate the candidates in advance, and then actually apply one.</p>
+<p>A process has steps that run at the same time. In the <strong>Moonlight Coffee proposal</strong>, once the request is received, <strong>Draw floor plan</strong> (Minji Kim) and <strong>Draft quote</strong> (quote agent) start together, and both must finish before it moves on to Write proposal.</p>
+<div class="hl"><pre><span></span><code>                       ┌─ Draw floor plan  4.2 hrs ─┐
+Receive request mail ──┤                            ├── Write proposal 6 min ── Finance review 1.8 days ── Reply to customer 1.5 hrs
+                       └─ Draft quote      3 min ───┘
+</code></pre></div>
+
+<p>Even if Draft quote finishes in 3 minutes, Write proposal waits for the floor plan. The total duration is set by <strong>the chain that takes the longest</strong>. That chain is the <strong>critical path</strong>. If a step on the critical path is an hour late, the whole thing is an hour late; a step off the critical path can be a little late without affecting the whole.</p>
+<p>The way to calculate this is the <strong>critical path method</strong> (CPM). It counts four times for each step.</p>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Meaning</th>
+<th>Example: Draft quote</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ES earliest start</td>
+<td>The earliest a step can start, once all the steps before it are done</td>
+<td>11s (right after the request is received)</td>
+</tr>
+<tr>
+<td>EF earliest finish</td>
+<td>ES + step time</td>
+<td>3 min</td>
+</tr>
+<tr>
+<td>LS latest start</td>
+<td>The latest a step can start without delaying the whole</td>
+<td>4.2 hrs</td>
+</tr>
+<tr>
+<td>LF latest finish</td>
+<td>The latest a step must finish without delaying the whole</td>
+<td>4.2 hrs (when the floor plan finishes)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Slack</strong> (float) = LS − ES. Draft quote has <strong>4.2 hours</strong> of slack, so it can start that much later without delaying the whole. The steps with zero slack form the critical path.</p>
+<h3 id="cpm-for-business-processes-differs-in-three-ways">CPM for business processes differs in three ways<a class="anchor" href="#cpm-for-business-processes-differs-in-three-ways" title="Permanent link">#</a></h3>
+<p>Unlike CPM for a construction schedule, a business process has the following. Process GPT Lite calculates straight from the BPMN.</p>
+<table>
+<thead>
+<tr>
+<th>BPMN symbol</th>
+<th>How it's handled</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parallel branch (+ gateway)</td>
+<td>All branches run at the same time. The join waits for the latest branch</td>
+</tr>
+<tr>
+<td>Choice branch (X gateway) — splitting forward</td>
+<td>The cases are split by the share that took each branch in past records, and each is calculated. Expected lead time = Σ share × length of that case. Each step gets a "critical probability" (the sum of the shares of cases in which it was critical)</td>
+</tr>
+<tr>
+<td>Choice branch — going back (change request)</td>
+<td>With p as the share that went back, it's treated as passing through p ÷ (1 − p) more times on average, and that much time is added as "rework"</td>
+</tr>
+</tbody>
+</table>
+<p>Step times are <strong>measured times</strong>: the actual time from reaching the step until it ends, waiting included. You can view them two ways, <strong>Typical (median)</strong> and <strong>Slow case (p80)</strong>.</p>
+<h2 id="try-it-1-view-the-critical-path">Try it 1 — View the critical path<a class="anchor" href="#try-it-1-view-the-critical-path" title="Permanent link">#</a></h2>
+<p>On the Improve screen, open the <strong>Critical path</strong> tab.</p>
+<figure><a href="img/critical-path-bpmn.webp" target="_blank" rel="noopener" title="View larger"><img alt="Critical path — the thick orange line is the path, the badge under each step is its step time, and gray is slack" src="img/critical-path-bpmn.webp" / loading="lazy" decoding="async"></a><figcaption>Critical path — the thick orange line is the path, the badge under each step is its step time, and gray is slack</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>On screen</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expected lead time</td>
+<td><strong>2.2 days</strong> (shown next to the measured median, 2.9 days)</td>
+</tr>
+<tr>
+<td>Critical path</td>
+<td>Receive request mail → Draw floor plan → Write proposal → Finance review → Reply to customer</td>
+</tr>
+<tr>
+<td>Step with slack</td>
+<td>Draft quote (slack 4.2 hrs)</td>
+</tr>
+</tbody>
+</table>
+<p>The two lead times don't have to match: the expected lead time adds up the usual (median) time of each step, while the measured median is the usual time of whole cases. Here the calculation comes out shorter.</p>
+<p>The Gantt chart and table below show ES, EF, LS, LF and slack for each step. Hatching is time waited, and the solid bar is work time.</p>
+<figure><a href="img/critical-path-gantt.webp" target="_blank" rel="noopener" title="View larger"><img alt="Gantt chart and CPM table — the Finance review bar is almost all hatching (waiting). Rework at 13% adds an expected 3.3 hours" src="img/critical-path-gantt.webp" / loading="lazy" decoding="async"></a><figcaption>Gantt chart and CPM table — the Finance review bar is almost all hatching (waiting). Rework at 13% adds an expected 3.3 hours</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>ES</th>
+<th>EF</th>
+<th>Slack</th>
+<th>Critical probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Draw floor plan</td>
+<td>11s</td>
+<td>4.2 hrs</td>
+<td>0</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Draft quote</td>
+<td>11s</td>
+<td>3 min</td>
+<td>4.2 hrs</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Write proposal</td>
+<td>4.2 hrs</td>
+<td>4.3 hrs</td>
+<td>0</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Finance review</td>
+<td>4.3 hrs</td>
+<td>2.0 days</td>
+<td>0</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Rework 13%</td>
+<td>2.0 days</td>
+<td>2.2 days</td>
+<td>0</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Reply to customer</td>
+<td>2.2 days</td>
+<td>2.2 days</td>
+<td>0</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<p>Of the 2.2-day critical path, Finance review takes <strong>1.8 days</strong>. That most of Finance review's step time is hatching tells the same story as <a href="bottleneck.html">Chapter 20</a> and <a href="value-stream.html">Chapter 21</a>, from a different angle.</p>
+<p>Switch the top right to <strong>Slow case (p80)</strong> and it recalculates with each step's p80 time. The expected lead time becomes <strong>4.9 days</strong>, and Draw floor plan grows to 20 hours. Even so, Draft quote still has slack.</p>
+<h3 id="when-will-a-case-in-progress-finish">When will a case in progress finish?<a class="anchor" href="#when-will-a-case-in-progress-finish" title="Permanent link">#</a></h3>
+<p>For a case in progress, it recalculates using the actual time of the steps already done, the remaining time of the current step (usual time − time elapsed), and the measured times for the rest. It's shown at the bottom of the screen under <strong>Remaining critical path of a case in progress</strong>.</p>
+<figure><a href="img/critical-path-remaining.webp" target="_blank" rel="noopener" title="View larger"><img alt="A case in progress — Gwanghwamun Store #53 (named &quot;Moonlight Coffee&quot; on screen), 22 min elapsed, about 2.1 days to go, expected to finish October 31 at 12:41 PM, remaining critical path Finance review → Reply to customer" src="img/critical-path-remaining.webp" / loading="lazy" decoding="async"></a><figcaption>A case in progress — Gwanghwamun Store #53 (named &quot;Moonlight Coffee&quot; on screen), 22 min elapsed, about 2.1 days to go, expected to finish October 31 at 12:41 PM, remaining critical path Finance review → Reply to customer</figcaption></figure>
+<p>In the picture, Gwanghwamun Store #53 has actually reached Finance review, and Seoyeon Park has opened it. The floor plan, quote and proposal took only minutes, but the remaining 2.1 days is the time a case usually spends in Finance review, most of it waiting. The expected finish time is counted in the calendar time of past records (nights and weekends included).</p>
+<h2 id="try-it-2-run-improvement-calculate-before-you-change">Try it 2 — Run improvement: calculate before you change<a class="anchor" href="#try-it-2-run-improvement-calculate-before-you-change" title="Permanent link">#</a></h2>
+<p>In the <strong>Run improvement</strong> tab, change a step and it immediately recalculates the lead time, critical path, flow efficiency and constraint utilization. The process itself doesn't change yet.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>What changes in the calculation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Automate with an agent</td>
+<td>That step's wait and work become the usual time of this process's agent steps. The work that came to the owner goes away</td>
+</tr>
+<tr>
+<td>Agent pre-draft (human only checks)</td>
+<td>The person's work time drops by the saving rate, and that person's capacity grows</td>
+</tr>
+<tr>
+<td>Skip when below threshold</td>
+<td>A branch appears before the step. The share under the threshold (from past records) skips that step</td>
+</tr>
+<tr>
+<td>In parallel with previous step</td>
+<td>Runs in parallel with the step right before it</td>
+</tr>
+<tr>
+<td>Add assignees</td>
+<td>One more person doing the same work</td>
+</tr>
+<tr>
+<td>Reduce revision requests</td>
+<td>The share going back drops, so fewer passes are repeated</td>
+</tr>
+</tbody>
+</table>
+<p>Waiting is calculated in the two kinds you saw in <a href="value-stream.html">Chapter 21</a>. Only <strong>waiting in line</strong> grows and shrinks with a queueing formula (the same shape as utilization ÷ (1 − utilization); with several people, a formula that takes the headcount into account). <strong>Waiting for the owner</strong> (the time spent waiting for the part of the day when this work is done) stays as it is. Changing the number of people or the amount of work doesn't change the setup of "waiting until the next morning."</p>
+<h3 id="test-1-what-if-you-automate-the-floor-plan">Test 1 — What if you automate the floor plan?<a class="anchor" href="#test-1-what-if-you-automate-the-floor-plan" title="Permanent link">#</a></h3>
+<p>Set the type to <strong>Automate with an agent</strong> and the step to <strong>Draw floor plan</strong>, then click <strong>Add</strong>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expected lead time</td>
+<td>2.2 days</td>
+<td>2.0 days</td>
+</tr>
+<tr>
+<td>Draw floor plan step time</td>
+<td>4.2 hrs</td>
+<td>5 min</td>
+</tr>
+<tr>
+<td>Flow efficiency</td>
+<td>5.5%</td>
+<td>2.8%</td>
+</tr>
+<tr>
+<td>Critical path</td>
+<td>… → Draw floor plan → … → Finance review → …</td>
+<td>Same</td>
+</tr>
+</tbody>
+</table>
+<p>The floor plan is on the critical path, so the lead time drops by those few hours, but the wait in front of Finance review stays the same, so the effect is small. Flow efficiency actually <strong>goes down</strong> — an agent now does in 4 minutes what took a person 1.6 hours, so total work shrank, while the lead time stayed almost the same. Flow efficiency measures "how much less waiting," so it doesn't improve with changes that don't cut waiting. This confirms the answer to question 3 in <a href="value-stream.html">Chapter 21</a> with numbers. Remove it with the × on its chip.</p>
+<h3 id="test-2-aim-at-the-constraint">Test 2 — Aim at the constraint<a class="anchor" href="#test-2-aim-at-the-constraint" title="Permanent link">#</a></h3>
+<p>Under <strong>From the 5 steps of the theory of constraints:</strong>, click <strong>An agent drafts the review first; the reviewer only checks</strong> and <strong>Quote amount under 50M goes ahead without Finance review</strong>. Both options are added together.</p>
+<p>The amount threshold (50M) is calculated from past records, so depending on your practice data it may come out differently, such as 40M.</p>
+<figure><a href="img/critical-path-whatif.webp" target="_blank" rel="noopener" title="View larger"><img alt="What-if — expected lead time 2.2 days → 20.3 h (62% shorter), flow efficiency 5.5% → 11.4%, Seoyeon Park's utilization 86% → 23%" src="img/critical-path-whatif.webp" / loading="lazy" decoding="async"></a><figcaption>What-if — expected lead time 2.2 days → 20.3 h (62% shorter), flow efficiency 5.5% → 11.4%, Seoyeon Park's utilization 86% → 23%</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expected lead time</td>
+<td>2.2 days</td>
+<td><strong>20.3 hrs</strong></td>
+</tr>
+<tr>
+<td>Flow efficiency</td>
+<td>5.5%</td>
+<td><strong>11.4%</strong></td>
+</tr>
+<tr>
+<td>Constraint utilization</td>
+<td>Seoyeon Park 86%</td>
+<td>Seoyeon Park 23%</td>
+</tr>
+<tr>
+<td>Finance review step time</td>
+<td>1.8 days</td>
+<td>1.1 days</td>
+</tr>
+<tr>
+<td>Share going through Finance review</td>
+<td>100%</td>
+<td>53%</td>
+</tr>
+</tbody>
+</table>
+<p>You can also see why Finance review still takes 1.1 days. Seoyeon Park's waiting in line has almost disappeared, but the waiting for the owner, because she reviews only in the morning, is still there. That's where the next improvement candidate (reviewing twice a day) comes from.</p>
+<div class="admonition note">
+<p class="admonition-title">Why flow efficiency is 5.5%, not 3.9%</p>
+<p>The 3.9% on the value stream map is the actual average of past cases, while this 5.5% comes from the critical path calculation (based on medians). To compare before and after with the same calculation, "before" uses the calculated value too.</p>
+</div>
+<h3 id="apply-proposal-make-a-new-version">Apply proposal — make a new version<a class="anchor" href="#apply-proposal-make-a-new-version" title="Permanent link">#</a></h3>
+<p>Click <strong>Apply proposal</strong> and a confirmation dialog opens. Look at what will change and the expected effect, then click <strong>Apply</strong>. Only the process owner and admins can do this.</p>
+<figure><a href="img/critical-path-apply.webp" target="_blank" rel="noopener" title="View larger"><img alt="Apply confirmation — the two changes, the expected effect, and the new version v2.0" src="img/critical-path-apply.webp" / loading="lazy" decoding="async"></a><figcaption>Apply confirmation — the two changes, the expected effect, and the new version v2.0</figcaption></figure>
+<p>Applying does the following:</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Process definition</td>
+<td>A <strong>Quote amount threshold</strong> branch appears before Finance review (under 50M → on to Reply to customer), and Finance review becomes a step where an agent fills in a draft first. The definition and BPMN are saved through <strong>the same save path</strong> as when you saved the process you made by chatting in <a href="process-create.html">Chapter 17</a></td>
+</tr>
+<tr>
+<td>Version</td>
+<td>A new version v2.0 is recorded (what changed, linked to the previous version), and <strong>cases started from then on</strong> run on the new version</td>
+</tr>
+<tr>
+<td>Improvement record</td>
+<td>The changed steps get an improvement record (PI Flag), so you can gather the improved steps in the Process GPT screens too</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Cases in progress finish on the version they started with</p>
+<p>Cases started before you apply keep running on the definition of <strong>the version they started with</strong> (v1.0) until they finish; the new version is used only for cases started after you apply. So changing a threshold doesn't change the approval path of a case that's already running. The Improve screen and the version comparison below also group each case by the version it started with.</p>
+</div>
+<p>Pick <strong>v2.0</strong> in the version selector at the top of the screen to see the new version's BPMN and results calculated only from cases started on that version.</p>
+<figure><a href="img/critical-path-v2.webp" target="_blank" rel="noopener" title="View larger"><img alt="v2.0 critical path — a &quot;Quote amount threshold&quot; branch now sits before Finance review. With 2 done, it shows &quot;2 done — small sample, treat numbers as a rough guide&quot;, and the main path probability is 50% (one of the two cases skipped Finance review)" src="img/critical-path-v2.webp" / loading="lazy" decoding="async"></a><figcaption>v2.0 critical path — a &quot;Quote amount threshold&quot; branch now sits before Finance review. With 2 done, it shows &quot;2 done — small sample, treat numbers as a rough guide&quot;, and the main path probability is 50% (one of the two cases skipped Finance review)</figcaption></figure>
+<p>In our run, Gwanghwamun Store #53, which was already waiting at Finance review when v2.0 was applied, stayed on v1.0: it is still counted under <strong>v1.0</strong> as the one case in progress, and its Finance review didn't become an agent pre-draft.</p>
+<h3 id="after-the-change-compare-versions">After the change — compare versions<a class="anchor" href="#after-the-change-compare-versions" title="Permanent link">#</a></h3>
+<p>In our run, we actually ran two new requests after applying it.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Quote amount (quote agent)</th>
+<th>What happened</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ikseon-dong Store #55 (25 ㎡)</td>
+<td>₩44,825,000</td>
+<td>Under 50M → at the branch it <strong>skipped Finance review</strong> and went straight to Reply to customer</td>
+</tr>
+<tr>
+<td>Yeonnam Store #56 (80 ㎡)</td>
+<td>₩106,480,000</td>
+<td>When it reached Finance review, <strong>an agent filled in a draft first</strong> (decision <strong>Request changes</strong>: "the line items total KRW 96,800,000 … a KRW 9,680,000 discrepancy with no line item explaining it", and the quote is about 2.4 times the customer's KRW 40,000,000 budget). Seoyeon Park opened and checked it, then submitted it as approved (the practice script approves every review)</td>
+</tr>
+</tbody>
+</table>
+<p>Yeonnam Store #56's Finance review was recorded as 38 seconds of agent draft and 41 seconds of Seoyeon Park's work (just like the breakdown in <a href="bottleneck.html">Chapter 20</a>). The version comparison at the bottom of the <strong>Run improvement</strong> tab shows the two versions side by side.</p>
+<figure><a href="img/critical-path-compare.webp" target="_blank" rel="noopener" title="View larger"><img alt="Before/after by version — v1.0: 50 cases (49 done), median lead time 2.9 days, flow efficiency 3.9%; v2.0: 2 cases, 6 min, 79.6% (small sample); share going through Finance review 100% → 50%" src="img/critical-path-compare.webp" / loading="lazy" decoding="async"></a><figcaption>Before/after by version — v1.0: 50 cases (49 done), median lead time 2.9 days, flow efficiency 3.9%; v2.0: 2 cases, 6 min, 79.6% (small sample); share going through Finance review 100% → 50%</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>v1.0</th>
+<th>v2.0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cases (done)</td>
+<td>50 (49)</td>
+<td>2 (2) — small sample</td>
+</tr>
+<tr>
+<td>Median lead time</td>
+<td>2.9 days</td>
+<td>6 min</td>
+</tr>
+<tr>
+<td>Flow efficiency</td>
+<td>3.9%</td>
+<td>79.6%</td>
+</tr>
+<tr>
+<td>Finance review: share going through · median duration</td>
+<td>100% · 1.8 days</td>
+<td>50% · 1 min</td>
+</tr>
+</tbody>
+</table>
+<p>The bottom line keeps the prediction made when you applied it (expected lead time 2.2 days → 20.3 hrs, flow efficiency 5.5% → 11.4%), so once cases pile up you can hold the prediction up against what really happened.</p>
+<div class="admonition warning">
+<p class="admonition-title">When the sample is small</p>
+<p>In our run, the two v2.0 cases were handled right away, even their people steps, and finished in minutes. If you compare them on the same scale as v1.0's lead time (days) built up over three months, the effect is wildly inflated — like the 6 minutes and 79.6% in the table above. When fewer than 10 cases are done, the screen adds <strong>Small sample</strong>. What you can trust right now is <strong>the fact that the path changed</strong> (small cases skip Finance review). Judge the lead time effect after a few weeks have piled up, by comparing this table with the prediction made when you applied it again. After that comes <strong>repeat</strong> from the five steps in <a href="value-stream.html">Chapter 21</a> — finding again where the constraint has moved to.</p>
+</div>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>That's the end of Part 6, "Improving processes." Team lead Jinyoung Jang turned ad hoc work into a formal process and fixed it, using nothing but chat, the editor and the Improve screen. In Part 7 you'll widen your view to growing and running this system. The first chapter is the <strong>agent Workroom</strong>, which opens the working folder where agents work (<a href="workroom.html">Chapter 23</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Draft quote has 4.2 hours of slack. If the quote agent breaks down and Draft quote finishes 3 hours late, what happens to the total lead time? What if it's 6 hours late?</li>
+<li>In Finance review, 14% go back with a change request. How many more passes is that on average? What if the share going back were 50%?</li>
+<li>In the what-if, add <strong>One more person on Finance review</strong>. Explain, using "the two kinds of waiting," why the lead time hardly drops below 20.3 hours (in our run it went to 20.1 hours).</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>Three hours late is within the slack (4.2 hours), so the whole stays the same. Six hours late goes 1.8 hours past the slack, so the whole is about 1.8 hours late, and Draft quote then becomes the critical path.</li>
+<li>p ÷ (1 − p) = 0.14 ÷ 0.86 ≈ 0.17 more passes (about one case in six goes through once more). At 50%, it's 0.5 ÷ 0.5 = 1 — on average, every case goes through once more.</li>
+<li>Adding a person cuts the waiting in line (waiting for earlier cases to finish), but the waiting for the owner, which comes from reviewing only during a set part of the day, stays. To cut the remaining wait, you have to change the review time slots themselves.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="value-stream.html"><span>Previous</span>Value stream and the theory of constraints</a><a class="next" href="workroom.html"><span>Next</span>Agent Workroom — Claude Code and Codex</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#the-critical-path-the-chain-that-sets-the-total-duration">The critical path — the chain that sets the total duration</a><ul><li><a href="#cpm-for-business-processes-differs-in-three-ways">CPM for business processes differs in three ways</a></li></ul></li><li><a href="#try-it-1-view-the-critical-path">Try it 1 — View the critical path</a><ul><li><a href="#when-will-a-case-in-progress-finish">When will a case in progress finish?</a></li></ul></li><li><a href="#try-it-2-run-improvement-calculate-before-you-change">Try it 2 — Run improvement: calculate before you change</a><ul><li><a href="#test-1-what-if-you-automate-the-floor-plan">Test 1 — What if you automate the floor plan?</a></li><li><a href="#test-2-aim-at-the-constraint">Test 2 — Aim at the constraint</a></li><li><a href="#apply-proposal-make-a-new-version">Apply proposal — make a new version</a></li><li><a href="#after-the-change-compare-versions">After the change — compare versions</a></li></ul></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

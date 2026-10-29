@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Process mining — from ad hoc work to a formal process — Process GPT Lite Tutorial</title>
+<meta name="description" content="Work that starts from an email and passes between people and agents leaves handover records. Once the same flow has piled up a few times, process mining finds the pattern and suggests it to an admin. When the admin registers it, the process starts on its own from the next similar email, and each step goes to the right person or agent.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/mining.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Process mining — from ad hoc work to a formal process — Process GPT Lite Tutorial">
+<meta property="og:description" content="Work that starts from an email and passes between people and agents leaves handover records. Once the same flow has piled up a few times, process mining finds the pattern and suggests it to an admin. When the admin registers it, the process starts on its own from the next similar email, and each step goes to the right person or agent.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/mining.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html" class="on" aria-current="page"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Working in processes<span class="chap">19</span></div>
+    <h1>Process mining — from ad hoc work to a formal process</h1>
+    <article>
+<blockquote>
+<p>Work that starts from an email and passes between people and agents leaves handover records. Once the same flow has piled up a few times, process mining finds the pattern and suggests it to an admin. When the admin registers it, the process starts on its own from the next similar email, and each step goes to the right person or agent.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/NrLzBfhxeUc" title="Process mining — from ad hoc work to a formal process — video 3:34" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="drawing-from-the-top-vs-finding-from-the-bottom">Drawing from the top vs. finding from the bottom<a class="anchor" href="#drawing-from-the-top-vs-finding-from-the-bottom" title="Permanent link">#</a></h2>
+<p>In <a href="process-create.html">Chapter 17</a> you <strong>drew a process from the top</strong>. Team lead Jinyoung Jang described the flow in words, and the assistant turned it into BPMN. The travel expense settlement in <a href="process-run.html">Chapter 18</a> was also a definition someone had drawn in advance. That works well when you already know the flow.</p>
+<p>But most work doesn't start as a process. The Moonlight Coffee Store #2 job also began with one email and was handled case by case through <a href="email-to-quote.html">Chapter 9</a>–<a href="meetings.html">Chapter 16</a>. Process mining means <strong>finding the recurring flow from the bottom, in the records of that ad hoc work</strong>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Create by chatting (Chapter 17)</th>
+<th>Mining (this chapter)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Starting point</td>
+<td>The flow people know</td>
+<td>The records of the work actually done</td>
+</tr>
+<tr>
+<td>Step names</td>
+<td>As you said them</td>
+<td>As they were recorded</td>
+</tr>
+<tr>
+<td>Owners</td>
+<td>You have to set the roles</td>
+<td>By default, the people who actually did each step</td>
+</tr>
+<tr>
+<td>Good for</td>
+<td>New work, work with set rules</td>
+<td>Work your team already knows by heart but has never written down</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-gets-recorded-handover-records">What gets recorded — handover records<a class="anchor" href="#what-gets-recorded-handover-records" title="Permanent link">#</a></h2>
+<p>Lite groups work that started from an email into <strong>one case</strong>, and inside that case it writes one handover record line each time the work moves on. The format is the same as Process GPT's handover records.</p>
+<table>
+<thead>
+<tr>
+<th>When</th>
+<th>Step recorded</th>
+<th>Receiver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A customer email asks for documents</td>
+<td>Receive request mail</td>
+<td>The person who got the email</td>
+</tr>
+<tr>
+<td>The assistant makes a draft</td>
+<td>Draw floor plan · Write proposal · Prepare quote</td>
+<td>The drawing, proposal and quote agents</td>
+</tr>
+<tr>
+<td>The draft is shared with a teammate (<a href="sharing.html">Chapter 14</a>)</td>
+<td>A review named for the receiver's role (Finance → Finance review, Designer → Design review, anyone else → "(role) review")</td>
+<td>The teammate who received it</td>
+</tr>
+<tr>
+<td>You reply to the customer</td>
+<td>Reply to customer</td>
+<td>The person who replied</td>
+</tr>
+<tr>
+<td>Materials are shown or work is assigned in a meeting (<a href="meetings.html">Chapter 16</a>)</td>
+<td>Meeting material shared · Tasks assigned during the meeting</td>
+<td>The person or agent who received it</td>
+</tr>
+</tbody>
+</table>
+<p>Each handover record line holds who → to whom, what work, when, and which tool (CADCraft, Word, Excel) and skill was used.</p>
+<div class="admonition note">
+<p class="admonition-title">Names of share steps, and where a case ends</p>
+<p>A share step is named after the receiver's role (<strong>Settings › Team &amp; roles</strong>). If the receiver has no role, the name comes from the share note ("drawing…" means Design review, "quoted amount…" means Finance review). That's why the designer's review and Finance's review are recorded as different steps. Replying to the customer ends the case, so <strong>anything shared after the reply isn't added to the case.</strong> <strong>How are cases grouped?</strong> on the mining screen states the same rules.</p>
+</div>
+<h2 id="try-it-1-build-up-past-records">Try it 1 — Build up past records<a class="anchor" href="#try-it-1-build-up-past-records" title="Permanent link">#</a></h2>
+<p>Mining needs <strong>at least 4 cases</strong> before it looks for a pattern. The screens in this chapter were captured after loading, as practice data, the handover records of three similar requests Jinyoung Jang's team handled earlier in October, plus one real case: the Moonlight Coffee Store #2 practice mail of <a href="email-to-quote.html">Chapter 9</a>, whose drafts were shared with Seoyeon Park (Finance) and then answered. In a real company, these records pile up on their own over a few weeks.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Customer · request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oct 5</td>
+<td>Hanbit Dental — interior design proposal and quote for the Seohyeon clinic</td>
+</tr>
+<tr>
+<td>Oct 12</td>
+<td>Onsaemiro Bakery — design proposal and quote for the Mangwon store</td>
+</tr>
+<tr>
+<td>Oct 19</td>
+<td>GreenFit Pilates — floor plan, proposal and quote for the Pangyo studio</td>
+</tr>
+<tr>
+<td>Oct 29</td>
+<td>Moonlight Coffee — design proposal and quote for Store #2 (the live case)</td>
+</tr>
+</tbody>
+</table>
+<p>All four went in the same order:</p>
+<div class="hl"><pre><span></span><code>Receive request mail (Jinyoung Jang) → Draw floor plan (drawing agent) → Write proposal (proposal agent) → Prepare quote (quote agent)
+  → Finance review (Seoyeon Park) → Reply to customer (Jinyoung Jang)
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">For instructors and admins (optional) — load practice cases</p>
+<p>An admin who can work in the server folder can use the practice-data script that comes with Lite to load three past cases (Receive request mail → Draw floor plan, Write proposal, Prepare quote → Finance review → Reply to customer) and set up the admin: <code>node server/scripts/seed-mining-demo.mjs &lt;sales account email&gt; &lt;finance account email&gt; &lt;admin account email&gt;</code> (with the install bundle, from the <code>install/</code> folder: <code>docker compose exec -w /app/server server node scripts/seed-mining-demo.mjs …</code>). For the English cases, use <code>--lang en</code> (it loads them into the English demo tenant, <code>en-demo</code>, so with the install bundle also add <code>--tenant lite</code>). Add the one email you handled yourself in <a href="email-to-quote.html">Chapter 9</a> — drafts, a share with Finance, and the reply — and you have 4, as in this chapter's screens. If you can't use the script, read along with the screenshots in this chapter to learn the flow.</p>
+</div>
+<h2 id="try-it-2-the-miner-finds-the-pattern">Try it 2 — The miner finds the pattern<a class="anchor" href="#try-it-2-the-miner-finds-the-pattern" title="Permanent link">#</a></h2>
+<p>Every minute, the Lite server asks Process GPT's process miner (a calculation service that finds recurring flows), "Is there a recurring flow?" The miner finds flows with fixed calculations and no AI model, so the same records always give the same answer.</p>
+<ol>
+<li>It builds the set of activities for each case and groups cases whose sets overlap by 60% or more (so that different kinds of work don't merge into one model).</li>
+<li>Within a group, it treats the activities that appear in at least half of the cases as <strong>core activities</strong>, and takes the most common order as the <strong>main flow</strong>.</li>
+<li>For each step, it counts who handled it (role and owner), the share handled by agents, and the tools and skills used.</li>
+</ol>
+<p>If a case is still in progress (it hasn't reached the last step, or it just moved), the miner waits. Suggesting a flow from a case in progress would leave out the later steps.</p>
+<p>In our run, this suggestion appeared within a minute of the reply that closed the live case (the name and summary come from an AI model, so they may differ from run to run). Two Store #2 practice mails had been handled by then — one replied to after a Finance share, one replied to without a share — so the suggestion counts 5 cases.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Design proposal &amp; quote</td>
+</tr>
+<tr>
+<td>Summary</td>
+<td>This flow handles a customer request for an interior floor plan, design proposal, and quote.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>5 cases, 29 handover records, 52% handled by agents</td>
+</tr>
+<tr>
+<td>Steps</td>
+<td>6 (four cases in the same order; one went from Prepare quote straight to Reply to customer without Finance review)</td>
+</tr>
+<tr>
+<td>Roles</td>
+<td>Sales (Jinyoung Jang), drawing, proposal and quote agents, Finance (Seoyeon Park)</td>
+</tr>
+<tr>
+<td>Clues for recognizing the next email</td>
+<td>Formats dxf, docx, xlsx; words interior, design, proposal, quote, floor, plan</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Watch the video</p>
+<p>The <a href="https://youtu.be/RFZOcq9Pj9E">process mining demo video</a> shows the whole run in one go: email work records → suggestion → registration → the next email starting as a process (the demo accounts and customer names differ from this chapter).</p>
+</div>
+<h2 id="try-it-3-the-suggestion-reaches-the-admin">Try it 3 — The suggestion reaches the admin<a class="anchor" href="#try-it-3-the-suggestion-reaches-the-admin" title="Permanent link">#</a></h2>
+<p>Suggestions go <strong>only to admins</strong>. The admin's Home shows the notification card "I found a recurring flow: Design proposal &amp; quote." The card description says how many cases were handled and in what order.</p>
+<blockquote>
+<p>The last 5 mail jobs were handled in the same order (Receive request mail → Draw floor plan → Write proposal → Prepare quote → Finance review → Reply to customer) …</p>
+</blockquote>
+<figure><a href="img/mining-notice.webp" target="_blank" rel="noopener" title="View larger"><img alt="The admin's Home (Jinyoung Jang) — the &quot;Suggestion&quot; card. Click &quot;Review&quot; to open the suggestion screen" src="img/mining-notice.webp" / loading="lazy" decoding="async"></a><figcaption>The admin's Home (Jinyoung Jang) — the &quot;Suggestion&quot; card. Click &quot;Review&quot; to open the suggestion screen</figcaption></figure>
+<p>When someone who isn't an admin opens the mining screen (address ending in <code>/mining</code>), the server refuses the suggestion list and the suggestion details. In the current English version the screen then simply shows no suggestions (the Korean screen says "Only admins can see this.").</p>
+<figure><a href="img/mining-denied.webp" target="_blank" rel="noopener" title="View larger"><img alt="Minji Kim (not an admin) on the mining screen — no suggestions are listed for her. Only admins see suggestions, register them and put them on hold" src="img/mining-denied.webp" / loading="lazy" decoding="async"></a><figcaption>Minji Kim (not an admin) on the mining screen — no suggestions are listed for her. Only admins see suggestions, register them and put them on hold</figcaption></figure>
+<p>Open the suggestion from the notification card or the mining screen, and you see the following. In this chapter the admin is team lead Jinyoung Jang.</p>
+<figure><a href="img/mining-detail.webp" target="_blank" rel="noopener" title="View larger"><img alt="Suggestion screen — 5 cases repeated, 29 handover records, 52% handled by agents. For each step of the discovered flow: person or agent, the role, the tools and skills used, how many cases it appeared in (5/5, Finance review 4/5), and who has done it" src="img/mining-detail.webp" / loading="lazy" decoding="async"></a><figcaption>Suggestion screen — 5 cases repeated, 29 handover records, 52% handled by agents. For each step of the discovered flow: person or agent, the role, the tools and skills used, how many cases it appeared in (5/5, Finance review 4/5), and who has done it</figcaption></figure>
+<figure><a href="img/mining-cases.webp" target="_blank" rel="noopener" title="View larger"><img alt="Real cases handled — one email is one case, and practice data is marked &quot;Sample data&quot;. The two Moonlight Coffee cases are the live ones (48 min and 25 min); the second had no Finance review. Below are the evidence (4 cases in one order, 1 without Finance review) and the &quot;On hold&quot; and &quot;Register as a process&quot; buttons" src="img/mining-cases.webp" / loading="lazy" decoding="async"></a><figcaption>Real cases handled — one email is one case, and practice data is marked &quot;Sample data&quot;. The two Moonlight Coffee cases are the live ones (48 min and 25 min); the second had no Finance review. Below are the evidence (4 cases in one order, 1 without Finance review) and the &quot;On hold&quot; and &quot;Register as a process&quot; buttons</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discovered flows</td>
+<td>The steps in order — people steps (role owners get a notification) and agent steps (run on their own) shown apart</td>
+</tr>
+<tr>
+<td>Steps</td>
+<td>For each step, the role, the tools and skills used, and how many cases it appeared in</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>The real cases handled — customer, email subject, time taken, owner of each step. Cases loaded for practice are marked <strong>Sample data</strong></td>
+</tr>
+<tr>
+<td>Decision</td>
+<td><strong>Register as a process</strong> · <strong>On hold</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-4-register-it-as-a-process">Try it 4 — Register it as a process<a class="anchor" href="#try-it-4-register-it-as-a-process" title="Permanent link">#</a></h2>
+<p>When the admin clicks <strong>Register as a process</strong>, the miner derives the flow once more from all the cases so far and saves it through Process GPT's own process-definition save path.</p>
+<table>
+<thead>
+<tr>
+<th>What registering creates</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Process definition</td>
+<td>BPMN, a form for each step, a start (request email arrives) and an end (reply sent)</td>
+</tr>
+<tr>
+<td>Agent steps</td>
+<td>Drawing the floor plan and writing the proposal and quote run on their own, with the skills used so far (<code>cadcraft-floor-plan</code>, <code>docx-proposal</code>, <code>xlsx</code>) attached as they are</td>
+</tr>
+<tr>
+<td>Role owners</td>
+<td>For people steps, the teammates who have been doing that work become the owners (Sales → Jinyoung Jang, Finance → Seoyeon Park)</td>
+</tr>
+<tr>
+<td>Link to the next email</td>
+<td>When an email matches the clues in the table above (2 or more formats, or 2 or more words), it starts this process</td>
+</tr>
+</tbody>
+</table>
+<p>Click <strong>On hold</strong> and the suggestion folds away, and the same pattern isn't suggested again. As more cases pile up, the decision stays the same and only the evidence grows. Even if newly grouped cases overlap more than half with an existing suggestion's cases, no new suggestion is made; they're added as evidence to that suggestion, so the same flow is never suggested twice.</p>
+<figure><a href="img/mining-registered.webp" target="_blank" rel="noopener" title="View larger"><img alt="Registered — the label on the same screen changed from &quot;Suggestion&quot; to &quot;Registered&quot;" src="img/mining-registered.webp" / loading="lazy" decoding="async"></a><figcaption>Registered — the label on the same screen changed from &quot;Suggestion&quot; to &quot;Registered&quot;</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Check the case list before you register</p>
+<p>Registering derives the flow again from the cases so far, so a case that includes handovers unrelated to the flow can add unneeded branches to the definition. Shares after the customer reply are no longer added to cases, but skim the case list once before you register. If the derived flow has steps that run at the same time, the registered definition's BPMN draws them with a <strong>parallel gateway</strong> (a diamond with ＋), and branches where only one path is taken with an exclusive gateway (a diamond with ×). In our run, the one case without a Finance review gave the definition an exclusive <strong>Split</strong> before Finance review with two placeholder conditions (<strong>Condition 1</strong>, <strong>Condition 2</strong>) that nobody filled in; when the next email started the process, both Finance review and Reply to customer were handed out as to-dos at once.</p>
+</div>
+<h2 id="try-it-5-the-next-email-becomes-a-process">Try it 5 — The next email becomes a process<a class="anchor" href="#try-it-5-the-next-email-becomes-a-process" title="Permanent link">#</a></h2>
+<p>Once the process is registered, when a new design request email comes in, the assistant starts the registered process instead of making ad hoc drafts. The chat of the person who got the email shows this:</p>
+<blockquote>
+<p>I'll handle the … mail with the registered 'Design proposal &amp; quote' process. The step agents make the floor plan, proposal and quote, and the finance review goes to Finance.</p>
+</blockquote>
+<p>A process card is attached below it, and from there it's the same as <a href="process-run.html">Chapter 18</a>. In our run, when a new email ("[Onyu Clinic] Request for an interior design proposal and quote for our Pangyo clinic") arrived in team lead Jinyoung Jang's inbox, the formal process started within seconds of the mail being read.</p>
+<figure><a href="img/mining-routed.webp" target="_blank" rel="noopener" title="View larger"><img alt="Jinyoung Jang's chat — &quot;I'll handle the Onyu Clinic mail with the registered 'Design proposal &amp; quote' process.&quot; and the process card (&quot;9 steps · 3 people · 3 agents&quot;, Started)" src="img/mining-routed.webp" / loading="lazy" decoding="async"></a><figcaption>Jinyoung Jang's chat — &quot;I'll handle the Onyu Clinic mail with the registered 'Design proposal &amp; quote' process.&quot; and the process card (&quot;9 steps · 3 people · 3 agents&quot;, Started)</figcaption></figure>
+<figure><a href="img/mining-instance.webp" target="_blank" rel="noopener" title="View larger"><img alt="The started instance — Receive request mail was filled in from the email and finished, Draw floor plan (drawing agent, cadcraft-floor-plan) and Write proposal (proposal agent, docx-proposal) are done, and Prepare quote (quote agent, xlsx) is running. Split, Finance review and Reply to customer follow" src="img/mining-instance.webp" / loading="lazy" decoding="async"></a><figcaption>The started instance — Receive request mail was filled in from the email and finished, Draw floor plan (drawing agent, cadcraft-floor-plan) and Write proposal (proposal agent, docx-proposal) are done, and Prepare quote (quote agent, xlsx) is running. Split, Finance review and Reply to customer follow</figcaption></figure>
+<p>When the three agent steps finished (about 17 minutes in our run), the Finance review went to Seoyeon Park. Her Home shows a <strong>Decision · Finance review</strong> card with the gist of the quote step and chips for the previous steps' outputs (floor plan, Word proposal, quote).</p>
+<figure><a href="img/mining-minji-todo.webp" target="_blank" rel="noopener" title="View larger"><img alt="Seoyeon Park's Home — the Finance review to-do from the formal process, with Approve / Request changes. Clicking a chip opens her own copy. The card below it is the Gwanghwamun Store #53 review from Part 6" src="img/mining-minji-todo.webp" / loading="lazy" decoding="async"></a><figcaption>Seoyeon Park's Home — the Finance review to-do from the formal process, with Approve / Request changes. Clicking a chip opens her own copy. The card below it is the Gwanghwamun Store #53 review from Part 6</figcaption></figure>
+<p><strong>Check</strong>: each step has an owner. In our run, the instance's to-dos were assigned like this: Receive request mail and Reply to customer → Jinyoung Jang; Draw floor plan, Write proposal and Prepare quote → the three agents; Finance review → Seoyeon Park.</p>
+<div class="admonition note">
+<p class="admonition-title">Registration applies to the whole company</p>
+<p>A registered process picks up <strong>any email, no matter who received it</strong>, when the clues match. This is so that the same work follows the same procedure regardless of who receives it. If several people share a practice server, keep in mind that after you register, other people's practice design request emails (<a href="email-to-quote.html">Chapter 9</a>) will also start this process instead of making ad hoc drafts. If several processes are registered, the most recently registered one is checked first.</p>
+</div>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>Once formal processes start running, instead of handover records you get <strong>run records that keep the exact start and end time of every step</strong>. In Part 6, "Improving processes," you'll use these records to find and fix where work piles up (<a href="bottleneck.html">Chapter 20</a>), how much time adds value and how much is spent waiting (<a href="value-stream.html">Chapter 21</a>), and which path sets the total duration (<a href="critical-path.html">Chapter 22</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>If one of the four cases went only "Prepare quote → Reply to customer" and ended, would that case be grouped into the same pattern?</li>
+<li>What happens if, after the admin puts the suggestion <strong>On hold</strong>, ten more email tasks with the same flow pile up?</li>
+<li>After registration, an email arrives saying "Please send a quote for event refreshments (Excel)." Will it start this process?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>No. That case's activity set (roughly Receive request mail, Prepare quote and Reply to customer) overlaps the 6-step set by less than 60%, so it goes into a different group. If 4 or more such cases pile up, they're suggested separately as a "quote-only flow."</li>
+<li>The same pattern isn't suggested again. Only the suggestion's evidence (the number of cases) grows, and the decision (on hold) stays the same.</li>
+<li>No. Of the format clues, only xlsx matches (2 or more needed), and of the word clues (interior, design, proposal, quote, floor, plan), only "quote" matches (2 or more needed). This email is handled as usual with ad hoc drafts.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="process-run.html"><span>Previous</span>Run a process — to-dos moving between people and agents</a><a class="next" href="bottleneck.html"><span>Next</span>Find the bottleneck — where does the time leak?</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#drawing-from-the-top-vs-finding-from-the-bottom">Drawing from the top vs. finding from the bottom</a></li><li><a href="#what-gets-recorded-handover-records">What gets recorded — handover records</a></li><li><a href="#try-it-1-build-up-past-records">Try it 1 — Build up past records</a></li><li><a href="#try-it-2-the-miner-finds-the-pattern">Try it 2 — The miner finds the pattern</a></li><li><a href="#try-it-3-the-suggestion-reaches-the-admin">Try it 3 — The suggestion reaches the admin</a></li><li><a href="#try-it-4-register-it-as-a-process">Try it 4 — Register it as a process</a></li><li><a href="#try-it-5-the-next-email-becomes-a-process">Try it 5 — The next email becomes a process</a></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

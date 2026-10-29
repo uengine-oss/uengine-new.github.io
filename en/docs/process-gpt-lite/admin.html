@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operations and security — Process GPT Lite Tutorial</title>
+<meta name="description" content="This chapter is for the people who install and run Process GPT Lite in-house. You&#x27;ll go through teammates and roles, admins, where the keys live, turning off demo login, Vault encryption and key rotation, backups and upgrades, regression tests before an upgrade, and the defaults that protect personal data.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/admin.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operations and security — Process GPT Lite Tutorial">
+<meta property="og:description" content="This chapter is for the people who install and run Process GPT Lite in-house. You&#x27;ll go through teammates and roles, admins, where the keys live, turning off demo login, Vault encryption and key rotation, backups and upgrades, regression tests before an upgrade, and the defaults that protect personal data.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/admin.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html" class="on" aria-current="page"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Extending and operating<span class="chap">25</span></div>
+    <h1>Operations and security</h1>
+    <article>
+<blockquote>
+<p>This chapter is for the people who install and run Process GPT Lite in-house. You'll go through teammates and roles, admins, where the keys live, turning off demo login, Vault encryption and key rotation, backups and upgrades, regression tests before an upgrade, and the defaults that protect personal data.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/fCHKL-Ox_tc" title="Operations and security — video 3:46" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p>This chapter gathers what to look after when you actually run the components from the previous chapter in-house. You did the installation itself in <a href="install.html">Chapter 1</a>, so here you cover what comes after it — people and permissions, secrets, backups and upgrades.</p>
+<h2 id="teammates-and-roles">Teammates and roles<a class="anchor" href="#teammates-and-roles" title="Permanent link">#</a></h2>
+<p>You set two things in <strong>Settings › Team &amp; roles</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Teammates</strong></td>
+<td>An admin adds them by name and email. An account is created even for someone who has never signed in, so they can receive work before their first visit. People who sign in join the team on their own the first time they open the team list. Someone an admin removed doesn't rejoin automatically even if they sign in again; an admin has to add them back</td>
+</tr>
+<tr>
+<td><strong>Role owners</strong></td>
+<td>A process step goes to the teammate who holds that role, and a notification goes to their Home. If it's left empty, whoever started the work (whoever set up the schedule) takes it. The order is <strong>per-process owner → company-wide default → whoever started it</strong> (<a href="process-run.html">Chapter 18</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>On the skills side there's a separate <strong>agent owner</strong>. Improvement suggestions for a shared skill can be merged only by the person who made the skill and the owner of the agent that has it (<a href="skills.html">Chapter 10</a>).</p>
+<h3 id="who-can-change-what">Who can change what<a class="anchor" href="#who-can-change-what" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>What changes</th>
+<th>Who can do it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adding and removing teammates (<code>POST</code> · <code>DELETE /api/team</code>)</td>
+<td>Admins</td>
+</tr>
+<tr>
+<td>Role owners — company-wide default (<code>PUT /api/roles</code>, applies to every process)</td>
+<td>Admins</td>
+</tr>
+<tr>
+<td>Role owners — one process only (<code>PUT /api/roles</code> with <code>defId</code>)</td>
+<td>That process's owner (<code>proc_def.owner</code>) and admins. For a process with no owner set, anyone, as in Process GPT</td>
+</tr>
+</tbody>
+</table>
+<p>If you're not an admin, <strong>Settings › Team &amp; roles</strong> opens read-only ("Only admins can add or remove teammates and assign role owners…", the picture in <a href="process-run.html">Chapter 18</a>). The server checks the same rule, so even calling the API directly is refused with "Only administrators can change this." The current Lite screens have no field for per-process owners, so set one by sending <code>{"defId": "&lt;process id&gt;", "role": "&lt;role name&gt;", "userId": "&lt;user id&gt;"}</code> to the API above. Someone removed from the team is also removed from the roles they held.</p>
+<h2 id="admins">Admins<a class="anchor" href="#admins" title="Permanent link">#</a></h2>
+<p>Admins are set by Process GPT's user table (<code>users.is_admin</code>) and the tenant's owner (<code>tenants.owner</code>). The install bundle makes the <strong>first admin email</strong> you enter at install (<code>ADMIN_EMAIL</code>) an admin. In a tenant with no admin at all (such as a development install started straight from source), <strong>the first person to sign in</strong> becomes the admin. So before you let several people use a development install, have the operator sign in first.</p>
+<table>
+<thead>
+<tr>
+<th>What only admins can do</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add and remove teammates, assign company-wide role owners</td>
+<td>Above in this chapter, <a href="process-run.html">Chapter 18</a></td>
+</tr>
+<tr>
+<td>View process mining suggestions, register them as processes, put them on hold</td>
+<td><a href="mining.html">Chapter 19</a></td>
+</tr>
+<tr>
+<td>View every process instance and its outputs (normally only participants and owners)</td>
+<td><a href="process-run.html">Chapter 18</a></td>
+</tr>
+<tr>
+<td>Open someone else's Workroom (normally only the step owner, participants and the conversation owner)</td>
+<td><a href="workroom.html">Chapter 23</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-are-the-keys">Where are the keys?<a class="anchor" href="#where-are-the-keys" title="Permanent link">#</a></h2>
+<p>In a development install, the relay server reads settings in the order <strong>environment variables → <code>server/.env</code> → the <code>.env</code> in the Process GPT folder</strong>. It doesn't copy secrets over to the Lite side again; it uses Process GPT's as they are. The install bundle keeps them all in a single <code>install/.env</code>. This file is created with permission 0600 at first install, the secrets are filled in automatically, and it stays as it is through upgrades.</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Development install</th>
+<th>Install bundle (<code>install/.env</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM address, key, models</td>
+<td><code>PRO_LLM_BASE_URL</code>, <code>PRO_LLM_API_KEY</code>, <code>PRO_LLM_MODEL</code>, <code>PRO_LLM_FAST_MODEL</code> (if missing, Process GPT's key)</td>
+<td><code>LLM_BASE_URL</code>, <code>LLM_API_KEY</code>, <code>LLM_MODEL</code>, <code>LLM_FAST_MODEL</code></td>
+</tr>
+<tr>
+<td>DB and login server</td>
+<td><code>POSTGRES_PASSWORD</code>, <code>ANON_KEY</code>, <code>SERVICE_ROLE_KEY</code> in Process GPT's <code>.env</code></td>
+<td><code>POSTGRES_PASSWORD</code>, <code>JWT_SECRET</code>, <code>ANON_KEY</code>, <code>SERVICE_ROLE_KEY</code> (generated automatically)</td>
+</tr>
+<tr>
+<td>Vault master key (KEK)</td>
+<td><code>server/.vault-keyring.json</code> (0600) or <code>PRO_VAULT_KEK</code></td>
+<td><code>VAULT_KEK</code> (generated automatically)</td>
+</tr>
+<tr>
+<td>Schedule callback secret</td>
+<td><code>PRO_CRON_SECRET</code></td>
+<td><code>CRON_SECRET</code> (generated automatically)</td>
+</tr>
+<tr>
+<td>Google login and mail connection</td>
+<td><code>GOOGLE_CLIENT_ID</code>, <code>GOOGLE_CLIENT_SECRET</code></td>
+<td>Same names</td>
+</tr>
+<tr>
+<td>Meeting transcription</td>
+<td><code>PRO_TRANSCRIBE_API_KEY</code></td>
+<td><code>TRANSCRIBE_API_KEY</code></td>
+</tr>
+</tbody>
+</table>
+<p>Each user's own secrets (connector tokens, Google mail connection tokens, site logins, cards) go not into a settings file but, encrypted, into <strong>that person's Vault</strong>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Don't use development settings as is on a shared server</p>
+<p>If <code>PRO_CRON_SECRET</code> is left empty, it uses a default written in the code. On a server several people use, change it to a value you choose. The install bundle generates a random value at install.</p>
+</div>
+<h2 id="turn-off-demo-login">Turn off demo login<a class="anchor" href="#turn-off-demo-login" title="Permanent link">#</a></h2>
+<p><strong>Demo login</strong>, which lets any email in with the code <code>000000</code>, is for trying things out.</p>
+<table>
+<thead>
+<tr>
+<th>Install</th>
+<th>Default</th>
+<th>How to turn it off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Development install</td>
+<td>On</td>
+<td><code>PRO_DEMO_LOGIN=0</code> in <code>server/.env</code> (or the environment), then restart the server</td>
+</tr>
+<tr>
+<td>Install bundle</td>
+<td><strong>Off</strong> (<code>DEMO_LOGIN=0</code>)</td>
+<td>Leave it as is. Use <code>1</code> only for demos on a closed PC</td>
+</tr>
+</tbody>
+</table>
+<p>With it off, the login code goes out by email. If SMTP isn't set up, the install bundle sends it to the bundle's mailbox (<code>http://localhost:18025</code>, which opens only on that PC). Check the current state with <code>demoLogin</code> in <code>/api/config</code>.</p>
+<h2 id="vault-encryption-and-key-rotation">Vault encryption and key rotation<a class="anchor" href="#vault-encryption-and-key-rotation" title="Permanent link">#</a></h2>
+<p>The Vault uses <strong>envelope encryption</strong>. A master key (KEK) that exists only on the server wraps a data key (DEK), one per user, and the DEK encrypts each item with AES-256-GCM. The database holds only the ciphertext and the wrapped DEKs, so taking just the DB isn't enough to open it. Passwords, card numbers and verification codes don't go to the screen or to the AI model; the server types them in itself during browser tasks (<a href="browser.html">Chapter 6</a>).</p>
+<figure><a href="img/admin-security.webp" target="_blank" rel="noopener" title="View larger"><img alt="Settings › Security — the encryption method, the KEK identifier and where it's kept (server keyring file, 1 version), per-user DEKs, and a check that never shows the values" src="img/admin-security.webp" / loading="lazy" decoding="async"></a><figcaption>Settings › Security — the encryption method, the KEK identifier and where it's kept (server keyring file, 1 version), per-user DEKs, and a check that never shows the values</figcaption></figure>
+<p>Key work is done in the server folder with <code>node scripts/vault-admin.mjs &lt;command&gt;</code>. This script never prints secrets or keys to the screen.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td>The keyring, the number of DEKs per KEK, the number of items by type</td>
+</tr>
+<tr>
+<td><code>verify</code></td>
+<td>Actually opens every item to check it</td>
+</tr>
+<tr>
+<td><code>rotate-kek</code></td>
+<td>Makes a new KEK, sets it as the current key and rewraps every DEK</td>
+</tr>
+<tr>
+<td><code>rewrap</code></td>
+<td>Rewraps DEKs wrapped with a retired KEK with the current KEK (after you've changed the KEK through an environment variable)</td>
+</tr>
+<tr>
+<td><code>prune-kek</code></td>
+<td>Removes from the keyring retired KEKs that no DEK uses</td>
+</tr>
+<tr>
+<td><code>rotate-dek &lt;user id \| --all&gt;</code></td>
+<td>Makes a new DEK and re-encrypts the items</td>
+</tr>
+</tbody>
+</table>
+<p>Restart the server after <code>rotate-kek</code> or <code>prune-kek</code>. If you supply the KEK through an environment variable (<code>PRO_VAULT_KEK</code>), <code>rotate-kek</code> is refused. Put the new key in <code>PRO_VAULT_KEK</code> and the old one in <code>PRO_VAULT_KEK_RETIRED</code>, restart, and then run <code>rewrap</code>.</p>
+<h2 id="backups-and-upgrades">Backups and upgrades<a class="anchor" href="#backups-and-upgrades" title="Permanent link">#</a></h2>
+<p>Lite has no backup feature of its own. Below is the <strong>recommended procedure</strong>. At a quiet time, copy the following five things together at the same point in time. In particular, <strong>if you lose the <code>.env</code> that holds the KEK, the Vault can't be recovered.</strong></p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database (conversations, cards, processes, team, Vault ciphertext)</td>
+<td>The <code>db</code> service. For example: <code>docker compose exec -T db pg_dump -U postgres postgres &gt; lite.sql</code></td>
+</tr>
+<tr>
+<td>File storage (the originals behind document and picture cards)</td>
+<td>The <code>storage-data</code> volume</td>
+</tr>
+<tr>
+<td>Shared folders (git) and ArtCraft web builds</td>
+<td>The <code>server-data</code> volume (<code>/data/folders</code>, <code>/data/craft</code>)</td>
+</tr>
+<tr>
+<td>Agent working folders and skills</td>
+<td><code>LITE_DATA_DIR/deepagents/</code> (<code>workspace</code>, <code>skills</code>)</td>
+</tr>
+<tr>
+<td>Secrets</td>
+<td><code>install/.env</code> (for a development install, <code>server/.vault-keyring.json</code> and the two <code>.env</code> files)</td>
+</tr>
+</tbody>
+</table>
+<p>Upgrading is a single line: <code>./install.sh --upgrade</code>. It gets the source (<code>git pull</code>), builds or pulls the images, runs the DB migrations and restarts. Secrets are kept. The recommended order is <strong>backup → upgrade → regression test</strong>.</p>
+<h2 id="regression-tests-before-an-upgrade">Regression tests before an upgrade<a class="anchor" href="#regression-tests-before-an-upgrade" title="Permanent link">#</a></h2>
+<p>The repository's <code>e2e/</code> has Playwright tests that re-check the features so far, in three tiers.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>What it checks</th>
+<th>Model calls</th>
+<th>Time</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>smoke</strong></td>
+<td>Startup and login, every screen loads without errors, the security fences (403 for someone else's Workroom, terminal tickets, no Vault secrets, panel row security)</td>
+<td>None</td>
+<td>About 1 min</td>
+<td><code>npm run test:smoke</code></td>
+</tr>
+<tr>
+<td><strong>feature</strong></td>
+<td>Features checked with fixed data (shared folders, skill sharing, panel apps, schedules, team, processes, editor, live editing)</td>
+<td>None</td>
+<td>A few min</td>
+<td><code>npm run test:feature</code></td>
+</tr>
+<tr>
+<td><strong>agent</strong></td>
+<td>The user journeys from the demo videos, end to end with real models</td>
+<td>Yes</td>
+<td>30–90 min</td>
+<td><code>npm run test:agent</code></td>
+</tr>
+</tbody>
+</table>
+<div class="hl"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>e2e<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npx<span class="w"> </span>playwright<span class="w"> </span>install<span class="w"> </span>chromium
+<span class="nv">PGPT_URL</span><span class="o">=</span>http://localhost:18080<span class="w"> </span><span class="nv">MAILPIT_URL</span><span class="o">=</span>http://localhost:18025<span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>test:smoke
+</code></pre></div>
+
+<ul>
+<li>The tests use only dedicated test accounts and delete the data they made when they finish. If a run was cut off, run <code>npm run cleanup</code>.</li>
+<li>Results are kept in <code>reports/&lt;tier&gt;/html</code> (HTML report) and <code>junit.xml</code> (for CI).</li>
+<li>In an install without ArtCraft (installed without <code>--with-craft</code>) or without the routing model server, those tests end not as failures but as <strong>skipped</strong>, with the reason.</li>
+</ul>
+<p>We recommend running smoke and feature on every upgrade, and agent too before a big release.</p>
+<h2 id="defaults-that-protect-personal-data">Defaults that protect personal data<a class="anchor" href="#defaults-that-protect-personal-data" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Default behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vault and browser</td>
+<td>Secret values don't go to the model. Secret field values are removed from the page summary the browser agent sees, and those fields are blurred in the screenshots sent to the model</td>
+</tr>
+<tr>
+<td>Panel apps</td>
+<td>Each field has a sensitivity (public, internal, personal, sensitive). Personal fields are visible only to the person, the author and the folder owner; sensitive fields only to the person and the folder owner. Team totals of sensitive numbers appear only once three or more people are included. When the maker lowers a level, a confirmation and a record are kept (<a href="panel-apps.html">Chapter 12</a>)</td>
+</tr>
+<tr>
+<td>Team sharing</td>
+<td>The server checks that only the recipient can open it, and the recipient edits their own copy (<a href="sharing.html">Chapter 14</a>)</td>
+</tr>
+<tr>
+<td>Meetings</td>
+<td>Only the words of people who consented to transcription and recording are transcribed. The meeting minutes list the people "who didn't consent." The helper can be turned off per room. To turn off the helper for the whole server, use <code>MEETING_AGENT=0</code> in the install bundle or <code>PRO_MEETING_AGENT=0</code> in a development install. To turn off meetings entirely, use <code>PRO_MEETINGS=0</code> in a development install (<a href="meetings.html">Chapter 16</a>)</td>
+</tr>
+<tr>
+<td>Workroom</td>
+<td>Only owners, participants, the conversation owner and admins. The terminal opens with a one-time ticket and doesn't pass on the server's secret environment variables</td>
+</tr>
+<tr>
+<td>Opening to the outside</td>
+<td>If you open a development server through a tunnel, the tunnel address is protected by an access password (<code>server/.public-access</code>). When you open the install bundle to the internet, put an HTTPS reverse proxy in front of it</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Known limitations</p>
+<ul>
+<li>In the current version, the files behind document and picture cards are uploaded to <strong>public storage</strong> at hard-to-guess addresses, so anyone who knows an address can open it without signing in. Keep this in mind if you run it open to the outside.</li>
+<li>Browser agent sessions live in server memory, so restarting the server marks the tasks in progress as "Stopped." Restart the server when no browser tasks are running.</li>
+<li>The agent's sandbox shell is shared <strong>per company (tenant)</strong>, not per user. The assistant is instructed to use only my attachments, shares I received, this conversation's folder and shared folders, and other people's conversation folders are blocked, but files someone left at the top of the workspace (<code>/workspace</code>) can be read through the shell. Tell people to keep material meant only for certain teammates in a shared folder with set members (<a href="folders.html">Chapter 13</a>).</li>
+<li>To check what goes to the model, start the server with <code>PRO_LLM_TRACE=&lt;file&gt;</code> (off by default). The text of the model requests the relay server makes itself (not images) piles up in that file; requests deepagents makes aren't included.</li>
+</ul>
+</div>
+<p>That wraps up Part 7. In the next chapter, you'll do a final project that uses everything you've learned so far on one new customer request, from start to finish (<a href="project.html">Chapter 26</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Seoyeon Park is leaving the company, and you want to block her account. Besides removing her from the team, what should you check?</li>
+<li>You moved the server to a new PC and brought only a database backup. What won't work?</li>
+<li>After an upgrade, smoke passed, but in feature all the ArtCraft tests are "skipped." Is that a failure?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>When an admin removes her from the team, she's also removed from her roles, so set new owners for the roles she held (if left empty, whoever started the work takes it). Someone removed doesn't rejoin the team automatically even if they sign in again. To block the login itself, make sure demo login is off, and block the account in the login server (Supabase Auth).</li>
+<li>Without the KEK, Vault items (logins, cards, connector tokens) can't be opened. Without file storage, the documents and pictures on cards won't open, and without the shared folder volume, the folders' history and variations are gone.</li>
+<li>No. If you installed without <code>--with-craft</code>, there are no ArtCraft apps, so those tests end as skipped, with the reason. If <code>craft</code> in <code>/api/config</code> says the apps are there and they're still skipped, that's when you look for the cause.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="architecture.html"><span>Previous</span>Architecture — Lite on the Process GPT backend</a><a class="next" href="project.html"><span>Next</span>Final project — a new customer request from start to finish</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#teammates-and-roles">Teammates and roles</a><ul><li><a href="#who-can-change-what">Who can change what</a></li></ul></li><li><a href="#admins">Admins</a></li><li><a href="#where-are-the-keys">Where are the keys?</a></li><li><a href="#turn-off-demo-login">Turn off demo login</a></li><li><a href="#vault-encryption-and-key-rotation">Vault encryption and key rotation</a></li><li><a href="#backups-and-upgrades">Backups and upgrades</a></li><li><a href="#regression-tests-before-an-upgrade">Regression tests before an upgrade</a></li><li><a href="#defaults-that-protect-personal-data">Defaults that protect personal data</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

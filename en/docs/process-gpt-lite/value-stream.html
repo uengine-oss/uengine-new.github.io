@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Value stream and the theory of constraints — Process GPT Lite Tutorial</title>
+<meta name="description" content="You&#x27;ll measure flow efficiency with a value stream map, which puts the time worked and the time waited from a case&#x27;s arrival to its finish on one page, and use the theory of constraints to find the one step that sets the overall speed. Then you&#x27;ll fill in the theory of constraints&#x27; five focusing steps with this process&#x27;s numbers.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt-lite/value-stream.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Value stream and the theory of constraints — Process GPT Lite Tutorial">
+<meta property="og:description" content="You&#x27;ll measure flow efficiency with a value stream map, which puts the time worked and the time waited from a case&#x27;s arrival to its finish on one page, and use the theory of constraints to find the one step that sets the overall speed. Then you&#x27;ll fill in the theory of constraints&#x27; five focusing steps with this process&#x27;s numbers.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt-lite/value-stream.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. conversation context, skills, process mining)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and first login</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screen</a></li>
+</ul>
+<div class="nav-part">You and your AI assistant</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>First conversation — hand work to the assistant</a></li>
+<li><a href="contexts.html"><span class="n">04</span>Conversation context — conversations that split on their own, and the output stack</a></li>
+<li><a href="mail.html"><span class="n">05</span>Mail assistant — find to-dos in incoming mail</a></li>
+<li><a href="browser.html"><span class="n">06</span>Browser agent and the Vault</a></li>
+</ul>
+<div class="nav-part">Documents and tools</div><ul>
+<li><a href="office.html"><span class="n">07</span>IeumOffice — edit Hangul, Word and Excel files by chatting</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — drawings, images, sound and video</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>From one email to a floor plan, proposal and quote</a></li>
+</ul>
+<div class="nav-part">Less repetition</div><ul>
+<li><a href="skills.html"><span class="n">10</span>Skills — save what worked and share it</a></li>
+<li><a href="missions.html"><span class="n">11</span>Integrations and scheduled missions</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>Panel apps — work mini apps you make by asking</a></li>
+</ul>
+<div class="nav-part">Working as a team</div><ul>
+<li><a href="folders.html"><span class="n">13</span>Shared folders — a file space the team shares</a></li>
+<li><a href="sharing.html"><span class="n">14</span>Sharing outputs and @mentions</a></li>
+<li><a href="messenger.html"><span class="n">15</span>Messenger and the room helper</a></li>
+<li><a href="meetings.html"><span class="n">16</span>Online meetings — the helper listens, shows materials and keeps minutes</a></li>
+</ul>
+<div class="nav-part">Working in processes</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>Create a process by chatting — &quot;Moonlight Coffee new store proposal&quot;</a></li>
+<li><a href="process-run.html"><span class="n">18</span>Run a process — to-dos moving between people and agents</a></li>
+<li><a href="mining.html"><span class="n">19</span>Process mining — from ad hoc work to a formal process</a></li>
+</ul>
+<div class="nav-part">Improving processes</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>Find the bottleneck — where does the time leak?</a></li>
+<li><a href="value-stream.html" class="on" aria-current="page"><span class="n">21</span>Value stream and the theory of constraints</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>Critical path and running improvements</a></li>
+</ul>
+<div class="nav-part">Extending and operating</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>Agent Workroom — Claude Code and Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>Architecture — Lite on the Process GPT backend</a></li>
+<li><a href="admin.html"><span class="n">25</span>Operations and security</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">26</span>Final project — a new customer request from start to finish</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">27</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">28</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Improving processes<span class="chap">21</span></div>
+    <h1>Value stream and the theory of constraints</h1>
+    <article>
+<blockquote>
+<p>You'll measure flow efficiency with a value stream map, which puts the time worked and the time waited from a case's arrival to its finish on one page, and use the theory of constraints to find the one step that sets the overall speed. Then you'll fill in the theory of constraints' five focusing steps with this process's numbers.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/3mxIqpr40fs" title="Value stream and the theory of constraints — video 3:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="value-stream-time-working-and-time-waiting">Value stream — time working and time waiting<a class="anchor" href="#value-stream-time-working-and-time-waiting" title="Permanent link">#</a></h2>
+<p>In <a href="bottleneck.html">Chapter 20</a> you found that Finance review is the bottleneck. Now step back and look at <strong>the whole flow</strong>.</p>
+<p>The <strong>value stream</strong> is every step it takes to produce the result the customer wants (here, a reply with the proposal and quote). Each step has two kinds of time.</p>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Meaning</th>
+<th>From the customer's view</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Work time</td>
+<td>The time a person or agent actually spends making an output</td>
+<td>Time worth paying for</td>
+</tr>
+<tr>
+<td>Wait time</td>
+<td>The time the work sits on the next person's desk (or in their inbox)</td>
+<td>Time that adds nothing</td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>value stream map</strong> lays out the steps in order and notes, for each step, the work time, the wait before it, and the share done in one pass. It started in manufacturing, but it's especially useful in office work, where waiting is invisible.</p>
+<h3 id="flow-efficiency">Flow efficiency<a class="anchor" href="#flow-efficiency" title="Permanent link">#</a></h3>
+<p><strong>Flow efficiency</strong> is the share of the lead time spent actually working.</p>
+<div class="hl"><pre><span></span><code>Flow efficiency = Σ work time ÷ lead time
+</code></pre></div>
+
+<p>For example, if a case's lead time is 3 days (72 hours) and all the time people and agents worked on it adds up to 3 hours, the flow efficiency is 3 ÷ 72 ≈ 4%. Office work is commonly said to have a flow efficiency of 5–15%. Low flow efficiency means <strong>cutting the waiting does more than working faster</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Measure to read alongside</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First-pass rate</td>
+<td>The share of cases that passed the step in one go (first-pass yield — not sent back with a change request)</td>
+</tr>
+<tr>
+<td>Product of first-pass rates of all steps</td>
+<td>An estimate of the chance a case goes from start to finish without ever going back</td>
+</tr>
+<tr>
+<td>Step time</td>
+<td>From reaching the step until it ends (wait + work)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-1-the-value-stream-map">Try it 1 — The value stream map<a class="anchor" href="#try-it-1-the-value-stream-map" title="Permanent link">#</a></h2>
+<p>On the Improve screen, open the <strong>Value stream</strong> tab.</p>
+<figure><a href="img/value-stream-map.webp" target="_blank" rel="noopener" title="View larger"><img alt="Value stream map — each box shows the owner, work time, step time and first-pass rate; the triangle before a box is the wait before that step; the ladder below shows the wait and work along the main path" src="img/value-stream-map.webp" / loading="lazy" decoding="async"></a><figcaption>Value stream map — each box shows the owner, work time, step time and first-pass rate; the triangle before a box is the wait before that step; the ladder below shows the wait and work along the main path</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Where to look</th>
+<th>In this example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boxes</td>
+<td>The steps. Draw floor plan and Draft quote run at the same time, so they sit one above the other. An orange border marks the main path (<a href="critical-path.html">Chapter 22</a>)</td>
+</tr>
+<tr>
+<td>Triangle before a box</td>
+<td>The average wait before that step. The one before Finance review is the largest and reddest, at <strong>2.3 days</strong></td>
+</tr>
+<tr>
+<td>First-pass rate</td>
+<td>Write proposal and Finance review at 88% — about one case in eight gets a change request</td>
+</tr>
+<tr>
+<td>Ladder</td>
+<td>The wait (top) and work (bottom) of the main path steps. Total wait 2.8 days, total work 2.8 hours</td>
+</tr>
+</tbody>
+</table>
+<p>The totals at the bottom are what matter.</p>
+<table>
+<thead>
+<tr>
+<th>Per case (average)</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lead time</td>
+<td>3.0 days (median 2.9 days, p80 4.8 days)</td>
+</tr>
+<tr>
+<td>Total work</td>
+<td>2.9 hours (human judgment + agent work, excluding rework)</td>
+</tr>
+<tr>
+<td><strong>Flow efficiency</strong></td>
+<td><strong>3.9%</strong></td>
+</tr>
+<tr>
+<td>Product of first-pass rates of all steps</td>
+<td>77%</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Waiting comes in two kinds too</p>
+<p>The explanation under the map says that about half (46%) of the wait before Finance review is <strong>waiting in line</strong>: time spent waiting because Seoyeon Park hadn't yet finished other cases that reached her first. The rest is <strong>waiting for the owner</strong>: time spent waiting for the part of the day when Seoyeon Park does this work (a little over an hour in the morning). Waiting in line shrinks when less work piles up, but waiting for the owner only shrinks when the way of working changes. This split is used as is in the what-if calculation in <a href="critical-path.html">Chapter 22</a>.</p>
+</div>
+<h2 id="the-theory-of-constraints-a-chain-is-only-as-strong-as-its-weakest-link">The theory of constraints — a chain is only as strong as its weakest link<a class="anchor" href="#the-theory-of-constraints-a-chain-is-only-as-strong-as-its-weakest-link" title="Permanent link">#</a></h2>
+<p>The <strong>theory of constraints</strong> (TOC) is an idea put forward by Eliyahu Goldratt. When work runs through a chain of steps, the overall speed is set by <strong>the single slowest step (the constraint)</strong>. However fast you make the other steps, more work just piles up in front of the constraint, and the whole doesn't get faster.</p>
+<p>You look at three numbers to find the constraint.</p>
+<table>
+<thead>
+<tr>
+<th>Number</th>
+<th>Meaning</th>
+<th>On this screen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arrivals (demand)</td>
+<td>How many items reach that person a day</td>
+<td>The average number of arrivals per weekday</td>
+</tr>
+<tr>
+<td>Capacity</td>
+<td>How many of these items that person can finish a day</td>
+<td>Time actually spent on days when work piled up ÷ work time per case</td>
+</tr>
+<tr>
+<td>Utilization</td>
+<td>Arrivals ÷ capacity</td>
+<td>The closer to 100%, the riskier</td>
+</tr>
+</tbody>
+</table>
+<p>It matters that capacity is <strong>read from the records</strong>, not typed in by someone. Seoyeon Park doesn't do only finance reviews. So capacity isn't "8 hours a day ÷ 42 minutes per case." It's <strong>the time she actually spent on this work</strong> on days when work had piled up and she should have been working without a break (days when a case waiting at noon still hadn't started at 6 p.m.).</p>
+<h3 id="high-utilization-makes-waiting-explode">High utilization makes waiting explode<a class="anchor" href="#high-utilization-makes-waiting-explode" title="Permanent link">#</a></h3>
+<p>Utilization and waiting don't move in a straight line. Queueing theory says waiting grows roughly in proportion to utilization ÷ (1 − utilization).</p>
+<table>
+<thead>
+<tr>
+<th>Utilization</th>
+<th>Utilization ÷ (1 − utilization)</th>
+<th>Compared with 50%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50%</td>
+<td>1</td>
+<td>1×</td>
+</tr>
+<tr>
+<td>80%</td>
+<td>4</td>
+<td>4×</td>
+</tr>
+<tr>
+<td>86%</td>
+<td>6.1</td>
+<td>6×</td>
+</tr>
+<tr>
+<td>95%</td>
+<td>19</td>
+<td>19×</td>
+</tr>
+</tbody>
+</table>
+<p>If just a little more work comes in, waiting multiplies. The other way around, lowering the constraint's utilization only a little cuts waiting a lot.</p>
+<h2 id="try-it-2-find-the-constraint">Try it 2 — Find the constraint<a class="anchor" href="#try-it-2-find-the-constraint" title="Permanent link">#</a></h2>
+<p>Open the <strong>Constraint</strong> tab. The table at the top shows the demand and capacity of each person and agent.</p>
+<figure><a href="img/value-stream-resources.webp" target="_blank" rel="noopener" title="View larger"><img alt="Arrivals, capacity, utilization and items waiting by person and agent — Seoyeon Park at 86% utilization, items waiting growing from 1.2 → 2.4" src="img/value-stream-resources.webp" / loading="lazy" decoding="async"></a><figcaption>Arrivals, capacity, utilization and items waiting by person and agent — Seoyeon Park at 86% utilization, items waiting growing from 1.2 → 2.4</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Owner</th>
+<th>Steps owned</th>
+<th>Arrivals/day</th>
+<th>Capacity/day</th>
+<th>Utilization</th>
+<th>Items waiting (before → last 2 weeks)</th>
+<th>Wait in lead time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Seoyeon Park</strong></td>
+<td>Finance review</td>
+<td>0.89</td>
+<td>1.04</td>
+<td><strong>86%</strong></td>
+<td>1.2 → <strong>2.4</strong> (Growing)</td>
+<td><strong>79%</strong></td>
+</tr>
+<tr>
+<td>Minji Kim</td>
+<td>Draw floor plan</td>
+<td>0.78</td>
+<td>Spare</td>
+<td>–</td>
+<td>0.2 → 0.3</td>
+<td>15%</td>
+</tr>
+<tr>
+<td>Jinyoung Jang</td>
+<td>Receive request mail, Reply to customer</td>
+<td>1.55</td>
+<td>Spare</td>
+<td>–</td>
+<td>0.0 → 0.0</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>Quote and proposal agents</td>
+<td>Draft quote, Write proposal</td>
+<td>0.75 · 0.86</td>
+<td>Spare</td>
+<td>–</td>
+<td>0</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<p>In our run the Quote agent and the Proposal agent each appear twice on the screen, the second time at 0.03 a day: the two cases run for real recorded the same agents under another name, so they are counted as separate rows.</p>
+<p>"Spare" in the capacity column means there were hardly any days when work piled up, so capacity never hit its limit. Only Seoyeon Park has 86% utilization, and the items waiting in front of her have grown over the last 2 weeks. As requests increased in October, she came close to her capacity. <strong>The constraint is Finance review (Seoyeon Park).</strong></p>
+<h2 id="five-focusing-steps-identify-exploit-subordinate-elevate-repeat">Five focusing steps — identify → exploit → subordinate → elevate → repeat<a class="anchor" href="#five-focusing-steps-identify-exploit-subordinate-elevate-repeat" title="Permanent link">#</a></h2>
+<p>The theory of constraints sets the order for dealing with a constraint in five steps. At the bottom of the screen are the five steps filled in with this process's numbers. Effects attached to each action, like "lead time 2.2 days → 1.4 days," come from the what-if calculation in <a href="critical-path.html">Chapter 22</a>. Their starting point, 2.2 days, is the expected lead time of the critical path calculation there, not the measured average.</p>
+<figure><a href="img/value-stream-focus.webp" target="_blank" rel="noopener" title="View larger"><img alt="The five focusing steps of the theory of constraints — from 1 Identify to 4 Elevate. Each action shows lead time, flow efficiency and utilization before → after, and a &quot;View in Run improvement →&quot; button" src="img/value-stream-focus.webp" / loading="lazy" decoding="async"></a><figcaption>The five focusing steps of the theory of constraints — from 1 Identify to 4 Elevate. Each action shows lead time, flow efficiency and utilization before → after, and a &quot;View in Run improvement →&quot; button</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Meaning</th>
+<th>In this process</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Identify</td>
+<td>Decide where the constraint is</td>
+<td>Finance review (Seoyeon Park). 0.9 arrivals a day, capacity 1.0, utilization 86%, and 79% of the lead time is the wait in front of it</td>
+</tr>
+<tr>
+<td>2. Exploit</td>
+<td>Don't waste a moment of the constraint's time</td>
+<td>① An agent makes a review draft first (checking calculations and unit prices), and Seoyeon Park only checks: 2.2 days → 1.4 days ② Cut change requests so nothing is reviewed twice (13% go back; 5% of Seoyeon Park's time): 2.2 days → 1.9 days</td>
+</tr>
+<tr>
+<td>3. Subordinate</td>
+<td>Pace everything else to the constraint</td>
+<td>A limit of 2 waiting in front of Finance review (WIP limit — a cap on the amount of work in progress): when they pile up, new requests' Draw floor plan starts in order of urgency</td>
+</tr>
+<tr>
+<td>4. Elevate</td>
+<td>Add capacity at the constraint or take work off it</td>
+<td>① Quotes under ₩50 million go ahead without Finance review: 2.2 days → 21.8 hours ② One more person on Finance review: 2.2 days → 1.4 days</td>
+</tr>
+<tr>
+<td>5. Repeat</td>
+<td>When the constraint moves, go back to step 1</td>
+<td>Even with the most effective option, the constraint is still Seoyeon Park (utilization 45%) — use steps 2–4 together, and look again after the change</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/value-stream-elevate.webp" target="_blank" rel="noopener" title="View larger"><img alt="Subordinate, elevate and repeat in the five steps — WIP limit, skipping cases under the threshold (47% of the last 49 were under 50M, and 4% of those got a change request), adding a person" src="img/value-stream-elevate.webp" / loading="lazy" decoding="async"></a><figcaption>Subordinate, elevate and repeat in the five steps — WIP limit, skipping cases under the threshold (47% of the last 49 were under 50M, and 4% of those got a change request), adding a person</figcaption></figure>
+<p>A few points to note:</p>
+<ul>
+<li><strong>Exploit comes before elevate.</strong> Before hiring more people (elevate), having the constraint you already have spend its time only on checking (exploit) is cheaper and faster. The agent pre-draft is exactly that.</li>
+<li><strong>Subordinate (the WIP limit) doesn't shorten the lead time.</strong> It accepts that rushing upstream only means waiting in front of the constraint, and it reduces rework caused by requests changing while they wait. That's why it has no effect number.</li>
+<li><strong>The case for skipping cases under the threshold is in the records.</strong> Of the last 49 cases, 47% were under ₩50 million, and their change-request rate was 4%, far lower than for those at or above it (19%). It means the finance review hardly changed the result for small cases.</li>
+<li><strong>Repeat</strong> means opening this screen again. Once new instances pile up after the improvement, the constraint might move to Minji Kim (Draw floor plan).</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">It's the same flow as AI transformation (AX) consulting</p>
+<p>Diagnosis (the breakdown in <a href="bottleneck.html">Chapter 20</a>) → value stream (this chapter's map) → bottleneck (constraint) → agents and automation (pre-drafts, automation) → process redesign (applying the improvement in <a href="critical-path.html">Chapter 22</a>) is exactly the flow of an AI transformation consulting engagement. The last part, change management, is up to people — if you change a threshold, Finance and the proposal team have to agree on it.</p>
+</div>
+<h2 id="next">Next<a class="anchor" href="#next" title="Permanent link">#</a></h2>
+<p>The constraint is Finance review (Seoyeon Park), and you have improvement candidates from the five steps. In the next chapter you'll look at the chain of steps that sets the total duration (the critical path), calculate how much the lead time would drop before actually changing anything, and then apply the option you pick as a new version (<a href="critical-path.html">Chapter 22</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>A process has a lead time of 5 days (120 hours) per case and 6 hours of total work. What's its flow efficiency? Which affects the lead time more: halving the work or halving the waiting?</li>
+<li>Why does Minji Kim's capacity show as "Spare"? Does it mean she can do an unlimited amount in a day?</li>
+<li>The constraint is Seoyeon Park. If you automate Draw floor plan with an agent, what happens to the lead time? Explain with the theory of constraints.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>6 ÷ 120 = 5%. Halving the work saves 3 hours; halving the waiting saves 57 hours. Cutting the waiting has a much bigger effect.</li>
+<li>Because there were hardly any days when work piled up (days when a case waiting at noon still hadn't started by evening), so there's no record of her capacity hitting its limit. It doesn't mean unlimited; it means "with today's demand, she has never been short."</li>
+<li>It drops a little (the floor plan is on the main path, so by those few hours), but not much. Even if the floor plan finishes sooner, the proposal still waits in front of Seoyeon Park. Improving a step that isn't the constraint only turns into more waiting in front of the constraint. You can check this yourself with the what-if calculation in <a href="critical-path.html">Chapter 22</a>.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="bottleneck.html"><span>Previous</span>Find the bottleneck — where does the time leak?</a><a class="next" href="critical-path.html"><span>Next</span>Critical path and running improvements</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Process GPT Lite in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#value-stream-time-working-and-time-waiting">Value stream — time working and time waiting</a><ul><li><a href="#flow-efficiency">Flow efficiency</a></li></ul></li><li><a href="#try-it-1-the-value-stream-map">Try it 1 — The value stream map</a></li><li><a href="#the-theory-of-constraints-a-chain-is-only-as-strong-as-its-weakest-link">The theory of constraints — a chain is only as strong as its weakest link</a><ul><li><a href="#high-utilization-makes-waiting-explode">High utilization makes waiting explode</a></li></ul></li><li><a href="#try-it-2-find-the-constraint">Try it 2 — Find the constraint</a></li><li><a href="#five-focusing-steps-identify-exploit-subordinate-elevate-repeat">Five focusing steps — identify → exploit → subordinate → elevate → repeat</a></li><li><a href="#next">Next</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
