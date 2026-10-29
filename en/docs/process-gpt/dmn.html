@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business rules (DMN) — let a table make the decision — Process GPT Tutorial</title>
+<meta name="description" content="Describe the price list&#x27;s volume discount in words to make a **decision table (DMN)**, save it as a version, and test it in inference mode. Then ask **Hanbit Office Quote Advisor**, which has the rule attached, and it answers with the discount rate from that rule.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/dmn.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Business rules (DMN) — let a table make the decision — Process GPT Tutorial">
+<meta property="og:description" content="Describe the price list&#x27;s volume discount in words to make a **decision table (DMN)**, save it as a version, and test it in inference mode. Then ask **Hanbit Office Quote Advisor**, which has the rule attached, and it answers with the discount rate from that rule.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/dmn.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><span class="soon"><span class="n">05</span>Org chart and role owners<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">06</span>Run a process and handle tasks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">07</span>Approve and reject — gateways and going back<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><span class="soon"><span class="n">11</span>Teach ways of working with skills<em>Coming soon</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><span class="soon"><span class="n">14</span>Connect external tools with MCP<em>Coming soon</em></span></li>
+<li><a href="dmn.html" class="on" aria-current="page"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><span class="soon"><span class="n">16</span>Execution analytics — lead time and bottlenecks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">17</span>Strategy board and KPIs<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><span class="soon"><span class="n">19</span>Final project<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Tools and rules<span class="chap">15</span></div>
+    <h1>Business rules (DMN) — let a table make the decision</h1>
+    <article>
+<blockquote>
+<p>Describe the price list's volume discount in words to make a <strong>decision table (DMN)</strong>, save it as a version, and test it in inference mode. Then ask <strong>Hanbit Office Quote Advisor</strong>, which has the rule attached, and it answers with the discount rate from that rule.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/9QCLJxgb5nY" title="Business rules (DMN) — let a table make the decision — video 3:25" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-a-decision-table">Why a decision table<a class="anchor" href="#why-a-decision-table" title="Permanent link">#</a></h2>
+<p>When a rule like “20–49 of the same product get 5%, 50–99 get 8% …” sits in a document as text, people and AI have to reread and interpret it every time. A <strong>decision table</strong> puts such rules into rows of “condition (When) → result (Then)”. The standard name is DMN (Decision Model and Notation), and Process GPT calls it a <strong>business rule</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Rule written as text</th>
+<th>Decision table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Each reader may interpret it differently</td>
+<td>Each condition has exactly one result row</td>
+</tr>
+<tr>
+<td>Hard to find what changed after an edit</td>
+<td>Saved as versions you can compare</td>
+</tr>
+<tr>
+<td>The agent has to find and read the document</td>
+<td>The agent finds the rule and uses it directly</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-1-make-a-decision-table-by-describing-it">Try it 1 — Make a decision table by describing it<a class="anchor" href="#try-it-1-make-a-decision-table-by-describing-it" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Under <strong>Agent Colleagues</strong> in the sidebar, open <strong>Hanbit Office Quote Advisor</strong> (<a href="agent-chat.html">Chapter 10</a>).</li>
+<li>At the very bottom of the profile on the left, click <strong>＋ next to Business Rule</strong>. The DMN editor and a chat box open on the right, and the mode at the bottom left of the chat box is <strong>Creation</strong>.</li>
+<li>Type the following and send it.</li>
+</ol>
+<figure><a href="img/dmn-editor.webp" target="_blank" rel="noopener" title="View larger"><img alt="Business Rule ＋ — “Business Rule ＋” below the agent profile, the DMN editor (DRD) open on the right with an empty “New Decision” box, and the chat box in Creation mode" src="img/dmn-editor.webp" / loading="lazy" decoding="async"></a><figcaption>Business Rule ＋ — “Business Rule ＋” below the agent profile, the DMN editor (DRD) open on the right with an empty “New Decision” box, and the chat box in Creation mode</figcaption></figure>
+<div class="hl"><pre><span></span><code>Make the Hanbit Office volume discount rule as a decision table. Input: order quantity of the same product (number). Output: discount (%). 1–19 → 0%, 20–49 → 5%, 50–99 → 8%, 100 or more → 12%.
+</code></pre></div>
+
+<p>In our run, after about 12 seconds the decision box was renamed <strong>Hanbit Office Volume Discount</strong>, and the chat below the editor said: “Created a Hanbit Office volume discount decision table: input is order quantity (number), output is discount (%). The table includes four rules covering all specified quantity ranges.”, followed by a list of the changes it made. Scroll down below the editor to see the chat.</p>
+<figure><a href="img/dmn-generated.webp" target="_blank" rel="noopener" title="View larger"><img alt="After sending — the decision box in the DRD is now named “Hanbit Office Volume Discount”" src="img/dmn-generated.webp" / loading="lazy" decoding="async"></a><figcaption>After sending — the decision box in the DRD is now named “Hanbit Office Volume Discount”</figcaption></figure>
+<h2 id="try-it-2-open-the-table">Try it 2 — Open the table<a class="anchor" href="#try-it-2-open-the-table" title="Permanent link">#</a></h2>
+<p>Click the blue table icon at the top left of the decision box to open the decision table.</p>
+<figure><a href="img/dmn-table.webp" target="_blank" rel="noopener" title="View larger"><img alt="Decision table — name “Hanbit Office Volume Discount”, Hit policy “Unique”, When “order_quantity” (number), Then “discount” (number), 4 rule rows" src="img/dmn-table.webp" / loading="lazy" decoding="async"></a><figcaption>Decision table — name “Hanbit Office Volume Discount”, Hit policy “Unique”, When “order_quantity” (number), Then “discount” (number), 4 rule rows</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>When order_quantity</th>
+<th>Then discount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&gt;= 1 and &lt;= 19</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&gt;= 20 and &lt;= 49</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&gt;= 50 and &lt;= 99</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&gt;= 100</code></td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>Hit policy <strong>Unique</strong> means exactly one row must match any input. Check in the table that the ranges don't overlap. You can click a cell to edit it, and add a row with the ＋ below the table. Go back with <strong>‹</strong> (View DRD) at the top left.</p>
+<h2 id="try-it-3-save-as-a-version">Try it 3 — Save as a version<a class="anchor" href="#try-it-3-save-as-a-version" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click 💾 next to <strong>New DMN Decision</strong> at the top right of the editor. The <strong>Save DMN</strong> dialog opens.</li>
+<li>Enter <code>Hanbit Office Volume Discount</code> in <strong>Name</strong>, and in <strong>Description</strong> write what the rule is for (for example, <code>Price list "2. Volume discount" — discount by quantity of the same product</code>). Leave <strong>Version Tag</strong> at <strong>Minor Update</strong> ("Current Version : v0.0 -&gt; Next Version : v0.1").</li>
+<li>Click <strong>Save</strong>. “Saved successfully.” appears, the editor's title changes from <strong>New DMN Decision</strong> to <strong>Hanbit Office Volume Discount</strong>, and the rule shows up under <strong>Business Rule</strong> in the profile.</li>
+</ol>
+<figure><a href="img/dmn-save.webp" target="_blank" rel="noopener" title="View larger"><img alt="Save DMN dialog — Name “Hanbit Office Volume Discount”, Version Tag Minor Update (v0.0 to v0.1), and the Description of the rule" src="img/dmn-save.webp" / loading="lazy" decoding="async"></a><figcaption>Save DMN dialog — Name “Hanbit Office Volume Discount”, Version Tag Minor Update (v0.0 to v0.1), and the Description of the rule</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">You need a name to save</p>
+<p>If <strong>Name</strong> is empty, you can't click <strong>Save</strong>. As with process definitions (<a href="definition.html">Chapter 4</a>), the version goes up one step each time you save.</p>
+</div>
+<h2 id="try-it-4-test-it-in-inference-mode">Try it 4 — Test it in inference mode<a class="anchor" href="#try-it-4-test-it-in-inference-mode" title="Permanent link">#</a></h2>
+<p>Switch the mode at the bottom left of the chat box from <strong>Creation</strong> to <strong>Inference</strong>, then ask:</p>
+<div class="hl"><pre><span></span><code>What is the discount for an order quantity of 40?
+</code></pre></div>
+
+<p>In our run, after about 12 seconds the answer came back. It first walked through the table and its hit policy, then gave a <strong>Final Result</strong>: “For an order quantity of 40, the discount applied is 5%.”, a small table (Order Quantity 40, Discount Rate 5%), “This is because 40 falls within the range 20–49, as specified by Rule 2.”, a practical note and a summary.</p>
+<figure><a href="img/dmn-infer.webp" target="_blank" rel="noopener" title="View larger"><img alt="Inference mode — mode Inference and “5. Final Result”: for an order quantity of 40 the discount is 5%, matched by Rule 2, with a practical note and a summary" src="img/dmn-infer.webp" / loading="lazy" decoding="async"></a><figcaption>Inference mode — mode Inference and “5. Final Result”: for an order quantity of 40 the discount is 5%, matched by Rule 2, with a practical note and a summary</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">Test with boundary values</p>
+<p>Ask about quantities where the range changes, such as 19 and 20, 49 and 50, or 99 and 100. You'll quickly see whether the table's “or more” and “less than” work as intended.</p>
+</div>
+<h2 id="try-it-5-ask-the-agent-using-the-rule">Try it 5 — Ask the agent using the rule<a class="anchor" href="#try-it-5-ask-the-agent-using-the-rule" title="Permanent link">#</a></h2>
+<p>Open the agent again, and <strong>Hanbit Office Volume Discount</strong> appears under <strong>Business Rule</strong> in the profile (scroll the profile down to see it). Ask in <strong>New Chat</strong> on the right.</p>
+<figure><a href="img/dmn-listed.webp" target="_blank" rel="noopener" title="View larger"><img alt="The agent opened again — the profile on the left down to “Business Rule ＋”, and an empty New Chat on the right" src="img/dmn-listed.webp" / loading="lazy" decoding="async"></a><figcaption>The agent opened again — the profile on the left down to “Business Rule ＋”, and an empty New Chat on the right</figcaption></figure>
+<div class="hl"><pre><span></span><code>Find the registered business rule &quot;Hanbit Office Volume Discount&quot; and tell me the discount rate for an order of 60 Mesh Chair Air.
+</code></pre></div>
+
+<p>In our run, after about 25 seconds it answered from the rule: it showed the rule's four ranges as a table (1–19 → 0, 20–49 → 5, 50–99 → 8, 100 or more → 12), then “Order Quantity: 60 — Applicable Discount Rate: 8%” and “If you order 60 Mesh Chair Air, you will receive an 8% discount according to the "Hanbit Office Volume Discount" business rule.” It finds the rule and answers even though you didn't pick the price list from the Knowledge Base.</p>
+<figure><a href="img/dmn-agent-answer.webp" target="_blank" rel="noopener" title="View larger"><img alt="The agent's answer — the Hanbit Office Volume Discount rules table and “Applicable Discount Rate: 8%” for an order of 60" src="img/dmn-agent-answer.webp" / loading="lazy" decoding="async"></a><figcaption>The agent's answer — the Hanbit Office Volume Discount rules table and “Applicable Discount Rate: 8%” for an order of 60</figcaption></figure>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>The decision table now handles the discount rate. Approval rules in the quote approval policy, such as “under KRW 30,000,000 the sales team lead approves; at KRW 30,000,000 or more the finance officer approves too”, can be made into a table the same way. Next comes the settings screen, where you manage what you've made so far (<a href="settings.html">Chapter 18</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>What does the decision table's hit policy <strong>Unique</strong> mean?</li>
+<li>If you ask in inference mode “What if the quantity is 50?”, what percentage should you get? Which row of the table is it?</li>
+<li>If you turned the approver rule in Article 5 of the quote approval policy into a decision table, what would the input and output be?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>Exactly one row must match any input. The ranges must not overlap.</li>
+<li>8%, row 3 (<code>&gt;= 50 and &lt;= 99</code>). 50 doesn't fall under row 2's <code>&lt;= 49</code>.</li>
+<li>The input is “quote total (excluding VAT, number)” and the output is “approver” (e.g. <code>sales team lead</code>, <code>sales team lead + finance officer</code>). The rows are <code>&lt; 30000000</code> → sales team lead and <code>&gt;= 30000000</code> → sales team lead + finance officer.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="document-process.html"><span>Previous</span>Creating a process from a document</a><a class="next" href="settings.html"><span>Next</span>Settings — bring in colleagues and change the screen</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-a-decision-table">Why a decision table</a></li><li><a href="#try-it-1-make-a-decision-table-by-describing-it">Try it 1 — Make a decision table by describing it</a></li><li><a href="#try-it-2-open-the-table">Try it 2 — Open the table</a></li><li><a href="#try-it-3-save-as-a-version">Try it 3 — Save as a version</a></li><li><a href="#try-it-4-test-it-in-inference-mode">Try it 4 — Test it in inference mode</a></li><li><a href="#try-it-5-ask-the-agent-using-the-rule">Try it 5 — Ask the agent using the rule</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

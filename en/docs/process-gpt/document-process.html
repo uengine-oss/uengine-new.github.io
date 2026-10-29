@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creating a process from a document — Process GPT Tutorial</title>
+<meta name="description" content="Pick the **Hanbit Office Bulk Order Quote Approval Policy** in the Knowledge Base and ask the Deep Agent to build a process that follows it. Approve the draft and pick two agents for the stock check and quote calculation, and the process, agents and input forms are created in one go. Then check the flow against the policy and ask for a fix where it differs.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/document-process.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Creating a process from a document — Process GPT Tutorial">
+<meta property="og:description" content="Pick the **Hanbit Office Bulk Order Quote Approval Policy** in the Knowledge Base and ask the Deep Agent to build a process that follows it. Approve the draft and pick two agents for the stock check and quote calculation, and the process, agents and input forms are created in one go. Then check the flow against the policy and ask for a fix where it differs.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/document-process.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><span class="soon"><span class="n">05</span>Org chart and role owners<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">06</span>Run a process and handle tasks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">07</span>Approve and reject — gateways and going back<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><span class="soon"><span class="n">11</span>Teach ways of working with skills<em>Coming soon</em></span></li>
+<li><a href="document-process.html" class="on" aria-current="page"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><span class="soon"><span class="n">14</span>Connect external tools with MCP<em>Coming soon</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><span class="soon"><span class="n">16</span>Execution analytics — lead time and bottlenecks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">17</span>Strategy board and KPIs<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><span class="soon"><span class="n">19</span>Final project<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">AI agents<span class="chap">12</span></div>
+    <h1>Creating a process from a document</h1>
+    <article>
+<blockquote>
+<p>Pick the <strong>Hanbit Office Bulk Order Quote Approval Policy</strong> in the Knowledge Base and ask the Deep Agent to build a process that follows it. Approve the draft and pick two agents for the stock check and quote calculation, and the process, agents and input forms are created in one go. Then check the flow against the policy and ask for a fix where it differs.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/djsSiSiwqDs" title="Creating a process from a document — video 4:15" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="how-this-differs-from-chapter-3">How this differs from Chapter 3<a class="anchor" href="#how-this-differs-from-chapter-3" title="Permanent link">#</a></h2>
+<p>In <a href="process-create.html">Chapter 3</a> you described the steps one by one in words. But companies already have documents such as policies and work manuals. Pick a document and say "follow this policy", and the Deep Agent reads it and pulls out the steps, owners and gateways.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Chapter 3 — described in words</th>
+<th>This chapter — from a document</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent</td>
+<td>Basic Agent</td>
+<td>Deep Agent</td>
+</tr>
+<tr>
+<td>Based on</td>
+<td>Sentences you write</td>
+<td>A policy document in the Knowledge Base</td>
+</tr>
+<tr>
+<td>What you get</td>
+<td>Process and forms</td>
+<td>Process, forms and <strong>agents for the steps</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The key points of the policy (<code>Hanbit-Office-Quote-Approval-Policy.pdf</code>, uploaded in <a href="knowledge.html">Chapter 8</a>):</p>
+<table>
+<thead>
+<tr>
+<th>Article</th>
+<th>What it says</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Article 2 — Receiving the quote request</td>
+<td>The sales representative receives and records the quote request (company name, contact person, products and quantities, installation region, requested delivery date)</td>
+</tr>
+<tr>
+<td>Article 3 — Stock check</td>
+<td>Confirm the stock and expected arrival date. An agent may do this</td>
+</tr>
+<tr>
+<td>Article 4 — Quote calculation</td>
+<td>Calculate the amount, discount, installation fee and total from the price list. An agent may do this</td>
+</tr>
+<tr>
+<td>Article 5 — Approval</td>
+<td>Under KRW 30,000,000: sales team lead. KRW 30,000,000 or more: sales team lead, then the finance officer. A rejected quote goes back to quote calculation</td>
+</tr>
+<tr>
+<td>Article 6 — Reply to the customer</td>
+<td>Send the quote and record the date sent and the quote validity (30 days)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-1-pick-the-policy-and-make-the-request">Try it 1 — Pick the policy and make the request<a class="anchor" href="#try-it-1-pick-the-policy-and-make-the-request" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In the chat box on Home (the pencil icon), make sure the agent is <strong>Deep Agent</strong>.</li>
+<li>＋ › <strong>Knowledge Base</strong> › <strong>Expand all</strong> › check <code>Hanbit-Office-Quote-Approval-Policy.pdf</code> › <strong>Use 1 file</strong>.</li>
+<li>Send the text below.</li>
+</ol>
+<figure><a href="img/dp-pick.webp" target="_blank" rel="noopener" title="View larger"><img alt="The Knowledge Base picker — “Hanbit-Office-Quote-Approval-Policy.pdf” checked" src="img/dp-pick.webp" / loading="lazy" decoding="async"></a><figcaption>The Knowledge Base picker — “Hanbit-Office-Quote-Approval-Policy.pdf” checked</figcaption></figure>
+<div class="hl"><pre><span></span><code>Search the selected knowledge base for the Hanbit Office Bulk Order Quote Approval Policy and create a bulk order quote process that follows it. Keep its steps and owners, the approval by amount, and sending rejected quotes back to quote calculation. Let agents handle the stock check and quote calculation steps, and make an input form for each step.
+</code></pre></div>
+
+<figure><a href="img/dp-typed.webp" target="_blank" rel="noopener" title="View larger"><img alt="The request typed — the “Hanbit-Office-Quote-Approval-Policy.pdf” chip above the chat box" src="img/dp-typed.webp" / loading="lazy" decoding="async"></a><figcaption>The request typed — the “Hanbit-Office-Quote-Approval-Policy.pdf” chip above the chat box</figcaption></figure>
+<h2 id="try-it-2-approve-the-draft">Try it 2 — Approve the draft<a class="anchor" href="#try-it-2-approve-the-draft" title="Permanent link">#</a></h2>
+<p>In our run, the draft window appeared after 26 seconds. Its title is the Deep Agent's opening sentence: "Here is the proposed process draft for the "Hanbit Office Bulk Order Quote Approval Process," derived directly from the official policy and following process best practices. Please review — if you want to add or change any steps, let me know." The draft follows the policy in five steps. The sales representative receives the quote request and fills in the quote request form. The stock checker (an agent) confirms the stock, the expected arrival date and whether the requested delivery date can be met. The quote calculator (an agent) calculates the unit price, volume discount, installation fee and total from the price list. Under KRW 30 million, the sales team lead approves or rejects; at KRW 30 million or more, the sales team lead approves first, then the finance officer. A rejected quote goes back to quote calculation with the approver's reason. Last, the sales representative sends the quote and records the date sent and the 30-day validity. The body ends with <strong>Shall I proceed as drafted? Tell me if you want to add or change any steps.</strong> In the current version, the opening sentence is repeated twice in the body and the headings show raw <code>**</code> marks. You can ignore both.</p>
+<figure><a href="img/dp-draft.webp" target="_blank" rel="noopener" title="View larger"><img alt="The draft window — the opening sentence as the title and twice more in the body, the “Proposed Process Flow” heading with raw asterisk marks, “Approve” · “Reject”, “Skip” and “Submit response”. The document used under “Knowledge Base” on the right, the skill bpmn-process-generation-skill under “Context”" src="img/dp-draft.webp" / loading="lazy" decoding="async"></a><figcaption>The draft window — the opening sentence as the title and twice more in the body, the “Proposed Process Flow” heading with raw asterisk marks, “Approve” · “Reject”, “Skip” and “Submit response”. The document used under “Knowledge Base” on the right, the skill bpmn-process-generation-skill under “Context”</figcaption></figure>
+<p>If it matches the policy, choose <strong>Approve</strong> and click <strong>Submit response</strong>. If something needs changing, choose <strong>Reject</strong> and write what to change in the box below (<strong>Add your reasoning or requested changes (optional)</strong>).</p>
+<div class="admonition note">
+<p class="admonition-title">When the draft comes as a chat message</p>
+<p>The Deep Agent sometimes shows the draft as a chat message instead of the window and asks whether to create the process with this flow. Then reply "Yes, please create the process with this flow."</p>
+</div>
+<h2 id="try-it-3-pick-agents-for-the-steps">Try it 3 — Pick agents for the steps<a class="anchor" href="#try-it-3-pick-agents-for-the-steps" title="Permanent link">#</a></h2>
+<p>Next, the <strong>Pick the items to add to this process (skip if none)</strong> window appears. These are candidates the Deep Agent suggests after reading the policy. In our run, it appeared 70 seconds after the request.</p>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>What the window says</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[Agent] Stock check automation agent</td>
+<td>Handles the stock check step using the inventory system (activity: stock_check)</td>
+</tr>
+<tr>
+<td>[Agent] Quote calculation automation agent</td>
+<td>Handles calculation of quote, discounts and fees as per the official price list (activity: quote_calculation)</td>
+</tr>
+<tr>
+<td>[DMN] Approval decision table</td>
+<td>Automates the approval routing and escalation …</td>
+</tr>
+</tbody>
+</table>
+<p>In our run, the window also suggested a <strong>[DMN]</strong> item (a rule as a decision table, <a href="dmn.html">Chapter 15</a>). Other runs can suggest <strong>[Skill]</strong> items (documents describing how to do the work, Chapter 11, coming soon). This chapter picks only the agents.</p>
+<p>Check <strong>[Agent] Stock check automation agent</strong> and <strong>[Agent] Quote calculation automation agent</strong> (<strong>2 selected</strong>), leave the [DMN] item unchecked, and click <strong>Submit response</strong>.</p>
+<figure><a href="img/dp-candidates-picked.webp" target="_blank" rel="noopener" title="View larger"><img alt="Items to add — the two agents checked, “[DMN] Approval decision table” unchecked, “2 selected”. A preview of the flow already built, in the Work folder on the right" src="img/dp-candidates-picked.webp" / loading="lazy" decoding="async"></a><figcaption>Items to add — the two agents checked, “[DMN] Approval decision table” unchecked, “2 selected”. A preview of the flow already built, in the Work folder on the right</figcaption></figure>
+<h2 id="try-it-4-review-and-save">Try it 4 — Review and save<a class="anchor" href="#try-it-4-review-and-save" title="Permanent link">#</a></h2>
+<p>In our run, about 128 seconds after the request, the Deep Agent said "I've created the Hanbit Office Bulk Order Quote Approval process, including agent-powered stock check and quote calculation steps, amount-based approval routing, and rejection loops, with dedicated input forms for each step." and asked us to review it and press "Save". The <strong>Work folder</strong> on the right already held 11 items. We replied "Yes, please create the process with this flow." anyway, and at about 157 seconds it answered "I've created the process with the specified flow—every step, owner, approval logic, agent-based automation, and input form is now implemented in files and ready for review." The Work folder still showed the same 11 items. This time no "holding the result back" notice came. If you get one, reply "Yes, please create the process with this flow."</p>
+<table>
+<thead>
+<tr>
+<th>Work folder</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hanbit Office Bulk Order Quote Approval Process.bpmn</td>
+<td>The flow. Click it for a preview below (<strong>Preview</strong> · <strong>XML</strong> · <strong>JSON</strong>)</td>
+</tr>
+<tr>
+<td>agent/Stock check automation agent · agent/Quote calculation automation agent</td>
+<td>Agent files for the two agent steps</td>
+</tr>
+<tr>
+<td>form/receive_quote_request.form · quote_calculation · approve_under_30m · approve_over_30m_saleslead · send_quote_to_customer_over_30m …</td>
+<td>An input form for each step</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/dp-generated.webp" target="_blank" rel="noopener" title="View larger"><img alt="Done — the reply “Yes, please create the process with this flow.”, “I've created the process with the specified flow…”, 11 items in the Work folder and “Save”" src="img/dp-generated.webp" / loading="lazy" decoding="async"></a><figcaption>Done — the reply “Yes, please create the process with this flow.”, “I've created the process with the specified flow…”, 11 items in the Work folder and “Save”</figcaption></figure>
+<p>Click <strong>Save</strong> at the top right of the Work folder. In our run, saving took a little over 2 minutes. "✅ Saved. Check the generated processes, skills, and agents." appears, with the saved items as cards: <strong>Generated BPMN process (1)</strong> (Hanbit Office Bulk Order Quote Approval Process, ID <code>bulk_order_quote_approval</code>) and <strong>Generated agents (2)</strong> (Stock check automation agent and Quote calculation automation agent). The <strong>Save</strong> button turns into <strong>Saved</strong>. This time both agent steps got new agents; the <strong>Hanbit Office Quote Advisor</strong> you made in Chapter 9 wasn't used. Once you go to another screen or refresh, the new agents appear under <strong>Agent Colleagues</strong> in the sidebar (for example <strong>Quote calculation automation agent</strong>, with the role "Quote Calculator (Agent)").</p>
+<figure><a href="img/dp-saved.webp" target="_blank" rel="noopener" title="View larger"><img alt="After saving — “Saved. Check the generated processes, skills, and agents.”, Generated BPMN process (1), Generated agents (2) Stock check automation agent and Quote calculation automation agent, and “Saved” at the top of the Work folder" src="img/dp-saved.webp" / loading="lazy" decoding="async"></a><figcaption>After saving — “Saved. Check the generated processes, skills, and agents.”, Generated BPMN process (1), Generated agents (2) Stock check automation agent and Quote calculation automation agent, and “Saved” at the top of the Work folder</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">Nothing is kept until you save</p>
+<p>Up to <strong>Save</strong>, everything exists only in the Work folder, even when the Deep Agent's message says the files "have been generated and saved". If you leave without clicking <strong>Save</strong>, the process doesn't go into the Process Definition Map.</p>
+</div>
+<h2 id="try-it-5-check-the-flow-against-the-policy">Try it 5 — Check the flow against the policy<a class="anchor" href="#try-it-5-check-the-flow-against-the-policy" title="Permanent link">#</a></h2>
+<p><strong>Hanbit Office Bulk Order Quote Approval Process</strong> now appears under <strong>Uncategorized</strong> in the Process Definition Map on Home. Click it to open it.</p>
+<figure><a href="img/dp-map.webp" target="_blank" rel="noopener" title="View larger"><img alt="Process Definition Map — “Sales Proposal Creation” (Chapter 3) and “Hanbit Office Bulk Order Quote Approval Process” under Uncategorized, both marked New, and the new Quote calculation automation agent in the sidebar" src="img/dp-map.webp" / loading="lazy" decoding="async"></a><figcaption>Process Definition Map — “Sales Proposal Creation” (Chapter 3) and “Hanbit Office Bulk Order Quote Approval Process” under Uncategorized, both marked New, and the new Quote calculation automation agent in the sidebar</figcaption></figure>
+<figure><a href="img/dp-bpmn.webp" target="_blank" rel="noopener" title="View larger"><img alt="The first generated flow — lanes Sales Representative · Stock Checker (Agent) · Quote Calculator (Agent) · Sales Team Lead and the finance officer's approval in the bottom lane, the “Approval by amount” gateway right after Quote calculation, and a “Rejected” label in the top-left corner" src="img/dp-bpmn.webp" / loading="lazy" decoding="async"></a><figcaption>The first generated flow — lanes Sales Representative · Stock Checker (Agent) · Quote Calculator (Agent) · Sales Team Lead and the finance officer's approval in the bottom lane, the “Approval by amount” gateway right after Quote calculation, and a “Rejected” label in the top-left corner</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>What to check</th>
+<th>Policy</th>
+<th>First generated flow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lanes</td>
+<td>Sales representative, stock check, quote calculation, sales team lead, finance officer</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Stock check · quote calculation</td>
+<td>An agent may do them</td>
+<td><strong>Stock Checker (Agent)</strong> and <strong>Quote Calculator (Agent)</strong> lanes</td>
+</tr>
+<tr>
+<td>Approval by amount</td>
+<td>The sales team lead; for KRW 30,000,000 or more, then the finance officer</td>
+<td>Same order: <strong>Approval by amount</strong> after <strong>Quote calculation</strong> sends under KRW 30M to <strong>Approval (under 30M)</strong>, and 30M or more to <strong>Approval (over 30M): Sales Team Lead</strong> → <strong>Approval (over 30M): Finance Officer</strong></td>
+</tr>
+<tr>
+<td>Approved · rejected</td>
+<td>Approved → reply to the customer. Rejected → back to quote calculation</td>
+<td>Partly. <strong>Approval outcome (under 30M)</strong> and <strong>Approval outcome (over 30M)</strong> (after the finance officer) send Approved to the customer and Rejected back to <strong>Quote calculation</strong>. But <strong>Approval (over 30M): Sales Team Lead</strong> goes straight to the finance officer, with no approve or reject decision</td>
+</tr>
+</tbody>
+</table>
+<p>The last row differs. The amount split and the order of approvals are right, but on the KRW 30,000,000-or-more path a quote the sales team lead rejects has nowhere to go. Just as you checked the draft quote against the price list in <a href="agent-chat.html">Chapter 10</a>, check flows the AI makes against the source too.</p>
+<div class="admonition note">
+<p class="admonition-title">Arrows bent to the top-left</p>
+<p>In the current version, some arrows (here, the <strong>Rejected</strong> ones back to <strong>Quote calculation</strong>) are drawn along the top edge and bent into the top-left corner of the flow, so only their "Rejected" label shows there. Labels can also overlap steps, and the arrow from <strong>Send quote to customer</strong> to the end runs across <strong>Send quote to customer (over 30M)</strong>. Only the drawing is off: in our run, the saved definition did send those Rejected arrows back to <strong>Quote calculation</strong>.</p>
+</div>
+<h2 id="try-it-6-ask-for-a-fix">Try it 6 — Ask for a fix<a class="anchor" href="#try-it-6-ask-for-a-fix" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Stay in this chapter's chat room (<strong>Hanbit Office Bulk Order Quote Process</strong>), or reopen it from <strong>Conversations</strong> in the sidebar.</li>
+<li>Type what differs into the chat box at the bottom (not the form preview on the right) and send it. We sent the Article 5 rule below, which restates the approval order:</li>
+</ol>
+<div class="hl"><pre><span></span><code>This differs from Article 5. If the quote total is under KRW 30,000,000, the sales team lead approves and it goes straight to the reply to the customer; if it is KRW 30,000,000 or more, the finance officer must approve after the sales team lead before the reply. Fix the flow in that order.
+</code></pre></div>
+
+<p>Our message didn't name the missing rejection, but the Deep Agent fixed the flow against Article 5 and added it. If your flow has a different gap, describe that gap in your own words. In our run, the notice "Something went wrong while putting the process files together, so I'm holding the result back." came back after 26 seconds, with the reason "There's no passing validate_process_definition record yet. Try again, or tell me what to change." We replied "Yes, please fix it that way.", and at about 42 seconds the Deep Agent said the process had been fixed according to Article 5, with both approvers able to send a rejected quote back to quote calculation. We sent the same reply once more, and at about 63 seconds it confirmed: "The process flow has been fixed exactly as you specified". It also said "This revision is saved and ready for review", but nothing is kept until you click <strong>Save</strong> in the Work folder. Saving took about 2 minutes again.</p>
+<figure><a href="img/dp-fix-generated.webp" target="_blank" rel="noopener" title="View larger"><img alt="After asking for the fix — the end of the Deep Agent's last reply (“If the quote is rejected at any approval step, the process loops back to quote calculation for corrections. This revision is saved and ready for review…”), 11 items in the Work folder with “Save”, and the form “Approval for Over 30M (Finance Officer)” in the preview" src="img/dp-fix-generated.webp" / loading="lazy" decoding="async"></a><figcaption>After asking for the fix — the end of the Deep Agent's last reply (“If the quote is rejected at any approval step, the process loops back to quote calculation for corrections. This revision is saved and ready for review…”), 11 items in the Work folder with “Save”, and the form “Approval for Over 30M (Finance Officer)” in the preview</figcaption></figure>
+<p>In our run, the fix was saved over the same definition, so the map still shows one <strong>Hanbit Office Bulk Order Quote Approval Process</strong>.</p>
+<figure><a href="img/dp-fix-map.webp" target="_blank" rel="noopener" title="View larger"><img alt="The map after the fix — one “Hanbit Office Bulk Order Quote Approval Process” and “Sales Proposal Creation” under Uncategorized" src="img/dp-fix-map.webp" / loading="lazy" decoding="async"></a><figcaption>The map after the fix — one “Hanbit Office Bulk Order Quote Approval Process” and “Sales Proposal Creation” under Uncategorized</figcaption></figure>
+<p>If your run saved a second definition with the same name, delete the older one:</p>
+<ol class="steps">
+<li>Open each one. The older one is the one without your fix.</li>
+<li>With the older one open, click the red trash can at the top right (<strong>Delete Process</strong>) and confirm the deletion.</li>
+</ol>
+<p>In the fixed flow, a new <strong>Sales Team Lead Approval Outcome (over 30M)</strong> decision comes after the sales team lead's approval on the KRW 30,000,000-or-more path. The rest stays as before.</p>
+<table>
+<thead>
+<tr>
+<th>After <strong>Approval by amount</strong></th>
+<th>Next</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Under KRW 30,000,000</td>
+<td><strong>Approval (under 30M)</strong> → <strong>Approval outcome (under 30M)</strong>: Approved → <strong>Send quote to customer</strong> → End; Rejected → <strong>Quote calculation</strong></td>
+</tr>
+<tr>
+<td>KRW 30,000,000 or more</td>
+<td><strong>Approval (over 30M): Sales Team Lead</strong> → <strong>Sales Team Lead Approval Outcome (over 30M)</strong>: Approved → <strong>Approval (over 30M): Finance Officer</strong>; Rejected → <strong>Quote calculation</strong>. Then <strong>Finance Officer Approval Outcome (over 30M)</strong>: Approved → <strong>Send quote to customer (over 30M)</strong> → End; Rejected → <strong>Quote calculation</strong></td>
+</tr>
+</tbody>
+</table>
+<p>In the current version, the Rejected arrows are still drawn into the top-left corner, and the label of <strong>Finance Officer Approval Outcome (over 30M)</strong> hangs below the pool. Only the drawing is off.</p>
+<figure><a href="img/dp-fix-bpmn.webp" target="_blank" rel="noopener" title="View larger"><img alt="The fixed flow — after Approval (over 30M): Sales Team Lead, the new “Sales Team Lead Approval Outcome (over 30M)” gateway sends Approved to Approval (over 30M): Finance Officer; the “Rejected” label is still in the top-left corner" src="img/dp-fix-bpmn.webp" / loading="lazy" decoding="async"></a><figcaption>The fixed flow — after Approval (over 30M): Sales Team Lead, the new “Sales Team Lead Approval Outcome (over 30M)” gateway sends Approved to Approval (over 30M): Finance Officer; the “Rejected” label is still in the top-left corner</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">Not running it yet</p>
+<p>Running this process so that agents handle the stock check and quote calculation is covered in Chapter 13 (coming soon). In the current version, the roles and agents you created aren't properly connected to the process engine, so that chapter will be published once this is fixed.</p>
+</div>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You built a process with agents in it from a policy document, checked it against the source and fixed it. The policy's numeric rules (volume discounts, approval limits) are easier to change when kept separately in a decision table. Next up: decision tables (DMN) (<a href="dmn.html">Chapter 15</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Why does this chapter use the Deep Agent rather than the Basic Agent?</li>
+<li>In the first generated flow, what matched the policy and what didn't?</li>
+<li>In the fixed flow, whose approval do a KRW 25,000,000 quote and a KRW 40,000,000 quote each need before going to the customer?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>The Deep Agent finds and reads the Knowledge Base document you picked and builds the process, form and agent files from it. The Basic Agent doesn't read the picked document, so it can make up rules, such as approval limits, that aren't in the policy.</li>
+<li>The lanes, the amount split and the order of approvals matched: the sales team lead, then the finance officer for KRW 30,000,000 or more. What didn't: on the KRW 30,000,000-or-more path, <strong>Approval (over 30M): Sales Team Lead</strong> went straight to the finance officer, so a quote the sales team lead rejects had no way back to quote calculation as the policy requires.</li>
+<li>KRW 25,000,000 needs only the sales team lead's approval (<strong>Approval (under 30M)</strong> → <strong>Send quote to customer</strong>); KRW 40,000,000 needs the sales team lead's and then the finance officer's approval before <strong>Send quote to customer (over 30M)</strong>.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="agent-chat.html"><span>Previous</span>Chatting with an agent</a><a class="next" href="dmn.html"><span>Next</span>Business rules (DMN) — let a table make the decision</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#how-this-differs-from-chapter-3">How this differs from Chapter 3</a></li><li><a href="#try-it-1-pick-the-policy-and-make-the-request">Try it 1 — Pick the policy and make the request</a></li><li><a href="#try-it-2-approve-the-draft">Try it 2 — Approve the draft</a></li><li><a href="#try-it-3-pick-agents-for-the-steps">Try it 3 — Pick agents for the steps</a></li><li><a href="#try-it-4-review-and-save">Try it 4 — Review and save</a></li><li><a href="#try-it-5-check-the-flow-against-the-policy">Try it 5 — Check the flow against the policy</a></li><li><a href="#try-it-6-ask-for-a-fix">Try it 6 — Ask for a fix</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

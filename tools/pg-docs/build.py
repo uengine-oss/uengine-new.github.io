@@ -33,6 +33,12 @@ SITE = f"https://www.uengine.org/{'en/' if EN else ''}docs/process-gpt/"
 EN_PARTS = {"시작하기": "Getting started", "프로세스 기본": "Process basics", "AI 에이전트": "AI agents",
             "도구와 규칙": "Tools and rules", "분석과 개선": "Analysis and improvement", "운영": "Operations",
             "마무리": "Final project", "부록": "Appendix"}
+# 「준비 중」 장의 영문 제목 (CHAPTERS 의 세 번째 값이 한국어라)
+EN_SOON = {"organization": "Org chart and role owners", "process-run": "Run a process and handle tasks",
+           "gateway": "Approve and reject — gateways and going back", "skills": "Teach ways of working with skills",
+           "agent-steps": "Run the steps agents handle", "mcp-hub": "Connect external tools with MCP",
+           "analytics": "Execution analytics — lead time and bottlenecks", "strategy": "Strategy board and KPIs",
+           "project": "Final project"}
 
 # (파일, 파트[, "준비 중" 제목]) — 제목은 각 md 의 첫 줄(# …)에서 읽는다. 장 번호 = 이 목록의 순서(index = 0장).
 # 세 번째 값이 있는 장은 아직 쓰지 않은 장: 사이드바에 번호와 제목만 「준비 중」으로 보이고 페이지는 만들지 않는다.
@@ -119,7 +125,7 @@ def main():
     pages = []
     for slug, part, *soon in CHAPTERS:
         if soon:
-            pages.append(dict(slug=slug, part=EN_PARTS.get(part, part) if EN else part, title=soon[0], soon=True))
+            pages.append(dict(slug=slug, part=EN_PARTS.get(part, part) if EN else part, title=EN_SOON.get(slug, soon[0]) if EN else soon[0], soon=True))
             continue
         raw = (SRC / f"{slug}.md").read_text(encoding="utf-8")
         first, rest = raw.split("\n", 1)

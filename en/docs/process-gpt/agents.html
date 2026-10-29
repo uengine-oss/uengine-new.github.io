@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creating an agent colleague — Process GPT Tutorial</title>
+<meta name="description" content="In the org chart&#x27;s **Create Agent**, describe the job in one sentence, and the AI drafts an agent with its name, role, goal and persona filled in. Review the draft and save it to add **Hanbit Office Quote Advisor** to **Agent Colleagues** in the sidebar.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/agents.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Creating an agent colleague — Process GPT Tutorial">
+<meta property="og:description" content="In the org chart&#x27;s **Create Agent**, describe the job in one sentence, and the AI drafts an agent with its name, role, goal and persona filled in. Review the draft and save it to add **Hanbit Office Quote Advisor** to **Agent Colleagues** in the sidebar.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/agents.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><span class="soon"><span class="n">05</span>Org chart and role owners<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">06</span>Run a process and handle tasks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">07</span>Approve and reject — gateways and going back<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html" class="on" aria-current="page"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><span class="soon"><span class="n">11</span>Teach ways of working with skills<em>Coming soon</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><span class="soon"><span class="n">14</span>Connect external tools with MCP<em>Coming soon</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><span class="soon"><span class="n">16</span>Execution analytics — lead time and bottlenecks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">17</span>Strategy board and KPIs<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><span class="soon"><span class="n">19</span>Final project<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">AI agents<span class="chap">9</span></div>
+    <h1>Creating an agent colleague</h1>
+    <article>
+<blockquote>
+<p>In the org chart's <strong>Create Agent</strong>, describe the job in one sentence, and the AI drafts an agent with its name, role, goal and persona filled in. Review the draft and save it to add <strong>Hanbit Office Quote Advisor</strong> to <strong>Agent Colleagues</strong> in the sidebar.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/QQJHBTRAjrE" title="Creating an agent colleague — video 4:19" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-is-an-agent-colleague">What is an agent colleague<a class="anchor" href="#what-is-an-agent-colleague" title="Permanent link">#</a></h2>
+<p>In Process GPT, an <strong>agent</strong> is an AI with a name and a job, like a human colleague. You give it work in chat (<a href="agent-chat.html">Chapter 10</a>) or hand it a step of a process. When you create an agent, you fill in:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name · Role</td>
+<td>The name shown in the sidebar and org chart, and a one-line description</td>
+<td>Hanbit Office Quote Advisor</td>
+</tr>
+<tr>
+<td>Goal</td>
+<td>What the agent is trying to achieve</td>
+<td>Write accurate quotes from the price list</td>
+</tr>
+<tr>
+<td>Persona</td>
+<td>Tone and working attitude</td>
+<td>Friendly and thorough, citing sources</td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>Names of the <strong>MCP servers</strong> it can use (Chapter 14, coming soon)</td>
+<td>(not connected in this chapter)</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>Documents describing how to do the work</td>
+<td>(left empty in this chapter)</td>
+</tr>
+<tr>
+<td>AI Provider · AI Model</td>
+<td>The language model that writes the answers. Leave empty to use the default model chosen at install</td>
+<td>(empty)</td>
+</tr>
+</tbody>
+</table>
+<p>The built-in <strong>Browser Automation Agent</strong> and <strong>OpenAI Advanced Analysis</strong> are agents made the same way.</p>
+<h2 id="try-it-1-draft-an-agent-from-one-sentence">Try it 1 — Draft an agent from one sentence<a class="anchor" href="#try-it-1-draft-an-agent-from-one-sentence" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click the person icon next to <strong>Agent Colleagues</strong> in the sidebar to open the org chart.</li>
+<li>Click the <strong>Create Agent</strong> tab at the top left. <strong>Create New Agent</strong> is selected (<strong>Create A2A Agent</strong> and <strong>Create ProcessGPT Agent</strong> next to it are for registering agents that run elsewhere).</li>
+<li>Type the sentence below in <strong>Enter the agent you want to generate</strong> and click <strong>Generate Agent with AI</strong>.</li>
+</ol>
+<figure><a href="img/ag-tab.webp" target="_blank" rel="noopener" title="View larger"><img alt="Org chart › Create Agent — “Create as Team Member”, Create New Agent · Create A2A Agent · Create ProcessGPT Agent, the input box and “Generate Agent with AI”" src="img/ag-tab.webp" / loading="lazy" decoding="async"></a><figcaption>Org chart › Create Agent — “Create as Team Member”, Create New Agent · Create A2A Agent · Create ProcessGPT Agent, the input box and “Generate Agent with AI”</figcaption></figure>
+<div class="hl"><pre><span></span><code>A sales-team agent that reads the Hanbit Office price list and writes office furniture proposals and draft quotes for customer requests. It calculates volume discounts and regional installation fees exactly and cites its sources.
+</code></pre></div>
+
+<p>In our run, the fields were filled in after about 4 seconds.</p>
+<figure><a href="img/ag-generated.webp" target="_blank" rel="noopener" title="View larger"><img alt="The draft the AI filled in — the description, profile image, Select Profile Image, and the Name box, here already changed to “Hanbit Office Quote Advisor”" src="img/ag-generated.webp" / loading="lazy" decoding="async"></a><figcaption>The draft the AI filled in — the description, profile image, Select Profile Image, and the Name box, here already changed to “Hanbit Office Quote Advisor”</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>What the AI filled in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>OfficeQuotePro</td>
+</tr>
+<tr>
+<td>Role</td>
+<td>Generate accurate office furniture proposals and draft quotes for sales team based on Hanbit Office price list.</td>
+</tr>
+<tr>
+<td>Goal</td>
+<td>Within 10 minutes, provide a complete, itemized office furniture proposal and preliminary quote—including volume discounts and regional installation fees …</td>
+</tr>
+<tr>
+<td>Persona</td>
+<td>OfficeQuotePro is highly analytical, detail-oriented, and reliable. It communicates in a clear, professional, and concise manner …</td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine, SourceCiter (made-up names, see the warning below)</td>
+</tr>
+</tbody>
+</table>
+<p>The AI's wording varies a little even for the same sentence. Edit any field you don't like.</p>
+<h2 id="try-it-2-review-the-draft-and-save">Try it 2 — Review the draft and save<a class="anchor" href="#try-it-2-review-the-draft-and-save" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>If <strong>Name</strong> isn't <code>Hanbit Office Quote Advisor</code> (our run got "OfficeQuotePro"), change it to <code>Hanbit Office Quote Advisor</code>. Later chapters use this name.</li>
+<li>Scroll down the left panel and look over Goal, Persona, Tools, Skills and AI Provider. Changing <strong>Name</strong> doesn't change the other fields: in our run, <strong>Persona</strong> still began with "OfficeQuotePro is …". Edit it there if you want the new name.</li>
+<li>Click <strong>Save</strong> at the bottom.</li>
+<li>The <strong>Hanbit Office Quote Advisor · Settings</strong> window opens on the right, and the new agent appears under <strong>Agent Colleagues</strong> in the sidebar.</li>
+</ol>
+<figure><a href="img/ag-generated-bottom.webp" target="_blank" rel="noopener" title="View larger"><img alt="Lower part of the draft — Tools filled with the made-up names DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine and SourceCiter, each with ⓧ and its own row, empty Skills, AI Provider · AI Model (empty), “Save”" src="img/ag-generated-bottom.webp" / loading="lazy" decoding="async"></a><figcaption>Lower part of the draft — Tools filled with the made-up names DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine and SourceCiter, each with ⓧ and its own row, empty Skills, AI Provider · AI Model (empty), “Save”</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">Tools are MCP server names</p>
+<p>The names in Tools point to <strong>MCP servers</strong> attached to the agent. The AI may suggest tool names that don't exist. Such a name has no connected MCP server behind it, so no tool is attached. In our run, the AI filled Tools with five such names: DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine and SourceCiter. None of them is an MCP server. You can remove a name with the ⓧ on its chip; we left them in, and chatting still worked. You'll add real tools by name in Chapter 14 (coming soon), after connecting MCP servers.</p>
+</div>
+<figure><a href="img/ag-saved.webp" target="_blank" rel="noopener" title="View larger"><img alt="After saving — “Hanbit Office Quote Advisor” under Agent Colleagues in the sidebar, and its Settings window on the right with the five made-up tool names, the persona, Achievements &amp; Badges and Knowledge Ontology" src="img/ag-saved.webp" / loading="lazy" decoding="async"></a><figcaption>After saving — “Hanbit Office Quote Advisor” under Agent Colleagues in the sidebar, and its Settings window on the right with the five made-up tool names, the persona, Achievements &amp; Badges and Knowledge Ontology</figcaption></figure>
+<p>The settings window puts the agent in the middle, with <strong>Tools &amp; Skills</strong>, <strong>Persona</strong>, <strong>Achievements &amp; Badges</strong> and <strong>Knowledge Ontology</strong> around it. The numbers in <strong>Achievements &amp; Badges</strong> (such as <strong>Task Completed x3</strong>) and <strong>Knowledge Ontology</strong> (such as <strong>1024 nodes</strong>) are <strong>example values</strong> the current version shows for every agent. They are not real records of the agent you just made.</p>
+<div class="admonition note">
+<p class="admonition-title">“APEXCHARTS” behind the org chart</p>
+<p>The slanted “APEXCHARTS” behind the org chart is a mark the charting library adds when it runs without a license key. It doesn't affect anything.</p>
+</div>
+<h2 id="try-it-3-edit">Try it 3 — Edit<a class="anchor" href="#try-it-3-edit" title="Permanent link">#</a></h2>
+<p>Click the agent in the sidebar to open its profile on the left (<a href="agent-chat.html">Chapter 10</a>). Use the pencil icon next to the name to edit Goal, Persona and Tools, and the red trash can to delete it. Don't delete it: the next chapter chats with this agent.</p>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p><strong>Hanbit Office Quote Advisor</strong> has joined as a colleague. In the next chapter you'll hand it the price list and get a draft quote (<a href="agent-chat.html">Chapter 10</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>What does <strong>Generate Agent with AI</strong> do? Does it also save the agent?</li>
+<li>In our run, the AI put <strong>CalculationEngine</strong> in Tools. Can the agent use a calculation tool?</li>
+<li><strong>Achievements &amp; Badges</strong> in the settings window shows <strong>Task Completed x3</strong>. Does that mean this agent has finished three tasks?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>It builds a <strong>draft</strong> from your sentence, filling in Name, Role, Goal and Persona (and sometimes Tools). The agent exists only after you review it, edit it and click <strong>Save</strong>.</li>
+<li>No. Tools holds MCP server names, so a tool is attached only when an MCP server with that name is connected (Chapter 14). No MCP server is named CalculationEngine, so the name does nothing.</li>
+<li>No. In the current version every agent shows the same example values.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="knowledge.html"><span>Previous</span>Knowledge Base — answers grounded in company documents</a><a class="next" href="agent-chat.html"><span>Next</span>Chatting with an agent</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-is-an-agent-colleague">What is an agent colleague</a></li><li><a href="#try-it-1-draft-an-agent-from-one-sentence">Try it 1 — Draft an agent from one sentence</a></li><li><a href="#try-it-2-review-the-draft-and-save">Try it 2 — Review the draft and save</a></li><li><a href="#try-it-3-edit">Try it 3 — Edit</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

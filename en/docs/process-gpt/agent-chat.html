@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chatting with an agent — Process GPT Tutorial</title>
+<meta name="description" content="Open **Hanbit Office Quote Advisor** from Chapter 9 and ask what it can do. Then reopen that chat from **Conversations**, attach the Knowledge Base price list, and get a draft quote to send to the customer. Check the draft against the price list before it goes out.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/agent-chat.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chatting with an agent — Process GPT Tutorial">
+<meta property="og:description" content="Open **Hanbit Office Quote Advisor** from Chapter 9 and ask what it can do. Then reopen that chat from **Conversations**, attach the Knowledge Base price list, and get a draft quote to send to the customer. Check the draft against the price list before it goes out.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/agent-chat.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><span class="soon"><span class="n">05</span>Org chart and role owners<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">06</span>Run a process and handle tasks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">07</span>Approve and reject — gateways and going back<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html" class="on" aria-current="page"><span class="n">10</span>Chatting with an agent</a></li>
+<li><span class="soon"><span class="n">11</span>Teach ways of working with skills<em>Coming soon</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><span class="soon"><span class="n">14</span>Connect external tools with MCP<em>Coming soon</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><span class="soon"><span class="n">16</span>Execution analytics — lead time and bottlenecks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">17</span>Strategy board and KPIs<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><span class="soon"><span class="n">19</span>Final project<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">AI agents<span class="chap">10</span></div>
+    <h1>Chatting with an agent</h1>
+    <article>
+<blockquote>
+<p>Open <strong>Hanbit Office Quote Advisor</strong> from Chapter 9 and ask what it can do. Then reopen that chat from <strong>Conversations</strong>, attach the Knowledge Base price list, and get a draft quote to send to the customer. Check the draft against the price list before it goes out.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/clcEceGiG_Q" title="Chatting with an agent — video 4:17" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="the-agent-screen">The agent screen<a class="anchor" href="#the-agent-screen" title="Permanent link">#</a></h2>
+<p>Click <strong>Hanbit Office Quote Advisor</strong> under <strong>Agent Colleagues</strong> in the sidebar to open the agent screen. The left side is its <strong>profile</strong>; the right side is a <strong>New Chat</strong> with this agent.</p>
+<figure><a href="img/ac-open.webp" target="_blank" rel="noopener" title="View larger"><img alt="The agent screen — profile on the left (Goal, Persona, Tools, Skills, Model, Conversation · Learning Mode · Question Mode · Knowledge Management, Business Rule), “New Chat” on the right" src="img/ac-open.webp" / loading="lazy" decoding="async"></a><figcaption>The agent screen — profile on the left (Goal, Persona, Tools, Skills, Model, Conversation · Learning Mode · Question Mode · Knowledge Management, Business Rule), “New Chat” on the right</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Profile section</th>
+<th>What you see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong> · <strong>Persona</strong></td>
+<td>What you saved in Chapter 9. Click <strong>Show more</strong> to expand</td>
+</tr>
+<tr>
+<td><strong>Tools</strong> · <strong>Skills</strong> · <strong>Model</strong></td>
+<td>The tool names saved in Chapter 9 (in our run, the made-up DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine and <strong>Show more</strong>), <strong>No skills assigned.</strong> and <strong>No model assigned.</strong> (the default model)</td>
+</tr>
+<tr>
+<td><strong>Conversation</strong></td>
+<td>The mode that's on now. You chat with the agent</td>
+</tr>
+<tr>
+<td><strong>Learning Mode</strong> · <strong>Question Mode</strong> · <strong>Knowledge Management</strong> · <strong>Business Rule</strong></td>
+<td>For teaching the agent and attaching rules. This chapter uses only <strong>Conversation</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-1-say-hello-first">Try it 1 — Say hello first<a class="anchor" href="#try-it-1-say-hello-first" title="Permanent link">#</a></h2>
+<p>Type the message below in <strong>Type a Message</strong> on the right and send it.</p>
+<div class="hl"><pre><span></span><code>Hello. Briefly tell me what you can help with and what you need to write a quote.
+</code></pre></div>
+
+<p>The agent introduces itself following its Chapter 9 goal and persona. In our run, it listed what it can help with (choosing furniture, applying volume discounts, calculating installation and delivery fees by region, preparing a quotation document) and what it needs for a quote (the furniture you need with the quantity of each, your company or <strong>delivery address</strong> for regional fees, any special requirements, and an optional installation date). This chat stays at the top of <strong>Conversations</strong> in the sidebar as <strong>New Chat</strong>.</p>
+<figure><a href="img/ac-intro.webp" target="_blank" rel="noopener" title="View larger"><img alt="The agent's first answer — what it can help with and what it needs for a quote" src="img/ac-intro.webp" / loading="lazy" decoding="async"></a><figcaption>The agent's first answer — what it can help with and what it needs for a quote</figcaption></figure>
+<h2 id="try-it-2-attach-the-price-list-in-the-chat-room-and-get-a-quote">Try it 2 — Attach the price list in the chat room and get a quote<a class="anchor" href="#try-it-2-attach-the-price-list-in-the-chat-room-and-get-a-quote" title="Permanent link">#</a></h2>
+<p>The ＋ on the agent screen offers only <strong>Attach File</strong>. To attach the Knowledge Base price list, <strong>reopen that chat from Conversations.</strong></p>
+<ol class="steps">
+<li>Click <strong>New Chat</strong> at the top of <strong>Conversations</strong> in the sidebar. If the header shows <strong>👥 2 · Hanbit Office Quote Advisor · Deep Agent</strong>, this is your chat room with that agent.</li>
+<li>Click ＋ › <strong>Knowledge Base</strong> in the chat box, then <strong>Expand all</strong> → check <code>Hanbit-Office-Price-List.pdf</code> → <strong>Use 1 file</strong> (same as in <a href="knowledge.html">Chapter 8</a>).</li>
+<li>Send the question below.</li>
+</ol>
+<figure><a href="img/ac-room.webp" target="_blank" rel="noopener" title="View larger"><img alt="The chat room reopened from Conversations — header “2 · Hanbit Office Quote Advisor · Deep Agent”, the first answer" src="img/ac-room.webp" / loading="lazy" decoding="async"></a><figcaption>The chat room reopened from Conversations — header “2 · Hanbit Office Quote Advisor · Deep Agent”, the first answer</figcaption></figure>
+<div class="hl"><pre><span></span><code>Search the selected knowledge base price list. Hanbit Trading wants 25 Mesh Chair Air and 25 3-Drawer Mobile Pedestals delivered to its Seoul head office. Write a draft quote for the customer as a table, including the discount, installation fee, total, lead time and quote validity.
+</code></pre></div>
+
+<figure><a href="img/ac-typed.webp" target="_blank" rel="noopener" title="View larger"><img alt="The question typed — the “Hanbit-Office-Price-List.pdf” chip above the chat box, “Knowledge Base 1” on the right" src="img/ac-typed.webp" / loading="lazy" decoding="async"></a><figcaption>The question typed — the “Hanbit-Office-Price-List.pdf” chip above the chat box, “Knowledge Base 1” on the right</figcaption></figure>
+<p>In our run, this draft came back after about 26 seconds, titled "Draft Quote: Hanbit Trading (Seoul Head Office)".</p>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>List Price (KRW)</th>
+<th>Subtotal (KRW)</th>
+<th>Discount</th>
+<th>Discounted Subtotal (KRW)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mesh Chair Air (HB-C01)</td>
+<td>25</td>
+<td>180,000</td>
+<td>4,500,000</td>
+<td>5%</td>
+<td>4,275,000</td>
+</tr>
+<tr>
+<td>3-Drawer Mobile Pedestal (HB-S30)</td>
+<td>25</td>
+<td>95,000</td>
+<td>2,375,000</td>
+<td>5%</td>
+<td>2,256,250</td>
+</tr>
+</tbody>
+</table>
+<p>The table went on with <strong>Subtotal After Discount</strong> 6,531,250, <strong>Installation &amp; Delivery (Seoul)</strong> Free and <strong>Total (excl. VAT): KRW 6,531,250</strong>. Under <strong>Further Details</strong> came the lead time (5 business days from order confirmation), the quote validity (30 days from the quote date), "Prices exclude VAT", the source (Hanbit Office Price List (H2 2026)) and free delivery and installation in the Seoul area.</p>
+<figure><a href="img/ac-answer.webp" target="_blank" rel="noopener" title="View larger"><img alt="The agent's draft quote — the 3-Drawer Mobile Pedestal (HB-S30) row, Subtotal After Discount 6,531,250, Installation &amp; Delivery (Seoul) Free, Total (excl. VAT) KRW 6,531,250, Further Details with lead time 5 business days and validity 30 days, and “Hanbit-Office-Price-List.pdf” under Knowledge Base on the right" src="img/ac-answer.webp" / loading="lazy" decoding="async"></a><figcaption>The agent's draft quote — the 3-Drawer Mobile Pedestal (HB-S30) row, Subtotal After Discount 6,531,250, Installation &amp; Delivery (Seoul) Free, Total (excl. VAT) KRW 6,531,250, Further Details with lead time 5 business days and validity 30 days, and “Hanbit-Office-Price-List.pdf” under Knowledge Base on the right</figcaption></figure>
+<h2 id="try-it-3-check-against-the-price-list">Try it 3 — Check against the price list<a class="anchor" href="#try-it-3-check-against-the-price-list" title="Permanent link">#</a></h2>
+<p>Before sending it to the customer, check the draft against the price list.</p>
+<table>
+<thead>
+<tr>
+<th>What to check</th>
+<th>Price list</th>
+<th>Draft</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit price</td>
+<td>Mesh Chair Air KRW 180,000, 3-Drawer Mobile Pedestal KRW 95,000</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Discount</td>
+<td>20–49 of the same product → 5%</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Amounts</td>
+<td>180,000×25×0.95 = KRW 4,275,000, 95,000×25×0.95 = KRW 2,256,250</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Installation</td>
+<td>Free delivery and installation in Seoul and Gyeonggi</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Lead time</td>
+<td>The longest product lead time — 5 business days for both</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Quote validity</td>
+<td>30 days from the quote date</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>4,275,000 + 2,256,250 = KRW 6,531,250 (VAT not included)</td>
+<td>Same</td>
+</tr>
+</tbody>
+</table>
+<p>In our run, every line matched the price list. If something doesn't match, continue the chat and ask for a fix, or take the draft and fix it yourself.</p>
+<div class="admonition tip">
+<p class="admonition-title">A person checks the draft before it goes out</p>
+<p>The agent calculates from the price list, but it can still get a word or a condition wrong. Its answer also varies a little each time, even for the same question. Always check numbers and conditions against the source. <a href="document-process.html">Chapter 12</a> shows how to make checking and approving a step of a process.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">“Attach File” on the agent screen</p>
+<p>In the current version, files attached with <strong>Attach File</strong> on the agent screen aren't passed to the agent. To ask about a document, upload it to the Knowledge Base as in this chapter, and pick it with <strong>Knowledge Base</strong> in the chat room opened from <strong>Conversations</strong>.</p>
+</div>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You've seen the agent write a draft quote from the price list. Next, you'll turn this work into a <strong>process</strong> that follows the company's quote approval policy, and hand some of its steps to agents (<a href="document-process.html">Chapter 12</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>How do you attach the Knowledge Base price list when you start from the agent screen?</li>
+<li>Why is there no installation fee in this draft?</li>
+<li>If the same customer raises the Mesh Chair Air order to 50, what is the amount for the chairs? Ask the agent, then check it yourself against the price list.</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>Chat with the agent once, reopen that chat room from <strong>Conversations</strong> in the sidebar, then in ＋ › <strong>Knowledge Base</strong> check the price list file and click <strong>Use 1 file</strong>.</li>
+<li>The customer's head office is in Seoul. The price list makes delivery and installation free in Seoul and Gyeonggi.</li>
+<li>50 falls in the 50–99 band, so the discount is 8%. 180,000 × 50 × 0.92 = KRW 8,280,000.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="agents.html"><span>Previous</span>Creating an agent colleague</a><a class="next" href="document-process.html"><span>Next</span>Creating a process from a document</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#the-agent-screen">The agent screen</a></li><li><a href="#try-it-1-say-hello-first">Try it 1 — Say hello first</a></li><li><a href="#try-it-2-attach-the-price-list-in-the-chat-room-and-get-a-quote">Try it 2 — Attach the price list in the chat room and get a quote</a></li><li><a href="#try-it-3-check-against-the-price-list">Try it 3 — Check against the price list</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
