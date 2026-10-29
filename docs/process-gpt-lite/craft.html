@@ -213,8 +213,8 @@
 <p>현재 버전에서는 영상처럼 긴 작업이 서버 오류로 중간에 끊길 수 있습니다. 비서가 만들던 파일은 남아 있으므로, 같은 요청을 다시 보내면 처음부터 하지 않고 남은 파일을 확인해 이어 갑니다.</p>
 </div>
 <h2 id="앱이-없을-때">앱이 없을 때<a class="anchor" href="#앱이-없을-때" title="Permanent link">#</a></h2>
-<p>ArtCraft 앱은 Lite 본체와 따로 설치합니다. 앱이 없는 설치에서도 Lite의 나머지 기능은 그대로 동작하고, 해당 앱의 카드만 열 수 없습니다(예: 메일 초안에서 평면도는 건너뛰고 제안서·견적서만 만듭니다).</p>
-<p>앱마다 두 가지가 있어야 합니다. 채팅 옆에 열리는 <strong>웹 편집기</strong>(한글이 □로 깨지지 않도록 한글 글꼴을 넣어 빌드한 것)와, 비서가 파일을 만들고 고칠 때 쓰는 <strong>명령줄 도구</strong>입니다. Docker로 설치하는 기본(lite) 구성에는 ArtCraft 앱이 들어 있지 않으므로(<a href="install.html">1장</a>), 설치 담당자가 저장소의 <a href="https://github.com/uengine-oss/process-gpt-lite/blob/main/artcraft/README.md">artcraft/README.md</a>를 따라 따로 넣습니다.</p>
+<p>ArtCraft 앱은 설치할 때 고르는 선택 구성입니다. 앱이 없는 설치에서도 Lite의 나머지 기능은 그대로 동작하고, 해당 앱의 카드만 열 수 없습니다(예: 메일 초안에서 평면도는 건너뛰고 제안서·견적서만 만듭니다).</p>
+<p>앱마다 두 가지가 있어야 합니다. 채팅 옆에 열리는 <strong>웹 편집기</strong>(한글이 □로 깨지지 않도록 한글 글꼴을 넣어 빌드한 것)와, 비서가 파일을 만들고 고칠 때 쓰는 <strong>명령줄 도구</strong>입니다. Docker 설치에서는 <code>./install.sh --with-craft</code>로 함께 넣습니다(<a href="install.html">1장</a>). 다섯 앱을 미리 빌드해 둔 이미지(<code>ghcr.io/uengine-oss/process-gpt-lite-craft</code>)를 받아 넣습니다. 소스에서 직접 빌드하려면 <code>.env</code>에 <code>LITE_CRAFT_IMAGE=</code>(빈 값)를 넣습니다(처음 약 50분, Docker 메모리 12GB 이상). 개발 설치는 저장소의 <a href="https://github.com/uengine-oss/process-gpt-lite/blob/main/artcraft/README.md">artcraft/README.md</a>를 따릅니다.</p>
 <h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
 <p>지금까지 문서(7장)와 도면·그림·소리·영상(이 장)을 하나씩 만들고 고쳤습니다. 다음 장에서는 고객 메일 한 통이 도착하면 비서가 평면도·설계 제안서·견적서를 한꺼번에 만들고, 제안서 속 평면도 그림을 포토크래프트로 꺼내 고친 뒤 제자리에 넣는 흐름을 따라 합니다(<a href="email-to-quote.html">9장</a>).</p>
 <div class="admonition tip">

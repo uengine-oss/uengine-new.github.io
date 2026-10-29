@@ -32,7 +32,7 @@ node server/test/fixtures/shop.mjs 8811
 | 연습용 카드 | `4242 4242 4242 4242`, 만료 `12/30`, CVC `123` |
 
 !!! note "설치 번들(Docker)에서는"
-    설치 번들에서는 브라우저가 서버 컨테이너 안에서 돌므로, 내 PC에서 띄운 테스트 상점은 `127.0.0.1` 대신 `host.docker.internal:8811`처럼 컨테이너에서 보이는 주소로 부르세요. 사내망의 실제 사이트에 쓸 때도 서버가 그 주소에 닿을 수 있어야 합니다.
+    설치 번들에서는 브라우저가 서버 컨테이너 안에서 돌고 테스트 상점은 `127.0.0.1`에서만 열리므로, 상점도 서버 컨테이너 안에서 띄웁니다. `install/` 폴더에서 `docker compose cp ../server/test/fixtures/shop.mjs server:/tmp/shop.mjs` 다음 `docker compose exec -d server node /tmp/shop.mjs 8811` 을 실행하면 이 장의 주소(`127.0.0.1:8811`)를 그대로 씁니다. 사내망의 실제 사이트에 쓸 때도 서버가 그 주소에 닿을 수 있어야 합니다.
 
 ## 따라 하기 1 — 처음 가는 사이트에 로그인
 

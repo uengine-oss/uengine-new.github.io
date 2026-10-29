@@ -118,9 +118,9 @@
 
 ## 앱이 없을 때
 
-ArtCraft 앱은 Lite 본체와 따로 설치합니다. 앱이 없는 설치에서도 Lite의 나머지 기능은 그대로 동작하고, 해당 앱의 카드만 열 수 없습니다(예: 메일 초안에서 평면도는 건너뛰고 제안서·견적서만 만듭니다).
+ArtCraft 앱은 설치할 때 고르는 선택 구성입니다. 앱이 없는 설치에서도 Lite의 나머지 기능은 그대로 동작하고, 해당 앱의 카드만 열 수 없습니다(예: 메일 초안에서 평면도는 건너뛰고 제안서·견적서만 만듭니다).
 
-앱마다 두 가지가 있어야 합니다. 채팅 옆에 열리는 **웹 편집기**(한글이 □로 깨지지 않도록 한글 글꼴을 넣어 빌드한 것)와, 비서가 파일을 만들고 고칠 때 쓰는 **명령줄 도구**입니다. Docker로 설치하는 기본(lite) 구성에는 ArtCraft 앱이 들어 있지 않으므로([1장](install.html)), 설치 담당자가 저장소의 [artcraft/README.md](https://github.com/uengine-oss/process-gpt-lite/blob/main/artcraft/README.md)를 따라 따로 넣습니다.
+앱마다 두 가지가 있어야 합니다. 채팅 옆에 열리는 **웹 편집기**(한글이 □로 깨지지 않도록 한글 글꼴을 넣어 빌드한 것)와, 비서가 파일을 만들고 고칠 때 쓰는 **명령줄 도구**입니다. Docker 설치에서는 `./install.sh --with-craft`로 함께 넣습니다([1장](install.html)). 다섯 앱을 미리 빌드해 둔 이미지(`ghcr.io/uengine-oss/process-gpt-lite-craft`)를 받아 넣습니다. 소스에서 직접 빌드하려면 `.env`에 `LITE_CRAFT_IMAGE=`(빈 값)를 넣습니다(처음 약 50분, Docker 메모리 12GB 이상). 개발 설치는 저장소의 [artcraft/README.md](https://github.com/uengine-oss/process-gpt-lite/blob/main/artcraft/README.md)를 따릅니다.
 
 ## 다음 장으로
 
