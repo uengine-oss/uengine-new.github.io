@@ -996,11 +996,11 @@ var SCENES = [
   h2:'AI must understand instructions<br>and <em>act</em> on its own',
   p:'AI handling process tasks must understand natural-language instructions, use tools (MCP), and collaborate with other agents (A2A). Process GPT fills that role.' },
 
-{ t:'shot', act:'agnt', layer:2, dur:9, short:1,
+{ t:EN ? 'shot' : 'video', act:'agnt', layer:2, dur:14, short:1,
   cat:'Agentic BPM', product:'Process GPT', step:'01',
-  h3:'Agents carry out the work themselves',
-  p:'The agent finds and reads price lists in the Knowledge Base, then drafts a quote as a table covering discounts, installation fees, delivery lead times, and validity periods. It also retains the source documents. A person checks the amounts and terms against those sources, makes any necessary edits, and sends the quote.',
-  src:doc('process-gpt/img/ac-answer.webp') },
+  h3:'From inventory check to quote calculation',
+  p:'After a request is submitted, agents process the inventory check and quote calculation in sequence. Using the price list and request inputs, the quote agent calculates the total with discounts and installation fees, then records the pricing rules in the notes.',
+  src:EN ? doc('process-gpt/img/ac-answer.webp') : IMG+'showcase/pg-agent-task.mp4', poster:EN ? null : IMG+'showcase/pg-agent-task-poster.webp' },
 
 { t:'shot', act:'agnt', layer:2, dur:6,
   cat:'Agentic BPM', product:'Process GPT', step:'02',
