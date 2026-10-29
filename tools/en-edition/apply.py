@@ -199,6 +199,7 @@ YOUTUBE_OVERRIDES = {
     'qRZ8bE8Ffsg': 'ckduR9oRtuE',  # Ontological Studio: build from a document (tutorial ch. 12)
     'np3Q9484lYo': 'ajoW9Oxf83g',  # Ontological Studio: run actions (tutorial ch. 16)
     'Lq4ZL_8vMtk': 'gAZZTiakdAA',  # Ontological Studio: code apps (tutorial ch. 18)
+    'HBk3WCvYx2c': 'TNdTiwJD8-s',  # 메인 전체 소개 영상(Showcase 나레이션판)
 }
 
 
