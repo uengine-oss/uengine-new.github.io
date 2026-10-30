@@ -34,7 +34,7 @@ This tutorial follows the story of **Hanbit Office**, an office furniture compan
 Each chapter goes **Why → Try it → Check your understanding**. Later chapters build on what you made in earlier ones, so it's best to follow them in order. The answers to the check questions are folded away — try them yourself first, then open them.
 
 !!! note "Chapters coming soon"
-    Chapters marked "Coming soon" in the table of contents on the left (Org chart and role owners, Run a process and handle tasks, Approve and reject, Skills, Run the steps agents handle, Connect external tools with MCP, Execution analytics, Strategy board, Final project) will be published one by one after fixes now underway in the current version are in. Chapter numbers are fixed in advance, so they won't change when these chapters appear.
+    Chapters marked "Coming soon" in the table of contents on the left (Skills, Run the steps agents handle, Connect external tools with MCP, Execution analytics, Strategy board, Final project) will be published one by one after fixes now underway in the current version are in. Chapter numbers are fixed in advance, so they won't change when these chapters appear.
 
 ## Who this tutorial is for
 

@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approve and reject — gateways and going back — Process GPT Tutorial</title>
+<meta name="description" content="Create 「Sales Proposal Approval」, reject a proposal, and revise it for approval. Follow the branches chosen by the review result and the loop back to review.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/gateway.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Approve and reject — gateways and going back — Process GPT Tutorial">
+<meta property="og:description" content="Create 「Sales Proposal Approval」, reject a proposal, and revise it for approval. Follow the branches chosen by the review result and the loop back to review.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/gateway.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><a href="organization.html"><span class="n">05</span>Org chart and role owners</a></li>
+<li><a href="process-run.html"><span class="n">06</span>Run a process and handle tasks</a></li>
+<li><a href="gateway.html" class="on" aria-current="page"><span class="n">07</span>Approve and reject — gateways and going back</a></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><span class="soon"><span class="n">11</span>Teach ways of working with skills<em>Coming soon</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><span class="soon"><span class="n">14</span>Connect external tools with MCP<em>Coming soon</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><span class="soon"><span class="n">16</span>Execution analytics — lead time and bottlenecks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">17</span>Strategy board and KPIs<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><span class="soon"><span class="n">19</span>Final project<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Process basics<span class="chap">7</span></div>
+    <h1>Approve and reject — gateways and going back</h1>
+    <article>
+<blockquote>
+<p>Create 「Sales Proposal Approval」, reject a proposal, and revise it for approval. Follow the branches chosen by the review result and the loop back to review.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Your installation needs these fixes</p>
+<p>The run screens in this chapter were captured on an installation with the following fixes applied (2026-10-30). Installations from before these fixes reach the installation repository may stop partway through a run. This notice will be removed once the fixes are included.</p>
+<ul>
+<li>Installation: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — missing columns in the task table; without them, the first submission stops.</li>
+<li>Interface: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/234">process-gpt-vue3 #234</a> — makes execution follow the first step and assigned role owners.</li>
+<li>Interface: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/233">process-gpt-vue3 #233</a> — preserves gateway conditions when saving in the editor.</li>
+</ul>
+</div>
+<h2 id="add-a-decision-to-the-flow">Add a decision to the flow<a class="anchor" href="#add-a-decision-to-the-flow" title="Permanent link">#</a></h2>
+<p>The process in Chapter 3 had no branches. This time, ask for approval and rejection from the start. You will create a new process, 「Sales Proposal Approval」.</p>
+<p>The customer enters a request, and Minji writes a proposal. Jinyoung reviews it. If he rejects it, Minji revises it and sends it through review again. If he approves it, Minji handles the step for sending it to the customer.</p>
+<h2 id="try-it-1-create-the-process-through-conversation">Try it 1 — Create the process through conversation<a class="anchor" href="#try-it-1-create-the-process-through-conversation" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open a new conversation as in Chapter 3 and choose 「Basic Agent」.</li>
+<li>Enter the prompt below.</li>
+<li>When 「Shall I create the process from this draft?」 appears, choose 「Create the process as is」.</li>
+</ol>
+<blockquote>
+<p>Create a sales proposal approval process. The customer enters their request, then a sales representative writes a proposal and the sales team lead reviews it. If the sales team lead approves, the sales representative sends the proposal to the customer; if the lead rejects it, the sales representative reads the review comments and rewrites the proposal. Put a review result (approve or reject) and review comments in the team lead review form, and make an input form for each step.</p>
+</blockquote>
+<figure><a href="img/gw-prompt.webp" target="_blank" rel="noopener" title="View larger"><img alt="Process creation prompt — Basic Agent selected and the request for approval, rejection, and input forms" src="img/gw-prompt.webp" / loading="lazy" decoding="async"></a><figcaption>Process creation prompt — Basic Agent selected and the request for approval, rejection, and input forms</figcaption></figure>
+<p>When asking for a branch, say <strong>who reviews</strong>, <strong>where approval leads</strong>, and <strong>where rejection leads</strong>. Also ask for the form field that supplies the decision: 「Review Result」.</p>
+<figure><a href="img/gw-draft-ok.webp" target="_blank" rel="noopener" title="View larger"><img alt="Draft approval — the draft confirmation and Create the process as is choice" src="img/gw-draft-ok.webp" / loading="lazy" decoding="async"></a><figcaption>Draft approval — the draft confirmation and Create the process as is choice</figcaption></figure>
+<p>After 「Created a work item to generate the process from the consultation.」, a progress indicator appears. Our run paused at 「waiting_for_user」 and 「72%」 for a confirmation.</p>
+<h2 id="try-it-2-answer-the-single-confirmation-panel">Try it 2 — Answer the single confirmation panel<a class="anchor" href="#try-it-2-answer-the-single-confirmation-panel" title="Permanent link">#</a></h2>
+<p>This English run shows <strong>one confirmation panel</strong>. It asks whether to create a decision table (DMN) for the gateway. There are no separate skill or agent pages in this run.</p>
+<p>The candidate is 「Proposal Approval Decision」 for 「Sales Proposal Approval」. It lists the approval and rejection branches.</p>
+<figure><a href="img/gw-panel-1.webp" target="_blank" rel="noopener" title="View larger"><img alt="DMN confirmation — the Korean question, gateway candidate, optional text field, and disabled Submit response" src="img/gw-panel-1.webp" / loading="lazy" decoding="async"></a><figcaption>DMN confirmation — the Korean question, gateway candidate, optional text field, and disabled Submit response</figcaption></figure>
+<ol class="steps">
+<li>Leave the gateway candidate unselected. This exercise uses the BPMN branch conditions.</li>
+<li>Find 「Write your own (optional)」. Its placeholder is 「Type anything you'd like」.</li>
+<li>Enter <code>No decision table is needed — use the BPMN gateway conditions.</code></li>
+<li>Click 「Submit response」 once it becomes enabled.</li>
+</ol>
+<figure><a href="img/gw-panel-2.webp" target="_blank" rel="noopener" title="View larger"><img alt="Written confirmation response — No decision table is needed entered in the optional text field" src="img/gw-panel-2.webp" / loading="lazy" decoding="async"></a><figcaption>Written confirmation response — No decision table is needed entered in the optional text field</figcaption></figure>
+<p>「Submit response」 is disabled while nothing is selected or typed. Entering the response lets you continue without selecting a gateway for DMN conversion.</p>
+<div class="admonition note">
+<p class="admonition-title">This confirmation is still in Korean</p>
+<p>The current version shows the DMN question and some generation progress text in Korean. 「DMN 의사결정 테이블을 어떤 게이트웨이에 만들까요?」 asks which gateways should become DMN decision tables. The submitted text bubble also starts with 「직접 입력:」, meaning direct input.</p>
+</div>
+<p>About ten seconds after submission, our run showed 「BPMN process generation complete」 and reported that one process had been created and saved.</p>
+<figure><a href="img/gw-generated.webp" target="_blank" rel="noopener" title="View larger"><img alt="Generation complete — the completion message and Sales Proposal Approval result marked Saved" src="img/gw-generated.webp" / loading="lazy" decoding="async"></a><figcaption>Generation complete — the completion message and Sales Proposal Approval result marked Saved</figcaption></figure>
+<p>The result card is titled 「BPMN process generation result」 and includes 「Full graph」 and 「Saved」. The definition is saved automatically. There is no separate save button to click here.</p>
+<h2 id="read-the-gateway-and-the-return-arrow">Read the gateway and the return arrow<a class="anchor" href="#read-the-gateway-and-the-return-arrow" title="Permanent link">#</a></h2>
+<p>The generated definition has three lanes: 「Customer」, 「Sales Representative」, and 「Sales Team Lead」.</p>
+<p>The flow starts with 「Submit Sales Request」, then moves to 「Write Proposal」 and 「Review Proposal」.</p>
+<figure><a href="img/gw-bpmn.webp" target="_blank" rel="noopener" title="View larger"><img alt="Approval flow — three lanes, Proposal Approval Decision, two conditional branches, and the rewrite loop" src="img/gw-bpmn.webp" / loading="lazy" decoding="async"></a><figcaption>Approval flow — three lanes, Proposal Approval Decision, two conditional branches, and the rewrite loop</figcaption></figure>
+<p>The diamond after review is 「Proposal Approval Decision」. An <strong>X inside a diamond means an exclusive gateway</strong>. The flow takes one outgoing branch whose condition matches.</p>
+<table>
+<thead>
+<tr>
+<th>Condition beside the arrow</th>
+<th>Next step</th>
+<th>What follows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Review result is approve」</td>
+<td>「Send Proposal to Customer」</td>
+<td>The process ends</td>
+</tr>
+<tr>
+<td>「Review result is reject」</td>
+<td>「Read Comments &amp; Rewrite Proposal」</td>
+<td>The flow returns to 「Review Proposal」</td>
+</tr>
+</tbody>
+</table>
+<p>The arrow from rewriting back to review makes a loop. Rejection does not end this instance. Minji revises the proposal, and Jinyoung handles the same review step again.</p>
+<div class="admonition note">
+<p class="admonition-title">Check the names in your generated process</p>
+<p>Generated step, form, and condition names can vary. This chapter uses the names from our run. Check that your approval path reaches customer sending and that your rejection path returns to review after revision.</p>
+</div>
+<h2 id="try-it-3-assign-the-lane-owners">Try it 3 — Assign the lane owners<a class="anchor" href="#try-it-3-assign-the-lane-owners" title="Permanent link">#</a></h2>
+<p>Use the same method as <a href="organization.html">Chapter 5</a>. In this definition's edit mode, the lanes are vertical columns with their names at the top.</p>
+<ol class="steps">
+<li>Open 「Sales Proposal Approval」 and click 「Edit」. Double-click the 「Sales Representative」 lane name.</li>
+<li>Choose 「Role Resolution By Direct user」 and select Minji Kim in 「User ID」. Save the panel.</li>
+<li>Double-click 「Sales Team Lead」. Use 「Role Resolution By Direct user」 to select Jinyoung Jang, then save and close the panel.</li>
+<li>Save the definition through 「Version Up」. Our version changes from v0.0 to v0.1.</li>
+</ol>
+<figure><a href="img/gwr-lane-manager.webp" target="_blank" rel="noopener" title="View larger"><img alt="Sales team lead assignment — Sales Team Lead lane panel with Jinyoung Jang selected as the direct user" src="img/gwr-lane-manager.webp" / loading="lazy" decoding="async"></a><figcaption>Sales team lead assignment — Sales Team Lead lane panel with Jinyoung Jang selected as the direct user</figcaption></figure>
+<p>The automatic save after generation and this version save are separate. The version now includes the role owners. Jinyoung will also take the 「Customer」 role when opening the run.</p>
+<div class="admonition note">
+<p class="admonition-title">A breadcrumb still shown in Korean</p>
+<p>The current version may show 「미분류 › 미분류」 in the definition breadcrumb. These are the uncategorized levels above the process.</p>
+</div>
+<h2 id="try-it-4-enter-the-customer-request-as-jinyoung">Try it 4 — Enter the customer request as Jinyoung<a class="anchor" href="#try-it-4-enter-the-customer-request-as-jinyoung" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>As Jinyoung, click 「Execute」 for 「Sales Proposal Approval」.</li>
+<li>Check 「Role Mapping」: 「Customer」 is Jinyoung Jang, 「Sales Representative」 is Minji Kim, and 「Sales Team Lead」 is Jinyoung Jang.</li>
+<li>Enter the request below in 「Sales Request Details」, then click 「Submit Complete」.</li>
+</ol>
+<blockquote>
+<p>Hanbit Trading’s Daejeon branch is moving offices. It needs 30 work desks and 30 chairs, with a budget of KRW 20,000,000, installed before move-in in the first week of December.</p>
+</blockquote>
+<figure><a href="img/gwr-run-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Filled run dialog — the three role owners and the Daejeon branch request" src="img/gwr-run-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Filled run dialog — the three role owners and the Daejeon branch request</figcaption></figure>
+<p>Our instance name appears as 「Sales Proposal Approval · Hanbit Daejeon Office Fu…」. Use this instance name to find the right cards when switching between Jinyoung and Minji.</p>
+<div class="admonition note">
+<p class="admonition-title">A task tab still shown in Korean</p>
+<p>The current version labels the similar-cases tab 「유사 사례」, even in English mode. Use 「Progress」 to view the process flow.</p>
+</div>
+<h2 id="try-it-5-write-the-proposal-as-minji">Try it 5 — Write the proposal as Minji<a class="anchor" href="#try-it-5-write-the-proposal-as-minji" title="Permanent link">#</a></h2>
+<p>In Minji's 「Task List」, open 「Write Proposal」 for this instance. 「Previous Activity Input」 includes 「Submit Sales Request · Jinyoung Jang」.</p>
+<p>The current form is 「Write Proposal Layout」. Its 「Proposal Details」 field is a <strong>plain text box</strong>.</p>
+<ol class="steps">
+<li>Read Jinyoung's request in 「Previous Activity Input」.</li>
+<li>Enter the proposal below directly in 「Proposal Details」.</li>
+<li>Check the text, then click 「Submit Complete」.</li>
+</ol>
+<blockquote>
+<p>Daejeon branch move proposal: 30 work desks and 30 mesh chairs. Estimated about KRW 18,000,000 (VAT excluded).</p>
+</blockquote>
+<figure><a href="img/gwr-write-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Filled proposal task — Previous Activity Input and the proposal in the plain Proposal Details text box" src="img/gwr-write-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Filled proposal task — Previous Activity Input and the proposal in the plain Proposal Details text box</figcaption></figure>
+<p>There is no Report editor for this field. Type into the text box itself. In our run, 「Review Proposal」 reached Jinyoung about three seconds after submission.</p>
+<h2 id="try-it-6-reject-the-proposal-as-jinyoung">Try it 6 — Reject the proposal as Jinyoung<a class="anchor" href="#try-it-6-reject-the-proposal-as-jinyoung" title="Permanent link">#</a></h2>
+<p>In Jinyoung's 「Task List」, open 「Review Proposal」. 「Previous Activity Input」 contains two entries: 「Submit Sales Request · Jinyoung Jang」 and 「Write Proposal · Minji Kim」.</p>
+<p>The current form is 「Review Proposal Layout」.</p>
+<ol class="steps">
+<li>Read the request and proposal in 「Previous Activity Input」.</li>
+<li>Change 「Review Result」 from 「Approve」 to 「Reject」.</li>
+<li>Enter the comment below in 「Review Comments」.</li>
+<li>Check that 「Review Result」 is 「Reject」, then click 「Submit Complete」.</li>
+</ol>
+<blockquote>
+<p>The installation fee and schedule are missing. Please add the installation fee for the Daejeon area and an installation schedule before move-in, then rewrite it.</p>
+</blockquote>
+<figure><a href="img/gwr-review-reject-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Review ready for rejection — two previous inputs, Reject selected, and the installation-fee and schedule comment" src="img/gwr-review-reject-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Review ready for rejection — two previous inputs, Reject selected, and the installation-fee and schedule comment</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">The first review defaults to Approve</p>
+<p>Writing a rejection comment does not change the selected result. Change 「Review Result」 to 「Reject」 before submitting.</p>
+</div>
+<p>About eight seconds later, Minji received 「Read Comments &amp; Rewrite Proposal」. 「Send Proposal to Customer」 did not open. The gateway took the rejection branch.</p>
+<h2 id="try-it-7-revise-the-proposal-as-minji">Try it 7 — Revise the proposal as Minji<a class="anchor" href="#try-it-7-revise-the-proposal-as-minji" title="Permanent link">#</a></h2>
+<p>Open 「Read Comments &amp; Rewrite Proposal」 as Minji. 「Previous Activity Input」 now includes the request, the first proposal, and Jinyoung's review.</p>
+<p>The current form is 「Read Comments &amp; Rewrite Proposal Layout」. It has two Report cards: 「Review Comments」 and 「Revised Proposal」.</p>
+<figure><a href="img/gwr-rewrite.webp" target="_blank" rel="noopener" title="View larger"><img alt="Rewrite task — three previous inputs and the Review Comments and Revised Proposal Report cards" src="img/gwr-rewrite.webp" / loading="lazy" decoding="async"></a><figcaption>Rewrite task — three previous inputs and the Review Comments and Revised Proposal Report cards</figcaption></figure>
+<ol class="steps">
+<li>Read the rejection comment in Jinyoung's 「Review Proposal」 entry under 「Previous Activity Input」.</li>
+<li>Open the 「Revised Proposal」 Report card for editing.</li>
+<li>Enter the revised proposal below in 「Content Editor」, then click 「Save」.</li>
+<li>Check the saved preview and click 「Submit Complete」.</li>
+</ol>
+<blockquote>
+<p>Revised Daejeon branch move proposal: 30 work desks and 30 mesh chairs, products about KRW 18,000,000 (VAT excluded). Includes the Daejeon installation fee; installed over two days in the first week of December, before move-in.</p>
+</blockquote>
+<figure><a href="img/gwr-rewrite-report.webp" target="_blank" rel="noopener" title="View larger"><img alt="Revised proposal editor — the proposal now includes the Daejeon installation fee and a two-day installation schedule" src="img/gwr-rewrite-report.webp" / loading="lazy" decoding="async"></a><figcaption>Revised proposal editor — the proposal now includes the Daejeon installation fee and a two-day installation schedule</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Read the comment in the previous input</p>
+<p>The rewrite form's 「Review Comments」 Report card is empty. Jinyoung's comment is not copied into it automatically. Read his review under 「Previous Activity Input」.</p>
+</div>
+<p>About three seconds after submission, 「Review Proposal」 returned to Jinyoung. The flow followed the return arrow to the same review step.</p>
+<h2 id="try-it-8-approve-and-record-sending-to-the-customer">Try it 8 — Approve and record sending to the customer<a class="anchor" href="#try-it-8-approve-and-record-sending-to-the-customer" title="Permanent link">#</a></h2>
+<p>Open 「Review Proposal」 again as Jinyoung. This time, the form <strong>keeps the previous values</strong>. It opens with 「Reject」 and the old comment already filled in.</p>
+<figure><a href="img/gwr-review-approve.webp" target="_blank" rel="noopener" title="View larger"><img alt="Reopened review before editing — Reject and the previous installation-fee and schedule comment remain filled in" src="img/gwr-review-approve.webp" / loading="lazy" decoding="async"></a><figcaption>Reopened review before editing — Reject and the previous installation-fee and schedule comment remain filled in</figcaption></figure>
+<ol class="steps">
+<li>Read Minji's revised proposal in the previous inputs.</li>
+<li>Change 「Review Result」 from 「Reject」 to 「Approve」.</li>
+<li>Replace 「Review Comments」 with <code>Good — the installation schedule is included. Please send it to the customer.</code></li>
+<li>Check both values, then click 「Submit Complete」.</li>
+<li>Switch to Minji and open 「Send Proposal to Customer」 when it arrives.</li>
+<li>In 「Send Proposal to Customer Layout」, leave the 「Draft Proposal」 file field empty for this exercise. In the 「Review Result」 text field, enter <code>Approved — sent the revised proposal with the installation schedule</code>.</li>
+<li>Click 「Submit Complete」.</li>
+</ol>
+<figure><a href="img/gwr-review-approve-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Second review ready to submit — Approve selected and the old comment replaced with approval" src="img/gwr-review-approve-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Second review ready to submit — Approve selected and the old comment replaced with approval</figcaption></figure>
+<p>The customer-sending task reached Minji about five seconds after approval in our run. This time, the gateway took the approval branch.</p>
+<figure><a href="img/gwr-send-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Customer-sending task — empty Draft Proposal file field and the completed Review Result text" src="img/gwr-send-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Customer-sending task — empty Draft Proposal file field and the completed Review Result text</figcaption></figure>
+<p>This exercise records the sending step in a form. Submitting the text is not itself an email-sending action.</p>
+<div class="admonition note">
+<p class="admonition-title">Check retained values when a step returns</p>
+<p>The first review defaulted to 「Approve」, but the reopened review retained 「Reject」. Do not assume a repeated step has reset its form. Check the result and replace the old comment before submitting.</p>
+</div>
+<h2 id="try-it-9-check-that-the-instance-is-complete">Try it 9 — Check that the instance is complete<a class="anchor" href="#try-it-9-check-that-the-instance-is-complete" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Check that the instance status is 「COMPLETED」.</li>
+<li>In Jinyoung's window, open 「Kanban Board」 and count the five cards under 「Done」.</li>
+<li>Check that there is only one 「Review Proposal」 card, even though Jinyoung reviewed twice.</li>
+</ol>
+<figure><a href="img/gwr-done-kanban.webp" target="_blank" rel="noopener" title="View larger"><img alt="Completed instance — COMPLETED status and five cards in Done, including one Review Proposal card" src="img/gwr-done-kanban.webp" / loading="lazy" decoding="async"></a><figcaption>Completed instance — COMPLETED status and five cards in Done, including one Review Proposal card</figcaption></figure>
+<p>The five cards are:</p>
+<ul>
+<li>「Send Proposal to Customer」 — Minji Kim</li>
+<li>「Read Comments &amp; Rewrite Proposal」 — Minji Kim</li>
+<li>「Review Proposal」 — 「My task」</li>
+<li>「Write Proposal」 — Minji Kim</li>
+<li>「Submit Sales Request」 — 「My task」</li>
+</ul>
+<p>There is one review card because <strong>the same step reopened</strong>. A separate second review step was not created. The instance finished after rejection, revision, another review, and the final customer-sending submission.</p>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You followed a branch based on a review result and a loop that returned work for revision. You have now created and run processes handled by people.</p>
+<p>In <a href="knowledge.html">Chapter 8</a>, you will upload company documents to the Knowledge Base so agents can use them as sources. In <a href="agent-steps.html">Chapter 13</a>, you will run an agent-assisted quote process whose approval path depends on whether the total is below KRW 30,000,000 or at least that amount.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Does a diamond with an X send work down every outgoing arrow?</li>
+<li>How does Jinyoung reject the proposal, and where does Minji read his comment?</li>
+<li>What must Jinyoung change when the review reopens?</li>
+<li>Why is there only one completed review card after two reviews?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>No. An exclusive gateway takes one branch whose condition matches. Here, rejection leads to rewriting and approval leads to customer sending.</li>
+<li>He changes 「Review Result」 from 「Approve」 to 「Reject」 and enters 「Review Comments」. Minji reads his review under 「Previous Activity Input」.</li>
+<li>The reopened form keeps 「Reject」 and the old comment. He must select 「Approve」 and replace the comment before submitting approval.</li>
+<li>The same 「Review Proposal」 step reopened after revision. The process did not create a separate second review step.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="process-run.html"><span>Previous</span>Run a process and handle tasks</a><a class="next" href="knowledge.html"><span>Next</span>Knowledge Base — answers grounded in company documents</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#add-a-decision-to-the-flow">Add a decision to the flow</a></li><li><a href="#try-it-1-create-the-process-through-conversation">Try it 1 — Create the process through conversation</a></li><li><a href="#try-it-2-answer-the-single-confirmation-panel">Try it 2 — Answer the single confirmation panel</a></li><li><a href="#read-the-gateway-and-the-return-arrow">Read the gateway and the return arrow</a></li><li><a href="#try-it-3-assign-the-lane-owners">Try it 3 — Assign the lane owners</a></li><li><a href="#try-it-4-enter-the-customer-request-as-jinyoung">Try it 4 — Enter the customer request as Jinyoung</a></li><li><a href="#try-it-5-write-the-proposal-as-minji">Try it 5 — Write the proposal as Minji</a></li><li><a href="#try-it-6-reject-the-proposal-as-jinyoung">Try it 6 — Reject the proposal as Jinyoung</a></li><li><a href="#try-it-7-revise-the-proposal-as-minji">Try it 7 — Revise the proposal as Minji</a></li><li><a href="#try-it-8-approve-and-record-sending-to-the-customer">Try it 8 — Approve and record sending to the customer</a></li><li><a href="#try-it-9-check-that-the-instance-is-complete">Try it 9 — Check that the instance is complete</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
