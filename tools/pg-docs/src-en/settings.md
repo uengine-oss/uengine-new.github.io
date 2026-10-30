@@ -67,7 +67,7 @@ That's all the chapters published for now. Chapters marked “Coming soon” (Sk
 
 !!! exercise "Check your understanding"
     1. On a local install, how do you bring a colleague into this company as a user?
-    2. Minji Kim signed up second. Is she an admin?
+    2. Minji Kim signed up second. Is Minji an admin?
     3. After switching the screen to Korean, where do you click to switch back to English?
 
 <details class="answer" markdown="1"><summary>Answers</summary>

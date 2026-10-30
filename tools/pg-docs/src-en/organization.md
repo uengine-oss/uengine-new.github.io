@@ -8,7 +8,7 @@ Hanbit Office is a B2B office furniture company. You are following this tutorial
 
 In [Chapter 4](definition.html), you renamed the first step to 「Enter Customer Request」 and saved the definition. Now you will add your colleagues to the org chart and assign a role owner.
 
-A **team** groups people in the organization. A **role** is the work someone owns in a process. Each lane represents a role. Adding Minji to the Sales Team and assigning her to the 「Sales Representative」 role are two separate actions.
+A **team** groups people in the organization. A **role** is the work someone owns in a process. Each lane represents a role. Adding Minji to the Sales Team and assigning Minji to the 「Sales Representative」 role are two separate actions.
 
 ## Try it 1 — Prepare your colleagues' accounts
 
@@ -70,7 +70,7 @@ In 「Manage Users」, Jinyoung has the labels 「me」 and 「superAdmin」. Mi
 
 ## Try it 4 — Assign Minji as the sales representative
 
-Team membership does not by itself assign Minji to a process step. Set her as the owner in the **definition's lane**.
+Team membership does not by itself assign Minji to a process step. Set Minji as the owner in the **definition's lane**.
 
 <ol class="steps" markdown="1">
 <li markdown="1">On the Process Definition Map, open 「Sales Proposal Creation」. The sub-process screen has 「Simulation」, 「Edit」, and 「Execute」 above the flow diagram.</li>
@@ -127,16 +127,16 @@ The dialog also shows 「Progress」, 「Agent Delegation」, and 「유사 사�
 
 ## Next chapter
 
-You created the Sales Team and assigned Minji to 「Sales Representative」. In [Chapter 6](process-run.html), Jinyoung submits a customer request and Minji finishes the task she receives.
+You created the Sales Team and assigned Minji to 「Sales Representative」. In [Chapter 6](process-run.html), Jinyoung submits a customer request and Minji finishes the task Minji receives.
 
 !!! exercise "Check your understanding"
-    1. What must Minji do before she appears in 「Select Team Member」?
+    1. What must Minji do before Minji appears in 「Select Team Member」?
     2. Does 「user」 on a person card mean that person is the sales representative?
-    3. Where do you assign Minji so the definition remembers her as the sales representative?
+    3. Where do you assign Minji so the definition remembers Minji as the sales representative?
 
 <details class="answer" markdown="1"><summary>Answers</summary>
 
-1. She must register on the same installation. The member list shows existing accounts.
+1. Minji must register on the same installation. The member list shows existing accounts.
 2. No. 「user」 is an account permission. Process roles belong to the definition's lanes.
 3. Open the 「Sales Representative」 lane panel and choose Minji with 「Role Resolution By Direct user」. Save the panel, then save the definition as a version.
 </details>

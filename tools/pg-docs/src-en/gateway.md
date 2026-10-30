@@ -13,7 +13,7 @@
 
 The process in Chapter 3 had no branches. This time, ask for approval and rejection from the start. You will create a new process, 「Sales Proposal Approval」.
 
-The customer enters a request, and Minji writes a proposal. Jinyoung reviews it. If he rejects it, Minji revises it and sends it through review again. If he approves it, Minji handles the step for sending it to the customer.
+The customer enters a request, and Minji writes a proposal. Jinyoung reviews it. If Jinyoung rejects it, Minji revises it and sends it through review again. If Jinyoung approves it, Minji handles the step for sending it to the customer.
 
 ## Try it 1 — Create the process through conversation
 
@@ -176,7 +176,7 @@ The current form is 「Read Comments & Rewrite Proposal Layout」. It has two Re
 ![Revised proposal editor — the proposal now includes the Daejeon installation fee and a two-day installation schedule](img/gwr-rewrite-report.webp)
 
 !!! note "Read the comment in the previous input"
-    The rewrite form's 「Review Comments」 Report card is empty. Jinyoung's comment is not copied into it automatically. Read his review under 「Previous Activity Input」.
+    The rewrite form's 「Review Comments」 Report card is empty. Jinyoung's comment is not copied into it automatically. Read Jinyoung's review under 「Previous Activity Input」.
 
 About three seconds after submission, 「Review Proposal」 returned to Jinyoung. The flow followed the return arrow to the same review step.
 
@@ -235,14 +235,14 @@ In [Chapter 8](knowledge.html), you will upload company documents to the Knowled
 
 !!! exercise "Check your understanding"
     1. Does a diamond with an X send work down every outgoing arrow?
-    2. How does Jinyoung reject the proposal, and where does Minji read his comment?
+    2. How does Jinyoung reject the proposal, and where does Minji read Jinyoung's comment?
     3. What must Jinyoung change when the review reopens?
     4. Why is there only one completed review card after two reviews?
 
 <details class="answer" markdown="1"><summary>Answers</summary>
 
 1. No. An exclusive gateway takes one branch whose condition matches. Here, rejection leads to rewriting and approval leads to customer sending.
-2. He changes 「Review Result」 from 「Approve」 to 「Reject」 and enters 「Review Comments」. Minji reads his review under 「Previous Activity Input」.
-3. The reopened form keeps 「Reject」 and the old comment. He must select 「Approve」 and replace the comment before submitting approval.
+2. Jinyoung changes 「Review Result」 from 「Approve」 to 「Reject」 and enters 「Review Comments」. Minji reads Jinyoung's review under 「Previous Activity Input」.
+3. The reopened form keeps 「Reject」 and the old comment. Jinyoung must select 「Approve」 and replace the comment before submitting approval.
 4. The same 「Review Proposal」 step reopened after revision. The process did not create a separate second review step.
 </details>
