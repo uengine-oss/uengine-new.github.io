@@ -77,7 +77,7 @@ Click **Export Component (.zip)** on the definition screen to download a zip fil
 
 ## Next chapter
 
-So far you've made and worked with a process that has only steps people do. The chapters on running a process and handling tasks (Chapters 5–7) are coming soon, so next we move on to AI agents. First, you'll upload the company documents that agents use as their sources to the **Knowledge Base** ([Chapter 8](knowledge.html)).
+So far you've made and worked with a process definition. Next you'll add colleagues to the org chart and give the 「Sales Representative」 role of this definition to Minji Kim ([Chapter 5](organization.html)). Then you'll run it and handle the tasks ([Chapter 6](process-run.html)), and go through an approve/reject gateway ([Chapter 7](gateway.html)).
 
 !!! exercise "Check your understanding"
     1. You renamed a step in the step panel and only closed the panel. When you open the definition again, will the name be changed?

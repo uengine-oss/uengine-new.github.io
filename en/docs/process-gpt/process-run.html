@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run a process and handle tasks — Process GPT Tutorial</title>
+<meta name="description" content="Run 「Sales Proposal Creation」 as Jinyoung Jang, then handle Minji Kim&#x27;s task. Follow one request from customer input to the completion of the last step.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/process-run.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Run a process and handle tasks — Process GPT Tutorial">
+<meta property="og:description" content="Run 「Sales Proposal Creation」 as Jinyoung Jang, then handle Minji Kim&#x27;s task. Follow one request from customer input to the completion of the last step.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/process-run.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><a href="organization.html"><span class="n">05</span>Org chart and role owners</a></li>
+<li><a href="process-run.html" class="on" aria-current="page"><span class="n">06</span>Run a process and handle tasks</a></li>
+<li><a href="gateway.html"><span class="n">07</span>Approve and reject — gateways and going back</a></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><span class="soon"><span class="n">11</span>Teach ways of working with skills<em>Coming soon</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><span class="soon"><span class="n">14</span>Connect external tools with MCP<em>Coming soon</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><span class="soon"><span class="n">16</span>Execution analytics — lead time and bottlenecks<em>Coming soon</em></span></li>
+<li><span class="soon"><span class="n">17</span>Strategy board and KPIs<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><span class="soon"><span class="n">19</span>Final project<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Process basics<span class="chap">6</span></div>
+    <h1>Run a process and handle tasks</h1>
+    <article>
+<blockquote>
+<p>Run 「Sales Proposal Creation」 as Jinyoung Jang, then handle Minji Kim's task. Follow one request from customer input to the completion of the last step.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Your installation needs these fixes</p>
+<p>The run screens in this chapter were captured on an installation with the following fixes applied (2026-10-30). Installations from before these fixes reach the installation repository may stop partway through a run. This notice will be removed once the fixes are included.</p>
+<ul>
+<li>Installation: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — missing columns in the task table; without them, the first submission stops.</li>
+<li>Interface: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/234">process-gpt-vue3 #234</a> — makes execution follow the first step and assigned role owners.</li>
+</ul>
+</div>
+<h2 id="definitions-instances-and-tasks">Definitions, instances, and tasks<a class="anchor" href="#definitions-instances-and-tasks" title="Permanent link">#</a></h2>
+<p>In <a href="organization.html">Chapter 5</a>, you assigned Minji to 「Sales Representative」. Now you will run that definition. Jinyoung enters the customer's request, and Minji writes the proposal.</p>
+<p>First, separate these three terms.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>In this exercise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Process definition</td>
+<td>The plan for doing the work</td>
+<td>「Sales Proposal Creation」</td>
+</tr>
+<tr>
+<td>Instance</td>
+<td>One run of that plan</td>
+<td>Handling Hanbit Trading's meeting-room request</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>One step assigned to its owner</td>
+<td>「Prepare and Send Proposal」 assigned to Minji</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>definition</strong> describes the order of work. An <strong>instance</strong> follows that order for a particular request. Each owner fills in and submits the form in their <strong>task</strong>.</p>
+<p>「Prepare and Send Proposal」 is the second step you renamed in <a href="definition.html">Chapter 4</a>.</p>
+<h2 id="try-it-1-open-the-run-dialog">Try it 1 — Open the run dialog<a class="anchor" href="#try-it-1-open-the-run-dialog" title="Permanent link">#</a></h2>
+<p>Start in Jinyoung's browser. You will use another browser or private window for Minji later.</p>
+<ol class="steps">
+<li>On the Process Definition Map, click 「Sales Proposal Creation」.</li>
+<li>Find the flow diagram and the 「Simulation」, 「Edit」, and 「Execute」 buttons above it.</li>
+<li>Click 「Execute」. A run dialog titled 「Sales Proposal Creation」 opens.</li>
+<li>Under 「Role Mapping」, check that 「Customer」 is Jinyoung Jang and 「Sales Representative」 is Minji Kim.</li>
+</ol>
+<figure><a href="img/run-def.webp" target="_blank" rel="noopener" title="View larger"><img alt="The sub-process screen — Sales Proposal Creation with Simulation, Edit, and Execute" src="img/run-def.webp" / loading="lazy" decoding="async"></a><figcaption>The sub-process screen — Sales Proposal Creation with Simulation, Edit, and Execute</figcaption></figure>
+<p>The first step is 「Enter Customer Request」, shown with 「NEW」. The dialog has 「Progress」, 「Agent Delegation」, and 「유사 사례」 tabs.</p>
+<p>On the right, 「Current Task」 contains 「Submit Request Layout」. Jinyoung will fill in its 「Sales Request」 field. Leave 「Add File」 under 「Source」 unused for this exercise.</p>
+<div class="admonition note">
+<p class="admonition-title">Text still shown in Korean</p>
+<p>The current version shows the definition breadcrumb as 「미분류 › 미분류」 and the similar-cases tab as 「유사 사례」, even in English mode. Use 「Progress」 to view the process flow.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">If the owners are different</p>
+<p>This exercise uses the definition saved in <a href="organization.html">Chapter 5</a>. If 「Sales Representative」 does not show Minji, check the lane assignment and make sure you saved both the panel and the definition.</p>
+</div>
+<h2 id="try-it-2-submit-the-customers-request">Try it 2 — Submit the customer's request<a class="anchor" href="#try-it-2-submit-the-customers-request" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Enter the request below in 「Sales Request」.</li>
+<li>Check the owners and the request, then click 「Submit Complete」 at the top right.</li>
+<li>When the instance screen opens, check its title and 「RUNNING」 status.</li>
+</ol>
+<p>Use this request:</p>
+<blockquote>
+<p>Hanbit Trading is redoing the meeting room at its head office. It needs one 12-seat meeting table and 12 mesh chairs, with a budget of KRW 15,000,000, installed by the end of November.</p>
+</blockquote>
+<figure><a href="img/run-dialog-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Filled run dialog — Jinyoung and Minji in Role Mapping, the Sales Request text, and Submit Complete" src="img/run-dialog-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Filled run dialog — Jinyoung and Minji in Role Mapping, the Sales Request text, and Submit Complete</figcaption></figure>
+<p>Our instance title appears as 「Sales Proposal Creation · Hanbit Trading meeting r…」. The name is generated from the request and may differ in your run. The screen may shorten it.</p>
+<p>The instance is still 「RUNNING」 after the first submission. Jinyoung's step is done, but Minji's step remains.</p>
+<div class="admonition note">
+<p class="admonition-title">People fill in the forms in this chapter</p>
+<p>Leave 「Agent Delegation」 and 「Voice Agent」 unused. You will work with agent-owned steps in <a href="agent-steps.html">Chapter 13</a>.</p>
+</div>
+<h2 id="try-it-3-check-the-running-instance">Try it 3 — Check the running instance<a class="anchor" href="#try-it-3-check-the-running-instance" title="Permanent link">#</a></h2>
+<p>The instance screen identifies Jinyoung as the starter and shows the start date. Its tabs are 「Progress」, 「Kanban Board」, 「Schedule」, 「Chat」, 「Source」, and 「Output」.</p>
+<p>Use the board to see which step is done and which is active.</p>
+<ol class="steps">
+<li>Open 「Kanban Board」 in the instance.</li>
+<li>Find 「Enter Customer Request」 under 「Done」. In Jinyoung's view, it shows 「My task」.</li>
+<li>Find 「Prepare and Send Proposal」 under 「In Progress」. Check that its owner is Minji Kim.</li>
+<li>Note the instance name so you can identify the same request in Minji's task list.</li>
+</ol>
+<figure><a href="img/run-instance-kanban.webp" target="_blank" rel="noopener" title="View larger"><img alt="Running instance — Prepare and Send Proposal assigned to Minji in In Progress and Enter Customer Request in Done" src="img/run-instance-kanban.webp" / loading="lazy" decoding="async"></a><figcaption>Running instance — Prepare and Send Proposal assigned to Minji in In Progress and Enter Customer Request in Done</figcaption></figure>
+<p>「Pending/Returned」 and 「Upcoming Tasks」 are empty at this point. In our capture, Minji's card shows 「2026.11.04 ~2026.11.09」.</p>
+<p>This board shows the steps of <strong>one instance</strong>. Minji's task list is a different view: it shows work assigned to her. Next, find this same task there.</p>
+<h2 id="try-it-4-open-minjis-task">Try it 4 — Open Minji's task<a class="anchor" href="#try-it-4-open-minjis-task" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open <code>http://localhost:8088</code> in another browser or private window and sign in as Minji Kim.</li>
+<li>Click the task icon in the top bar to open 「Task List」.</li>
+<li>Under 「In Progress」, find 「Prepare and Send Proposal」. Check its instance name against the Hanbit Trading meeting-room request you just created.</li>
+<li>Click the card to open the task.</li>
+</ol>
+<figure><a href="img/run-minji-todo.webp" target="_blank" rel="noopener" title="View larger"><img alt="Minji's Task List — Prepare and Send Proposal for the Hanbit Trading meeting-room instance" src="img/run-minji-todo.webp" / loading="lazy" decoding="async"></a><figcaption>Minji's Task List — Prepare and Send Proposal for the Hanbit Trading meeting-room instance</figcaption></figure>
+<p>The list shows 「Last Updated (Recent)」 at the top. Each task card includes its instance name and scheduled dates.</p>
+<p>Check the instance name even when the step name looks right. Opening a run dialog in Chapter 5 may have left an extra 「Enter Customer Request」 task, and other runs can have the same step names.</p>
+<p>The task screen shows 「Prepare and Send Proposal」, 「IN_PROGRESS」, and 「v 0.3」. That is the definition version used by this instance.</p>
+<p>Its tabs are 「Progress」, 「Work History」, 「Agent Delegation」, and 「유사 사례」. The top-right buttons are 「Intermediate Save」 and 「Submit Complete」. This exercise goes straight to submission after filling in the form.</p>
+<h2 id="try-it-5-read-the-request-and-write-the-proposal">Try it 5 — Read the request and write the proposal<a class="anchor" href="#try-it-5-read-the-request-and-write-the-proposal" title="Permanent link">#</a></h2>
+<p>Under 「Previous Activity Input」, the 「Enter Customer Request · Jinyoung Jang」 card contains the request submitted in the first step.</p>
+<p>Below it, 「Current Task」 shows 「Write Proposal and Send to Customer Layout」. Its title differs from the renamed step title. The form has <strong>one field</strong>, 「Sales Proposal」, displayed as a 「Report」 card.</p>
+<figure><a href="img/run-minji-task.webp" target="_blank" rel="noopener" title="View larger"><img alt="Minji's task — Previous Activity Input, the current Sales Proposal Report card, Intermediate Save, and Submit Complete" src="img/run-minji-task.webp" / loading="lazy" decoding="async"></a><figcaption>Minji's task — Previous Activity Input, the current Sales Proposal Report card, Intermediate Save, and Submit Complete</figcaption></figure>
+<ol class="steps">
+<li>Read Jinyoung's request in 「Previous Activity Input」.</li>
+<li>In 「Current Task」, click the blue edit button on the 「Sales Proposal」 card.</li>
+<li>In 「Content Editor」, enter the proposal below.</li>
+<li>Click 「Save」. Check that the proposal appears in the card's preview.</li>
+<li>Click 「Submit Complete」.</li>
+</ol>
+<p>Use this proposal:</p>
+<blockquote>
+<p>Proposal for Hanbit Trading's meeting room: one 12-seat meeting table and 12 high-back mesh chairs as a set. About KRW 12,500,000 (VAT excluded), no installation fee at the Seoul head office, installed in the 4th week of November.</p>
+</blockquote>
+<figure><a href="img/run-minji-task-report.webp" target="_blank" rel="noopener" title="View larger"><img alt="Editing the proposal — Content Editor with the meeting-room proposal and Save" src="img/run-minji-task-report.webp" / loading="lazy" decoding="async"></a><figcaption>Editing the proposal — Content Editor with the meeting-room proposal and Save</figcaption></figure>
+<figure><a href="img/run-minji-task-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Filled task — the Sales Proposal card previews the saved proposal" src="img/run-minji-task-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Filled task — the Sales Proposal card previews the saved proposal</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">One Report field holds the proposal</p>
+<p>This form has no separate request, quote, or schedule fields. Put the proposal, price, installation fee, and timing together in 「Sales Proposal」. Use 「Previous Activity Input」 as your source, then save the editor before submitting the task.</p>
+</div>
+<h2 id="try-it-6-check-that-the-whole-instance-is-complete">Try it 6 — Check that the whole instance is complete<a class="anchor" href="#try-it-6-check-that-the-whole-instance-is-complete" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>After Minji submits, wait for the instance to show 「COMPLETED」. This took about nine seconds in our run.</li>
+<li>In Jinyoung's window, open the same instance's 「Kanban Board」.</li>
+<li>Check that 「In Progress」 is empty and 「Done」 contains both 「Prepare and Send Proposal」 and 「Enter Customer Request」.</li>
+</ol>
+<figure><a href="img/run-instance-done-kanban.webp" target="_blank" rel="noopener" title="View larger"><img alt="Completed instance — both steps in Done, with Minji Kim and My task as their owners" src="img/run-instance-done-kanban.webp" / loading="lazy" decoding="async"></a><figcaption>Completed instance — both steps in Done, with Minji Kim and My task as their owners</figcaption></figure>
+<p>Minji handled the last step, so her submission completed both the task and the instance. In Jinyoung's view, 「Prepare and Send Proposal」 shows Minji Kim, while 「Enter Customer Request」 shows 「My task」.</p>
+<p>The first submission left the instance 「RUNNING」. The last submission changed it to 「COMPLETED」. Finishing one task and finishing the whole instance are different events.</p>
+<div class="admonition note">
+<p class="admonition-title">The completed step's details</p>
+<p>In this run, 「Step Details」 showed 「USER INPUT」 and 「No form content available.」 after completion, followed by feedback controls. Use the instance status and the board to check that the run has finished.</p>
+</div>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You submitted a customer request and completed the assigned task. In <a href="gateway.html">Chapter 7</a>, the sales team lead will approve or reject a proposal. You will follow both the approval path and the path that returns work for revision.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>How is a definition different from an instance?</li>
+<li>Where does Minji read the customer's request, and where does she write the proposal?</li>
+<li>Why is the instance 「RUNNING」 after Jinyoung submits but 「COMPLETED」 after Minji submits?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>A definition is the plan for the work. An instance is one run of that plan for a particular request.</li>
+<li>She reads 「Enter Customer Request · Jinyoung Jang」 under 「Previous Activity Input」. She edits the 「Sales Proposal」 Report card through 「Content Editor」, then saves it.</li>
+<li>Minji's step remains after Jinyoung submits. Minji submits the last step, so the whole instance is complete.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="organization.html"><span>Previous</span>Org chart and role owners</a><a class="next" href="gateway.html"><span>Next</span>Approve and reject — gateways and going back</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#definitions-instances-and-tasks">Definitions, instances, and tasks</a></li><li><a href="#try-it-1-open-the-run-dialog">Try it 1 — Open the run dialog</a></li><li><a href="#try-it-2-submit-the-customers-request">Try it 2 — Submit the customer&#x27;s request</a></li><li><a href="#try-it-3-check-the-running-instance">Try it 3 — Check the running instance</a></li><li><a href="#try-it-4-open-minjis-task">Try it 4 — Open Minji&#x27;s task</a></li><li><a href="#try-it-5-read-the-request-and-write-the-proposal">Try it 5 — Read the request and write the proposal</a></li><li><a href="#try-it-6-check-that-the-whole-instance-is-complete">Try it 6 — Check that the whole instance is complete</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

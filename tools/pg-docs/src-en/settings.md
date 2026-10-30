@@ -29,6 +29,9 @@ Click ⚙ at the right end of the top bar to open settings. The tabs run in one 
 
 ## Try it 2 — Bring in a colleague
 
+!!! note "If you did Chapter 5"
+    If you already signed up Minji Kim and Seoyeon Park in [Chapter 5](organization.html), 「Manage Users」 lists all three with 「Affiliated Team : Sales Team」. The steps below repeat what you did there (signing up directly at the same address), so you can skip them.
+
 For now, **Manage Users** lists only you (Jinyoung Jang, **me**, **superAdmin**). **Invite User** sends an invitation email, but a local install doesn't send email. Locally, a colleague joins this company as a user by **signing up at the same address**.
 
 ![Manage Users — the “Invite User” button and Jinyoung Jang (me, superAdmin)](img/set-users.webp)
@@ -60,7 +63,7 @@ For now, **Manage Users** lists only you (Jinyoung Jang, **me**, **superAdmin**)
 
 ## Next chapter
 
-That's all the chapters published for now. Chapters marked “Coming soon” (Org chart and role owners, Run a process and handle tasks, Approve and reject, and more) will be published one by one as fixes for the current version land. A one-page summary is in the [appendix](cheatsheet.html).
+That's all the chapters published for now. Chapters marked “Coming soon” (Skills, MCP, Execution analytics, and more) will be published one by one as fixes for the current version land. A one-page summary is in the [appendix](cheatsheet.html).
 
 !!! exercise "Check your understanding"
     1. On a local install, how do you bring a colleague into this company as a user?
