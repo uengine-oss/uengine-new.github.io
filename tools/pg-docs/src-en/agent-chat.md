@@ -82,7 +82,7 @@ In our run, every line matched the price list. If something doesn't match, conti
 
 ## Next chapter
 
-You've seen the agent write a draft quote from the price list. Next, you'll turn this work into a **process** that follows the company's quote approval policy, and hand some of its steps to agents ([Chapter 12](document-process.html)).
+You've seen the agent write a draft quote from the price list. Next, you'll teach the agent how to lay out a quote with a **skill** ([Chapter 11](skills.html)). Then you'll turn this work into a **process** that follows the company's quote approval policy, and hand some of its steps to agents ([Chapter 12](document-process.html)).
 
 !!! exercise "Check your understanding"
     1. How do you attach the Knowledge Base price list when you start from the agent screen?

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teach ways of working with skills — Process GPT Tutorial</title>
+<meta name="description" content="Attach a quote-format skill to 「Hanbit Office Quote Advisor」. Send the same request again after changing the rules, then check what improved and what still needs human review.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/skills.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Teach ways of working with skills — Process GPT Tutorial">
+<meta property="og:description" content="Attach a quote-format skill to 「Hanbit Office Quote Advisor」. Send the same request again after changing the rules, then check what improved and what still needs human review.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/skills.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><a href="organization.html"><span class="n">05</span>Org chart and role owners</a></li>
+<li><a href="process-run.html"><span class="n">06</span>Run a process and handle tasks</a></li>
+<li><a href="gateway.html"><span class="n">07</span>Approve and reject — gateways and going back</a></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><a href="skills.html" class="on" aria-current="page"><span class="n">11</span>Teach ways of working with skills</a></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><a href="mcp-hub.html"><span class="n">14</span>Connect external tools with MCP</a></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><a href="analytics.html"><span class="n">16</span>Execution analytics — lead time and bottlenecks</a></li>
+<li><a href="strategy.html"><span class="n">17</span>Strategy board and KPIs</a></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">19</span>Final project — Hanbit Office A/S intake</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">AI agents<span class="chap">11</span></div>
+    <h1>Teach ways of working with skills</h1>
+    <article>
+<blockquote>
+<p>Attach a quote-format skill to 「Hanbit Office Quote Advisor」. Send the same request again after changing the rules, then check what improved and what still needs human review.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Your installation needs these fixes</p>
+<p>The run screens in this chapter were captured on an installation with the following fixes applied (2026-10-30). Before these fixes reach the installation repository, skill registration or application may not work. This notice will be removed once the fixes are included.</p>
+<ul>
+<li>Agent: <a href="https://github.com/uengine-oss/process-gpt-deepagents/pull/9">process-gpt-deepagents #9</a> — makes skills available in workspaces opened before the first skill was uploaded.</li>
+<li>Installation: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — adds the fields needed to register skills on a fresh installation.</li>
+</ul>
+</div>
+<h2 id="separate-prices-from-writing-rules">Separate prices from writing rules<a class="anchor" href="#separate-prices-from-writing-rules" title="Permanent link">#</a></h2>
+<p>In <a href="knowledge.html">Chapter 8</a>, you uploaded company documents to 「Hanbit-Office-Sales-Docs」. In <a href="agents.html">Chapter 9</a>, you created 「Hanbit Office Quote Advisor」. Now you will teach this agent how to arrange a quote.</p>
+<p>The price list supplies prices. The skill supplies working rules. This skill contains no product prices. It defines the heading, table columns, order of totals, and closing line. It tells the agent to get prices from the selected price list.</p>
+<p>Jinyoung Jang uploads the skill as the admin and attaches it to the agent. This prepares a format Minji Kim can use for customer quotes. Uploading a skill and attaching it to an agent are separate steps.</p>
+<h2 id="try-it-1-explore-the-skills-list">Try it 1 — Explore the skills list<a class="anchor" href="#try-it-1-explore-the-skills-list" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open 「Skills」 from the sidebar.</li>
+<li>Check the 「Uploaded skills」 tab.</li>
+<li>Open 「Built-in skills」, then return to 「Uploaded skills」.</li>
+</ol>
+<figure><a href="img/sk-list.webp" target="_blank" rel="noopener" title="View larger"><img alt="Skills list — Skills List Management, Uploaded skills, and the Skill name, Skill description, and Used by columns" src="img/sk-list.webp" / loading="lazy" decoding="async"></a><figcaption>Skills list — Skills List Management, Uploaded skills, and the Skill name, Skill description, and Used by columns</figcaption></figure>
+<p>The page heading is 「Skills List Management」. Its subtitle says 「Add or remove skills here. Click a skill to open it and edit its files.」. You can switch between 「Table」 and 「Card」.</p>
+<p>Existing skills are separate from the file you will upload. A skill appearing in this list does not mean the quote advisor uses it.</p>
+<figure><a href="img/sk-builtin.webp" target="_blank" rel="noopener" title="View larger"><img alt="Built-in skills — the Built-in skills tab with English skill descriptions" src="img/sk-builtin.webp" / loading="lazy" decoding="async"></a><figcaption>Built-in skills — the Built-in skills tab with English skill descriptions</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Some seeded descriptions remain in Korean</p>
+<p>The English installation still shows Korean descriptions for some existing skills, including 「bpmn-process-generation-skill」. Use the skill name to distinguish these from 「hanbit-quote-format」.</p>
+</div>
+<h2 id="try-it-2-upload-the-quote-format-file">Try it 2 — Upload the quote-format file<a class="anchor" href="#try-it-2-upload-the-quote-format-file" title="Permanent link">#</a></h2>
+<p>Download <a href="files/hanbit-quote-format-en.zip">hanbit-quote-format-en.zip</a>. It contains the following <code>SKILL.md</code>. Upload the zip file without extracting it for this exercise.</p>
+<div class="hl"><pre><span></span><code>---
+name: hanbit-quote-format
+<span class="gu">description: Use whenever you write a quote or draft quote for a Hanbit Office customer. Defines the quote layout, the order of totals and the closing line.</span>
+<span class="gu">---</span>
+
+<span class="gh"># Hanbit Office quote format</span>
+
+Follow these rules every time you write a quote for a customer.
+
+<span class="k">1.</span> Start with the heading <span class="sb">`Hanbit Office Quote — &lt;customer name&gt;`</span>.
+<span class="k">2.</span> Put the items in one table with exactly these columns: Item | Qty | Unit price (KRW) | Discount | Amount (KRW).
+<span class="k">3.</span> Under the table, list in this order: Subtotal, Volume discount, Installation fee, Quote total (VAT excluded).
+<span class="k">4.</span> Take prices, discounts and fees only from the selected price list. If something is missing, say so instead of guessing.
+<span class="k">5.</span> End with exactly this line: <span class="sb">`Valid for 30 days · Hanbit Office Sales Team`</span>
+</code></pre></div>
+
+<p>The <code>name</code> identifies the skill. The <code>description</code> explains when to use it. The body gives five rules for writing customer quotes.</p>
+<ol class="steps">
+<li>Click 「Add skill」.</li>
+<li>Choose 「Upload File」 and upload the downloaded zip file.</li>
+<li>Check for 「Skill added successfully.」.</li>
+<li>Find 「hanbit-quote-format」 in the list. Check that 「Used by」 is 0.</li>
+</ol>
+<figure><a href="img/sk-add-menu.webp" target="_blank" rel="noopener" title="View larger"><img alt="Add skill menu — Upload File for a zip or skill file, and From Repository for a Git URL" src="img/sk-add-menu.webp" / loading="lazy" decoding="async"></a><figcaption>Add skill menu — Upload File for a zip or skill file, and From Repository for a Git URL</figcaption></figure>
+<p>The menu describes 「Upload File」 as 「Upload a .zip or .skill file」. The other option is 「From Repository」, with 「Add from a Git repository URL」. This exercise uses the prepared zip file.</p>
+<figure><a href="img/sk-uploaded.webp" target="_blank" rel="noopener" title="View larger"><img alt="Uploaded skill — hanbit-quote-format with its English description and Used by 0" src="img/sk-uploaded.webp" / loading="lazy" decoding="async"></a><figcaption>Uploaded skill — hanbit-quote-format with its English description and Used by 0</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Check the installation if uploading fails</p>
+<p>A missing database field caused 「Upload failed with error」 during earlier installation testing. The installation fix above covers that problem. If you see the same error, check whether the fix is installed before changing the skill file.</p>
+</div>
+<h2 id="try-it-3-open-the-file-and-attach-it-to-the-agent">Try it 3 — Open the file and attach it to the agent<a class="anchor" href="#try-it-3-open-the-file-and-attach-it-to-the-agent" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click 「hanbit-quote-format」 to open its detail page.</li>
+<li>In 「Files」, check the file tree and the <code>SKILL.md</code> editor.</li>
+<li>Find 「Used by agents (0)」.</li>
+<li>Open 「Hanbit Office Quote Advisor」 and use the pencil beside its name to edit the agent.</li>
+<li>In 「Skills」, select 「hanbit-quote-format」.</li>
+<li>Check the selected skill and save the agent changes.</li>
+</ol>
+<figure><a href="img/sk-detail.webp" target="_blank" rel="noopener" title="View larger"><img alt="Skill detail — Files and Graph tabs, the SKILL.md editor, and Used by agents (0)" src="img/sk-detail.webp" / loading="lazy" decoding="async"></a><figcaption>Skill detail — Files and Graph tabs, the SKILL.md editor, and Used by agents (0)</figcaption></figure>
+<p>The detail page has 「Files」 and 「Graph」 tabs. This exercise uses the file editor. Check that <code>hanbit-quote-format/SKILL.md</code> contains the five rules from the zip file.</p>
+<figure><a href="img/sk-attach.webp" target="_blank" rel="noopener" title="View larger"><img alt="Attach the skill — hanbit-quote-format selected in the agent's Skills field" src="img/sk-attach.webp" / loading="lazy" decoding="async"></a><figcaption>Attach the skill — hanbit-quote-format selected in the agent's Skills field</figcaption></figure>
+<p>The agent editor includes 「Name」, 「Role」, 「Goal」, 「Persona」, 「Tools」, 「Skills」, 「AI Provider」, and 「AI Model」. Change 「Skills」 for this exercise.</p>
+<div class="admonition note">
+<p class="admonition-title">A tool name is not proof of a connection</p>
+<p>Names suggested during agent generation do not establish an external tool connection. A skill supplies instructions. In <a href="mcp-hub.html">Chapter 14</a>, you will register an MCP server and select its tool for the agent.</p>
+</div>
+<h2 id="try-it-4-ask-which-format-the-agent-follows">Try it 4 — Ask which format the agent follows<a class="anchor" href="#try-it-4-ask-which-format-the-agent-follows" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Send the greeting below to 「Hanbit Office Quote Advisor」.</li>
+<li>Read the reply in the conversation.</li>
+<li>Compare its explanation with the five rules in <code>SKILL.md</code>.</li>
+</ol>
+<blockquote>
+<p>Hello. Briefly tell me which format you follow when you write a quote.</p>
+</blockquote>
+<figure><a href="img/sk-chat-hello.webp" target="_blank" rel="noopener" title="View larger"><img alt="Format-check conversation — the agent explains the quote rules beside the context panel" src="img/sk-chat-hello.webp" / loading="lazy" decoding="async"></a><figcaption>Format-check conversation — the agent explains the quote rules beside the context panel</figcaption></figure>
+<p>In this run, the agent restated the five rules in its own words. It described the heading, table columns, totals, price-list source, and closing line.</p>
+<p>This checks whether the agent can describe the rules. It does not prove that every quote will follow them. Next, compare an actual quote with both the skill and the price list.</p>
+<h2 id="try-it-5-create-the-first-quote-from-the-price-list">Try it 5 — Create the first quote from the price list<a class="anchor" href="#try-it-5-create-the-first-quote-from-the-price-list" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the plus menu in the conversation and choose 「Knowledge Base」.</li>
+<li>Click 「Expand all」 and select 「Hanbit-Office-Price-List.pdf」.</li>
+<li>Click 「Use 1 file」.</li>
+<li>Send the request below.</li>
+<li>Check the heading, table columns, totals, closing line, and arithmetic.</li>
+</ol>
+<blockquote>
+<p>Search the selected knowledge base for the Hanbit Office price list (Hanbit-Office-Price-List.pdf) and use it. Hanbit Trading wants 25 Mesh Chair Air and 25 3-Drawer Mobile Pedestals delivered to its Seoul head office. Write the quote to send to the customer.</p>
+</blockquote>
+<figure><a href="img/sk-picker.webp" target="_blank" rel="noopener" title="View larger"><img alt="Price-list selection — Hanbit-Office-Price-List.pdf selected in the Knowledge Base picker" src="img/sk-picker.webp" / loading="lazy" decoding="async"></a><figcaption>Price-list selection — Hanbit-Office-Price-List.pdf selected in the Knowledge Base picker</figcaption></figure>
+<p>The answer arrived after about 30 seconds. Naming the file matters here. In earlier attempts, the agent said it could not locate the selected price list and did not search it. The request above explicitly names the source.</p>
+<figure><a href="img/sk-answer1.webp" target="_blank" rel="noopener" title="View larger"><img alt="First quote — Hanbit Office Quote heading and the two product rows" src="img/sk-answer1.webp" / loading="lazy" decoding="async"></a><figcaption>First quote — Hanbit Office Quote heading and the two product rows</figcaption></figure>
+<p>The answer used the requested quote format. Both products had a quantity of 25 and a 5% discount.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th style="text-align: right;">Qty</th>
+<th style="text-align: right;">Unit price (KRW)</th>
+<th style="text-align: right;">Discount</th>
+<th style="text-align: right;">Amount (KRW) shown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mesh Chair Air</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">180,000</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">4,275,000</td>
+</tr>
+<tr>
+<td>3-Drawer Mobile Pedestal</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">95,000</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">2,256,250</td>
+</tr>
+</tbody>
+</table>
+<p>The totals contained an arithmetic error.</p>
+<table>
+<thead>
+<tr>
+<th>Total</th>
+<th style="text-align: right;">First answer</th>
+<th style="text-align: right;">Correct value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Subtotal」</td>
+<td style="text-align: right;">KRW 6,875,000</td>
+<td style="text-align: right;">KRW 6,875,000</td>
+</tr>
+<tr>
+<td>「Volume discount」</td>
+<td style="text-align: right;"><strong>KRW 361,250</strong></td>
+<td style="text-align: right;"><strong>KRW 343,750</strong></td>
+</tr>
+<tr>
+<td>「Installation fee」</td>
+<td style="text-align: right;">Free, Seoul region</td>
+<td style="text-align: right;">KRW 0</td>
+</tr>
+<tr>
+<td>「Quote total (VAT excluded)」</td>
+<td style="text-align: right;"><strong>KRW 6,513,750</strong></td>
+<td style="text-align: right;"><strong>KRW 6,531,250</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Check the calculation yourself:</p>
+<div class="hl"><pre><span></span><code>25 × 180,000 = 4,500,000
+25 × 95,000 = 2,375,000
+Subtotal = 4,500,000 + 2,375,000 = 6,875,000
+Volume discount = 6,875,000 × 5% = 343,750
+Quote total = 6,875,000 − 343,750 + 0 = 6,531,250
+</code></pre></div>
+
+<figure><a href="img/sk-answer1-end.webp" target="_blank" rel="noopener" title="View larger"><img alt="First quote totals — the incorrect discount and total, the closing line, and the price-list source" src="img/sk-answer1-end.webp" / loading="lazy" decoding="async"></a><figcaption>First quote totals — the incorrect discount and total, the closing line, and the price-list source</figcaption></figure>
+<p>The answer included 「Valid for 30 days · Hanbit Office Sales Team」 and 「Source: Hanbit-Office-Price-List.pdf, p.1」. It also noted a lead time of 5 business days. A source citation does not verify the arithmetic.</p>
+<div class="admonition note">
+<p class="admonition-title">Check what each amount means</p>
+<p>The table contains amounts after discount: KRW 4,275,000 and KRW 2,256,250. Their sum is KRW 6,531,250, not the stated subtotal of KRW 6,875,000. The totals use a subtotal before discount. Check both the arithmetic and the meaning of the amounts before sending a quote.</p>
+</div>
+<h2 id="try-it-6-add-and-save-an-arithmetic-rule">Try it 6 — Add and save an arithmetic rule<a class="anchor" href="#try-it-6-add-and-save-an-arithmetic-rule" title="Permanent link">#</a></h2>
+<p>Open the same skill file. Keep the five existing rules and add this line at the end.</p>
+<div class="hl"><pre><span></span><code><span class="k">6.</span> Before answering, check the arithmetic: volume discount = subtotal × discount rate, and subtotal − volume discount + installation fee = quote total. Show the discount calculation in one line.
+</code></pre></div>
+
+<ol class="steps">
+<li>Add rule 6 to the end of <code>SKILL.md</code> for 「hanbit-quote-format」.</li>
+<li>Click 「Save」 in the editor.</li>
+<li>In 「No Git Repository」, click 「깃 없이 저장」.</li>
+<li>Check for 「스킬 파일이 성공적으로 저장되었습니다.」.</li>
+</ol>
+<p>The last button and confirmation message remain in Korean. 「깃 없이 저장」 means save without Git. 「스킬 파일이 성공적으로 저장되었습니다.」 means the skill file was saved successfully.</p>
+<p>The 「No Git Repository」 dialog explains that the skill has no linked Git repository. Its buttons are 「Cancel」, 「깃 없이 저장」, and 「Create Repository &amp; Save」. This exercise saves only the file.</p>
+<figure><a href="img/sk-nogit.webp" target="_blank" rel="noopener" title="View larger"><img alt="Save without Git — No Git Repository dialog with the Korean save-without-Git button" src="img/sk-nogit.webp" / loading="lazy" decoding="async"></a><figcaption>Save without Git — No Git Repository dialog with the Korean save-without-Git button</figcaption></figure>
+<figure><a href="img/sk-saved.webp" target="_blank" rel="noopener" title="View larger"><img alt="Saved skill — confirmation after saving the updated skill without Git" src="img/sk-saved.webp" / loading="lazy" decoding="async"></a><figcaption>Saved skill — confirmation after saving the updated skill without Git</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">This save does not provide change history</p>
+<p>Saving without Git does not provide Git change history or merge requests. Here, use it to save the arithmetic rule and compare the next answer.</p>
+</div>
+<h2 id="try-it-7-repeat-the-same-request">Try it 7 — Repeat the same request<a class="anchor" href="#try-it-7-repeat-the-same-request" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Return to the same conversation.</li>
+<li>Send the same request for Hanbit Trading's 25 chairs and 25 pedestals.</li>
+<li>Check whether the new answer shows the discount calculation.</li>
+<li>Recalculate the totals and compare them with the table amounts.</li>
+</ol>
+<figure><a href="img/sk-answer2.webp" target="_blank" rel="noopener" title="View larger"><img alt="Quote after the rule change — the same order with the corrected discount and total" src="img/sk-answer2.webp" / loading="lazy" decoding="async"></a><figcaption>Quote after the rule change — the same order with the corrected discount and total</figcaption></figure>
+<p>The new answer arrived after about 25 seconds. It showed:</p>
+<ul>
+<li>「Volume discount」: KRW 343,750, with KRW 6,875,000 × 5%.</li>
+<li>「Quote total (VAT excluded)」: KRW 6,531,250.</li>
+</ul>
+<p>The discount and final total were correct this time.</p>
+<figure><a href="img/sk-answer2-end.webp" target="_blank" rel="noopener" title="View larger"><img alt="Second answer totals — the discount calculation and correct quote total of KRW 6,531,250" src="img/sk-answer2-end.webp" / loading="lazy" decoding="async"></a><figcaption>Second answer totals — the discount calculation and correct quote total of KRW 6,531,250</figcaption></figure>
+<p>The table still used the same amounts after discount: KRW 4,275,000 and KRW 2,256,250. The subtotal below it still used the amount before discount. The arithmetic improved, but the table and totals still used different bases.</p>
+<p>Review the intended change and any remaining problem separately. Rule 6 helped in this run. It did not make the whole quote ready to send. Clarify whether the table amounts are before or after discount, and make the labels and totals consistent.</p>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You uploaded a quote-format skill, attached it to an agent, and compared answers before and after a rule change. You also found an error that remained after the total was corrected.</p>
+<p>In <a href="document-process.html">Chapter 12</a>, you will create a process from a document. In <a href="mcp-hub.html">Chapter 14</a>, you will fill a selected Word template with a quote.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>What does the price list supply, and what does this skill supply?</li>
+<li>What remains to be done when a newly uploaded skill shows 「Used by」 0?</li>
+<li>What improved after rule 6, and what still needed review?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>The price list supplies prices, discounts, and installation fees. The skill defines the heading, table columns, totals order, closing line, and working rules.</li>
+<li>Select 「hanbit-quote-format」 in the agent's 「Skills」 field and save the agent changes.</li>
+<li>The discount became KRW 343,750 and the total became KRW 6,531,250, with a discount calculation. The table still used amounts after discount while the subtotal used the amount before discount.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="agent-chat.html"><span>Previous</span>Chatting with an agent</a><a class="next" href="document-process.html"><span>Next</span>Creating a process from a document</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#separate-prices-from-writing-rules">Separate prices from writing rules</a></li><li><a href="#try-it-1-explore-the-skills-list">Try it 1 — Explore the skills list</a></li><li><a href="#try-it-2-upload-the-quote-format-file">Try it 2 — Upload the quote-format file</a></li><li><a href="#try-it-3-open-the-file-and-attach-it-to-the-agent">Try it 3 — Open the file and attach it to the agent</a></li><li><a href="#try-it-4-ask-which-format-the-agent-follows">Try it 4 — Ask which format the agent follows</a></li><li><a href="#try-it-5-create-the-first-quote-from-the-price-list">Try it 5 — Create the first quote from the price list</a></li><li><a href="#try-it-6-add-and-save-an-arithmetic-rule">Try it 6 — Add and save an arithmetic rule</a></li><li><a href="#try-it-7-repeat-the-same-request">Try it 7 — Repeat the same request</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

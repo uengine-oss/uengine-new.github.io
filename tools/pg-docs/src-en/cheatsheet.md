@@ -58,6 +58,6 @@ All amounts exclude VAT.
 | Basic Agent · Deep Agent | The AI that handles the chat. Deep Agent finds and reads documents and makes files |
 | Knowledge Base | Where you upload company documents. Pick them in chat to use as sources |
 | Agent Colleagues | AI colleagues with a name, goal and persona |
-| MCP server | A server that gives agents tools (Chapter 14, coming soon) |
+| MCP server | A server that gives agents tools ([Chapter 14](mcp-hub.html)) |
 | Decision table (DMN) · business rule | A rule that sets condition → result in a table |
 | Hit policy Unique | Only one row matches any input |

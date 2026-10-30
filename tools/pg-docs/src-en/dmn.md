@@ -91,7 +91,7 @@ In our run, after about 25 seconds it answered from the rule: it showed the rule
 
 ## Next chapter
 
-The decision table now handles the discount rate. Approval rules in the quote approval policy, such as “under KRW 30,000,000 the sales team lead approves; at KRW 30,000,000 or more the finance officer approves too”, can be made into a table the same way. Next comes the settings screen, where you manage what you've made so far ([Chapter 18](settings.html)).
+The decision table now handles the discount rate. Approval rules in the quote approval policy, such as “under KRW 30,000,000 the sales team lead approves; at KRW 30,000,000 or more the finance officer approves too”, can be made into a table the same way. Next, you'll look at the lead time and bottlenecks of the work you've run, on the analytics screens ([Chapter 16](analytics.html)).
 
 !!! exercise "Check your understanding"
     1. What does the decision table's hit policy **Unique** mean?

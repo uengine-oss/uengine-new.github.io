@@ -11,7 +11,7 @@ In Process GPT, an **agent** is an AI with a name and a job, like a human collea
 | Name · Role | The name shown in the sidebar and org chart, and a one-line description | Hanbit Office Quote Advisor |
 | Goal | What the agent is trying to achieve | Write accurate quotes from the price list |
 | Persona | Tone and working attitude | Friendly and thorough, citing sources |
-| Tools | Names of the **MCP servers** it can use (Chapter 14, coming soon) | (not connected in this chapter) |
+| Tools | Names of the **MCP servers** it can use ([Chapter 14](mcp-hub.html)) | (not connected in this chapter) |
 | Skills | Documents describing how to do the work | (left empty in this chapter) |
 | AI Provider · AI Model | The language model that writes the answers. Leave empty to use the default model chosen at install | (empty) |
 
@@ -57,7 +57,7 @@ The AI's wording varies a little even for the same sentence. Edit any field you 
 ![Lower part of the draft — Tools filled with the made-up names DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine and SourceCiter, each with ⓧ and its own row, empty Skills, AI Provider · AI Model (empty), “Save”](img/ag-generated-bottom.webp)
 
 !!! warning "Tools are MCP server names"
-    Tools may also be empty. The names in Tools point to **MCP servers** attached to the agent. The AI may suggest tool names that don't exist. Such a name has no connected MCP server behind it, so no tool is attached. In our run, the AI filled Tools with five such names: DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine and SourceCiter. None of them is an MCP server. You can remove a name with the ⓧ on its chip; we left them in, and chatting still worked. You'll add real tools by name in Chapter 14 (coming soon), after connecting MCP servers.
+    Tools may also be empty. The names in Tools point to **MCP servers** attached to the agent. The AI may suggest tool names that don't exist. Such a name has no connected MCP server behind it, so no tool is attached. In our run, the AI filled Tools with five such names: DocumentReader, PriceListAnalyzer, QuoteBuilder, CalculationEngine and SourceCiter. None of them is an MCP server. You can remove a name with the ⓧ on its chip; we left them in, and chatting still worked. You'll add real tools by name in [Chapter 14](mcp-hub.html), after connecting MCP servers.
 
 ![After saving — “Hanbit Office Quote Advisor” under Agent Colleagues in the sidebar, and its Settings window on the right with the five made-up tool names, the persona, Achievements & Badges and Knowledge Ontology](img/ag-saved.webp)
 

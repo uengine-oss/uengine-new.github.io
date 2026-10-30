@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategy board and KPIs — Process GPT Tutorial</title>
+<meta name="description" content="Add completed-count, duration, and satisfaction KPIs to 「Grow bulk order revenue」. Complete another process, answer its surveys, and compare the refreshed measurements.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/strategy.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strategy board and KPIs — Process GPT Tutorial">
+<meta property="og:description" content="Add completed-count, duration, and satisfaction KPIs to 「Grow bulk order revenue」. Complete another process, answer its surveys, and compare the refreshed measurements.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/strategy.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><a href="organization.html"><span class="n">05</span>Org chart and role owners</a></li>
+<li><a href="process-run.html"><span class="n">06</span>Run a process and handle tasks</a></li>
+<li><a href="gateway.html"><span class="n">07</span>Approve and reject — gateways and going back</a></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><a href="skills.html"><span class="n">11</span>Teach ways of working with skills</a></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><a href="mcp-hub.html"><span class="n">14</span>Connect external tools with MCP</a></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><a href="analytics.html"><span class="n">16</span>Execution analytics — lead time and bottlenecks</a></li>
+<li><a href="strategy.html" class="on" aria-current="page"><span class="n">17</span>Strategy board and KPIs</a></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">19</span>Final project — Hanbit Office A/S intake</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Analysis and improvement<span class="chap">17</span></div>
+    <h1>Strategy board and KPIs</h1>
+    <article>
+<blockquote>
+<p>Add completed-count, duration, and satisfaction KPIs to 「Grow bulk order revenue」. Complete another process, answer its surveys, and compare the refreshed measurements.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Your installation needs these fixes</p>
+<p>The run screens in this chapter were captured on an installation with the following fix applied (2026-10-30). Before this fix reaches the installation repository, the strategy service may fail to connect. This notice will be removed once the fix is included.</p>
+<ul>
+<li>Installation: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — fixes the strategy service's graph database connection.</li>
+</ul>
+</div>
+<h2 id="connect-execution-records-to-an-objective">Connect execution records to an objective<a class="anchor" href="#connect-execution-records-to-an-objective" title="Permanent link">#</a></h2>
+<p>In <a href="analytics.html">Chapter 16</a>, you read execution times and bottlenecks. Now you will create a strategic objective and connect process records and survey responses to its KPIs.</p>
+<p>Jinyoung Jang creates the objective and KPIs as the admin. Minji Kim completes another sales proposal and answers a survey. Jinyoung also answers, then refreshes the measurements.</p>
+<p>The objective is 「Grow bulk order revenue」. Its KPIs count completed proposals, measure approval time, and collect proposal satisfaction. This exercise does not measure revenue itself. Keep the objective's name separate from what its KPIs actually measure.</p>
+<h2 id="try-it-1-explore-the-strategy-board">Try it 1 — Explore the strategy board<a class="anchor" href="#try-it-1-explore-the-strategy-board" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open 「Strategy Board」.</li>
+<li>Read 「BSC strategy map · KPIs · initiatives」.</li>
+<li>Find 「Financial」, 「Customer」, 「Internal Process」, and 「Learning &amp; Growth」.</li>
+</ol>
+<figure><a href="img/st-board.webp" target="_blank" rel="noopener" title="View larger"><img alt="Empty strategy board — four perspectives and the board controls" src="img/st-board.webp" / loading="lazy" decoding="async"></a><figcaption>Empty strategy board — four perspectives and the board controls</figcaption></figure>
+<p>Each empty perspective shows 「No objectives in this perspective yet」. The controls include 「Import legacy map」, 「Refresh Metrics」, 「AI Edit」, and 「Add Objective」.</p>
+<p>Two buttons remain in Korean: 「전략 정합성 검사」 means strategy consistency check, and 「온톨로지 뷰」 means ontology view.</p>
+<p>This exercise adds one objective under 「Financial」. You do not need to fill all four perspectives to test KPI measurements.</p>
+<h2 id="try-it-2-add-the-strategic-objective">Try it 2 — Add the strategic objective<a class="anchor" href="#try-it-2-add-the-strategic-objective" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click 「Add Objective」.</li>
+<li>Set 「Name」 to 「Grow bulk order revenue」.</li>
+<li>Set 「Description」 to 「Grow revenue from bulk orders (20 or more pieces of office furniture)」.</li>
+<li>Choose 「Financial」 in 「Perspective」.</li>
+<li>Keep 「Strategic importance」 at 3 and click 「Save」.</li>
+</ol>
+<figure><a href="img/st-obj-dialog.webp" target="_blank" rel="noopener" title="View larger"><img alt="Add Objective dialog — the revenue objective, description, Financial perspective, and importance 3" src="img/st-obj-dialog.webp" / loading="lazy" decoding="async"></a><figcaption>Add Objective dialog — the revenue objective, description, Financial perspective, and importance 3</figcaption></figure>
+<p>The dialog also has 「Parent objectives」. This is the first objective on the board, so no parent is needed for the exercise.</p>
+<p>「Strategic importance」 includes the explanation 「1 (low) – 5 (high) — used as the weight for contribution aggregation」.</p>
+<p>The description's “20 or more” threshold describes the objective. It does not automatically filter the completed-count KPI by order quantity. That KPI will count completions of a linked process definition.</p>
+<figure><a href="img/st-obj-saved.webp" target="_blank" rel="noopener" title="View larger"><img alt="Saved objective — Grow bulk order revenue with 0 KPI, 0 initiatives, and Not measured" src="img/st-obj-saved.webp" / loading="lazy" decoding="async"></a><figcaption>Saved objective — Grow bulk order revenue with 0 KPI, 0 initiatives, and Not measured</figcaption></figure>
+<p>The card initially shows 「0 KPI · 0 initiatives · Not measured」. A Korean 「전략맵 초기화」 button also appears after the first objective; it means reset strategy map.</p>
+<h2 id="try-it-3-add-the-proposal-count-kpi">Try it 3 — Add the proposal-count KPI<a class="anchor" href="#try-it-3-add-the-proposal-count-kpi" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the 「Grow bulk order revenue」 card.</li>
+<li>Choose the 「KPI」 tab and click 「Add KPI」.</li>
+<li>Enter the settings below.</li>
+<li>Check the linked process, unit, baseline, target, and direction, then save.</li>
+</ol>
+<figure><a href="img/st-obj-panel.webp" target="_blank" rel="noopener" title="View larger"><img alt="Objective panel — KPI, Initiatives, Contribution, and Add KPI" src="img/st-obj-panel.webp" / loading="lazy" decoding="async"></a><figcaption>Objective panel — KPI, Initiatives, Contribution, and Add KPI</figcaption></figure>
+<p>The panel has 「KPI」, 「Initiatives」, and 「Contribution」 tabs. This exercise adds KPIs only.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Name」</td>
+<td>「Sales proposals sent」</td>
+</tr>
+<tr>
+<td>「Measure type」</td>
+<td>「Completed count」</td>
+</tr>
+<tr>
+<td>「Linked process definition」</td>
+<td>「Sales Proposal Submission」</td>
+</tr>
+<tr>
+<td>「Unit」</td>
+<td>cases</td>
+</tr>
+<tr>
+<td>「Baseline」</td>
+<td>0</td>
+</tr>
+<tr>
+<td>「Target」</td>
+<td>10</td>
+</tr>
+<tr>
+<td>「Direction」</td>
+<td>「Higher is better」</td>
+</tr>
+</tbody>
+</table>
+<p>For 「Description」, explain that this KPI counts completed sales proposal processes. This makes its scope clear.</p>
+<figure><a href="img/st-kpi1-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Completed-count KPI — Sales Proposal Submission linked to Sales proposals sent, with target 10" src="img/st-kpi1-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Completed-count KPI — Sales Proposal Submission linked to Sales proposals sent, with target 10</figcaption></figure>
+<p>The dialog also includes 「AI Suggest」, 「Strategic importance」, 「Period start」, and 「Period end」. This chapter enters the measured KPI types and targets directly.</p>
+<p>The KPI name says proposals sent, but the selected measure is 「Completed count」. It counts completion records for the linked process. It does not read an email system to verify messages sent.</p>
+<h2 id="try-it-4-add-the-approval-time-kpi">Try it 4 — Add the approval-time KPI<a class="anchor" href="#try-it-4-add-the-approval-time-kpi" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click 「Add KPI」 again.</li>
+<li>Enter the settings below for 「Proposal approval time」.</li>
+<li>Check that the baseline and target use hours.</li>
+<li>Choose 「Lower is better」 and save.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Name」</td>
+<td>「Proposal approval time」</td>
+</tr>
+<tr>
+<td>「Measure type」</td>
+<td>「Avg duration」</td>
+</tr>
+<tr>
+<td>「Linked process definition」</td>
+<td>「Sales Proposal Approval」</td>
+</tr>
+<tr>
+<td>「Unit」</td>
+<td>hours</td>
+</tr>
+<tr>
+<td>「Baseline」</td>
+<td>48</td>
+</tr>
+<tr>
+<td>「Target」</td>
+<td>24</td>
+</tr>
+<tr>
+<td>「Direction」</td>
+<td>「Lower is better」</td>
+</tr>
+</tbody>
+</table>
+<p>Use 「Description」 to explain that this measures average elapsed time from the customer request through sending the approved proposal.</p>
+<figure><a href="img/st-kpi2-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Duration KPI — Proposal approval time with baseline 48 hours, target 24 hours, and Lower is better" src="img/st-kpi2-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Duration KPI — Proposal approval time with baseline 48 hours, target 24 hours, and Lower is better</figcaption></figure>
+<p>The count KPI improves as its value rises. The duration KPI improves as its value falls. Do not enter a number of minutes or seconds into a target expressed in hours.</p>
+<p>This chapter uses 「Completed count」, 「Avg duration」, and 「Survey score」. It does not connect an external revenue system.</p>
+<h2 id="try-it-5-refresh-the-first-measurements">Try it 5 — Refresh the first measurements<a class="anchor" href="#try-it-5-refresh-the-first-measurements" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click 「Refresh Metrics」 on the board.</li>
+<li>Check the objective card.</li>
+<li>Open the objective panel and read both KPI values.</li>
+</ol>
+<figure><a href="img/st-measured-board.webp" target="_blank" rel="noopener" title="View larger"><img alt="First measurement board — the objective after refreshing its two process-based KPIs" src="img/st-measured-board.webp" / loading="lazy" decoding="async"></a><figcaption>First measurement board — the objective after refreshing its two process-based KPIs</figcaption></figure>
+<p>The panel shows:</p>
+<table>
+<thead>
+<tr>
+<th>KPI</th>
+<th>Current / target</th>
+<th style="text-align: right;">Achievement shown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Sales proposals sent」</td>
+<td>「1 / 10 cases」</td>
+<td style="text-align: right;">10%</td>
+</tr>
+<tr>
+<td>「Proposal approval time」</td>
+<td>「0.04 / 24 hours」</td>
+<td style="text-align: right;">150%</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/st-measured-panel.webp" target="_blank" rel="noopener" title="View larger"><img alt="First KPI measurements — Sales proposals sent at 1/10 and Proposal approval time at 0.04/24" src="img/st-measured-panel.webp" / loading="lazy" decoding="async"></a><figcaption>First KPI measurements — Sales proposals sent at 1/10 and Proposal approval time at 0.04/24</figcaption></figure>
+<p>The duration KPI appears as 「Avg duration (h)」 in the measured panel. It is set to 「Lower is better」. The practice runs were much shorter than the 24-hour target, so the displayed achievement reached the 150% cap.</p>
+<div class="admonition note">
+<p class="admonition-title">150% is not a time-saving percentage</p>
+<p>Read 150% as the displayed KPI achievement. It does not mean elapsed time fell by 150%. Read it together with the current value of 0.04 hours, the 24-hour target, and 「Lower is better」.</p>
+</div>
+<h2 id="try-it-6-add-a-satisfaction-survey-kpi">Try it 6 — Add a satisfaction survey KPI<a class="anchor" href="#try-it-6-add-a-satisfaction-survey-kpi" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click 「Add KPI」 in the objective panel.</li>
+<li>Set 「Name」 to 「Proposal satisfaction」. Use 「Description」 to explain that it measures participants' satisfaction after the proposal process.</li>
+<li>Choose 「Survey score」 in 「Measure type」 and 「Sales Proposal Submission」 in 「Linked process definition」.</li>
+<li>Set 「Unit」 to points and 「Target」 to 4.5.</li>
+<li>Under 「Survey questions (auto-sent on process completion)」, click 「Add question」.</li>
+<li>Enter 「How satisfied were you with this proposal?」 for Q1, then save.</li>
+</ol>
+<figure><a href="img/st-survey-kpi.webp" target="_blank" rel="noopener" title="View larger"><img alt="Survey KPI — Proposal satisfaction linked to Sales Proposal Submission, with target 4.5 and the survey question" src="img/st-survey-kpi.webp" / loading="lazy" decoding="async"></a><figcaption>Survey KPI — Proposal satisfaction linked to Sales Proposal Submission, with target 4.5 and the survey question</figcaption></figure>
+<p>The dialog explains: 「When the linked process completes, a survey workitem is issued to participants/requesters automatically.」</p>
+<p>Entering a target of 4.5 does not create a measured score of 4.5. Responses must be collected first.</p>
+<p>This exercise surveys process participants. It does not demonstrate a survey sent to an external customer. In the captured run, Minji and Jinyoung received the survey workitems.</p>
+<h2 id="try-it-7-complete-another-proposal-process">Try it 7 — Complete another proposal process<a class="anchor" href="#try-it-7-complete-another-proposal-process" title="Permanent link">#</a></h2>
+<p>After saving the survey KPI, run 「Sales Proposal Submission」 again using the method from <a href="process-run.html">Chapter 6</a>.</p>
+<ol class="steps">
+<li>As Jinyoung, run 「Sales Proposal Submission」.</li>
+<li>Enter the customer request below.</li>
+<li>As Minji, complete the proposal task with the response below and click 「Submit Complete」.</li>
+<li>Check that the process is 「COMPLETED」.</li>
+<li>Find 「설문: Proposal satisfaction」 in Minji's 「Task List」.</li>
+</ol>
+<p>Customer request:</p>
+<blockquote>
+<p>Hanbit Trading needs 8 standing desks for its Pangyo office, with a budget of KRW 8,000,000, installed in mid-December.</p>
+</blockquote>
+<p>Minji's proposal:</p>
+<blockquote>
+<p>Pangyo office proposal: 8 standing desks, about KRW 7,200,000 (VAT excluded), installed in the 3rd week of December.</p>
+</blockquote>
+<p>Both Minji and Jinyoung received survey workitems after completion.</p>
+<figure><a href="img/st-survey-list.webp" target="_blank" rel="noopener" title="View larger"><img alt="Survey workitem — the task titled 설문: Proposal satisfaction" src="img/st-survey-list.webp" / loading="lazy" decoding="async"></a><figcaption>Survey workitem — the task titled 설문: Proposal satisfaction</figcaption></figure>
+<p>The generated workitem still has the Korean prefix 「설문:」, meaning survey. Its description also contains 「완료에 따른 KPI 설문」, meaning a KPI survey following completion. Check the instance named in that description.</p>
+<div class="admonition note">
+<p class="admonition-title">The objective description does not filter the KPI</p>
+<p>The objective describes orders of 20 or more pieces. This new order has only eight desks, but completing the linked process still increases the count. The quantity condition in the objective description is not automatically applied to the KPI.</p>
+</div>
+<h2 id="try-it-8-answer-the-surveys-as-minji-and-jinyoung">Try it 8 — Answer the surveys as Minji and Jinyoung<a class="anchor" href="#try-it-8-answer-the-surveys-as-minji-and-jinyoung" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open Minji's 「설문: Proposal satisfaction」 workitem.</li>
+<li>Read the completed process name and 「How satisfied were you with this proposal?」.</li>
+<li>Choose five stars.</li>
+<li>Enter the comment below and click 「Submit」.</li>
+<li>Check for 「Thank you for your response!」.</li>
+<li>Open Jinyoung's survey for the same instance, choose four stars, and submit it.</li>
+</ol>
+<blockquote>
+<p>The request was clear, so I could send the proposal quickly.</p>
+</blockquote>
+<figure><a href="img/st-survey-open.webp" target="_blank" rel="noopener" title="View larger"><img alt="Survey form — Proposal satisfaction, Process Satisfaction Survey, the completed process name, and the question" src="img/st-survey-open.webp" / loading="lazy" decoding="async"></a><figcaption>Survey form — Proposal satisfaction, Process Satisfaction Survey, the completed process name, and the question</figcaption></figure>
+<p>The screen is titled 「Proposal satisfaction」 and 「Process Satisfaction Survey」. It says:</p>
+<blockquote>
+<p>The process 'Sales Proposal Submission · Hanbit Trading standin' has completed. Please answer the questions below.</p>
+</blockquote>
+<p>Read the process name before responding so that the rating applies to the intended execution.</p>
+<figure><a href="img/st-survey-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Minji's survey response — five stars and the comment about sending the proposal quickly" src="img/st-survey-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Minji's survey response — five stars and the comment about sending the proposal quickly</figcaption></figure>
+<p>Minji gave 5 points, and Jinyoung gave 4. These are practice values used to demonstrate measurement. They are not the correct satisfaction ratings for every execution.</p>
+<figure><a href="img/st-survey-done.webp" target="_blank" rel="noopener" title="View larger"><img alt="Survey submitted — Thank you for your response! and Back to todolist" src="img/st-survey-done.webp" / loading="lazy" decoding="async"></a><figcaption>Survey submitted — Thank you for your response! and Back to todolist</figcaption></figure>
+<p>After submission, the screen offers 「Back to todolist」. Submitting responses and refreshing the strategy measurements are separate actions.</p>
+<h2 id="try-it-9-compare-the-second-measurements">Try it 9 — Compare the second measurements<a class="anchor" href="#try-it-9-compare-the-second-measurements" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>As Jinyoung, return to 「Strategy Board」.</li>
+<li>Click 「Refresh Metrics」.</li>
+<li>Open 「Grow bulk order revenue」 and read all three KPIs.</li>
+<li>Compare them with the first measurements.</li>
+</ol>
+<figure><a href="img/st-measured2.webp" target="_blank" rel="noopener" title="View larger"><img alt="Second measurement — proposal count 2/10, approval time 0.04/24, and satisfaction 4.50/4.50" src="img/st-measured2.webp" / loading="lazy" decoding="async"></a><figcaption>Second measurement — proposal count 2/10, approval time 0.04/24, and satisfaction 4.50/4.50</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>KPI</th>
+<th>Second measurement</th>
+<th style="text-align: right;">Achievement shown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Sales proposals sent」</td>
+<td>「2 / 10 cases」</td>
+<td style="text-align: right;">20%</td>
+</tr>
+<tr>
+<td>「Proposal approval time」</td>
+<td>「0.04 / 24 hours」</td>
+<td style="text-align: right;">150%</td>
+</tr>
+<tr>
+<td>「Proposal satisfaction」</td>
+<td>「4.50 / 4.50 points」</td>
+<td style="text-align: right;">100%</td>
+</tr>
+</tbody>
+</table>
+<p>The proposal count rose from 1 to 2. Satisfaction now shows 4.50, matching the average of the two responses: <code>(5 + 4) ÷ 2 = 4.5</code>.</p>
+<p>Approval time stayed at 0.04 hours. The new execution was 「Sales Proposal Submission」. The duration KPI is linked to 「Sales Proposal Approval」, a different process definition.</p>
+<figure><a href="img/st-board-final.webp" target="_blank" rel="noopener" title="View larger"><img alt="Final strategy board — Grow bulk order revenue with 3 KPI, 0 initiatives, and 90%" src="img/st-board-final.webp" / loading="lazy" decoding="async"></a><figcaption>Final strategy board — Grow bulk order revenue with 3 KPI, 0 initiatives, and 90%</figcaption></figure>
+<p>The objective card shows 「3 KPI · 0 initiatives · 90%」. This summarizes the configured KPIs. It is not a measurement of actual revenue.</p>
+<h2 id="try-it-10-check-overall-progress-and-the-ontology">Try it 10 — Check overall progress and the ontology<a class="anchor" href="#try-it-10-check-overall-progress-and-the-ontology" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open 「KPI &amp; Progress」 and read overall strategy achievement.</li>
+<li>Read the lower KPI and process-pipeline sections separately.</li>
+<li>Return to the board and open 「온톨로지 뷰」 to inspect the ontology.</li>
+</ol>
+<figure><a href="img/st-kpi-progress.webp" target="_blank" rel="noopener" title="View larger"><img alt="KPI and progress — Strategy Achievement Overall 90% and the separate empty pipeline sections" src="img/st-kpi-progress.webp" / loading="lazy" decoding="async"></a><figcaption>KPI and progress — Strategy Achievement Overall 90% and the separate empty pipeline sections</figcaption></figure>
+<p>The top shows 「Strategy Achievement Overall 90%」 and 「Grow bulk order revenue 90% Financial」.</p>
+<p>The lower 「KPI Achievement」 section shows 「At Risk 0%」, 「Target 0」, and 「Current Published 0」. 「Process Pipeline」 shows 0 for 「Draft」, 「Review」, and 「Published」.</p>
+<p>The explanation says 「Only processes published after review are counted toward KPI targets」. 「Weekly Deployment Velocity」 shows 「No data available」.</p>
+<div class="admonition note">
+<p class="admonition-title">These sections do not measure the same thing</p>
+<p>Overall achievement is 90%, while another section shows 「At Risk 0%」. Pipeline counts of 0 do not mean no process instances were completed. Keep each value with its section name and explanation. The captured evidence does not establish every relationship between these aggregates.</p>
+</div>
+<p>The ontology page remains almost entirely Korean in English mode. Its heading is 「기업 운영 온톨로지」, meaning enterprise operations ontology. Its subtitle describes four layers: strategy, process, resources, and knowledge.</p>
+<figure><a href="img/st-ontology.webp" target="_blank" rel="noopener" title="View larger"><img alt="Ontology — the Korean interface with 71 nodes, 66 relationships, and the English legend" src="img/st-ontology.webp" / loading="lazy" decoding="async"></a><figcaption>Ontology — the Korean interface with 71 nodes, 66 relationships, and the English legend</figcaption></figure>
+<p>The run shows 「노드 71」 and 「관계 66」: 71 nodes and 66 relationships.</p>
+<p>The tabs include 「온톨로지 그래프」, 「영향도 분석」, and 「전략 개선점」, meaning ontology graph, impact analysis, and strategy improvements. 「전략보드에서 편집」 means edit in the strategy board.</p>
+<p>The English legend includes Strategy, KPI, Initiative, Process, Task, User, Agent, Team, and Skill. This view helps inspect connections. Node and relationship counts do not prove that a strategy is appropriate.</p>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You attached three KPIs to an objective and refreshed their measurements after another completion and two survey responses. You separated the objective description, measurement scope, and displayed achievement.</p>
+<p>In <a href="settings.html">Chapter 18</a>, you will review settings. In <a href="project.html">Chapter 19</a>, you will combine these skills in a final project.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Which direction did you choose for proposal count and approval time?</li>
+<li>What produced the satisfaction score of 4.50?</li>
+<li>Does the objective's 90% mean Hanbit Office achieved 90% of a revenue target?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>「Higher is better」 for proposal count, with a target of 10 cases. 「Lower is better」 for approval time, with a target of 24 hours.</li>
+<li>After adding the survey KPI, another 「Sales Proposal Submission」 instance completed. Minji answered 5 and Jinyoung answered 4. Jinyoung then clicked 「Refresh Metrics」.</li>
+<li>No. This exercise measured process completions, duration, and participant satisfaction, not revenue. The objective's quantity threshold also did not automatically filter the completed-count KPI.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="analytics.html"><span>Previous</span>Execution analytics — lead time and bottlenecks</a><a class="next" href="settings.html"><span>Next</span>Settings — bring in colleagues and change the screen</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#connect-execution-records-to-an-objective">Connect execution records to an objective</a></li><li><a href="#try-it-1-explore-the-strategy-board">Try it 1 — Explore the strategy board</a></li><li><a href="#try-it-2-add-the-strategic-objective">Try it 2 — Add the strategic objective</a></li><li><a href="#try-it-3-add-the-proposal-count-kpi">Try it 3 — Add the proposal-count KPI</a></li><li><a href="#try-it-4-add-the-approval-time-kpi">Try it 4 — Add the approval-time KPI</a></li><li><a href="#try-it-5-refresh-the-first-measurements">Try it 5 — Refresh the first measurements</a></li><li><a href="#try-it-6-add-a-satisfaction-survey-kpi">Try it 6 — Add a satisfaction survey KPI</a></li><li><a href="#try-it-7-complete-another-proposal-process">Try it 7 — Complete another proposal process</a></li><li><a href="#try-it-8-answer-the-surveys-as-minji-and-jinyoung">Try it 8 — Answer the surveys as Minji and Jinyoung</a></li><li><a href="#try-it-9-compare-the-second-measurements">Try it 9 — Compare the second measurements</a></li><li><a href="#try-it-10-check-overall-progress-and-the-ontology">Try it 10 — Check overall progress and the ontology</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
