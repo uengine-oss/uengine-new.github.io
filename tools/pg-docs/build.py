@@ -41,7 +41,7 @@ EN_SOON = {"organization": "Org chart and role owners", "process-run": "Run a pr
            "project": "Final project"}
 
 # (파일, 파트[, "준비 중" 제목]) — 제목은 각 md 의 첫 줄(# …)에서 읽는다. 장 번호 = 이 목록의 순서(index = 0장).
-# 세 번째 값이 있는 장은 아직 쓰지 않은 장: 사이드바에 번호와 제목만 「준비 중」으로 보이고 페이지는 만들지 않는다.
+# 세 번째 값은 「준비 중」일 때 사이드바에 보일 제목 — 그 언어의 md(src/·src-en/)가 생기면 그 장을 만든다.
 # 장을 나중에 써도 번호가 바뀌지 않게(영상 제목의 「NN장」과 맞게) 미리 자리를 둔다.
 CHAPTERS = [
     ("index", "시작하기"),
@@ -124,8 +124,10 @@ def main():
     videos = json.loads(VIDEOS.read_text(encoding="utf-8")) if VIDEOS.exists() else {}
     pages = []
     for slug, part, *soon in CHAPTERS:
-        if soon:
-            pages.append(dict(slug=slug, part=EN_PARTS.get(part, part) if EN else part, title=EN_SOON.get(slug, soon[0]) if EN else soon[0], soon=True))
+        # 그 언어의 md 가 아직 없으면 「준비 중」 — 한국어판이 먼저 나가고 영문판은 뒤에 올 수 있다
+        if not (SRC / f"{slug}.md").exists():
+            title = EN_SOON.get(slug, slug) if EN else (soon[0] if soon else slug)
+            pages.append(dict(slug=slug, part=EN_PARTS.get(part, part) if EN else part, title=title, soon=True))
             continue
         raw = (SRC / f"{slug}.md").read_text(encoding="utf-8")
         first, rest = raw.split("\n", 1)
