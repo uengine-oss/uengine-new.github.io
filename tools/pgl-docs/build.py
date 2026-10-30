@@ -62,6 +62,7 @@ CHAPTERS = [
     ("workroom", "확장과 운영"),
     ("architecture", "확장과 운영"),
     ("admin", "확장과 운영"),
+    ("agentic", "확장과 운영"),
     ("project", "마무리"),
     ("cheatsheet", "부록"),
     ("faq", "부록"),
@@ -123,6 +124,8 @@ def main():
     videos = json.loads(VIDEOS.read_text(encoding="utf-8")) if VIDEOS.exists() else {}
     pages = []
     for slug, part in CHAPTERS:
+        if EN and not (SRC / f"{slug}.md").exists():
+            continue  # a chapter not yet in English is left out of the English edition (its numbering stays)
         raw = (SRC / f"{slug}.md").read_text(encoding="utf-8")
         first, rest = raw.split("\n", 1)
         assert first.startswith("# "), slug
