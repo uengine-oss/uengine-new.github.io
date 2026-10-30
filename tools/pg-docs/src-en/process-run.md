@@ -85,7 +85,7 @@ Use the board to see which step is done and which is active.
 
 「Pending/Returned」 and 「Upcoming Tasks」 are empty at this point. In our capture, Minji's card shows 「2026.11.04 ~2026.11.09」.
 
-This board shows the steps of **one instance**. Minji's task list is a different view: it shows work assigned to her. Next, find this same task there.
+This board shows the steps of **one instance**. Minji's task list is a different view: it shows work assigned to Minji. Next, find this same task there.
 
 ## Try it 4 — Open Minji's task
 
@@ -143,7 +143,7 @@ Use this proposal:
 
 ![Completed instance — both steps in Done, with Minji Kim and My task as their owners](img/run-instance-done-kanban.webp)
 
-Minji handled the last step, so her submission completed both the task and the instance. In Jinyoung's view, 「Prepare and Send Proposal」 shows Minji Kim, while 「Enter Customer Request」 shows 「My task」.
+Minji handled the last step, so their submission completed both the task and the instance. In Jinyoung's view, 「Prepare and Send Proposal」 shows Minji Kim, while 「Enter Customer Request」 shows 「My task」.
 
 The first submission left the instance 「RUNNING」. The last submission changed it to 「COMPLETED」. Finishing one task and finishing the whole instance are different events.
 
@@ -156,12 +156,12 @@ You submitted a customer request and completed the assigned task. In [Chapter 7]
 
 !!! exercise "Check your understanding"
     1. How is a definition different from an instance?
-    2. Where does Minji read the customer's request, and where does she write the proposal?
+    2. Where does Minji read the customer's request, and where does Minji write the proposal?
     3. Why is the instance 「RUNNING」 after Jinyoung submits but 「COMPLETED」 after Minji submits?
 
 <details class="answer" markdown="1"><summary>Answers</summary>
 
 1. A definition is the plan for the work. An instance is one run of that plan for a particular request.
-2. She reads 「Enter Customer Request · Jinyoung Jang」 under 「Previous Activity Input」. She edits the 「Sales Proposal」 Report card through 「Content Editor」, then saves it.
+2. Minji reads 「Enter Customer Request · Jinyoung Jang」 under 「Previous Activity Input」. Minji edits the 「Sales Proposal」 Report card through 「Content Editor」, then saves it.
 3. Minji's step remains after Jinyoung submits. Minji submits the last step, so the whole instance is complete.
 </details>
