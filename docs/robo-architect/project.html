@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>종합 과제 — 리뷰 기능 붙이기 — Robo Architect 튜토리얼</title>
+<meta name="description" content="지금까지의 흐름 — 프로포절 · 헌장 · Plan · 구현 · 검증 · 수락 · 변경 영향도 — 를 혼자서 한 번 끝까지 돌립니다. 과제는 한빛 딜리버리에 「리뷰」를 붙이는 것입니다. 전략 설계까지 실제로 돌려 본 예시를 함께 보여 줍니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/project.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="종합 과제 — 리뷰 기능 붙이기 — Robo Architect 튜토리얼">
+<meta property="og:description" content="지금까지의 흐름 — 프로포절 · 헌장 · Plan · 구현 · 검증 · 수락 · 변경 영향도 — 를 혼자서 한 번 끝까지 돌립니다. 과제는 한빛 딜리버리에 「리뷰」를 붙이는 것입니다. 전략 설계까지 실제로 돌려 본 예시를 함께 보여 줍니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/project.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html" class="on" aria-current="page"><span class="n">14</span>종합 과제 — 리뷰 기능 붙이기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">마무리<span class="chap">14</span></div>
+    <h1>종합 과제 — 리뷰 기능 붙이기</h1>
+    <article>
+<blockquote>
+<p>지금까지의 흐름 — 프로포절 · 헌장 · Plan · 구현 · 검증 · 수락 · 변경 영향도 — 를 혼자서 한 번 끝까지 돌립니다. 과제는 한빛 딜리버리에 「리뷰」를 붙이는 것입니다. 전략 설계까지 실제로 돌려 본 예시를 함께 보여 줍니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/89iDfsDUhOo" title="종합 과제 — 리뷰 기능 붙이기 — 영상 2:21" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="과제">과제<a class="anchor" href="#과제" title="Permanent link">#</a></h2>
+<p>한빛 딜리버리 프로젝트(<code>hanbit_delivery</code>)에 다음 요구사항을 프로포절로 넣고, 수락까지 가져갑니다.</p>
+<div class="hl"><pre><span></span><code>한빛 딜리버리: 고객은 배달 완료된 주문에 별점(1~5)과 짧은 글로 리뷰를 남길 수 있다. 한 주문에 리뷰는 하나만 남길 수 있다. 사장님은 자기 가게의 리뷰에 답글을 달 수 있다. 가게 목록에는 그 가게의 평균 별점이 보인다.
+</code></pre></div>
+
+<h2 id="순서">순서<a class="anchor" href="#순서" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>프로포절 만들기</strong> — 프로포절 탭 › <strong>+ 새 Proposal</strong>에 위 문장을 넣고 <strong>AI 분석 시작</strong>(3장).</li>
+<li><strong>전략 설계 확인</strong> — 바운디드 컨텍스트 · 기능 · 사용자 스토리 · 인수 조건을 읽고, 다르면 <strong>의도가 다른가요? 피드백 후 재생성</strong>(3장).</li>
+<li><strong>Plan</strong> — 헌장은 4장에서 정한 것을 그대로 씁니다. <strong>Plan 생성 → Plan 확정</strong>(5장). 헌장 공백이 나오면 적어 둡니다.</li>
+<li><strong>구현</strong> — <strong>Proposal 제출 → 작업 목록 생성 → 구현하기 → Claude Code 셀로 이동</strong>(6장).</li>
+<li><strong>검증과 수락</strong> — <strong>구현 완료 → 검증</strong>, 인수 조건 통과를 확인하고 <strong>Accept</strong>(7장).</li>
+<li><strong>영향 확인</strong> — 요구사항 · 설계 · 데이터 탭에서 무엇이 새로 생기고 무엇이 바뀌었는지 봅니다(8 · 9장).</li>
+</ol>
+<h2 id="예시-전략-설계까지-돌려-본-결과">예시 — 전략 설계까지 돌려 본 결과<a class="anchor" href="#예시-전략-설계까지-돌려-본-결과" title="Permanent link">#</a></h2>
+<p>같은 문장을 연습 프로젝트 <code>hanbit_doc</code>(12장)에 넣어 INTENT까지 돌려 보았습니다. <strong>85초</strong> 걸렸고, 명확화 질문 없이 바로 나뉘었습니다.</p>
+<figure><a href="img/project-01-task.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="과제 문장을 넣은 새 Proposal" src="img/project-01-task.webp" / loading="lazy" decoding="async"></a><figcaption>과제 문장을 넣은 새 Proposal</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>바운디드 컨텍스트</th>
+<th>분류</th>
+<th>기능</th>
+<th>사용자 스토리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>리뷰</td>
+<td>Supporting</td>
+<td>리뷰 작성 · 사장님 리뷰 답글</td>
+<td>고객: 배달 완료된 주문에 리뷰를 남긴다 · 사장님: 자기 가게의 리뷰 목록을 확인한다 · 사장님: 자기 가게의 리뷰에 답글을 단다</td>
+</tr>
+<tr>
+<td>가게</td>
+<td>Supporting</td>
+<td>가게 목록 평균 별점</td>
+<td>고객: 가게 목록에서 가게별 평균 별점을 확인한다</td>
+</tr>
+</tbody>
+</table>
+<p>프로세스는 「리뷰 작성과 평균 별점 반영」, 「사장님 리뷰 답글」 두 개였습니다.</p>
+<figure><a href="img/project-03-detail.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="PRO-002 — 리뷰 · 가게 컨텍스트와 프로세스 「리뷰 작성과 평균 별점 반영」" src="img/project-03-detail.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-002 — 리뷰 · 가게 컨텍스트와 프로세스 「리뷰 작성과 평균 별점 반영」</figcaption></figure>
+<p>과제 문장의 규칙이 모두 인수 조건으로 내려왔습니다. 「고객: 배달 완료된 주문에 리뷰를 남긴다」에 붙은 것들입니다.</p>
+<table>
+<thead>
+<tr>
+<th>문장의 규칙</th>
+<th>인수 조건 (Given · When · Then)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>배달 완료된 주문에</td>
+<td>아직 배달 완료되지 않은 주문 · 리뷰 작성 시도 · 배달 완료된 주문에만 남길 수 있다고 안내하고 등록하지 않는다</td>
+</tr>
+<tr>
+<td>한 주문에 하나</td>
+<td>이미 리뷰가 등록된 주문 · 다시 등록하려 함 · 하나만 남길 수 있다고 안내하고 거부한다</td>
+</tr>
+<tr>
+<td>별점 1~5</td>
+<td>별점을 고르지 않았거나 범위를 벗어남 · 등록 · 1~5 사이 정수여야 한다고 안내하고 거부한다</td>
+</tr>
+<tr>
+<td>(문장에 없던 것)</td>
+<td>다른 고객의 주문 · 리뷰 작성 시도 · 거부한다</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/project-04-strategic-1.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="리뷰 작성 스토리의 인수 조건 — 정상 등록, 배달 미완료 · 중복 · 별점 범위 · 글 길이 · 다른 고객의 주문" src="img/project-04-strategic-1.webp" / loading="lazy" decoding="async"></a><figcaption>리뷰 작성 스토리의 인수 조건 — 정상 등록, 배달 미완료 · 중복 · 별점 범위 · 글 길이 · 다른 고객의 주문</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">여러분의 결과는 이와 다릅니다</p>
+<p>예시는 수락된 설계가 없는 연습 프로젝트에서 돌린 것이라 「가게」 컨텍스트도 새로 만들었습니다(CREATE). INTENT 스킬에는 「기존 도메인 구성 요소와 일치하면 그 id를 재사용한다」는 규칙이 있어서, 3~7장을 마친 <code>hanbit_delivery</code> 에서는 「메뉴 관리」 · 「주문」 같은 기존 컨텍스트를 고치는 항목(MODIFY)이 섞여 나옵니다. 그 차이를 9장의 영향도와 함께 보는 것이 이 과제의 핵심입니다.</p>
+</div>
+<h2 id="스스로-점검하기">스스로 점검하기<a class="anchor" href="#스스로-점검하기" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>점검</th>
+<th>볼 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>리뷰를 따로 된 바운디드 컨텍스트로 둘지, 주문 안에 둘지 — 그 판단의 근거를 말할 수 있다</td>
+<td>전략 설계 · 헌장 원칙 I(모듈 경계)</td>
+</tr>
+<tr>
+<td>「배달 완료된 주문에만」 · 「한 주문에 하나」가 인수 조건과 애그리거트 규칙(불변식)으로 들어갔다</td>
+<td>전략 설계 · Plan 의 Tactical Design</td>
+</tr>
+<tr>
+<td>평균 별점을 어디서 계산하는지(리드모델) 설명할 수 있고, 다른 모듈의 테이블을 직접 읽지 않는다</td>
+<td>Plan 의 아키텍처 결정 · 헌장 원칙 I</td>
+</tr>
+<tr>
+<td>검증에서 리뷰 스토리의 인수 조건이 통과했다</td>
+<td>검증 칸</td>
+</tr>
+<tr>
+<td>기존 주문 · 가게 설계 중 무엇이 바뀌었는지 영향도로 확인했다</td>
+<td>Impact Map · 9장</td>
+</tr>
+</tbody>
+</table>
+<h2 id="더-해-볼-것">더 해 볼 것<a class="anchor" href="#더-해-볼-것" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>스킬로 팀 규칙 고정</strong> — 「리뷰 글 길이는 숫자로 정한다」 같은 규칙을 <code>robo-proposal-intent</code> 에 더해 보고 결과를 비교합니다(10장).</li>
+<li><strong>옛 DB와 맞추기</strong> — 11장의 옛 DB <code>orders.status</code> 에는 <code>DELIVERED</code> 가 있습니다. 「배달 완료」를 옛 데이터의 어느 값과 대응시킬지 헌장이나 다음 프로포절에 적어 봅니다.</li>
+<li><strong>문서로 시작하기</strong> — 리뷰 · 쿠폰 · 단골 같은 요구사항을 문서 한 편으로 써서 12장처럼 붙여 넣어 봅니다.</li>
+</ul>
+    </article>
+    <nav class="pager"><a class="prev" href="ingest.html"><span>이전</span>요구사항 문서로 설계 시작하기</a><a class="next" href="cheatsheet.html"><span>다음</span>치트시트</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#과제">과제</a></li><li><a href="#순서">순서</a></li><li><a href="#예시-전략-설계까지-돌려-본-결과">예시 — 전략 설계까지 돌려 본 결과</a></li><li><a href="#스스로-점검하기">스스로 점검하기</a></li><li><a href="#더-해-볼-것">더 해 볼 것</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
