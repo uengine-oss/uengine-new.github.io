@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지 — Robo Architect 튜토리얼</title>
+<meta name="description" content="「사장님은 메뉴를 등록하고, 고객은 메뉴를 골라 주문하고 접수 전에는 취소할 수 있다」를 자연어로 써서 첫 프로포절을 만들고, Claude Code가 나눈 전략 설계(프로세스 · 바운디드 컨텍스트 · 기능 · 유저 스토리 · 인수 조건)와 영향도 맵을 읽습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/proposal.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지 — Robo Architect 튜토리얼">
+<meta property="og:description" content="「사장님은 메뉴를 등록하고, 고객은 메뉴를 골라 주문하고 접수 전에는 취소할 수 있다」를 자연어로 써서 첫 프로포절을 만들고, Claude Code가 나눈 전략 설계(프로세스 · 바운디드 컨텍스트 · 기능 · 유저 스토리 · 인수 조건)와 영향도 맵을 읽습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/proposal.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html" class="on" aria-current="page"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">14</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로포절 라이프사이클<span class="chap">3</span></div>
+    <h1>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</h1>
+    <article>
+<blockquote>
+<p>「사장님은 메뉴를 등록하고, 고객은 메뉴를 골라 주문하고 접수 전에는 취소할 수 있다」를 자연어로 써서 첫 프로포절을 만들고, Claude Code가 나눈 전략 설계(프로세스 · 바운디드 컨텍스트 · 기능 · 유저 스토리 · 인수 조건)와 영향도 맵을 읽습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/2chRz-w1Xvo" title="프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지 — 영상 2:43" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="왜-프로포절인가">왜 프로포절인가<a class="anchor" href="#왜-프로포절인가" title="Permanent link">#</a></h2>
+<p>Robo Architect에서는 코드를 바로 고치지 않습니다. 바꾸고 싶은 것이 생기면 먼저 <strong>프로포절</strong>을 만듭니다. 프로포절 하나가 변경 하나이고, 그 안에 「무엇을 왜 바꾸는가」(전략 설계)부터 「어떻게 만들었고 맞게 만들었는가」(구현·검증)까지가 이력으로 남습니다. 그래서 나중에 「이 애그리거트는 왜 생겼지?」를 물으면 그 프로포절을 열어 보면 됩니다.</p>
+<p>프로포절의 첫 단계가 <strong>INTENT</strong>입니다. 요구사항 문장을 도메인 주도 설계(DDD)의 말로 나눕니다.</p>
+<table>
+<thead>
+<tr>
+<th>나오는 것</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로세스</td>
+<td>업무가 흘러가는 순서. 예: 메뉴 등록 → 가격 수정 → 품절 표시</td>
+</tr>
+<tr>
+<td>바운디드 컨텍스트</td>
+<td>같은 말이 같은 뜻으로 쓰이는 영역. Core(핵심) · Supporting(지원) · Generic(일반)으로 나눕니다</td>
+</tr>
+<tr>
+<td>기능(Feature)</td>
+<td>컨텍스트 안의 기능 묶음</td>
+</tr>
+<tr>
+<td>유저 스토리</td>
+<td>「누가 · 무엇을 · 왜」</td>
+</tr>
+<tr>
+<td>인수 조건</td>
+<td>Given(이런 상황에서) · When(이렇게 하면) · Then(이렇게 된다). 나중에 그대로 테스트가 됩니다(7장)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-프로포절-만들기">따라 하기 1 — 프로포절 만들기<a class="anchor" href="#따라-하기-1-프로포절-만들기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>홈에서 <strong>프로포절</strong> 카드를 눌러 프로포절 탭을 엽니다.</li>
+<li>오른쪽 위 <strong>＋ 새 Proposal</strong>을 누릅니다.</li>
+<li>입력칸에 요구사항을 씁니다.
+
+
+<div class="hl"><pre><span></span><code>한빛 딜리버리: 사장님은 가게 메뉴를 등록하고 가격을 고치고 품절로 표시할 수 있다. 고객은 메뉴를 골라 주문하고, 가게가 접수하기 전까지 주문을 취소할 수 있다.
+</code></pre></div>
+
+
+</li>
+<li>방식은 <strong>간소화</strong>(Intent → Plan)를 그대로 둡니다. 「상세 DDD」는 Discover → Decompose → … → Tactical의 DDD 단계를 하나씩 확정하며 가는 길이고, 「ODA 표준」은 TM Forum ODA 표준을 근거로 설계합니다.</li>
+<li><strong>AI 분석 시작</strong>을 누릅니다.</li>
+</ol>
+<figure><a href="img/proposal-02-create.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="새 Proposal 생성 — 요구사항 입력칸과 간소화 · 상세 DDD · ODA 표준" src="img/proposal-02-create.webp" / loading="lazy" decoding="async"></a><figcaption>새 Proposal 생성 — 요구사항 입력칸과 간소화 · 상세 DDD · ODA 표준</figcaption></figure>
+<p>분석은 내 컴퓨터의 Claude Code가 <strong>robo-proposal-intent</strong> 스킬을 따라 합니다. 진행 창에 Claude가 쓰는 도구와 생각이 그대로 흐릅니다. 레거시 그래프 검색(<code>cluster_retrieve</code>)이 「후보 0개」로 끝나는 것은 정상입니다 — 아직 분석한 기존 코드가 없기 때문입니다(13장에서 기존 코드를 분석하면 여기서 근거가 걸립니다).</p>
+<figure><a href="img/proposal-03-analyzing-2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="자연어 인텐트 분해 중 — Claude Code 의 도구 호출과 레거시 그래프 검색 로그" src="img/proposal-03-analyzing-2.webp" / loading="lazy" decoding="async"></a><figcaption>자연어 인텐트 분해 중 — Claude Code 의 도구 호출과 레거시 그래프 검색 로그</figcaption></figure>
+<p>이 튜토리얼에서는 <strong>2분 남짓</strong>(132초) 뒤에 「Proposal PRO-001 초안이 생성되었습니다」가 나왔습니다. <strong>Proposal 보기</strong>를 누릅니다.</p>
+<div class="admonition note">
+<p class="admonition-title">AI가 질문을 하면</p>
+<p>요구사항이 모호하면 분석 중에 「AI가 몇 가지 사항을 확인하고 싶습니다」와 보기가 나옵니다. 보기를 고르거나 직접 써서 <strong>답변 제출</strong>을 누르고, 넘어가려면 <strong>현재 정보로 계속</strong>을 누릅니다.</p>
+</div>
+<h2 id="따라-하기-2-전략-설계-읽기">따라 하기 2 — 전략 설계 읽기<a class="anchor" href="#따라-하기-2-전략-설계-읽기" title="Permanent link">#</a></h2>
+<p>프로포절 상세의 첫 칸 <strong>Intent(전략)</strong>이 전략 설계입니다. 제목은 대표 유저 스토리(「사장님: 가게 메뉴를 등록한다」)로 붙고, 상태는 <strong>INTENT</strong>입니다.</p>
+<figure><a href="img/proposal-06-detail.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="PRO-001 상세 — 프로세스 두 개(메뉴 판매 운영 · 주문 생성과 접수 전 취소)와 바운디드 컨텍스트" src="img/proposal-06-detail.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-001 상세 — 프로세스 두 개(메뉴 판매 운영 · 주문 생성과 접수 전 취소)와 바운디드 컨텍스트</figcaption></figure>
+<p>이 튜토리얼에서 나온 것은 이렇습니다. 여러분의 결과는 이름과 개수가 조금 다를 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>나온 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로세스</td>
+<td>메뉴 판매 운영 · 주문 생성과 접수 전 취소</td>
+</tr>
+<tr>
+<td>바운디드 컨텍스트</td>
+<td><strong>주문</strong>(Core) · <strong>메뉴 관리</strong>(Supporting)</td>
+</tr>
+<tr>
+<td>기능</td>
+<td>메뉴 등록·가격 관리 · 메뉴 품절 관리 · 가게 메뉴 조회 · 주문하기 · 주문 접수 · 주문 취소</td>
+</tr>
+<tr>
+<td>유저 스토리</td>
+<td>7개 — 사장님 4개(메뉴 등록 · 가격 수정 · 품절 표시 · 주문 접수), 고객 3개(메뉴 조회 · 주문 · 접수 전 취소)</td>
+</tr>
+</tbody>
+</table>
+<p>「주문」이 Core인 이유가 설명에 적혀 있습니다 — 주문의 생애주기(접수 대기 → 접수됨/취소됨)가 이 서비스의 핵심 규칙이기 때문입니다. 아래로 내리면 유저 스토리마다 인수 조건이 붙어 있습니다.</p>
+<figure><a href="img/proposal-07-strategic-2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="주문 컨텍스트 — 기능 「주문하기」와 유저 스토리 「고객: 메뉴를 골라 주문한다」의 Given-When-Then" src="img/proposal-07-strategic-2.webp" / loading="lazy" decoding="async"></a><figcaption>주문 컨텍스트 — 기능 「주문하기」와 유저 스토리 「고객: 메뉴를 골라 주문한다」의 Given-When-Then</figcaption></figure>
+<p>예를 들어 「고객: 가게 접수 전 주문을 취소한다」에는 이런 조건이 붙었습니다.</p>
+<div class="hl"><pre><span></span><code>Given &#39;접수 대기&#39; 상태의 내 주문, When 고객이 취소하면, Then 주문이 &#39;취소됨&#39; 상태가 되고 가게는 그 주문을 접수할 수 없다
+Given 가게가 이미 접수한 주문, When 고객이 취소하면, Then 취소가 거부되고 &#39;가게가 이미 접수하여 취소할 수 없음&#39;이 안내된다
+Given 이미 취소된 주문, When 다시 취소하면, Then 상태 변화 없이 이미 취소된 주문임이 안내된다
+</code></pre></div>
+
+<p>요구사항 문장에는 없던 경계 상황(이미 접수한 주문, 이미 취소한 주문)까지 조건으로 나와 있습니다. 이 조건이 7장에서 구현을 검증하는 테스트가 됩니다.</p>
+<figure><a href="img/proposal-07-strategic-4.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="맨 아래 — 상세 DDD 로 업그레이드 · Diff 직접 수정 · 의도가 다른가요? 피드백 후 재생성 · Plan 단계로 진행" src="img/proposal-07-strategic-4.webp" / loading="lazy" decoding="async"></a><figcaption>맨 아래 — 상세 DDD 로 업그레이드 · Diff 직접 수정 · 의도가 다른가요? 피드백 후 재생성 · Plan 단계로 진행</figcaption></figure>
+<p>맨 아래의 단추로 결과를 고칩니다.</p>
+<table>
+<thead>
+<tr>
+<th>단추</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>의도가 다른가요? 피드백 후 재생성</td>
+<td>잘못 나눈 점을 말로 적으면 다시 분해합니다. 예: 「주문 취소는 고객만 할 수 있다」</td>
+</tr>
+<tr>
+<td>Diff 직접 수정</td>
+<td>전략 설계(JSON)를 직접 고칩니다</td>
+</tr>
+<tr>
+<td>상세 DDD 로 업그레이드</td>
+<td>간소화로 시작한 프로포절을 DDD 단계별 분해로 바꿉니다</td>
+</tr>
+<tr>
+<td>Plan 단계로 진행 →</td>
+<td>이 전략 설계로 확정하고 계획 단계로 갑니다(4·5장)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-3-영향도-맵">따라 하기 3 — 영향도 맵<a class="anchor" href="#따라-하기-3-영향도-맵" title="Permanent link">#</a></h2>
+<p><strong>Impact Map</strong> 칸은 이 프로포절이 기존 설계의 무엇을 새로 만들고 무엇을 바꾸는지를 Requirements · Process · Design 단위로 보여 줍니다. 지금은 빈 프로젝트라 모두 <strong>신규</strong>입니다. 이미 설계가 있는 프로젝트에서 두 번째 프로포절을 만들면 「변경」이 섞여 나옵니다(9장).</p>
+<figure><a href="img/proposal-08-impact.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Impact Map — Requirements 15개: 컨텍스트 · 기능 · 유저 스토리, 모두 신규" src="img/proposal-08-impact.webp" / loading="lazy" decoding="async"></a><figcaption>Impact Map — Requirements 15개: 컨텍스트 · 기능 · 유저 스토리, 모두 신규</figcaption></figure>
+<h2 id="확인할-것">확인할 것<a class="anchor" href="#확인할-것" title="Permanent link">#</a></h2>
+<ul>
+<li>프로포절 목록에 <code>PRO-001</code>이 <strong>INTENT</strong> 상태로 있다.</li>
+<li>전략 설계에 프로세스, 바운디드 컨텍스트(Core 하나 이상), 기능, 유저 스토리, 인수 조건이 있다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>「주문」 컨텍스트가 Core로, 「메뉴 관리」가 Supporting으로 나뉜 까닭은 무엇일까요?</li>
+<li>분석 중 레거시 그래프 검색이 「후보 0개」로 끝났습니다. 잘못된 것인가요?</li>
+<li>결과가 생각과 다르면 어떻게 고치나요? 두 가지를 말해 보세요.</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>주문의 생애주기(접수 대기 → 접수됨/취소됨)와 취소 규칙이 한빛 딜리버리의 핵심 업무 규칙이고, 메뉴 관리는 그 주문을 돕는 정보 관리이기 때문입니다.</li>
+<li>아닙니다. 아직 분석한 기존 코드가 없어서 근거 후보가 없을 뿐입니다.</li>
+<li>「의도가 다른가요? 피드백 후 재생성」에 말로 고칠 점을 적거나, 「Diff 직접 수정」으로 전략 설계를 직접 고칩니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="tour.html"><span>이전</span>화면 둘러보기</a><a class="next" href="constitution.html"><span>다음</span>프로젝트 헌장 정하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-프로포절인가">왜 프로포절인가</a></li><li><a href="#따라-하기-1-프로포절-만들기">따라 하기 1 — 프로포절 만들기</a></li><li><a href="#따라-하기-2-전략-설계-읽기">따라 하기 2 — 전략 설계 읽기</a></li><li><a href="#따라-하기-3-영향도-맵">따라 하기 3 — 영향도 맵</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

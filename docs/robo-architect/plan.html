@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan — 전술 설계와 아키텍처 — Robo Architect 튜토리얼</title>
+<meta name="description" content="헌장을 근거로 Claude Code가 프로포절의 전술 설계(애그리거트 · 커맨드 · 이벤트 · 리드모델)와 아키텍처 결정(배포 · 데이터 접근 · API 계약 · 인증 · 테스트 전략)을 세웁니다. 결정마다 근거가 된 헌장 구절이 붙고, 헌장이 침묵하는 곳은 「헌장 공백」으로 드러납니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/plan.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plan — 전술 설계와 아키텍처 — Robo Architect 튜토리얼">
+<meta property="og:description" content="헌장을 근거로 Claude Code가 프로포절의 전술 설계(애그리거트 · 커맨드 · 이벤트 · 리드모델)와 아키텍처 결정(배포 · 데이터 접근 · API 계약 · 인증 · 테스트 전략)을 세웁니다. 결정마다 근거가 된 헌장 구절이 붙고, 헌장이 침묵하는 곳은 「헌장 공백」으로 드러납니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/plan.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html" class="on" aria-current="page"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">14</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로포절 라이프사이클<span class="chap">5</span></div>
+    <h1>Plan — 전술 설계와 아키텍처</h1>
+    <article>
+<blockquote>
+<p>헌장을 근거로 Claude Code가 프로포절의 전술 설계(애그리거트 · 커맨드 · 이벤트 · 리드모델)와 아키텍처 결정(배포 · 데이터 접근 · API 계약 · 인증 · 테스트 전략)을 세웁니다. 결정마다 근거가 된 헌장 구절이 붙고, 헌장이 침묵하는 곳은 「헌장 공백」으로 드러납니다.</p>
+</blockquote>
+<h2 id="왜-plan인가">왜 Plan인가<a class="anchor" href="#왜-plan인가" title="Permanent link">#</a></h2>
+<p>전략 설계(3장)는 「무엇을」입니다. 구현하려면 「어떻게」가 필요합니다. <strong>Plan</strong>은 두 가지를 정합니다.</p>
+<ul>
+<li><strong>전술 설계</strong> — DDD의 구성 요소. 애그리거트(일관성을 지키는 단위), 커맨드(상태를 바꾸는 요청), 이벤트(일어난 사실), 리드모델(조회용 모델)</li>
+<li><strong>아키텍처 결정</strong> — 배포 단위, 데이터 접근, API 계약, 인증, 테스트 전략 같은 것. 결정마다 「헌장의 어느 구절」에서 나왔는지 붙습니다</li>
+</ul>
+<h2 id="따라-하기-1-plan-생성">따라 하기 1 — Plan 생성<a class="anchor" href="#따라-하기-1-plan-생성" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><code>PRO-001</code>의 <strong>Plan</strong> 칸에서 <strong>Plan 생성</strong>을 누릅니다(헌장을 막 만들었다면 저절로 시작합니다).</li>
+<li>「Claude 가 전술적 분해와 아키텍처 계획을 작성하고 있습니다…」와 경과 시간이 보입니다. 보통 5~12분, 이 튜토리얼에서는 <strong>약 10분</strong>(598초) 걸렸습니다.</li>
+</ol>
+<figure><a href="img/plan-03-running-0124.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Plan 생성 중 — 경과 시간, 보통 5~12분, 탭을 옮기면 처음부터 다시 시작한다는 경고" src="img/plan-03-running-0124.webp" / loading="lazy" decoding="async"></a><figcaption>Plan 생성 중 — 경과 시간, 보통 5~12분, 탭을 옮기면 처음부터 다시 시작한다는 경고</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">생성 중에는 그 화면에 머무세요</p>
+<p>Plan 생성은 화면이 결과를 이어 받는 방식이라, 생성 중에 새로고침하거나 그 탭에서 다른 화면으로 옮기면 처음부터 다시 시작합니다. 다른 일을 하려면 홈에서 <strong>새 탭</strong>을 여세요.</p>
+</div>
+<h2 id="따라-하기-2-plan-읽기">따라 하기 2 — Plan 읽기<a class="anchor" href="#따라-하기-2-plan-읽기" title="Permanent link">#</a></h2>
+<p>생성이 끝나면 위에 진행 로그, 아래에 <strong>아키텍처 결정(Constitution 기반)</strong>, <strong>헌장 공백</strong>, <strong>Tactical Design</strong>, 그리고 요약이 나옵니다.</p>
+<figure><a href="img/plan-04-result.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Plan 결과 — 전술 분해 로그와 아키텍처 결정의 시작" src="img/plan-04-result.webp" / loading="lazy" decoding="async"></a><figcaption>Plan 결과 — 전술 분해 로그와 아키텍처 결정의 시작</figcaption></figure>
+<h3 id="아키텍처-결정">아키텍처 결정<a class="anchor" href="#아키텍처-결정" title="Permanent link">#</a></h3>
+<p>결정마다 오른쪽 위에 근거가 된 헌장 구획이 붙습니다(예: <code>↳ Architecture</code>, <code>↳ V. 타입 안전과 계약 우선</code>). 이 튜토리얼에서 나온 결정의 일부입니다.</p>
+<table>
+<thead>
+<tr>
+<th>결정</th>
+<th>내용</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>배포 환경</td>
+<td>Node.js 프로세스 1개에서 Express + SQLite 단일 파일 DB, React 빌드 결과를 같은 앱이 정적 서빙</td>
+<td>Architecture</td>
+</tr>
+<tr>
+<td>Ingress · Service Mesh</td>
+<td>모놀리스라 N/A. 모듈 간 연동은 Ordering → Menu 단방향 인-프로세스 호출 하나</td>
+<td>Architecture, VII</td>
+</tr>
+<tr>
+<td>데이터 접근</td>
+<td>better-sqlite3 + 모듈별 repository, 마이그레이션 SQL. 접수·취소는 <code>UPDATE … WHERE status = 'PLACED'</code> 조건부 갱신</td>
+<td>II, Technology Constraints</td>
+</tr>
+<tr>
+<td>API 계약</td>
+<td><code>shared/</code> 의 zod 스키마 하나에서 TS 타입을 만들고 라우트 경계에서 검증</td>
+<td>V</td>
+</tr>
+<tr>
+<td>인증</td>
+<td>Express 미들웨어가 서명 토큰으로 <code>{userId, role, ownedStoreIds}</code> 를 싣고, 서비스가 소유를 검사</td>
+<td>IV</td>
+</tr>
+<tr>
+<td>테스트 전략</td>
+<td>Vitest 하나로 도메인 단위 테스트(불변식 4개) + API 통합 테스트(인메모리 SQLite)</td>
+<td>VI</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/plan-05-scroll-3.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="아키텍처 결정 — 프론트엔드 · 레포 매핑 · 데이터 접근, 결정마다 근거 헌장 구획" src="img/plan-05-scroll-3.webp" / loading="lazy" decoding="async"></a><figcaption>아키텍처 결정 — 프론트엔드 · 레포 매핑 · 데이터 접근, 결정마다 근거 헌장 구획</figcaption></figure>
+<h3 id="헌장-공백">헌장 공백<a class="anchor" href="#헌장-공백" title="Permanent link">#</a></h3>
+<p>헌장이 정하지 않았는데 계획에 꼭 필요한 영역은 노란 상자로 나옵니다. 이번에는 <strong>IDENTITY_AND_STORE_OWNERSHIP_SOURCE</strong> — 「어느 사장님이 어느 가게의 주인인가」의 원천이 헌장에도 전략 설계에도 없어서, 계획은 개발용 토큰으로 두고 공백으로 남겼습니다. 이런 것은 헌장을 보완하거나 다음 프로포절(예: 가게 등록)에서 다룹니다.</p>
+<h3 id="전술-설계">전술 설계<a class="anchor" href="#전술-설계" title="Permanent link">#</a></h3>
+<p>Tactical Design에 만들 것(CREATE)이 우선순위(HIGH/MEDIUM)와 함께 나옵니다. 이번에는 20개였습니다.</p>
+<table>
+<thead>
+<tr>
+<th>애그리거트</th>
+<th>커맨드 → 이벤트</th>
+<th>리드모델</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Menu</strong></td>
+<td>RegisterMenu → MenuRegistered · ChangeMenuPrice → MenuPriceChanged · MarkMenuSoldOut → MenuMarkedSoldOut · ReleaseMenuSoldOut → MenuSoldOutReleased</td>
+<td>StoreMenuView · OrderableMenuLookup</td>
+</tr>
+<tr>
+<td><strong>Order</strong></td>
+<td>PlaceOrder → OrderPlaced · AcceptOrder → OrderAccepted · CancelOrder → OrderCancelled</td>
+<td>StoreOrderQueueView · CustomerOrderView</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/plan-05-scroll-4.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Tactical Design — CREATE Aggregate Menu · Command RegisterMenu · Event MenuRegistered …, 「열기」로 설계 캔버스에서 미리 보기" src="img/plan-05-scroll-4.webp" / loading="lazy" decoding="async"></a><figcaption>Tactical Design — CREATE Aggregate Menu · Command RegisterMenu · Event MenuRegistered …, 「열기」로 설계 캔버스에서 미리 보기</figcaption></figure>
+<p>항목 오른쪽의 <strong>열기</strong>를 누르면 그 요소를 설계 캔버스에 미리 보기로 띄웁니다. 「OrderableMenuLookup」은 주문 모듈이 메뉴 모듈에 묻는 공개 인터페이스입니다 — 헌장 원칙 I(다른 모듈 테이블을 직접 읽지 않는다)이 전술 설계로 내려온 모습입니다.</p>
+<h2 id="따라-하기-3-plan-확정">따라 하기 3 — Plan 확정<a class="anchor" href="#따라-하기-3-plan-확정" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>맨 아래로 내려 요약을 읽고 <strong>Plan 확정</strong>을 누릅니다.</li>
+<li>「✓ Plan 이 확정되었습니다.」가 나오고 프로포절이 <strong>SUBMITTED</strong>(제출됨) 상태가 됩니다. 아래에 <strong>샌드박스 구현 열기</strong>가 생깁니다(6장).</li>
+</ol>
+<figure><a href="img/plan-06-confirmed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Plan 확정 — 영향 목록, 요약, 「Plan 이 확정되었습니다」, 샌드박스 구현 열기" src="img/plan-06-confirmed.webp" / loading="lazy" decoding="async"></a><figcaption>Plan 확정 — 영향 목록, 요약, 「Plan 이 확정되었습니다」, 샌드박스 구현 열기</figcaption></figure>
+<h2 id="확인할-것">확인할 것<a class="anchor" href="#확인할-것" title="Permanent link">#</a></h2>
+<ul>
+<li>Plan에 아키텍처 결정이 있고, 결정마다 근거 헌장 구획이 붙어 있다.</li>
+<li>Tactical Design에 애그리거트 Menu · Order가 있다.</li>
+<li>Plan을 확정했고 「샌드박스 구현 열기」가 보인다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>아키텍처 결정 옆의 <code>↳ V. 타입 안전과 계약 우선</code> 같은 표시는 무엇인가요?</li>
+<li>「헌장 공백」이 나왔습니다. 무시하고 진행해도 되나요?</li>
+<li>Plan 생성 중에 다른 화면을 보려면 어떻게 하나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>그 결정의 근거가 된 헌장 구획입니다. 결정이 헌장의 어디에서 나왔는지 추적할 수 있습니다.</li>
+<li>진행은 됩니다. 다만 계획이 그 영역을 임시로 정했다는 뜻이므로, 헌장을 보완하거나 다음 프로포절에서 다루는 것이 좋습니다.</li>
+<li>홈에서 새 탭을 엽니다. 생성 중인 탭을 새로고침하거나 그 탭에서 화면을 옮기면 처음부터 다시 시작합니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="constitution.html"><span>이전</span>프로젝트 헌장 정하기</a><a class="next" href="skills.html"><span>다음</span>스킬 파일로 엔진 바꾸기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-plan인가">왜 Plan인가</a></li><li><a href="#따라-하기-1-plan-생성">따라 하기 1 — Plan 생성</a></li><li><a href="#따라-하기-2-plan-읽기">따라 하기 2 — Plan 읽기</a><ul><li><a href="#아키텍처-결정">아키텍처 결정</a></li><li><a href="#헌장-공백">헌장 공백</a></li><li><a href="#전술-설계">전술 설계</a></li></ul></li><li><a href="#따라-하기-3-plan-확정">따라 하기 3 — Plan 확정</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robo Architect 튜토리얼 — Robo Architect 튜토리얼</title>
+<meta name="description" content="요구사항 한 줄을 프로포절로 만들어 도메인 주도 설계(DDD)로 나누고, 프로젝트 헌장과 계획을 세워 Claude Code가 샌드박스에서 구현하게 한 뒤, 인수 조건으로 검증하고 설계에 되돌려 반영하는 흐름을 Robo Architect Lite 데스크톱 앱에서 처음부터 한 단계씩 익히는 실습서입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Robo Architect 튜토리얼 — Robo Architect 튜토리얼">
+<meta property="og:description" content="요구사항 한 줄을 프로포절로 만들어 도메인 주도 설계(DDD)로 나누고, 프로젝트 헌장과 계획을 세워 Claude Code가 샌드박스에서 구현하게 한 뒤, 인수 조건으로 검증하고 설계에 되돌려 반영하는 흐름을 Robo Architect Lite 데스크톱 앱에서 처음부터 한 단계씩 익히는 실습서입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">14</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap"></span></div>
+    <h1>Robo Architect 튜토리얼</h1>
+    <article>
+<blockquote>
+<p>요구사항 한 줄을 프로포절로 만들어 도메인 주도 설계(DDD)로 나누고, 프로젝트 헌장과 계획을 세워 Claude Code가 샌드박스에서 구현하게 한 뒤, 인수 조건으로 검증하고 설계에 되돌려 반영하는 흐름을 Robo Architect Lite 데스크톱 앱에서 처음부터 한 단계씩 익히는 실습서입니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/835RppWnQvc" title="Robo Architect 튜토리얼 — 영상 1:43" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="robo-architect는">Robo Architect는<a class="anchor" href="#robo-architect는" title="Permanent link">#</a></h2>
+<p>Robo Architect는 <strong>명세 주도 개발(Spec-Driven Development) 도구</strong>입니다. 코드가 아니라 명세(Spec)를 원본으로 삼습니다. 요구사항을 자연어로 쓰면 AI가 도메인 주도 설계(DDD)의 말로 나눕니다 — 바운디드 컨텍스트, 애그리거트, 커맨드, 이벤트, 그리고 Given-When-Then 형식의 인수 조건입니다. 그 설계를 근거로 Claude Code가 코드를 쓰고, 다 쓴 코드는 다시 설계와 대조해 검증합니다.</p>
+<p>모든 변경은 <strong>프로포절</strong> 하나로 다룹니다. 프로포절은 다음 순서로 나아갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>하는 일</th>
+<th>이 튜토리얼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INTENT</td>
+<td>자연어 요구사항을 전략 설계(프로세스·바운디드 컨텍스트·기능·유저 스토리·인수 조건)로 나눕니다</td>
+<td>3장</td>
+</tr>
+<tr>
+<td>PLAN</td>
+<td>프로젝트 헌장을 근거로 전술 설계와 아키텍처, 영향도를 정합니다</td>
+<td>4·5장</td>
+</tr>
+<tr>
+<td>IMPLEMENTING</td>
+<td>별도의 Git 워크트리(샌드박스)에서 Claude Code가 구현합니다</td>
+<td>6장</td>
+</tr>
+<tr>
+<td>VALIDATING · 승인 대기</td>
+<td>구조 검증과 인수 조건 테스트를 돌립니다</td>
+<td>7장</td>
+</tr>
+<tr>
+<td>ACCEPTED</td>
+<td>수락하면 코드가 본체에 합쳐지고 설계 그래프에 반영됩니다</td>
+<td>7장</td>
+</tr>
+</tbody>
+</table>
+<p>이 튜토리얼은 <strong>Robo Architect Lite</strong>를 씁니다. Lite는 내 컴퓨터에서 혼자 쓰는 데스크톱 앱입니다. 설계는 Neo4j가 아니라 <strong>Ontological DB</strong>의 그래프에 저장하고, 프로젝트마다 그래프가 하나씩 생깁니다. 로그인 화면이 없고, AI 작업은 내 컴퓨터의 Claude Code가 맡습니다.</p>
+<h2 id="이-튜토리얼의-이야기">이 튜토리얼의 이야기<a class="anchor" href="#이-튜토리얼의-이야기" title="Permanent link">#</a></h2>
+<p>동네 음식점과 고객을 잇는 배달 서비스 <strong>한빛 딜리버리</strong>를 만듭니다. 여러분은 이 서비스의 설계를 맡은 <strong>장진영</strong>입니다.</p>
+<table>
+<thead>
+<tr>
+<th>등장</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>장진영</td>
+<td>한빛 딜리버리의 아키텍트. 이 튜토리얼에서 여러분이 맡는 사람입니다</td>
+</tr>
+<tr>
+<td>사장님</td>
+<td>가게 메뉴를 등록하고 들어온 주문을 접수합니다</td>
+</tr>
+<tr>
+<td>고객</td>
+<td>메뉴를 골라 주문하고, 접수 전이면 취소합니다</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>스킬을 따라 설계를 나누고, 계획을 세우고, 코드를 쓰는 AI 동료</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>시작하기</strong> — 앱을 설치해 첫 프로젝트를 만들고 화면을 둘러봅니다.</li>
+<li><strong>프로포절 라이프사이클</strong> — 「메뉴 등록과 주문」 요구사항을 프로포절로 만들어 전략 설계를 받고, 프로젝트 헌장을 정해 계획을 세운 뒤, 샌드박스에서 구현하고 검증해 수락합니다.</li>
+<li><strong>설계와 변경</strong> — 수락된 설계를 Stories·Process·Design·Data 탭에서 보고, 두 번째 요구사항이 기존 설계에 주는 영향을 영향도 맵으로 읽고, 엔진의 스킬 파일을 들여다봅니다.</li>
+<li><strong>레거시와 데이터</strong> — 한빛 딜리버리의 기존 주문 DB를 데이터 소스로 붙여 스키마를 봅니다.</li>
+<li><strong>마무리</strong> — 리뷰 기능을 처음부터 끝까지 직접 넣는 종합 과제입니다.</li>
+</ol>
+<h2 id="학습-순서">학습 순서<a class="anchor" href="#학습-순서" title="Permanent link">#</a></h2>
+<div class="cards" markdown="0">
+<a href="install.html"><b>시작하기</b><span>설치와 첫 프로젝트, 화면 둘러보기</span></a>
+<a href="proposal.html"><b>프로포절 라이프사이클</b><span>프로포절 만들기, 헌장, 계획, 샌드박스 구현, 검증과 수락</span></a>
+<a href="skills.html"><b>설계와 변경</b><span>스킬 파일로 엔진 바꾸기 (설계 둘러보기 · 변경 영향도는 준비 중)</span></a>
+<a href="fabric.html"><b>레거시와 데이터</b><span>데이터 소스 연결, 요구사항 문서로 설계 시작하기</span></a>
+<a href="cheatsheet.html"><b>부록</b><span>치트시트, 자주 묻는 질문</span></a>
+</div>
+
+<p>각 장은 <strong>왜 → 따라 하기 → 확인 문제</strong> 순서로 되어 있습니다. 앞 장에서 만든 것을 다음 장에서 이어 쓰므로 순서대로 따라 하는 것이 좋습니다. 확인 문제의 답은 접혀 있으니, 먼저 스스로 해 본 뒤 펼쳐 보세요.</p>
+<h2 id="누구를-위한-튜토리얼인가">누구를 위한 튜토리얼인가<a class="anchor" href="#누구를-위한-튜토리얼인가" title="Permanent link">#</a></h2>
+<ul>
+<li>웹 서비스를 한 번쯤 만들어 본 개발자, 또는 요구사항과 설계를 다루는 기획자·아키텍트가 대상입니다.</li>
+<li>DDD를 몰라도 됩니다. 바운디드 컨텍스트·애그리거트 같은 말은 처음 나올 때 장 안에서 설명합니다.</li>
+<li>코드를 직접 쓰지 않습니다. 코드는 Claude Code가 씁니다. 여러분은 설계를 읽고 고르고 확인합니다.</li>
+</ul>
+<h2 id="준비물">준비물<a class="anchor" href="#준비물" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>컴퓨터</td>
+<td>macOS 또는 Windows 10/11. 메모리 16GB 이상, 디스크 여유 20GB 이상</td>
+</tr>
+<tr>
+<td>Docker Desktop</td>
+<td>그래프 DB와 분석 서비스가 컨테이너로 돕니다. 켜져 있어야 합니다</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>터미널에서 <code>claude</code> 가 실행되고 로그인되어 있어야 합니다. 프로포절의 모든 AI 작업이 이것으로 돕니다</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>프로젝트 폴더와 샌드박스 워크트리를 만듭니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="이-튜토리얼의-화면">이 튜토리얼의 화면<a class="anchor" href="#이-튜토리얼의-화면" title="Permanent link">#</a></h2>
+<p>튜토리얼의 화면과 결과는 모두 Robo Architect Lite 데스크톱 앱(macOS)을 실제로 실행해 얻었습니다. AI가 만드는 설계와 코드는 실행할 때마다 조금씩 다르므로, 여러분 화면의 글자가 그림과 똑같지 않아도 괜찮습니다. 각 장의 <strong>확인할 것</strong>에 적힌 요소가 있으면 됩니다.</p>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="install.html"><span>다음</span>설치하고 첫 프로젝트 만들기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#robo-architect는">Robo Architect는</a></li><li><a href="#이-튜토리얼의-이야기">이 튜토리얼의 이야기</a></li><li><a href="#학습-순서">학습 순서</a></li><li><a href="#누구를-위한-튜토리얼인가">누구를 위한 튜토리얼인가</a></li><li><a href="#준비물">준비물</a></li><li><a href="#이-튜토리얼의-화면">이 튜토리얼의 화면</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

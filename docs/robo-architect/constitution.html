@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로젝트 헌장 정하기 — Robo Architect 튜토리얼</title>
+<meta name="description" content="계획을 세우기 전에 이 프로젝트의 설계 원칙 · 기술 스택 · 아키텍처 스타일 · 레포 전략을 한 번 정합니다. Claude Code가 프로포절을 읽고 질문과 추천을 내면 답만 고르면 되고, 그 답으로 헌장(Constitution) 문서가 만들어집니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/constitution.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="프로젝트 헌장 정하기 — Robo Architect 튜토리얼">
+<meta property="og:description" content="계획을 세우기 전에 이 프로젝트의 설계 원칙 · 기술 스택 · 아키텍처 스타일 · 레포 전략을 한 번 정합니다. Claude Code가 프로포절을 읽고 질문과 추천을 내면 답만 고르면 되고, 그 답으로 헌장(Constitution) 문서가 만들어집니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/constitution.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html" class="on" aria-current="page"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">14</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로포절 라이프사이클<span class="chap">4</span></div>
+    <h1>프로젝트 헌장 정하기</h1>
+    <article>
+<blockquote>
+<p>계획을 세우기 전에 이 프로젝트의 설계 원칙 · 기술 스택 · 아키텍처 스타일 · 레포 전략을 한 번 정합니다. Claude Code가 프로포절을 읽고 질문과 추천을 내면 답만 고르면 되고, 그 답으로 헌장(Constitution) 문서가 만들어집니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/4VAm8eH1dE0" title="프로젝트 헌장 정하기 — 영상 2:19" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="왜-헌장인가">왜 헌장인가<a class="anchor" href="#왜-헌장인가" title="Permanent link">#</a></h2>
+<p>같은 「주문」 애그리거트도 Spring Boot로 만들지 Node.js로 만들지, 서비스를 나눌지 하나로 둘지에 따라 계획이 완전히 달라집니다. 그런 결정을 프로포절마다 다시 하면 프로포절끼리 서로 다른 구조를 만들어 버립니다. <strong>헌장</strong>은 이런 결정을 프로젝트에 한 번 적어 두는 문서입니다. 이후 모든 프로포절의 계획(5장)과 구현(6장)이 헌장을 따르고, 계획의 결정마다 「헌장의 어느 구절에서 나왔는지」가 표시됩니다.</p>
+<p>헌장은 Markdown 문서 하나입니다. 구획(##)마다 선언만 적습니다.</p>
+<table>
+<thead>
+<tr>
+<th>구획</th>
+<th>담는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core Principles</td>
+<td>설계 원칙. 반드시(MUST), 바꿀 수 없음(NON-NEGOTIABLE) 같은 강도와 근거</td>
+</tr>
+<tr>
+<td>Technology Constraints</td>
+<td>언어·프레임워크·데이터스토어</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>모놀리스/마이크로서비스, 모듈과 의존 방향, 계층</td>
+</tr>
+<tr>
+<td>Repository Strategy</td>
+<td>모노레포/멀티레포, 폴더 배치</td>
+</tr>
+<tr>
+<td>Governance</td>
+<td>개정 절차와 버전 정책</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-인터뷰로-헌장-만들기">따라 하기 1 — 인터뷰로 헌장 만들기<a class="anchor" href="#따라-하기-1-인터뷰로-헌장-만들기" title="Permanent link">#</a></h2>
+<p>헌장이 없는 프로젝트에서 프로포절의 Plan을 만들려고 하면 「Constitution 작성이 필요합니다」가 나오고 인터뷰가 열립니다.</p>
+<ol class="steps">
+<li>프로포절 탭에서 <code>PRO-001</code>을 열고 <strong>Plan</strong> 칸 → <strong>Plan 단계로 진행 →</strong> → <strong>Plan 생성</strong>을 누릅니다.</li>
+<li>「프로젝트 헌장(Constitution)」 창이 뜨고, Claude Code가 먼저 이 프로포절을 분석합니다(「제안 PRO-001 — BoundedContext 2개: 메뉴 관리, 주문」).</li>
+<li>질문이 하나씩 나옵니다. 질문 밑의 <strong>근거</strong>가 Claude Code의 추천 이유입니다. 보기를 고르거나 직접 써서 <strong>다음 질문 →</strong>을 누릅니다.</li>
+<li>마지막 질문에서 <strong>✓ 헌장 생성</strong>을 누릅니다. 헌장이 저장되고 Plan 생성이 저절로 이어집니다(5장).</li>
+</ol>
+<figure><a href="img/constitution-04-q1.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="질문 1 — 아키텍처 스타일, 근거와 MONOLITH(추천) · MICROSERVICES" src="img/constitution-04-q1.webp" / loading="lazy" decoding="async"></a><figcaption>질문 1 — 아키텍처 스타일, 근거와 MONOLITH(추천) · MICROSERVICES</figcaption></figure>
+<p>이 튜토리얼에서는 질문이 두 개였습니다.</p>
+<table>
+<thead>
+<tr>
+<th>질문</th>
+<th>근거(추천 이유)</th>
+<th>고른 답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>아키텍처 스타일</td>
+<td>바운디드 컨텍스트가 적고 단순 → 단일 배포가 간단</td>
+<td><strong>MONOLITH</strong> (추천)</td>
+</tr>
+<tr>
+<td>기술 스택 (백엔드 / 프론트엔드 / 데이터스토어)</td>
+<td>DDD 애그리거트·트랜잭션 일관성에 성숙한 스택</td>
+<td>직접 입력: <strong>TypeScript(Node.js, Express) / React / SQLite</strong></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/constitution-04-q2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="질문 2 — 기술 스택: Spring Boot + JPA + PostgreSQL + Vue 3(추천) 등 보기와 직접 입력칸" src="img/constitution-04-q2.webp" / loading="lazy" decoding="async"></a><figcaption>질문 2 — 기술 스택: Spring Boot + JPA + PostgreSQL + Vue 3(추천) 등 보기와 직접 입력칸</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">추천을 따르지 않아도 됩니다</p>
+<p>기술 스택의 추천은 Spring Boot였지만, 이 튜토리얼은 구현을 빨리 돌려 보려고 Node.js와 SQLite를 직접 썼습니다. 직접 쓴 답도 헌장에 「사용자 인터뷰 확정」으로 적힙니다. 질문의 수와 보기는 프로포절에 따라 달라집니다.</p>
+</div>
+<h2 id="따라-하기-2-헌장-읽기">따라 하기 2 — 헌장 읽기<a class="anchor" href="#따라-하기-2-헌장-읽기" title="Permanent link">#</a></h2>
+<p>헌장은 홈의 <strong>프로젝트 헌장</strong> 카드(또는 설계 탭 네비게이터의 「헌장」 단추)로 언제든 엽니다.</p>
+<figure><a href="img/constitution-01-editor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로젝트 헌장 — 미리보기 · 편집, 「인터뷰로 설정」, 한빛 딜리버리 Constitution" src="img/constitution-01-editor.webp" / loading="lazy" decoding="async"></a><figcaption>프로젝트 헌장 — 미리보기 · 편집, 「인터뷰로 설정」, 한빛 딜리버리 Constitution</figcaption></figure>
+<p>두 질문에 답했을 뿐인데, Claude Code는 프로포절의 전략 설계를 읽어 원칙 일곱 개를 세웠습니다.</p>
+<table>
+<thead>
+<tr>
+<th>원칙</th>
+<th>요지</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I. 바운디드 컨텍스트 = 모듈 경계</td>
+<td>메뉴 관리(Menu)와 주문(Ordering) 두 모듈. 모듈은 자기 테이블만 쓰고, 다른 모듈은 공개 인터페이스로만 부른다</td>
+</tr>
+<tr>
+<td>II. 주문 상태 전이는 도메인이 강제한다 (<strong>NON-NEGOTIABLE</strong>)</td>
+<td>접수대기 → 접수됨 / 접수대기 → 취소됨. 고객 취소는 접수대기에서만. 취소와 접수가 겹치면 <code>UPDATE … WHERE status = 'PLACED'</code> 로 하나만 성공</td>
+</tr>
+<tr>
+<td>III. 메뉴 상태가 주문 가능성을 결정한다</td>
+<td>품절 메뉴 주문은 서버가 거부. 주문 항목은 주문 시점의 메뉴명·단가를 스냅샷으로</td>
+</tr>
+<tr>
+<td>IV. 역할 분리</td>
+<td>사장님은 자기 가게만, 고객은 자기 주문만. 권한 검사는 서버에서</td>
+</tr>
+<tr>
+<td>V. 타입 안전과 계약 우선</td>
+<td>TypeScript strict, 요청/응답 타입은 한 곳에서 정의해 공유</td>
+</tr>
+<tr>
+<td>VI. 테스트로 규칙을 고정한다</td>
+<td>위 불변식마다 자동화 테스트(MUST)</td>
+</tr>
+<tr>
+<td>VII. 단순성(YAGNI)</td>
+<td>요구되지 않은 인프라(메시지 브로커 등)를 들이지 않는다</td>
+</tr>
+</tbody>
+</table>
+<p>그 밖에 Technology Constraints(Express · React · SQLite, WAL 모드, 마이그레이션 스크립트), Architecture(모듈러 모놀리스, 의존 방향 Ordering → Menu), Repository Strategy(모노레포 <code>backend/</code> · <code>frontend/</code> · <code>shared/</code>), Governance(SemVer 개정 정책)가 적혔습니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">헌장을 고치면</p>
+<p><strong>편집</strong>으로 바꿔 직접 고치거나 <strong>인터뷰로 설정</strong>으로 다시 인터뷰합니다. 헌장을 저장하면 이 헌장으로 세운 계획들이 「오래됨(stale)」으로 표시되고, 다시 계획을 세우라고 안내합니다.</p>
+</div>
+<h2 id="확인할-것">확인할 것<a class="anchor" href="#확인할-것" title="Permanent link">#</a></h2>
+<ul>
+<li>홈의 「프로젝트 헌장」 카드로 연 편집기에 <code>한빛 딜리버리 Constitution</code>이 있다.</li>
+<li>Technology Constraints 표에 인터뷰에서 고른 스택이 「사용자 인터뷰 확정」으로 적혀 있다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>헌장은 프로포절마다 만드나요, 프로젝트에 하나인가요?</li>
+<li>원칙 II에 붙은 NON-NEGOTIABLE은 무슨 뜻일까요?</li>
+<li>헌장을 고친 뒤에는 무엇을 해야 하나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>프로젝트에 하나입니다(바운디드 컨텍스트별 덧붙임은 할 수 있습니다). 모든 프로포절의 계획이 이 헌장을 따릅니다.</li>
+<li>바꿀 수 없는 원칙입니다. 바운디드 컨텍스트별 덧붙임으로도 덮어쓸 수 없습니다.</li>
+<li>그 헌장에 기대던 계획이 「오래됨」으로 표시되므로, 해당 프로포절의 Plan을 다시 생성해 확정합니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="proposal.html"><span>이전</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a><a class="next" href="plan.html"><span>다음</span>Plan — 전술 설계와 아키텍처</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-헌장인가">왜 헌장인가</a></li><li><a href="#따라-하기-1-인터뷰로-헌장-만들기">따라 하기 1 — 인터뷰로 헌장 만들기</a></li><li><a href="#따라-하기-2-헌장-읽기">따라 하기 2 — 헌장 읽기</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

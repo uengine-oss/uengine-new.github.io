@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설치하고 첫 프로젝트 만들기 — Robo Architect 튜토리얼</title>
+<meta name="description" content="Robo Architect Lite 데스크톱 앱을 설치하고 처음 띄워, 앱이 그래프 DB와 분석 서비스를 Docker로 올리는 것을 확인한 뒤, 홈에서 첫 프로젝트 「hanbit_delivery」를 만들고 코드 폴더를 정해 엽니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/install.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="설치하고 첫 프로젝트 만들기 — Robo Architect 튜토리얼">
+<meta property="og:description" content="Robo Architect Lite 데스크톱 앱을 설치하고 처음 띄워, 앱이 그래프 DB와 분석 서비스를 Docker로 올리는 것을 확인한 뒤, 홈에서 첫 프로젝트 「hanbit_delivery」를 만들고 코드 폴더를 정해 엽니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/install.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html" class="on" aria-current="page"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">14</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap">1</span></div>
+    <h1>설치하고 첫 프로젝트 만들기</h1>
+    <article>
+<blockquote>
+<p>Robo Architect Lite 데스크톱 앱을 설치하고 처음 띄워, 앱이 그래프 DB와 분석 서비스를 Docker로 올리는 것을 확인한 뒤, 홈에서 첫 프로젝트 「hanbit_delivery」를 만들고 코드 폴더를 정해 엽니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/_QeXQRdvAjA" title="설치하고 첫 프로젝트 만들기 — 영상 2:36" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇이-설치되나">무엇이 설치되나<a class="anchor" href="#무엇이-설치되나" title="Permanent link">#</a></h2>
+<p>Lite는 데스크톱 앱 하나와 Docker 컨테이너 일곱 개로 돕니다. 앱을 켜면 앱이 컨테이너를 직접 올리고, 끄면 그대로 둡니다(다음 실행이 빠릅니다).</p>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>데스크톱 앱</td>
+<td>화면, 그리고 내 컴퓨터에서 도는 Robo Architect 백엔드</td>
+</tr>
+<tr>
+<td>graph-db</td>
+<td><strong>Ontological DB</strong> — 설계를 그래프로 저장합니다. 프로젝트마다 그래프가 하나씩 생깁니다</td>
+</tr>
+<tr>
+<td>graph-bolt</td>
+<td>그래프 DB의 Bolt 프로토콜 입구. 앱은 여기로 질의합니다</td>
+</tr>
+<tr>
+<td>fabric · catalog</td>
+<td>데이터 소스(기존 DB)를 그래프 DB에 연결하고 스키마를 정리합니다(11장)</td>
+</tr>
+<tr>
+<td>analyzer · parser · gateway</td>
+<td>레거시 코드를 읽어 분석합니다</td>
+</tr>
+</tbody>
+</table>
+<p>Neo4j는 쓰지 않습니다. 예전 Robo Architect는 설계를 Neo4j에 두었지만, Lite는 데이터 소스 연결까지 그래프 DB가 직접 하는 Ontological DB를 씁니다.</p>
+<h2 id="준비">준비<a class="anchor" href="#준비" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker Desktop</td>
+<td>설치하고 <strong>켜 둡니다</strong>. 디스크 여유 20GB, 메모리 16GB 이상을 권장합니다</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>터미널에서 <code>claude</code> 를 한 번 실행해 로그인해 둡니다. 프로포절의 분석·계획·구현이 모두 이것으로 돕니다</td>
+</tr>
+<tr>
+<td>Git</td>
+<td><code>git --version</code> 이 나오면 됩니다</td>
+</tr>
+<tr>
+<td>OpenAI API 키</td>
+<td>요구사항 탭의 문서 업로드와 레거시 코드 분석(13장)에 씁니다. 3~12장은 키 없이 따라 할 수 있습니다</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Claude Code가 맡는 일</p>
+<p>Robo Architect의 엔진은 자체 AI 파이프라인이 아니라 <strong>Claude Code의 스킬</strong>입니다. 프로포절을 만들면 앱이 내 컴퓨터의 <code>claude</code> 를 불러 스킬 파일(10장)을 따라 일을 시킵니다. 그래서 API 키를 따로 넣지 않아도 되고, 같은 스킬을 터미널의 Claude Code에서 그대로 쓸 수도 있습니다.</p>
+</div>
+<h2 id="따라-하기-1-설치">따라 하기 1 — 설치<a class="anchor" href="#따라-하기-1-설치" title="Permanent link">#</a></h2>
+<p>Lite 설치본은 세 파일로 받습니다(uEngine에 요청). Windows 기준입니다.</p>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>크기</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Robo-Architect-Setup-&lt;버전&gt;.exe</code></td>
+<td>약 100MB</td>
+<td>데스크톱 앱 설치 프로그램</td>
+</tr>
+<tr>
+<td><code>robo-images.tar</code></td>
+<td>약 1.5GB</td>
+<td>컨테이너 이미지 일곱 개 묶음</td>
+</tr>
+<tr>
+<td><code>SHA256SUMS</code></td>
+<td>두 줄</td>
+<td>두 파일이 온전한지 확인하는 값</td>
+</tr>
+</tbody>
+</table>
+<ol class="steps">
+<li>받은 폴더에서 PowerShell을 열고 두 파일의 해시가 <code>SHA256SUMS</code> 와 같은지 봅니다.
+
+
+<div class="hl"><pre><span></span><code><span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">SHA256SUMS</span>
+<span class="nb">Get-ChildItem</span> <span class="p">.\</span><span class="n">Robo-Architect-Setup</span><span class="p">-*.</span><span class="n">exe</span><span class="p">,</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="p">|</span>
+  <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span> <span class="s2">&quot;{0}  {1}&quot;</span> <span class="o">-f</span> <span class="p">(</span><span class="nb">Get-FileHash</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span> <span class="nv">$_</span><span class="p">).</span><span class="n">Hash</span><span class="p">.</span><span class="n">ToLower</span><span class="p">(),</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Name</span> <span class="p">}</span>
+</code></pre></div>
+
+
+</li>
+<li><code>Robo-Architect-Setup-&lt;버전&gt;.exe</code> 를 실행합니다. 관리자 권한은 필요 없습니다. <strong>마지막 화면의 「실행」 체크는 끕니다</strong> — 설치 프로그램에서 띄운 앱은 설치 프로그램이 시작될 때의 환경을 물려받습니다.</li>
+<li>이미지 묶음을 앱의 데이터 폴더로 옮깁니다. 이 단계를 빼면 앱이 「이미지 묶음이 없습니다」로 멈춥니다.
+
+
+<div class="hl"><pre><span></span><code><span class="nv">$dst</span> <span class="p">=</span> <span class="s2">&quot;$env:APPDATA\robo-architect-desktop\runtime&quot;</span>
+<span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="nv">$dst</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+<span class="nb">Copy-Item</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="n">-Destination</span> <span class="nv">$dst</span> <span class="n">-Force</span>
+</code></pre></div>
+
+
+</li>
+<li>(13장을 하거나 요구사항 탭의 문서 업로드를 쓸 때) OpenAI 키를 사용자 환경 변수로 넣고 로그아웃·재로그인합니다. 서비스마다 읽는 이름이 달라 같은 값을 다섯 이름에 넣습니다.
+
+
+<div class="hl"><pre><span></span><code><span class="k">foreach</span> <span class="p">(</span><span class="nv">$n</span> <span class="k">in</span> <span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;LLM_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;ROBO_LLM_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;ROBO_EMBED_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;ROBO_SEARCH_LLM_API_KEY&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="nv">$n</span><span class="p">,</span> <span class="s1">&#39;&lt;발급받은 키&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">macOS</p>
+<p>이 튜토리얼의 화면은 macOS(Apple silicon)에서 같은 구성을 띄워 찍었습니다. macOS 설치본은 아직 배포하지 않으므로, macOS에서는 개발팀의 소스 실행 방법으로 띄웁니다. 앱을 띄운 뒤의 화면과 동작은 Windows와 같습니다.</p>
+</div>
+<h2 id="따라-하기-2-처음-띄우기">따라 하기 2 — 처음 띄우기<a class="anchor" href="#따라-하기-2-처음-띄우기" title="Permanent link">#</a></h2>
+<p>바탕화면의 <strong>Robo-Architect</strong> 아이콘으로 앱을 띄웁니다. 창 맨 위는 <strong>탭 줄</strong>이고, 처음 열리는 탭은 <strong>홈</strong>입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(설치본은 이미지 묶음을 풀어 넣느라 처음에 4~5분 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.</p>
+<figure><a href="img/install-boot.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」" src="img/install-boot.webp" / loading="lazy" decoding="async"></a><figcaption>처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」</figcaption></figure>
+<p>다 올라오면 왼쪽 아래 상태가 <strong>Ontological 연결됨</strong>으로 바뀌고, 가운데에 프로젝트를 고르는 칸이 열립니다. 로그인은 묻지 않습니다 — Lite는 혼자 쓰는 앱이라 계정이 없고, 이름과 이메일은 내 컴퓨터의 Git 설정에서 읽습니다.</p>
+<figure><a href="img/install-home-empty.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="기동이 끝난 홈 — 프로젝트 robo(기본), 새 프로젝트 이름 칸, 코드 폴더" src="img/install-home-empty.webp" / loading="lazy" decoding="async"></a><figcaption>기동이 끝난 홈 — 프로젝트 robo(기본), 새 프로젝트 이름 칸, 코드 폴더</figcaption></figure>
+<p>컨테이너가 모두 떴는지는 터미널에서 봅니다. 일곱 줄이 나오고 모두 <code>healthy</code> 여야 합니다.</p>
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>ps<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;label=com.docker.compose.project=robo-architect-desktop&quot;</span><span class="w"> </span>--format<span class="w"> </span><span class="s2">&quot;{{.Names}}  {{.Status}}&quot;</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>robo-architect-desktop-gateway-1     Up 17 seconds (healthy)
+robo-architect-desktop-analyzer-1    Up 28 seconds (healthy)
+robo-architect-desktop-catalog-1     Up 34 seconds (healthy)
+robo-architect-desktop-fabric-1      Up 39 seconds (healthy)
+robo-architect-desktop-graph-bolt-1  Up 45 seconds (healthy)
+robo-architect-desktop-graph-db-1    Up 50 seconds (healthy)
+robo-architect-desktop-parser-1      Up 50 seconds (healthy)
+</code></pre></div>
+
+<h2 id="따라-하기-3-첫-프로젝트-만들기">따라 하기 3 — 첫 프로젝트 만들기<a class="anchor" href="#따라-하기-3-첫-프로젝트-만들기" title="Permanent link">#</a></h2>
+<p>Robo Architect의 <strong>프로젝트</strong>는 그래프 DB 안의 그래프 하나입니다. 그래프 DB는 하나지만 그 안에 그래프를 여럿 둘 수 있어서, 프로젝트를 만들 때마다 그래프가 하나씩 생기고 서로 섞이지 않습니다. 처음에는 설치 때 만들어진 기본 프로젝트 <code>robo</code> 하나가 있습니다.</p>
+<ol class="steps">
+<li>홈의 「새 프로젝트」 칸에 <code>hanbit_delivery</code> 를 쓰고 <strong>＋ 만들기</strong>를 누릅니다. 이름은 영문 소문자로 시작하고 소문자·숫자·밑줄만 씁니다. 「프로젝트 hanbit_delivery 을 만들었습니다」가 나오고 그 프로젝트가 골라집니다.</li>
+<li><strong>코드 폴더</strong>의 「폴더 선택…」으로 구현 코드가 쌓일 폴더를 고릅니다. 이 튜토리얼은 <code>hanbit-delivery</code> 라는 Git 저장소 폴더를 씁니다. 6장에서 Claude Code가 이 폴더에 코드를 쓰고, 프로포절마다 이 폴더의 Git 워크트리를 샌드박스로 씁니다.</li>
+<li><strong>프로젝트 열기</strong>를 누릅니다. 앱이 백엔드를 이 프로젝트의 그래프로 맞추고(몇 초) 홈 위쪽에 열린 프로젝트를 보여 줍니다. 기능 카드가 켜집니다.</li>
+</ol>
+<figure><a href="img/install-project-created.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="새 프로젝트 hanbit_delivery 를 만들어 고른 모습" src="img/install-project-created.webp" / loading="lazy" decoding="async"></a><figcaption>새 프로젝트 hanbit_delivery 를 만들어 고른 모습</figcaption></figure>
+<figure><a href="img/install-home-project.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로젝트를 연 홈 — hanbit_delivery · 코드 폴더, 켜진 기능 카드 여덟 개" src="img/install-home-project.webp" / loading="lazy" decoding="async"></a><figcaption>프로젝트를 연 홈 — hanbit_delivery · 코드 폴더, 켜진 기능 카드 여덟 개</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">코드 폴더는 Git 저장소로</p>
+<p>코드 폴더는 Git 저장소여야 샌드박스 구현(6장)이 됩니다. 빈 폴더라면 터미널에서 한 번 만들어 둡니다.</p>
+<p><code>bash
+mkdir hanbit-delivery &amp;&amp; cd hanbit-delivery
+git init -b main &amp;&amp; git commit --allow-empty -m init</code></p>
+</div>
+<p>다음에 앱을 켜면 마지막에 연 프로젝트를 저절로 다시 엽니다. 다른 프로젝트로 가려면 홈의 <strong>프로젝트 바꾸기</strong>를 누릅니다.</p>
+<h2 id="확인할-것">확인할 것<a class="anchor" href="#확인할-것" title="Permanent link">#</a></h2>
+<ul>
+<li>컨테이너 일곱 개가 <code>healthy</code> 다.</li>
+<li>홈 위쪽에 <code>hanbit_delivery</code> 프로젝트와 코드 폴더가 보인다.</li>
+<li>왼쪽 아래 상태가 「Ontological 연결됨 · 그래프 hanbit_delivery」, 「에이전트 Claude Code」다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>Lite에서 「프로젝트」는 무엇으로 저장되나요?</li>
+<li>프로포절의 분석·계획·구현에 OpenAI 키가 필요한가요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>그래프 DB(Ontological DB) 안의 <strong>그래프</strong> 하나입니다. 그래프 DB는 하나이고, 프로젝트마다 그래프가 따로 생겨 서로 섞이지 않습니다.</li>
+<li>아닙니다. 프로포절 작업은 내 컴퓨터의 <strong>Claude Code</strong>가 스킬을 따라 합니다. OpenAI 키는 요구사항 탭의 문서 업로드와 레거시 코드 분석(13장)에만 씁니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>Robo Architect 튜토리얼</a><a class="next" href="tour.html"><span>다음</span>화면 둘러보기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇이-설치되나">무엇이 설치되나</a></li><li><a href="#준비">준비</a></li><li><a href="#따라-하기-1-설치">따라 하기 1 — 설치</a></li><li><a href="#따라-하기-2-처음-띄우기">따라 하기 2 — 처음 띄우기</a></li><li><a href="#따라-하기-3-첫-프로젝트-만들기">따라 하기 3 — 첫 프로젝트 만들기</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
