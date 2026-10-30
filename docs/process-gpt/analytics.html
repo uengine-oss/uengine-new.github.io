@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실행 분석 — 리드타임과 병목 — Process GPT 튜토리얼</title>
+<meta name="description" content="완료한 프로세스를 대시보드와 열 지도에서 살펴봅니다. 전체 처리 주기와 단계별 소요·대기를 구분하고, 숫자를 읽을 때 주의할 표시 결함을 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt/analytics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="실행 분석 — 리드타임과 병목 — Process GPT 튜토리얼">
+<meta property="og:description" content="완료한 프로세스를 대시보드와 열 지도에서 살펴봅니다. 전체 처리 주기와 단계별 소요·대기를 구분하고, 숫자를 읽을 때 주의할 표시 결함을 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt/analytics.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 게이트웨이, 에이전트, 폼)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 가입하기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로세스 기본</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>대화로 프로세스 만들기</a></li>
+<li><a href="definition.html"><span class="n">04</span>정의 들여다보기와 버전</a></li>
+<li><a href="organization.html"><span class="n">05</span>조직도와 역할 담당자</a></li>
+<li><a href="process-run.html"><span class="n">06</span>실행하고 할 일 처리하기</a></li>
+<li><a href="gateway.html"><span class="n">07</span>승인과 반려 — 갈림길과 되돌아가기</a></li>
+</ul>
+<div class="nav-part">AI 에이전트</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></li>
+<li><a href="agents.html"><span class="n">09</span>에이전트 동료 만들기</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>에이전트와 대화하기</a></li>
+<li><a href="skills.html"><span class="n">11</span>스킬로 일하는 방법 가르치기</a></li>
+<li><a href="document-process.html"><span class="n">12</span>문서로 프로세스 만들기</a></li>
+<li><a href="agent-steps.html"><span class="n">13</span>에이전트가 맡는 단계 실행하기</a></li>
+</ul>
+<div class="nav-part">도구와 규칙</div><ul>
+<li><a href="mcp-hub.html"><span class="n">14</span>MCP로 외부 도구 연결하기</a></li>
+<li><a href="dmn.html"><span class="n">15</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a></li>
+</ul>
+<div class="nav-part">분석과 개선</div><ul>
+<li><a href="analytics.html" class="on" aria-current="page"><span class="n">16</span>실행 분석 — 리드타임과 병목</a></li>
+<li><a href="strategy.html"><span class="n">17</span>전략 보드와 KPI</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="settings.html"><span class="n">18</span>설정 — 동료를 들이고 화면을 바꾸기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">19</span>종합 과제 — 한빛오피스 A/S 접수 처리</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>한눈에 보기</a></li>
+<li><a href="faq.html"><span class="n">21</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">분석과 개선<span class="chap">16</span></div>
+    <h1>실행 분석 — 리드타임과 병목</h1>
+    <article>
+<blockquote>
+<p>완료한 프로세스를 대시보드와 열 지도에서 살펴봅니다. 전체 처리 주기와 단계별 소요·대기를 구분하고, 숫자를 읽을 때 주의할 표시 결함을 확인합니다.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">설치본 수정이 필요합니다</p>
+<p>이 장의 실행 화면은 아래 수정을 넣은 설치본(2026-10-30)에서 찍었습니다. 이 수정이 설치 저장소에 들어가기 전의 설치본에서는 시간 계산이나 분석 화면이 다를 수 있습니다. 들어가면 이 안내를 지웁니다.</p>
+<ul>
+<li>분석: <a href="https://github.com/uengine-oss/process-gpt-analytic/pull/1">process-gpt-analytic #1</a> — 실제 시작 시각으로 소요·대기</li>
+<li>화면: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/236">process-gpt-vue3 #236</a> — 첫 단계 시작 시각·대시보드</li>
+<li>설치: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — 분석 서비스 경로·시간대</li>
+</ul>
+</div>
+<h2 id="완료한-세-실행을-읽습니다">완료한 세 실행을 읽습니다<a class="anchor" href="#완료한-세-실행을-읽습니다" title="Permanent link">#</a></h2>
+<p>이번 장에서는 새 업무를 시작하지 않습니다. 앞 장에서 완료한 실행을 분석합니다. 촬영 시점에는 <a href="process-run.html">6장</a>의 「영업 제안서 작성」, <a href="gateway.html">7장</a>의 「영업 제안서 승인」, <a href="agent-steps.html">13장</a>의 견적 실행이 각각 1건 있었습니다.</p>
+<p>세 실행은 모두 「COMPLETED」였습니다. 승인 실행은 반려, 재작성과 승인을 거쳤습니다. 견적 실행은 「한빛오피스 대량 주문 견적 승인」입니다. 독자의 실행 횟수와 처리 시간이 다르면 화면의 숫자도 달라집니다.</p>
+<p>장진영은 관리자로 전체 현황을 살펴봅니다. 김민지나 박서연의 업무가 오래 걸려 보이더라도 숫자 하나로 담당자를 평가하지 않습니다. 어떤 단계인지, 처리와 대기 중 무엇을 보여 주는지 먼저 확인합니다.</p>
+<p>이 장에서 리드타임은 시작부터 완료까지 걸린 전체 시간을 읽는 관점입니다. 대시보드의 「처리 주기」와 개별 작업의 소요시간을 나누어 봅니다. 전체 실행 시간과 한 작업의 평균 시간은 같은 값이 아닙니다.</p>
+<h2 id="따라-하기-1-대시보드의-전체-현황-보기">따라 하기 1 — 대시보드의 전체 현황 보기<a class="anchor" href="#따라-하기-1-대시보드의-전체-현황-보기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>사이드바에서 「분석」의 「대시보드」를 엽니다.</li>
+<li>「분석 대시보드」와 「프로세스 실행 현황 및 분석」을 확인합니다.</li>
+<li>위쪽 카드의 실행 수와 완료 수를 읽습니다.</li>
+<li>「작업 배분(에이전트 vs 사람)」과 월별 추이를 확인합니다.</li>
+</ol>
+<figure><a href="img/an-dash-0.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="대시보드 위쪽 — 실행 수 카드와 에이전트·사람 작업 배분" src="img/an-dash-0.webp" / loading="lazy" decoding="async"></a><figcaption>대시보드 위쪽 — 실행 수 카드와 에이전트·사람 작업 배분</figcaption></figure>
+<p>화면 위에는 「새로고침」이 있습니다. 촬영 시점의 카드는 「프로세스 인스턴스 3 (완료: 3)」, 「에이전트 작업 2 (사람: 11)」, 「전체 FTE 0.0」이었습니다.</p>
+<p>작업 배분 도넛에는 「Agent 2」와 「Human 11」이 표시되었습니다. 「월별 작업 추이 최근 6개월」도 있습니다. 먼저 완료한 실행이 세 건이라는 점과 사람·에이전트의 작업 표시를 구분합니다.</p>
+<table>
+<thead>
+<tr>
+<th>위쪽 항목</th>
+<th>촬영에서 보인 값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「프로세스 인스턴스」</td>
+<td>3, 완료 3</td>
+</tr>
+<tr>
+<td>「에이전트 작업」</td>
+<td>2, 사람 11</td>
+</tr>
+<tr>
+<td>「전체 FTE」</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>「작업 배분(에이전트 vs 사람)」</td>
+<td>Agent 2, Human 11</td>
+</tr>
+</tbody>
+</table>
+<p>실행 수와 작업 수를 섞어 읽지 않습니다. 한 프로세스 실행에는 여러 단계가 들어 있습니다. 실행이 세 건이라고 해서 처리한 작업도 세 개라는 뜻은 아닙니다.</p>
+<h2 id="따라-하기-2-데이터가-있는-곳과-없는-곳-구분하기">따라 하기 2 — 데이터가 있는 곳과 없는 곳 구분하기<a class="anchor" href="#따라-하기-2-데이터가-있는-곳과-없는-곳-구분하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>대시보드를 아래로 내려 「FTE 히트맵」을 확인합니다.</li>
+<li>「Domain별 Sub Process」의 안내를 읽습니다.</li>
+<li>「부서별 작업 수량」과 「에이전트 vs 사람 성능 비교」의 값을 확인합니다.</li>
+</ol>
+<figure><a href="img/an-dash-1.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="대시보드 중간 — FTE·도메인 안내와 부서별 작업 수량" src="img/an-dash-1.webp" / loading="lazy" decoding="async"></a><figcaption>대시보드 중간 — FTE·도메인 안내와 부서별 작업 수량</figcaption></figure>
+<p>「FTE 히트맵」에는 「FTE 데이터가 없습니다」가 나왔습니다. 「Domain별 Sub Process 총 0건」에는 「프로세스 체계도에서 도메인을 설정해주세요」라는 안내가 있었습니다.</p>
+<p>이 표시는 앞에서 실행한 프로세스가 사라졌다는 뜻으로 읽지 않습니다. 실행 카드에는 완료 세 건이 있습니다. 각 영역에서 필요한 정보가 준비되어 있는지 별도로 확인합니다. 이 촬영에서는 FTE나 도메인 분석 결과를 얻지 않았습니다.</p>
+<p>「부서별 작업 수량」에는 「조직도에서 부서 동기화」와 「총 16건」이 보였습니다. 아래의 「에이전트 vs 사람 성능 비교」에는 다음 값이 표시되었습니다.</p>
+<table>
+<thead>
+<tr>
+<th>대상</th>
+<th style="text-align: right;">작업</th>
+<th style="text-align: right;">평균 처리시간</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>에이전트</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">21초</td>
+</tr>
+<tr>
+<td>사람</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">94초</td>
+</tr>
+</tbody>
+</table>
+<p>에이전트에는 「100.0%」의 1차 성공률과 「0.0%」의 오류율도 표시되었습니다. 이 값은 분석 화면에 표시된 결과입니다. 견적서 문장의 정확성이나 워드 양식 보존까지 검증했다는 뜻으로 사용하지 않습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">영역별 작업 수가 다르게 표시됩니다</p>
+<p>위쪽 카드는 에이전트 2·사람 11이고, 성능 비교는 에이전트 4·사람 12입니다. 부서별 영역에는 총 16건이 나옵니다. 촬영 자료만으로 집계 차이의 원인을 확정할 수 없습니다. 서로 같은 수라고 가정하여 합치거나 비율을 다시 계산하지 않습니다.</p>
+</div>
+<h2 id="따라-하기-3-전체-처리-주기-확인하기">따라 하기 3 — 전체 처리 주기 확인하기<a class="anchor" href="#따라-하기-3-전체-처리-주기-확인하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>「프로세스 성능」의 「처리 주기」를 찾습니다.</li>
+<li>작성, 승인과 견적 프로세스의 완료 수와 평균 시간을 비교합니다.</li>
+<li>「최근 프로세스 인스턴스」에서 개별 실행의 소요시간을 확인합니다.</li>
+</ol>
+<figure><a href="img/an-dash-2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 성능 — 처리 주기와 병목 분석 영역" src="img/an-dash-2.webp" / loading="lazy" decoding="async"></a><figcaption>프로세스 성능 — 처리 주기와 병목 분석 영역</figcaption></figure>
+<p>촬영에서는 각 프로세스가 1/1 완료로 나왔습니다. 평균 처리 주기는 「영업 제안서 작성」 30초, 「영업 제안서 승인」 3분, 견적 13분입니다.</p>
+<p>「최근 프로세스 인스턴스」에는 작성 30초, 승인 205초, 견적 796초가 표시되었습니다. 한쪽은 분 단위로, 다른 쪽은 초 단위로 보입니다. 화면에 보이는 단위를 함께 읽습니다.</p>
+<p>이번에는 프로세스마다 실행이 한 건뿐입니다. 따라서 이 평균을 여러 고객 주문에서 반복 확인한 대표 시간으로 사용하지 않습니다. 이번 실습에서 어떤 실행이 상대적으로 오래 걸렸는지 찾는 데 사용합니다.</p>
+<figure><a href="img/an-dash-3.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="최근 실행 — 「최근 프로세스 인스턴스」의 실행별 시간과 시작 시간" src="img/an-dash-3.webp" / loading="lazy" decoding="async"></a><figcaption>최근 실행 — 「최근 프로세스 인스턴스」의 실행별 시간과 시작 시간</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">시작 시간에 9시간 차이가 남아 있습니다</p>
+<p>「최근 프로세스 인스턴스」의 시작 시간 칸은 실제보다 9시간 늦게 보였습니다. 실제 10월 30일 16:26인 값이 10월 31일 01:26으로 표시되었습니다. 이 칸만 보고 다음 날 실행한 업무라고 판단하지 않습니다.</p>
+</div>
+<h2 id="따라-하기-4-대기와-처리를-구분하기">따라 하기 4 — 대기와 처리를 구분하기<a class="anchor" href="#따라-하기-4-대기와-처리를-구분하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>「병목 분석」의 「대기시간 상위 5개」를 읽습니다.</li>
+<li>각 항목에서 「대기」와 「처리」 중 어떤 설명이 붙었는지 확인합니다.</li>
+<li>견적의 승인 단계와 제안서 고객 발송 단계의 표시를 비교합니다.</li>
+</ol>
+<p>촬영에서 첫 항목은 「제안서 고객 발송」이었습니다. 대기 32초와 처리 27초가 함께 표시되었습니다. 다음 항목에는 「영업팀장 승인」 처리 7분, 「재무 담당 승인」 처리 5분이 보였습니다.</p>
+<p>그 뒤에는 「제안서 검토 및 승인/반려」 처리 1분과 「제안서 작성」 처리 1분이 있었습니다. 영역 제목이 대기시간이라고 해도 각 항목의 분 단위 숫자를 모두 대기시간으로 옮겨 적지 않습니다.</p>
+<table>
+<thead>
+<tr>
+<th>확인한 단계</th>
+<th>촬영 화면에서 읽은 시간</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「제안서 고객 발송」</td>
+<td>대기 32초, 처리 27초</td>
+</tr>
+<tr>
+<td>「영업팀장 승인」</td>
+<td>처리 7분</td>
+</tr>
+<tr>
+<td>「재무 담당 승인」</td>
+<td>처리 5분</td>
+</tr>
+<tr>
+<td>「제안서 검토 및 승인/반려」</td>
+<td>처리 1분</td>
+</tr>
+<tr>
+<td>「제안서 작성」</td>
+<td>처리 1분</td>
+</tr>
+</tbody>
+</table>
+<p>병목 후보를 찾은 뒤에는 해당 프로세스의 흐름으로 이동해 읽습니다. 승인에 시간이 많이 쓰였다는 것과 담당자가 계속 작업했다는 것은 구분해야 합니다. 촬영 자료에는 시간이 길어진 이유까지 들어 있지 않습니다.</p>
+<h2 id="따라-하기-5-프로세스-분석-열기">따라 하기 5 — 프로세스 분석 열기<a class="anchor" href="#따라-하기-5-프로세스-분석-열기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>분석 메뉴의 「Heatmap」을 엽니다.</li>
+<li>「프로세스 분석」과 「실행 이력 기반 성능 분석 및 병목 구간 탐지」를 확인합니다.</li>
+<li>「분석할 프로세스 선택」에서 「영업 제안서 승인」을 선택합니다.</li>
+<li>「기간」은 「최근 30일」, 「상태」는 「전체」, 「지표」는 「총 소요시간」인지 확인합니다.</li>
+</ol>
+<figure><a href="img/an-heat-empty.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 분석 첫 화면 — 프로세스 선택, 기간·상태·지표 칸" src="img/an-heat-empty.webp" / loading="lazy" decoding="async"></a><figcaption>프로세스 분석 첫 화면 — 프로세스 선택, 기간·상태·지표 칸</figcaption></figure>
+<p>위쪽에는 「지표 안내」와 「FTE 설정」이 있습니다. 안내에는 「기본 지표: 소요시간 · 횟수 · 이상치 / FTE 지표: 업무량 · 피크 · 부하율」이 표시됩니다.</p>
+<p>이번에는 실제로 촬영한 소요시간과 횟수를 살펴봅니다. FTE 데이터가 없는 상태에서 업무량이나 부하율의 결과를 추정하지 않습니다.</p>
+<figure><a href="img/an-heat-gw-0.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인 프로세스 분석 — 요약 카드와 소요시간 분석" src="img/an-heat-gw-0.webp" / loading="lazy" decoding="async"></a><figcaption>승인 프로세스 분석 — 요약 카드와 소요시간 분석</figcaption></figure>
+<p>승인 프로세스의 카드는 「인스턴스 5」·「작업 5」·「평균 소요 48초」·「완료율 100%」였습니다. 전체 실행이 205초였다는 점과 작업 평균이 48초라는 표시를 구분합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">「인스턴스」 카드에 작업 수가 표시됩니다</p>
+<p>승인 프로세스는 실행 1건인데 「인스턴스 5」로 보였습니다. 이 칸에 작업 수가 표시되는 결함이 남아 있습니다. 대시보드의 완료 실행 수와 대조하고, 이 숫자를 실행 다섯 건으로 해석하지 않습니다.</p>
+</div>
+<h2 id="따라-하기-6-승인-흐름의-열-지도-읽기">따라 하기 6 — 승인 흐름의 열 지도 읽기<a class="anchor" href="#따라-하기-6-승인-흐름의-열-지도-읽기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>흐름도 위에 표시된 열 지도를 봅니다.</li>
+<li>주요 병목의 단계 이름을 흐름도에서 찾습니다.</li>
+<li>소요시간 분포의 최소·최대·중앙값·평균을 읽습니다.</li>
+<li>「지표」를 「횟수」로 바꾸고 검토 단계의 횟수를 확인합니다.</li>
+</ol>
+<figure><a href="img/an-heat-gw-1.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인 흐름의 열 지도 — 검토·작성·재작성 단계 위의 소요시간 표시" src="img/an-heat-gw-1.webp" / loading="lazy" decoding="async"></a><figcaption>승인 흐름의 열 지도 — 검토·작성·재작성 단계 위의 소요시간 표시</figcaption></figure>
+<p>주요 병목에는 「제안서 검토 및 승인/반려」가 1분·1회·37%, 「제안서 작성」이 1분·35%, 「제안서 재작성」이 30초·13%로 나왔습니다.</p>
+<p>소요시간 분포는 최소 9초, 최대 1분, 중앙값 30초, 평균 48초입니다. 흐름도에서 오래 걸린 단계를 찾은 뒤 아래 수치로 확인합니다. 색만 보고 정확한 시간을 추측하지 않습니다.</p>
+<figure><a href="img/an-heat-gw-count.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="횟수로 본 승인 흐름 — 「횟수」 지표와 검토 단계의 집계" src="img/an-heat-gw-count.webp" / loading="lazy" decoding="async"></a><figcaption>횟수로 본 승인 흐름 — 「횟수」 지표와 검토 단계의 집계</figcaption></figure>
+<p><a href="gateway.html">7장</a>에서는 장진영이 한 번 반려하고, 김민지가 다시 작성한 뒤 장진영이 승인했습니다. 검토를 두 번 처리했지만 같은 할 일을 다시 열었으므로 분석에서는 「1회」로 셌습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">「1회」가 반려 없음을 뜻하지 않습니다</p>
+<p>같은 검토 작업을 다시 여는 방식의 실행은 두 번 검토해도 「1회」로 표시됩니다. 횟수만으로 반려가 없었다고 결론 내리지 않습니다. 재작성 단계와 실제 실행 흐름을 함께 확인합니다.</p>
+</div>
+<h2 id="따라-하기-7-견적-승인과-비교하기">따라 하기 7 — 견적 승인과 비교하기<a class="anchor" href="#따라-하기-7-견적-승인과-비교하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>「분석할 프로세스 선택」에서 「한빛오피스 대량 주문 견적 승인」을 선택합니다.</li>
+<li>「지표」를 「총 소요시간」으로 놓고 요약 카드와 주요 병목을 읽습니다.</li>
+<li>흐름도에서 영업팀장 승인과 재무 담당 승인을 찾습니다.</li>
+<li>「횟수」 지표도 확인한 뒤 소요시간 결과와 구분합니다.</li>
+</ol>
+<figure><a href="img/an-heat-quote-0.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적 프로세스 요약 — 「인스턴스 6」·「작업 6」·「평균 소요 2분」" src="img/an-heat-quote-0.webp" / loading="lazy" decoding="async"></a><figcaption>견적 프로세스 요약 — 「인스턴스 6」·「작업 6」·「평균 소요 2분」</figcaption></figure>
+<p>견적은 「인스턴스 6」·「작업 6」·「평균 소요 2분」으로 나왔습니다. 여기에서도 인스턴스 칸은 실행 건수로 읽지 않습니다. 촬영 데이터의 견적 실행은 한 건입니다.</p>
+<p>주요 병목은 「영업팀장 승인」 7분·53%, 「재무 담당 승인」 5분·34%였습니다. 「고객 회신」은 52초입니다. 「견적 산출」 21초, 「재고 확인」 20초, 「견적 요청 접수」 9초도 확인했습니다.</p>
+<figure><a href="img/an-heat-quote-1.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적 흐름의 열 지도 — 영업팀장 승인과 재무 담당 승인 등 단계별 시간" src="img/an-heat-quote-1.webp" / loading="lazy" decoding="async"></a><figcaption>견적 흐름의 열 지도 — 영업팀장 승인과 재무 담당 승인 등 단계별 시간</figcaption></figure>
+<p>이번 실행에서는 두 승인 단계가 큰 비중을 차지했습니다. 이를 승인 절차를 먼저 살펴볼 근거로 삼을 수 있습니다. 다만 한 번의 실습 결과만으로 승인 단계를 없애거나 담당자의 능력을 판단하지 않습니다.</p>
+<figure><a href="img/an-heat-quote-count.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적 횟수 분석 — 「횟수」 지표로 바꾼 견적 프로세스" src="img/an-heat-quote-count.webp" / loading="lazy" decoding="async"></a><figcaption>견적 횟수 분석 — 「횟수」 지표로 바꾼 견적 프로세스</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">이번 견적 실행은 공개한 13장 화면과 경로가 다릅니다</p>
+<p>새로 생성한 정의에서는 약 653만 원 견적도 영업팀장 승인 뒤 재무 담당 승인으로 갔습니다. 저장 때 「BPMN 검증 결과」에 「게이트웨이에 최소 2개의 분기가 필요합니다」와 「승인자 결정」이 표시되었지만 그대로 저장한 정의입니다. 이 분석은 그 실행을 끝낸 기록이며, 재무 승인이 올바른 경로였다는 증거는 아닙니다.</p>
+</div>
+<h2 id="분석-숫자를-읽기-전에-확인할-점">분석 숫자를 읽기 전에 확인할 점<a class="anchor" href="#분석-숫자를-읽기-전에-확인할-점" title="Permanent link">#</a></h2>
+<p>이번 분석은 실제 완료한 세 실행을 바탕으로 합니다. 설치 과정에서 예시 데이터와 시간대 문제가 먼저 수정되었습니다. 남아 있는 화면 결함과 이미 고친 계산 문제를 구분합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">모든 작업이 9시간으로 보이면 설치 상태를 확인합니다</p>
+<p>촬영 전에는 분석 서비스가 DB 시간대 설정 전에 시작하여 모든 작업 시간이 9시간으로 나오는 문제가 있었습니다. 분석 서비스가 DB 마이그레이션이 끝난 뒤 시작하도록 고쳤고, 이 시작 순서 수정은 장 앞의 <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a>에 들어 있습니다. 이미 띄운 설치본이라면 분석 서비스를 한 번 다시 시작합니다.</p>
+</div>
+<p>또한 처음 분석할 때 예시 테넌트의 「영업활동 프로세스」 10건이 섞이는 문제가 있었습니다. 분석 수정에서는 예시 데이터 생성을 기본으로 껐고, 촬영 설치에 있던 예시 행도 지웠습니다.</p>
+<p>따라서 이번 화면의 병목을 읽을 때는 세 가지를 먼저 확인합니다. 내가 실행한 프로세스인지, 표시된 수가 실행 수인지 작업 수인지, 시간의 단위와 의미가 무엇인지 확인합니다. 그 뒤에 오래 걸린 단계의 업무 내용을 살펴봅니다.</p>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>완료한 실행의 전체 처리 주기와 단계별 소요·대기를 비교했습니다. 표시 결함 때문에 해석을 멈춰야 하는 곳도 확인했습니다. <a href="strategy.html">17장</a>에서는 전략목표에 완료 건수, 평균 처리시간과 설문 점수 KPI를 연결하고 측정값을 갱신합니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>승인 프로세스의 「인스턴스 5」는 실행 다섯 건을 뜻하나요?</li>
+<li>검토 횟수가 「1회」인데도 반려와 재검토가 있었던 이유는 무엇인가요?</li>
+<li>견적에서 승인 단계의 비중이 높다는 결과만으로 담당자가 느리다고 판단할 수 있나요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>아닙니다. 촬영에서는 실행이 한 건이고 작업이 다섯 개입니다. 인스턴스 칸에 작업 수를 표시하는 결함이 남아 있습니다.</li>
+<li>반려 뒤 같은 검토 할 일을 다시 열었기 때문입니다. 횟수 지표만 보지 말고 재작성 단계와 실행 흐름을 함께 확인합니다.</li>
+<li>판단할 수 없습니다. 한 건의 실습 결과이며 시간이 길어진 이유는 확인되지 않았습니다. 처리·대기 표시, 실제 업무와 승인 경로를 먼저 확인합니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="dmn.html"><span>이전</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a><a class="next" href="strategy.html"><span>다음</span>전략 보드와 KPI</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT를 로컬에 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#완료한-세-실행을-읽습니다">완료한 세 실행을 읽습니다</a></li><li><a href="#따라-하기-1-대시보드의-전체-현황-보기">따라 하기 1 — 대시보드의 전체 현황 보기</a></li><li><a href="#따라-하기-2-데이터가-있는-곳과-없는-곳-구분하기">따라 하기 2 — 데이터가 있는 곳과 없는 곳 구분하기</a></li><li><a href="#따라-하기-3-전체-처리-주기-확인하기">따라 하기 3 — 전체 처리 주기 확인하기</a></li><li><a href="#따라-하기-4-대기와-처리를-구분하기">따라 하기 4 — 대기와 처리를 구분하기</a></li><li><a href="#따라-하기-5-프로세스-분석-열기">따라 하기 5 — 프로세스 분석 열기</a></li><li><a href="#따라-하기-6-승인-흐름의-열-지도-읽기">따라 하기 6 — 승인 흐름의 열 지도 읽기</a></li><li><a href="#따라-하기-7-견적-승인과-비교하기">따라 하기 7 — 견적 승인과 비교하기</a></li><li><a href="#분석-숫자를-읽기-전에-확인할-점">분석 숫자를 읽기 전에 확인할 점</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
