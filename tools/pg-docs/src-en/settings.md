@@ -1,6 +1,6 @@
 # Settings — bring in colleagues and change the screen
 
-> In ⚙ settings on the top bar, change your account and theme, and bring sales representative Minji Kim into the company as a user. Switch the screen language to Korean and back, and find the Knowledge Base tab and the MCP Servers and Environments tabs used in Chapter 14 (coming soon).
+> In ⚙ settings on the top bar, change your account and theme, and bring sales representative Minji Kim into the company as a user. Switch the screen language to Korean and back, and find the Knowledge Base tab and the MCP Servers and Environments tabs used in [Chapter 14](mcp-hub.html).
 
 ## The settings screen
 
@@ -12,7 +12,7 @@ Click ⚙ at the right end of the top bar to open settings. The tabs run in one 
 | Appearance | Theme Color (Light, Sky, Dark), Simplified view (On/Off) | This chapter |
 | Manage Users | People in the same company and their roles | This chapter |
 | Knowledge Base | The same screen as Knowledge Base on the top bar | [Chapter 8](knowledge.html) |
-| MCP Servers · Environments | Tool servers to attach to agents, and their secrets | Chapter 14 (coming soon) |
+| MCP Servers · Environments | Tool servers to attach to agents, and their secrets | [Chapter 14](mcp-hub.html) |
 | Google Drive Settings · Git Settings · DataSource · Code Editor · Glossary Management · Catalog · Org Groups · Tenant Management | External storage, data connections and admin features | Not used |
 
 ![Settings — the Account Settings tab (profile image, name and email, two-step verification) and “🇺🇸 English” at the end of the tab row](img/set-account.webp)
@@ -63,7 +63,7 @@ For now, **Manage Users** lists only you (Jinyoung Jang, **me**, **superAdmin**)
 
 ## Next chapter
 
-That's all the chapters published for now. Chapters marked “Coming soon” (Skills, MCP, Execution analytics, and more) will be published one by one as fixes for the current version land. A one-page summary is in the [appendix](cheatsheet.html).
+The next chapter is the final project, where you build Hanbit Office A/S intake yourself using everything so far ([Chapter 19](project.html)). A one-page summary is in the [appendix](cheatsheet.html).
 
 !!! exercise "Check your understanding"
     1. On a local install, how do you bring a colleague into this company as a user?

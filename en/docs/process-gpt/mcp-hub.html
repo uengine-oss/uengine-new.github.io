@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect external tools with MCP — Process GPT Tutorial</title>
+<meta name="description" content="Connect the 「office」 tool to 「Hanbit Office Quote Advisor」. Fill a selected Word template with a quote, then inspect the preview for calculation and document errors.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/mcp-hub.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Connect external tools with MCP — Process GPT Tutorial">
+<meta property="og:description" content="Connect the 「office」 tool to 「Hanbit Office Quote Advisor」. Fill a selected Word template with a quote, then inspect the preview for calculation and document errors.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/mcp-hub.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><a href="organization.html"><span class="n">05</span>Org chart and role owners</a></li>
+<li><a href="process-run.html"><span class="n">06</span>Run a process and handle tasks</a></li>
+<li><a href="gateway.html"><span class="n">07</span>Approve and reject — gateways and going back</a></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><a href="skills.html"><span class="n">11</span>Teach ways of working with skills</a></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><a href="mcp-hub.html" class="on" aria-current="page"><span class="n">14</span>Connect external tools with MCP</a></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><a href="analytics.html"><span class="n">16</span>Execution analytics — lead time and bottlenecks</a></li>
+<li><a href="strategy.html"><span class="n">17</span>Strategy board and KPIs</a></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">19</span>Final project — Hanbit Office A/S intake</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Tools and rules<span class="chap">14</span></div>
+    <h1>Connect external tools with MCP</h1>
+    <article>
+<blockquote>
+<p>Connect the 「office」 tool to 「Hanbit Office Quote Advisor」. Fill a selected Word template with a quote, then inspect the preview for calculation and document errors.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Your installation needs these fixes</p>
+<p>The run screens in this chapter were captured on an installation with the following fixes applied (2026-10-30). Before these fixes reach the installation repository, using a selected template or opening the result document may fail. This notice will be removed once the fixes are included.</p>
+<ul>
+<li>Agent: <a href="https://github.com/uengine-oss/process-gpt-deepagents/pull/10">process-gpt-deepagents #10</a> — enables filling the selected Word template.</li>
+<li>Interface: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/237">process-gpt-vue3 #237</a> — fixes result-document preview and download URLs.</li>
+<li>Installation: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — provides storage for the generated result.</li>
+</ul>
+</div>
+<h2 id="turn-a-draft-into-a-document">Turn a draft into a document<a class="anchor" href="#turn-a-draft-into-a-document" title="Permanent link">#</a></h2>
+<p>In <a href="skills.html">Chapter 11</a>, you taught quote-writing rules through a skill. Now you will select a company Word template and ask the agent to fill it.</p>
+<p>The price list supplies amounts. The skill supplies writing rules. The Word template is the document to fill. 「office」 is the external tool used to create the document.</p>
+<p>Jinyoung Jang registers the server and connects it to 「Hanbit Office Quote Advisor」. The exercise uses Hanbit Trading's order for 25 Mesh Chair Air and 25 3-Drawer Mobile Pedestals.</p>
+<p>In this English run, the draft total was wrong. The same wrong total went into the Word document. Follow both the tool connection and the checks needed before sending the result to a customer.</p>
+<h2 id="try-it-1-register-the-mcp-server">Try it 1 — Register the MCP server<a class="anchor" href="#try-it-1-register-the-mcp-server" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open 「MCP Servers」 in settings.</li>
+<li>Click 「Add New MCP Server」.</li>
+<li>Replace the contents of the 「New MCP」 editor with the JSON below.</li>
+<li>Click 「Add」 and check the new server card.</li>
+</ol>
+<figure><a href="img/mcp-settings.webp" target="_blank" rel="noopener" title="View larger"><img alt="MCP server settings — MCP Servers and Add New MCP Server" src="img/mcp-settings.webp" / loading="lazy" decoding="async"></a><figcaption>MCP server settings — MCP Servers and Add New MCP Server</figcaption></figure>
+<p>The editor initially contains <code>{ "mcpServers": {} }</code>. Replace the whole value, including its braces. The server name is <code>office</code>.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;office&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://process-gpt-office-mcp:1192/mcp&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<figure><a href="img/mcp-add-filled.webp" target="_blank" rel="noopener" title="View larger"><img alt="Server registration — the office JSON in the New MCP editor" src="img/mcp-add-filled.webp" / loading="lazy" decoding="async"></a><figcaption>Server registration — the office JSON in the New MCP editor</figcaption></figure>
+<p>This is the Office MCP service address in the captured installation. It registers a tool endpoint for the agent. It is not a document URL to open in your browser.</p>
+<p>The saved card shows 「Office」, 「Web Service」, and 「Validation failed」. The server was saved as enabled.</p>
+<figure><a href="img/mcp-added.webp" target="_blank" rel="noopener" title="View larger"><img alt="Registered server — Office Web Service with Validation failed" src="img/mcp-added.webp" / loading="lazy" decoding="async"></a><figcaption>Registered server — Office Web Service with Validation failed</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">The card shows 「Validation failed」</p>
+<p>This is a defect seen in the captured installation. The tools still worked with that message present. Check the actual tool result later in this chapter; the card alone does not prove that document generation succeeded or failed.</p>
+</div>
+<h2 id="try-it-2-select-the-agents-tool">Try it 2 — Select the agent's tool<a class="anchor" href="#try-it-2-select-the-agents-tool" title="Permanent link">#</a></h2>
+<p>Registering a server does not attach it to every agent. Select the registered tool for the quote advisor.</p>
+<ol class="steps">
+<li>Open 「Hanbit Office Quote Advisor」 and use the pencil beside its name.</li>
+<li>Check the 「Tools」 field.</li>
+<li>Remove any generated tool-name entries that do not correspond to a connected server.</li>
+<li>Select 「office Web Service」.</li>
+<li>Check that 「office」 is selected, then save the agent changes.</li>
+</ol>
+<figure><a href="img/mcp-tools.webp" target="_blank" rel="noopener" title="View larger"><img alt="Agent tool selection — office selected in the Tools field" src="img/mcp-tools.webp" / loading="lazy" decoding="async"></a><figcaption>Agent tool selection — office selected in the Tools field</figcaption></figure>
+<p>Names suggested during agent generation do not themselves create tool connections. Here, select the server you just registered.</p>
+<p>Keep the 「hanbit-quote-format」 skill from <a href="skills.html">Chapter 11</a>. Attaching a skill and connecting a tool serve different purposes. The skill gives instructions; the tool performs document operations.</p>
+<figure><a href="img/mcp-tools-saved.webp" target="_blank" rel="noopener" title="View larger"><img alt="Saved agent tools — the quote advisor after the office tool was attached" src="img/mcp-tools-saved.webp" / loading="lazy" decoding="async"></a><figcaption>Saved agent tools — the quote advisor after the office tool was attached</figcaption></figure>
+<h2 id="try-it-3-upload-the-company-template">Try it 3 — Upload the company template<a class="anchor" href="#try-it-3-upload-the-company-template" title="Permanent link">#</a></h2>
+<p>Download <a href="files/hanbit-office-templates.zip">Hanbit Office templates (zip)</a> and extract it. The 「Hanbit-Office-Templates」 folder contains 「Hanbit-Quote-Template.docx」.</p>
+<ol class="steps">
+<li>Find 「Hanbit-Quote-Template.docx」 in the extracted folder.</li>
+<li>Upload 「Hanbit-Office-Templates」 to 「Knowledge Base」 using the method from <a href="knowledge.html">Chapter 8</a>.</li>
+<li>Wait until the document row shows 「indexed」.</li>
+</ol>
+<figure><a href="img/mcp-kb.webp" target="_blank" rel="noopener" title="View larger"><img alt="Uploaded template — Hanbit-Quote-Template.docx in the Knowledge Base with indexed status" src="img/mcp-kb.webp" / loading="lazy" decoding="async"></a><figcaption>Uploaded template — Hanbit-Quote-Template.docx in the Knowledge Base with indexed status</figcaption></figure>
+<p>Open the original template and note its customer, items, totals, and terms sections. Later, compare the generated document with that structure. Checking only the final amount can miss duplicated headings or unfinished customer details.</p>
+<h2 id="try-it-4-ask-about-available-tools">Try it 4 — Ask about available tools<a class="anchor" href="#try-it-4-ask-about-available-tools" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Send the greeting below to 「Hanbit Office Quote Advisor」.</li>
+<li>Read the reply for document-generation and editing capabilities.</li>
+<li>Prepare to select the price list and template in the same conversation.</li>
+</ol>
+<blockquote>
+<p>Hello. What tools can you use right now?</p>
+</blockquote>
+<figure><a href="img/mcp-chat-hello.webp" target="_blank" rel="noopener" title="View larger"><img alt="Tool-check conversation — the agent lists filesystem, document, and web tools" src="img/mcp-chat-hello.webp" / loading="lazy" decoding="async"></a><figcaption>Tool-check conversation — the agent lists filesystem, document, and web tools</figcaption></figure>
+<p>The reply listed filesystem tools, document tools, and web tools. Its document capabilities included 「Generate and edit DOCX and HWPX」 based on templates and conversion between HTML and DOCX or HWPX. The chat header showed 「Deep Agent」.</p>
+<p>This reply describes available capabilities. It is not evidence that a document has been created. Next, request a draft, then ask the agent to fill the selected template.</p>
+<h2 id="try-it-5-select-the-sources-and-create-a-draft">Try it 5 — Select the sources and create a draft<a class="anchor" href="#try-it-5-select-the-sources-and-create-a-draft" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the conversation's plus menu and choose 「Knowledge Base」.</li>
+<li>Select 「Hanbit-Office-Price-List.pdf」 from 「Hanbit-Office-Sales-Docs」 and 「Hanbit-Quote-Template.docx」 from 「Hanbit-Office-Templates」.</li>
+<li>Send the request below.</li>
+<li>Check quantities, unit prices, discounts, and totals against the price list.</li>
+</ol>
+<blockquote>
+<p>Search the selected knowledge base for the Hanbit Office price list (Hanbit-Office-Price-List.pdf) and use it. Hanbit Trading wants 25 Mesh Chair Air and 25 3-Drawer Mobile Pedestals delivered to its Seoul head office. Write a draft quote.</p>
+</blockquote>
+<figure><a href="img/mcp-picker.webp" target="_blank" rel="noopener" title="View larger"><img alt="Selected sources — the price list and Word quote template in the Knowledge Base picker" src="img/mcp-picker.webp" / loading="lazy" decoding="async"></a><figcaption>Selected sources — the price list and Word quote template in the Knowledge Base picker</figcaption></figure>
+<p>The draft arrived after about 35 seconds. Its item amounts used inconsistent discount treatment.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th style="text-align: right;">Qty</th>
+<th style="text-align: right;">Unit price (KRW)</th>
+<th style="text-align: right;">Discount shown</th>
+<th style="text-align: right;">Amount (KRW) shown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mesh Chair Air</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">180,000</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">4,275,000</td>
+</tr>
+<tr>
+<td>3-Drawer Mobile Pedestal</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">95,000</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">2,375,000</td>
+</tr>
+</tbody>
+</table>
+<p>The chair amount already included the 5% discount. The pedestal amount did not. The agent then added these amounts as the subtotal and applied another 5% discount.</p>
+<table>
+<thead>
+<tr>
+<th>Total</th>
+<th style="text-align: right;">Draft answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Subtotal」</td>
+<td style="text-align: right;">KRW 6,650,000</td>
+</tr>
+<tr>
+<td>「Volume discount」</td>
+<td style="text-align: right;">KRW 332,500, calculated as 6,650,000 × 5%</td>
+</tr>
+<tr>
+<td>「Installation fee」</td>
+<td style="text-align: right;">KRW 0</td>
+</tr>
+<tr>
+<td>「Quote total (VAT excluded)」</td>
+<td style="text-align: right;"><strong>KRW 6,317,500</strong></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/mcp-step1.webp" target="_blank" rel="noopener" title="View larger"><img alt="Draft quote — inconsistent item amounts and the incorrect total of KRW 6,317,500" src="img/mcp-step1.webp" / loading="lazy" decoding="async"></a><figcaption>Draft quote — inconsistent item amounts and the incorrect total of KRW 6,317,500</figcaption></figure>
+<p>The correct calculation is:</p>
+<div class="hl"><pre><span></span><code>Before-discount item amounts = 4,500,000 + 2,375,000
+Subtotal = 6,875,000
+Volume discount = 6,875,000 × 5% = 343,750
+Installation fee = 0
+Quote total, VAT excluded = 6,531,250
+</code></pre></div>
+
+<p>The answer also gave a lead time of 5 business days and cited 「Reference: [Hanbit-Office-Price-List.pdf, p.1]」. The citation did not make the calculation correct.</p>
+<p>The agent still had rule 6 from <a href="skills.html">Chapter 11</a>. It nevertheless produced the wrong total. A rule that helped one answer does not guarantee the next answer.</p>
+<div class="admonition note">
+<p class="admonition-title">Check the draft before creating the file</p>
+<p>The correct total is KRW 6,531,250. In your own work, correct and recheck the draft before generating a customer document. The captured run continued with the wrong draft, so the next screens show that error carried into the Word file.</p>
+</div>
+<h2 id="try-it-6-fill-the-selected-word-template">Try it 6 — Fill the selected Word template<a class="anchor" href="#try-it-6-fill-the-selected-word-template" title="Permanent link">#</a></h2>
+<p>The captured run used the following request without correcting the draft first.</p>
+<ol class="steps">
+<li>In the same conversation, request a Word file using the selected template.</li>
+<li>Wait for the document result.</li>
+<li>Open the result link and inspect the preview.</li>
+<li>Compare the document's customer, items, and totals with the draft.</li>
+</ol>
+<blockquote>
+<p>Now fill the selected Hanbit-Quote-Template.docx with exactly this quote using the office tool and give me the Word file.</p>
+</blockquote>
+<p>After about 40 seconds, the reply said 「The draft quote has been filled into the Hanbit-Quote-Template.docx.」. It offered 「Hanbit-Trading-Draft-Quote.docx」 with a download link.</p>
+<figure><a href="img/mcp-step2.webp" target="_blank" rel="noopener" title="View larger"><img alt="Word document result — the completion reply and generated quote document" src="img/mcp-step2.webp" / loading="lazy" decoding="async"></a><figcaption>Word document result — the completion reply and generated quote document</figcaption></figure>
+<p>Clicking the link opened the 「Preview」 panel. The preview loaded successfully from storage.</p>
+<p>The customer was Hanbit Trading. The contact remained 「[To be confirmed]」, and the quote date remained 「[Insert date of issue]」. These placeholders need review before delivery.</p>
+<div class="admonition note">
+<p class="admonition-title">Creating a document does not correct its contents</p>
+<p>The request asked the tool to use exactly the draft quote. The document retained the wrong total of KRW 6,317,500. Successful file generation is separate from correct prices, calculations, and customer details.</p>
+</div>
+<h2 id="try-it-7-inspect-the-preview-and-check-downloading">Try it 7 — Inspect the preview and check downloading<a class="anchor" href="#try-it-7-inspect-the-preview-and-check-downloading" title="Permanent link">#</a></h2>
+<p>The result panel has 「Preview」, 「Code」, 「AI edit」, 「Edit」, and 「Download」.</p>
+<ol class="steps">
+<li>Read the customer details and item table in 「Preview」.</li>
+<li>Check 「3. Totals」 against your own calculation.</li>
+<li>Compare headings, table structure, terms, and closing text with the original template.</li>
+<li>Try 「Download」. Confirm that a Word file actually reaches your device.</li>
+<li>If a file downloads, open it and compare it with the preview.</li>
+</ol>
+<figure><a href="img/mcp-view.webp" target="_blank" rel="noopener" title="View larger"><img alt="Document panel — Preview, Code, AI edit, Edit, and Download controls" src="img/mcp-view.webp" / loading="lazy" decoding="async"></a><figcaption>Document panel — Preview, Code, AI edit, Edit, and Download controls</figcaption></figure>
+<p>The preview contained these totals:</p>
+<ul>
+<li>「Subtotal (items only)」: KRW 6,650,000.</li>
+<li>「Volume discount (5% on subtotal)」: − KRW 332,500.</li>
+<li>「Installation fee」: KRW 0.</li>
+<li>「Quote total (VAT excluded)」: <strong>KRW 6,317,500</strong>.</li>
+</ul>
+<p>The correct total remains <strong>KRW 6,531,250</strong>.</p>
+<figure><a href="img/mcp-result.webp" target="_blank" rel="noopener" title="View larger"><img alt="Document preview — customer details, item rows, and the same incorrect totals as the draft" src="img/mcp-result.webp" / loading="lazy" decoding="async"></a><figcaption>Document preview — customer details, item rows, and the same incorrect totals as the draft</figcaption></figure>
+<p>Check terms against the source as well. Text added by the agent is not automatically an agreed customer condition.</p>
+<div class="admonition note">
+<p class="admonition-title">A local Word download was not verified</p>
+<p>The preview worked, and the generated file was present in storage. The scripted download produced no download event in any of the three English runs. This chapter does not claim that a downloaded Word file was opened and checked. Verify the download separately on your installation.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">The filled template still has defects</p>
+<p>The result repeats 「3. Totals」 and displays raw <code>**</code> characters. 「Hanbit Office Sales Team」 appears twice. The contact and quote date remain placeholders. Correct the arithmetic, duplicates, formatting, and missing details before sending the document.</p>
+</div>
+<h2 id="separate-the-roles-of-sources-skills-and-tools">Separate the roles of sources, skills, and tools<a class="anchor" href="#separate-the-roles-of-sources-skills-and-tools" title="Permanent link">#</a></h2>
+<p>Several inputs worked together in this conversation. Review each part according to its role.</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Role in this exercise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Price list</td>
+<td>Supplies prices, discounts, and installation fees.</td>
+</tr>
+<tr>
+<td>「hanbit-quote-format」</td>
+<td>Supplies quote-writing rules.</td>
+</tr>
+<tr>
+<td>Word quote template</td>
+<td>Supplies the document to fill.</td>
+</tr>
+<tr>
+<td>「office」</td>
+<td>Fills the template and creates the result document.</td>
+</tr>
+</tbody>
+</table>
+<p>Connecting a tool does not remove review. Check the draft's calculation first. Then check the document's calculation, headings, table structure, customer details, and terms.</p>
+<p>This run demonstrated document generation and preview. It also demonstrated how an incorrect draft can become an incorrect document.</p>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You registered an external tool and attached it to the quote advisor. You filled a selected Word template and checked the result's arithmetic, formatting, and download limits.</p>
+<p>In <a href="dmn.html">Chapter 15</a>, you will work with decision rules. In <a href="analytics.html">Chapter 16</a>, you will examine execution times and bottlenecks.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Why select 「office Web Service」 instead of relying on names suggested during agent generation?</li>
+<li>What request turns the chat draft into a Word document?</li>
+<li>What went wrong in this run, and what must be checked before sending the document?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>A suggested name does not establish a tool connection. 「office Web Service」 selects the registered MCP server.</li>
+<li>Ask the agent to fill the selected 「Hanbit-Quote-Template.docx」 with the checked quote using the 「office」 tool.</li>
+<li>The draft mixed amounts before and after discount, producing KRW 6,317,500 instead of KRW 6,531,250. That error entered the document. Also check duplicated headings and closing text, raw formatting characters, missing contact and date values, terms, and whether the Word file actually downloads.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="document-process.html"><span>Previous</span>Creating a process from a document</a><a class="next" href="dmn.html"><span>Next</span>Business rules (DMN) — let a table make the decision</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#turn-a-draft-into-a-document">Turn a draft into a document</a></li><li><a href="#try-it-1-register-the-mcp-server">Try it 1 — Register the MCP server</a></li><li><a href="#try-it-2-select-the-agents-tool">Try it 2 — Select the agent&#x27;s tool</a></li><li><a href="#try-it-3-upload-the-company-template">Try it 3 — Upload the company template</a></li><li><a href="#try-it-4-ask-about-available-tools">Try it 4 — Ask about available tools</a></li><li><a href="#try-it-5-select-the-sources-and-create-a-draft">Try it 5 — Select the sources and create a draft</a></li><li><a href="#try-it-6-fill-the-selected-word-template">Try it 6 — Fill the selected Word template</a></li><li><a href="#try-it-7-inspect-the-preview-and-check-downloading">Try it 7 — Inspect the preview and check downloading</a></li><li><a href="#separate-the-roles-of-sources-skills-and-tools">Separate the roles of sources, skills, and tools</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

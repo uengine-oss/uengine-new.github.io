@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Execution analytics — lead time and bottlenecks — Process GPT Tutorial</title>
+<meta name="description" content="Read completed processes in the dashboard and heatmap. Separate whole-process cycle time from task duration and waiting, and identify display defects that limit interpretation.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/process-gpt/analytics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Execution analytics — lead time and bottlenecks — Process GPT Tutorial">
+<meta property="og:description" content="Read completed processes in the dashboard and heatmap. Separate whole-process cycle time from task duration and waiting, and identify display defects that limit interpretation.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/process-gpt/analytics.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. gateway, agent, form)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">Product</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and sign up</a></li>
+<li><a href="tour.html"><span class="n">02</span>Tour of the screens</a></li>
+</ul>
+<div class="nav-part">Process basics</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>Create a process through chat</a></li>
+<li><a href="definition.html"><span class="n">04</span>Look inside the definition and versions</a></li>
+<li><a href="organization.html"><span class="n">05</span>Org chart and role owners</a></li>
+<li><a href="process-run.html"><span class="n">06</span>Run a process and handle tasks</a></li>
+<li><a href="gateway.html"><span class="n">07</span>Approve and reject — gateways and going back</a></li>
+</ul>
+<div class="nav-part">AI agents</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>Knowledge Base — answers grounded in company documents</a></li>
+<li><a href="agents.html"><span class="n">09</span>Creating an agent colleague</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>Chatting with an agent</a></li>
+<li><a href="skills.html"><span class="n">11</span>Teach ways of working with skills</a></li>
+<li><a href="document-process.html"><span class="n">12</span>Creating a process from a document</a></li>
+<li><span class="soon"><span class="n">13</span>Run the steps agents handle<em>Coming soon</em></span></li>
+</ul>
+<div class="nav-part">Tools and rules</div><ul>
+<li><a href="mcp-hub.html"><span class="n">14</span>Connect external tools with MCP</a></li>
+<li><a href="dmn.html"><span class="n">15</span>Business rules (DMN) — let a table make the decision</a></li>
+</ul>
+<div class="nav-part">Analysis and improvement</div><ul>
+<li><a href="analytics.html" class="on" aria-current="page"><span class="n">16</span>Execution analytics — lead time and bottlenecks</a></li>
+<li><a href="strategy.html"><span class="n">17</span>Strategy board and KPIs</a></li>
+</ul>
+<div class="nav-part">Operations</div><ul>
+<li><a href="settings.html"><span class="n">18</span>Settings — bring in colleagues and change the screen</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">19</span>Final project — Hanbit Office A/S intake</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>At a glance</a></li>
+<li><a href="faq.html"><span class="n">21</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Analysis and improvement<span class="chap">16</span></div>
+    <h1>Execution analytics — lead time and bottlenecks</h1>
+    <article>
+<blockquote>
+<p>Read completed processes in the dashboard and heatmap. Separate whole-process cycle time from task duration and waiting, and identify display defects that limit interpretation.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Your installation needs these fixes</p>
+<p>The run screens in this chapter were captured on an installation with the following fixes applied (2026-10-30). Before these fixes reach the installation repository, time calculations or analytics screens may differ. This notice will be removed once the fixes are included.</p>
+<ul>
+<li>Analytics: <a href="https://github.com/uengine-oss/process-gpt-analytic/pull/1">process-gpt-analytic #1</a> — calculates duration and waiting from actual start times.</li>
+<li>Interface: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/236">process-gpt-vue3 #236</a> — fixes first-step start times and dashboard behavior.</li>
+<li>Installation: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — fixes analytics service routing and time-zone setup.</li>
+</ul>
+</div>
+<h2 id="read-three-completed-executions">Read three completed executions<a class="anchor" href="#read-three-completed-executions" title="Permanent link">#</a></h2>
+<p>This chapter does not start new work. It analyzes earlier executions. The English run had three completed instances:</p>
+<ul>
+<li>「Sales Proposal Submission」: one instance from <a href="process-run.html">Chapter 6</a>.</li>
+<li>「Sales Proposal Approval」: two instances from <a href="gateway.html">Chapter 7</a>, including one rejection, rewrite, and approval loop.</li>
+</ul>
+<p>All three were 「COMPLETED」. Your counts and times will differ if you ran different exercises or took longer to complete them.</p>
+<p>The English run had no executed quote process because Chapter 13 (coming soon) is not available yet. There is no quote-process comparison in this chapter.</p>
+<p>Jinyoung Jang reviews the overall results as the admin. Do not judge Minji Kim or Seoyeon Park from a single time value. First identify the step and whether the screen shows processing, waiting, or total elapsed time.</p>
+<p>Here, lead time means the elapsed time from start to completion. Separate a process's cycle time from an individual task's average duration. They are not the same measure.</p>
+<h2 id="try-it-1-read-the-dashboard-overview">Try it 1 — Read the dashboard overview<a class="anchor" href="#try-it-1-read-the-dashboard-overview" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open 「Analytics Dashboard」.</li>
+<li>Check the heading 「Process Execution Status &amp; Analysis」.</li>
+<li>Read the instance and completion counts in the top cards.</li>
+<li>Read the agent and human task counts separately from the instance count.</li>
+</ol>
+<figure><a href="img/an-dash-0.webp" target="_blank" rel="noopener" title="View larger"><img alt="Dashboard overview — three completed process instances, Agent Tasks 0, Human 12, and Total FTE 0.0" src="img/an-dash-0.webp" / loading="lazy" decoding="async"></a><figcaption>Dashboard overview — three completed process instances, Agent Tasks 0, Human 12, and Total FTE 0.0</figcaption></figure>
+<p>The page includes 「Refresh」. At capture time, the top cards showed:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Displayed value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Process Instances」</td>
+<td>3, with 「Completed: 3」</td>
+</tr>
+<tr>
+<td>「Agent Tasks」</td>
+<td>0</td>
+</tr>
+<tr>
+<td>「Human」</td>
+<td>12</td>
+</tr>
+<tr>
+<td>「Total FTE」</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+<p>An instance contains several steps. Three completed instances do not mean three completed tasks.</p>
+<h2 id="try-it-2-separate-missing-data-from-execution-data">Try it 2 — Separate missing data from execution data<a class="anchor" href="#try-it-2-separate-missing-data-from-execution-data" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Scroll to 「FTE Heatmap」.</li>
+<li>Read the message in 「Domain별 Sub Process」.</li>
+<li>Check 「Tasks by Department」 and 「Agent vs Human Performance Comparison」.</li>
+</ol>
+<figure><a href="img/an-dash-1.webp" target="_blank" rel="noopener" title="View larger"><img alt="Dashboard middle — FTE and domain messages, department task totals, and performance comparison" src="img/an-dash-1.webp" / loading="lazy" decoding="async"></a><figcaption>Dashboard middle — FTE and domain messages, department task totals, and performance comparison</figcaption></figure>
+<p>「FTE Heatmap」 shows 「Process × Department」 and 「No FTE data available」. 「Domain별 Sub Process」 shows a total of 0 and 「Set Domain in Process Map」. The word 「별」 remains Korean here; it means “by.”</p>
+<p>These messages do not mean the completed instances disappeared. The top cards still show three completed instances. Each section needs its own supporting data. This run did not produce an FTE or domain analysis result.</p>
+<p>「Tasks by Department」 shows 「Sync from Organization」 and a total of 15. The performance comparison shows:</p>
+<table>
+<thead>
+<tr>
+<th>Subject</th>
+<th style="text-align: right;">Tasks shown</th>
+<th>Time shown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent</td>
+<td style="text-align: right;">2</td>
+<td>0sec</td>
+</tr>
+<tr>
+<td>Human</td>
+<td style="text-align: right;">13</td>
+<td>34sec average</td>
+</tr>
+</tbody>
+</table>
+<p>Both show 100.0% 「First-Time-Right」 and 0.0% 「Error Rate」. These are displayed analytics values. They do not prove that an agent's calculations or generated documents were correct.</p>
+<div class="admonition note">
+<p class="admonition-title">Task counts disagree between sections</p>
+<p>The top cards show 0 agent tasks and 12 human tasks. The comparison shows 2 agent tasks and 13 human tasks. The department section totals 15. The captured evidence does not establish why every count differs. Do not combine these figures as if they counted the same records.</p>
+</div>
+<h2 id="try-it-3-read-whole-process-cycle-time">Try it 3 — Read whole-process cycle time<a class="anchor" href="#try-it-3-read-whole-process-cycle-time" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Find 「Process Performance (Cycle Time)」.</li>
+<li>Compare the completion counts and average times for the two process definitions.</li>
+<li>Find 「Recent Process Instances」 and read each instance's duration.</li>
+</ol>
+<figure><a href="img/an-dash-2.webp" target="_blank" rel="noopener" title="View larger"><img alt="Process performance — cycle-time values and Bottleneck Analysis" src="img/an-dash-2.webp" / loading="lazy" decoding="async"></a><figcaption>Process performance — cycle-time values and Bottleneck Analysis</figcaption></figure>
+<p>The cycle-time section shows:</p>
+<table>
+<thead>
+<tr>
+<th>Process</th>
+<th>Completion</th>
+<th>Average</th>
+<th>P95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Sales Proposal Approval」</td>
+<td>2/2, 100%</td>
+<td>「2분」</td>
+<td>「2분」</td>
+</tr>
+<tr>
+<td>「Sales Proposal Submission」</td>
+<td>1/1</td>
+<td>「35초」</td>
+<td>「35초」</td>
+</tr>
+</tbody>
+</table>
+<p>The time units remain Korean in this section. 「분」 means minutes, and 「초」 means seconds.</p>
+<p>「Recent Process Instances」 shows the two approval runs as 143sec and 150sec. The submission run is 35sec. Read the units and rounding with each value.</p>
+<figure><a href="img/an-dash-3.webp" target="_blank" rel="noopener" title="View larger"><img alt="Recent instances — two completed approval instances at 143sec and 150sec, and one submission at 35sec" src="img/an-dash-3.webp" / loading="lazy" decoding="async"></a><figcaption>Recent instances — two completed approval instances at 143sec and 150sec, and one submission at 35sec</figcaption></figure>
+<p>This is a small practice sample. It can show which captured run took longer. It is not enough to establish a typical time for real customer work.</p>
+<h2 id="try-it-4-separate-waiting-from-processing">Try it 4 — Separate waiting from processing<a class="anchor" href="#try-it-4-separate-waiting-from-processing" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Read 「Bottleneck Analysis (Wait Time Top 5)」.</li>
+<li>Check whether each number is labeled as waiting or processing.</li>
+<li>Find the named steps in their process flow before drawing conclusions.</li>
+</ol>
+<p>The first entry was 「Send Proposal to Customer」. It showed a wait of 「14초」 and processing of 「26초」 across two cases.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Time shown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Send Proposal to Customer」</td>
+<td>Wait 14 seconds; processing 26 seconds; 2 cases</td>
+</tr>
+<tr>
+<td>「Review Proposal」</td>
+<td>Processing 1 minute</td>
+</tr>
+<tr>
+<td>「Prepare and Send Proposal」</td>
+<td>Processing 31 seconds</td>
+</tr>
+<tr>
+<td>「Draft Proposal」</td>
+<td>Processing 30 seconds</td>
+</tr>
+<tr>
+<td>「Rewrite Proposal」</td>
+<td>Processing 25 seconds</td>
+</tr>
+</tbody>
+</table>
+<p>The section title mentions waiting. That does not make every time inside it a wait time. Preserve the labels when recording results.</p>
+<p>A long duration identifies a step worth examining. It does not show that someone worked continuously for that whole period. These records do not explain why a step took longer.</p>
+<h2 id="try-it-5-open-process-analytics">Try it 5 — Open process analytics<a class="anchor" href="#try-it-5-open-process-analytics" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the analytics heatmap view.</li>
+<li>Check 「History-based process performance analysis and bottleneck detection」.</li>
+<li>In 「Select Process to Analyze」, choose 「Sales Proposal Approval」.</li>
+<li>Set 「Period」 to 「Last 30 days」, 「Status」 to 「All」, and 「Metric」 to 「Total Duration」.</li>
+</ol>
+<figure><a href="img/an-heat-empty.webp" target="_blank" rel="noopener" title="View larger"><img alt="Process analytics before selection — process, period, status, and metric controls" src="img/an-heat-empty.webp" / loading="lazy" decoding="async"></a><figcaption>Process analytics before selection — process, period, status, and metric controls</figcaption></figure>
+<p>The page includes 「Metric Info」 and 「FTE Settings」. The metric groups are:</p>
+<ul>
+<li>「Basic Metrics」: 「Duration」, 「Frequency」, and 「Outlier」.</li>
+<li>「FTE Metrics」: 「Workload」, 「Peak」, and 「Load Ratio」.</li>
+</ul>
+<p>This exercise reads duration and frequency. Do not infer workload or load ratio from a screen that has no FTE data.</p>
+<figure><a href="img/an-heat-gw-0.webp" target="_blank" rel="noopener" title="View larger"><img alt="Approval process summary — Instances 10, Activity 5, Avg Duration 36sec, and Completion Rate 100%" src="img/an-heat-gw-0.webp" / loading="lazy" decoding="async"></a><figcaption>Approval process summary — Instances 10, Activity 5, Avg Duration 36sec, and Completion Rate 100%</figcaption></figure>
+<p>For 「Sales Proposal Approval」, the cards show 「Instances」 10, 「Activity」 5, 「Avg Duration」 36sec, and 「Completion Rate」 100%.</p>
+<p>The task-duration average is not the whole-process duration of 143 or 150 seconds.</p>
+<div class="admonition note">
+<p class="admonition-title">The 「Instances」 card does not show the true instance count</p>
+<p>This view shows 10 for two completed approval instances. It counts task executions in this card rather than process instances. Check the dashboard's two completed approval runs. Do not report ten approval instances from this card.</p>
+</div>
+<h2 id="try-it-6-read-the-approval-heatmap">Try it 6 — Read the approval heatmap<a class="anchor" href="#try-it-6-read-the-approval-heatmap" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Read the duration badges over the flow diagram.</li>
+<li>Find the steps listed in 「Bottleneck Top 3」.</li>
+<li>Compare names, durations, and bottleneck scores.</li>
+<li>Switch 「Metric」 to 「Frequency」 and inspect 「Flow Node Count — Execution Count」.</li>
+</ol>
+<figure><a href="img/an-heat-gw-1.webp" target="_blank" rel="noopener" title="View larger"><img alt="Approval heatmap — duration badges for review, drafting, customer sending, rewriting, and request submission" src="img/an-heat-gw-1.webp" / loading="lazy" decoding="async"></a><figcaption>Approval heatmap — duration badges for review, drafting, customer sending, rewriting, and request submission</figcaption></figure>
+<p>The node badges show:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th style="text-align: right;">Duration</th>
+<th style="text-align: right;">Bottleneck score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Review Proposal」</td>
+<td style="text-align: right;">1min</td>
+<td style="text-align: right;">52%</td>
+</tr>
+<tr>
+<td>「Draft Proposal」</td>
+<td style="text-align: right;">30sec</td>
+<td style="text-align: right;">18%</td>
+</tr>
+<tr>
+<td>「Send Proposal to Customer」</td>
+<td style="text-align: right;">26sec</td>
+<td style="text-align: right;">16%</td>
+</tr>
+<tr>
+<td>「Rewrite Proposal」</td>
+<td style="text-align: right;">25sec</td>
+<td style="text-align: right;">8%</td>
+</tr>
+<tr>
+<td>「Submit Sales Request」</td>
+<td style="text-align: right;">11sec</td>
+<td style="text-align: right;">7%</td>
+</tr>
+</tbody>
+</table>
+<p>「Bottleneck Top 3」 lists 「Review Proposal」, 「Draft Proposal」, and 「Send Proposal to Customer」. Each shows 「2회」. The Korean 「회」 means occurrences or times.</p>
+<p>Use the labels and numbers to confirm what the colors suggest. Do not estimate exact times from color alone.</p>
+<figure><a href="img/an-heat-gw-count.webp" target="_blank" rel="noopener" title="View larger"><img alt="Approval frequency view — Flow Node Count and Execution Count over the process" src="img/an-heat-gw-count.webp" / loading="lazy" decoding="async"></a><figcaption>Approval frequency view — Flow Node Count and Execution Count over the process</figcaption></figure>
+<p>One of the two approval instances included a rejection, a rewrite, and another review. The review step reopened within that instance.</p>
+<div class="admonition note">
+<p class="admonition-title">A frequency count does not show the full review history</p>
+<p>The review badge shows two occurrences across the two approval instances. It does not separately reveal every review submission in the rejection loop. Check the rewrite step and the actual execution history before concluding that no rejection occurred.</p>
+</div>
+<h2 id="check-what-the-analytics-numbers-represent">Check what the analytics numbers represent<a class="anchor" href="#check-what-the-analytics-numbers-represent" title="Permanent link">#</a></h2>
+<p>Before using a value, confirm three things: whether it belongs to a process you ran, whether it counts instances or tasks, and what its time unit and label mean.</p>
+<p>The installation fixes also matter. Earlier setup problems affected time-zone handling and sample data.</p>
+<div class="admonition note">
+<p class="admonition-title">If every task appears to take nine hours, check the installation</p>
+<p>Earlier testing found that starting analytics before database time-zone setup could produce nine-hour task durations. <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> changes startup order so analytics starts after migrations. An already running installation may need its analytics service restarted after the fix.</p>
+</div>
+<p>The analytics fix disables sample-data generation by default. If unfamiliar processes appear, check their source before treating them as your execution history.</p>
+<p>Separate fixed installation problems from defects still visible in this run. The inconsistent task counts and the misleading 「Instances」 card remain reasons to stop and check the underlying records.</p>
+<h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
+<p>You compared whole-process cycle time with task duration and waiting. You also identified places where inconsistent labels or counts limit what the screen can tell you.</p>
+<p>In <a href="strategy.html">Chapter 17</a>, you will connect completed counts, average duration, and survey scores to a strategic objective.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check your understanding</p>
+<ol>
+<li>Does 「Instances」 10 mean there were ten completed approval instances?</li>
+<li>Does the review frequency prove that each instance had only one review submission?</li>
+<li>Can a long task duration alone show that a person works slowly?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>No. The English run had two completed approval instances. This card counts task executions instead of process instances.</li>
+<li>No. One instance reopened the same review step after rejection and rewriting. Check the execution history as well as the frequency display.</li>
+<li>No. Check processing and waiting labels, the step's work, and the execution history. This small practice sample does not explain why a step took longer.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="dmn.html"><span>Previous</span>Business rules (DMN) — let a table make the decision</a><a class="next" href="strategy.html"><span>Next</span>Strategy board and KPIs</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#read-three-completed-executions">Read three completed executions</a></li><li><a href="#try-it-1-read-the-dashboard-overview">Try it 1 — Read the dashboard overview</a></li><li><a href="#try-it-2-separate-missing-data-from-execution-data">Try it 2 — Separate missing data from execution data</a></li><li><a href="#try-it-3-read-whole-process-cycle-time">Try it 3 — Read whole-process cycle time</a></li><li><a href="#try-it-4-separate-waiting-from-processing">Try it 4 — Separate waiting from processing</a></li><li><a href="#try-it-5-open-process-analytics">Try it 5 — Open process analytics</a></li><li><a href="#try-it-6-read-the-approval-heatmap">Try it 6 — Read the approval heatmap</a></li><li><a href="#check-what-the-analytics-numbers-represent">Check what the analytics numbers represent</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

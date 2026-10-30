@@ -59,7 +59,7 @@ Next, the **Pick the items to add to this process (skip if none)** window appear
 | [Agent] Quote calculation automation agent | Handles calculation of quote, discounts and fees as per the official price list (activity: quote_calculation) |
 | [DMN] Approval decision table | Automates the approval routing and escalation … |
 
-In our run, the window also suggested a **[DMN]** item (a rule as a decision table, [Chapter 15](dmn.html)). Other runs can suggest **[Skill]** items (documents describing how to do the work, Chapter 11, coming soon). Candidate names can vary; this chapter picks only the two agents for stock check and quote calculation.
+In our run, the window also suggested a **[DMN]** item (a rule as a decision table, [Chapter 15](dmn.html)). Other runs can suggest **[Skill]** items (documents describing how to do the work, [Chapter 11](skills.html)). Candidate names can vary; this chapter picks only the two agents for stock check and quote calculation.
 
 Check **[Agent] Stock check automation agent** and **[Agent] Quote calculation automation agent** (**2 selected**), leave the [DMN] item unchecked, and click **Submit response**.
 
