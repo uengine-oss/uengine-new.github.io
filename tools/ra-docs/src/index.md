@@ -42,7 +42,7 @@ Robo Architect는 **명세 주도 개발(Spec-Driven Development) 도구**입니
 <a href="proposal.html"><b>프로포절 라이프사이클</b><span>프로포절 만들기, 헌장, 계획, 샌드박스 구현, 검증과 수락</span></a>
 <a href="skills.html"><b>설계와 변경</b><span>스킬 파일로 엔진 바꾸기 (설계 둘러보기 · 변경 영향도는 준비 중)</span></a>
 <a href="fabric.html"><b>레거시와 데이터</b><span>데이터 소스 연결, 요구사항 문서로 설계 시작하기</span></a>
-<a href="cheatsheet.html"><b>부록</b><span>치트시트, 자주 묻는 질문</span></a>
+<a href="project.html"><b>마무리</b><span>종합 과제 — 리뷰 기능</span></a>
 </div>
 
 각 장은 **왜 → 따라 하기 → 확인 문제** 순서로 되어 있습니다. 앞 장에서 만든 것을 다음 장에서 이어 쓰므로 순서대로 따라 하는 것이 좋습니다. 확인 문제의 답은 접혀 있으니, 먼저 스스로 해 본 뒤 펼쳐 보세요.
