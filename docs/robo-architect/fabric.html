@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데이터 소스 연결 — 데이터 패브릭 — Robo Architect 튜토리얼</title>
+<meta name="description" content="한빛 딜리버리가 지금 쓰는 옛 주문 DB(PostgreSQL)를 레거시 탭의 데이터 소스에 등록합니다. 연결을 시험하고 만들면 그 DB의 실제 테이블이 바로 보이고, 이 연결이 레거시 분석과 데이터 스키마의 원천이 됩니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/fabric.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="데이터 소스 연결 — 데이터 패브릭 — Robo Architect 튜토리얼">
+<meta property="og:description" content="한빛 딜리버리가 지금 쓰는 옛 주문 DB(PostgreSQL)를 레거시 탭의 데이터 소스에 등록합니다. 연결을 시험하고 만들면 그 DB의 실제 테이블이 바로 보이고, 이 연결이 레거시 분석과 데이터 스키마의 원천이 됩니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/fabric.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html" class="on" aria-current="page"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">14</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">레거시와 데이터<span class="chap">11</span></div>
+    <h1>데이터 소스 연결 — 데이터 패브릭</h1>
+    <article>
+<blockquote>
+<p>한빛 딜리버리가 지금 쓰는 옛 주문 DB(PostgreSQL)를 레거시 탭의 데이터 소스에 등록합니다. 연결을 시험하고 만들면 그 DB의 실제 테이블이 바로 보이고, 이 연결이 레거시 분석과 데이터 스키마의 원천이 됩니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/Xtt9fhm9Esg" title="데이터 소스 연결 — 데이터 패브릭 — 영상 2:48" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="왜-데이터-소스인가">왜 데이터 소스인가<a class="anchor" href="#왜-데이터-소스인가" title="Permanent link">#</a></h2>
+<p>새 시스템은 빈 땅에 서지 않습니다. 한빛 딜리버리에는 이미 가게 · 메뉴 · 주문 · 배달을 담은 옛 DB가 있고, 새 설계는 그 DB와 맞물려야 합니다. 어떤 테이블이 있는지, 주문 상태가 어떤 값으로 저장되는지를 모르고 설계하면 옮길 때 막힙니다.</p>
+<p>Robo Architect Lite에는 <strong>데이터 패브릭</strong>(Ontological의 fabric · catalog 컨테이너)이 함께 들어 있습니다. 여기에 회사의 DB를 <strong>데이터 소스</strong>로 한 번 등록해 두면, 그 DB를 직접 열지 않고도 앱 안에서 테이블을 보고, 레거시 분석(13장)이 그 구조를 읽어 갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>레거시 탭의 레일</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>코드</strong></td>
+<td>옛 시스템의 소스 코드 · DDL 폴더를 보고 분석을 시작한다(13장)</td>
+</tr>
+<tr>
+<td><strong>데이터 소스</strong></td>
+<td>DB 연결을 등록 · 시험하고, 실제 테이블을 본다 (이 장)</td>
+</tr>
+<tr>
+<td><strong>코드 그래프</strong></td>
+<td>분석한 코드의 호출 · 참조 관계</td>
+</tr>
+<tr>
+<td><strong>데이터 스키마</strong></td>
+<td>테이블과 컬럼, 관계를 캔버스로. DDL 정의 · 코드 분석 · 사용자 입력에서 채워진다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-1-실습용-옛-db-띄우기">따라 하기 1 — 실습용 옛 DB 띄우기<a class="anchor" href="#따라-하기-1-실습용-옛-db-띄우기" title="Permanent link">#</a></h2>
+<p>실습에는 한빛 딜리버리의 옛 주문 DB를 흉내 낸 작은 PostgreSQL을 씁니다. 테이블 일곱 개(<code>store</code> 가게 · <code>menu</code> 메뉴 · <code>customer</code> 고객 · <code>orders</code> 주문 · <code>order_item</code> 주문 항목 · <code>rider</code> 라이더 · <code>delivery</code> 배달)와 예제 데이터가 들어 있습니다.</p>
+<ol class="steps">
+<li><a href="files/legacy-delivery.sql">legacy-delivery.sql</a>을 내려받습니다.</li>
+<li>터미널에서 PostgreSQL 컨테이너를 띄웁니다(Docker Desktop은 1장에서 이미 깔았습니다).
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ra-tut-legacy-pg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">POSTGRES_USER</span><span class="o">=</span>legacy<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>legacy1234<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_DB</span><span class="o">=</span>hanbit<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:25433:5432<span class="w"> </span>postgres:16-alpine
+</code></pre></div>
+
+
+</li>
+<li>몇 초 뒤, 내려받은 파일이 있는 폴더에서 스키마와 데이터를 넣습니다.
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>ra-tut-legacy-pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>legacy<span class="w"> </span>-d<span class="w"> </span>hanbit<span class="w"> </span>&lt;<span class="w"> </span>legacy-delivery.sql
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ra-tut-legacy-pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>legacy<span class="w"> </span>-d<span class="w"> </span>hanbit<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;\dt delivery.*&#39;</span>
+</code></pre></div>
+
+
+</li>
+<li>마지막 명령이 <code>delivery</code> 스키마의 테이블 7개(<code>customer</code> … <code>store</code>)를 보여 주면 준비가 끝났습니다.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">포트 25433</p>
+<p>PC에 이미 PostgreSQL이 5432 포트로 떠 있을 수 있어 실습 DB는 25433으로 엽니다. <code>127.0.0.1:</code> 을 붙였으므로 이 PC 밖에서는 접속할 수 없습니다.</p>
+</div>
+<h2 id="따라-하기-2-데이터-소스-등록">따라 하기 2 — 데이터 소스 등록<a class="anchor" href="#따라-하기-2-데이터-소스-등록" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>홈에서 <strong>레거시 · 데이터 소스</strong> 카드를 엽니다. 레거시 탭의 레일에는 레거시 기능의 메뉴 — 코드 · 데이터 소스 · 코드 그래프 · 데이터 스키마 — 만 있습니다.</li>
+<li><strong>데이터 소스</strong>를 누릅니다. 처음에는 「등록된 데이터 소스가 없습니다」가 나옵니다.</li>
+</ol>
+<figure><a href="img/fabric-02-sources.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="데이터 소스 — 아직 등록된 데이터 소스가 없다, 새 연결 추가" src="img/fabric-02-sources.webp" / loading="lazy" decoding="async"></a><figcaption>데이터 소스 — 아직 등록된 데이터 소스가 없다, 새 연결 추가</figcaption></figure>
+<ol class="steps" start="3">
+<li><strong>새 연결 추가</strong>를 누르면 「새 데이터 소스」 창에 쓸 수 있는 유형이 나옵니다. 지금은 관계형 데이터베이스 세 가지(PostgreSQL · MySQL · MariaDB)입니다. <strong>PostgreSQL</strong>을 고릅니다.</li>
+</ol>
+<figure><a href="img/fabric-03-types.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="새 데이터 소스 — 유형 검색, 관계형 데이터베이스 PostgreSQL · MySQL · MariaDB" src="img/fabric-03-types.webp" / loading="lazy" decoding="async"></a><figcaption>새 데이터 소스 — 유형 검색, 관계형 데이터베이스 PostgreSQL · MySQL · MariaDB</figcaption></figure>
+<ol class="steps" start="4">
+<li>「PostgreSQL 연결」 창에 다음을 넣습니다.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>칸</th>
+<th>값</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>연결 이름</td>
+<td><code>hanbit_legacy</code></td>
+<td>앱 안에서 부를 이름</td>
+</tr>
+<tr>
+<td>Host</td>
+<td><code>host.docker.internal</code></td>
+<td>데이터 패브릭이 컨테이너 안에서 돌기 때문에, 내 PC를 가리킬 때 <code>localhost</code> 대신 이 이름을 씁니다</td>
+</tr>
+<tr>
+<td>Port</td>
+<td><code>25433</code></td>
+<td>따라 하기 1에서 연 포트</td>
+</tr>
+<tr>
+<td>Username / Password</td>
+<td><code>legacy</code> / <code>legacy1234</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Database</td>
+<td><code>hanbit</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Schema</td>
+<td><code>delivery</code></td>
+<td>비우면 <code>public</code> 을 가져옵니다</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/fabric-04-form.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="PostgreSQL 연결 — 연결 이름 · Host · Port · Username · Password · Database · Schema" src="img/fabric-04-form.webp" / loading="lazy" decoding="async"></a><figcaption>PostgreSQL 연결 — 연결 이름 · Host · Port · Username · Password · Database · Schema</figcaption></figure>
+<ol class="steps" start="5">
+<li><strong>연결 테스트</strong>를 누릅니다. 「✓ 데이터베이스 연결에 성공했습니다.」가 나오면 <strong>연결 생성</strong>을 누릅니다.</li>
+</ol>
+<figure><a href="img/fabric-05-tested.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="연결 테스트 성공 — 데이터베이스 연결에 성공했습니다, 연결 생성" src="img/fabric-05-tested.webp" / loading="lazy" decoding="async"></a><figcaption>연결 테스트 성공 — 데이터베이스 연결에 성공했습니다, 연결 생성</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">Host 에 localhost 를 쓰면</p>
+<p>연결 테스트가 실패합니다. 컨테이너 안의 <code>localhost</code> 는 데이터 패브릭 컨테이너 자기 자신이기 때문입니다. 회사 DB처럼 다른 서버에 있는 DB라면 그 서버의 주소를 그대로 씁니다.</p>
+</div>
+<h2 id="따라-하기-3-실제-테이블-보기">따라 하기 3 — 실제 테이블 보기<a class="anchor" href="#따라-하기-3-실제-테이블-보기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>목록에 <code>hanbit_legacy</code> 카드(POSTGRES, <code>host.docker.internal</code> · <code>hanbit</code>)가 생기고, 오른쪽 위 숫자가 <strong>1 연결됨</strong>이 됩니다.</li>
+<li>카드를 누르면 아래에 <strong>실제 DB 테이블</strong> 패널이 열리고, <code>delivery</code> 스키마의 테이블이 나옵니다.</li>
+</ol>
+<figure><a href="img/fabric-07-tables.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="hanbit_legacy 카드와 실제 DB 테이블 — customer · delivery · menu · order_item · orders · rider · store" src="img/fabric-07-tables.webp" / loading="lazy" decoding="async"></a><figcaption>hanbit_legacy 카드와 실제 DB 테이블 — customer · delivery · menu · order_item · orders · rider · store</figcaption></figure>
+<p>이 튜토리얼에서 나온 테이블은 <code>customer</code> · <code>delivery</code> · <code>menu</code> · <code>order_item</code> · <code>orders</code> · <code>rider</code> · <code>store</code> 일곱 개로, 따라 하기 1에서 넣은 것과 같습니다. 앱이 DB에 직접 붙어 목록을 읽어 온 것입니다.</p>
+<h2 id="데이터-스키마는-언제-채워지나">데이터 스키마는 언제 채워지나<a class="anchor" href="#데이터-스키마는-언제-채워지나" title="Permanent link">#</a></h2>
+<p>레일의 <strong>데이터 스키마</strong>를 눌러 보면 아직 「테이블 0」, 「캔버스가 비어 있습니다」입니다. 오른쪽의 <strong>메타데이터 출처</strong> 범례(DDL 정의 · 코드 분석 · 사용자 입력)가 말하듯, 이 캔버스는 옛 시스템의 DDL과 코드를 <strong>분석</strong>한 결과로 채워집니다. 분석은 13장 「레거시 코드 분석」에서 합니다.</p>
+<figure><a href="img/fabric-08-schema.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="데이터 스키마 — 테이블 0, 캔버스가 비어 있습니다, 메타데이터 출처 DDL 정의 · 코드 분석 · 사용자 입력" src="img/fabric-08-schema.webp" / loading="lazy" decoding="async"></a><figcaption>데이터 스키마 — 테이블 0, 캔버스가 비어 있습니다, 메타데이터 출처 DDL 정의 · 코드 분석 · 사용자 입력</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">옛 DB와 새 설계를 나란히</p>
+<p>5장의 Plan에서 Order 애그리거트는 <code>PLACED → ACCEPTED / CANCELLED</code> 로 상태를 다룹니다. 옛 <code>orders.status</code> 에는 <code>DELIVERED</code> · <code>DELIVERING</code> · <code>COOKING</code> · <code>REJECTED</code> 같은 값이 들어 있습니다. 옮길 때 이 값을 어떻게 대응시킬지가 다음 프로포절의 좋은 주제입니다.</p>
+</div>
+<h2 id="확인할-것">확인할 것<a class="anchor" href="#확인할-것" title="Permanent link">#</a></h2>
+<ul>
+<li>데이터 소스 목록에 <code>hanbit_legacy</code> 가 있고 「1 연결됨」이다.</li>
+<li>카드를 눌렀을 때 실제 DB 테이블 7개가 보인다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>Host 칸에 <code>localhost</code> 가 아니라 <code>host.docker.internal</code> 을 쓰는 이유는 무엇인가요?</li>
+<li>「연결 테스트」와 「연결 생성」은 무엇이 다른가요?</li>
+<li>데이터 소스를 등록했는데 데이터 스키마가 비어 있습니다. 고장인가요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>DB에 접속하는 쪽이 컨테이너 안의 데이터 패브릭이기 때문입니다. 컨테이너 안에서 <code>localhost</code> 는 그 컨테이너 자신이고, 내 PC는 <code>host.docker.internal</code> 입니다.</li>
+<li>연결 테스트는 입력한 값으로 접속만 해 보고, 연결 생성은 그 연결을 데이터 소스로 등록합니다.</li>
+<li>아닙니다. 데이터 스키마는 DDL · 코드 분석(13장)이나 사용자 입력으로 채워집니다. 등록만으로는 실제 DB 테이블 패널에 목록이 보입니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="skills.html"><span>이전</span>스킬 파일로 엔진 바꾸기</a><a class="next" href="ingest.html"><span>다음</span>요구사항 문서로 설계 시작하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-데이터-소스인가">왜 데이터 소스인가</a></li><li><a href="#따라-하기-1-실습용-옛-db-띄우기">따라 하기 1 — 실습용 옛 DB 띄우기</a></li><li><a href="#따라-하기-2-데이터-소스-등록">따라 하기 2 — 데이터 소스 등록</a></li><li><a href="#따라-하기-3-실제-테이블-보기">따라 하기 3 — 실제 테이블 보기</a></li><li><a href="#데이터-스키마는-언제-채워지나">데이터 스키마는 언제 채워지나</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

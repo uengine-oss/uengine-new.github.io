@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>치트시트 — Robo Architect 튜토리얼</title>
+<meta name="description" content="화면 · 단축키 · 프로포절 단계 · 스킬 · 자주 쓰는 값을 한 장에 모았습니다. 따라 하다가 「그게 어디 있었지?」 할 때 펼쳐 보세요.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/cheatsheet.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="치트시트 — Robo Architect 튜토리얼">
+<meta property="og:description" content="화면 · 단축키 · 프로포절 단계 · 스킬 · 자주 쓰는 값을 한 장에 모았습니다. 따라 하다가 「그게 어디 있었지?」 할 때 펼쳐 보세요.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/cheatsheet.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><span class="soon"><span class="n">06</span>샌드박스에서 구현하기<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">07</span>검증하고 수락하기<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><span class="soon"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">09</span>두 번째 프로포절 — 변경 영향도<em>준비 중</em></span></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">14</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html" class="on" aria-current="page"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">부록<span class="chap">15</span></div>
+    <h1>치트시트</h1>
+    <article>
+<blockquote>
+<p>화면 · 단축키 · 프로포절 단계 · 스킬 · 자주 쓰는 값을 한 장에 모았습니다. 따라 하다가 「그게 어디 있었지?」 할 때 펼쳐 보세요.</p>
+</blockquote>
+<h2 id="화면">화면<a class="anchor" href="#화면" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>화면(홈 카드)</th>
+<th>탭 이름</th>
+<th>하는 일</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로포절</td>
+<td>프로포절</td>
+<td>요구사항 한 줄 → 설계 · 계획 · 구현 · 검증</td>
+<td>3~7장</td>
+</tr>
+<tr>
+<td>요구사항</td>
+<td>요구사항</td>
+<td>바운디드 컨텍스트 › 기능 › 사용자 스토리 › 인수 조건</td>
+<td>8장</td>
+</tr>
+<tr>
+<td>프로세스</td>
+<td>프로세스</td>
+<td>BPM 흐름과 이벤트 모델링</td>
+<td>8장</td>
+</tr>
+<tr>
+<td>설계 캔버스</td>
+<td>설계</td>
+<td>애그리거트 · 커맨드 · 이벤트 · 정책</td>
+<td>8장</td>
+</tr>
+<tr>
+<td>데이터 모델</td>
+<td>데이터</td>
+<td>애그리거트 · 엔티티 · 값 객체</td>
+<td>8장</td>
+</tr>
+<tr>
+<td>코드</td>
+<td>코드</td>
+<td>코드 폴더의 파일과 Claude Code 터미널</td>
+<td>6장</td>
+</tr>
+<tr>
+<td>레거시 · 데이터 소스</td>
+<td>레거시</td>
+<td>레일에 코드 · 데이터 소스 · 코드 그래프 · 데이터 스키마</td>
+<td>11 · 13장</td>
+</tr>
+<tr>
+<td>프로젝트 헌장</td>
+<td>설계</td>
+<td>설계 원칙 · 기술 스택 · 아키텍처 스타일</td>
+<td>4장</td>
+</tr>
+</tbody>
+</table>
+<h2 id="창과-탭">창과 탭<a class="anchor" href="#창과-탭" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 것</th>
+<th>방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>홈으로</td>
+<td>⌘1 (탭 줄의 <strong>홈</strong>)</td>
+</tr>
+<tr>
+<td>N번째 탭으로</td>
+<td>⌘2 부터 순서대로</td>
+</tr>
+<tr>
+<td>다음 탭</td>
+<td>Ctrl+Tab</td>
+</tr>
+<tr>
+<td>두 화면을 나란히</td>
+<td>탭 우클릭 → <strong>새 창으로 분리</strong></td>
+</tr>
+<tr>
+<td>한 탭 안에서 화면 바꾸기</td>
+<td>왼쪽 <strong>레일</strong> (레거시 탭의 레일은 레거시 메뉴만)</td>
+</tr>
+<tr>
+<td>밝게 · 어둡게</td>
+<td>탭 줄 오른쪽 해 · 달 단추 — 홈과 모든 탭이 함께 바뀐다</td>
+</tr>
+<tr>
+<td>다른 프로젝트로</td>
+<td>홈 위쪽 프로젝트 줄 → <strong>프로젝트 바꾸기</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="프로포절-단계">프로포절 단계<a class="anchor" href="#프로포절-단계" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>상태</th>
+<th>뜻</th>
+<th>누르는 것</th>
+<th>걸린 시간(이 튜토리얼)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INTENT</td>
+<td>전략 설계(바운디드 컨텍스트 · 기능 · 스토리 · 인수 조건)</td>
+<td><strong>+ 새 Proposal</strong> → <strong>AI 분석 시작</strong></td>
+<td>약 2분</td>
+</tr>
+<tr>
+<td>PLAN</td>
+<td>헌장(처음 한 번) → 전술 설계 · 아키텍처 결정</td>
+<td><strong>Plan 단계로 진행 →</strong> → <strong>Plan 생성</strong> → <strong>Plan 확정</strong></td>
+<td>약 10분</td>
+</tr>
+<tr>
+<td>SUBMITTED</td>
+<td>계획이 확정됨</td>
+<td><strong>샌드박스 구현</strong> 칸 → <strong>작업 목록 생성</strong></td>
+<td>약 1.5분</td>
+</tr>
+<tr>
+<td>IMPLEMENTING</td>
+<td>샌드박스(Git 워크트리)에서 Claude Code가 구현</td>
+<td><strong>구현하기</strong> → <strong>Claude Code 셀로 이동</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>VALIDATING · 승인 대기</td>
+<td>구조 동기화 + 인수 조건 검증</td>
+<td><strong>구현 완료 → 검증</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>ACCEPTED · DESTROYED</td>
+<td><strong>Accept (Dual Merge)</strong> 는 코드와 그래프 DB를 함께 반영하고, <strong>Destroy</strong> 는 버린다(Diff 이력은 보관)</td>
+<td><strong>Accept / Destroy</strong> 칸</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">생성 중에는 그 탭에 머물기</p>
+<p>Plan 생성처럼 오래 걸리는 단계는 그 탭을 새로고침하거나 그 탭에서 화면을 옮기면 처음부터 다시 시작합니다. 다른 일은 홈에서 새 탭을 열어 합니다.</p>
+</div>
+<h2 id="스킬">스킬<a class="anchor" href="#스킬" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>스킬</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INTENT</td>
+<td><code>robo-proposal-intent</code></td>
+</tr>
+<tr>
+<td>헌장</td>
+<td><code>robo-project-constitution</code></td>
+</tr>
+<tr>
+<td>PLAN</td>
+<td><code>robo-proposal-plan</code></td>
+</tr>
+<tr>
+<td>작업 목록</td>
+<td><code>robo-proposal-tasks</code></td>
+</tr>
+<tr>
+<td>구현</td>
+<td><code>robo-implement</code> (코드 탭 셀의 <code>/robo-implement PRO-001</code>)</td>
+</tr>
+<tr>
+<td>검증</td>
+<td><code>robo-proposal-test</code> · <code>robo-sync</code></td>
+</tr>
+<tr>
+<td>영향 분석</td>
+<td><code>robo-proposal-context</code></td>
+</tr>
+</tbody>
+</table>
+<p>원본은 앱 설치 폴더의 <code>resources/runtime/architect/app/skills/</code>, 코드 탭 셀용 사본은 <code>~/.claude/skills/</code> 입니다(10장).</p>
+<h2 id="자주-쓰는-값">자주 쓰는 값<a class="anchor" href="#자주-쓰는-값" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로젝트 이름 규칙</td>
+<td>영문 소문자로 시작, 소문자 · 숫자 · 밑줄, 2~40자 (<code>hanbit_delivery</code>)</td>
+</tr>
+<tr>
+<td>실습 옛 DB</td>
+<td><code>ra-tut-legacy-pg</code> · <code>127.0.0.1:25433</code> · <code>legacy</code> / <code>legacy1234</code> · DB <code>hanbit</code> · 스키마 <code>delivery</code></td>
+</tr>
+<tr>
+<td>데이터 소스 Host (내 PC의 DB)</td>
+<td><code>host.docker.internal</code> — <code>localhost</code> 는 컨테이너 자신이라 실패</td>
+</tr>
+<tr>
+<td>컨테이너</td>
+<td>graph-db · graph-bolt · fabric · catalog · analyzer · parser · gateway (7개)</td>
+</tr>
+<tr>
+<td>OpenAI API 키가 필요한 곳</td>
+<td>요구사항 탭의 문서 업로드 · 레거시 분석(13장) — 12장의 「문서를 프로포절에 붙여 넣기」는 키 없이</td>
+</tr>
+</tbody>
+</table>
+    </article>
+    <nav class="pager"><a class="prev" href="ingest.html"><span>이전</span>요구사항 문서로 설계 시작하기</a><a class="next" href="faq.html"><span>다음</span>자주 묻는 질문</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#화면">화면</a></li><li><a href="#창과-탭">창과 탭</a></li><li><a href="#프로포절-단계">프로포절 단계</a></li><li><a href="#스킬">스킬</a></li><li><a href="#자주-쓰는-값">자주 쓰는 값</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
