@@ -38,7 +38,7 @@ Process GPT Lite는 **대화 하나로 일하는 AI 업무 비서**입니다. �
 <a href="folders.html"><b>4 · 팀으로 일하기</b><span>공유 폴더, 산출물 공유와 @멘션, 메신저와 번역, 원격 회의와 통역</span></a>
 <a href="process-create.html"><b>5 · 프로세스로 일하기</b><span>대화로 프로세스 만들기, 실행, 프로세스 마이닝</span></a>
 <a href="bottleneck.html"><b>6 · 프로세스 개선</b><span>병목 찾기, 가치 흐름과 제약 이론, 크리티컬 패스와 개선 실행</span></a>
-<a href="workroom.html"><b>7 · 확장과 운영</b><span>에이전트 작업실, 구조, 운영과 보안</span></a>
+<a href="workroom.html"><b>7 · 확장과 운영</b><span>에이전트 작업실, 구조, 운영과 보안, 에이전트 가드레일</span></a>
 <a href="project.html"><b>8 · 종합 과제</b><span>새 고객 요청을 처음부터 끝까지</span></a>
 </div>
 
