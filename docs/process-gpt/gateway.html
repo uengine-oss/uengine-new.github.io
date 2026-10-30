@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>승인과 반려 — 갈림길과 되돌아가기 — Process GPT 튜토리얼</title>
+<meta name="description" content="「영업 제안서 승인」을 만들고, 반려된 제안서를 다시 작성해 승인받습니다. 검토 결과에 따라 갈라지는 길과 앞 단계로 돌아가는 흐름을 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt/gateway.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="승인과 반려 — 갈림길과 되돌아가기 — Process GPT 튜토리얼">
+<meta property="og:description" content="「영업 제안서 승인」을 만들고, 반려된 제안서를 다시 작성해 승인받습니다. 검토 결과에 따라 갈라지는 길과 앞 단계로 돌아가는 흐름을 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt/gateway.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt/img/tour-home.webp">
+<link rel="icon" href="../../images/processgpt/pg-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgpt/pg-mark.png" alt="" width="28" height="28"><span>Process GPT <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 게이트웨이, 에이전트, 폼)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgpt.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 가입하기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로세스 기본</div><ul>
+<li><a href="process-create.html"><span class="n">03</span>대화로 프로세스 만들기</a></li>
+<li><a href="definition.html"><span class="n">04</span>정의 들여다보기와 버전</a></li>
+<li><a href="organization.html"><span class="n">05</span>조직도와 역할 담당자</a></li>
+<li><a href="process-run.html"><span class="n">06</span>실행하고 할 일 처리하기</a></li>
+<li><a href="gateway.html" class="on" aria-current="page"><span class="n">07</span>승인과 반려 — 갈림길과 되돌아가기</a></li>
+</ul>
+<div class="nav-part">AI 에이전트</div><ul>
+<li><a href="knowledge.html"><span class="n">08</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></li>
+<li><a href="agents.html"><span class="n">09</span>에이전트 동료 만들기</a></li>
+<li><a href="agent-chat.html"><span class="n">10</span>에이전트와 대화하기</a></li>
+<li><span class="soon"><span class="n">11</span>스킬로 일하는 방법 가르치기<em>준비 중</em></span></li>
+<li><a href="document-process.html"><span class="n">12</span>문서로 프로세스 만들기</a></li>
+<li><a href="agent-steps.html"><span class="n">13</span>에이전트가 맡는 단계 실행하기</a></li>
+</ul>
+<div class="nav-part">도구와 규칙</div><ul>
+<li><span class="soon"><span class="n">14</span>MCP로 외부 도구 연결하기<em>준비 중</em></span></li>
+<li><a href="dmn.html"><span class="n">15</span>비즈니스 규칙(DMN) — 결정을 표로 맡기기</a></li>
+</ul>
+<div class="nav-part">분석과 개선</div><ul>
+<li><span class="soon"><span class="n">16</span>실행 분석 — 리드타임과 병목<em>준비 중</em></span></li>
+<li><span class="soon"><span class="n">17</span>전략 보드와 KPI<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="settings.html"><span class="n">18</span>설정 — 동료를 들이고 화면을 바꾸기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><span class="soon"><span class="n">19</span>종합 과제<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">20</span>한눈에 보기</a></li>
+<li><a href="faq.html"><span class="n">21</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로세스 기본<span class="chap">7</span></div>
+    <h1>승인과 반려 — 갈림길과 되돌아가기</h1>
+    <article>
+<blockquote>
+<p>「영업 제안서 승인」을 만들고, 반려된 제안서를 다시 작성해 승인받습니다. 검토 결과에 따라 갈라지는 길과 앞 단계로 돌아가는 흐름을 확인합니다.</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">설치본 수정이 필요합니다</p>
+<p>이 장의 실행 화면은 아래 수정을 넣은 설치본(2026-10-30)에서 찍었습니다. 이 수정이 설치 저장소에 들어가기 전의 설치본에서는 실행이 중간에 멈출 수 있습니다. 들어가면 이 안내를 지웁니다.</p>
+<ul>
+<li>설치: <a href="https://github.com/uengine-oss/process-gpt-infra-docker/pull/1">process-gpt-infra-docker #1</a> — 할 일 표의 빠진 열(없으면 첫 제출에서 멈춤)</li>
+<li>화면: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/234">process-gpt-vue3 #234</a> — 실행이 첫 단계와 역할 담당자를 지키게</li>
+<li>화면: <a href="https://github.com/uengine-oss/process-gpt-vue3/pull/233">process-gpt-vue3 #233</a> — 편집기에서 저장할 때 갈림길 조건을 지키게</li>
+</ul>
+</div>
+<h2 id="이번에는-갈림길을-넣습니다">이번에는 갈림길을 넣습니다<a class="anchor" href="#이번에는-갈림길을-넣습니다" title="Permanent link">#</a></h2>
+<p>3장에서는 갈림길을 일부러 뺐습니다. 이번에는 처음부터 승인과 반려를 말해 새 프로세스 「영업 제안서 승인」을 만듭니다.</p>
+<p>고객이 요청사항을 입력하면 김민지가 제안서를 작성합니다. 장진영이 반려하면 김민지가 다시 작성하고, 장진영의 검토를 다시 받습니다. 승인하면 김민지가 고객 발송 단계를 처리합니다.</p>
+<h2 id="따라-하기-1-대화로-프로세스-만들기">따라 하기 1 — 대화로 프로세스 만들기<a class="anchor" href="#따라-하기-1-대화로-프로세스-만들기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>3장처럼 새 대화를 열고 「기본 에이전트」를 선택합니다.</li>
+<li>채팅 입력칸에 아래 요청을 입력합니다.</li>
+<li>「이 프로세스 초안으로 생성할까요?」가 나오면 3장처럼 「이대로 프로세스 생성」으로 답합니다.</li>
+</ol>
+<blockquote>
+<p>영업 제안서 승인 프로세스를 만들어 줘. 고객이 요청사항을 입력하면 영업 담당자가 제안서를 작성하고, 영업팀장이 제안서를 검토해. 영업팀장이 승인하면 영업 담당자가 제안서를 고객에게 발송하고, 반려하면 영업 담당자가 검토 의견을 보고 제안서를 다시 작성해. 팀장 검토 폼에는 검토 결과(승인 또는 반려)와 검토 의견을 넣고, 단계마다 입력 폼도 만들어 줘.</p>
+</blockquote>
+<figure><a href="img/gw-prompt.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 생성 요청 — 「기본 에이전트」가 선택된 채팅 입력칸과 요청 문장" src="img/gw-prompt.webp" / loading="lazy" decoding="async"></a><figcaption>프로세스 생성 요청 — 「기본 에이전트」가 선택된 채팅 입력칸과 요청 문장</figcaption></figure>
+<p>갈림길을 요청할 때는 <strong>누가 검토하는지</strong>, <strong>승인하면 어디로 가는지</strong>, <strong>반려하면 어디로 돌아가는지</strong>를 말합니다. 판단에 쓸 폼 칸인 「검토 결과」도 함께 요청합니다.</p>
+<p>「컨설팅 기반 프로세스 생성 워크아이템이 생성되었습니다.」 뒤에 진행 막대가 보입니다. 실습에서는 「BPMN 프로세스 생성 · waiting_for_user · 72%」와 「사용자 확인이 필요합니다. 아래 질문에 응답해 주세요.」가 표시되었습니다.</p>
+<h2 id="따라-하기-2-세-쪽의-확인-창-제출하기">따라 하기 2 — 세 쪽의 확인 창 제출하기<a class="anchor" href="#따라-하기-2-세-쪽의-확인-창-제출하기" title="Permanent link">#</a></h2>
+<p>이번 확인 창은 세 쪽입니다. 사람만 처리하는 프로세스이므로 세 쪽 모두 아무것도 선택하지 않습니다. 체크가 있으면 풉니다.</p>
+<ol class="steps">
+<li>「1 / 3」의 「스킬 — 생성할 스킬 선택」을 확인합니다. 후보 「영업 제안서 작성 및 재작성」을 선택하지 않고 「다음」을 누릅니다.</li>
+<li>「어떤 에이전트를 생성/연결할까요?」에서 후보 「영업 담당자 — 영업 제안서 작성 및 재작성 (신규)」를 선택하지 않고 「다음」을 누릅니다.</li>
+<li>「DMN 의사결정 테이블을 어떤 게이트웨이에 만들까요?」에서 「제안서 승인 여부 판단」 후보를 선택하지 않고 「응답 제출」을 누릅니다.</li>
+</ol>
+<figure><a href="img/gw-draft-ok.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="초안 확인과 첫째 쪽 — 「이대로 프로세스 생성」 말풍선, 「스킬 — 생성할 스킬 선택」과 「1 / 3」" src="img/gw-draft-ok.webp" / loading="lazy" decoding="async"></a><figcaption>초안 확인과 첫째 쪽 — 「이대로 프로세스 생성」 말풍선, 「스킬 — 생성할 스킬 선택」과 「1 / 3」</figcaption></figure>
+<p>첫째 쪽에는 모두 해제하면 이 프로세스의 스킬 생성을 건너뛴다는 안내가 있습니다.</p>
+<figure><a href="img/gw-panel-2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="둘째 확인 쪽 — 「어떤 에이전트를 생성/연결할까요?」와 영업 담당자 후보, 「이전」·「다음」" src="img/gw-panel-2.webp" / loading="lazy" decoding="async"></a><figcaption>둘째 확인 쪽 — 「어떤 에이전트를 생성/연결할까요?」와 영업 담당자 후보, 「이전」·「다음」</figcaption></figure>
+<p>셋째 쪽 후보에는 승인하면 「제안서 고객 발송」으로, 반려하면 「제안서 재작성」으로 가는 두 분기가 표시됩니다. 선택하지 않은 게이트웨이는 BPMN 분기 조건만 사용합니다.</p>
+<figure><a href="img/gw-panel-3.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="셋째 확인 쪽 — DMN 의사결정 테이블 후보 「제안서 승인 여부 판단」과 「응답 제출」" src="img/gw-panel-3.webp" / loading="lazy" decoding="async"></a><figcaption>셋째 확인 쪽 — DMN 의사결정 테이블 후보 「제안서 승인 여부 판단」과 「응답 제출」</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">3장과 다른 확인 창</p>
+<p>3장에서는 이 창 없이 바로 만들어졌습니다. 요청 내용과 회차에 따라 확인 창이 나올 수 있습니다. 스킬은 11장(준비 중), 에이전트가 맡는 단계는 <a href="agent-steps.html">13장</a>, DMN은 15장에서 다룹니다.</p>
+</div>
+<p>「3/3개 응답 완료」 뒤 실습에서는 약 15초 만에 생성이 끝났습니다. 「✅ BPMN 프로세스 생성 완료 1개의 프로세스가 생성되었습니다. 프로세스 정의가 저장되었습니다. 왼쪽 메뉴에서 확인할 수 있습니다.」라는 안내가 나왔습니다.</p>
+<figure><a href="img/gw-generated.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="생성 완료 — 「3/3개 응답 완료」, 「BPMN 프로세스 생성 완료」와 작업 폴더의 「영업 제안서 승인」·「저장됨」" src="img/gw-generated.webp" / loading="lazy" decoding="async"></a><figcaption>생성 완료 — 「3/3개 응답 완료」, 「BPMN 프로세스 생성 완료」와 작업 폴더의 「영업 제안서 승인」·「저장됨」</figcaption></figure>
+<p>생성된 정의는 자동으로 저장되었습니다. 작업 폴더의 「저장됨」을 확인합니다. 이때는 저장 단추를 따로 누르지 않았습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">나의 업무에 남는 「pdf2bpmn」</p>
+<p>이렇게 확인 창을 거쳐 만들면 장진영의 「나의 업무」에 「pdf2bpmn」이라는 업무가 「기한 지남」으로 남습니다. 프로세스를 만들 때 생긴 작업 기록이 끝난 것으로 바뀌지 않은 것입니다. 열거나 제출하지 않아도 됩니다.</p>
+</div>
+<h2 id="갈림길과-돌아오는-화살표-읽기">갈림길과 돌아오는 화살표 읽기<a class="anchor" href="#갈림길과-돌아오는-화살표-읽기" title="Permanent link">#</a></h2>
+<p>만들어진 흐름도에는 「고객」·「영업 담당자」·「영업팀장」 레인이 있습니다. 「요청사항 입력」에서 시작해 「제안서 작성」과 「제안서 검토 및 승인/반려」로 이어집니다.</p>
+<figure><a href="img/gw-bpmn.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인과 반려 흐름도 — 세 레인, 「제안서 승인 여부 판단」 마름모와 두 조건 화살표, 「제안서 재작성」" src="img/gw-bpmn.webp" / loading="lazy" decoding="async"></a><figcaption>승인과 반려 흐름도 — 세 레인, 「제안서 승인 여부 판단」 마름모와 두 조건 화살표, 「제안서 재작성」</figcaption></figure>
+<p>검토 다음의 마름모는 「제안서 승인 여부 판단」입니다. 마름모 안의 <strong>X는 배타 게이트웨이</strong>를 뜻합니다. 나가는 화살표 중 조건이 맞는 하나로만 갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>화살표 옆 조건</th>
+<th>다음 단계</th>
+<th>이어지는 흐름</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「승인인 경우」</td>
+<td>「제안서 고객 발송」</td>
+<td>프로세스 종료</td>
+</tr>
+<tr>
+<td>「반려인 경우」</td>
+<td>「제안서 재작성」</td>
+<td>「제안서 검토 및 승인/반려」로 돌아감</td>
+</tr>
+</tbody>
+</table>
+<p>재작성에서 검토로 돌아오는 화살표가 고리를 만듭니다. 반려는 이번 업무의 끝이 아닙니다. 제안서를 고친 뒤 같은 검토 단계를 다시 처리합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">생성된 이름을 확인합니다</p>
+<p>단계·폼·조건 이름은 만들 때마다 조금씩 다를 수 있습니다. 이 장은 실습에서 생성된 이름을 사용합니다. 자신의 흐름도에서도 승인 경로와 반려 후 검토로 돌아오는 경로를 확인합니다.</p>
+</div>
+<h2 id="따라-하기-3-레인-담당자-지정하기">따라 하기 3 — 레인 담당자 지정하기<a class="anchor" href="#따라-하기-3-레인-담당자-지정하기" title="Permanent link">#</a></h2>
+<p><a href="organization.html">5장</a>과 같은 방법으로 담당자를 지정하고 정의를 버전으로 저장합니다. 이번 정의의 편집 모드에서는 레인이 세로 열로 그려집니다. 레인 이름은 위쪽에 있습니다.</p>
+<ol class="steps">
+<li>편집 모드에서 위쪽 「영업 담당자」 레인 이름을 두 번 누릅니다. 직접 사용자 선택으로 김민지를 지정합니다.</li>
+<li>「영업팀장」 레인 이름을 두 번 누릅니다. 직접 사용자 선택으로 장진영을 지정합니다.</li>
+<li>담당자를 지정한 정의를 버전으로 저장합니다. 「고객」은 실행하는 사람이 맡습니다.</li>
+</ol>
+<figure><a href="img/gwr-lane-manager.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="영업팀장 담당자 지정 — 편집 모드 레인 패널의 「영업팀장」과 직접 사용자 선택, 유저 ID 장진영" src="img/gwr-lane-manager.webp" / loading="lazy" decoding="async"></a><figcaption>영업팀장 담당자 지정 — 편집 모드 레인 패널의 「영업팀장」과 직접 사용자 선택, 유저 ID 장진영</figcaption></figure>
+<p>생성 직후의 자동 저장과 담당자 지정 뒤의 버전 저장을 구분합니다. 이제 지정한 담당자로 실행할 준비가 되었습니다.</p>
+<h2 id="따라-하기-4-장진영이-고객-요청-입력하기">따라 하기 4 — 장진영이 고객 요청 입력하기<a class="anchor" href="#따라-하기-4-장진영이-고객-요청-입력하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>장진영으로 「영업 제안서 승인」의 「실행」을 누릅니다.</li>
+<li>「역할 지정」에서 「고객」 장진영, 「영업 담당자」 김민지, 「영업팀장」 장진영을 확인합니다.</li>
+<li>「요청사항」에 아래 내용을 입력하고 「제출 완료」를 누릅니다.</li>
+</ol>
+<blockquote>
+<p>한빛물산 대전 지사가 사무실을 옮깁니다. 업무용 책상 30개와 의자 30개가 필요하고, 예산은 2,000만 원, 12월 첫 주 입주 전까지 설치를 원합니다.</p>
+</blockquote>
+<figure><a href="img/gwr-run-filled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="요청을 채운 실행 창 — 고객 장진영·영업 담당자 김민지·영업팀장 장진영과 「요청사항」" src="img/gwr-run-filled.webp" / loading="lazy" decoding="async"></a><figcaption>요청을 채운 실행 창 — 고객 장진영·영업 담당자 김민지·영업팀장 장진영과 「요청사항」</figcaption></figure>
+<p>실습에서 생성된 인스턴스 이름은 「영업 제안서 승인 한빛물산 대전 지사 사무가구」입니다. 이제 김민지에게 온 제안서 작성 업무를 처리합니다.</p>
+<h2 id="따라-하기-5-김민지가-제안서-작성하기">따라 하기 5 — 김민지가 제안서 작성하기<a class="anchor" href="#따라-하기-5-김민지가-제안서-작성하기" title="Permanent link">#</a></h2>
+<p>김민지의 「나의 업무」에서 「제안서 작성」을 엽니다. 「이전 작업 입력 내역」에는 「요청사항 입력 · 장진영」이 있습니다. 아래 폼은 「제안서 작성 레이아웃」입니다.</p>
+<ol class="steps">
+<li>「이전 작업 입력 내역」에서 장진영의 요청사항을 확인합니다.</li>
+<li>비어 있는 「고객 요청사항」에 <code>대전 지사 이전 — 책상 30개, 의자 30개, 예산 2,000만 원, 12월 첫 주 입주 전 설치</code>를 입력합니다.</li>
+<li>「제안서 내용」 이름 아래 「Report」라고 적힌 카드를 누릅니다.</li>
+<li>열린 「컨텐츠 에디터」에 아래 제안 글을 쓰고 오른쪽 아래 「저장」을 누릅니다.</li>
+<li>카드에 내용의 미리보기가 보이면 「제출 완료」를 누릅니다.</li>
+</ol>
+<blockquote>
+<p>대전 지사 이전 제안: 업무용 책상 30개와 메쉬 의자 30개. 예상 금액 약 1,800만 원(부가세 별도).</p>
+</blockquote>
+<figure><a href="img/gwr-write-report.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="제안서 내용 편집 — 「컨텐츠 에디터」의 제안 글과 오른쪽 아래 「저장」" src="img/gwr-write-report.webp" / loading="lazy" decoding="async"></a><figcaption>제안서 내용 편집 — 「컨텐츠 에디터」의 제안 글과 오른쪽 아래 「저장」</figcaption></figure>
+<figure><a href="img/gwr-write-filled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="제안서 작성 완료 전 — 이전 작업 입력 내역, 채워진 「고객 요청사항」과 「제안서 내용」 Report 카드 미리보기" src="img/gwr-write-filled.webp" / loading="lazy" decoding="async"></a><figcaption>제안서 작성 완료 전 — 이전 작업 입력 내역, 채워진 「고객 요청사항」과 「제안서 내용」 Report 카드 미리보기</figcaption></figure>
+<p>실습에서는 제출하고 약 5초 뒤 장진영에게 검토 업무가 갔습니다.</p>
+<h2 id="따라-하기-6-장진영이-반려하기">따라 하기 6 — 장진영이 반려하기<a class="anchor" href="#따라-하기-6-장진영이-반려하기" title="Permanent link">#</a></h2>
+<p>장진영의 「나의 업무」에서 「제안서 검토 및 승인/반려」를 엽니다. 「이전 작업 입력 내역」에는 장진영의 「요청사항 입력」과 김민지의 「제안서 작성」 두 개가 있습니다.</p>
+<ol class="steps">
+<li>앞 단계의 요청사항과 제안 내용을 확인합니다.</li>
+<li>「검토 결과」 고르기 칸을 「반려」로 바꿉니다.</li>
+<li>「검토 의견」에 아래 내용을 입력합니다.</li>
+<li>「검토 결과」가 「반려」인지 확인하고 「제출 완료」를 누릅니다.</li>
+</ol>
+<blockquote>
+<p>설치비와 설치 일정이 빠졌습니다. 대전 지역 설치비와 입주 전 설치 일정을 넣어 다시 작성해 주세요.</p>
+</blockquote>
+<figure><a href="img/gwr-review-reject-filled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="반려할 검토 폼 — 이전 작업 입력 내역 두 개, 「검토 결과」의 「반려」와 「검토 의견」" src="img/gwr-review-reject-filled.webp" / loading="lazy" decoding="async"></a><figcaption>반려할 검토 폼 — 이전 작업 입력 내역 두 개, 「검토 결과」의 「반려」와 「검토 의견」</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">처음에는 승인이 선택되어 있습니다</p>
+<p>이 실습의 「검토 결과」에는 처음부터 「승인」이 선택되어 있습니다. 반려 의견만 쓰지 말고, 고르기 칸도 반드시 「반려」로 바꿉니다.</p>
+</div>
+<p>실습에서는 약 8초 뒤 김민지에게 「제안서 재작성」이 열렸습니다. 「제안서 고객 발송」은 열리지 않았습니다. 갈림길에서 반려 조건에 맞는 길 하나로 간 것입니다.</p>
+<h2 id="따라-하기-7-김민지가-다시-작성하기">따라 하기 7 — 김민지가 다시 작성하기<a class="anchor" href="#따라-하기-7-김민지가-다시-작성하기" title="Permanent link">#</a></h2>
+<p>김민지가 「제안서 재작성」을 엽니다. 「이전 작업 입력 내역」에는 「요청사항 입력」·「제안서 작성」·「제안서 검토 및 승인/반려」 세 개가 있습니다.</p>
+<ol class="steps">
+<li>「이전 작업 입력 내역」의 장진영 검토에서 반려 의견을 읽습니다.</li>
+<li>「제안서 재작성 입력」 폼의 「수정된 제안서」 Report 카드를 누릅니다.</li>
+<li>「컨텐츠 에디터」에 아래 수정 내용을 입력하고 「저장」을 누릅니다.</li>
+<li>「제출 완료」를 누릅니다.</li>
+</ol>
+<blockquote>
+<p>대전 지사 이전 수정 제안: 업무용 책상 30개와 메쉬 의자 30개, 제품 금액 약 1,800만 원(부가세 별도). 대전 지역 설치비 포함, 12월 1주 차(입주 전) 이틀에 걸쳐 설치.</p>
+</blockquote>
+<figure><a href="img/gwr-rewrite.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="제안서 재작성 — 이전 작업 입력 내역 세 개와 「검토 의견」·「수정된 제안서」 Report 카드" src="img/gwr-rewrite.webp" / loading="lazy" decoding="async"></a><figcaption>제안서 재작성 — 이전 작업 입력 내역 세 개와 「검토 의견」·「수정된 제안서」 Report 카드</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">검토 의견은 앞 단계에서 읽습니다</p>
+<p>재작성 폼의 「검토 의견」 Report 카드는 비어 있습니다. 장진영이 쓴 의견이 저절로 옮겨 오지 않습니다. 「이전 작업 입력 내역」에서 반려 의견을 확인합니다.</p>
+</div>
+<p>실습에서는 약 5초 뒤 장진영에게 검토 업무가 다시 열렸습니다. 흐름도의 돌아오는 화살표를 따라 같은 검토 단계로 돌아왔습니다.</p>
+<h2 id="따라-하기-8-승인하고-고객-발송-기록하기">따라 하기 8 — 승인하고 고객 발송 기록하기<a class="anchor" href="#따라-하기-8-승인하고-고객-발송-기록하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>장진영이 다시 열린 「제안서 검토 및 승인/반려」에서 수정된 제안서를 확인합니다.</li>
+<li>「검토 결과」가 「승인」인지 확인합니다. 「검토 의견」에 <code>설치 일정까지 들어가 좋습니다. 고객에게 보내 주세요.</code>를 입력하고 「제출 완료」를 누릅니다.</li>
+<li>김민지에게 열린 「제안서 고객 발송」을 확인합니다.</li>
+<li>「제안서 고객 발송 입력」 폼의 「제안서」 파일 칸은 이 실습에서 비웁니다. 「검토 결과」 글 칸에 <code>승인 — 설치 일정 포함 수정본 발송</code>을 입력합니다.</li>
+<li>「제출 완료」를 누릅니다.</li>
+</ol>
+<figure><a href="img/gwr-review-approve-filled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="두 번째 검토 — 「검토 결과」의 「승인」과 설치 일정을 확인한 의견" src="img/gwr-review-approve-filled.webp" / loading="lazy" decoding="async"></a><figcaption>두 번째 검토 — 「검토 결과」의 「승인」과 설치 일정을 확인한 의견</figcaption></figure>
+<p>실습에서는 승인 제출 후 약 3초 뒤 김민지에게 「제안서 고객 발송」이 열렸습니다. 이번에는 승인 조건에 맞는 길로 갔습니다.</p>
+<figure><a href="img/gwr-send-filled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="고객 발송 입력 — 이전 작업 입력 내역과 「제안서」 파일 칸, 「검토 결과」 글" src="img/gwr-send-filled.webp" / loading="lazy" decoding="async"></a><figcaption>고객 발송 입력 — 이전 작업 입력 내역과 「제안서」 파일 칸, 「검토 결과」 글</figcaption></figure>
+<p>이 프로세스는 실제 이메일을 보내지 않습니다. 「고객 발송」은 담당자가 보냈다고 기록하는 단계입니다.</p>
+<h2 id="따라-하기-9-전체-완료-확인하기">따라 하기 9 — 전체 완료 확인하기<a class="anchor" href="#따라-하기-9-전체-완료-확인하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>인스턴스 상태가 「COMPLETED」인지 확인합니다.</li>
+<li>장진영 화면의 칸반보드 「완료됨」에서 다섯 카드를 확인합니다.</li>
+<li>검토를 두 번 처리했지만 「제안서 검토 및 승인/반려」 카드는 하나인지 확인합니다.</li>
+</ol>
+<figure><a href="img/gwr-done-kanban.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="완료된 인스턴스 — 「COMPLETED」와 칸반보드 「완료됨」의 다섯 카드" src="img/gwr-done-kanban.webp" / loading="lazy" decoding="async"></a><figcaption>완료된 인스턴스 — 「COMPLETED」와 칸반보드 「완료됨」의 다섯 카드</figcaption></figure>
+<p>「제안서 고객 발송」·「제안서 재작성」·「제안서 작성」의 담당자는 김민지입니다. 「제안서 검토 및 승인/반려」와 「요청사항 입력」은 장진영 화면에서 「내 업무」로 보입니다.</p>
+<p>검토 카드가 하나인 것은 <strong>같은 단계가 다시 열렸기 때문</strong>입니다. 반려 후 재작성과 두 번째 검토를 거쳐, 마지막 고객 발송 단계까지 제출하면서 인스턴스가 끝났습니다.</p>
+<h2 id="다음-장으로">다음 장으로<a class="anchor" href="#다음-장으로" title="Permanent link">#</a></h2>
+<p>검토 결과로 갈라지는 길과 재작성 뒤 검토로 돌아오는 흐름을 실행했습니다. 여기까지 사람이 하는 프로세스를 만들고 실행했습니다. <a href="knowledge.html">8장</a>부터는 AI 에이전트 쪽으로 넘어가, 먼저 에이전트가 근거로 쓸 회사 문서를 지식 베이스에 올립니다. 견적 총액(3,000만 원 미만·이상)으로 갈리는 견적 프로세스는 <a href="agent-steps.html">13장</a>에서 에이전트와 함께 실행합니다.</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>X가 있는 마름모에서는 나가는 화살표를 모두 따라가나요?</li>
+<li>반려하려면 무엇을 바꾸고, 김민지는 어디에서 반려 의견을 읽나요?</li>
+<li>검토를 두 번 했는데 완료된 검토 카드가 하나인 이유는 무엇인가요?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>아닙니다. 배타 게이트웨이는 조건이 맞는 화살표 하나로만 갑니다. 이번에는 반려하면 재작성으로, 승인하면 고객 발송으로 갑니다.</li>
+<li>처음 선택된 「검토 결과」의 「승인」을 「반려」로 바꿉니다. 김민지는 「이전 작업 입력 내역」의 장진영 검토에서 의견을 읽습니다.</li>
+<li>재작성 뒤 같은 검토 단계가 다시 열렸기 때문입니다. 두 번째 검토를 위한 별도 단계가 생긴 것은 아닙니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="process-run.html"><span>이전</span>실행하고 할 일 처리하기</a><a class="next" href="knowledge.html"><span>다음</span>지식 베이스 — 회사 문서를 근거로 답하게 하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT를 로컬에 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#이번에는-갈림길을-넣습니다">이번에는 갈림길을 넣습니다</a></li><li><a href="#따라-하기-1-대화로-프로세스-만들기">따라 하기 1 — 대화로 프로세스 만들기</a></li><li><a href="#따라-하기-2-세-쪽의-확인-창-제출하기">따라 하기 2 — 세 쪽의 확인 창 제출하기</a></li><li><a href="#갈림길과-돌아오는-화살표-읽기">갈림길과 돌아오는 화살표 읽기</a></li><li><a href="#따라-하기-3-레인-담당자-지정하기">따라 하기 3 — 레인 담당자 지정하기</a></li><li><a href="#따라-하기-4-장진영이-고객-요청-입력하기">따라 하기 4 — 장진영이 고객 요청 입력하기</a></li><li><a href="#따라-하기-5-김민지가-제안서-작성하기">따라 하기 5 — 김민지가 제안서 작성하기</a></li><li><a href="#따라-하기-6-장진영이-반려하기">따라 하기 6 — 장진영이 반려하기</a></li><li><a href="#따라-하기-7-김민지가-다시-작성하기">따라 하기 7 — 김민지가 다시 작성하기</a></li><li><a href="#따라-하기-8-승인하고-고객-발송-기록하기">따라 하기 8 — 승인하고 고객 발송 기록하기</a></li><li><a href="#따라-하기-9-전체-완료-확인하기">따라 하기 9 — 전체 완료 확인하기</a></li><li><a href="#다음-장으로">다음 장으로</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
