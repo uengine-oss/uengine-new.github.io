@@ -46,6 +46,31 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+        <style id="ra-media">
+            .ra-card-media { position: relative; display: block; overflow: hidden; cursor: pointer; }
+            .ra-card-media img { transition: transform .3s ease; }
+            .ra-card-media:hover img, .ra-card-media:focus-visible img { transform: scale(1.02); }
+            .ra-media-badge { position: absolute; left: 16px; bottom: 16px; padding: 8px 16px; border-radius: 20px; background: rgba(17,17,17,.82); color: #fff; font-size: 14px; font-weight: 600; pointer-events: none; transition: background .2s; }
+            .ra-card-media:hover .ra-media-badge, .ra-card-media:focus-visible .ra-media-badge { background: #f00; }
+            .ra-modal { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.78); }
+            .ra-modal.open { display: flex; }
+            .ra-modal-box { position: relative; width: min(1100px, 100%); }
+            .ra-modal-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+            .ra-modal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+            .ra-modal-title { color: #fff; font-size: 1rem; font-weight: 600; margin: 0 48px 10px 2px; }
+            .ra-modal-close { position: absolute; right: 0; top: -6px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255,255,255,.15); color: #fff; font-size: 22px; line-height: 36px; cursor: pointer; }
+            .ra-modal-close:hover { background: rgba(255,255,255,.3); }
+            .ra-gal-head { font-size: 1.3rem; font-weight: 700; margin: 10px 0 24px; padding-bottom: 12px; border-bottom: 2px solid #111; }
+            .ra-yt { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #000; cursor: pointer; box-shadow: 0 6px 20px rgba(26,26,46,.12); }
+            .ra-yt img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease, opacity .3s ease; }
+            .ra-yt:hover img, .ra-yt:focus-visible img { transform: scale(1.03); opacity: .85; }
+            .ra-yt-play { position: absolute; left: 50%; top: 50%; width: 64px; height: 44px; margin: -22px 0 0 -32px; border-radius: 12px; background: rgba(20,20,20,.82); }
+            .ra-yt:hover .ra-yt-play { background: #f00; }
+            .ra-yt-play::after { content: ""; position: absolute; left: 26px; top: 13px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent #fff; }
+            .ra-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+            .ra-v-title { font-size: 1.1rem; font-weight: 700; margin: 14px 0 6px; }
+            .ra-v-cap { font-size: .95rem; color: #666; line-height: 1.6; margin: 0; }
+        </style>
     </head>
     
     <body class="appear-animate">
@@ -532,8 +557,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/proposal-new.jpg" alt="자연어 요구사항 입력" style="width: 100%; display: block;" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="2chRz-w1Xvo" data-title="3장 · 프로포절 만들기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/proposal-new.webp" alt="자연어 요구사항 입력" style="width: 100%; display: block;" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -549,7 +574,7 @@
                                             </div>
                                             <div class="feature-item  mb-0">
                                                 <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
-                                                <span class="feature-text">문서 업로드로도 시작 가능</span>
+                                                <span class="feature-text">요구사항 문서로도 시작 가능</span>
                                             </div>
                                             <div class="feature-item  mb-0">
                                                 <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
@@ -562,15 +587,15 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/proposal-diff.jpg" alt="전략적·전술적 Diff" style="width: 100%; display: block;" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="2chRz-w1Xvo" data-title="3장 · 프로포절 만들기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/proposal-diff.webp" alt="전략적·전술적 Diff" style="width: 100%; display: block;" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
                                             프로포절 기반 변경 관리
                                         </h4>
                                         <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">
-                                            입력한 요구사항으로부터 Epic·Feature·User Story(전략적 변경)와 Aggregate·Command·Event(전술적 변경)가 자동 도출됩니다. 모든 변경은 하나의 프로포절로 관리되어 이력을 추적합니다.
+                                            입력한 요구사항으로부터 바운디드 컨텍스트·기능·유저 스토리(전략 설계)와 애그리거트·커맨드·이벤트(전술 설계)가 자동 도출됩니다. 모든 변경은 하나의 프로포절로 관리되어 이력을 추적합니다.
                                         </p>
                                         <div class="testimonials-6-author-feature" style="text-align: left !important;">
                                             <div class="feature-item mt-20 mb-0">
@@ -579,7 +604,7 @@
                                             </div>
                                             <div class="feature-item  mb-0">
                                                 <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
-                                                <span class="feature-text">Epic/Feature/Story 자동 도출</span>
+                                                <span class="feature-text">BC·기능·스토리 자동 도출</span>
                                             </div>
                                             <div class="feature-item  mb-0">
                                                 <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
@@ -592,8 +617,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/impact-map.jpg" alt="변경 영향도 분석 Impact Map" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="q_aU3ZZOf9c" data-title="9장 · 두 번째 프로포절 — 변경 영향도" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/impact-map.webp" alt="변경 영향도 분석 Impact Map" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -622,8 +647,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/stories-bdd.jpg" alt="BDD 인수 조건" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="UnyvHHgfQ1c" data-title="8장 · 설계 둘러보기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/stories-bdd.webp" alt="BDD 인수 조건" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -652,8 +677,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/process-journey.jpg" alt="프로세스·유저 저니" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="UnyvHHgfQ1c" data-title="8장 · 설계 둘러보기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/process-journey.webp" alt="프로세스·유저 저니" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -682,8 +707,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/design-aggregate.jpg" alt="Aggregate 이벤트스토밍 설계" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="UnyvHHgfQ1c" data-title="8장 · 설계 둘러보기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/design-aggregate.webp" alt="Aggregate 이벤트스토밍 설계" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <a id="ra-eventstorming" name="ra-eventstorming"></a>
@@ -713,8 +738,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/sandbox-tasks.jpg" alt="샌드박스 작업 목록" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="xbaFznVapoQ" data-title="6장 · 샌드박스에서 구현하기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/sandbox-tasks.webp" alt="샌드박스 작업 목록" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -743,8 +768,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/claude-skill.jpg" alt="Claude Code 스킬 엔진" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="xbaFznVapoQ" data-title="6장 · 샌드박스에서 구현하기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/claude-skill.webp" alt="Claude Code 스킬 엔진" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -773,8 +798,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/skill-files.jpg" alt="오픈 스킬 파일" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="k6UJg-sq1Ig" data-title="10장 · 스킬 파일로 엔진 바꾸기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/skill-files.webp" alt="오픈 스킬 파일" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -803,8 +828,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/ddd-codegen.jpg" alt="DDD 코드 자동 생성" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="xbaFznVapoQ" data-title="6장 · 샌드박스에서 구현하기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/ddd-codegen.webp" alt="DDD 코드 자동 생성" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <a id="ra-codegen" name="ra-codegen"></a>
@@ -834,8 +859,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/impl-result.jpg" alt="구현 결과 산출물 리포트" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="xbaFznVapoQ" data-title="6장 · 샌드박스에서 구현하기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/impl-result.webp" alt="구현 결과 산출물 리포트" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -864,8 +889,8 @@
 
                             <div class="col-lg-6 d-flex align-items-stretch mb-30">
                                 <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
-                                    <div style="overflow: hidden;">
-                                        <img src="../images/roboarchitect/verify-accept.jpg" alt="검증 및 Accept" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="X7uMBfXB9oM" data-title="7장 · 검증하고 수락하기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/verify-accept.webp" alt="검증 및 Accept" style="width: 100%; display: block;" loading="lazy" decoding="async">
                                     </div>
                                     <div style="padding: 30px 30px 40px;">
                                         <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
@@ -891,10 +916,292 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="4VAm8eH1dE0" data-title="4장 · 프로젝트 헌장 정하기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/constitution.webp" alt="프로젝트 헌장" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    </div>
+                                    <div style="padding: 30px 30px 40px;">
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
+                                            프로젝트 헌장 정하기
+                                        </h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">
+                                            계획을 세우기 전에 설계 원칙·기술 스택·아키텍처 스타일·레포 전략을 헌장(Constitution)으로 한 번 정합니다. Claude Code가 프로포절을 읽고 질문과 추천을 내면 답만 고르면 되고, 이후 Plan의 결정마다 근거가 된 헌장 구절이 붙습니다.
+                                        </p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                            <div class="feature-item mt-20 mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">질문·추천으로 만드는 헌장</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">Plan 결정마다 헌장 근거 표시</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">헌장이 침묵하는 곳은 「헌장 공백」으로</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="Ku1mD08laVU" data-title="13장 · 레거시 코드 분석" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/legacy-analysis.webp" alt="레거시 코드 분석 화면" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    </div>
+                                    <div style="padding: 30px 30px 40px;">
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
+                                            레거시 분석을 근거로 신규 설계
+                                        </h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">
+                                            운영 중인 레거시 시스템(Java·DDL)을 분석해 코드 그래프·비즈니스 규칙·데이터 스키마를 만들고, 새 프로포절이 그 분석을 근거로 설계합니다. 레거시의 규칙과 테이블이 신규 서비스의 인수 조건과 데이터 구조로 이어집니다.
+                                        </p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                            <div class="feature-item mt-20 mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">코드 그래프·비즈니스 규칙 추출</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">테이블·컬럼 데이터 스키마</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">레거시 근거가 붙은 프로포절</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="Xtt9fhm9Esg" data-title="11장 · 데이터 소스 연결 — 데이터 패브릭" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/data-fabric.webp" alt="데이터 소스 연결 화면" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    </div>
+                                    <div style="padding: 30px 30px 40px;">
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
+                                            데이터 패브릭으로 운영 DB 연결
+                                        </h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">
+                                            운영 중인 DB(PostgreSQL·MySQL·MariaDB)를 데이터 소스로 등록하면 실제 테이블이 바로 보이고, 이 연결이 레거시 분석과 데이터 스키마의 원천이 됩니다. Ontological DB와 데이터 패브릭은 데스크톱 앱과 함께 올라옵니다.
+                                        </p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                            <div class="feature-item mt-20 mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">연결 시험 후 데이터 소스 등록</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">실제 테이블 바로 조회</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">레거시 분석·데이터 스키마의 원천</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform 0.3s ease;">
+                                    <div class="ra-card-media" role="button" tabindex="0" data-yt="QL30s-Qju-s" data-title="12장 · 요구사항 문서로 설계 시작하기" data-badge="영상 보기">
+                                        <img src="../images/roboarchitect/doc-ingest.webp" alt="요구사항 문서로 설계 시작 화면" style="width: 100%; display: block;" loading="lazy" decoding="async">
+                                    </div>
+                                    <div style="padding: 30px 30px 40px;">
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 0; text-align: left;">
+                                            요구사항 문서로 설계 시작
+                                        </h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">
+                                            요구사항 문서 한 편을 통째로 새 프로포절에 붙여 넣으면, Claude Code가 문서 전체를 바운디드 컨텍스트·기능·유저 스토리·인수 조건·프로세스로 나눕니다. 긴 기획서도 그대로 설계의 출발점이 됩니다.
+                                        </p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                            <div class="feature-item mt-20 mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">문서를 통째로 붙여 넣기</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">BC·기능·스토리·인수 조건 자동 분해</span>
+                                            </div>
+                                            <div class="feature-item  mb-0">
+                                                <span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                                                <span class="feature-text">내 컴퓨터의 Claude Code로 실행</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
                 <!-- End Section -->
+
+
+                <!-- 영상으로 보기 Section -->
+                <section class="page-section" id="videos">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">영상으로 보기</span>
+                            </h3>
+                            <p class="section-descr mb-60 mb-sm-40 wow fadeInUp">
+                                튜토리얼 장마다 실제 앱 화면으로 만든 설명 영상입니다. 썸네일을 누르면 재생됩니다 — <a href="https://www.youtube.com/playlist?list=PLcEEMmcn-wIM" target="_blank" rel="noopener" style="text-decoration: underline;">재생목록 전체 보기</a> · <a href="../docs/robo-architect/" style="text-decoration: underline;">튜토리얼</a>
+                            </p>
+                        </div>
+                        <h3 class="ra-gal-head">한눈에 보기</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="EAq5rZlH6RQ" aria-label="Robo Architect Lite 전체 둘러보기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/EAq5rZlH6RQ/hqdefault.jpg" alt="Robo Architect Lite 전체 둘러보기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">Robo Architect Lite 전체 둘러보기</h4>
+                                <p class="ra-v-cap">요구사항 한 줄에서 설계·구현·검증·수락, 변경 영향도와 레거시 분석까지 Lite의 흐름을 한 편에 봅니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="835RppWnQvc" aria-label="0장 · 튜토리얼 소개 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/835RppWnQvc/hqdefault.jpg" alt="0장 · 튜토리얼 소개 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">0장 · 튜토리얼 소개</h4>
+                                <p class="ra-v-cap">프로포절 → 헌장 → Plan → 구현 → 검증 → 수락으로 이어지는 튜토리얼 전체 길을 먼저 봅니다.</p>
+                            </div>
+                        </div>
+                        <h3 class="ra-gal-head">시작하기</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="_QeXQRdvAjA" aria-label="1장 · 설치하고 첫 프로젝트 만들기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/_QeXQRdvAjA/hqdefault.jpg" alt="1장 · 설치하고 첫 프로젝트 만들기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">1장 · 설치하고 첫 프로젝트 만들기</h4>
+                                <p class="ra-v-cap">데스크톱 앱을 설치하고, 그래프 DB와 분석 서비스가 함께 올라오는 것을 확인한 뒤 첫 프로젝트를 엽니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="jcBO9QrEdL4" aria-label="2장 · 화면 둘러보기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/jcBO9QrEdL4/hqdefault.jpg" alt="2장 · 화면 둘러보기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">2장 · 화면 둘러보기</h4>
+                                <p class="ra-v-cap">탭 줄과 홈, 프로포절·요구사항·프로세스·설계·데이터·코드·레거시 일곱 화면을 한 바퀴 돕니다.</p>
+                            </div>
+                        </div>
+                        <h3 class="ra-gal-head">프로포절 라이프사이클</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="2chRz-w1Xvo" aria-label="3장 · 프로포절 만들기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/2chRz-w1Xvo/hqdefault.jpg" alt="3장 · 프로포절 만들기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">3장 · 프로포절 만들기</h4>
+                                <p class="ra-v-cap">요구사항 한 줄로 프로포절을 만들고, Claude Code가 나눈 전략 설계와 영향도 맵을 읽습니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="4VAm8eH1dE0" aria-label="4장 · 프로젝트 헌장 정하기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/4VAm8eH1dE0/hqdefault.jpg" alt="4장 · 프로젝트 헌장 정하기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">4장 · 프로젝트 헌장 정하기</h4>
+                                <p class="ra-v-cap">질문과 추천에 답해 설계 원칙·기술 스택·아키텍처 스타일·레포 전략을 헌장으로 정합니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="S8UloNVUEGE" aria-label="5장 · Plan — 전술 설계와 아키텍처 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/S8UloNVUEGE/hqdefault.jpg" alt="5장 · Plan — 전술 설계와 아키텍처 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">5장 · Plan — 전술 설계와 아키텍처</h4>
+                                <p class="ra-v-cap">애그리거트·커맨드·이벤트와 아키텍처 결정이 헌장 근거와 함께 나옵니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="xbaFznVapoQ" aria-label="6장 · 샌드박스에서 구현하기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/xbaFznVapoQ/hqdefault.jpg" alt="6장 · 샌드박스에서 구현하기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">6장 · 샌드박스에서 구현하기</h4>
+                                <p class="ra-v-cap">작업 목록을 만들고, 코드 탭의 Claude Code 셀이 샌드박스 워크트리에서 하나씩 구현합니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="X7uMBfXB9oM" aria-label="7장 · 검증하고 수락하기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/X7uMBfXB9oM/hqdefault.jpg" alt="7장 · 검증하고 수락하기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">7장 · 검증하고 수락하기</h4>
+                                <p class="ra-v-cap">구조 검증과 인수 조건으로 구현을 대조하고, Accept (Dual Merge)로 코드와 설계를 함께 합칩니다.</p>
+                            </div>
+                        </div>
+                        <h3 class="ra-gal-head">설계와 변경</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="UnyvHHgfQ1c" aria-label="8장 · 설계 둘러보기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/UnyvHHgfQ1c/hqdefault.jpg" alt="8장 · 설계 둘러보기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">8장 · 설계 둘러보기</h4>
+                                <p class="ra-v-cap">수락된 설계를 요구사항·프로세스·설계 캔버스·데이터 네 가지 눈으로 봅니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="q_aU3ZZOf9c" aria-label="9장 · 두 번째 프로포절 — 변경 영향도 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/q_aU3ZZOf9c/hqdefault.jpg" alt="9장 · 두 번째 프로포절 — 변경 영향도 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">9장 · 두 번째 프로포절 — 변경 영향도</h4>
+                                <p class="ra-v-cap">새 요구사항이 기존 설계의 무엇을 새로 만들고(CREATE) 무엇을 고치는지(MODIFY) 봅니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="k6UJg-sq1Ig" aria-label="10장 · 스킬 파일로 엔진 바꾸기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/k6UJg-sq1Ig/hqdefault.jpg" alt="10장 · 스킬 파일로 엔진 바꾸기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">10장 · 스킬 파일로 엔진 바꾸기</h4>
+                                <p class="ra-v-cap">SKILL.md에 규칙 한 줄을 더해 엔진의 결과가 바뀌는 것을 비교합니다.</p>
+                            </div>
+                        </div>
+                        <h3 class="ra-gal-head">레거시와 데이터</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="Xtt9fhm9Esg" aria-label="11장 · 데이터 소스 연결 — 데이터 패브릭 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/Xtt9fhm9Esg/hqdefault.jpg" alt="11장 · 데이터 소스 연결 — 데이터 패브릭 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">11장 · 데이터 소스 연결 — 데이터 패브릭</h4>
+                                <p class="ra-v-cap">운영 중인 PostgreSQL을 데이터 소스로 등록하고 실제 테이블을 봅니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="QL30s-Qju-s" aria-label="12장 · 요구사항 문서로 설계 시작하기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/QL30s-Qju-s/hqdefault.jpg" alt="12장 · 요구사항 문서로 설계 시작하기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">12장 · 요구사항 문서로 설계 시작하기</h4>
+                                <p class="ra-v-cap">문서 한 편을 붙여 넣어 바운디드 컨텍스트·기능·스토리·프로세스로 나눕니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="Ku1mD08laVU" aria-label="13장 · 레거시 코드 분석 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/Ku1mD08laVU/hqdefault.jpg" alt="13장 · 레거시 코드 분석 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">13장 · 레거시 코드 분석</h4>
+                                <p class="ra-v-cap">옛 주문 시스템을 분석한 그래프를 근거로 새 기능을 프로포절로 설계합니다.</p>
+                            </div>
+                        </div>
+                        <h3 class="ra-gal-head">마무리</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <button type="button" class="ra-yt" data-yt="89iDfsDUhOo" aria-label="14장 · 종합 과제 — 리뷰 기능 붙이기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/89iDfsDUhOo/hqdefault.jpg" alt="14장 · 종합 과제 — 리뷰 기능 붙이기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="ra-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="ra-v-title">14장 · 종합 과제 — 리뷰 기능 붙이기</h4>
+                                <p class="ra-v-cap">지금까지의 흐름을 혼자서 한 번 끝까지 돌려 봅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End 영상으로 보기 Section -->
 
                 <!-- Divider -->
                 <hr class="mt-0 mb-0"/>
@@ -972,7 +1279,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                                     </div>
                                     <h4 class="features-2-title" style="font-size: 1.3rem;">1. 프로포절 작성</h4>
-                                    <div class="features-2-descr">기획자가 자연어로 요구사항을 입력하면 Epic·Feature·User Story가 자동으로 도출됩니다.</div>
+                                    <div class="features-2-descr">기획자가 자연어로 요구사항을 입력하면 바운디드 컨텍스트·기능·유저 스토리가 자동으로 도출됩니다.</div>
                                 </div>
                             </div>
                             
@@ -1303,6 +1610,53 @@
                 </section>
                 <!-- End Call Action Section -->
 
+                <script>
+                (function () {
+                    // 카드 그림을 누르면 그 기능을 다룬 튜토리얼 장 영상을 창으로 띄운다
+                    var modal = document.createElement('div');
+                    modal.className = 'ra-modal';
+                    modal.setAttribute('role', 'dialog');
+                    modal.setAttribute('aria-modal', 'true');
+                    modal.innerHTML = '<div class="ra-modal-box"><p class="ra-modal-title"></p><button type="button" class="ra-modal-close" aria-label="닫기">&times;</button><div class="ra-modal-frame"></div></div>';
+                    document.body.appendChild(modal);
+                    var frame = modal.querySelector('.ra-modal-frame'), lastFocus = null;
+                    function player(id, title) {
+                        var f = document.createElement('iframe');
+                        f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                        f.title = title;
+                        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                        f.allowFullscreen = true;
+                        return f;
+                    }
+                    function closeVideo() { modal.classList.remove('open'); frame.innerHTML = ''; if (lastFocus) lastFocus.focus(); }
+                    function openVideo(id, title) {
+                        lastFocus = document.activeElement;
+                        modal.querySelector('.ra-modal-title').textContent = title;
+                        frame.innerHTML = '';
+                        frame.appendChild(player(id, title));
+                        modal.classList.add('open');
+                        modal.querySelector('.ra-modal-close').focus();
+                    }
+                    modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('ra-modal-close')) closeVideo(); });
+                    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeVideo(); });
+                    document.querySelectorAll('.ra-card-media').forEach(function (a) {
+                        var badge = document.createElement('span');
+                        badge.className = 'ra-media-badge';
+                        badge.textContent = '▶ ' + a.getAttribute('data-badge');
+                        a.appendChild(badge);
+                        a.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('data-yt'), a.getAttribute('data-title')); });
+                        a.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); a.click(); } });
+                    });
+                    document.querySelectorAll('button.ra-yt').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var w = document.createElement('div');
+                            w.className = 'ra-yt';
+                            w.appendChild(player(btn.getAttribute('data-yt'), btn.getAttribute('aria-label') || 'YouTube video'));
+                            btn.replaceWith(w);
+                        });
+                    });
+                })();
+                </script>
            </main>
             
             <!-- Footer -->
