@@ -229,16 +229,36 @@ PLAYLIST_OVERRIDES = {
 }
 
 
-# A Korean document with an English edition of the same document (file names as they appear in hrefs).
+# A Korean document with an English edition of the same document (site paths as they appear in hrefs).
 DOC_OVERRIDES = {
-    'Robo-Architect-%EC%A0%9C%ED%92%88%EC%86%8C%EA%B0%9C%EC%84%9C-2026.10.pdf': 'Robo-Architect-Brochure-2026.10.pdf',
+    'docs/Robo-Architect-%EC%A0%9C%ED%92%88%EC%86%8C%EA%B0%9C%EC%84%9C-2026.10.pdf': 'docs/Robo-Architect-Brochure-2026.10.pdf',
+    'docs/ProcessGPT-%EC%A0%9C%ED%92%88%EC%86%8C%EA%B0%9C%EC%84%9C-2026.10.pdf': 'docs/ProcessGPT-Brochure-2026.10.pdf',
+    'docs/ProcessGPT-제품소개서-2026.10.pdf': 'docs/ProcessGPT-Brochure-2026.10.pdf',
+    'docs/uEngine-Cloud-product-brochure-2026.09.pdf': 'docs/uEngine-Cloud-Brochure-2026.10.pdf',
+    'images/Ontologic-Autonomous-Enterprise.pdf': 'images/Ontologic-Autonomous-Enterprise-en.pdf',
+    'images/Robo-Analyzer-intro.pdf': 'images/Robo-Analyzer-intro-en.pdf',
+    'images/OpenSource-2.0-Survival-Strategy.pdf': 'images/OpenSource-2.0-Survival-Strategy-en.pdf',
+    'images/uEngine-BPM6-intro.pdf': 'images/uEngine-BPM6-intro-en.pdf',
 }
 
 
 def swap_docs(s):
     for ko, en in DOC_OVERRIDES.items():
-        s = s.replace('/docs/' + ko, '/docs/' + en)
+        s = s.replace('/' + ko + '"', '/' + en + '"')
     return s
+
+
+# Products the English site does not offer: their pages stay reachable by direct link, but the
+# English nav and footer menus leave them out (a menu <li> holding only that link, and a menu
+# group left empty by it).
+EN_MENU_HIDDEN = ('uenginecloud', 'uengine-pal', 'ontologic', 'aitools', 'dreamvibe')
+_MENU_ITEM = re.compile(r'\n?[ \t]*<li>\s*<a href="(?:[^"]*/)?(?:' + '|'.join(re.escape(p) for p in EN_MENU_HIDDEN)
+                        + r')\.html"[^>]*>[^<]*</a>\s*</li>')
+_EMPTY_GROUP = re.compile(r'\n?[ \t]*<span class="mn-group-title"[^>]*>[^<]*</span>\s*<ul>\s*</ul>')
+
+
+def hide_menu_items(s):
+    return _EMPTY_GROUP.sub('', _MENU_ITEM.sub('', s))
 
 
 def swap_videos(s, page):
@@ -330,6 +350,7 @@ def build(page, src, segs, tm):
     s = swap_js(s)
     s = swap_videos(s, page)
     s = swap_docs(s)
+    s = hide_menu_items(s)
     s = swap_inline_images(s, page)
     s = localize_youtube(s)
     # Korean pages link into the English tree as "en/contents/x.html"; inside that tree the
