@@ -14,7 +14,7 @@ import base64
 import importlib.util
 import re, json, sys, os, html as htmlmod
 
-ASSET_DIRS = ('images', 'css', 'js', 'webfonts', 'php', 'docs', 'fonts', 'learning', 'newsletters')
+ASSET_DIRS = ('images', 'css', 'js', 'webfonts', 'php', 'docs', 'fonts', 'learning', 'newsletters', 'media')
 JS_EN = {'js/product-ontology.js', 'js/contact-form.js', 'js/register-form.js'}
 SITE = 'https://www.uengine.org/'
 
@@ -60,7 +60,11 @@ def fix_asset_paths(s, root):
         if d == 'docs' and root:
             # a doc site with its own English edition (en/docs/...) stays inside en/
             path, _, anchor = rest.partition('#')
-            if path.split('/')[0] in EN_DOCS or os.path.exists(os.path.join(root, 'en', 'docs', path.split('?')[0])):
+            site = path.split('/')[0]
+            # EN_DOCS only covers a doc site whose English edition is not on disk yet; once it is,
+            # a chapter that has no English page falls back to the Korean chapter instead of a 404
+            pending = site in EN_DOCS and not os.path.isdir(os.path.join(root, 'en', 'docs', site))
+            if pending or os.path.exists(os.path.join(root, 'en', 'docs', path.split('?')[0])):
                 anchor = DOC_ANCHORS.get(anchor, anchor)
                 return m.group('q') + m.group('rel') + 'docs/' + path + ('#' + anchor if anchor else '')
         if d == 'images' and root:
@@ -200,14 +204,51 @@ YOUTUBE_OVERRIDES = {
     'np3Q9484lYo': 'ajoW9Oxf83g',  # Ontological Studio: run actions (tutorial ch. 16)
     'Lq4ZL_8vMtk': 'gAZZTiakdAA',  # Ontological Studio: code apps (tutorial ch. 18)
     'HBk3WCvYx2c': 'TNdTiwJD8-s',  # 메인 전체 소개 영상(Showcase 나레이션판)
+    # Robo Architect tutorial (docs/robo-architect) chapter videos, KR playlist -> EN playlist
+    '835RppWnQvc': '2Dpz5qE5sHk',  # ch. 0 introduction
+    '_QeXQRdvAjA': 'oe-gnLpasHk',  # ch. 1 install
+    'jcBO9QrEdL4': 'UPTVjqau6dE',  # ch. 2 tour
+    '2chRz-w1Xvo': 'BSrKavdxjlU',  # ch. 3 proposal
+    '4VAm8eH1dE0': 'Hoi9ySeP0qc',  # ch. 4 constitution
+    'S8UloNVUEGE': 'Ea2_dsoDfVc',  # ch. 5 plan
+    'k6UJg-sq1Ig': 'btmWz494WE8',  # ch. 10 skills
+    'Xtt9fhm9Esg': 'snAEMhSsyCU',  # ch. 11 data fabric
+    'QL30s-Qju-s': '4luG6V6Doys',  # ch. 12 requirements document
+    'Ku1mD08laVU': 'eUWHZ1IOkE4',  # ch. 13 legacy
+    '89iDfsDUhOo': 'pifkRAAA1lk',  # ch. 14 final project
+    'xbaFznVapoQ': 'mpKMeJFyT6k',  # ch. 6 implement
+    'X7uMBfXB9oM': 'QgGREx0-krg',  # ch. 7 verify
+    'UnyvHHgfQ1c': 'Z5kojRyuYtY',  # ch. 8 design
+    'q_aU3ZZOf9c': 'sL80KljOC9U',  # ch. 9 change
+    'EAq5rZlH6RQ': 'p_rrviHehd0',  # Robo Architect Lite full tour (product page hero)
 }
+
+# Korean playlist -> English playlist of the same tutorial.
+PLAYLIST_OVERRIDES = {
+    'PLcEEMmcn-wIM': 'PLR2C_G9zElUs',  # Robo Architect tutorial
+}
+
+
+# A Korean document with an English edition of the same document (file names as they appear in hrefs).
+DOC_OVERRIDES = {
+    'Robo-Architect-%EC%A0%9C%ED%92%88%EC%86%8C%EA%B0%9C%EC%84%9C-2026.10.pdf': 'Robo-Architect-Brochure-2026.10.pdf',
+}
+
+
+def swap_docs(s):
+    for ko, en in DOC_OVERRIDES.items():
+        s = s.replace('/docs/' + ko, '/docs/' + en)
+    return s
 
 
 def swap_videos(s, page):
     """Swap a Korean-narrated YouTube video for its English counterpart (on YouTube or hosted here)."""
     for vid, en in YOUTUBE_OVERRIDES.items():
-        s = re.sub(r'(youtube(?:-nocookie)?\.com/embed/|youtu\.be/|youtube\.com/watch\?v=)' + re.escape(vid) + r'\b',
-                   lambda m: m.group(1) + en, s)
+        # embeds, links, gallery thumbnails and click-to-play buttons
+        s = re.sub(r'(youtube(?:-nocookie)?\.com/embed/|youtu\.be/|youtube\.com/watch\?v=|i\.ytimg\.com/vi/|data-yt=")'
+                   + re.escape(vid) + r'\b', lambda m: m.group(1) + en, s)
+    for pl, en in PLAYLIST_OVERRIDES.items():
+        s = re.sub(r'(youtube\.com/playlist\?list=)' + re.escape(pl) + r'\b', lambda m: m.group(1) + en, s)
     up = '../' * (page.count('/') + 1)
     for vid, local in VIDEO_OVERRIDES.items():
         src = up + local
@@ -226,14 +267,17 @@ def pgl_rules(s, page):
 
     - screenshots: images/processgptlite/en/<name>.jpg, falling back to the Korean capture until the
       English one exists
-    - the Lite practitioner AX course has no English page: its links open the English AX training page
     - the in-place player shows YouTube's chrome and captions in English
     - Korean videos are swapped for their English re-recordings as tools/pgl-en-videos.json fills up
     """
     s = re.sub(r'src="((?:\.\./)*)images/processgptlite/([A-Za-z0-9_-]+\.jpg)"',
                lambda m: (f'src="{m.group(1)}images/processgptlite/en/{m.group(2)}" '
                           f'onerror="this.onerror=null;this.src=\'{m.group(1)}images/processgptlite/{m.group(2)}\'"'), s)
-    s = re.sub(r'href="ax-lite-course\.html(?:#[^"]*)?"', 'href="educationax.html"', s)
+    return pgl_videos(s, page)
+
+
+def pgl_videos(s, page):
+    """The Lite videos on the English Lite page and the English Lite course page (ax-lite-course)."""
     s = s.replace("'?autoplay=1&rel=0'", "'?autoplay=1&rel=0&hl=en&cc_lang_pref=en'")
     tool = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'pgl-en-videos.py')
     if os.path.isfile(tool):
@@ -247,6 +291,7 @@ def pgl_rules(s, page):
 # Page-specific rules, applied after the generic passes and before links are resolved.
 PAGE_RULES = {
     'contents/processgptlite.html': pgl_rules,
+    'contents/ax-lite-course.html': pgl_videos,
 }
 
 
@@ -284,11 +329,13 @@ def build(page, src, segs, tm):
     s = fix_asset_paths(s, SITE_ROOT)
     s = swap_js(s)
     s = swap_videos(s, page)
+    s = swap_docs(s)
     s = swap_inline_images(s, page)
     s = localize_youtube(s)
     # Korean pages link into the English tree as "en/contents/x.html"; inside that tree the
     # same link must stay relative to en/ itself, or it would resolve to /en/en/contents/.
     s = re.sub(r'((?:\.\./)*)en/(contents/|index\.html)', lambda m: m.group(1) + m.group(2), s)
+    s = re.sub(r'(href=")((?:\.\./)*)en/docs/', lambda m: m.group(1) + m.group(2) + 'docs/', s)
     if page in PAGE_RULES:
         s = PAGE_RULES[page](s, page)
     s = link_untranslated(s, page, SITE_ROOT)

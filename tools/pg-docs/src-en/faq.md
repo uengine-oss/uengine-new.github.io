@@ -59,7 +59,7 @@
 ## Settings
 
 **The screen changed to Korean.**
-: In ⚙ settings, click **🇰🇷 한국어** at the end of the tab row and choose **🇺🇸 English** ([Chapter 18](settings.html)).
+: In ⚙ settings, click **🇰🇷 Korean** at the end of the tab row and choose **🇺🇸 English** ([Chapter 18](settings.html)).
 
 **Some skill descriptions in the sidebar are in Korean.**
 : They come from the built-in skills' own metadata, not from the screen language. The skills work the same.

@@ -50,13 +50,13 @@ An instance contains several steps. Three completed instances do not mean three 
 
 <ol class="steps" markdown="1">
 <li markdown="1">Scroll to 「FTE Heatmap」.</li>
-<li markdown="1">Read the message in 「Domain별 Sub Process」.</li>
+<li markdown="1">Read the message in 「Sub Process by Domain」.</li>
 <li markdown="1">Check 「Tasks by Department」 and 「Agent vs Human Performance Comparison」.</li>
 </ol>
 
 ![Dashboard middle — FTE and domain messages, department task totals, and performance comparison](img/an-dash-1.webp)
 
-「FTE Heatmap」 shows 「Process × Department」 and 「No FTE data available」. 「Domain별 Sub Process」 shows a total of 0 and 「Set Domain in Process Map」. The word 「별」 remains Korean here; it means “by.”
+「FTE Heatmap」 shows 「Process × Department」 and 「No FTE data available」. 「Sub Process by Domain」 shows a total of 0 and 「Set Domain in Process Map」. The current version may still show this card title half in Korean.
 
 These messages do not mean the completed instances disappeared. The top cards still show three completed instances. Each section needs its own supporting data. This run did not produce an FTE or domain analysis result.
 
@@ -86,10 +86,10 @@ The cycle-time section shows:
 
 | Process | Completion | Average | P95 |
 |---|---|---|---|
-| 「Sales Proposal Approval」 | 2/2, 100% | 「2분」 | 「2분」 |
-| 「Sales Proposal Submission」 | 1/1 | 「35초」 | 「35초」 |
+| 「Sales Proposal Approval」 | 2/2, 100% | 2 min | 2 min |
+| 「Sales Proposal Submission」 | 1/1 | 35 sec | 35 sec |
 
-The time units remain Korean in this section. 「분」 means minutes, and 「초」 means seconds.
+The current version may still show the time units in this section in Korean; read them as minutes and seconds.
 
 「Recent Process Instances」 shows the two approval runs as 143sec and 150sec. The submission run is 35sec. Read the units and rounding with each value.
 
@@ -105,7 +105,7 @@ This is a small practice sample. It can show which captured run took longer. It 
 <li markdown="1">Find the named steps in their process flow before drawing conclusions.</li>
 </ol>
 
-The first entry was 「Send Proposal to Customer」. It showed a wait of 「14초」 and processing of 「26초」 across two cases.
+The first entry was 「Send Proposal to Customer」. It showed a wait of 14 seconds and processing of 26 seconds across two cases.
 
 | Step | Time shown |
 |---|---|
@@ -167,7 +167,7 @@ The node badges show:
 | 「Rewrite Proposal」 | 25sec | 8% |
 | 「Submit Sales Request」 | 11sec | 7% |
 
-「Bottleneck Top 3」 lists 「Review Proposal」, 「Draft Proposal」, and 「Send Proposal to Customer」. Each shows 「2회」. The Korean 「회」 means occurrences or times.
+「Bottleneck Top 3」 lists 「Review Proposal」, 「Draft Proposal」, and 「Send Proposal to Customer」. Each shows a frequency of 2 times. The current version may still show the “times” unit in Korean.
 
 Use the labels and numbers to confirm what the colors suggest. Do not estimate exact times from color alone.
 

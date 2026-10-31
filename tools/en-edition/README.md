@@ -70,9 +70,11 @@ node render_check.mjs en/index.html en/contents/processgpt.html   # SITE_URL ove
   English edition is on disk, because it ships together with the English pages that link to it.
 - **Page-specific rules** (`PAGE_RULES`): the Process GPT Lite page loads its screenshots from
   `images/processgptlite/en/` and falls back to the Korean capture until the English one exists
-  (`tools/pgl-en-images.md`), sends the Lite AX course links to `educationax.html`, and swaps each Korean
-  video for its English re-recording once `tools/pgl-en-videos.json` has an `en_id` for it
-  (`tools/pgl-en-videos.py` does the same swap on the built page without a rebuild).
+  (`tools/pgl-en-images.md`) and swaps each Korean video for its English re-recording once
+  `tools/pgl-en-videos.json` has an `en_id` for it (`tools/pgl-en-videos.py` does the same swap on the
+  built page without a rebuild). The Lite course page (`ax-lite-course.html`) gets the same video swap.
+- A chapter of an `EN_DOCS` site that has no English page yet (its English edition is otherwise on disk)
+  links to the Korean chapter, so label such a link as Korean in the translation.
 - **Pages without an English edition yet** (no `en/<page>` on disk): links to them open the Korean
   page instead of a 404.
 - A KO/EN language switch is inserted into the nav on both sides.

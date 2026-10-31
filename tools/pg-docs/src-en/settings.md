@@ -52,14 +52,14 @@ For now, **Manage Users** lists only you (Jinyoung Jang, **me**, **superAdmin**)
 ## Try it 3 — Change the screen language
 
 <ol class="steps" markdown="1">
-<li markdown="1">Click **🇺🇸 English** at the end of the tab row and choose **🇰🇷 한국어**. The tab names change to 계정 설정, 테마 설정, 사용자 관리 ….</li>
-<li markdown="1">Go to home: the sidebar (대화목록, 에이전트 동료) and the chat box (its example sentences, 딥 에이전트) are in Korean too. The names of the processes and agents you made stay as they are.</li>
-<li markdown="1">Go back to settings, click **🇰🇷 한국어** and switch back to **🇺🇸 English**.</li>
+<li markdown="1">Click **🇺🇸 English** at the end of the tab row and choose **🇰🇷 Korean**. The tab names (「Account Settings」, 「Appearance」, 「Manage Users」 …) change to Korean.</li>
+<li markdown="1">Go to home: the sidebar (「Conversations」, 「Agent Colleagues」) and the chat box (its example sentences, 「Deep Agent」) are in Korean too. The names of the processes and agents you made stay as they are.</li>
+<li markdown="1">Go back to settings, click **🇰🇷 Korean** and switch back to **🇺🇸 English**.</li>
 </ol>
 
-![The language menu at the end of the tab row — 한국어 and English](img/set-lang.webp)
+![The language menu at the end of the tab row — Korean and English](img/set-lang.webp)
 
-![Home after switching to Korean — the sidebar, the example sentences, 딥 에이전트 and 프로세스 정의 체계도 in Korean, while “Sales Proposal Creation” and the agents you made keep their names](img/set-english-home.webp)
+![Home after switching to Korean — the sidebar, the example sentences, Deep Agent and the Process Definition Map in Korean, while “Sales Proposal Creation” and the agents you made keep their names](img/set-english-home.webp)
 
 ## Next chapter
 
@@ -74,5 +74,5 @@ The next chapter is the final project, where you build Hanbit Office A/S intake 
 
 1. Have them sign up themselves at the same address (http://localhost:8088) with **Create an account**. A local install doesn't send invitation emails.
 2. No. Only Jinyoung Jang, who signed up first, is an admin; Minji Kim joins as a regular user.
-3. In ⚙ settings, click **🇰🇷 한국어** at the end of the tab row and choose **🇺🇸 English**.
+3. In ⚙ settings, click **🇰🇷 Korean** at the end of the tab row and choose **🇺🇸 English**.
 </details>

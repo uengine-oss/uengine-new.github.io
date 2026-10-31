@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan — tactical design and architecture — Robo Architect Tutorial</title>
+<meta name="description" content="Based on the constitution, Claude Code sets the proposal&#x27;s tactical design (aggregates · commands · events · read models) and its architecture decisions (deployment · data access · API contracts · authentication · test strategy). Each decision cites the constitution passage it rests on, and areas the constitution is silent on surface as a “Constitution Gap”.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/plan.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plan — tactical design and architecture — Robo Architect Tutorial">
+<meta property="og:description" content="Based on the constitution, Claude Code sets the proposal&#x27;s tactical design (aggregates · commands · events · read models) and its architecture decisions (deployment · data access · API contracts · authentication · test strategy). Each decision cites the constitution passage it rests on, and areas the constitution is silent on surface as a “Constitution Gap”.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/plan.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html" class="on" aria-current="page"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">The proposal lifecycle<span class="chap">5</span></div>
+    <h1>Plan — tactical design and architecture</h1>
+    <article>
+<blockquote>
+<p>Based on the constitution, Claude Code sets the proposal's tactical design (aggregates · commands · events · read models) and its architecture decisions (deployment · data access · API contracts · authentication · test strategy). Each decision cites the constitution passage it rests on, and areas the constitution is silent on surface as a “Constitution Gap”.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/Ea2_dsoDfVc" title="Plan — tactical design and architecture — video 4:24" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-a-plan">Why a plan<a class="anchor" href="#why-a-plan" title="Permanent link">#</a></h2>
+<p>The strategic design (Chapter 3) is the “what”. To implement it, you need the “how”. The <strong>plan</strong> decides two things.</p>
+<ul>
+<li><strong>Tactical design</strong> — the building blocks of DDD: aggregates (the unit that keeps consistency), commands (requests that change state), events (facts that happened) and read models (models for queries)</li>
+<li><strong>Architecture decisions</strong> — things like deployment units, data access, API contracts, authentication and test strategy. Each decision states which passage of the constitution it came from</li>
+</ul>
+<h2 id="hands-on-1-generate-the-plan">Hands-on 1 — Generate the plan<a class="anchor" href="#hands-on-1-generate-the-plan" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In the <strong>Plan</strong> section of <code>PRO-001</code>, click <strong>Generate Plan</strong> (if you just created the constitution, it starts by itself).</li>
+<li>“Claude is drafting the tactical breakdown and architecture plan…” and the elapsed time appear. It usually takes 5–12 minutes; in this tutorial it took <strong>about 11½ minutes</strong> (693 seconds, counted from the moment the constitution was saved).</li>
+</ol>
+<figure><a href="img/plan-03-running-0313.webp" target="_blank" rel="noopener" title="View larger"><img alt="Generating the plan — elapsed time, “Usually takes 5–12 minutes”, and the warning that reloading or moving to another screen starts over" src="img/plan-03-running-0313.webp" / loading="lazy" decoding="async"></a><figcaption>Generating the plan — elapsed time, “Usually takes 5–12 minutes”, and the warning that reloading or moving to another screen starts over</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">Stay on that screen while it generates</p>
+<p>Plan generation works by having the screen receive the result as it streams, so reloading during generation, or moving to another screen in that tab, starts it over from the beginning. If you want to do something else, open a <strong>new tab</strong> from Home.</p>
+</div>
+<h2 id="hands-on-2-read-the-plan">Hands-on 2 — Read the plan<a class="anchor" href="#hands-on-2-read-the-plan" title="Permanent link">#</a></h2>
+<p>When generation finishes, the progress log is at the top, followed by <strong>Architecture Decisions (Constitution-based)</strong>, <strong>Constitution Gap</strong>, <strong>Tactical Design</strong>, and a summary.</p>
+<figure><a href="img/plan-04-result.webp" target="_blank" rel="noopener" title="View larger"><img alt="Plan result — the progress log (one “tactical” line per element) and the start of the architecture decisions" src="img/plan-04-result.webp" / loading="lazy" decoding="async"></a><figcaption>Plan result — the progress log (one “tactical” line per element) and the start of the architecture decisions</figcaption></figure>
+<h3 id="architecture-decisions">Architecture decisions<a class="anchor" href="#architecture-decisions" title="Permanent link">#</a></h3>
+<p>Each decision shows, next to its title, the constitution sections it rests on (e.g. <code>↳ Architecture (Deployment environment); VII. Simplicity; Technology Constraints (Datastore)</code>). This time there were eleven decisions; here are some of them.</p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Content</th>
+<th>Based on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deployment Env</td>
+<td>One Node.js LTS process runs Express; it serves the REST API under <code>/api</code> and the built React assets, packaged as one container image with one SQLite file on a persistent volume</td>
+<td>Architecture, VII, Technology Constraints</td>
+</tr>
+<tr>
+<td>Ingress · Service Mesh / Framework</td>
+<td>N/A, it's a monolith. Express with TypeScript strict mode; each module is layered domain → application → infrastructure → interface, and Ordering calls only Menu Management's published <code>MenuCatalogQuery</code> port (<code>OrderableMenuItems</code>), in-process</td>
+<td>Architecture, I, Technology Constraints</td>
+</tr>
+<tr>
+<td>Repo Mapping</td>
+<td>Monorepo with npm workspaces: <code>backend/src/modules/menu-management</code>, <code>backend/src/modules/ordering</code>, <code>backend/migrations</code>, <code>frontend/</code></td>
+<td>Repository Strategy</td>
+</tr>
+<tr>
+<td>LIBRARIES (data access, tests)</td>
+<td>better-sqlite3 with hand-written SQL (no ORM); state-changing commands run in <code>BEGIN IMMEDIATE</code> transactions that re-check the state, so a conflicting AcceptOrder and CancelOrder can't both succeed; Vitest (test-first) · Supertest · React Testing Library</td>
+<td>Technology Constraints, VI</td>
+</tr>
+<tr>
+<td>API_ERROR_MAPPING</td>
+<td>Domain errors map to explicit 4xx: invalid input 400, not your store or order 403, sold out · different store · items changed · illegal transition 409, unknown 404</td>
+<td>Technology Constraints (API style)</td>
+</tr>
+<tr>
+<td>AUTHENTICATION</td>
+<td>A middleware resolves <code>ActorContext {actorId, role, ownedStoreIds}</code> and the services check role and ownership; how users log in and who owns which store is left open, with a development stub for now</td>
+<td>none — marked <strong>Constitution Gap</strong> (see below)</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/plan-05-scroll-3.webp" target="_blank" rel="noopener" title="View larger"><img alt="Architecture decisions — Deployment Env · Ingress · Service Mesh / Framework, each with the constitution sections it rests on" src="img/plan-05-scroll-3.webp" / loading="lazy" decoding="async"></a><figcaption>Architecture decisions — Deployment Env · Ingress · Service Mesh / Framework, each with the constitution sections it rests on</figcaption></figure>
+<h3 id="constitution-gap">Constitution Gap<a class="anchor" href="#constitution-gap" title="Permanent link">#</a></h3>
+<p>Areas the plan needs but the constitution doesn't decide appear in a yellow box. This time it was <strong>AUTHENTICATION</strong> — how users are identified and where “which store owner owns which store” comes from are in neither the constitution nor the proposal's user stories, so the plan used a development stub for now and left it as a gap. Handle such gaps by extending the constitution or in a later proposal (for example, sign-in and store registration).</p>
+<figure><a href="img/plan-05-gap.webp" target="_blank" rel="noopener" title="View larger"><img alt="Constitution Gap — the AUTHENTICATION decision tagged “Constitution Gap”, and the yellow box listing it" src="img/plan-05-gap.webp" / loading="lazy" decoding="async"></a><figcaption>Constitution Gap — the AUTHENTICATION decision tagged “Constitution Gap”, and the yellow box listing it</figcaption></figure>
+<h3 id="tactical-design">Tactical design<a class="anchor" href="#tactical-design" title="Permanent link">#</a></h3>
+<p>Tactical Design lists what to build (CREATE) with a priority (HIGH/MEDIUM). This time there were 28 items — 3 aggregates, 10 commands, 10 events and 5 read models.</p>
+<table>
+<thead>
+<tr>
+<th>Aggregate</th>
+<th>Command → event</th>
+<th>Read models</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MenuItem</strong> (Menu Management)</td>
+<td>RegisterMenuItem → MenuItemRegistered · ChangeMenuItemPrice → MenuItemPriceChanged · MarkMenuItemSoldOut → MenuItemMarkedSoldOut · MarkMenuItemAvailable → MenuItemMarkedAvailable</td>
+<td>StoreMenu · OrderableMenuItems</td>
+</tr>
+<tr>
+<td><strong>OrderDraft</strong> (Ordering)</td>
+<td>PickMenuItem → MenuItemPicked · ChangePickedItemQuantity → PickedItemQuantityChanged · RemovePickedItem → PickedItemRemoved</td>
+<td>OrderDraftSummary</td>
+</tr>
+<tr>
+<td><strong>Order</strong> (Ordering)</td>
+<td>PlaceOrder → OrderPlaced · AcceptOrder → OrderAccepted · CancelOrder → OrderCancelled</td>
+<td>IncomingOrders · MyOrderStatus</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/plan-05-tactical.webp" target="_blank" rel="noopener" title="View larger"><img alt="Tactical Design — CREATE Aggregate MenuItem · Command RegisterMenuItem · Event MenuItemRegistered …, “Open” to preview on the design canvas" src="img/plan-05-tactical.webp" / loading="lazy" decoding="async"></a><figcaption>Tactical Design — CREATE Aggregate MenuItem · Command RegisterMenuItem · Event MenuItemRegistered …, “Open” to preview on the design canvas</figcaption></figure>
+<p>Click <strong>Open</strong> to the right of an item to show that element on the design canvas as a preview. “OrderableMenuItems” is what the ordering module asks the menu module for, through the menu module's published port (MenuCatalogQuery) — this is constitution principle I (a module talks to another only through its published interface) carried down into the tactical design. “OrderDraft” is the order being put together before it is placed, so the picking rules (available items only, one store per order) have their own aggregate.</p>
+<h2 id="hands-on-3-confirm-the-plan">Hands-on 3 — Confirm the plan<a class="anchor" href="#hands-on-3-confirm-the-plan" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Scroll to the bottom, read the summary, and click <strong>Confirm Plan</strong>.</li>
+<li>“✓ Plan has been confirmed.” appears. The proposal's status is <strong>SUBMITTED</strong> (listed under <strong>PLAN</strong>; it got there when you clicked <strong>Proceed to Plan →</strong>), and <strong>Open Sandbox Implementation</strong> appears below (Chapter 6).</li>
+</ol>
+<figure><a href="img/plan-06-confirmed.webp" target="_blank" rel="noopener" title="View larger"><img alt="Plan confirmed — the impact list, the summary, “Plan has been confirmed”, Open Sandbox Implementation" src="img/plan-06-confirmed.webp" / loading="lazy" decoding="async"></a><figcaption>Plan confirmed — the impact list, the summary, “Plan has been confirmed”, Open Sandbox Implementation</figcaption></figure>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>The plan has architecture decisions, each citing the constitution section it rests on.</li>
+<li>Tactical Design has the aggregates MenuItem · OrderDraft · Order.</li>
+<li>You confirmed the plan and <strong>Open Sandbox Implementation</strong> is visible.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>What is a mark like <code>↳ VII. Simplicity</code> next to an architecture decision?</li>
+<li>A “Constitution Gap” appeared. Can you ignore it and carry on?</li>
+<li>How do you look at another screen while the plan is generating?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>The constitution section the decision rests on. It lets you trace where in the constitution each decision came from.</li>
+<li>You can carry on. But it means the plan decided that area provisionally, so it's better to extend the constitution or handle it in a later proposal.</li>
+<li>Open a new tab from Home. Reloading the tab that is generating, or moving to another screen in that tab, starts generation over.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="constitution.html"><span>Previous</span>Set the project constitution</a><a class="next" href="implement.html"><span>Next</span>Implement in a sandbox</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-a-plan">Why a plan</a></li><li><a href="#hands-on-1-generate-the-plan">Hands-on 1 — Generate the plan</a></li><li><a href="#hands-on-2-read-the-plan">Hands-on 2 — Read the plan</a><ul><li><a href="#architecture-decisions">Architecture decisions</a></li><li><a href="#constitution-gap">Constitution Gap</a></li><li><a href="#tactical-design">Tactical design</a></li></ul></li><li><a href="#hands-on-3-confirm-the-plan">Hands-on 3 — Confirm the plan</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robo Architect Tutorial — Robo Architect Tutorial</title>
+<meta name="description" content="A hands-on guide to the Robo Architect Lite desktop app, step by step from scratch: turn a one-line requirement into a proposal, break it down with domain-driven design (DDD), set a project constitution and a plan, have Claude Code implement it in a sandbox, then validate it against acceptance criteria and merge it back into the design.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Robo Architect Tutorial — Robo Architect Tutorial">
+<meta property="og:description" content="A hands-on guide to the Robo Architect Lite desktop app, step by step from scratch: turn a one-line requirement into a proposal, break it down with domain-driven design (DDD), set a project constitution and a plan, have Claude Code implement it in a sandbox, then validate it against acceptance criteria and merge it back into the design.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Getting started<span class="chap"></span></div>
+    <h1>Robo Architect Tutorial</h1>
+    <article>
+<blockquote>
+<p>A hands-on guide to the Robo Architect Lite desktop app, step by step from scratch: turn a one-line requirement into a proposal, break it down with domain-driven design (DDD), set a project constitution and a plan, have Claude Code implement it in a sandbox, then validate it against acceptance criteria and merge it back into the design.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/2Dpz5qE5sHk" title="Robo Architect Tutorial — video 3:25" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-robo-architect-is">What Robo Architect is<a class="anchor" href="#what-robo-architect-is" title="Permanent link">#</a></h2>
+<p>Robo Architect is a <strong>spec-driven development (SDD) tool</strong>. The spec, not the code, is the source of truth. You write requirements in plain language, and AI breaks them down into the vocabulary of domain-driven design (DDD) — bounded contexts, aggregates, commands, events, and acceptance criteria in Given-When-Then form. Claude Code writes the code from that design, and the finished code is checked against the design again.</p>
+<p>Every change is handled as one <strong>proposal</strong>. A proposal moves through these stages.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What happens</th>
+<th>In this tutorial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INTENT</td>
+<td>Breaks a plain-language requirement into a strategic design (processes, bounded contexts, features, user stories, acceptance criteria)</td>
+<td>Chapter 3</td>
+</tr>
+<tr>
+<td>PLAN</td>
+<td>Decides the tactical design, architecture and impact, based on the project constitution</td>
+<td>Chapters 4 · 5</td>
+</tr>
+<tr>
+<td>IMPLEMENTING</td>
+<td>Claude Code implements it in a separate Git worktree (the sandbox)</td>
+<td>Chapter 6</td>
+</tr>
+<tr>
+<td>VALIDATING · Pending Acceptance</td>
+<td>Runs structural validation and acceptance-criteria tests</td>
+<td>Chapter 7</td>
+</tr>
+<tr>
+<td>ACCEPTED</td>
+<td>On acceptance, the code is merged into the main branch and written into the design graph</td>
+<td>Chapter 7</td>
+</tr>
+</tbody>
+</table>
+<p>This tutorial uses <strong>Robo Architect Lite</strong>, a desktop app you use on your own computer. It stores the design not in Neo4j but in a graph in <strong>Ontological DB</strong>, one graph per project. There is no sign-in screen, and AI work is done by Claude Code on your computer.</p>
+<h2 id="the-story">The story<a class="anchor" href="#the-story" title="Permanent link">#</a></h2>
+<p>You will build <strong>Hanbit Delivery</strong>, a delivery service that connects neighborhood restaurants with customers. You play <strong>Jinyoung Jang</strong>, who is in charge of designing the service.</p>
+<table>
+<thead>
+<tr>
+<th>Who</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jinyoung Jang</td>
+<td>Hanbit Delivery's architect — the person you play in this tutorial</td>
+</tr>
+<tr>
+<td>Store owner</td>
+<td>Registers the store's menu items and accepts incoming orders</td>
+</tr>
+<tr>
+<td>Customer</td>
+<td>Picks menu items and orders, and can cancel before the store accepts</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>The AI teammate that follows skills to break down the design, make the plan and write the code</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>Getting started</strong> — install the app, create your first project and tour the screens.</li>
+<li><strong>The proposal lifecycle</strong> — turn the “register menu items and order” requirement into a proposal and get a strategic design, set the project constitution and make a plan, then implement in a sandbox, validate and accept.</li>
+<li><strong>Design and change</strong> — view the accepted design in the Requirements, Process, Design and Data tabs, read how a second requirement affects the existing design in the Impact Map, and look inside the engine's skill files.</li>
+<li><strong>Legacy and data</strong> — connect Hanbit Delivery's existing order DB as a data source, start a design from a requirements document, and analyze the old order system's code to design a new feature on the evidence of its business rules.</li>
+<li><strong>Final project</strong> — add a review feature yourself, from start to finish.</li>
+</ol>
+<h2 id="learning-path">Learning path<a class="anchor" href="#learning-path" title="Permanent link">#</a></h2>
+<div class="cards" markdown="0">
+<a href="install.html"><b>Getting started</b><span>Installation and your first project, a tour of the screens</span></a>
+<a href="proposal.html"><b>The proposal lifecycle</b><span>Create a proposal, constitution, plan, sandbox implementation, validation and acceptance</span></a>
+<a href="design.html"><b>Design and change</b><span>Design tour, the change impact of a second proposal, changing the engine with skill files</span></a>
+<a href="fabric.html"><b>Legacy and data</b><span>Connect data sources, start a design from a requirements document, analyze legacy code and design on its evidence</span></a>
+<a href="project.html"><b>Final project</b><span>Capstone — a review feature</span></a>
+</div>
+
+<p>Each chapter follows the order <strong>why → hands-on → quiz</strong>. Later chapters build on what you made in earlier ones, so it's best to follow them in order. The quiz answers are folded; try the questions yourself first, then expand them.</p>
+<h2 id="who-this-tutorial-is-for">Who this tutorial is for<a class="anchor" href="#who-this-tutorial-is-for" title="Permanent link">#</a></h2>
+<ul>
+<li>Developers who have built a web service at least once, or planners and architects who work with requirements and design.</li>
+<li>You don't need to know DDD. Terms like bounded context and aggregate are explained in the chapter where they first appear.</li>
+<li>You won't write code yourself. Claude Code writes it. You read, choose and check the design.</li>
+</ul>
+<h2 id="what-you-need">What you need<a class="anchor" href="#what-you-need" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Computer</td>
+<td>macOS or Windows 10/11. 16 GB of memory or more, 20 GB of free disk space or more</td>
+</tr>
+<tr>
+<td>Docker Desktop</td>
+<td>The graph DB and analysis services run as containers. It must be running</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td><code>claude</code> must run in a terminal and be signed in. All AI work in a proposal runs through it</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>Creates the project folder and the sandbox worktrees</td>
+</tr>
+</tbody>
+</table>
+<h2 id="about-the-screens-in-this-tutorial">About the screens in this tutorial<a class="anchor" href="#about-the-screens-in-this-tutorial" title="Permanent link">#</a></h2>
+<p>Every screen and result in this tutorial comes from actually running the Robo Architect Lite desktop app (macOS) in English. AI-generated designs and code differ a little on every run, so the text on your screen doesn't have to match the pictures exactly. It's enough that the items listed under <strong>What to check</strong> in each chapter are there.</p>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="install.html"><span>Next</span>Install and create your first project</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-robo-architect-is">What Robo Architect is</a></li><li><a href="#the-story">The story</a></li><li><a href="#learning-path">Learning path</a></li><li><a href="#who-this-tutorial-is-for">Who this tutorial is for</a></li><li><a href="#what-you-need">What you need</a></li><li><a href="#about-the-screens-in-this-tutorial">About the screens in this tutorial</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

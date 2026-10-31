@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect data sources — the data fabric — Robo Architect Tutorial</title>
+<meta name="description" content="Register the old order DB (PostgreSQL) that Hanbit Delivery uses today as a data source in the Legacy tab. Once you test and create the connection, the DB&#x27;s real tables show up right away, and this connection becomes the source for legacy analysis and the data schema.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/fabric.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Connect data sources — the data fabric — Robo Architect Tutorial">
+<meta property="og:description" content="Register the old order DB (PostgreSQL) that Hanbit Delivery uses today as a data source in the Legacy tab. Once you test and create the connection, the DB&#x27;s real tables show up right away, and this connection becomes the source for legacy analysis and the data schema.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/fabric.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html" class="on" aria-current="page"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Legacy and data<span class="chap">11</span></div>
+    <h1>Connect data sources — the data fabric</h1>
+    <article>
+<blockquote>
+<p>Register the old order DB (PostgreSQL) that Hanbit Delivery uses today as a data source in the Legacy tab. Once you test and create the connection, the DB's real tables show up right away, and this connection becomes the source for legacy analysis and the data schema.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/snAEMhSsyCU" title="Connect data sources — the data fabric — video 4:22" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-data-sources">Why data sources<a class="anchor" href="#why-data-sources" title="Permanent link">#</a></h2>
+<p>A new system isn't built on empty ground. Hanbit Delivery already has an old DB holding stores · menus · orders · deliveries, and the new design has to fit with it. If you design without knowing which tables exist or which values the order status is stored as, you'll get stuck when you migrate.</p>
+<p>Robo Architect Lite comes with a <strong>data fabric</strong> (Ontological's fabric · catalog containers). Register your company's DB here once as a <strong>data source</strong>, and you can see its tables inside the app without opening the DB directly, while legacy analysis (Chapter 13) reads its structure.</p>
+<table>
+<thead>
+<tr>
+<th>Legacy tab rail</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Code</strong></td>
+<td>View the old system's source code · DDL folder and start an analysis (Chapter 13)</td>
+</tr>
+<tr>
+<td><strong>Data sources</strong></td>
+<td>Register · test DB connections and see the real tables (this chapter)</td>
+</tr>
+<tr>
+<td><strong>Code graph</strong></td>
+<td>Call · reference relationships of the analyzed code</td>
+</tr>
+<tr>
+<td><strong>Data schema</strong></td>
+<td>Tables, columns and relationships on a canvas. Filled from DDL definitions · code analysis · user input</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hands-on-1-start-the-practice-legacy-db">Hands-on 1 — Start the practice legacy DB<a class="anchor" href="#hands-on-1-start-the-practice-legacy-db" title="Permanent link">#</a></h2>
+<p>For the exercise you'll use a small PostgreSQL that imitates Hanbit Delivery's old order DB. It has seven tables (<code>store</code> stores · <code>menu</code> menu items · <code>customer</code> customers · <code>orders</code> orders · <code>order_item</code> order items · <code>rider</code> riders · <code>delivery</code> deliveries) and sample data.</p>
+<ol class="steps">
+<li>Download <a href="files/legacy-delivery.sql">legacy-delivery.sql</a>.</li>
+<li>Start a PostgreSQL container in a terminal (you installed Docker Desktop in Chapter 1).
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ra-tut-legacy-pg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">POSTGRES_USER</span><span class="o">=</span>legacy<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>legacy1234<span class="w"> </span>-e<span class="w"> </span><span class="nv">POSTGRES_DB</span><span class="o">=</span>hanbit<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:25433:5432<span class="w"> </span>postgres:16-alpine
+</code></pre></div>
+
+
+</li>
+<li>A few seconds later, load the schema and data from the folder where you downloaded the file.
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>ra-tut-legacy-pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>legacy<span class="w"> </span>-d<span class="w"> </span>hanbit<span class="w"> </span>&lt;<span class="w"> </span>legacy-delivery.sql
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ra-tut-legacy-pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>legacy<span class="w"> </span>-d<span class="w"> </span>hanbit<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;\dt delivery.*&#39;</span>
+</code></pre></div>
+
+
+</li>
+<li>When the last command lists the 7 tables of the <code>delivery</code> schema (<code>customer</code> … <code>store</code>), you're ready.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Port 25433</p>
+<p>Your PC may already have PostgreSQL running on port 5432, so the practice DB uses 25433. Because of the <code>127.0.0.1:</code> prefix, it can't be reached from outside this PC.</p>
+</div>
+<h2 id="hands-on-2-register-the-data-source">Hands-on 2 — Register the data source<a class="anchor" href="#hands-on-2-register-the-data-source" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>On Home, open the <strong>Legacy · Data Sources</strong> card. The Legacy tab's rail has only the Legacy menu — Code · Data sources · Code graph · Data schema.</li>
+<li>Click <strong>Data sources</strong>. At first it says “No data sources registered yet”, and the count at the top right is <strong>0 Connected</strong>.</li>
+</ol>
+<figure><a href="img/fabric-02-sources.webp" target="_blank" rel="noopener" title="View larger"><img alt="Data Sources — “No data sources registered yet”, 0 Connected, Add new connection" src="img/fabric-02-sources.webp" / loading="lazy" decoding="async"></a><figcaption>Data Sources — “No data sources registered yet”, 0 Connected, Add new connection</figcaption></figure>
+<ol class="steps" start="3">
+<li>Click <strong>Add new connection</strong>, and the <strong>New data source</strong> dialog shows the types you can use. For now, these are three relational databases (PostgreSQL · MySQL · MariaDB). Choose <strong>PostgreSQL</strong>.</li>
+</ol>
+<figure><a href="img/fabric-03-types.webp" target="_blank" rel="noopener" title="View larger"><img alt="New data source — type search, “3 data source types available”, Relational databases: PostgreSQL · MySQL · MariaDB" src="img/fabric-03-types.webp" / loading="lazy" decoding="async"></a><figcaption>New data source — type search, “3 data source types available”, Relational databases: PostgreSQL · MySQL · MariaDB</figcaption></figure>
+<ol class="steps" start="4">
+<li>In the <strong>PostgreSQL connection</strong> dialog, enter the following.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection name</td>
+<td><code>hanbit_legacy</code></td>
+<td>The name used inside the app</td>
+</tr>
+<tr>
+<td>Host</td>
+<td><code>host.docker.internal</code></td>
+<td>The data fabric runs inside a container, so to point to your PC use this name instead of <code>localhost</code></td>
+</tr>
+<tr>
+<td>Port</td>
+<td><code>25433</code></td>
+<td>The port you opened in Hands-on 1</td>
+</tr>
+<tr>
+<td>Username / Password</td>
+<td><code>legacy</code> / <code>legacy1234</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Database</td>
+<td><code>hanbit</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Schema</td>
+<td><code>delivery</code></td>
+<td>If left empty, <code>public</code> is used</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/fabric-04-form.webp" target="_blank" rel="noopener" title="View larger"><img alt="PostgreSQL connection — Connection name · Host · Port · Username · Password · Database · Schema" src="img/fabric-04-form.webp" / loading="lazy" decoding="async"></a><figcaption>PostgreSQL connection — Connection name · Host · Port · Username · Password · Database · Schema</figcaption></figure>
+<ol class="steps" start="5">
+<li>Click <strong>Test connection</strong>. When “✓ Connected to the database.” appears, click <strong>Create connection</strong>.</li>
+</ol>
+<figure><a href="img/fabric-05-tested.webp" target="_blank" rel="noopener" title="View larger"><img alt="Connection test succeeded — “✓ Connected to the database.”, with the Test connection · Create connection buttons just below" src="img/fabric-05-tested.webp" / loading="lazy" decoding="async"></a><figcaption>Connection test succeeded — “✓ Connected to the database.”, with the Test connection · Create connection buttons just below</figcaption></figure>
+<div class="admonition warning">
+<p class="admonition-title">If you put localhost in Host</p>
+<p>The connection test fails. <code>localhost</code> inside a container is the data fabric container itself. For a DB on another server, like a company DB, use that server's address as it is.</p>
+</div>
+<h2 id="hands-on-3-see-the-real-tables">Hands-on 3 — See the real tables<a class="anchor" href="#hands-on-3-see-the-real-tables" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>A <code>hanbit_legacy</code> card (POSTGRES, <code>host.docker.internal</code> · <code>hanbit</code>) appears in the list, and the count at the top right becomes <strong>1 Connected</strong>.</li>
+<li>Click the card, and the <strong>Live DB tables</strong> panel opens below with the tables of the <code>delivery</code> schema.</li>
+</ol>
+<figure><a href="img/fabric-07-tables.webp" target="_blank" rel="noopener" title="View larger"><img alt="The hanbit_legacy card opened — HANBIT_LEGACY · POSTGRES, Live DB tables customer · delivery · menu · order_item (orders · rider · store further down)" src="img/fabric-07-tables.webp" / loading="lazy" decoding="async"></a><figcaption>The hanbit_legacy card opened — HANBIT_LEGACY · POSTGRES, Live DB tables customer · delivery · menu · order_item (orders · rider · store further down)</figcaption></figure>
+<p>The tables in this tutorial were the seven <code>customer</code> · <code>delivery</code> · <code>menu</code> · <code>order_item</code> · <code>orders</code> · <code>rider</code> · <code>store</code>, the same ones you loaded in Hands-on 1. The app connected to the DB directly and read the list.</p>
+<h2 id="when-does-the-data-schema-fill-up">When does the data schema fill up?<a class="anchor" href="#when-does-the-data-schema-fill-up" title="Permanent link">#</a></h2>
+<p>Click <strong>Data schema</strong> on the rail, and it still shows <strong>TABLE 0</strong> and “The canvas is empty”. As the <strong>METADATA SOURCE</strong> legend on the right (DDL definition · Code analysis · User input) suggests, this canvas is filled with the results of <strong>analyzing</strong> the old system's DDL and code. You do the analysis in Chapter 13, “Analyze legacy code”.</p>
+<figure><a href="img/fabric-08-schema.webp" target="_blank" rel="noopener" title="View larger"><img alt="Data schema — TABLE 0, “The canvas is empty”, METADATA SOURCE: DDL definition · Code analysis · User input" src="img/fabric-08-schema.webp" / loading="lazy" decoding="async"></a><figcaption>Data schema — TABLE 0, “The canvas is empty”, METADATA SOURCE: DDL definition · Code analysis · User input</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">Old DB and new design side by side</p>
+<p>In the Chapter 5 plan, the Order aggregate starts in “Awaiting acceptance” (the constitution's Placed state) and moves only to Accepted or Cancelled. The old <code>orders.status</code> holds values such as <code>DELIVERED</code> · <code>DELIVERING</code> · <code>COOKING</code> · <code>REJECTED</code>. How to map these values when you migrate is a good topic for the next proposal.</p>
+</div>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li><code>hanbit_legacy</code> is in the data source list, showing “1 Connected”.</li>
+<li>Clicking the card shows the 7 live DB tables.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>Why do you use <code>host.docker.internal</code> instead of <code>localhost</code> in the Host field?</li>
+<li>What's the difference between <strong>Test connection</strong> and <strong>Create connection</strong>?</li>
+<li>You registered a data source, but the data schema is empty. Is it broken?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>Because the side that connects to the DB is the data fabric inside a container. Inside a container, <code>localhost</code> is that container itself, and your PC is <code>host.docker.internal</code>.</li>
+<li>Test connection only tries to connect with the values you entered; Create connection registers that connection as a data source.</li>
+<li>No. The data schema is filled by DDL · code analysis (Chapter 13) or user input. Registering alone shows the list in the live DB tables panel.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="skills.html"><span>Previous</span>Change the engine with skill files</a><a class="next" href="ingest.html"><span>Next</span>Start a design from a requirements document</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-data-sources">Why data sources</a></li><li><a href="#hands-on-1-start-the-practice-legacy-db">Hands-on 1 — Start the practice legacy DB</a></li><li><a href="#hands-on-2-register-the-data-source">Hands-on 2 — Register the data source</a></li><li><a href="#hands-on-3-see-the-real-tables">Hands-on 3 — See the real tables</a></li><li><a href="#when-does-the-data-schema-fill-up">When does the data schema fill up?</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

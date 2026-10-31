@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Ontological DB — An Ontology Graph Database Inside PostgreSQL | uEngine</title>
+        <meta name="description" content="One PostgreSQL extension adds a Cypher graph database and a data fabric. Query Oracle, SQL Server and MySQL data as a graph without copying it, while the database itself handles point-in-time queries, schema evolution and built-in security. Open source.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/ontologicaldb.html">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Ontological DB — An Ontology Graph Database Inside PostgreSQL | uEngine">
+        <meta property="og:description" content="One PostgreSQL extension adds a Cypher graph database and a data fabric. Query Oracle, SQL Server and MySQL data as a graph without copying it, while the database itself handles point-in-time queries, schema evolution and built-in security. Open source.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/ontologicaldb.html">
+        <meta property="og:image" content="https://www.uengine.org/images/ontological-db/odb-fabric-graph.jpg">
+        <meta property="og:image:alt" content="Ontological DB — An Ontology Graph Database Inside PostgreSQL | uEngine">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Ontological DB — An Ontology Graph Database Inside PostgreSQL | uEngine">
+        <meta name="twitter:description" content="One PostgreSQL extension adds a Cypher graph database and a data fabric. Query Oracle, SQL Server and MySQL data as a graph without copying it, while the database itself handles point-in-time queries, schema evolution and built-in security. Open source.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/ontological-db/odb-fabric-graph.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Ontological DB","description":"One PostgreSQL extension adds a Cypher graph database and a data fabric. Query Oracle, SQL Server and MySQL data as a graph without copying it, while the database itself handles point-in-time queries, schema evolution and built-in security. Open source.","url":"https://www.uengine.org/en/contents/ontologicaldb.html","image":"https://www.uengine.org/images/ontological-db/odb-fabric-graph.jpg","applicationCategory":"DeveloperApplication","operatingSystem":"Web","inLanguage":"en","publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}}}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Ontological DB","item":"https://www.uengine.org/en/contents/ontologicaldb.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/ontologicaldb.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/ontologicaldb.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/ontologicaldb.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../index.html" class="logo">
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../contents/ontologicaldb.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;AI Tools&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aitools.html" style="font-size: 18px;">AI Tools</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                            <li>
+                                                <a href="ax-lite-course.html" style="font-size: 18px;">AI Work Class for Your Company</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                        <li><a href="uengine-pal.html" style="font-size: 18px;">uEngine PAL</a></li>
+                                            <li>
+                                                <a href="uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                               
+                            <li class="pc-chat lang-switch"><a href="../../contents/ontologicaldb.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section pb-100 pb-sm-60 bg-gray-light-1 bg-light-alpha-90 bg-scroll" style="background-image: url(../../images/full-width-images/section-bg-2.jpg)">
+                    <div class="container position-relative pt-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-10 offset-md-1">
+                                    <h2 class="section-caption-border mb-30 mb-xs-20 wow fadeInUp" data-wow-duration="1.2s">
+                                        Our Products · Ontological DB
+                                    </h2>
+                                    <img src="../../images/ontological-studio/ol-mark.svg" alt="Ontological DB OL logo" width="200" height="135" class="mb-30 wow fadeInUp" style="width: 200px; max-width: 45vw; height: auto; display: block; margin: 0 auto;" decoding="async">
+                                    <h1 class="hs-title-1 mb-30">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Ontological DB</span>
+                                    </h1>
+                                    <p class="mb-40 wow fadeInUp" style="font-size: 1.35rem; color: #333; line-height: 1.6;">
+                                        <b>An ontology database for agentic AI.</b> Your PostgreSQL becomes a graph database as it is.<br class="d-none d-md-inline">
+                                        Ask in Cypher, and link data from other systems into the graph <b>without copying it</b>.
+                                    </p>
+                                    <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                        <a href="ontologystudio.html#download" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10">
+                                            <span style="font-size: 16px;">Try it in Ontological Studio</span>
+                                        </a>
+                                        <a href="#demo" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                            <span style="font-size: 16px;">Demo videos</span>
+                                        </a>
+                                        <a href="../docs/ontological-studio/" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                            <span style="font-size: 16px;">Tutorial</span>
+                                        </a>
+                                    </div>
+                                    <p class="mt-20 mb-0" style="font-size: 0.95rem; color: #777;">
+                                        PostgreSQL 16 extension · Rust (pgrx) · Apache-2.0 open source ·
+                                        <a href="https://github.com/uengine-oss/ontological-db" target="_blank" rel="noopener" style="text-decoration: underline;">GitHub</a> ·
+                                        <a href="https://uengine-oss.github.io/ontological-db/" target="_blank" rel="noopener" style="text-decoration: underline;">Docs · Tutorials</a>
+                                    </p>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+
+                <!-- About Section -->
+                <section class="page-section pb-0">
+                    <div class="container">
+
+                        <div class="row mb-60 mb-sm-40">
+                            <div class="col-lg-10 offset-lg-1 text-center">
+                                <p class="section-descr mb-20" style="font-size: 2rem; color: #111; font-weight: 600; line-height: 1.5;">
+                                    No separate graph database to build, no data to copy
+                                </p>
+                                <p class="lead mt-0 mb-0" style="font-size: 20px;">
+                                    Purchasing lives in the ERP, logistics in the WMS, customers in the CRM. A question like “Which shipments from suppliers affected by East Asia risks have not arrived yet?”
+                                    can only be answered by following the relationships between systems. The usual fix is to stand up a separate graph database and move the data over with ETL,
+                                    which means managing servers and permissions twice — and the copy is always behind the source.<br><br>
+                                    Ontological DB adds a graph to the <b>PostgreSQL you already run, with a single extension</b>. You query the data in <b>Cypher</b>,
+                                    and tables in other databases are declared as graph nodes <b>without copying them</b>, read from the source at query time.
+                                    Permissions, auditing and point-in-time queries are handled by the database itself, so the same rules apply whether a person or an AI agent is asking.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center" id="demo">
+                            <div class="col-lg-7 mb-md-30">
+                                <video controls preload="none" playsinline poster="../../media/ontological-db/virtual-fabric-demo.jpg" width="1280" height="720" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); background: #14181f;" aria-label="Data fabric demo video: querying ERP, WMS and CRM data with a single Cypher query, without copying it">
+                                    <source src="../../media/ontological-db/virtual-fabric-demo.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="ko" label="Korean" src="../../media/ontological-db/virtual-fabric-demo.vtt">
+                                    Data fabric demo video: querying ERP, WMS and CRM data with a single Cypher query, without copying it (your browser cannot play this video)
+                                </video>
+                                <p class="mt-15 mb-0" style="font-size: 1.05rem; color: #666;">
+                                    <b>Demo ①</b> Scattered supply-chain data, one Cypher query, no copies — data sources · virtual nodes · virtual relationships (2:23)
+                                </p>
+                            </div>
+                            <div class="col-lg-5">
+                                <h3 style="font-size: 1.6rem; font-weight: bold; margin: 0 0 15px; line-height: 1.4;">Three declarations, one query</h3>
+                                <p style="font-size: 1.05rem; color: #666; line-height: 1.7; margin-bottom: 15px;">
+                                    Register external databases as data sources, then declare tables as nodes and the key mappings between systems as relationships — once.
+                                    From then on, a single Cypher pattern queries several databases together, with no join conditions to write.
+                                </p>
+<pre style="background: #14181f; color: #d7dee6; border: 0; border-radius: 10px; padding: 16px 18px; font-size: 0.82rem; line-height: 1.6; overflow-x: auto; margin-bottom: 12px;">CREATE DATASOURCE wms WITH ENGINE = 'mysql',
+  PARAMETERS = {host: '…', database: 'wms', password: $pw}
+CREATE VIRTUAL NODE Shipment FROM wms.shipment KEY shipment_no
+CREATE VIRTUAL RELATIONSHIP SHIPPED_BY
+  FROM Shipment(vendor_code) TO Supplier(supplier_id)</pre>
+<pre style="background: #14181f; color: #d7dee6; border: 0; border-radius: 10px; padding: 16px 18px; font-size: 0.82rem; line-height: 1.6; overflow-x: auto; margin-bottom: 12px;">// risks in the graph, suppliers in the ERP, shipments in the WMS
+MATCH (:Region {name: 'East Asia'})&lt;-[:IN_REGION]-(e:RiskEvent)
+      -[:AFFECTS]-&gt;(s:Supplier)&lt;-[:SHIPPED_BY]-(sh:Shipment)
+WHERE sh.ship_status &lt;&gt; 'DELIVERED'
+RETURN e.title, s.name, sh.shipment_no</pre>
+                                <p class="mb-0" style="font-size: 0.95rem; color: #888; line-height: 1.6;">
+                                    Knowledge stored in the graph (risks) and rows in the source systems (suppliers, shipments) come back from a single query. Not a single row of data is copied.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End About Section -->
+
+                <!-- 데모 영상 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-30 mb-sm-20 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Demo videos, about two minutes each</span>
+                            </h3>
+                            <p class="mb-60 mb-sm-40" style="font-size: 1.2rem; color: #666;">
+                                Each one starts from an empty database and shows what was actually typed and run in the portal editor. The explanations appear as on-screen captions, in Korean.
+                            </p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <video controls preload="none" playsinline poster="../../media/ontological-db/three-languages-demo.jpg" width="1280" height="720" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); background: #14181f;" aria-label="Demo video: Cypher and TypeQL reading and writing an ontology imported from OWL">
+                                    <source src="../../media/ontological-db/three-languages-demo.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="ko" label="Korean" src="../../media/ontological-db/three-languages-demo.vtt">
+                                    Demo video: Cypher and TypeQL reading and writing an ontology imported from OWL (your browser cannot play this video)
+                                </video>
+                                <p class="mt-15 mb-0" style="font-size: 1.05rem; color: #666;"><b>Demo ②</b> Three languages, one graph — Cypher and TypeQL read and write an ontology imported from OWL (2:55)</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <video controls preload="none" playsinline poster="../../media/ontological-db/temporal-demo.jpg" width="1280" height="720" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); background: #14181f;" aria-label="Bitemporal demo video: asking the same query again with only the point in time changed">
+                                    <source src="../../media/ontological-db/temporal-demo.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="ko" label="Korean" src="../../media/ontological-db/temporal-demo.vtt">
+                                    Bitemporal demo video: asking the same query again with only the point in time changed (your browser cannot play this video)
+                                </video>
+                                <p class="mt-15 mb-0" style="font-size: 1.05rem; color: #666;"><b>Demo ③</b> Time travel — the same query five times, changing only the point in time (2:16)</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <video controls preload="none" playsinline poster="../../media/ontological-db/security-demo.jpg" width="1280" height="720" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); background: #14181f;" aria-label="Built-in security demo video: the same query returns different paths depending on the role">
+                                    <source src="../../media/ontological-db/security-demo.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="ko" label="Korean" src="../../media/ontological-db/security-demo.vtt">
+                                    Built-in security demo video: the same query returns different paths depending on the role (your browser cannot play this video)
+                                </video>
+                                <p class="mt-15 mb-0" style="font-size: 1.05rem; color: #666;"><b>Demo ④</b> Built-in security — the same query returns different paths depending on the role (2:38)</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <video controls preload="none" playsinline poster="../../media/ontological-db/schema-evolution-demo.jpg" width="1280" height="720" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); background: #14181f;" aria-label="Schema evolution demo video: fixing a wrong property type in a live graph">
+                                    <source src="../../media/ontological-db/schema-evolution-demo.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="ko" label="Korean" src="../../media/ontological-db/schema-evolution-demo.vtt">
+                                    Schema evolution demo video: fixing a wrong property type in a live graph (your browser cannot play this video)
+                                </video>
+                                <p class="mt-15 mb-0" style="font-size: 1.05rem; color: #666;"><b>Demo ⑤</b> Schema evolution — fixing a wrong type in a live graph (2:08)</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <video controls preload="none" playsinline poster="../../media/ontological-db/agent-native-demo.jpg" width="1280" height="720" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); background: #14181f;" aria-label="Demo video: an agent reads the schema, gets it wrong, and corrects itself">
+                                    <source src="../../media/ontological-db/agent-native-demo.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="ko" label="Korean" src="../../media/ontological-db/agent-native-demo.vtt">
+                                    Demo video: an agent reads the schema, gets it wrong, and corrects itself (your browser cannot play this video)
+                                </video>
+                                <p class="mt-15 mb-0" style="font-size: 1.05rem; color: #666;"><b>Demo ⑥</b> Agent interface — reading the schema, getting it wrong, fixing it (2:02)</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-40">
+                                <video controls preload="none" playsinline poster="../../media/ontological-db/vector-search-demo.jpg" width="1280" height="720" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); background: #14181f;" aria-label="Vector search demo video: finding cases with a similar resolution reason through embeddings on relationships">
+                                    <source src="../../media/ontological-db/vector-search-demo.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="ko" label="Korean" src="../../media/ontological-db/vector-search-demo.vtt">
+                                    Vector search demo video: finding cases with a similar resolution reason through embeddings on relationships (your browser cannot play this video)
+                                </video>
+                                <p class="mt-15 mb-0" style="font-size: 1.05rem; color: #666;"><b>Demo ⑦</b> Vector search — relationship search finds the answer document search missed (2:16)</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- 주요 기능 Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+
+                        <div class="col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-center">
+                            <h3 class="section-title mb-30 mb-sm-20 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Key Features</span>
+                            </h3>
+                            <p class="mb-80 mb-sm-40" style="font-size: 1.2rem; color: #666;">
+                                The database does what applications used to build themselves — and every feature has a tutorial that was actually run to verify it
+                            </p>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-cypher.webp" alt="Cypher results querying trucks, electric trucks and vans together through a single Vehicle label, with the type hierarchy on the left" width="1045" height="588" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-cypher" name="feat-cypher"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">PostgreSQL that speaks Cypher</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">Cypher queries compile into ordinary SQL that the PostgreSQL planner optimizes. Properties are real columns generated for each type, not JSON blobs, so indexes, statistics and constraints apply as usual. Query a parent label and its subtypes come back too. Neo4j drivers connect over Bolt — just change the connection address.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Bolt 4.4 gateway — authentication uses PostgreSQL roles as they are, and the Neo4j MCP server works unmodified</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">All 24 guide queries from the official Neo4j Movies example return the same results as Neo4j</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Imports OWL ontologies as a type hierarchy, and reads and writes the same graph in TypeQL too</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-fabric-graph.webp" alt="Region and risk nodes stored in the graph and supplier rows from the ERP appearing together in one graph result" width="1600" height="900" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-fabric" name="feat-fabric"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">A data fabric without copies</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">Register an external database with <code>CREATE DATASOURCE … WITH ENGINE</code> and declare a table as a node with <code>CREATE VIRTUAL NODE … FROM … KEY …</code>. Filters and joins within the same database run at the source, and only the rows needed come back. Joins and aggregations that span several sources go into the node definition (<code>AS SELECT</code>) just once.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Sources: PostgreSQL · MySQL/MariaDB · Oracle · SQL Server (TDS 7.2)</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">A Cypher query joining PostgreSQL, Oracle and SQL Server virtual nodes measured at about 140 ms, with Korean (Hangul) text intact</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Sources are read-only. Even if the source account has write access, the engine refuses first.</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-schema-evolution.webp" alt="Schema designer — changing an age property to an integer halts on one validation violation and shows the id of the offending node" width="1045" height="588" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-evolution" name="feat-evolution"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">Change the schema while in service</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">A schema change goes through plan → expand → migrate → validate → contract, and every step is logged. The plan step changes nothing: it first tells you how many values cannot be converted and which nodes hold them. Reads keep being served during the change, and writes that do not fit the new type are rejected from that moment on.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Existing rows move in batches and resume from where they stopped.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Renaming or adding a parent type rewrites not a single row.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Each schema version keeps a catalog snapshot and its change history.</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-temporal.webp" alt="Entering a point in time in the time-travel bar and rerunning the same query: the salary comes out different for 2021 and today" width="896" height="504" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-temporal" name="feat-temporal"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">Time travel — yesterday’s answer, from the same query</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">Each type records both valid time and system time. Because it tells apart a real-world change (an update) from fixing a value that was recorded wrong (a correction), “the actual salary in June 2023” and “the June 2023 salary as we knew it when we filed the audit report” come back as different answers.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Leave the query as it is and change only the session’s point in time. The compiled SQL is identical too.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">A change dated in the future does not affect current results until that date arrives.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">A query that cannot be answered as of that point in time is rejected with an error instead of returning current data.</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-security.webp" alt="The same query run as a nurse and as a doctor: the nurse gets two paths, the doctor three" width="896" height="504" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-security" name="feat-security"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">The database enforces permissions</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">Users are PostgreSQL roles, and connecting over Bolt authenticates as that same role. With row-level security on a type, nodes you are not allowed to read drop out of the join, and every path that passes through them disappears from the result. Permissions are enforced during traversal, even when the node itself is not part of the result.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Write permissions apply per type, operation and property, and Cypher, SQL and Bolt all refuse by the same rules.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">AI agents are allowed only Actions that carry a parameter contract and preconditions</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">The audit log records who did it, on whose behalf, and why — and not even a writer role can modify it.</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-agent.webp" alt="Diagnosis before running a query — row counts at each step of the pattern and a Cartesian-product warning for unconnected nodes" width="896" height="504" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-agent" name="feat-agent"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">An interface agents can correct themselves against</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">When an agent meets a graph for the first time, the database itself hands it what it needs: a schema trimmed to fit in a prompt, error codes and suggested fixes without running the query, the reason a query with no errors returned zero rows, and a cost estimate before execution.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">A schema summary that includes relationship directions</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">When a result has zero rows, it tells you where in the pattern the match broke off.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Cartesian products are flagged before execution, and executed queries are written to the audit log.</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-vector.webp" alt="Result graph: embeddings on relationships find customer inquiries and documents with a similar resolution reason" width="896" height="504" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-vector" name="feat-vector"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">Embeddings on relationships, too</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">Embeddings are properties, not a separate vector store, so they can be declared on relationships as well as nodes. Search relationship context by meaning — “why was this inquiry resolved by this document?” — and run similarity ranking together with graph patterns and filters in a single SQL statement.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">The same <code>CREATE VECTOR INDEX</code> statement as Neo4j</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Filters apply before the top k are picked.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Hybrid search (RRF) that combines vector rank with graph distance</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/ontological-db/odb-portal.webp" alt="Ontological Portal — types, relationships and the inheritance hierarchy on the left; the SQL compiled from Cypher and the graph result on the right" width="1600" height="900" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-portal" name="feat-portal"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">Ontological Portal</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">A web console for working with the graph directly. Type Cypher and fabric statements into the editor and the results come back as a graph, a table or JSON; the SQL tab shows the exact SQL the Cypher compiled to. Types, relationships and the inheritance hierarchy are laid out on the left.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Graph · Table · JSON · SQL tabs</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Schema map (designer) · time-travel bar · query history</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text"><code>:schema</code> · <code>:why</code> · <code>:explain</code> commands; pass passwords with <code>:param</code> (never stored in the history)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- 동작 방식 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+
+                        <div class="row mb-60 mb-sm-40">
+                            <div class="col-md-8 col-lg-6">
+                                <h2 class="section-title mb-0">How It Works</h2>
+                            </div>
+                            <div class="col-lg-6 pt-20 pt-md-30">
+                                <p class="text-gray mb-0" style="color: #666; font-size: 1.2rem;">
+                                    It is a PostgreSQL extension, not a new server. Source databases are reached through PostgreSQL foreign tables (FDW), and Cypher is translated into SQL whose cost the planner estimates.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mt-n30 mb-60 mb-sm-40">
+
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.0s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4zm0 2c3.87 0 6 1.5 6 2s-2.13 2-6 2-6-1.5-6-2 2.13-2 6-2zm6 12c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23V17zm0-4.5c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23v2.23z"/></svg></div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">1. Install</h4>
+                                    <div class="features-2-descr">Run <code>CREATE EXTENSION ontological</code> on PostgreSQL 16. The graph is just tables and indexes inside this database.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">2. Connect</h4>
+                                    <div class="features-2-descr"><code>CREATE DATASOURCE</code> registers a source database. Registering is enough to see its tables, and not a single row of data moves.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.2s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17 12c-1.3 0-2.4.84-2.82 2H9.82C9.4 12.84 8.3 12 7 12c-1.66 0-3 1.34-3 3s1.34 3 3 3c1.3 0 2.4-.84 2.82-2h4.36c.42 1.16 1.52 2 2.82 2 1.66 0 3-1.34 3-3s-1.34-3-3-3zM7 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm10 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM12 2c-1.66 0-3 1.34-3 3 0 1.3.84 2.4 2 2.82V10h2V7.82c1.16-.42 2-1.52 2-2.82 0-1.66-1.34-3-3-3zm0 4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg></div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">3. Declare</h4>
+                                    <div class="features-2-descr">Declare tables as virtual nodes, and the key mappings between systems as virtual relationships, once. Every hop after that applies the join.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.0s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg></div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">4. Ask</h4>
+                                    <div class="features-2-descr">Cypher compiles to SQL. Filters and joins within the same database run at the source; joins across different databases are handled by PostgreSQL.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">5. Inspect</h4>
+                                    <div class="features-2-descr">Prefix a query with <code>EXPLAIN FABRIC</code> to see, step by step, the SQL actually sent to each source and the number of rows that came back.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 d-flex align-items-stretch mt-30 wow fadeIn" data-wow-duration="1.2s" data-wow-delay="0.2s">
+                                <div class="features-2-item pt-sm-40 pb-sm-40">
+                                    <div class="features-2-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></div>
+                                    <h4 class="features-2-title" style="font-size: 1.3rem;">6. Govern</h4>
+                                    <div class="features-2-descr">Roles, row-level security, auditing and point-in-time queries use PostgreSQL’s own features. Nothing is ever written to the sources.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-md-30">
+                                <figure class="mb-0">
+                                    <img src="../../images/ontological-db/odb-fabric-diagram.webp" alt="Data fabric example — regions and risks in the graph, suppliers, purchase orders and items in a PostgreSQL ERP, shipments and inventory in a MySQL WMS, and customers, orders and claims in a MySQL CRM, linked by dashed virtual relationships" width="1436" height="594" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async">
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;">Dashed lines are virtual relationships that cross databases. Solid lines are relationships within one database.</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6">
+                                <figure class="mb-0">
+                                    <img src="../../images/ontological-db/odb-fabric-explain.webp" alt="EXPLAIN FABRIC result — a step-by-step table: in the ERP the join runs at the source, and the WMS receives only SQL carrying the delay condition and returns 2 rows" width="1600" height="506" style="width: 100%; height: auto; display: block; border-radius: 12px;" loading="lazy" decoding="async">
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><code>EXPLAIN FABRIC</code> — the ERP joined purchase orders and suppliers internally, and the WMS sent back only the 2 rows matching the delay condition.</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="row mt-80 mt-sm-50 mb-40 mb-sm-30">
+                            <div class="col-lg-10 offset-lg-1 text-center">
+                                <h3 class="section-title mb-20" style="line-height: 1.4;">Two time axes — bitemporal</h3>
+                                <p class="mb-0" style="font-size: 1.15rem; color: #666;">Every fact records both <b>valid time</b> (when it applies) and <b>system time</b> (when it was recorded that way). Even after a later correction, you can reproduce exactly what a decision was based on at the time. <a href="../docs/ontological-studio/time-travel.html" style="text-decoration: underline;">Follow along in the tutorial</a></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../../images/ontological-db/odb-concept-bitemporal.webp" target="_blank" rel="noopener" title="View larger"><img src="../../images/ontological-db/odb-concept-bitemporal.webp" alt="Valid period and recorded period for the same product — by the records stored before the correction, August 15 was SAFE; by the later correction saying it was RISK from July 1, it is RISK" width="1600" height="582" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>Before and after a correction</b> — ask about the same August 15 and the answer is SAFE or RISK, depending on which point in the record you read from.</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../../images/ontological-db/odb-concept-timequery.webp" target="_blank" rel="noopener" title="View larger"><img src="../../images/ontological-db/odb-concept-timequery.webp" alt="Point-in-time query flow — for the same question, choosing a valid date and a recorded date finds the matching record among the latest records, past records still recognized, and records from before a correction, and answers with the information and relationships as of then" width="1600" height="582" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>Point-in-time queries</b> — leave the query as it is and pick only the valid date and the recorded-as-of date. Relationships are chosen and joined as of the same point in time.</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../../images/ontological-db/odb-concept-index.webp" target="_blank" rel="noopener" title="View larger"><img src="../../images/ontological-db/odb-concept-index.webp" alt="Fast lookup by period — an index finds the rows whose period contains the query date; a current query scans only current rows and open history, and closed history superseded by corrections is searched only by queries that specify a point in time" width="1600" height="583" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>Fast point-in-time search</b> — current queries read only current rows; records from before a correction are searched only when you specify a point in time.</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 mb-40">
+                                <figure class="mb-0">
+                                    <a href="../../images/ontological-db/odb-concept-schema-steps.webp" target="_blank" rel="noopener" title="View larger"><img src="../../images/ontological-db/odb-concept-schema-steps.webp" alt="Schema change steps — change plan, impact review, step-by-step execution, validation check, completion and history record. If validation fails, correct the bad values and validate again" width="1600" height="533" style="width: 100%; height: auto; display: block; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff;" loading="lazy" decoding="async"></a>
+                                    <figcaption class="mt-15" style="font-size: 1rem; color: #666;"><b>Schema change steps</b> — plan → impact review → step-by-step execution → validation → completion. The change does not complete while any value cannot be converted.</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- 비교 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+
+                        <div class="col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-center">
+                            <h3 class="section-title mb-30 mb-sm-20 mt-n20" style="line-height: 1.5;">
+                                <span class="wow charsAnimIn" data-splitting="chars">How it differs from running a separate graph database</span>
+                            </h3>
+                            <p class="mb-60 mb-sm-40" style="font-size: 1.2rem; color: #666;">
+                                Compared with standing up a separate graph database and moving business data into it with ETL so you can query along relationships.
+                            </p>
+                        </div>
+
+                        <div class="col-lg-10 offset-lg-1 mb-n20" style="overflow-x: auto;">
+                            <table class="tbl-default">
+                                <tr class="border-bottom-n">
+                                    <th class="tbl-title-gray">Category</th>
+                                    <th class="tbl-title-gray">Separate graph DB + ETL replication</th>
+                                    <th class="tbl-title">Ontological DB</th>
+                                </tr>
+                                <tr>
+                                    <td class="border-left-n" style="font-weight: 600; white-space: nowrap;">Installation · operations</td>
+                                    <td>Stand up and operate a separate graph DB server</td>
+                                    <td>One extension on the PostgreSQL you already run</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-left-n" style="font-weight: 600; white-space: nowrap;">Business data</td>
+                                    <td>Copied by ETL — the copy always lags the source</td>
+                                    <td>Read from the source at query time through virtual nodes; no copies</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-left-n" style="font-weight: 600; white-space: nowrap;">Joins across systems</td>
+                                    <td>Join conditions rewritten for every query</td>
+                                    <td>Declared once as a virtual relationship; every hop after that applies the join</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-left-n" style="font-weight: 600; white-space: nowrap;">Permissions · auditing</td>
+                                    <td>Configured separately in the graph DB and in each source</td>
+                                    <td>One set of PostgreSQL roles, row-level security and auditing, enforced even during traversal</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-left-n" style="font-weight: 600; white-space: nowrap;">Point-in-time queries</td>
+                                    <td>Snapshots or history tables designed separately</td>
+                                    <td>Change only the session’s point in time and the same Cypher returns the results as of then</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-left-n" style="font-weight: 600; white-space: nowrap;">Schema changes</td>
+                                    <td>Migration scripts written separately</td>
+                                    <td>Plan → expand → migrate → validate → contract, while the service runs</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-left-n" style="font-weight: 600; white-space: nowrap;">How to connect</td>
+                                    <td>Graph DB–specific drivers</td>
+                                    <td>Both Neo4j drivers (Bolt) and PostgreSQL clients</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-10 offset-lg-1">
+                            <p class="mt-30 mb-0" style="font-size: 1rem; color: #888; line-height: 1.7;">
+                                <b>Current scope</b> — source databases are read-only, and variable-length traversal over virtual relationships (<code>*1..n</code>) is not supported yet.
+                                Cypher <code>UNION</code> and SPARQL are not supported yet either. Unsupported items for each feature are listed in the <a href="https://uengine-oss.github.io/ontological-db/" target="_blank" rel="noopener" style="text-decoration: underline;">product documentation</a>.
+                            </p>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- Ontological Studio Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="row align-items-center">
+
+                            <div class="col-md-6 col-lg-5 wow fadeInUp">
+                                <h2 class="section-caption-border mb-20">Ontological Studio</h2>
+                                <h3 class="section-title mb-30" style="line-height: 1.4;">It comes inside Ontological Studio</h3>
+                                <p class="section-descr mb-30">
+                                    Ontological DB is the engine of the desktop app <b>Ontological Studio</b>. One installer bundles PostgreSQL 16, the Ontological extension,
+                                    the Bolt gateway and the portal, so you can try it right away with nothing else to install.
+                                </p>
+                                <p class="mb-30" style="color: #666; font-size: 1.05rem; line-height: 1.7;">
+                                    Connect source databases in the Data Sources tab and expose them as virtual nodes; on top of them, agents build the ontology and answer with evidence.
+                                    To install it on a server yourself, get the source from <a href="https://github.com/uengine-oss/ontological-db" target="_blank" rel="noopener" style="text-decoration: underline;">GitHub</a> and build the extension.
+                                </p>
+                                <div class="mt-40">
+                                    <a href="ontologystudio.html#download" class="btn btn-mod btn-round btn-hover-anim mb-sm-10">
+                                        <span>Download Ontological Studio</span>
+                                    </a>
+                                    <a href="ontologystudio.html" style="margin-left: 20px;"><b>Explore Ontological Studio</b></a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 offset-lg-1 text-center mt-40 mt-md-0 wow fadeInUp" data-wow-delay="0.1s">
+                                <img src="../../images/en/ontological-studio/os-datasource.webp" alt="Ontological Studio Data Sources tab — connecting source databases and exposing them as virtual nodes" width="1600" height="900" style="width: 100%; max-width: 600px; height: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);" loading="lazy" decoding="async">
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- 연관 솔루션 Section -->
+                <section class="page-section">
+                    <div class="container position-relative">
+
+                        <div class="col-md-10 offset-md-1 text-center mb-60 mb-sm-40">
+                            <h2 class="section-caption-border mb-20">Related Solutions</h2>
+                            <h3 class="section-title mb-30 mt-n20" style="line-height: 1.4;">
+                                <span class="wow charsAnimIn" data-splitting="chars">Build ontologies, run them, put them to work</span>
+                            </h3>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 34px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%;">
+                                    <h4 style="font-size: 1.5rem; font-weight: bold; margin: 0 0 12px;">Ontological Studio</h4>
+                                    <p style="font-size: 1.05rem; color: #666; line-height: 1.6;">A desktop app that connects documents and source databases without replication, so agents can build an ontology, answer with evidence, and — after approval — run actions in business systems.</p>
+                                    <a href="ontologystudio.html" class="btn btn-mod btn-medium btn-round btn-hover-anim"><span>Learn more</span></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 34px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%;">
+                                    <h4 style="font-size: 1.5rem; font-weight: bold; margin: 0 0 12px;">Ontologic Platform</h4>
+                                    <p style="font-size: 1.05rem; color: #666; line-height: 1.6;">An execution platform for natural-language queries, root-cause analysis, what-if simulation and monitoring automation on top of the ontology.</p>
+                                    <a href="ontologic.html" class="btn btn-mod btn-medium btn-round btn-hover-anim"><span>Learn more</span></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 34px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%;">
+                                    <h4 style="font-size: 1.5rem; font-weight: bold; margin: 0 0 12px;">Process GPT</h4>
+                                    <p style="font-size: 1.05rem; color: #666; line-height: 1.6;">An agentic process platform that connects people, AI agents and existing systems in a single business process.</p>
+                                    <a href="processgpt.html" class="btn btn-mod btn-medium btn-round btn-hover-anim"><span>Learn more</span></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- Call Action Section -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative mt-n30 mt-sm-0">
+
+                        <div class="row wow fadeInUp get-started-content">
+                            <div>
+                                <p class="mb-20 mt-n10" style="font-size: 2.2rem; font-weight: 600;">
+                                    Run it yourself
+                                </p>
+                                <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">
+                                    Ontological DB is Apache-2.0 open source. There are <a href="https://uengine-oss.github.io/ontological-db/docs/tutorials/README.html" target="_blank" rel="noopener" style="text-decoration: underline;">seven tutorials</a>, one per feature, each actually run from an empty database.<br>
+                                    The fastest way to get started is to install Ontological Studio.
+                                </p>
+                                <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                    <a href="ontologystudio.html#download" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10">
+                                        <span style="font-size: 16px;">Try it in Ontological Studio</span>
+                                    </a>
+                                    <a href="../docs/ontological-studio/" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                        <span style="font-size: 16px;">Follow the tutorial</span>
+                                    </a>
+                                    <a href="https://github.com/uengine-oss/ontological-db" target="_blank" rel="noopener" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;">
+                                        <span style="font-size: 16px;">Source on GitHub</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- Contact us Section -->
+                <section class="page-section mt-n10 mt-sm-0 mb-sm-20">
+                    <div class="container position-relative">
+
+                        <div class="row text-center wow fadeInUp">
+                            <div class="col-md-8 offset-md-2 col-lg-10 offset-lg-1">
+                                <p class="section-title-tiny mb-10" style="font-size: 2rem;">
+                                    Have more questions?
+                                </p>
+                                <p class="section-title-tiny mb-50 mb-sm-30">
+                                    Want to learn more about <b>Ontological DB</b>, or have a question? Get in touch anytime.
+                                </p>
+                                <div class="local-scroll">
+                                    <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
+                                        <span>Contact us</span>
+                                    </a>
+                                </div>
+
+                                <!-- Contact Form (초기 숨김) -->
+                                <div id="contact_form_container" class="contact-form-container" style="display: none;">
+                                    <div class="form-header">
+                                        <div></div>
+                                        <h2>Contact Us</h2>
+                                        <button id="close_btn" class="close-button">✖</button>
+                                    </div>
+
+                                    <form id="contact_form" action="https://formspree.io/f/mjkydzab" method="POST" class="form contact-form fadeInUp wch-unset">
+                                        <div class="row">
+                                            <input type="hidden" name="classification" value="OntologicalDB">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">Name <span>*</span></label>
+                                                    <input type="text" name="name" id="name" class="input-lg round form-control" placeholder="Please enter your name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email <span>*</span></label>
+                                                    <input type="email" name="email" id="email" class="input-lg round form-control" placeholder="Please enter the email address where you would like to receive our reply">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="company">Company <span>*</span></label>
+                                                    <input type="text" name="company" id="company" class="input-lg round form-control" placeholder="Please enter your company or organization name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="position">Job Title</label>
+                                                    <input type="text" name="position" id="position" class="input-lg round form-control" placeholder="Please enter your job title">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="message">Message <span>*</span></label>
+                                            <textarea name="message" id="message" class="input-lg round form-control" placeholder="Please enter your message"></textarea>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-tip pt-0">
+                                                    <div class="contact_form_policy">
+                                                        <label style="color: var(--color-gray-light-6);">
+                                                            <input type="checkbox" name="contact_policy" id="contact_policy" value="I agree" style="vertical-align: middle; width: 15px; height: 15px;">
+                                                            <span style="color: var(--color-gray-light-6);">(Required)</span>
+                                                            <button id="contact_form_modal_open" data-modal="contact_form_policy_modal" type="button">Collection and Use of Personal Information</button>
+                                                            <span style="color: var(--color-gray-light-6);"> to the terms above.</span>
+                                                        </label>
+                                                        <div class="contact_form_msg_error" id="contact_policy_error"></div>
+                                                        <div class="contact_form_modal blind" id="contact_form_policy_modal">
+                                                            <div class="contact_form_modal_body">
+                                                                <h2 class="contact_form_modal_title">
+                                                                    Collection and Use of Personal Information
+                                                                </h2>
+                                                                <div class="contact_form_modal_text">
+                                                                    When uEngine Solutions (the "Company") collects and uses personal information in order to respond to your inquiry, your consent is required under the Personal Information Protection Act and other applicable laws.
+                                                                    <br>The Company collects and uses only the minimum personal information needed to answer inquiries about purchasing its products and consulting, and to use the services it provides.
+                                                                    <br>The information collected is not used for any purpose other than sending the reply, and is destroyed as soon as the service ends.
+                                                                </div>
+                                                                <div class="contact_form_modal_btn">
+                                                                    <button id="contact_form_modal_close"
+                                                                        class="contact_form_modal_close_btn btn btn-mod btn-round"
+                                                                        data-modal="contact_form_policy_modal"
+                                                                        type="button"
+                                                                        style="background-color: var(--color-dark-3);
+                                                                        color: var(--color-gray-light-3);">Close</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="contact_form_modal_bg" id="contact_form_modal_bg"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="text-end pt-20 pt-xs-40">
+                                                    <button class="submit_btn btn btn-mod btn-large btn-round btn-hover-anim" id="submit_btn" aria-controls="result">
+                                                        <span>Send Message</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                       <div id="result" role="region" aria-live="polite" aria-atomic="true"></div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+                            
+                            <div>                                
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="aitools.html">AI Tools</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="ax-lite-course.html">AI Work Class for Your Company</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="uengine-pal.html">uEngine PAL</a></li>
+                                        <li><a href="uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="blog/whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="showcase.html">Showcase</a></li><li><a href="history.html">History</a></li>
+                                        <li><a href="partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="newsroom.html">Newsroom</a></li>
+                                        <li><a href="newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="interview.html">Interview</a></li>
+                                        <li><a href="webinars.html">Webinars</a></li>
+                                        <li><a href="bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/en/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
+

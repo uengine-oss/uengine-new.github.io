@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tour the design — Requirements · Process · Design · Data — Robo Architect Tutorial</title>
+<meta name="description" content="The design of PRO-001, accepted in Chapter 7, now lives in the project graph. Look at the same graph four ways — Requirements (bounded context › feature › story › acceptance criteria), Process (Event Modeling), the design canvas (UI → command → aggregate → event) and Data (the aggregates&#x27; entities · value objects).">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/design.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tour the design — Requirements · Process · Design · Data — Robo Architect Tutorial">
+<meta property="og:description" content="The design of PRO-001, accepted in Chapter 7, now lives in the project graph. Look at the same graph four ways — Requirements (bounded context › feature › story › acceptance criteria), Process (Event Modeling), the design canvas (UI → command → aggregate → event) and Data (the aggregates&#x27; entities · value objects).">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/design.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html" class="on" aria-current="page"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Design and change<span class="chap">8</span></div>
+    <h1>Tour the design — Requirements · Process · Design · Data</h1>
+    <article>
+<blockquote>
+<p>The design of PRO-001, accepted in Chapter 7, now lives in the project graph. Look at the same graph four ways — Requirements (bounded context › feature › story › acceptance criteria), Process (Event Modeling), the design canvas (UI → command → aggregate → event) and Data (the aggregates' entities · value objects).</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/Z5kojRyuYtY" title="Tour the design — Requirements · Process · Design · Data — video 5:09" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="four-tabs-one-graph">Four tabs, one graph<a class="anchor" href="#four-tabs-one-graph" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>What you see</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Requirements</strong></td>
+<td>Bounded context (EPIC) › feature (FEAT) › user story (US) › acceptance criteria</td>
+<td>Business language</td>
+</tr>
+<tr>
+<td><strong>Process</strong></td>
+<td>BPM, Event Modeling — who clicks what, and what happens</td>
+<td>Flow</td>
+</tr>
+<tr>
+<td><strong>Design</strong></td>
+<td>UI · commands · aggregates · events · read models inside each bounded context</td>
+<td>DDD building blocks</td>
+</tr>
+<tr>
+<td><strong>Data</strong></td>
+<td>The aggregates' root entities · value objects · enumerations</td>
+<td>Data structure</td>
+</tr>
+</tbody>
+</table>
+<p>Open each tab once from Home and switch between them (Chapter 2). A change made in one tab is written to the graph, so it shows in the other tabs as well.</p>
+<h2 id="hands-on-1-requirements">Hands-on 1 — Requirements<a class="anchor" href="#hands-on-1-requirements" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the <strong>Requirements</strong> tab. The tree on the left has the EPICs <strong>Menu Management</strong> and <strong>Ordering</strong> — the bounded contexts created when you accepted in Chapter 7.</li>
+<li>Click ▸ to the left of an EPIC to expand it, and expand the features (FEAT) too. Clicking the row itself opens that item's details instead of expanding it. Menu Management has four features and Ordering three, with nine user stories in all.</li>
+<li><strong>Clarification coverage</strong> on the right shows how clear the requirements are from ten angles (functional scope · domain model · UX flow · non-functional · integrations · edge cases · trade-offs · terminology · completion signals · placeholders). This project was at 100% (0 ambiguous out of 9).</li>
+</ol>
+<figure><a href="img/design-01-stories-tree.webp" target="_blank" rel="noopener" title="View larger"><img alt="Requirements tab — the EPICs Menu Management (four features) and Ordering (three features) expanded, clarification coverage 100% (0 ambiguous / 9 total) on the right" src="img/design-01-stories-tree.webp" / loading="lazy" decoding="async"></a><figcaption>Requirements tab — the EPICs Menu Management (four features) and Ordering (three features) expanded, clarification coverage 100% (0 ambiguous / 9 total) on the right</figcaption></figure>
+<ol class="steps" start="4">
+<li>Under Ordering › Order Cancellation, click the story “Customer: sees the current status of my order and whether cancellation is still allowed”. <strong>Overview</strong> shows As a · I want · so that and the acceptance criteria (Given · When · Then) — two for this story.</li>
+<li>Click <strong>Design trace</strong> to see, in one line, where this story leads in the design — Order status screen (UI) → MyOrderStatus (read model). This story only reads, so it ends at a read model. A story that changes something runs screen → command → aggregate → event instead; you'll see Place order button → PlaceOrder → Order → OrderPlaced on the design canvas in Hands-on 3. Click a node to open its property editor on the right.</li>
+</ol>
+<figure><a href="img/design-01-story-detail.webp" target="_blank" rel="noopener" title="View larger"><img alt="Story overview — “Customer: sees the current status of my order and whether cancellation is still allowed”, two acceptance criteria (the cancel option is available while Awaiting acceptance, not once Accepted or Cancelled)" src="img/design-01-story-detail.webp" / loading="lazy" decoding="async"></a><figcaption>Story overview — “Customer: sees the current status of my order and whether cancellation is still allowed”, two acceptance criteria (the cancel option is available while Awaiting acceptance, not once Accepted or Cancelled)</figcaption></figure>
+<figure><a href="img/design-01-story-trace.webp" target="_blank" rel="noopener" title="View larger"><img alt="Design trace — Order status screen → the read model MyOrderStatus (orderId · storeId · lines · total · status · canCancel · placedAt)" src="img/design-01-story-trace.webp" / loading="lazy" decoding="async"></a><figcaption>Design trace — Order status screen → the read model MyOrderStatus (orderId · storeId · lines · total · status · canCancel · placedAt)</figcaption></figure>
+<p>Get to know the other toolbar buttons too — <strong>+ Add requirement</strong>, <strong>🧭 DDD wizard</strong>, <strong>Upload document</strong> (needs a key, Chapter 12), <strong>🔍 Clarify requirements (all)</strong>, <strong>💬 Chat</strong> (edit by describing the change), <strong>↩︎ Deletion history</strong> (restore deleted items), <strong>Clear data</strong> (deletes this project's requirements — check before you click).</p>
+<h2 id="hands-on-2-process">Hands-on 2 — Process<a class="anchor" href="#hands-on-2-process" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the <strong>Process</strong> tab. At the top is a <strong>BPM</strong> / <strong>Event Modeling</strong> switch. BPM is filled when there are processes made by uploading a requirements document (the document-upload path in Chapter 12). A design made from a proposal is viewed in Event Modeling.</li>
+<li>Click <strong>Event Modeling</strong>. <strong>USER JOURNEYS</strong> on the left has 10 journeys, one per command (RegisterMenuItem … CancelOrder).</li>
+<li>Drag <strong>PlaceOrder</strong> onto the canvas. Each row (lane) shows who (Customer), what (Place order button → PlaceOrder), and what happens in which context (Ordering: OrderPlaced).</li>
+</ol>
+<figure><a href="img/design-02-event-modeling.webp" target="_blank" rel="noopener" title="View larger"><img alt="Event Modeling — the PlaceOrder journey: Customer · Place order button → PlaceOrder → OrderPlaced in the Ordering lane, 10 user journeys on the left" src="img/design-02-event-modeling.webp" / loading="lazy" decoding="async"></a><figcaption>Event Modeling — the PlaceOrder journey: Customer · Place order button → PlaceOrder → OrderPlaced in the Ordering lane, 10 user journeys on the left</figcaption></figure>
+<p>The <strong>E · C · R · UI</strong> buttons at the bottom toggle events · commands · read models · screens on and off.</p>
+<h2 id="hands-on-3-the-design-canvas">Hands-on 3 — The design canvas<a class="anchor" href="#hands-on-3-the-design-canvas" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the <strong>Design</strong> tab. Click the service name at the top left (“My Service Name” at first) and change it to <strong>Hanbit Delivery</strong>.</li>
+<li>Click <strong>Ordering</strong> under BOUNDED CONTEXTS once to expand it — User Stories (5), the aggregates Order · OrderDraft, the read models IncomingOrders · MyOrderStatus · OrderDraftSummary, and nine screens.</li>
+<li>Double-click <strong>Ordering</strong> to put the whole context on the canvas (27 nodes · 21 connections). Screens (white) → commands (blue) → aggregates (yellow) → events (orange), with read models (green) below. OrderDraft takes the customer's picks (PickMenuItem · ChangePickedItemQuantity · RemovePickedItem), and Order takes PlaceOrder · AcceptOrder · CancelOrder.</li>
+<li>Double-click <strong>Menu Management</strong> to add it too. This design has 44 nodes and 34 connections.</li>
+</ol>
+<figure><a href="img/design-03-design.webp" target="_blank" rel="noopener" title="View larger"><img alt="Design canvas — the Ordering context, 27 nodes · 21 connections: screens → PickMenuItem · ChangePickedItemQuantity · RemovePickedItem → OrderDraft, and PlaceOrder · AcceptOrder · CancelOrder → Order → OrderPlaced · OrderAccepted · OrderCancelled" src="img/design-03-design.webp" / loading="lazy" decoding="async"></a><figcaption>Design canvas — the Ordering context, 27 nodes · 21 connections: screens → PickMenuItem · ChangePickedItemQuantity · RemovePickedItem → OrderDraft, and PlaceOrder · AcceptOrder · CancelOrder → Order → OrderPlaced · OrderAccepted · OrderCancelled</figcaption></figure>
+<figure><a href="img/design-03-design-both.webp" target="_blank" rel="noopener" title="View larger"><img alt="Both contexts — Ordering and Menu Management (RegisterMenuItem · ChangeMenuItemPrice · MarkMenuItemSoldOut · MarkMenuItemAvailable → MenuItem), 44 nodes · 34 connections" src="img/design-03-design-both.webp" / loading="lazy" decoding="async"></a><figcaption>Both contexts — Ordering and Menu Management (RegisterMenuItem · ChangeMenuItemPrice · MarkMenuItemSoldOut · MarkMenuItemAvailable → MenuItem), 44 nodes · 34 connections</figcaption></figure>
+<ul>
+<li><strong>Click a node</strong> and it becomes the target in the Chat on the right, where you can edit it in words, e.g. “rename this command and update the related events too” (needs an OpenAI key). The change is written to the graph right away — to change the code as well, it's safer to go through a proposal (Chapter 9).</li>
+<li>Turn off the <strong>DDD terms</strong> toggle at the bottom left to switch to developer terms.</li>
+</ul>
+<h2 id="hands-on-4-data">Hands-on 4 — Data<a class="anchor" href="#hands-on-4-data" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the <strong>Data</strong> tab.</li>
+<li>Drag <strong>Ordering</strong> and <strong>Menu Management</strong> from BOUNDED CONTEXTS onto the canvas. “2 BC · 3 Aggregates” appears at the top, and the root entities, value objects and enumerations of Order · OrderDraft · MenuItem are drawn — for example Order with the enumeration OrderStatus (Awaiting acceptance · Accepted · Cancelled) and the value object OrderLine.</li>
+</ol>
+<figure><a href="img/design-04-data.webp" target="_blank" rel="noopener" title="View larger"><img alt="Data tab — 2 BC · 3 Aggregates: Order (OrderStatus · OrderLine), OrderDraft (OrderDraftLine), MenuItem (Availability)" src="img/design-04-data.webp" / loading="lazy" decoding="async"></a><figcaption>Data tab — 2 BC · 3 Aggregates: Order (OrderStatus · OrderLine), OrderDraft (OrderDraftLine), MenuItem (Availability)</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">How is this different from the data schema in Chapter 11?</p>
+<p>The Data tab shows the data structure of the aggregates you <strong>designed</strong>. Legacy › Data schema in Chapter 11 shows the tables of a <strong>real DB you connected</strong>. Looking at the two side by side and matching old tables to new aggregates is where legacy modernization starts.</p>
+</div>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>In the Requirements tab you expanded EPIC › FEAT › US and opened a story's design trace.</li>
+<li>You put the PlaceOrder journey on the Event Modeling canvas.</li>
+<li>You put the Ordering · Menu Management contexts on the design canvas (44 nodes · 34 connections) and saw the UI → command → aggregate → event flow.</li>
+<li>You put the Order · OrderDraft · MenuItem aggregates on the Data tab.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>Where can you see at a glance which screens · commands · aggregates · events · read models the story “Customer: sees the current status of my order and whether cancellation is still allowed” leads to?</li>
+<li>BPM in the Process tab is empty. Is it broken?</li>
+<li>You renamed a command through the Chat on the design canvas. Does the code that is already implemented change too?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>Open that story in the Requirements tab and click <strong>Design trace</strong>. Order status screen → MyOrderStatus is shown in one line.</li>
+<li>No. BPM is filled when there are processes made by uploading a requirements document. A design made from a proposal is viewed in Event Modeling.</li>
+<li>No. The Chat edits only the graph (the design). To bring the code in line too, make the change a proposal and take it through implementation · validation · acceptance (Chapter 9).</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="verify.html"><span>Previous</span>Validate and accept</a><a class="next" href="change.html"><span>Next</span>A second proposal — change impact</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#four-tabs-one-graph">Four tabs, one graph</a></li><li><a href="#hands-on-1-requirements">Hands-on 1 — Requirements</a></li><li><a href="#hands-on-2-process">Hands-on 2 — Process</a></li><li><a href="#hands-on-3-the-design-canvas">Hands-on 3 — The design canvas</a></li><li><a href="#hands-on-4-data">Hands-on 4 — Data</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

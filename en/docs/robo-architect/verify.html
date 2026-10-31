@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Validate and accept — Robo Architect Tutorial</title>
+<meta name="description" content="When implementation is finished, “Done → Verify” checks the sandbox code against the design. Structural validation (robo-sync: are the design&#x27;s aggregates · commands · events in the code?) and acceptance criteria (do the Given · When · Then hold?) are reviewed together, and if they pass, “Accept (Dual Merge)” merges the code and the design graph into the main line at once. In this tutorial all 52 checks passed, with 0 failures and 0 SKIPs, and validation through acceptance took about 8 minutes.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/verify.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Validate and accept — Robo Architect Tutorial">
+<meta property="og:description" content="When implementation is finished, “Done → Verify” checks the sandbox code against the design. Structural validation (robo-sync: are the design&#x27;s aggregates · commands · events in the code?) and acceptance criteria (do the Given · When · Then hold?) are reviewed together, and if they pass, “Accept (Dual Merge)” merges the code and the design graph into the main line at once. In this tutorial all 52 checks passed, with 0 failures and 0 SKIPs, and validation through acceptance took about 8 minutes.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/verify.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html" class="on" aria-current="page"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">The proposal lifecycle<span class="chap">7</span></div>
+    <h1>Validate and accept</h1>
+    <article>
+<blockquote>
+<p>When implementation is finished, “Done → Verify” checks the sandbox code against the design. Structural validation (robo-sync: are the design's aggregates · commands · events in the code?) and acceptance criteria (do the Given · When · Then hold?) are reviewed together, and if they pass, “Accept (Dual Merge)” merges the code and the design graph into the main line at once. In this tutorial all 52 checks passed, with 0 failures and 0 SKIPs, and validation through acceptance took about 8 minutes.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/QgGREx0-krg" title="Validate and accept — video 5:05" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-validate">Why validate<a class="anchor" href="#why-validate" title="Permanent link">#</a></h2>
+<p>The AI ticking every item on the task list is no guarantee that the code was built as designed. Validation looks at two things.</p>
+<ul>
+<li><strong>Structural validation</strong> — whether the tactical design's (Chapter 5) aggregates · fields · commands · events are in the code. The <code>robo-sync</code> extractor pulls them out of the code and matches them against the design.</li>
+<li><strong>Acceptance criteria</strong> — for each Given · When · Then in the strategic design (Chapter 3), it reads the code and tests to judge whether it holds, and attaches evidence (the code that enforces it, the tests that passed).</li>
+</ul>
+<h2 id="hands-on-1-run-validation">Hands-on 1 — Run validation<a class="anchor" href="#hands-on-1-run-validation" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>When the progress bar reaches 18/18, <strong>Done → Verify</strong> appears in the <strong>Sandbox Implementation</strong> section. Click it.</li>
+<li>You move to the <strong>Validation</strong> section and the log streams (“Loaded 24 acceptance criteria + structural targets. Comparing with the robo-sync extractor…”). To stop midway, click <strong>Stop</strong>.</li>
+<li>In this tutorial, the results came out after <strong>about 7½ minutes</strong>.</li>
+</ol>
+<figure><a href="img/verify-03-result.webp" target="_blank" rel="noopener" title="View larger"><img alt="Validation result — Total 52 · PASS 52 · FAIL 0 · SKIP 0, pass rate 100%, then the first card, SC-001 RegisterMenuItem (opened again after acceptance, so the badge already reads ACCEPTED)" src="img/verify-03-result.webp" / loading="lazy" decoding="async"></a><figcaption>Validation result — Total 52 · PASS 52 · FAIL 0 · SKIP 0, pass rate 100%, then the first card, SC-001 RegisterMenuItem (opened again after acceptance, so the badge already reads ACCEPTED)</figcaption></figure>
+<h2 id="hands-on-2-read-the-results">Hands-on 2 — Read the results<a class="anchor" href="#hands-on-2-read-the-results" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Count</th>
+<th>PASS</th>
+<th>FAIL</th>
+<th>SKIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Acceptance criteria</td>
+<td>24</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Structural validation</td>
+<td>28</td>
+<td>28</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>52</td>
+<td>52</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The 28 structural checks are the tactical design's elements: 3 aggregates, 10 commands, 10 events and 5 read models. The pass rate is PASS ÷ Total = 52 ÷ 52 = <strong>100%</strong>.</p>
+<p>Each card shows the verdict, the kind (Acceptance · Structural), the target (e.g. <code>RegisterMenuItem</code>), the scenario number (<code>SC-001</code>) and the evidence. For example, SC-002 says “registering a menu item with an empty name or a price of 0 or less returns InvalidMenuItemError and adds nothing”. Its evidence is that the MenuItem aggregate's <code>register()</code> collects the violations (blank name, price not a whole number above 0) and throws <code>InvalidMenuItemError</code> (400) before anything is saved, and that the throw rolls back the transaction.</p>
+<figure><a href="img/verify-03-result-2.webp" target="_blank" rel="noopener" title="View larger"><img alt="Acceptance criteria cards — SC-002 and SC-003 for RegisterMenuItem and SC-004 for ChangeMenuItemPrice, each with its scenario and evidence" src="img/verify-03-result-2.webp" / loading="lazy" decoding="async"></a><figcaption>Acceptance criteria cards — SC-002 and SC-003 for RegisterMenuItem and SC-004 for ChangeMenuItemPrice, each with its scenario and evidence</figcaption></figure>
+<h3 id="what-skip-means">What SKIP means<a class="anchor" href="#what-skip-means" title="Permanent link">#</a></h3>
+<p>There were no SKIPs this time. A SKIP means a check couldn't be judged automatically; it isn't a failure. The usual cause is a command with no type of its own: if a command exists only as service method arguments and a zod schema, the extractor can't pull out its input fields. The validator may read the code and note “the inputs match the spec”, but since that isn't an automatic match, it records SKIP rather than PASS.</p>
+<p>In this run every command had its own input type, such as <code>ChangeMenuItemPriceCommand { menuItemId, price }</code>, so all 10 commands were matched field by field. (The extractor reads only the first exported class in a file, so the validator ran it on copies of each declaration — command inputs, event payloads, value objects — to compare them all.)</p>
+<div class="admonition note">
+<p class="admonition-title">To keep SKIPs at zero</p>
+<p>Keep commands as types, as in this run (<code>RegisterMenuItemCommand</code>, <code>ChangeMenuItemPriceCommand</code>, …), so the extractor can read them. If you want this as a team rule, write it into the constitution (Chapter 4) or the implementation skill (Chapter 10).</p>
+</div>
+<h2 id="hands-on-3-accept-dual-merge">Hands-on 3 — Accept (Dual Merge)<a class="anchor" href="#hands-on-3-accept-dual-merge" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the <strong>Accept / Destroy</strong> section. Under “PO Final Decision” there are <strong>✓ Accept (Dual Merge)</strong> and <strong>✗ Destroy</strong>.</li>
+<li>If there are failures (FAIL), you must tick “I acknowledge the failures and will proceed with Accept” before Accept can be clicked. There were no failures this time, so it was enabled right away.</li>
+<li>Click <strong>Accept (Dual Merge)</strong>. “Dual Merge completed” and “Code and graph DB are now in sync.” appear, and the status becomes <strong>ACCEPTED</strong>.</li>
+</ol>
+<figure><a href="img/verify-04-accept-tab.webp" target="_blank" rel="noopener" title="View larger"><img alt="PO Final Decision — Accept (Dual Merge) / Destroy" src="img/verify-04-accept-tab.webp" / loading="lazy" decoding="async"></a><figcaption>PO Final Decision — Accept (Dual Merge) / Destroy</figcaption></figure>
+<figure><a href="img/verify-06-accepted.webp" target="_blank" rel="noopener" title="View larger"><img alt="Dual Merge completed — ACCEPTED, the “Revoke (Undo)” button, and BOUNDED CONTEXTS on the left with Menu Management open: its user stories and the MenuItem aggregate's commands and events" src="img/verify-06-accepted.webp" / loading="lazy" decoding="async"></a><figcaption>Dual Merge completed — ACCEPTED, the “Revoke (Undo)” button, and BOUNDED CONTEXTS on the left with Menu Management open: its user stories and the MenuItem aggregate's commands and events</figcaption></figure>
+<p>Dual Merge merges two things at once.</p>
+<ul>
+<li><strong>Code</strong> — merges the <code>proposal/PRO-001</code> branch into the main branch and removes the sandbox worktree.</li>
+<li><strong>Design</strong> — writes the proposal's strategic and tactical design into the project graph. The two BOUNDED CONTEXTS (Ordering · Menu Management) that appeared on the left are the result. You tour this design in Chapter 8.</li>
+</ul>
+<p>If you need to undo it, click <strong>↩ Revoke (Undo)</strong>. You choose one of two options.</p>
+<ul>
+<li><strong>Graph only</strong> — reverts only the changes to the design graph and leaves the code on the main branch.</li>
+<li><strong>Graph + Code</strong> — reverts the graph and also runs <code>git revert</code> on the Accept merge commit.</li>
+</ul>
+<p>To throw the proposal away instead of accepting it, click <strong>Destroy</strong> instead of Accept. It removes the sandbox worktree and sets the status to DESTROYED. Because this happens before acceptance, the design graph was never changed, and the proposal's diff history is kept. A proposal that is already ACCEPTED can't be destroyed (use Revoke).</p>
+<h2 id="run-it-yourself">Run it yourself<a class="anchor" href="#run-it-yourself" title="Permanent link">#</a></h2>
+<p>Once accepted, the code is on the main branch, so you can run it yourself (Node.js 22 or later). In this tutorial's result, all 296 tests passed: 274 in the backend and 22 in the frontend.</p>
+<div class="hl"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/robo-lite-src/projects/hanbit-delivery-en<span class="w">   </span><span class="c1"># the code folder you chose on Home</span>
+npm<span class="w"> </span>install
+npm<span class="w"> </span><span class="nb">test</span><span class="w">        </span><span class="c1"># backend: Test Files 21 passed (21) · Tests 274 passed (274)</span>
+<span class="w">                </span><span class="c1"># frontend: Test Files 3 passed (3) · Tests 22 passed (22)</span>
+</code></pre></div>
+
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>The validation result shows Total · PASS · FAIL · SKIP and the pass rate.</li>
+<li>You read the evidence on a card, and can say what a SKIP would mean and how command types prevent it.</li>
+<li>After Accept (Dual Merge), the status is ACCEPTED and bounded contexts have appeared on the left.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>What do structural validation and acceptance-criteria validation each look at?</li>
+<li>Suppose a run had 5 SKIPs and no failures. They aren't failures, so why isn't the pass rate 100%?</li>
+<li>There is one FAIL, but you want to accept anyway. How?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>Structural validation uses the robo-sync extractor to check that the tactical design's elements (aggregates · fields · commands · events) are in the code. Acceptance-criteria validation judges, with evidence, whether each Given · When · Then is upheld by the code and tests.</li>
+<li>The pass rate is PASS ÷ Total, so SKIPs that couldn't be judged automatically are in the denominator too — with this run's 52 checks, 47 ÷ 52 ≈ 90%. Making commands into types lets the extractor read them and reduces SKIPs.</li>
+<li>In the Accept / Destroy section, tick “I acknowledge the failures and will proceed with Accept”, and Accept becomes clickable. A record that you merged knowing about the failure is kept, so it's best to fix it in a later proposal.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="implement.html"><span>Previous</span>Implement in a sandbox</a><a class="next" href="design.html"><span>Next</span>Tour the design — Requirements · Process · Design · Data</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-validate">Why validate</a></li><li><a href="#hands-on-1-run-validation">Hands-on 1 — Run validation</a></li><li><a href="#hands-on-2-read-the-results">Hands-on 2 — Read the results</a><ul><li><a href="#what-skip-means">What SKIP means</a></li></ul></li><li><a href="#hands-on-3-accept-dual-merge">Hands-on 3 — Accept (Dual Merge)</a></li><li><a href="#run-it-yourself">Run it yourself</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

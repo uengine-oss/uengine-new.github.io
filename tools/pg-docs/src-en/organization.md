@@ -88,7 +88,7 @@ Team membership does not by itself assign Minji to a process step. Set Minji as 
 ![Direct user assignment — Minji Kim selected in User ID](img/org-lane-user.webp)
 
 !!! note "A breadcrumb still shown in Korean"
-    The current version shows 「미분류 › 미분류」 in the definition breadcrumb, even in English mode. It means the definition is under uncategorized levels.
+    The current version shows 「Uncategorized › Uncategorized」 in Korean in the definition breadcrumb, even in English mode. It means the definition is under uncategorized levels.
 
 ## Try it 5 — Save a version
 
@@ -117,10 +117,10 @@ Saving the lane panel applies the change to the diagram. Saving the definition k
 
 Jinyoung takes the 「Customer」 role for this exercise. The first step is 「Enter Customer Request」. On the right, 「Current Task」 contains 「Submit Request Layout」 and its 「Sales Request」 field.
 
-The dialog also shows 「Progress」, 「Agent Delegation」, and 「유사 사례」 tabs. You will enter the request in the next chapter.
+The dialog also shows 「Progress」, 「Agent Delegation」, and 「Similar cases」 tabs. You will enter the request in the next chapter.
 
 !!! note "A tab still shown in Korean"
-    The current version displays the similar-cases tab as 「유사 사례」, even in English mode.
+    The current version displays the 「Similar cases」 tab in Korean, even in English mode.
 
 !!! note "Opening the dialog already creates a to-do"
     In the current version, opening the run dialog creates the first-step to-do. Closing it without submitting can leave an 「Enter Customer Request」 card in the task list. In Chapter 6, choose the task by its instance name so you work on the new request.

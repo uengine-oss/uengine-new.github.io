@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A second proposal — change impact — Robo Architect Tutorial</title>
+<meta name="description" content="Add a new requirement on top of an accepted design, and the proposal shows separately what it creates (CREATE) and what it modifies (MODIFY). Feeding “order rejection reasons” in as PRO-002, the strategic design added a feature to the existing “Ordering” context, and the plan produced a MODIFY of PRO-001&#x27;s Order aggregate with HIGH conflict risk.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/change.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A second proposal — change impact — Robo Architect Tutorial">
+<meta property="og:description" content="Add a new requirement on top of an accepted design, and the proposal shows separately what it creates (CREATE) and what it modifies (MODIFY). Feeding “order rejection reasons” in as PRO-002, the strategic design added a feature to the existing “Ordering” context, and the plan produced a MODIFY of PRO-001&#x27;s Order aggregate with HIGH conflict risk.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/change.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html" class="on" aria-current="page"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Design and change<span class="chap">9</span></div>
+    <h1>A second proposal — change impact</h1>
+    <article>
+<blockquote>
+<p>Add a new requirement on top of an accepted design, and the proposal shows separately what it creates (CREATE) and what it modifies (MODIFY). Feeding “order rejection reasons” in as PRO-002, the strategic design added a feature to the existing “Ordering” context, and the plan produced a MODIFY of PRO-001's Order aggregate with HIGH conflict risk.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/sL80KljOC9U" title="A second proposal — change impact — video 5:08" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-change-impact">Why change impact<a class="anchor" href="#why-change-impact" title="Permanent link">#</a></h2>
+<p>The first proposal (Chapters 3–7) built everything new in an empty graph. Most real work is <strong>changing what already exists</strong>. Then you want to know two things.</p>
+<ul>
+<li><strong>What changes</strong> — what is newly created (CREATE) and what existing elements are modified (MODIFY)</li>
+<li><strong>Where the risk is</strong> — places that touch elements that are already implemented and accepted (conflict risk)</li>
+</ul>
+<p>The INTENT skill follows the rule “if an existing domain element matches, reuse its id”, and the plan reads the existing aggregates in the graph to produce MODIFY items. The Impact Map gathers the result into requirements · process · design layers.</p>
+<h2 id="hands-on-1-create-the-proposal">Hands-on 1 — Create the proposal<a class="anchor" href="#hands-on-1-create-the-proposal" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In the <code>hanbit_delivery_en</code> project, where you finished up to Chapter 7, click Proposals tab › <strong>+ New Proposal</strong>.</li>
+<li>Enter the following sentence and click <strong>Start AI Analysis</strong>. In this tutorial it finished in <strong>about 70 seconds</strong>, with no clarification questions.</li>
+</ol>
+<div class="hl"><pre><span></span><code>Hanbit Delivery: When a store owner rejects an incoming order, they pick one reason (out of ingredients, closed for the day, or other). Customers see the rejected order&#39;s status together with that reason.
+</code></pre></div>
+
+<figure><a href="img/change-04-detail.webp" target="_blank" rel="noopener" title="View larger"><img alt="PRO-002 — the process “Store Order Rejection” (customer places an order → store owner reviews it → rejects it with one reason → status Rejected with the reason → customer sees it), the feature “Store Order Rejection” and the store owner's story" src="img/change-04-detail.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-002 — the process “Store Order Rejection” (customer places an order → store owner reviews it → rejects it with one reason → status Rejected with the reason → customer sees it), the feature “Store Order Rejection” and the store owner's story</figcaption></figure>
+<p>The strategic design came out with one feature, “Store Order Rejection”, two user stories (“Store owner: reject an incoming order with a reason” · “Customer: see my rejected order's status and reason”), and the process “Store Order Rejection”. Note that it <strong>did not create a new bounded context</strong> — the feature went under the existing <strong>Ordering</strong> context created by PRO-001.</p>
+<p>The two stories have nine acceptance criteria between them. They cover the rules in the sentence, plus edge cases that weren't in it.</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Acceptance criteria (Given · When · Then)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reject with a reason</td>
+<td>An incoming order awaiting the store's decision · reject it, picking one reason · status “Rejected”, with the reason recorded</td>
+</tr>
+<tr>
+<td>Exactly one reason</td>
+<td>Rejecting an order · reasons are offered · exactly Out of ingredients, Closed for the day and Other, and only one can be selected</td>
+</tr>
+<tr>
+<td>(Not in the sentence) No reason</td>
+<td>Rejecting an order · no reason picked · not completed, and the owner is asked to pick a reason</td>
+</tr>
+<tr>
+<td>(Not in the sentence) Order already closed</td>
+<td>An order already accepted, or already cancelled or rejected · try to reject it · refused, and the order keeps its status</td>
+</tr>
+<tr>
+<td>The customer sees the reason</td>
+<td>My order was rejected · I view it · “Rejected” together with the reason the store owner picked</td>
+</tr>
+<tr>
+<td>(Not in the sentence) A rejected order is final</td>
+<td>My order was rejected · I view it · shown as a final status, no longer offered for cancellation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hands-on-2-the-impact-map-at-the-intent-stage">Hands-on 2 — The Impact Map at the intent stage<a class="anchor" href="#hands-on-2-the-impact-map-at-the-intent-stage" title="Permanent link">#</a></h2>
+<p>Open the <strong>Impact Map</strong> section. At the intent stage there are only requirements (1 feature · 2 stories) and a process (1), all “New”. That's because the design (aggregates · commands · events) hasn't been decided yet. The MEDIUM badge next to each item is its impact level, not a conflict risk.</p>
+<figure><a href="img/change-06-impact.webp" target="_blank" rel="noopener" title="View larger"><img alt="Impact Map at the intent stage — Requirements 3 (the feature Store Order Rejection and two stories) · Process 1, all New" src="img/change-06-impact.webp" / loading="lazy" decoding="async"></a><figcaption>Impact Map at the intent stage — Requirements 3 (the feature Store Order Rejection and two stories) · Process 1, all New</figcaption></figure>
+<h2 id="hands-on-3-see-modify-in-the-plan">Hands-on 3 — See MODIFY in the plan<a class="anchor" href="#hands-on-3-see-modify-in-the-plan" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click <strong>Proceed to Plan →</strong>, then <strong>Generate Plan</strong>. The constitution (Chapter 4) is used as it is. In this tutorial it took <strong>about 7 minutes</strong> (404 seconds).</li>
+<li>In the progress log you can see the plan check the existing Order aggregate in the graph and reuse PRO-001's decisions — “I'm checking whether the earlier proposal (PRO-001) already fixed the hosting target and libraries, so this plan stays consistent with it.” The log calls the change to Order an UPDATE; the Tactical Design list below shows it as MODIFY.</li>
+</ol>
+<figure><a href="img/change-08-plan.webp" target="_blank" rel="noopener" title="View larger"><img alt="Plan log — “[tactical] UPDATE Aggregate Order (agg-order-823005): adds the 'Rejected' status to OrderStatus, a rejectionReason property, a RejectionReason enum (Out of ingredients / Closed for the day / Other) and RejectionReasonRequiredError”" src="img/change-08-plan.webp" / loading="lazy" decoding="async"></a><figcaption>Plan log — “[tactical] UPDATE Aggregate Order (agg-order-823005): adds the 'Rejected' status to OrderStatus, a rejectionReason property, a RejectionReason enum (Out of ingredients / Closed for the day / Other) and RejectionReasonRequiredError”</figcaption></figure>
+<p>Tactical Design came out with four items.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Kind</th>
+<th>Name</th>
+<th>Impact level</th>
+<th>What changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MODIFY</strong></td>
+<td>Aggregate</td>
+<td>Order</td>
+<td>HIGH</td>
+<td>the status <code>Rejected</code> added to <code>OrderStatus</code>, the enumeration <code>RejectionReason</code> (Out of ingredients · Closed for the day · Other), the property <code>rejectionReason</code>, the exception <code>RejectionReasonRequiredError</code>, 3 invariants (reject only while awaiting acceptance, exactly one reason, the status re-checked inside the transaction)</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>Command</td>
+<td>RejectOrder</td>
+<td>HIGH</td>
+<td>The store owner rejects an order with exactly one reason (4 Given · When · Then scenarios)</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>Event</td>
+<td>OrderRejected</td>
+<td>MEDIUM</td>
+<td>Emitted on rejection (orderId · storeId · status · rejectionReason · rejectedAt)</td>
+</tr>
+<tr>
+<td><strong>MODIFY</strong></td>
+<td>Read model</td>
+<td>MyOrderStatus</td>
+<td>MEDIUM</td>
+<td>Adds <code>rejectionReason</code>, shown only for a rejected order, which is no longer offered for cancellation</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/change-08-plan-modify.webp" target="_blank" rel="noopener" title="View larger"><img alt="Tactical Design — MODIFY Aggregate Order (HIGH), CREATE RejectOrder (HIGH) · OrderRejected (MEDIUM), MODIFY ReadModel MyOrderStatus (MEDIUM), the Constitution Gap AUTHENTICATION above and the Impact Analysis table below" src="img/change-08-plan-modify.webp" / loading="lazy" decoding="async"></a><figcaption>Tactical Design — MODIFY Aggregate Order (HIGH), CREATE RejectOrder (HIGH) · OrderRejected (MEDIUM), MODIFY ReadModel MyOrderStatus (MEDIUM), the Constitution Gap AUTHENTICATION above and the Impact Analysis table below</figcaption></figure>
+<p>The architecture decisions also follow the existing decisions. Repo Mapping keeps PRO-001's layout and lists only the ordering folders (<code>backend/src/modules/ordering</code>, a migration for <code>ordering_</code> tables only, <code>frontend/src/features/ordering</code>), and INTER_CONTEXT_INTEGRATION says the rejection “stays inside the Ordering module; it makes no call to Menu Management”. The <strong>Constitution Gap</strong> box flags AUTHENTICATION again, as in Chapter 5 — the plan reuses PRO-001's development stub.</p>
+<h2 id="hands-on-4-the-impact-map-after-the-plan-and-conflict-risk">Hands-on 4 — The Impact Map after the plan, and conflict risk<a class="anchor" href="#hands-on-4-the-impact-map-after-the-plan-and-conflict-risk" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Go back to the <strong>Impact Map</strong> section. Now there is a <strong>Design</strong> layer (4) — Order (<strong>Modified</strong>, HIGH), RejectOrder (New, HIGH), OrderRejected (New, MEDIUM), MyOrderStatus (<strong>Modified</strong>, MEDIUM). HIGH and MEDIUM here are each item's impact level from the plan, not its conflict risk.</li>
+<li>The conflict risk of each node is in the <strong>Impact Analysis</strong> table under Tactical Design in the <strong>Plan</strong> section. Order is <strong>HIGH — TacticalDiff MODIFY operation</strong>; the other three are NONE with “No related node”. <strong>Conflict risk analysis (Impact Map)</strong> below the Impact Map section is folded, and until the plan is confirmed it comes with the notice “No confirmed Plan yet”.</li>
+</ol>
+<figure><a href="img/change-09-impact-plan-conflict.webp" target="_blank" rel="noopener" title="View larger"><img alt="Impact Map after the plan — below Requirements and Process, Design 4 (Order Modified HIGH, RejectOrder New HIGH, OrderRejected New MEDIUM, MyOrderStatus Modified MEDIUM), then Conflict risk analysis folded with “No confirmed Plan yet”" src="img/change-09-impact-plan-conflict.webp" / loading="lazy" decoding="async"></a><figcaption>Impact Map after the plan — below Requirements and Process, Design 4 (Order Modified HIGH, RejectOrder New HIGH, OrderRejected New MEDIUM, MyOrderStatus Modified MEDIUM), then Conflict risk analysis folded with “No confirmed Plan yet”</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">HIGH doesn't mean “don't”; it means “look here”</p>
+<p>Order is an aggregate already implemented and accepted in PRO-001, so changing it affects the existing code and tests. In validation (Chapter 7), make sure the existing acceptance criteria (cancel only before acceptance, and so on) still pass. This proposal continues exactly like Chapters 6–7: confirm the plan → implement → validate → accept.</p>
+</div>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>PRO-002's strategic design added a feature to the existing “Ordering” context without a new context.</li>
+<li>The plan's Tactical Design has MODIFY Aggregate Order.</li>
+<li>After the plan, the Impact Map has a Design layer, and in the Plan's Impact Analysis table Order's conflict risk is HIGH.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>Why was there no design layer in the Impact Map at the intent stage?</li>
+<li>Order came out as “Modified · HIGH”. What should you be careful about?</li>
+<li>Does this change touch the Menu Management context too? Where do you check?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>Because aggregates · commands · events are decided in the plan (tactical design). The intent stage goes only as far as requirements and processes.</li>
+<li>You are changing an aggregate that is already implemented and accepted, so the existing code and tests are affected. In validation, check that the existing acceptance criteria still pass.</li>
+<li>No. The plan's Repo Mapping lists only the ordering folders, INTER_CONTEXT_INTEGRATION says it “makes no call to Menu Management”, and the Impact Map has no Menu Management nodes either.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="design.html"><span>Previous</span>Tour the design — Requirements · Process · Design · Data</a><a class="next" href="skills.html"><span>Next</span>Change the engine with skill files</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-change-impact">Why change impact</a></li><li><a href="#hands-on-1-create-the-proposal">Hands-on 1 — Create the proposal</a></li><li><a href="#hands-on-2-the-impact-map-at-the-intent-stage">Hands-on 2 — The Impact Map at the intent stage</a></li><li><a href="#hands-on-3-see-modify-in-the-plan">Hands-on 3 — See MODIFY in the plan</a></li><li><a href="#hands-on-4-the-impact-map-after-the-plan-and-conflict-risk">Hands-on 4 — The Impact Map after the plan, and conflict risk</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

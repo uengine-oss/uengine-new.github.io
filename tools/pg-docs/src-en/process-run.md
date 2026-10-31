@@ -37,12 +37,12 @@ Start in Jinyoung's browser. You will use another browser or private window for 
 
 ![The sub-process screen — Sales Proposal Creation with Simulation, Edit, and Execute](img/run-def.webp)
 
-The first step is 「Enter Customer Request」, shown with 「NEW」. The dialog has 「Progress」, 「Agent Delegation」, and 「유사 사례」 tabs.
+The first step is 「Enter Customer Request」, shown with 「NEW」. The dialog has 「Progress」, 「Agent Delegation」, and 「Similar cases」 tabs.
 
 On the right, 「Current Task」 contains 「Submit Request Layout」. Jinyoung will fill in its 「Sales Request」 field. Leave 「Add File」 under 「Source」 unused for this exercise.
 
 !!! note "Text still shown in Korean"
-    The current version shows the definition breadcrumb as 「미분류 › 미분류」 and the similar-cases tab as 「유사 사례」, even in English mode. Use 「Progress」 to view the process flow.
+    The current version shows the definition breadcrumb (「Uncategorized › Uncategorized」) and the 「Similar cases」 tab in Korean, even in English mode. Use 「Progress」 to view the process flow.
 
 !!! note "If the owners are different"
     This exercise uses the definition saved in [Chapter 5](organization.html). If 「Sales Representative」 does not show Minji, check the lane assignment and make sure you saved both the panel and the definition.
@@ -66,7 +66,7 @@ Our instance title appears as 「Sales Proposal Creation · Hanbit Trading meeti
 The instance is still 「RUNNING」 after the first submission. Jinyoung's step is done, but Minji's step remains.
 
 !!! note "People fill in the forms in this chapter"
-    Leave 「Agent Delegation」 and 「Voice Agent」 unused. You will work with agent-owned steps in [Chapter 13](agent-steps.html).
+    Leave 「Agent Delegation」 and 「Voice Agent」 unused. You will work with agent-owned steps in Chapter 13 (English edition coming soon).
 
 ## Try it 3 — Check the running instance
 
@@ -104,7 +104,7 @@ Check the instance name even when the step name looks right. Opening a run dialo
 
 The task screen shows 「Prepare and Send Proposal」, 「IN_PROGRESS」, and 「v 0.3」. That is the definition version used by this instance.
 
-Its tabs are 「Progress」, 「Work History」, 「Agent Delegation」, and 「유사 사례」. The top-right buttons are 「Intermediate Save」 and 「Submit Complete」. This exercise goes straight to submission after filling in the form.
+Its tabs are 「Progress」, 「Work History」, 「Agent Delegation」, and 「Similar cases」. The top-right buttons are 「Intermediate Save」 and 「Submit Complete」. This exercise goes straight to submission after filling in the form.
 
 ## Try it 5 — Read the request and write the proposal
 

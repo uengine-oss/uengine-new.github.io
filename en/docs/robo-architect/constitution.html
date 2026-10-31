@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set the project constitution — Robo Architect Tutorial</title>
+<meta name="description" content="Before planning, decide this project&#x27;s design principles · tech stack · architecture style · repository strategy once. Claude Code reads the proposal and offers questions and recommendations, you just pick the answers, and those answers become the constitution document.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/constitution.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Set the project constitution — Robo Architect Tutorial">
+<meta property="og:description" content="Before planning, decide this project&#x27;s design principles · tech stack · architecture style · repository strategy once. Claude Code reads the proposal and offers questions and recommendations, you just pick the answers, and those answers become the constitution document.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/constitution.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html" class="on" aria-current="page"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">The proposal lifecycle<span class="chap">4</span></div>
+    <h1>Set the project constitution</h1>
+    <article>
+<blockquote>
+<p>Before planning, decide this project's design principles · tech stack · architecture style · repository strategy once. Claude Code reads the proposal and offers questions and recommendations, you just pick the answers, and those answers become the constitution document.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/Hoi9ySeP0qc" title="Set the project constitution — video 4:02" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-a-constitution">Why a constitution<a class="anchor" href="#why-a-constitution" title="Permanent link">#</a></h2>
+<p>The same “Order” aggregate leads to completely different plans depending on whether you build it with Spring Boot or Node.js, and whether you split it into services or keep one. If you make those decisions again for every proposal, proposals end up building different structures. The <strong>constitution</strong> is the document where you write such decisions down once for the project. From then on, every proposal's plan (Chapter 5) and implementation (Chapter 6) follow the constitution, and each plan decision shows which passage of the constitution it came from.</p>
+<p>The constitution is a single Markdown document. Each section (##) holds declarations only.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core Principles</td>
+<td>Design principles, with a strength such as must (MUST) or cannot be changed (NON-NEGOTIABLE), and a rationale</td>
+</tr>
+<tr>
+<td>Technology Constraints</td>
+<td>Languages, frameworks, datastores</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>Monolith/microservices, modules and dependency direction, layers</td>
+</tr>
+<tr>
+<td>Repository Strategy</td>
+<td>Monorepo/multi-repo, folder layout</td>
+</tr>
+<tr>
+<td>Governance</td>
+<td>Amendment procedure and versioning policy</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hands-on-1-create-the-constitution-by-interview">Hands-on 1 — Create the constitution by interview<a class="anchor" href="#hands-on-1-create-the-constitution-by-interview" title="Permanent link">#</a></h2>
+<p>If you try to make a proposal's plan in a project without a constitution, “Constitution Required” appears and an interview opens.</p>
+<ol class="steps">
+<li>In the Proposals tab, open <code>PRO-001</code>, click <strong>Proceed to Plan →</strong> at the bottom, then <strong>Generate Plan</strong> in the <strong>Plan</strong> section.</li>
+<li>The <strong>Project Constitution</strong> dialog opens, and Claude Code first analyzes this proposal (“[analysis] proposal PRO-001 — 2 BoundedContexts: Menu Management, Ordering”).</li>
+<li>Questions appear one at a time. The <strong>Rationale</strong> under a question is Claude Code's reason for its recommendation. Pick an option or type your own, then click <strong>Next question →</strong>.</li>
+<li>On the last question, click <strong>✓ Create constitution</strong>. The constitution is saved, and plan generation continues automatically (Chapter 5).</li>
+</ol>
+<figure><a href="img/constitution-01-q.webp" target="_blank" rel="noopener" title="View larger"><img alt="Question 1 — architecture style, Claude Code's rationale, and MONOLITH · Recommended / MICROSERVICES" src="img/constitution-01-q.webp" / loading="lazy" decoding="async"></a><figcaption>Question 1 — architecture style, Claude Code's rationale, and MONOLITH · Recommended / MICROSERVICES</figcaption></figure>
+<p>In this tutorial there were two questions.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Rationale (reason for the recommendation)</th>
+<th>Answer chosen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecture style</td>
+<td>Only 2 bounded contexts, both mostly CRUD, joined at one point (Ordering reads a menu item's price and sold-out status) — a modular monolith keeps them separate without the cost of distributed services</td>
+<td><strong>MONOLITH</strong> (recommended)</td>
+</tr>
+<tr>
+<td>Tech stack (backend / frontend / datastore)</td>
+<td>The requirement names no technology, so this is a suggested default: the order-state rule and the checkout checks need ACID transactions (PostgreSQL), and Spring Boot's module support can keep the two contexts apart in one deployable</td>
+<td>Typed in: <strong>Backend TypeScript (Node.js, Express) / Frontend React / Datastore SQLite</strong></td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/constitution-02-q.webp" target="_blank" rel="noopener" title="View larger"><img alt="Question 2 — tech stack: three options (Spring Boot + JPA + PostgreSQL + Vue 3 …) and a free-text field holding Claude Code's suggestion, Java 21 + Spring Boot 3" src="img/constitution-02-q.webp" / loading="lazy" decoding="async"></a><figcaption>Question 2 — tech stack: three options (Spring Boot + JPA + PostgreSQL + Vue 3 …) and a free-text field holding Claude Code's suggestion, Java 21 + Spring Boot 3</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">You don't have to follow the recommendation</p>
+<p>The recommended tech stack was Spring Boot (Java 21 + Spring Boot 3, typed into the field for you), but this tutorial replaced it with Node.js and SQLite to get the implementation running quickly. The constitution records your answers as “confirmed by the user in the interview”. The number of questions and their options depend on the proposal.</p>
+</div>
+<h2 id="hands-on-2-read-the-constitution">Hands-on 2 — Read the constitution<a class="anchor" href="#hands-on-2-read-the-constitution" title="Permanent link">#</a></h2>
+<p>You can open the constitution at any time from the <strong>Project Constitution</strong> card on Home (or the <strong>Constitution</strong> button in the Design tab's navigator).</p>
+<figure><a href="img/constitution-01-editor.webp" target="_blank" rel="noopener" title="View larger"><img alt="Project Constitution — Preview · Edit, “Set up by interview”, Hanbit Delivery Constitution" src="img/constitution-01-editor.webp" / loading="lazy" decoding="async"></a><figcaption>Project Constitution — Preview · Edit, “Set up by interview”, Hanbit Delivery Constitution</figcaption></figure>
+<p>You answered only two questions, but Claude Code read the proposal's strategic design and set out seven principles. The ones it added on its own, beyond your requirement and answers, are marked <strong>(recommended)</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Gist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I. Bounded Contexts as Modules</td>
+<td>Two modules, Menu Management and Ordering. A module owns its domain model and tables, MUST NOT touch another module's tables, and talks to it only through its published interface or in-process domain events</td>
+</tr>
+<tr>
+<td>II. Invariants Live in the Aggregate</td>
+<td>Rules are enforced in the aggregates: a menu item has a non-negative price and only its store owner may change it; sold-out items MUST be rejected from an order; a customer may cancel only before the store accepts</td>
+</tr>
+<tr>
+<td>III. Explicit Order Lifecycle</td>
+<td>Placed → Accepted and Placed → Cancelled, only through named commands (PlaceOrder · AcceptOrder · CancelOrder); an illegal transition fails with a domain error; every change emits an event</td>
+</tr>
+<tr>
+<td>IV. Price Snapshot at Order Time (recommended)</td>
+<td>Each order line copies the item ID, name and unit price at order time; later price changes or sold-out marks MUST NOT change existing orders</td>
+</tr>
+<tr>
+<td>V. Role-Scoped Actions</td>
+<td>Two roles, Store Owner and Customer; every command is checked against role and ownership in the application layer</td>
+</tr>
+<tr>
+<td>VI. Test-First on Domain Rules (recommended)</td>
+<td>Every rule and transition in II–IV has automated tests; API tests cover the success and rejection paths of each command</td>
+</tr>
+<tr>
+<td>VII. Simplicity (recommended)</td>
+<td>One deployable, one database, synchronous in-process calls; no message brokers, API gateways or service mesh unless the constitution is amended</td>
+</tr>
+</tbody>
+</table>
+<p>It also wrote Technology Constraints (TypeScript strict on Node.js with Express · React · one SQLite file with versioned migrations · REST with explicit 4xx domain errors · state-changing commands in a transaction that re-checks the current state), Architecture (modular monolith, layers domain → application → infrastructure → interface, Ordering → Menu Management through its read interface), Repository Strategy (monorepo <code>backend/</code> · <code>frontend/</code>) and Governance (MAJOR · MINOR · PATCH amendments; an amendment makes earlier plans stale).</p>
+<div class="admonition tip">
+<p class="admonition-title">When you change the constitution</p>
+<p>Switch to <strong>Edit</strong> and change it directly, or interview again with <strong>Set up by interview</strong>. When you save the constitution, plans made with it are marked “stale”, and you are told to plan again.</p>
+</div>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>The editor opened from the <strong>Project Constitution</strong> card on Home shows <code>Hanbit Delivery Constitution</code>.</li>
+<li>Technology Constraints lists the stack you chose in the interview (TypeScript on Node.js with Express · React · SQLite), and the Sync Impact Report at the top says the tech stack was confirmed by the user in the interview.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>Do you make a constitution for each proposal, or is there one per project?</li>
+<li>Principles IV, VI and VII are marked “(recommended)”. What does that mean?</li>
+<li>What do you have to do after changing the constitution?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>One per project (you can add per-bounded-context additions). Every proposal's plan follows this constitution.</li>
+<li>Claude Code added them on its own — they don't come from your requirement or your interview answers. They still bind every plan like the other principles; if you disagree, change them with <strong>Edit</strong> or interview again.</li>
+<li>Plans that relied on that constitution are marked “stale”, so regenerate the plan of each affected proposal and confirm it.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="proposal.html"><span>Previous</span>Create a proposal — from one requirement to strategic design</a><a class="next" href="plan.html"><span>Next</span>Plan — tactical design and architecture</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-a-constitution">Why a constitution</a></li><li><a href="#hands-on-1-create-the-constitution-by-interview">Hands-on 1 — Create the constitution by interview</a></li><li><a href="#hands-on-2-read-the-constitution">Hands-on 2 — Read the constitution</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
