@@ -40,7 +40,7 @@ Robo Architect는 **명세 주도 개발(Spec-Driven Development) 도구**입니
 <div class="cards" markdown="0">
 <a href="install.html"><b>시작하기</b><span>설치와 첫 프로젝트, 화면 둘러보기</span></a>
 <a href="proposal.html"><b>프로포절 라이프사이클</b><span>프로포절 만들기, 헌장, 계획, 샌드박스 구현, 검증과 수락</span></a>
-<a href="skills.html"><b>설계와 변경</b><span>스킬 파일로 엔진 바꾸기 (설계 둘러보기 · 변경 영향도는 준비 중)</span></a>
+<a href="design.html"><b>설계와 변경</b><span>설계 둘러보기, 두 번째 프로포절의 변경 영향도, 스킬 파일로 엔진 바꾸기</span></a>
 <a href="fabric.html"><b>레거시와 데이터</b><span>데이터 소스 연결, 요구사항 문서로 설계 시작하기</span></a>
 <a href="project.html"><b>마무리</b><span>종합 과제 — 리뷰 기능</span></a>
 </div>

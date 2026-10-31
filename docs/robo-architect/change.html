@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>두 번째 프로포절 — 변경 영향도 — Robo Architect 튜토리얼</title>
+<meta name="description" content="수락된 설계 위에 새 요구사항을 넣으면, 프로포절은 무엇을 새로 만들고(CREATE) 무엇을 고치는지(MODIFY) 나눠 보여 줍니다. 「주문 거절 사유」를 PRO-002로 넣어 보니, 전략 설계는 기존 「주문」 컨텍스트에 기능을 더했고, Plan은 PRO-001의 애그리거트 Order를 고치는 MODIFY와 충돌 가능성 HIGH를 냈습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/change.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="두 번째 프로포절 — 변경 영향도 — Robo Architect 튜토리얼">
+<meta property="og:description" content="수락된 설계 위에 새 요구사항을 넣으면, 프로포절은 무엇을 새로 만들고(CREATE) 무엇을 고치는지(MODIFY) 나눠 보여 줍니다. 「주문 거절 사유」를 PRO-002로 넣어 보니, 전략 설계는 기존 「주문」 컨텍스트에 기능을 더했고, Plan은 PRO-001의 애그리거트 Order를 고치는 MODIFY와 충돌 가능성 HIGH를 냈습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/change.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><a href="implement.html"><span class="n">06</span>샌드박스에서 구현하기</a></li>
+<li><a href="verify.html"><span class="n">07</span>검증하고 수락하기</a></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><a href="design.html"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터</a></li>
+<li><a href="change.html" class="on" aria-current="page"><span class="n">09</span>두 번째 프로포절 — 변경 영향도</a></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">14</span>종합 과제 — 리뷰 기능 붙이기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">설계와 변경<span class="chap">9</span></div>
+    <h1>두 번째 프로포절 — 변경 영향도</h1>
+    <article>
+<blockquote>
+<p>수락된 설계 위에 새 요구사항을 넣으면, 프로포절은 무엇을 새로 만들고(CREATE) 무엇을 고치는지(MODIFY) 나눠 보여 줍니다. 「주문 거절 사유」를 PRO-002로 넣어 보니, 전략 설계는 기존 「주문」 컨텍스트에 기능을 더했고, Plan은 PRO-001의 애그리거트 Order를 고치는 MODIFY와 충돌 가능성 HIGH를 냈습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/q_aU3ZZOf9c" title="두 번째 프로포절 — 변경 영향도 — 영상 3:00" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="왜-변경-영향도인가">왜 변경 영향도인가<a class="anchor" href="#왜-변경-영향도인가" title="Permanent link">#</a></h2>
+<p>첫 프로포절(3~7장)은 빈 그래프에 새로 만들었습니다. 실제 일은 대부분 <strong>이미 있는 것을 고치는</strong> 일입니다. 그때 알고 싶은 것은 두 가지입니다.</p>
+<ul>
+<li><strong>무엇이 바뀌나</strong> — 새로 만드는 것(CREATE)과 기존 것을 고치는 것(MODIFY)</li>
+<li><strong>어디가 위험한가</strong> — 이미 구현 · 수락된 요소를 건드리는 곳(충돌 가능성)</li>
+</ul>
+<p>INTENT 스킬은 「기존 도메인 구성 요소와 일치하면 그 id를 재사용한다」는 규칙으로, Plan은 그래프의 기존 애그리거트를 읽어 MODIFY를 냅니다. Impact Map은 그 결과를 요구사항 · 프로세스 · 설계 층으로 모아 보여 줍니다.</p>
+<h2 id="따라-하기-1-프로포절-만들기">따라 하기 1 — 프로포절 만들기<a class="anchor" href="#따라-하기-1-프로포절-만들기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>7장까지 마친 <code>hanbit_delivery</code> 프로젝트에서 프로포절 탭 › <strong>+ 새 Proposal</strong>을 누릅니다.</li>
+<li>다음 문장을 넣고 <strong>AI 분석 시작</strong>을 누릅니다. 이 튜토리얼에서는 명확화 질문 없이 <strong>80초</strong> 만에 끝났습니다.</li>
+</ol>
+<div class="hl"><pre><span></span><code>한빛 딜리버리: 사장님은 들어온 주문을 거절할 때 사유(재료 소진, 영업 종료, 기타)를 하나 고른다. 고객은 거절된 주문의 상태와 함께 그 사유를 본다.
+</code></pre></div>
+
+<figure><a href="img/change-04-detail.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="PRO-002 — 프로세스 「주문 거절 및 사유 안내」, 기능 「주문 거절」과 사장님 스토리의 인수 조건" src="img/change-04-detail.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-002 — 프로세스 「주문 거절 및 사유 안내」, 기능 「주문 거절」과 사장님 스토리의 인수 조건</figcaption></figure>
+<p>전략 설계에는 기능 「주문 거절」 · 「주문 상태 조회」, 사용자 스토리 두 개, 프로세스 「주문 거절 및 사유 안내」가 나왔습니다. 눈여겨볼 점은 <strong>새 바운디드 컨텍스트를 만들지 않았다</strong>는 것입니다 — 두 기능 모두 PRO-001에서 생긴 기존 <strong>주문</strong> 컨텍스트 아래에 들어갔습니다.</p>
+<p>인수 조건은 문장의 규칙과, 문장에 없던 경계도 다룹니다.</p>
+<table>
+<thead>
+<tr>
+<th>규칙</th>
+<th>인수 조건 (Given · When · Then)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>사유를 골라 거절</td>
+<td>접수 대기 주문 · 세 사유 중 하나를 골라 거절 · 상태 「거절됨」, 사유가 함께 기록</td>
+</tr>
+<tr>
+<td>사유는 하나</td>
+<td>거절 사유 선택 화면 · 사유를 고름 · 세 가지 중 정확히 하나만</td>
+</tr>
+<tr>
+<td>(문장에 없던 것) 사유 없이</td>
+<td>접수 대기 주문 · 사유 없이 거절하려 함 · 처리되지 않고 사유 선택을 요구</td>
+</tr>
+<tr>
+<td>(문장에 없던 것) 이미 끝난 주문</td>
+<td>이미 접수 · 취소 · 거절된 주문 · 거절하려 함 · 거부</td>
+</tr>
+<tr>
+<td>고객이 사유를 봄</td>
+<td>「재료 소진」으로 거절된 주문 · 고객이 조회 · 「거절됨」과 「재료 소진」이 함께 표시</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-2-인텐트-단계의-impact-map">따라 하기 2 — 인텐트 단계의 Impact Map<a class="anchor" href="#따라-하기-2-인텐트-단계의-impact-map" title="Permanent link">#</a></h2>
+<p><strong>Impact Map</strong> 칸을 엽니다. 인텐트 단계에서는 요구사항(기능 2 · 스토리 2)과 프로세스(1)만 있고, 모두 「신규」입니다. 아직 설계(애그리거트 · 커맨드 · 이벤트)는 정해지지 않았기 때문입니다.</p>
+<figure><a href="img/change-06-impact.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="인텐트 단계 Impact Map — Requirements 4개 · Process 1개, 모두 신규" src="img/change-06-impact.webp" / loading="lazy" decoding="async"></a><figcaption>인텐트 단계 Impact Map — Requirements 4개 · Process 1개, 모두 신규</figcaption></figure>
+<h2 id="따라-하기-3-plan에서-modify-보기">따라 하기 3 — Plan에서 MODIFY 보기<a class="anchor" href="#따라-하기-3-plan에서-modify-보기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>Plan 단계로 진행 →</strong> 을 누르고 <strong>Plan 생성</strong>을 누릅니다. 헌장(4장)은 그대로 씁니다. 이 튜토리얼에서는 <strong>약 6분</strong>(395초) 걸렸습니다.</li>
+<li>진행 로그에 Plan이 그래프의 기존 Order 애그리거트를 확인하고 PRO-001의 확정 Plan을 다시 쓰는 모습이 보입니다 — 「Checking PRO-001's confirmed implementation plan so this plan reuses its decisions (ORM, test runner, layout)」.</li>
+</ol>
+<figure><a href="img/change-08-plan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Plan 로그 — 「[전술] Aggregate Order (MODIFY agg-order-9f7c84): OrderStatus에 REJECTED 추가, RejectionReason enum 신규 …」" src="img/change-08-plan.webp" / loading="lazy" decoding="async"></a><figcaption>Plan 로그 — 「[전술] Aggregate Order (MODIFY agg-order-9f7c84): OrderStatus에 REJECTED 추가, RejectionReason enum 신규 …」</figcaption></figure>
+<p>Tactical Design에는 네 항목이 나왔습니다.</p>
+<table>
+<thead>
+<tr>
+<th>연산</th>
+<th>종류</th>
+<th>이름</th>
+<th>우선순위</th>
+<th>무엇이 바뀌나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MODIFY</strong></td>
+<td>애그리거트</td>
+<td>Order</td>
+<td>HIGH</td>
+<td><code>OrderStatus</code>에 <code>REJECTED</code>, 열거형 <code>RejectionReason</code>(재료 소진 · 영업 종료 · 기타), 속성 <code>rejectionReason</code>, 예외 2개, 불변식 2개</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>커맨드</td>
+<td>RejectOrder</td>
+<td>HIGH</td>
+<td>사유를 받아 거절</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>이벤트</td>
+<td>OrderRejected</td>
+<td>MEDIUM</td>
+<td>거절됨</td>
+</tr>
+<tr>
+<td><strong>MODIFY</strong></td>
+<td>리드모델</td>
+<td>CustomerOrderView</td>
+<td>MEDIUM</td>
+<td>고객 주문 조회에 거절 사유</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/change-08-plan-modify.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Tactical Design — MODIFY Aggregate Order(HIGH), CREATE RejectOrder · OrderRejected, MODIFY ReadModel CustomerOrderView, 아래 임팩트 분석" src="img/change-08-plan-modify.webp" / loading="lazy" decoding="async"></a><figcaption>Tactical Design — MODIFY Aggregate Order(HIGH), CREATE RejectOrder · OrderRejected, MODIFY ReadModel CustomerOrderView, 아래 임팩트 분석</figcaption></figure>
+<p>아키텍처 결정도 기존 결정을 따릅니다. 레포 매핑에는 「Menu 모듈(backend/menu)은 바꾸지 않는다」고 적혀 있습니다 — 변경이 주문 모듈에만 머문다는 뜻입니다.</p>
+<h2 id="따라-하기-4-plan-뒤의-impact-map과-충돌-가능성">따라 하기 4 — Plan 뒤의 Impact Map과 충돌 가능성<a class="anchor" href="#따라-하기-4-plan-뒤의-impact-map과-충돌-가능성" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>Impact Map</strong> 칸으로 돌아갑니다. 이제 <strong>Design</strong> 층(4)이 생겼습니다 — Order(<strong>수정</strong>, HIGH), RejectOrder(신규), OrderRejected(신규), CustomerOrderView(<strong>수정</strong>).</li>
+<li>노드마다의 충돌 가능성은 <strong>Plan</strong> 칸의 Tactical Design 아래 <strong>임팩트 분석</strong> 표에 나옵니다. Order는 <strong>HIGH — TacticalDiff MODIFY 작업</strong>, 나머지 셋은 「관련 노드 없음」으로 NONE입니다. Impact Map 칸 아래의 <strong>충돌 가능성 분석</strong>은 접혀 있고, Plan을 확정하기 전에는 「확정된 Plan이 없습니다」 안내가 함께 나옵니다.</li>
+</ol>
+<figure><a href="img/change-09-impact-plan-conflict.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Plan 뒤 Impact Map — Requirements · Process · Design(Order 수정 HIGH, RejectOrder 신규, OrderRejected 신규, CustomerOrderView 수정)" src="img/change-09-impact-plan-conflict.webp" / loading="lazy" decoding="async"></a><figcaption>Plan 뒤 Impact Map — Requirements · Process · Design(Order 수정 HIGH, RejectOrder 신규, OrderRejected 신규, CustomerOrderView 수정)</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">HIGH는 「하지 마라」가 아니라 「여기를 보라」</p>
+<p>Order는 PRO-001에서 이미 구현 · 수락된 애그리거트라서, 고치면 기존 코드와 테스트가 영향을 받습니다. 검증(7장)에서 기존 인수 조건(접수 전에만 취소 등)이 계속 통과하는지 꼭 확인하세요. 이 프로포절도 6~7장과 똑같이 Plan 확정 → 구현 → 검증 → 수락으로 이어집니다.</p>
+</div>
+<h2 id="확인할-것">확인할 것<a class="anchor" href="#확인할-것" title="Permanent link">#</a></h2>
+<ul>
+<li>PRO-002의 전략 설계가 새 컨텍스트 없이 기존 「주문」 컨텍스트에 기능을 더했다.</li>
+<li>Plan의 Tactical Design에 MODIFY Aggregate Order가 있다.</li>
+<li>Plan 뒤 Impact Map에 Design 층과 충돌 가능성 HIGH가 보인다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>인텐트 단계의 Impact Map에는 왜 설계 층이 없었나요?</li>
+<li>Order가 「수정 · HIGH」로 나왔습니다. 무엇을 조심해야 하나요?</li>
+<li>이 변경으로 메뉴 관리 컨텍스트도 바뀌나요? 어디서 확인하나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>애그리거트 · 커맨드 · 이벤트는 Plan(전술 설계)에서 정해지기 때문입니다. 인텐트 단계는 요구사항과 프로세스까지입니다.</li>
+<li>이미 구현 · 수락된 애그리거트를 고치는 것이라 기존 코드와 테스트가 영향을 받습니다. 검증에서 기존 인수 조건이 계속 통과하는지 확인합니다.</li>
+<li>바뀌지 않습니다. Plan의 레포 매핑에 「Menu 모듈은 바꾸지 않는다」고 적혀 있고, Impact Map에도 메뉴 관리 쪽 노드가 없습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="design.html"><span>이전</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터</a><a class="next" href="skills.html"><span>다음</span>스킬 파일로 엔진 바꾸기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-변경-영향도인가">왜 변경 영향도인가</a></li><li><a href="#따라-하기-1-프로포절-만들기">따라 하기 1 — 프로포절 만들기</a></li><li><a href="#따라-하기-2-인텐트-단계의-impact-map">따라 하기 2 — 인텐트 단계의 Impact Map</a></li><li><a href="#따라-하기-3-plan에서-modify-보기">따라 하기 3 — Plan에서 MODIFY 보기</a></li><li><a href="#따라-하기-4-plan-뒤의-impact-map과-충돌-가능성">따라 하기 4 — Plan 뒤의 Impact Map과 충돌 가능성</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

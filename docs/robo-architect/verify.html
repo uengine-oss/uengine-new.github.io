@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>검증하고 수락하기 — Robo Architect 튜토리얼</title>
+<meta name="description" content="구현이 끝나면 **구현 완료 → 검증**으로 샌드박스 코드를 설계와 대조합니다. 구조 검증(robo-sync: 설계의 애그리거트 · 커맨드 · 이벤트가 코드에 있는가)과 인수 조건(Given · When · Then이 지켜지는가)을 함께 보고, 통과하면 **Accept (Dual Merge)**로 코드와 설계 그래프를 한 번에 본체에 합칩니다. 이 튜토리얼에서는 49건 중 44건 통과, 실패 0건이었고 검증부터 수락까지 약 7분 걸렸습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/robo-architect/verify.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="검증하고 수락하기 — Robo Architect 튜토리얼">
+<meta property="og:description" content="구현이 끝나면 **구현 완료 → 검증**으로 샌드박스 코드를 설계와 대조합니다. 구조 검증(robo-sync: 설계의 애그리거트 · 커맨드 · 이벤트가 코드에 있는가)과 인수 조건(Given · When · Then이 지켜지는가)을 함께 보고, 통과하면 **Accept (Dual Merge)**로 코드와 설계 그래프를 한 번에 본체에 합칩니다. 이 튜토리얼에서는 49건 중 44건 통과, 실패 0건이었고 검증부터 수락까지 약 7분 걸렸습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/robo-architect/verify.html">
+<meta property="og:image" content="https://www.uengine.org/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 프로포절, 애그리거트, 인수 조건)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치하고 첫 프로젝트 만들기</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">프로포절 라이프사이클</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>프로포절 만들기 — 요구사항 한 줄에서 전략 설계까지</a></li>
+<li><a href="constitution.html"><span class="n">04</span>프로젝트 헌장 정하기</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — 전술 설계와 아키텍처</a></li>
+<li><a href="implement.html"><span class="n">06</span>샌드박스에서 구현하기</a></li>
+<li><a href="verify.html" class="on" aria-current="page"><span class="n">07</span>검증하고 수락하기</a></li>
+</ul>
+<div class="nav-part">설계와 변경</div><ul>
+<li><a href="design.html"><span class="n">08</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터</a></li>
+<li><a href="change.html"><span class="n">09</span>두 번째 프로포절 — 변경 영향도</a></li>
+<li><a href="skills.html"><span class="n">10</span>스킬 파일로 엔진 바꾸기</a></li>
+</ul>
+<div class="nav-part">레거시와 데이터</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>데이터 소스 연결 — 데이터 패브릭</a></li>
+<li><a href="ingest.html"><span class="n">12</span>요구사항 문서로 설계 시작하기</a></li>
+<li><span class="soon"><span class="n">13</span>레거시 코드 분석<em>준비 중</em></span></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">14</span>종합 과제 — 리뷰 기능 붙이기</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>치트시트</a></li>
+<li><a href="faq.html"><span class="n">16</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">프로포절 라이프사이클<span class="chap">7</span></div>
+    <h1>검증하고 수락하기</h1>
+    <article>
+<blockquote>
+<p>구현이 끝나면 <strong>구현 완료 → 검증</strong>으로 샌드박스 코드를 설계와 대조합니다. 구조 검증(robo-sync: 설계의 애그리거트 · 커맨드 · 이벤트가 코드에 있는가)과 인수 조건(Given · When · Then이 지켜지는가)을 함께 보고, 통과하면 <strong>Accept (Dual Merge)</strong>로 코드와 설계 그래프를 한 번에 본체에 합칩니다. 이 튜토리얼에서는 49건 중 44건 통과, 실패 0건이었고 검증부터 수락까지 약 7분 걸렸습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/X7uMBfXB9oM" title="검증하고 수락하기 — 영상 2:55" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="왜-검증하나">왜 검증하나<a class="anchor" href="#왜-검증하나" title="Permanent link">#</a></h2>
+<p>AI가 작업 목록을 다 채웠다고 설계대로 만들어졌다는 보장은 없습니다. 검증은 두 가지를 봅니다.</p>
+<ul>
+<li><strong>구조 검증</strong> — 전술 설계(5장)의 애그리거트 · 필드 · 커맨드 · 이벤트가 코드에 있는지, <code>robo-sync</code> 추출기로 코드에서 뽑아 설계와 맞춰 봅니다.</li>
+<li><strong>인수 조건</strong> — 전략 설계(3장)의 Given · When · Then마다 코드와 테스트를 읽어 지켜지는지 판정하고, 근거(파일:줄, 통과한 테스트)를 붙입니다.</li>
+</ul>
+<h2 id="따라-하기-1-검증-실행">따라 하기 1 — 검증 실행<a class="anchor" href="#따라-하기-1-검증-실행" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>진행 막대가 15/15가 되면 <strong>샌드박스 구현</strong> 칸에 <strong>구현 완료 → 검증</strong>이 생깁니다. 누릅니다.</li>
+<li><strong>검증</strong> 칸으로 넘어가 로그가 흐릅니다(「인수 조건 18건 + 구조 검증 대상 로드. robo-sync 추출기로 대조합니다…」). 도중에 멈추려면 <strong>검증 중지</strong>를 누릅니다.</li>
+<li>이 튜토리얼에서는 <strong>약 7분</strong> 뒤 결과가 나왔습니다.</li>
+</ol>
+<figure><a href="img/verify-03-result.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="검증 결과 — 전체 49 · PASS 44 · FAIL 0 · SKIP 5, 통과율 90%, 위에는 검증 로그" src="img/verify-03-result.webp" / loading="lazy" decoding="async"></a><figcaption>검증 결과 — 전체 49 · PASS 44 · FAIL 0 · SKIP 5, 통과율 90%, 위에는 검증 로그</figcaption></figure>
+<h2 id="따라-하기-2-결과-읽기">따라 하기 2 — 결과 읽기<a class="anchor" href="#따라-하기-2-결과-읽기" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>건수</th>
+<th>PASS</th>
+<th>FAIL</th>
+<th>SKIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>인수 조건</td>
+<td>18</td>
+<td>18</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>구조 검증</td>
+<td>31</td>
+<td>26</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr>
+<td>합계</td>
+<td>49</td>
+<td>44</td>
+<td>0</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>통과율은 PASS ÷ 전체 = 44 ÷ 49 ≈ <strong>90%</strong>입니다.</p>
+<p>카드마다 판정, 종류(인수조건 · 구조), 대상(예: <code>RegisterMenu</code>), 시나리오 번호(<code>SC-001</code>)와 근거가 붙습니다. 예를 들어 SC-002 「메뉴 이름을 비운 채 등록하면 InvalidMenuName」의 근거는 <code>validName(Menu.ts:103-107)</code>이 공백을 지운 뒤 빈 이름이면 오류를 던지고, 테스트 <code>Menu.test("", "   ")</code>가 통과했다는 것입니다.</p>
+<figure><a href="img/verify-03-result-2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="인수 조건 카드 — SC-001~003 RegisterMenu, 시나리오와 근거(파일:줄, 통과한 테스트)" src="img/verify-03-result-2.webp" / loading="lazy" decoding="async"></a><figcaption>인수 조건 카드 — SC-001~003 RegisterMenu, 시나리오와 근거(파일:줄, 통과한 테스트)</figcaption></figure>
+<h3 id="skip은-무엇인가">SKIP은 무엇인가<a class="anchor" href="#skip은-무엇인가" title="Permanent link">#</a></h3>
+<p>SKIP 5건은 모두 구조 검증이었고 이유가 같았습니다. <code>ChangeMenuPrice</code>, <code>MarkMenuSoldOut</code>, <code>ReleaseMenuSoldOut</code>, <code>AcceptOrder</code>, <code>CancelOrder</code> 커맨드가 따로 된 커맨드 타입 없이 서비스 메서드 인자(<code>acceptOrder(principal, orderId)</code>)와 zod 스키마로만 표현되어, 추출기가 입력 필드를 뽑지 못했습니다. 검증기는 코드를 직접 읽어 「입력은 명세와 일치한다」고 적었지만, 자동 대조가 아니라서 PASS 대신 SKIP으로 남겼습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">SKIP을 줄이려면</p>
+<p>커맨드를 <code>ChangeMenuPriceCommand { menuId, price }</code>처럼 타입으로 두면 추출기가 읽을 수 있습니다. 팀 규칙으로 정하고 싶다면 헌장(4장)이나 구현 스킬(10장)에 적어 두세요.</p>
+</div>
+<h2 id="따라-하기-3-수락dual-merge">따라 하기 3 — 수락(Dual Merge)<a class="anchor" href="#따라-하기-3-수락dual-merge" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>Accept / Destroy</strong> 칸을 엽니다. 「PO 최종 결정」에 <strong>✓ Accept (Dual Merge)</strong>와 <strong>✗ Destroy</strong>가 있습니다.</li>
+<li>실패(FAIL)가 있으면 「실패 항목을 인지하고 Accept를 진행합니다」 확인란을 켜야 Accept가 눌립니다. 이번에는 실패가 없어 바로 눌렸습니다.</li>
+<li><strong>Accept (Dual Merge)</strong>를 누릅니다. 「Dual Merge 완료 — 코드와 그래프 DB가 동기화되었습니다」가 나오고 상태가 <strong>ACCEPTED</strong>가 됩니다.</li>
+</ol>
+<figure><a href="img/verify-04-accept-tab.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="PO 최종 결정 — Accept (Dual Merge) / Destroy" src="img/verify-04-accept-tab.webp" / loading="lazy" decoding="async"></a><figcaption>PO 최종 결정 — Accept (Dual Merge) / Destroy</figcaption></figure>
+<figure><a href="img/verify-06-accepted.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Dual Merge 완료 — ACCEPTED, 왼쪽 BOUNDED CONTEXTS에 「주문」 「메뉴 관리」가 생김, 「수거(되돌리기)」 단추" src="img/verify-06-accepted.webp" / loading="lazy" decoding="async"></a><figcaption>Dual Merge 완료 — ACCEPTED, 왼쪽 BOUNDED CONTEXTS에 「주문」 「메뉴 관리」가 생김, 「수거(되돌리기)」 단추</figcaption></figure>
+<p>Dual Merge는 두 가지를 한 번에 합칩니다.</p>
+<ul>
+<li><strong>코드</strong> — <code>proposal/PRO-001</code> 가지를 본체에 머지하고 샌드박스 워크트리를 지웁니다.</li>
+<li><strong>설계</strong> — 프로포절의 전략 · 전술 설계를 프로젝트 그래프에 씁니다. 왼쪽에 BOUNDED CONTEXTS 2개(주문 · 메뉴 관리)가 나타난 것이 그 결과입니다. 8장에서 이 설계를 둘러봅니다.</li>
+</ul>
+<p>되돌려야 하면 <strong>수거(되돌리기)</strong>를 누릅니다. 두 가지 중에 고릅니다.</p>
+<ul>
+<li><strong>그래프만 되돌리기</strong> — 설계 그래프의 변경만 되돌리고, 코드는 본체에 그대로 둡니다.</li>
+<li><strong>그래프 + 코드 되돌리기</strong> — 그래프에 더해 Accept 머지 커밋을 <code>git revert</code> 합니다.</li>
+</ul>
+<p>수락하지 않고 버리려면 Accept 대신 <strong>Destroy</strong>를 누릅니다. 샌드박스 워크트리를 지우고 상태를 DESTROYED로 바꿉니다. 수락 전이라 설계 그래프는 바뀐 적이 없고, 프로포절의 Diff 이력은 남습니다. 이미 ACCEPTED인 프로포절은 Destroy할 수 없습니다(수거를 씁니다).</p>
+<h2 id="직접-돌려-보기">직접 돌려 보기<a class="anchor" href="#직접-돌려-보기" title="Permanent link">#</a></h2>
+<p>수락하면 코드가 본체에 있으니 직접 돌려 볼 수 있습니다. 이 튜토리얼의 결과는 테스트 45개가 모두 통과했습니다.</p>
+<div class="hl"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/robo-lite-src/projects/hanbit-delivery<span class="w">   </span><span class="c1"># 홈에서 고른 코드 폴더</span>
+npm<span class="w"> </span>install
+npm<span class="w"> </span><span class="nb">test</span><span class="w">        </span><span class="c1"># Test Files 5 passed (5) · Tests 45 passed (45)</span>
+</code></pre></div>
+
+<h2 id="확인할-것">확인할 것<a class="anchor" href="#확인할-것" title="Permanent link">#</a></h2>
+<ul>
+<li>검증 결과에 전체 · PASS · FAIL · SKIP과 통과율이 나왔다.</li>
+<li>SKIP 카드의 근거를 읽고 왜 자동 대조를 못 했는지 설명할 수 있다.</li>
+<li>Accept (Dual Merge) 뒤 상태가 ACCEPTED이고, 왼쪽에 바운디드 컨텍스트가 생겼다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>구조 검증과 인수 조건 검증은 각각 무엇을 보나요?</li>
+<li>SKIP 5건 때문에 통과율이 90%였습니다. 실패가 아닌데 왜 100%가 아닌가요?</li>
+<li>FAIL이 하나 있는데 수락하고 싶습니다. 어떻게 하나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>구조 검증은 전술 설계의 요소(애그리거트 · 필드 · 커맨드 · 이벤트)가 코드에 있는지를 robo-sync 추출기로 대조합니다. 인수 조건 검증은 Given · When · Then이 코드와 테스트로 지켜지는지 근거와 함께 판정합니다.</li>
+<li>통과율은 PASS ÷ 전체라서, 자동으로 판정하지 못한 SKIP도 분모에 들어갑니다. 커맨드를 타입으로 두면 추출기가 읽어 SKIP이 줄어듭니다.</li>
+<li>Accept / Destroy 칸에서 「실패 항목을 인지하고 Accept를 진행합니다」 확인란을 켜면 Accept가 눌립니다. 실패를 알고도 합친다는 기록이 남으니, 다음 프로포절에서 고치는 것이 좋습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="implement.html"><span>이전</span>샌드박스에서 구현하기</a><a class="next" href="design.html"><span>다음</span>설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-검증하나">왜 검증하나</a></li><li><a href="#따라-하기-1-검증-실행">따라 하기 1 — 검증 실행</a></li><li><a href="#따라-하기-2-결과-읽기">따라 하기 2 — 결과 읽기</a><ul><li><a href="#skip은-무엇인가">SKIP은 무엇인가</a></li></ul></li><li><a href="#따라-하기-3-수락dual-merge">따라 하기 3 — 수락(Dual Merge)</a></li><li><a href="#직접-돌려-보기">직접 돌려 보기</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
