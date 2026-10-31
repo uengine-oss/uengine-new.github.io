@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Implement in a sandbox — Robo Architect Tutorial</title>
+<meta name="description" content="Split the confirmed plan into a task list, and the Claude Code cell in the Code tab implements that list item by item with `/robo-implement`. The work happens not on the main branch but in a worktree (the sandbox) on the `proposal/PRO-001` branch, with a commit for each finished task. In this tutorial, 18 tasks took about 35 minutes.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/implement.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Implement in a sandbox — Robo Architect Tutorial">
+<meta property="og:description" content="Split the confirmed plan into a task list, and the Claude Code cell in the Code tab implements that list item by item with `/robo-implement`. The work happens not on the main branch but in a worktree (the sandbox) on the `proposal/PRO-001` branch, with a commit for each finished task. In this tutorial, 18 tasks took about 35 minutes.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/implement.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html" class="on" aria-current="page"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">The proposal lifecycle<span class="chap">6</span></div>
+    <h1>Implement in a sandbox</h1>
+    <article>
+<blockquote>
+<p>Split the confirmed plan into a task list, and the Claude Code cell in the Code tab implements that list item by item with <code>/robo-implement</code>. The work happens not on the main branch but in a worktree (the sandbox) on the <code>proposal/PRO-001</code> branch, with a commit for each finished task. In this tutorial, 18 tasks took about 35 minutes.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/mpKMeJFyT6k" title="Implement in a sandbox — video 4:58" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-happens">What happens<a class="anchor" href="#what-happens" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Task list</strong> — the <code>robo-proposal-tasks</code> skill turns the plan (Chapter 5) into a checklist by phase. Each task lists the file paths it will create.</li>
+<li><strong>Sandbox</strong> — a git worktree is created at <code>.sandbox/proposal/PRO-001</code> inside the target project folder, and the work happens on the <code>proposal/PRO-001</code> branch. The main code stays as it is until acceptance (Chapter 7).</li>
+<li><strong>Claude Code cell</strong> — in the terminal on the right of the Code tab, Claude Code on your PC runs <code>/robo-implement PRO-001</code>. Each time it finishes a task, it ticks the checkbox in <code>PROPOSAL_PRO-001_TASKS.md</code> and commits.</li>
+<li><strong>Progress</strong> — the proposal's <strong>Sandbox Implementation</strong> section reads those checkboxes and shows a progress bar and per-phase counts.</li>
+</ul>
+<h2 id="hands-on-1-generate-the-task-list">Hands-on 1 — Generate the task list<a class="anchor" href="#hands-on-1-generate-the-task-list" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In <code>PRO-001</code>, whose plan you confirmed, open the <strong>Sandbox Implementation</strong> section. Check that the target project is the code folder you chose on Home (<code>…/projects/hanbit-delivery-en</code>).</li>
+<li>Click <strong>Generate task list</strong>. Claude Code reads the plan and writes tasks by phase. In this tutorial it took <strong>about 4 minutes</strong>. If it stops with “Failed to parse the task breakdown”, Claude's answer couldn't be read as a task list — click it again (this time it worked on the first try).</li>
+<li><strong>Implementation Task List · 18 tasks</strong> appears. Each task has a description and the files it will create. If you don't like it, click <strong>Regenerate task list</strong>.</li>
+</ol>
+<figure><a href="img/impl-04-tasks-running.webp" target="_blank" rel="noopener" title="View larger"><img alt="Generating the task list — “Decomposing…” with a Stop button while the plan is split into tasks by phase" src="img/impl-04-tasks-running.webp" / loading="lazy" decoding="async"></a><figcaption>Generating the task list — “Decomposing…” with a Stop button while the plan is split into tasks by phase</figcaption></figure>
+<figure><a href="img/impl-03-sandbox.webp" target="_blank" rel="noopener" title="View larger"><img alt="Implementation task list, 18 tasks — Phase 1: Setup with T001 (scaffold the monorepo), the files it will create listed under the task, Phase 2 below" src="img/impl-03-sandbox.webp" / loading="lazy" decoding="async"></a><figcaption>Implementation task list, 18 tasks — Phase 1: Setup with T001 (scaffold the monorepo), the files it will create listed under the task, Phase 2 below</figcaption></figure>
+<p>This task list had eight phases.</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Tasks</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Setup</td>
+<td>T001</td>
+<td>npm-workspaces monorepo (Express · TypeScript backend, React · Vite frontend), an ESLint rule that a module imports another only through its public index</td>
+</tr>
+<tr>
+<td>2 Foundational (Shared Kernel)</td>
+<td>T002</td>
+<td>SQLite connection and migration runner, <code>BEGIN IMMEDIATE</code> transactions, an event dispatcher that runs after commit, DomainError → HTTP mapping, a development stub for the acting user (the AUTHENTICATION gap stays open)</td>
+</tr>
+<tr>
+<td>3 Menu Management - Domain &amp; Infrastructure</td>
+<td>T003–T004</td>
+<td>MenuItem aggregate (test-first), <code>menu_items</code> migration and repository</td>
+</tr>
+<tr>
+<td>4 Menu Management - Application &amp; API</td>
+<td>T005–T007</td>
+<td>the four menu commands with owner checks, the StoreMenu query and the published <code>MenuCatalogQuery</code> port (OrderableMenuItems), menu routes</td>
+</tr>
+<tr>
+<td>5 Ordering - Domain &amp; Infrastructure</td>
+<td>T008–T010</td>
+<td>OrderDraft and Order aggregates (test-first), ordering tables and repositories</td>
+</tr>
+<tr>
+<td>6 Ordering - Application &amp; API</td>
+<td>T011–T014</td>
+<td>picking items, PlaceOrder, AcceptOrder · CancelOrder, the IncomingOrders · MyOrderStatus queries, ordering routes</td>
+</tr>
+<tr>
+<td>7 Frontend</td>
+<td>T015–T016</td>
+<td>menu screens (store menu, owner menu management), ordering screens (order review, order status, incoming orders)</td>
+</tr>
+<tr>
+<td>8 Test &amp; Polish</td>
+<td>T017–T018</td>
+<td>process-level API tests and module-boundary tests, packaging as one deployable unit (Dockerfile)</td>
+</tr>
+</tbody>
+</table>
+<p>You can see the decisions of the Chapter 5 plan turned directly into tasks — for example, T011 says each handler “calls MenuCatalogQuery through the menu-management public index” for the item's store, current price and availability, and T010 adds “no foreign keys to menu_ tables” (constitution principle I, Bounded Contexts as Modules). T017 then adds an architecture test that Ordering SQL never references <code>menu_</code> tables.</p>
+<h2 id="hands-on-2-start-implementing">Hands-on 2 — Start implementing<a class="anchor" href="#hands-on-2-start-implementing" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Click <strong>Start implementation</strong>. The app creates the worktree and the <code>proposal/PRO-001</code> branch. If the target folder isn't a Git repository, it asks whether to run <code>git init</code> and continue.</li>
+<li>Click <strong>Go to Claude Code cell</strong>. The Code tab opens with a <strong>PRO-001</strong> cell on the right.</li>
+<li>The first time, Claude Code asks two things. Click the cell, choose with the arrow keys and press Enter.
+<br>① <strong>Folder trust</strong> — “Yes, I trust this folder” (the default is “No, exit”, so be sure to move down to it)
+<br>② <strong>Bypass permissions mode consent</strong> — “Yes, I accept” (so that file writes and commands during implementation aren't confirmed one by one)</li>
+<li>Once you've answered both, the app types <code>/robo-implement PRO-001</code> into the cell and implementation starts. While a prompt is on screen, the app doesn't send the command and waits.</li>
+</ol>
+<figure><a href="img/impl-06-prompt-wait-user-trust.webp" target="_blank" rel="noopener" title="View larger"><img alt="Folder trust prompt in the PRO-001 cell — the worktree path and “No, exit / Yes, I trust this folder”" src="img/impl-06-prompt-wait-user-trust.webp" / loading="lazy" decoding="async"></a><figcaption>Folder trust prompt in the PRO-001 cell — the worktree path and “No, exit / Yes, I trust this folder”</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Both prompts appear only the first time</p>
+<p>Folder trust and bypass-permissions consent are Claude Code's own safety checks, so Robo Architect doesn't answer them for you. Once answered they're remembered, and you won't be asked again for the same folder on the same PC. Bypassing permissions suits an implementation cell that works only inside the sandbox worktree — the main code doesn't change until acceptance.</p>
+</div>
+<h2 id="hands-on-3-watch-the-progress">Hands-on 3 — Watch the progress<a class="anchor" href="#hands-on-3-watch-the-progress" title="Permanent link">#</a></h2>
+<p>In the cell you can watch Claude Code read and write files, run <code>npm install</code> and tests, and <code>git commit</code>. Go back to the Proposals tab to see the progress bar.</p>
+<figure><a href="img/impl-08-progress-05461.webp" target="_blank" rel="noopener" title="View larger"><img alt="Implementing — “Running 2/18”, phases 1 and 2 done, phase 3 (Menu Management - Domain &amp; Infrastructure) in progress at 0/2 with T003 next" src="img/impl-08-progress-05461.webp" / loading="lazy" decoding="async"></a><figcaption>Implementing — “Running 2/18”, phases 1 and 2 done, phase 3 (Menu Management - Domain &amp; Infrastructure) in progress at 0/2 with T003 next</figcaption></figure>
+<ul>
+<li><strong>Progress bar · per-phase counts</strong> — updated each time the cell ticks a checkbox in <code>PROPOSAL_PRO-001_TASKS.md</code>. Finished tasks are struck through, and phases that are done fold up to their count.</li>
+<li><strong>“Stalled — no update for Nm”</strong> — appears when the checkboxes haven't changed for a while. Open the cell and see what Claude is waiting for (a question, an error).</li>
+<li><strong>Stop · further instructions</strong> — stop with Ctrl+C or Esc in the cell, then type further instructions.</li>
+<li><strong>Mark remaining done</strong> — if the run ended with some tasks left over, this moves on to validation with what has been done so far. To have Claude finish the rest instead, give it further instructions in the cell.</li>
+</ul>
+<figure><a href="img/impl-09-cell-done.webp" target="_blank" rel="noopener" title="View larger"><img alt="PRO-001 cell after the last task — “typecheck OK”, “Test Files 21 passed”, “ticked T018” with its commit, “bypass permissions on” at the bottom" src="img/impl-09-cell-done.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-001 cell after the last task — “typecheck OK”, “Test Files 21 passed”, “ticked T018” with its commit, “bypass permissions on” at the bottom</figcaption></figure>
+<p>In this tutorial, all 18 tasks were done <strong>about 35 minutes</strong> after answering the prompts.</p>
+<figure><a href="img/impl-10-progress-done.webp" target="_blank" rel="noopener" title="View larger"><img alt="Implementation done — “Done 18/18”, the bar at 100%, each phase complete" src="img/impl-10-progress-done.webp" / loading="lazy" decoding="async"></a><figcaption>Implementation done — “Done 18/18”, the bar at 100%, each phase complete</figcaption></figure>
+<h2 id="result-what-was-created">Result — what was created<a class="anchor" href="#result-what-was-created" title="Permanent link">#</a></h2>
+<p>The <code>proposal/PRO-001</code> branch got one commit per task, 18 in all (<code>T001: scaffold npm-workspaces monorepo …</code> … <code>T018: one deployable unit …</code>). Excluding the lock file, that's 125 files and 9,290 lines.</p>
+<div class="hl"><pre><span></span><code>backend/src/modules/menu-management/   MenuItem aggregate · commands · StoreMenu query · MenuCatalogQuery port · routes
+backend/src/modules/ordering/          OrderDraft · Order aggregates · commands · queries · routes
+backend/src/shared/                    SQLite · transactions · events · HTTP errors · dev actor stub
+backend/migrations/                    0001 menu_items · 0002 ordering tables
+backend/tests/                         process-level API tests · module-boundary tests · acceptance traceability
+frontend/src/features/menu/            store menu · owner menu management · register form · change price dialog
+frontend/src/features/ordering/        order review · order status · incoming orders
+Dockerfile                             one deployable unit (Node.js LTS slim, SQLite file on a volume)
+</code></pre></div>
+
+<p>This code exists only in the sandbox for now. It is merged into the main branch only after it is validated and accepted (Chapter 7).</p>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>The task list is shown by phase, with file paths on each task.</li>
+<li>In the cell, you answered “Yes” to folder trust and bypass permissions the first time, and <code>/robo-implement PRO-001</code> then started by itself.</li>
+<li>The progress bar reached 18/18, and the <code>proposal/PRO-001</code> branch has a commit per task.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>Does the main code (the default branch of <code>hanbit-delivery-en</code>) change during implementation?</li>
+<li>The cell is stuck at “Is this a project you created or one you trust?”. What do you do?</li>
+<li>The progress bar shows “Stalled”. What do you look at first?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>No. Implementation happens on the <code>proposal/PRO-001</code> branch in the <code>.sandbox/proposal/PRO-001</code> worktree, and it is merged into the main branch on acceptance (Dual Merge).</li>
+<li>Click the cell, select “Yes, I trust this folder” with the arrow keys and press Enter. When the bypass-permissions consent appears next, choose “Yes, I accept”. The app then types in the implementation command.</li>
+<li>The PRO-001 cell in the Code tab. Claude may be asking a question or stuck on an error. Answer it or type further instructions; if you'd rather validate what's done so far, use <strong>Mark remaining done</strong>.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="plan.html"><span>Previous</span>Plan — tactical design and architecture</a><a class="next" href="verify.html"><span>Next</span>Validate and accept</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-happens">What happens</a></li><li><a href="#hands-on-1-generate-the-task-list">Hands-on 1 — Generate the task list</a></li><li><a href="#hands-on-2-start-implementing">Hands-on 2 — Start implementing</a></li><li><a href="#hands-on-3-watch-the-progress">Hands-on 3 — Watch the progress</a></li><li><a href="#result-what-was-created">Result — what was created</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

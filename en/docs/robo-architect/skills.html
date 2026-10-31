@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change the engine with skill files — Robo Architect Tutorial</title>
+<meta name="description" content="Every instruction Robo Architect follows when it analyzes, plans and implements a proposal is written as text in a skill file (SKILL.md). Add one rule line to a skill file and the engine&#x27;s output changes. Try it yourself in a practice project and compare the results.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/skills.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Change the engine with skill files — Robo Architect Tutorial">
+<meta property="og:description" content="Every instruction Robo Architect follows when it analyzes, plans and implements a proposal is written as text in a skill file (SKILL.md). Add one rule line to a skill file and the engine&#x27;s output changes. Try it yourself in a practice project and compare the results.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/skills.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html" class="on" aria-current="page"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Design and change<span class="chap">10</span></div>
+    <h1>Change the engine with skill files</h1>
+    <article>
+<blockquote>
+<p>Every instruction Robo Architect follows when it analyzes, plans and implements a proposal is written as text in a skill file (SKILL.md). Add one rule line to a skill file and the engine's output changes. Try it yourself in a practice project and compare the results.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/btmWz494WE8" title="Change the engine with skill files — video 4:07" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="skills-are-the-engine">Skills are the engine<a class="anchor" href="#skills-are-the-engine" title="Permanent link">#</a></h2>
+<p>Every time Chapters 3–5 said “Claude Code analyzes”, the app called <code>claude</code> on your computer and handed it <strong>one skill file</strong> as its instructions. A skill file is a Markdown document — purpose, procedure, output format and rules, written as text a person can read. Change this text, without touching any code, and the engine's judgment changes.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Skill</th>
+<th>In this tutorial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INTENT — strategic design</td>
+<td><code>robo-proposal-intent</code></td>
+<td>Chapter 3</td>
+</tr>
+<tr>
+<td>Constitution — recommendations and the document</td>
+<td><code>robo-project-constitution</code></td>
+<td>Chapter 4</td>
+</tr>
+<tr>
+<td>PLAN — tactical design · architecture</td>
+<td><code>robo-proposal-plan</code></td>
+<td>Chapter 5</td>
+</tr>
+<tr>
+<td>Task list</td>
+<td><code>robo-proposal-tasks</code></td>
+<td>Chapter 6</td>
+</tr>
+<tr>
+<td>Implementation — <code>/robo-implement PRO-001</code> in the Code tab's cell</td>
+<td><code>robo-implement</code></td>
+<td>Chapter 6</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td><code>robo-proposal-test</code> · <code>robo-sync</code></td>
+<td>Chapter 7</td>
+</tr>
+<tr>
+<td>Impact analysis</td>
+<td><code>robo-proposal-context</code></td>
+<td>Chapter 9</td>
+</tr>
+<tr>
+<td>Detailed DDD stages</td>
+<td><code>robo-proposal-discover</code> · <code>-decompose</code> · <code>-strategize</code> · <code>-connect</code> · <code>-define</code> · <code>-scope</code> · <code>-tactical</code></td>
+<td>“Detailed DDD” in Chapter 3</td>
+</tr>
+</tbody>
+</table>
+<p>The skills live in three bundle folders — <code>robo-proposals/</code> (proposal stages), <code>robo-spec/</code> (implementation · reverse sync) and <code>robo-changes/</code> (requirement changes).</p>
+<div class="admonition note">
+<p class="admonition-title">What the app decides and what the skill decides</p>
+<p>The order of the stages, where results are saved, and the screens are decided by the app. For example, the <strong>order of questions</strong> in the constitution interview is fixed by the app (the two questions in Chapter 4), while the skill handles each question's <strong>recommendation and rationale</strong>, and the <strong>constitution document</strong> it writes from your answers. “What to judge, how, and what to write out” is the skill's job.</p>
+</div>
+<h2 id="where-the-skill-files-are">Where the skill files are<a class="anchor" href="#where-the-skill-files-are" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>resources/runtime/architect/app/skills/</code> in the app's install folder</td>
+<td>The originals the app hands to <code>claude</code> at each stage. For a default Windows install, that's <code>%LOCALAPPDATA%\Programs\Robo-Architect\resources\runtime\architect\app\skills\</code></td>
+</tr>
+<tr>
+<td><code>~/.claude/skills/</code> in your home folder</td>
+<td>Copies used as slash commands such as <code>/robo-implement</code> in the Code tab's Claude Code cell. When you first open the Code tab, it asks whether to install any missing skills</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hands-on-1-create-a-practice-project">Hands-on 1 — Create a practice project<a class="anchor" href="#hands-on-1-create-a-practice-project" title="Permanent link">#</a></h2>
+<p>Skills are shared by the whole app. To avoid touching the Hanbit Delivery design, create a separate empty project to experiment in.</p>
+<ol class="steps">
+<li>In the project bar at the top of Home, click <strong>Switch project</strong>.</li>
+<li>Type <code>skill_lab_en</code> in the new project field and click <strong>Create</strong>, choose an empty folder (e.g. <code>skill-lab-en</code>) as the code folder, and click <strong>Open project</strong>.</li>
+<li>When the project bar shows <code>skill_lab_en</code>, you're set. This project has its own graph, so nothing you make here mixes with <code>hanbit_delivery_en</code>.</li>
+</ol>
+<figure><a href="img/skills-01-project-opened.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home — project skill_lab_en, code folder skill-lab-en" src="img/skills-01-project-opened.webp" / loading="lazy" decoding="async"></a><figcaption>Home — project skill_lab_en, code folder skill-lab-en</figcaption></figure>
+<h2 id="hands-on-2-add-one-rule-to-the-skill">Hands-on 2 — Add one rule to the skill<a class="anchor" href="#hands-on-2-add-one-rule-to-the-skill" title="Permanent link">#</a></h2>
+<p>Open <code>robo-proposals/robo-proposal-intent/SKILL.md</code> in an editor. Under <code>## Rules</code> at the bottom there are eight rules. (The skill files ship in Korean; the rules are shown here in English translation.)</p>
+<div class="hl"><pre><span></span><code><span class="gu">## Rules</span>
+
+<span class="k">1.</span> Use the legacy implementation as real-world evidence, but never let it override the user&#39;s requirements, and never copy it as is.
+…
+<span class="k">7.</span> The output language follows the language of the original prompt.
+<span class="k">8.</span> When regenerating from feedback, apply the feedback first, keep everything it didn&#39;t point out, and don&#39;t create new clarification questions.
+</code></pre></div>
+
+<p>Add a ninth rule here and save. Your team refers to each module by a short code in code and tickets, so the rule asks for a code with every bounded context name. You can write the new rule in English even though the others are in Korean — Claude reads both.</p>
+<div class="hl"><pre><span></span><code><span class="k">9.</span> Append a short uppercase code in parentheses to every BoundedContext name. Example: Ordering (ORD), Menu Management (MENU).
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">Make a copy before you edit</p>
+<p>Keep a copy of the original. You'll have to restore it after the experiment, and reinstalling or updating the app overwrites the skills in the install folder with the new version. If it's a rule your team will keep using, put it in the skills repository and ship it together.</p>
+</div>
+<h2 id="hands-on-3-analyze-the-same-requirement-again">Hands-on 3 — Analyze the same requirement again<a class="anchor" href="#hands-on-3-analyze-the-same-requirement-again" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In <code>skill_lab_en</code>, open the Proposals tab and enter the same sentence as in Chapter 3 under <strong>+ New Proposal</strong>.
+
+
+<div class="hl"><pre><span></span><code>Hanbit Delivery: Store owners can register menu items, change their prices, and mark them as sold out. Customers can pick menu items and place an order, and can cancel the order until the store accepts it.
+</code></pre></div>
+
+
+</li>
+<li>Click <strong>Start AI Analysis</strong>. There's no need to restart the app — it reads the skill file at each stage, when the stage runs. In this tutorial it took 190 seconds, with no clarification questions.</li>
+<li>Open the strategic design with <strong>View Proposal</strong> and scroll past the <strong>PROCESS</strong> cards to <strong>BOUNDED CONTEXT</strong>.</li>
+</ol>
+<figure><a href="img/skills-03-strategic-1.webp" target="_blank" rel="noopener" title="View larger"><img alt="PRO-001 “Store Owner: Register a menu item” in skill_lab_en — under BOUNDED CONTEXT, “Menu Management (MENU)” (Supporting) and its first feature “Menu Item Management”" src="img/skills-03-strategic-1.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-001 “Store Owner: Register a menu item” in skill_lab_en — under BOUNDED CONTEXT, “Menu Management (MENU)” (Supporting) and its first feature “Menu Item Management”</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Chapter 3 (original skill)</th>
+<th>This chapter (rule 9 added)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bounded context 1</td>
+<td>Menu Management</td>
+<td><strong>Menu Management (MENU)</strong></td>
+</tr>
+<tr>
+<td>Bounded context 2</td>
+<td>Ordering</td>
+<td><strong>Ordering (ORD)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Without changing a single line of code, the engine named the contexts by the new rule — even the codes are the ones in the rule's example. Everything else has nothing to do with the rule, so it comes out along the same lines as in Chapter 3 — the same two contexts with the same classifications (Ordering Core, Menu Management Supporting), and features · user stories · acceptance criteria of the same kind. Only the counts vary from run to run: this run had 5 features and 6 user stories, against 7 and 9 in Chapter 3.</p>
+<figure><a href="img/skills-03-strategic-2.webp" target="_blank" rel="noopener" title="View larger"><img alt="Further down the same proposal — “Menu Availability” under Menu Management (MENU), then “Ordering (ORD)” (Core) with “Order Placement”; acceptance criteria (Given · When · Then) along the same lines as Chapter 3" src="img/skills-03-strategic-2.webp" / loading="lazy" decoding="async"></a><figcaption>Further down the same proposal — “Menu Availability” under Menu Management (MENU), then “Ordering (ORD)” (Core) with “Order Placement”; acceptance criteria (Given · When · Then) along the same lines as Chapter 3</figcaption></figure>
+<h2 id="hands-on-4-restore">Hands-on 4 — Restore<a class="anchor" href="#hands-on-4-restore" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Restore <code>SKILL.md</code> from the copy of the original.</li>
+<li>On Home, click <strong>Switch project</strong> → choose <code>hanbit_delivery_en</code> and open it again with the code folder <code>hanbit-delivery-en</code>.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Which rules belong in a skill?</p>
+<p>Good candidates are <strong>things your team kept fixing by hand every time</strong>, such as “add a short code to every name”, “at least one failure path in every set of acceptance criteria” or “amounts are integers in the smallest currency unit”. Once a rule is in the skill, every proposal comes out that way from the start.</p>
+</div>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>In the <code>skill_lab_en</code> proposal, the bounded context names came out with a code attached.</li>
+<li>You restored the skill file to the original and switched the project back to <code>hanbit_delivery_en</code>.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>Do you have to restart the app after editing a skill file?</li>
+<li>Why did you create a separate practice project?</li>
+<li>You want the constitution interview to ask one more question. Is editing the skill enough?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>No. The app reads the skill file each time it runs a stage.</li>
+<li>So that the experimental proposal doesn't mix into the Hanbit Delivery design. Each project has its own graph.</li>
+<li>No. The order of interview questions is decided by the app. The skill handles the recommendations · rationales and the constitution document.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="change.html"><span>Previous</span>A second proposal — change impact</a><a class="next" href="fabric.html"><span>Next</span>Connect data sources — the data fabric</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#skills-are-the-engine">Skills are the engine</a></li><li><a href="#where-the-skill-files-are">Where the skill files are</a></li><li><a href="#hands-on-1-create-a-practice-project">Hands-on 1 — Create a practice project</a></li><li><a href="#hands-on-2-add-one-rule-to-the-skill">Hands-on 2 — Add one rule to the skill</a></li><li><a href="#hands-on-3-analyze-the-same-requirement-again">Hands-on 3 — Analyze the same requirement again</a></li><li><a href="#hands-on-4-restore">Hands-on 4 — Restore</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

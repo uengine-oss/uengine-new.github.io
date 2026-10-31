@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install and create your first project — Robo Architect Tutorial</title>
+<meta name="description" content="Install the Robo Architect Lite desktop app and launch it for the first time, check that it brings up the graph DB and analysis services in Docker, then create your first project, “hanbit_delivery_en”, on Home, choose its code folder and open it.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/install.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install and create your first project — Robo Architect Tutorial">
+<meta property="og:description" content="Install the Robo Architect Lite desktop app and launch it for the first time, check that it brings up the graph DB and analysis services in Docker, then create your first project, “hanbit_delivery_en”, on Home, choose its code folder and open it.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/install.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html" class="on" aria-current="page"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Getting started<span class="chap">1</span></div>
+    <h1>Install and create your first project</h1>
+    <article>
+<blockquote>
+<p>Install the Robo Architect Lite desktop app and launch it for the first time, check that it brings up the graph DB and analysis services in Docker, then create your first project, “hanbit_delivery_en”, on Home, choose its code folder and open it.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/oe-gnLpasHk" title="Install and create your first project — video 4:13" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="what-gets-installed">What gets installed<a class="anchor" href="#what-gets-installed" title="Permanent link">#</a></h2>
+<p>Lite runs as one desktop app and seven Docker containers. When you start the app, it brings up the containers itself; when you quit, it leaves them running (so the next start is faster).</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Desktop app</td>
+<td>The screens, plus the Robo Architect backend running on your computer</td>
+</tr>
+<tr>
+<td>graph-db</td>
+<td><strong>Ontological DB</strong> — stores the design as a graph. Each project gets its own graph</td>
+</tr>
+<tr>
+<td>graph-bolt</td>
+<td>The graph DB's Bolt-protocol entry point. The app sends its queries here</td>
+</tr>
+<tr>
+<td>fabric · catalog</td>
+<td>Connect data sources (existing DBs) to the graph DB and organize their schemas (Chapter 11)</td>
+</tr>
+<tr>
+<td>analyzer · parser · gateway</td>
+<td>Read and analyze legacy code</td>
+</tr>
+</tbody>
+</table>
+<p>Neo4j is not used. Earlier versions of Robo Architect kept the design in Neo4j, but Lite uses Ontological DB, where the graph DB itself also connects to your data sources.</p>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker Desktop</td>
+<td>Install it and <strong>keep it running</strong>. 20 GB of free disk space and 16 GB of memory or more are recommended</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>Run <code>claude</code> once in a terminal and sign in. Proposal analysis, planning and implementation all run through it</td>
+</tr>
+<tr>
+<td>Git</td>
+<td><code>git --version</code> should print a version</td>
+</tr>
+<tr>
+<td>OpenAI API key</td>
+<td>Used only for document upload in the Requirements tab. You can follow this whole tutorial (Chapters 3–14) without a key — legacy code analysis (Chapter 13) also runs through Claude Code</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">What Claude Code does</p>
+<p>Robo Architect's engine is not a built-in AI pipeline but <strong>Claude Code skills</strong>. When you create a proposal, the app calls <code>claude</code> on your computer and has it do the work by following a skill file (Chapter 10). That's why you don't need to enter a separate API key, and why you can also use the same skills directly from Claude Code in a terminal.</p>
+</div>
+<h2 id="hands-on-1-install">Hands-on 1 — Install<a class="anchor" href="#hands-on-1-install" title="Permanent link">#</a></h2>
+<p>The Lite installer comes as three files (ask uEngine for them). These steps are for Windows.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Size</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Robo-Architect-Setup-&lt;version&gt;.exe</code></td>
+<td>about 100 MB</td>
+<td>Desktop app installer</td>
+</tr>
+<tr>
+<td><code>robo-images.tar</code></td>
+<td>about 1.5 GB</td>
+<td>Bundle of the seven container images</td>
+</tr>
+<tr>
+<td><code>SHA256SUMS</code></td>
+<td>two lines</td>
+<td>Checksums that confirm both files are intact</td>
+</tr>
+</tbody>
+</table>
+<ol class="steps">
+<li>Open PowerShell in the download folder and check that the hashes of both files match <code>SHA256SUMS</code>.
+
+
+<div class="hl"><pre><span></span><code><span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">SHA256SUMS</span>
+<span class="nb">Get-ChildItem</span> <span class="p">.\</span><span class="n">Robo-Architect-Setup</span><span class="p">-*.</span><span class="n">exe</span><span class="p">,</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="p">|</span>
+  <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span> <span class="s2">&quot;{0}  {1}&quot;</span> <span class="o">-f</span> <span class="p">(</span><span class="nb">Get-FileHash</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span> <span class="nv">$_</span><span class="p">).</span><span class="n">Hash</span><span class="p">.</span><span class="n">ToLower</span><span class="p">(),</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Name</span> <span class="p">}</span>
+</code></pre></div>
+
+
+</li>
+<li>Run <code>Robo-Architect-Setup-&lt;version&gt;.exe</code>. You don't need administrator rights. <strong>Uncheck the “Run” option on the last screen</strong> — an app launched from the installer inherits the environment the installer started with.</li>
+<li>Move the image bundle into the app's data folder. If you skip this step, the app stops at start-up — Home shows “Ontological stopped · Could not start — see the logs folder”, and the log in the logs folder says <code>docker.image_archive_missing</code>.
+
+
+<div class="hl"><pre><span></span><code><span class="nv">$dst</span> <span class="p">=</span> <span class="s2">&quot;$env:APPDATA\robo-architect-desktop\runtime&quot;</span>
+<span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="nv">$dst</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+<span class="nb">Copy-Item</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="n">-Destination</span> <span class="nv">$dst</span> <span class="n">-Force</span>
+</code></pre></div>
+
+
+</li>
+<li>(Only if you will use document upload in the Requirements tab) Set your OpenAI key as a user environment variable, then sign out and sign back in. Each service reads a different name, so put the same value under five names.
+
+
+<div class="hl"><pre><span></span><code><span class="k">foreach</span> <span class="p">(</span><span class="nv">$n</span> <span class="k">in</span> <span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;LLM_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;ROBO_LLM_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;ROBO_EMBED_API_KEY&#39;</span><span class="p">,</span><span class="s1">&#39;ROBO_SEARCH_LLM_API_KEY&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="nv">$n</span><span class="p">,</span> <span class="s1">&#39;&lt;your key&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">macOS</p>
+<p>The screens in this tutorial were captured on macOS (Apple silicon) running the same setup. There is no macOS installer yet, so on macOS the app is started with the development team's run-from-source procedure. Once the app is up, its screens and behavior are the same as on Windows.</p>
+</div>
+<h2 id="hands-on-2-first-launch">Hands-on 2 — First launch<a class="anchor" href="#hands-on-2-first-launch" title="Permanent link">#</a></h2>
+<p>Start the app from the <strong>Robo-Architect</strong> icon on your desktop. The top of the window is the <strong>tab strip</strong>, and the first tab that opens is <strong>Home</strong>. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (with the installer, the first start takes 4–5 minutes because the image bundle is unpacked). Until then the feature cards are dimmed and locked.</p>
+<figure><a href="img/install-boot.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left" src="img/install-boot.webp" / loading="lazy" decoding="async"></a><figcaption>Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left</figcaption></figure>
+<p>When everything is up, the status at bottom left changes to <strong>Ontological connected</strong>, and the project picker opens in the middle. There is no sign-in — Lite is a single-user app with no accounts, and your name and email are read from Git on your computer.</p>
+<figure><a href="img/install-home-empty.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home after start-up — project robo (default), the new project name field, the code folder" src="img/install-home-empty.webp" / loading="lazy" decoding="async"></a><figcaption>Home after start-up — project robo (default), the new project name field, the code folder</figcaption></figure>
+<p>Check in a terminal that all containers are up. You should get seven lines, all <code>healthy</code>.</p>
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>ps<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;label=com.docker.compose.project=robo-architect-desktop&quot;</span><span class="w"> </span>--format<span class="w"> </span><span class="s2">&quot;{{.Names}}  {{.Status}}&quot;</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>robo-architect-desktop-gateway-1     Up 17 seconds (healthy)
+robo-architect-desktop-analyzer-1    Up 28 seconds (healthy)
+robo-architect-desktop-catalog-1     Up 34 seconds (healthy)
+robo-architect-desktop-fabric-1      Up 39 seconds (healthy)
+robo-architect-desktop-graph-bolt-1  Up 45 seconds (healthy)
+robo-architect-desktop-graph-db-1    Up 50 seconds (healthy)
+robo-architect-desktop-parser-1      Up 50 seconds (healthy)
+</code></pre></div>
+
+<h2 id="hands-on-3-create-your-first-project">Hands-on 3 — Create your first project<a class="anchor" href="#hands-on-3-create-your-first-project" title="Permanent link">#</a></h2>
+<p>A Robo Architect <strong>project</strong> is one graph inside the graph DB. There is one graph DB, but it can hold many graphs, so each new project gets its own graph and they never mix. At first there is one project, the default <code>robo</code>, created at install time.</p>
+<ol class="steps">
+<li>In the <strong>New project</strong> field on Home, type <code>hanbit_delivery_en</code> and click <strong>＋ Create</strong>. Names must start with a lowercase letter and use only lowercase letters, digits and underscores. “Created project hanbit_delivery_en.” appears and that project is selected.</li>
+<li>Under <strong>Code folder</strong>, click <strong>Choose folder…</strong> and pick the folder where the implementation code will go. This tutorial uses a Git repository folder named <code>hanbit-delivery-en</code>. In Chapter 6 Claude Code writes code into this folder, and each proposal uses a Git worktree of this folder as its sandbox.</li>
+<li>Click <strong>Open project</strong>. The app points the backend at this project's graph (a few seconds) and shows the open project at the top of Home. The feature cards are enabled.</li>
+</ol>
+<figure><a href="img/install-project-created.webp" target="_blank" rel="noopener" title="View larger"><img alt="The new project hanbit_delivery_en, created and selected" src="img/install-project-created.webp" / loading="lazy" decoding="async"></a><figcaption>The new project hanbit_delivery_en, created and selected</figcaption></figure>
+<figure><a href="img/install-home-project.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home with the project open — hanbit_delivery_en · code folder, eight enabled feature cards" src="img/install-home-project.webp" / loading="lazy" decoding="async"></a><figcaption>Home with the project open — hanbit_delivery_en · code folder, eight enabled feature cards</figcaption></figure>
+<div class="admonition tip">
+<p class="admonition-title">Make the code folder a Git repository</p>
+<p>Sandbox implementation (Chapter 6) needs the code folder to be a Git repository. If it's an empty folder, set it up once in a terminal.</p>
+<p><code>bash
+mkdir hanbit-delivery-en &amp;&amp; cd hanbit-delivery-en
+git init -b main &amp;&amp; git commit --allow-empty -m init</code></p>
+</div>
+<p>The next time you start the app, it reopens the project you opened last. To move to another project, click <strong>Switch project</strong> on Home.</p>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>All seven containers are <code>healthy</code>.</li>
+<li>The <code>hanbit_delivery_en</code> project and its code folder are shown at the top of Home.</li>
+<li>The status at bottom left reads “Ontological connected — graph hanbit_delivery_en · 7 Docker containers · 127.0.0.1” and “Agent Claude Code”.</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>In Lite, what is a “project” stored as?</li>
+<li>Do proposal analysis, planning and implementation need an OpenAI key?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>As one <strong>graph</strong> inside the graph DB (Ontological DB). There is one graph DB, and each project gets its own graph, so they never mix.</li>
+<li>No. Proposal work is done by <strong>Claude Code</strong> on your computer, following skills. The OpenAI key is only used for document upload in the Requirements tab. Legacy code analysis (Chapter 13) is done by Claude Code too.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>Previous</span>Robo Architect Tutorial</a><a class="next" href="tour.html"><span>Next</span>A tour of the screens</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-gets-installed">What gets installed</a></li><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#hands-on-1-install">Hands-on 1 — Install</a></li><li><a href="#hands-on-2-first-launch">Hands-on 2 — First launch</a></li><li><a href="#hands-on-3-create-your-first-project">Hands-on 3 — Create your first project</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

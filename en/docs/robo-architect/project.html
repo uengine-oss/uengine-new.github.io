@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final project — add reviews — Robo Architect Tutorial</title>
+<meta name="description" content="Run the whole flow so far — proposal · constitution · plan · implementation · validation · acceptance · change impact — once more, end to end, on your own. The task is to add “reviews” to Hanbit Delivery. An example run as far as the strategic design is shown alongside.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/project.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Final project — add reviews — Robo Architect Tutorial">
+<meta property="og:description" content="Run the whole flow so far — proposal · constitution · plan · implementation · validation · acceptance · change impact — once more, end to end, on your own. The task is to add “reviews” to Hanbit Delivery. An example run as far as the strategic design is shown alongside.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/project.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html" class="on" aria-current="page"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Final project<span class="chap">14</span></div>
+    <h1>Final project — add reviews</h1>
+    <article>
+<blockquote>
+<p>Run the whole flow so far — proposal · constitution · plan · implementation · validation · acceptance · change impact — once more, end to end, on your own. The task is to add “reviews” to Hanbit Delivery. An example run as far as the strategic design is shown alongside.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/pifkRAAA1lk" title="Final project — add reviews — video 4:09" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="the-task">The task<a class="anchor" href="#the-task" title="Permanent link">#</a></h2>
+<p>Put the following requirement into the Hanbit Delivery project (<code>hanbit_delivery_en</code>) as a proposal, and take it all the way to acceptance.</p>
+<div class="hl"><pre><span></span><code>Hanbit Delivery: Customers can leave a review with a star rating (1-5) and a short comment on an order that has been delivered. Only one review is allowed per order. Store owners can reply to reviews of their own store. The store list shows each store&#39;s average rating.
+</code></pre></div>
+
+<h2 id="steps">Steps<a class="anchor" href="#steps" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>Create the proposal</strong> — Proposals tab › <strong>+ New Proposal</strong>, enter the sentence above, and click <strong>Start AI Analysis</strong> (Chapter 3).</li>
+<li><strong>Check the strategic design</strong> — read the bounded contexts · features · user stories · acceptance criteria, and if they're off, use <strong>Different intent? Regenerate with feedback</strong> (Chapter 3).</li>
+<li><strong>Plan</strong> — use the constitution you set in Chapter 4 as it is. <strong>Proceed to Plan → → Generate Plan → Confirm Plan</strong> (Chapter 5). If a Constitution Gap comes up, note it down.</li>
+<li><strong>Implement</strong> — <strong>Open Sandbox Implementation → Generate task list → Start implementation → Go to Claude Code cell</strong> (Chapter 6).</li>
+<li><strong>Validate and accept</strong> — <strong>Done → Verify</strong>, check that the acceptance criteria pass, then <strong>Accept (Dual Merge)</strong> (Chapter 7).</li>
+<li><strong>Check the impact</strong> — see in the Requirements · Design · Data tabs what was newly created and what changed (Chapters 8 · 9).</li>
+</ol>
+<h2 id="example-a-run-through-the-strategic-design">Example — a run through the strategic design<a class="anchor" href="#example-a-run-through-the-strategic-design" title="Permanent link">#</a></h2>
+<p>We put the same sentence into the practice project <code>hanbit_doc_en</code> (Chapter 12) and ran it through INTENT. It took <strong>180 seconds</strong> (3 minutes), and it was split right away with no clarification questions. Because the project already holds PRO-001 from Chapter 12, this one became <strong>PRO-002</strong>.</p>
+<figure><a href="img/project-01-task.webp" target="_blank" rel="noopener" title="View larger"><img alt="New Proposal with the task sentence" src="img/project-01-task.webp" / loading="lazy" decoding="async"></a><figcaption>New Proposal with the task sentence</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Bounded context</th>
+<th>Classification</th>
+<th>Features</th>
+<th>User stories</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Review</td>
+<td>Supporting</td>
+<td>Order Review Submission · Owner Review Reply</td>
+<td>Customer: leave a review on a delivered order · Store owner: view reviews of my store · Store owner: reply to a review of my store</td>
+</tr>
+<tr>
+<td>Store</td>
+<td>Supporting</td>
+<td>Store List Average Rating</td>
+<td>Customer: see each store's average rating in the store list</td>
+</tr>
+</tbody>
+</table>
+<p>There was one process, “Order Review and Owner Reply”, which runs from delivery completion through writing the review and updating the store's average rating to the store owner's reply.</p>
+<figure><a href="img/project-03-detail.webp" target="_blank" rel="noopener" title="View larger"><img alt="PRO-002 “Customer: leave a review on a delivered order” — Legacy evidence 20, and the process “Order Review and Owner Reply” in Strategic Design" src="img/project-03-detail.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-002 “Customer: leave a review on a delivered order” — Legacy evidence 20, and the process “Order Review and Owner Reply” in Strategic Design</figcaption></figure>
+<p>The header also shows <strong>Legacy evidence 20</strong>. The analysis graph is one for the whole app, so the old order system you analyzed in Chapter 13 was searched here too, and its code and tables were attached as evidence — for example, the old <code>DeliveryService.complete</code>, which sets an order to <code>DELIVERED</code>, is cited as the point where an order becomes reviewable.</p>
+<p>Every rule in the task sentence came down as acceptance criteria. These are the ones attached to “Customer: leave a review on a delivered order”.</p>
+<table>
+<thead>
+<tr>
+<th>Rule in the sentence</th>
+<th>Acceptance criteria (Given · When · Then)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>On a delivered order</td>
+<td>My order is not DELIVERED (e.g. WAITING, ACCEPTED, COOKING, DELIVERING, CANCELLED or REJECTED) · try to review it · rejected with a message that only delivered orders can be reviewed</td>
+</tr>
+<tr>
+<td>One per order</td>
+<td>An order that already has a review · submit another review for it · rejected with a message that only one review is allowed per order</td>
+</tr>
+<tr>
+<td>Rating 1–5</td>
+<td>A rating outside 1–5 or not a whole number · submit · rejected and nothing is saved</td>
+</tr>
+<tr>
+<td>A short comment</td>
+<td>An empty comment or one longer than the allowed maximum length · submit · rejected and nothing is saved</td>
+</tr>
+<tr>
+<td>(Not in the sentence)</td>
+<td>An order placed by another customer · try to review it · rejected and nothing is saved</td>
+</tr>
+</tbody>
+</table>
+<p>The order statuses in the first row (WAITING · COOKING · DELIVERING …) are not in the task sentence. They are exactly the old <code>orders.status</code> values, which came in with the legacy evidence.</p>
+<figure><a href="img/project-04-strategic-1.webp" target="_blank" rel="noopener" title="View larger"><img alt="Review (Supporting) › Order Review Submission › “Customer: leave a review on a delivered order” — normal submission, then not delivered · duplicate · rating range · comment length · another customer's order" src="img/project-04-strategic-1.webp" / loading="lazy" decoding="async"></a><figcaption>Review (Supporting) › Order Review Submission › “Customer: leave a review on a delivered order” — normal submission, then not delivered · duplicate · rating range · comment length · another customer's order</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">Your result will differ from this</p>
+<p>The example ran in a practice project with no accepted design, so it also created a new “Store” context (CREATE). The INTENT skill has the rule “if an existing domain element matches, reuse its id”, so in <code>hanbit_delivery_en</code>, where you finished Chapters 3–7, the new features go under existing contexts such as “Ordering” · “Menu Management”, and the plan has items that modify existing aggregates (MODIFY) (in Chapter 9, Order came out as MODIFY with HIGH conflict risk). Looking at that difference together with the impact from Chapter 9 is the point of this task.</p>
+</div>
+<h2 id="check-yourself">Check yourself<a class="anchor" href="#check-yourself" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Where to look</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You can explain your reasoning for making reviews a separate bounded context, or putting them inside ordering</td>
+<td>Strategic design · constitution principle I (module boundaries)</td>
+</tr>
+<tr>
+<td>“Only on delivered orders” and “one per order” went into the acceptance criteria and the aggregate rules (invariants)</td>
+<td>Strategic design · the plan's Tactical Design</td>
+</tr>
+<tr>
+<td>You can explain where the average rating is calculated (a read model), without reading another module's tables directly</td>
+<td>The plan's architecture decisions · constitution principle I</td>
+</tr>
+<tr>
+<td>The review story's acceptance criteria passed in validation</td>
+<td>Validation section</td>
+</tr>
+<tr>
+<td>You checked in the impact view what changed in the existing order · store design</td>
+<td>Impact Map · Chapter 9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="more-to-try">More to try<a class="anchor" href="#more-to-try" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Fix a team rule in a skill</strong> — add a rule such as “set the review comment length as a number” to <code>robo-proposal-intent</code> and compare the results (Chapter 10).</li>
+<li><strong>Match the old DB</strong> — the old DB's <code>orders.status</code> from Chapter 11 has <code>DELIVERED</code>. Write down in the constitution or the next proposal which old value “delivered” maps to.</li>
+<li><strong>Start from a document</strong> — write requirements such as reviews · coupons · regulars as one document and paste it in as in Chapter 12.</li>
+</ul>
+    </article>
+    <nav class="pager"><a class="prev" href="legacy.html"><span>Previous</span>Analyze legacy code</a><a class="next" href="cheatsheet.html"><span>Next</span>Cheat sheet</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#the-task">The task</a></li><li><a href="#steps">Steps</a></li><li><a href="#example-a-run-through-the-strategic-design">Example — a run through the strategic design</a></li><li><a href="#check-yourself">Check yourself</a></li><li><a href="#more-to-try">More to try</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

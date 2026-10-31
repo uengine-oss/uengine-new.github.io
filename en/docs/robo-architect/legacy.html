@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analyze legacy code — Robo Architect Tutorial</title>
+<meta name="description" content="Analyze the old order system (Java · DDL) that Hanbit Delivery uses today into a code graph and a data schema, then design a new feature, “order rejection reasons”, as a proposal grounded in that graph. Claude Code on your computer does both the analysis and the design, so no OpenAI key is needed.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/robo-architect/legacy.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analyze legacy code — Robo Architect Tutorial">
+<meta property="og:description" content="Analyze the old order system (Java · DDL) that Hanbit Delivery uses today into a code graph and a data schema, then design a new feature, “order rejection reasons”, as a proposal grounded in that graph. Claude Code on your computer does both the analysis and the design, so no OpenAI key is needed.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/robo-architect/legacy.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/robo-architect/img/tour-home-tabs.webp">
+<link rel="icon" href="../../../images/roboarchitect/ra-mark.png" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('radocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/roboarchitect/ra-mark.png" alt="" width="28" height="28"><span>Robo Architect <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. proposal, aggregate, acceptance criteria)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/roboarchitect.html">Product</a>
+    <a href="https://github.com/uengine-oss/robo-architect" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Toggle light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Robo Architect Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Install and create your first project</a></li>
+<li><a href="tour.html"><span class="n">02</span>A tour of the screens</a></li>
+</ul>
+<div class="nav-part">The proposal lifecycle</div><ul>
+<li><a href="proposal.html"><span class="n">03</span>Create a proposal — from one requirement to strategic design</a></li>
+<li><a href="constitution.html"><span class="n">04</span>Set the project constitution</a></li>
+<li><a href="plan.html"><span class="n">05</span>Plan — tactical design and architecture</a></li>
+<li><a href="implement.html"><span class="n">06</span>Implement in a sandbox</a></li>
+<li><a href="verify.html"><span class="n">07</span>Validate and accept</a></li>
+</ul>
+<div class="nav-part">Design and change</div><ul>
+<li><a href="design.html"><span class="n">08</span>Tour the design — Requirements · Process · Design · Data</a></li>
+<li><a href="change.html"><span class="n">09</span>A second proposal — change impact</a></li>
+<li><a href="skills.html"><span class="n">10</span>Change the engine with skill files</a></li>
+</ul>
+<div class="nav-part">Legacy and data</div><ul>
+<li><a href="fabric.html"><span class="n">11</span>Connect data sources — the data fabric</a></li>
+<li><a href="ingest.html"><span class="n">12</span>Start a design from a requirements document</a></li>
+<li><a href="legacy.html" class="on" aria-current="page"><span class="n">13</span>Analyze legacy code</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">14</span>Final project — add reviews</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">15</span>Cheat sheet</a></li>
+<li><a href="faq.html"><span class="n">16</span>Frequently asked questions</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Legacy and data<span class="chap">13</span></div>
+    <h1>Analyze legacy code</h1>
+    <article>
+<blockquote>
+<p>Analyze the old order system (Java · DDL) that Hanbit Delivery uses today into a code graph and a data schema, then design a new feature, “order rejection reasons”, as a proposal grounded in that graph. Claude Code on your computer does both the analysis and the design, so no OpenAI key is needed.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/eUWHZ1IOkE4" title="Analyze legacy code — video 4:50" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="designing-from-an-old-system">Designing from an old system<a class="anchor" href="#designing-from-an-old-system" title="Permanent link">#</a></h2>
+<p>So far you've designed by putting requirements into an empty project. Real work is usually changing or rebuilding a <strong>system that's already running</strong>. The most expensive mistake then is to design the new one without knowing the business rules the old system already enforces. Rules like “only orders waiting for acceptance can be rejected” or “closing the store rejects all waiting orders at once” aren't in any document. They're only in the code.</p>
+<p>This chapter has two parts.</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>What it does</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Analysis</strong></td>
+<td>Analyze the old code folder in Legacy › Code</td>
+<td>Code graph (classes · methods · business rules · examples) · data schema (tables · column descriptions)</td>
+</tr>
+<tr>
+<td><strong>2. Design from evidence</strong></td>
+<td>Put a new requirement into a proposal, and the INTENT skill searches the analysis graph and attaches evidence to each element</td>
+<td>“Evidence n/m”, evidence tags · source code for each element</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-practice-code">The practice code<a class="anchor" href="#the-practice-code" title="Permanent link">#</a></h2>
+<p>Download <a href="files/hanbit-legacy.zip">hanbit-legacy.zip</a> and unzip it (it unzips into a <code>hanbit-legacy</code> folder). It's the old order system Hanbit Delivery has used since 2016: Java 8 + JDBC, with the PostgreSQL schema <code>delivery</code> you connected in Chapter 11 as its DB.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schema/delivery.sql</code></td>
+<td>7 tables (customer · store · menu · orders · order_item · rider · delivery)</td>
+</tr>
+<tr>
+<td><code>order/OrderService.java</code></td>
+<td>Place · accept · reject · start cooking · cancel an order. The store's status changes (accept · reject · start cooking) all go through one <code>changeStatus</code></td>
+</tr>
+<tr>
+<td><code>store/StoreService.java</code></td>
+<td>Open the store · close the store (rejects all waiting orders)</td>
+</tr>
+<tr>
+<td><code>menu/MenuService.java</code> · <code>delivery/DeliveryService.java</code> · <code>report/SettlementReport.java</code></td>
+<td>Menus · delivery · daily settlement</td>
+</tr>
+</tbody>
+</table>
+<p>Order status goes <code>WAITING</code> → <code>ACCEPTED</code> → <code>COOKING</code> → <code>DELIVERING</code> → <code>DELIVERED</code>, and can end as <code>CANCELLED</code> or <code>REJECTED</code> along the way. When an order is rejected, <strong>the reason isn't stored anywhere</strong>. That's what you'll fix in Part 2.</p>
+<h2 id="hands-on-1-create-the-project">Hands-on 1 — Create the project<a class="anchor" href="#hands-on-1-create-the-project" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In the project bar on Home, click <strong>Switch project</strong>, type <code>hanbit_legacy_en</code> in the <strong>New project</strong> field, and click <strong>Create</strong>.</li>
+<li>For the code folder, click <strong>Choose folder…</strong>, choose the unzipped <code>hanbit-legacy</code> folder, and click <strong>Open project</strong>. (In the screenshots the folder is named <code>hanbit-legacy-en</code>. The folder name doesn't matter.)</li>
+</ol>
+<figure><a href="img/legacy-01-project-folder.webp" target="_blank" rel="noopener" title="View larger"><img alt="Project hanbit_legacy_en (empty project) selected, code folder …/hanbit-legacy-en, Open project" src="img/legacy-01-project-folder.webp" / loading="lazy" decoding="async"></a><figcaption>Project hanbit_legacy_en (empty project) selected, code folder …/hanbit-legacy-en, Open project</figcaption></figure>
+<h2 id="hands-on-2-start-the-analysis">Hands-on 2 — Start the analysis<a class="anchor" href="#hands-on-2-start-the-analysis" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>On Home, open the <strong>Legacy · Data Sources</strong> card. <strong>Code</strong> on the rail shows the code folder's file tree (click a file to preview it on the right).</li>
+<li>Click <strong>Start analysis</strong> at the bottom. If there's an earlier analysis, it asks whether to delete it and start over. Continue.</li>
+</ol>
+<figure><a href="img/legacy-02-code-tree.webp" target="_blank" rel="noopener" title="View larger"><img alt="Legacy › Code — the file tree of hanbit-legacy-en, File preview, and Start analysis" src="img/legacy-02-code-tree.webp" / loading="lazy" decoding="async"></a><figcaption>Legacy › Code — the file tree of hanbit-legacy-en, File preview, and Start analysis</figcaption></figure>
+<p>The analysis runs in seven stages: <strong>DDL parsing · Source loading · Project scan · Relationship linking · Analysis context setup · Code analysis · Post-processing</strong>. The first four parse the code and link classes · methods · tables with the calls · reads · writes between them. In <strong>Code analysis</strong>, the AI writes what each method does, its business rules and examples. The screen soon moves to the <strong>Code graph</strong>, and a progress window shows the stage and the number of nodes and relations. In this tutorial it took <strong>141 seconds</strong> (about 2 minutes 20 seconds).</p>
+<figure><a href="img/legacy-04-running-0070.webp" target="_blank" rel="noopener" title="View larger"><img alt="Analyzing — the Code graph tree fills in, and the progress window is at Stage 6/7, “AI is analysing code meaning”" src="img/legacy-04-running-0070.webp" / loading="lazy" decoding="async"></a><figcaption>Analyzing — the Code graph tree fills in, and the progress window is at Stage 6/7, “AI is analysing code meaning”</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">The AI is Claude Code on your computer</p>
+<p>The analyzer's AI calls go through the app and are answered by Claude Code on your computer (<code>claude -p</code>). It uses the same login session as the proposal skills, so no OpenAI key is needed. In this setup, the analyzer's “semantic search” finds candidates with <strong>keyword search</strong> instead of vectors (embeddings). The evidence search in Part 2 uses this search.</p>
+</div>
+<h2 id="hands-on-3-read-the-code-graph">Hands-on 3 — Read the code graph<a class="anchor" href="#hands-on-3-read-the-code-graph" title="Permanent link">#</a></h2>
+<p>When the analysis finishes, the <strong>NAVIGATOR</strong> on the left becomes a package › class › method tree. In this tutorial there were 6 classes, 18 methods and 7 tables (32 columns), linked by 23 places where methods read or write tables and 46 calls.</p>
+<ol class="steps">
+<li>In the tree, expand <strong>order › OrderService</strong>. <strong>Double-click</strong> a method name to put it on the canvas. Put <code>placeOrder</code> · <code>acceptOrder</code> · <code>rejectOrder</code> · <code>startCooking</code> · <code>cancelOrder</code> · <code>changeStatus</code> on it. The <strong>Calls</strong> lines show that accepting, rejecting and starting cooking all go through <code>changeStatus</code> (cancelling runs its own update, limited to the customer's own order).</li>
+<li>Click <code>rejectOrder</code> once in the tree, and its details open on the right: <strong>Logical name</strong> “Store order rejection”, <strong>Role</strong> <strong>Command</strong>, then OVERVIEW, <strong>BUSINESS RULE</strong>, SOURCE CODE and CONNECT.</li>
+</ol>
+<figure><a href="img/legacy-06-graph.webp" target="_blank" rel="noopener" title="View larger"><img alt="OrderService and its methods — HAS_MEMBER and Calls lines, with OrderService's details on the right (Logical name “Order Placement and Status Management”)" src="img/legacy-06-graph.webp" / loading="lazy" decoding="async"></a><figcaption>OrderService and its methods — HAS_MEMBER and Calls lines, with OrderService's details on the right (Logical name “Order Placement and Status Management”)</figcaption></figure>
+<p>The <strong>BUSINESS RULE</strong> section is the core material of this chapter. Each rule the code actually enforces is written as one sentence with <strong>Examples</strong> (<strong>Given</strong> · <strong>When</strong> · <strong>Then</strong>).</p>
+<figure><a href="img/legacy-06-detail-rules.webp" target="_blank" rel="noopener" title="View larger"><img alt="rejectOrder's business rule — the order must be 'WAITING' and moves to 'REJECTED', with two examples (a waiting order is rejected / any other order fails with “Only waiting orders can be rejected”)" src="img/legacy-06-detail-rules.webp" / loading="lazy" decoding="async"></a><figcaption>rejectOrder's business rule — the order must be 'WAITING' and moves to 'REJECTED', with two examples (a waiting order is rejected / any other order fails with “Only waiting orders can be rejected”)</figcaption></figure>
+<p>Open <code>StoreService.close</code> (logical name “Store closing with waiting order rejection”) and you'll find rules like “When a store is closed, every order of that store whose status is 'WAITING' is changed to status 'REJECTED'; orders in any other status are left unchanged.” and “After both updates, the changes are committed in one transaction and the number of orders rejected is returned; if the store has no 'WAITING' orders, 0 is returned.” These facts weren't in any document. They came out of the code.</p>
+<h2 id="hands-on-4-the-data-schema">Hands-on 4 — The data schema<a class="anchor" href="#hands-on-4-the-data-schema" title="Permanent link">#</a></h2>
+<p>Click <strong>Data schema</strong> on the rail, and the left side lists the 7 tables read from the DDL (default › delivery). Double-click a table name to put it on the canvas. With <strong>Logical name</strong> turned on, tables show as “Orders” · “Store” · “Order item” · “Menu”, and columns show as the descriptions the code analysis wrote.</p>
+<figure><a href="img/legacy-07-schema-cards.webp" target="_blank" rel="noopener" title="View larger"><img alt="Data schema — Orders · Store · Order item · Menu, each column with the description the code analysis wrote and FK marks" src="img/legacy-07-schema-cards.webp" / loading="lazy" decoding="async"></a><figcaption>Data schema — Orders · Store · Order item · Menu, each column with the description the code analysis wrote and FK marks</figcaption></figure>
+<p>The data schema was empty when you only registered the data source in Chapter 11. Now the DDL and the code analysis have filled it. Column descriptions come from <strong>how the code uses the column</strong>, for example the order ID is “used in update conditions to select the specific order to change, such as for status transitions and cancellation”.</p>
+<div class="admonition warning">
+<p class="admonition-title">There's one analysis result per app</p>
+<p>The analysis graph is one for the whole app, not one per project. If you analyze another code folder, the previous analysis is deleted and replaced. Also, the parts the AI writes (the number of rules, the sentences) differ a little on each run. Across runs of this tutorial there were 35, 52 and 53 business rules. Classes · methods · tables come from parsing and stay the same.</p>
+</div>
+<h2 id="hands-on-5-design-a-new-feature-from-legacy-evidence">Hands-on 5 — Design a new feature from legacy evidence<a class="anchor" href="#hands-on-5-design-a-new-feature-from-legacy-evidence" title="Permanent link">#</a></h2>
+<p>Now you use the analysis graph as <strong>evidence for the design</strong>. The new feature is “order rejection reasons”. The old system rejects orders but never records why.</p>
+<ol class="steps">
+<li>In the same <code>hanbit_legacy_en</code> project, open the <strong>Proposals</strong> card and click <strong>+ New Proposal</strong>.</li>
+<li>Type the following requirement and click <strong>Start AI Analysis</strong>.</li>
+</ol>
+<div class="hl"><pre><span></span><code>Hanbit Delivery: When a store owner rejects an incoming order, they pick one reason (out of ingredients, closed for the day, or other). Customers see the rejected order&#39;s status together with that reason. When closing the store rejects all waiting orders at once, the reason must be recorded too.
+</code></pre></div>
+
+<p>The progress window shows a difference from Chapters 3 and 12. The INTENT skill searches the legacy graph for each business axis (<code>Searching the legacy graph: …</code>, “→ 11 legacy candidates · 3 rules found”), and opens the useful candidates down to their source code with <code>Inspecting legacy node: …</code>: <code>rejectOrder</code> · <code>StoreService.close</code> · <code>changeStatus</code> · the <code>orders</code> table. In this tutorial it took <strong>161 seconds</strong> (about 2 minutes 40 seconds).</p>
+<figure><a href="img/legacy-11-analyzing-3.webp" target="_blank" rel="noopener" title="View larger"><img alt="INTENT progress window — Inspecting legacy node for rejectOrder · close · changeStatus · orders" src="img/legacy-11-analyzing-3.webp" / loading="lazy" decoding="async"></a><figcaption>INTENT progress window — Inspecting legacy node for rejectOrder · close · changeStatus · orders</figcaption></figure>
+<p>Click <strong>View Proposal</strong>, and the header sums up the evidence: <strong>Legacy evidence 15</strong>, <strong>Evidence 11/11</strong>. That means all 11 elements (2 bounded contexts · 3 features · 4 user stories · 2 processes) have evidence somewhere in the old code. The tag on each element (🔗 2) is that element's evidence count.</p>
+<figure><a href="img/legacy-13-evidence.webp" target="_blank" rel="noopener" title="View larger"><img alt="PRO-001 — “Legacy evidence 15 · Evidence 11/11”, with evidence tags on the processes “Order Rejection with Reason” and “Store Closing with Waiting Order Rejection”" src="img/legacy-13-evidence.webp" / loading="lazy" decoding="async"></a><figcaption>PRO-001 — “Legacy evidence 15 · Evidence 11/11”, with evidence tags on the processes “Order Rejection with Reason” and “Store Closing with Waiting Order Rejection”</figcaption></figure>
+<p>Click a tag, and that element's evidence opens. The process “Order Rejection with Reason” has two pieces of evidence.</p>
+<figure><a href="img/legacy-14-evidence-pop.webp" target="_blank" rel="noopener" title="View larger"><img alt="Evidence detail — placeOrder (derived from · Search-confirmed) and rejectOrder “Store order rejection” (refines · Source-inspected, order/OrderService.java : 73~75), “Cited by 3 elements”" src="img/legacy-14-evidence-pop.webp" / loading="lazy" decoding="async"></a><figcaption>Evidence detail — placeOrder (derived from · Search-confirmed) and rejectOrder “Store order rejection” (refines · Source-inspected, order/OrderService.java : 73~75), “Cited by 3 elements”</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Mark</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>derived from</strong> · <strong>refines</strong> · reads · writes</td>
+<td>How the new element relates to the old code: it comes from an old behavior / it changes an old behavior / it reads · writes that table</td>
+</tr>
+<tr>
+<td><strong>Source-inspected</strong> · <strong>Search-confirmed</strong></td>
+<td>INTENT opened the source code to check it / checked it only from search results</td>
+</tr>
+<tr>
+<td>File : line · code</td>
+<td>The source the evidence points to (<code>order/OrderService.java : 73~75</code>)</td>
+</tr>
+<tr>
+<td><strong>Cited by n elements</strong></td>
+<td>New elements that rely on the same old code. If you change that old code, they're all affected</td>
+</tr>
+</tbody>
+</table>
+<p>Evidence shows up in the acceptance criteria too. “Store owner: Reject an incoming order with one reason” has <strong>“Given an order that is no longer waiting (for example already accepted), When I try to reject it, Then the rejection is refused with 'Only waiting orders can be rejected' and neither the status nor any reason is recorded”</strong>. That's <code>rejectOrder</code>'s rule, down to its exact message. The next criterion, an order of a different store is refused and left unchanged, comes from <code>changeStatus</code> only updating the given store's orders. In “Store owner: Waiting orders are rejected with reason 'Closed for the day' when the store closes”, the other order “keeps its status with no rejection reason”, and “the store closing and every rejection with its reason are recorded together”. Both follow the <code>StoreService.close</code> rules (only 'WAITING' orders, one transaction). And in “Store owner: Close the store for the day”, “I am told that 3 orders were rejected” (0 when there are none) comes from <code>close</code> returning the number of rejected orders. None of these were in the requirement sentence.</p>
+<figure><a href="img/legacy-13-evidence-2.webp" target="_blank" rel="noopener" title="View larger"><img alt="User story acceptance criteria — refused with 'Only waiting orders can be rejected', another store's order left unchanged, and at closing only waiting orders are rejected, recorded together with the closing" src="img/legacy-13-evidence-2.webp" / loading="lazy" decoding="async"></a><figcaption>User story acceptance criteria — refused with 'Only waiting orders can be rejected', another store's order left unchanged, and at closing only waiting orders are rejected, recorded together with the closing</figcaption></figure>
+<p>The <strong>Legacy evidence</strong> panel on the right of the <strong>Impact Map</strong> section groups the evidence by old code (in this tutorial, 8 cited · 7 searched). Hover over a card to see wires to the requirements that cite it. Click it to see the source and the elements citing it.</p>
+<figure><a href="img/legacy-16-impact.webp" target="_blank" rel="noopener" title="View larger"><img alt="Impact Map — Requirements 9 on the left, Legacy evidence on the right (Store closing with waiting order rejection · OrderService · placeOrder · Store order rejection · Order status transition · Store)" src="img/legacy-16-impact.webp" / loading="lazy" decoding="async"></a><figcaption>Impact Map — Requirements 9 on the left, Legacy evidence on the right (Store closing with waiting order rejection · OrderService · placeOrder · Store order rejection · Order status transition · Store)</figcaption></figure>
+<p>Like PRO-001 in Chapter 3, this proposal continues from <strong>Proceed to Plan →</strong> to the constitution, the plan and the implementation. The skills of the plan and implementation stages reuse the same evidence. They don't search again for source code they've already opened.</p>
+<div class="admonition tip">
+<p class="admonition-title">Verify evidence</p>
+<p>Click <strong>Verify evidence</strong> in the header to expand the evidence verdicts and wires of every element at once. An element without evidence is marked “No legacy basis” (a newly introduced element with no counterpart in the legacy code). That's useful information too: it's where to ask why a new element is new.</p>
+</div>
+<h2 id="what-to-check">What to check<a class="anchor" href="#what-to-check" title="Permanent link">#</a></h2>
+<ul>
+<li>The Legacy › Code graph tree has order › OrderService › rejectOrder, and its details show a business rule with examples.</li>
+<li>The data schema has 7 tables (delivery).</li>
+<li>The “order rejection reasons” proposal has “Evidence n/m” in its header, and clicking an element's tag shows the source code (file : line).</li>
+</ul>
+<h2 id="quiz">Quiz<a class="anchor" href="#quiz" title="Permanent link">#</a></h2>
+<ol>
+<li>Where do business rules and examples come from, documents or code?</li>
+<li>What does “Evidence 11/11” mean? If you get 0/11, what do you check first?</li>
+<li>What's the difference between “Source-inspected” and “Search-confirmed” evidence?</li>
+<li>The acceptance criterion “I am told that 3 orders were rejected” wasn't in the requirement sentence. Where did it come from?</li>
+</ol>
+<details class="answer">
+<summary>Answers</summary>
+<ol>
+<li>From code. In the analysis's “Code analysis” stage, the AI writes what each method does and its rules, and gives each rule a Given · When · Then example. That's why rules that were in no document (only waiting orders can be rejected, closing the store rejects all waiting orders) come out.</li>
+<li>All 11 new elements have evidence somewhere in the old code. If it's 0/11, first check that Legacy › Code graph has an analysis result. There's only one analysis per app, so if you analyzed another folder, that result is what gets used as evidence.</li>
+<li>Source-inspected evidence is something INTENT checked by opening the source code with a legacy node inspection. Search-confirmed evidence was checked only from search results (summaries).</li>
+<li>From the old system's behavior: <code>StoreService.close</code> rejects the waiting orders and returns how many it rejected (0 if none). The design keeps something the store owner already gets today, so the new feature doesn't lose it.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="ingest.html"><span>Previous</span>Start a design from a requirements document</a><a class="next" href="project.html"><span>Next</span>Final project — add reviews</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#designing-from-an-old-system">Designing from an old system</a></li><li><a href="#the-practice-code">The practice code</a></li><li><a href="#hands-on-1-create-the-project">Hands-on 1 — Create the project</a></li><li><a href="#hands-on-2-start-the-analysis">Hands-on 2 — Start the analysis</a></li><li><a href="#hands-on-3-read-the-code-graph">Hands-on 3 — Read the code graph</a></li><li><a href="#hands-on-4-the-data-schema">Hands-on 4 — The data schema</a></li><li><a href="#hands-on-5-design-a-new-feature-from-legacy-evidence">Hands-on 5 — Design a new feature from legacy evidence</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
