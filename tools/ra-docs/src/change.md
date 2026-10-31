@@ -80,7 +80,7 @@ Tactical Design에는 네 항목이 나왔습니다.
 
 - PRO-002의 전략 설계가 새 컨텍스트 없이 기존 「주문」 컨텍스트에 기능을 더했다.
 - Plan의 Tactical Design에 MODIFY Aggregate Order가 있다.
-- Plan 뒤 Impact Map에 Design 층과 충돌 가능성 HIGH가 보인다.
+- Plan 뒤 Impact Map에 Design 층이 생기고, Plan의 임팩트 분석 표에서 Order의 충돌 가능성이 HIGH다.
 
 ## 확인 문제
 
