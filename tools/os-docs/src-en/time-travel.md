@@ -118,7 +118,7 @@ Not only data but also the schema keeps history. A **schema change**, such as ch
 
 ![Schema change stages — plan, impact review, staged execution, validation, completion and a history record. If validation fails, you fix the bad values and validate again](../../../images/ontological-db/en/odb-concept-schema-steps.webp)
 
-For more, see the [Ontological DB introduction](../../../contents/ontologicaldb.html).
+For more, see the [Ontological DB introduction](../../contents/ontologicaldb.html).
 
 !!! exercise "Check yourself"
     1. Is each of these a change or a correction? ⓐ From July 1, a supplier's grade went down from 1 to 2. ⓑ A supplier's country was entered as Korea by mistake; it was actually Vietnam.
