@@ -27,7 +27,7 @@ The objective is 「Grow bulk order revenue」. Its KPIs count completed proposa
 
 Each empty perspective shows 「No objectives in this perspective yet」. The controls include 「Import legacy map」, 「Refresh Metrics」, 「AI Edit」, and 「Add Objective」.
 
-Two buttons remain in Korean: 「전략 정합성 검사」 means strategy consistency check, and 「온톨로지 뷰」 means ontology view.
+Two more buttons, 「Strategy consistency check」 and 「Ontology view」, are still labeled in Korean in the current version.
 
 This exercise adds one objective under 「Financial」. You do not need to fill all four perspectives to test KPI measurements.
 
@@ -51,7 +51,7 @@ The description's “20 or more” threshold describes the objective. It does no
 
 ![Saved objective — Grow bulk order revenue with 0 KPI, 0 initiatives, and Not measured](img/st-obj-saved.webp)
 
-The card initially shows 「0 KPI · 0 initiatives · Not measured」. A Korean 「전략맵 초기화」 button also appears after the first objective; it means reset strategy map.
+The card initially shows 「0 KPI · 0 initiatives · Not measured」. A 「Reset strategy map」 button, still labeled in Korean, also appears after the first objective.
 
 ## Try it 3 — Add the proposal-count KPI
 
@@ -163,7 +163,7 @@ After saving the survey KPI, run 「Sales Proposal Submission」 again using the
 <li markdown="1">Enter the customer request below.</li>
 <li markdown="1">As Minji, complete the proposal task with the response below and click 「Submit Complete」.</li>
 <li markdown="1">Check that the process is 「COMPLETED」.</li>
-<li markdown="1">Find 「설문: Proposal satisfaction」 in Minji's 「Task List」.</li>
+<li markdown="1">Find the 「Survey: Proposal satisfaction」 task in Minji's 「Task List」.</li>
 </ol>
 
 Customer request:
@@ -176,9 +176,9 @@ Minji's proposal:
 
 Both Minji and Jinyoung received survey workitems after completion.
 
-![Survey workitem — the task titled 설문: Proposal satisfaction](img/st-survey-list.webp)
+![Survey workitem — the task titled Survey: Proposal satisfaction](img/st-survey-list.webp)
 
-The generated workitem still has the Korean prefix 「설문:」, meaning survey. Its description also contains 「완료에 따른 KPI 설문」, meaning a KPI survey following completion. Check the instance named in that description.
+The current version still writes the “Survey:” prefix of the generated workitem in Korean. Its description, also in Korean, says it is a KPI survey sent on completion. Check the instance named in that description.
 
 !!! note "The objective description does not filter the KPI"
     The objective describes orders of 20 or more pieces. This new order has only eight desks, but completing the linked process still increases the count. The quantity condition in the objective description is not automatically applied to the KPI.
@@ -186,7 +186,7 @@ The generated workitem still has the Korean prefix 「설문:」, meaning survey
 ## Try it 8 — Answer the surveys as Minji and Jinyoung
 
 <ol class="steps" markdown="1">
-<li markdown="1">Open Minji's 「설문: Proposal satisfaction」 workitem.</li>
+<li markdown="1">Open Minji's 「Survey: Proposal satisfaction」 workitem.</li>
 <li markdown="1">Read the completed process name and 「How satisfied were you with this proposal?」.</li>
 <li markdown="1">Choose five stars.</li>
 <li markdown="1">Enter the comment below and click 「Submit」.</li>
@@ -242,7 +242,7 @@ The objective card shows 「3 KPI · 0 initiatives · 90%」. This summarizes th
 <ol class="steps" markdown="1">
 <li markdown="1">Open 「KPI & Progress」 and read overall strategy achievement.</li>
 <li markdown="1">Read the lower KPI and process-pipeline sections separately.</li>
-<li markdown="1">Return to the board and open 「온톨로지 뷰」 to inspect the ontology.</li>
+<li markdown="1">Return to the board and open 「Ontology view」 to inspect the ontology.</li>
 </ol>
 
 ![KPI and progress — Strategy Achievement Overall 90% and the separate empty pipeline sections](img/st-kpi-progress.webp)
@@ -256,13 +256,13 @@ The explanation says 「Only processes published after review are counted toward
 !!! note "These sections do not measure the same thing"
     Overall achievement is 90%, while another section shows 「At Risk 0%」. Pipeline counts of 0 do not mean no process instances were completed. Keep each value with its section name and explanation. The captured evidence does not establish every relationship between these aggregates.
 
-The ontology page remains almost entirely Korean in English mode. Its heading is 「기업 운영 온톨로지」, meaning enterprise operations ontology. Its subtitle describes four layers: strategy, process, resources, and knowledge.
+The ontology page remains almost entirely Korean in English mode. Its heading reads “Enterprise operations ontology”, and its subtitle describes four layers: strategy, process, resources, and knowledge.
 
 ![Ontology — the Korean interface with 71 nodes, 66 relationships, and the English legend](img/st-ontology.webp)
 
-The run shows 「노드 71」 and 「관계 66」: 71 nodes and 66 relationships.
+The run shows 71 nodes and 66 relationships.
 
-The tabs include 「온톨로지 그래프」, 「영향도 분석」, and 「전략 개선점」, meaning ontology graph, impact analysis, and strategy improvements. 「전략보드에서 편집」 means edit in the strategy board.
+The tabs are “Ontology graph”, “Impact analysis”, and “Strategy improvements”, and the “Edit in strategy board” button at the top right takes you back to the board.
 
 The English legend includes Strategy, KPI, Initiative, Process, Task, User, Agent, Team, and Skill. This view helps inspect connections. Node and relationship counts do not prove that a strategy is appropriate.
 

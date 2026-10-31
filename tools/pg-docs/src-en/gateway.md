@@ -53,7 +53,7 @@ The candidate is 「Proposal Approval Decision」 for 「Sales Proposal Approval
 「Submit response」 is disabled while nothing is selected or typed. Entering the response lets you continue without selecting a gateway for DMN conversion.
 
 !!! note "This confirmation is still in Korean"
-    The current version shows the DMN question and some generation progress text in Korean. 「DMN 의사결정 테이블을 어떤 게이트웨이에 만들까요?」 asks which gateways should become DMN decision tables. The submitted text bubble also starts with 「직접 입력:」, meaning direct input.
+    The current version shows the DMN question and some generation progress text in Korean. The question asks which gateways should become DMN decision tables. The submitted text bubble also starts with a Korean label; in English it reads 「Your input:」.
 
 About ten seconds after submission, our run showed 「BPMN process generation complete」 and reported that one process had been created and saved.
 
@@ -97,7 +97,7 @@ Use the same method as [Chapter 5](organization.html). In this definition's edit
 The automatic save after generation and this version save are separate. The version now includes the role owners. Jinyoung will also take the 「Customer」 role when opening the run.
 
 !!! note "A breadcrumb still shown in Korean"
-    The current version may show 「미분류 › 미분류」 in the definition breadcrumb. These are the uncategorized levels above the process.
+    The current version may show 「Uncategorized › Uncategorized」 in Korean in the definition breadcrumb. These are the uncategorized levels above the process.
 
 ## Try it 4 — Enter the customer request as Jinyoung
 
@@ -114,7 +114,7 @@ The automatic save after generation and this version save are separate. The vers
 Our instance name appears as 「Sales Proposal Approval · Hanbit Daejeon Office Fu…」. Use this instance name to find the right cards when switching between Jinyoung and Minji.
 
 !!! note "A task tab still shown in Korean"
-    The current version labels the similar-cases tab 「유사 사례」, even in English mode. Use 「Progress」 to view the process flow.
+    The current version labels the 「Similar cases」 tab in Korean, even in English mode. Use 「Progress」 to view the process flow.
 
 ## Try it 5 — Write the proposal as Minji
 
@@ -231,7 +231,7 @@ There is one review card because **the same step reopened**. A separate second r
 
 You followed a branch based on a review result and a loop that returned work for revision. You have now created and run processes handled by people.
 
-In [Chapter 8](knowledge.html), you will upload company documents to the Knowledge Base so agents can use them as sources. In [Chapter 13](agent-steps.html), you will run an agent-assisted quote process whose approval path depends on whether the total is below KRW 30,000,000 or at least that amount.
+In [Chapter 8](knowledge.html), you will upload company documents to the Knowledge Base so agents can use them as sources. In Chapter 13 (English edition coming soon), you will run an agent-assisted quote process whose approval path depends on whether the total is below KRW 30,000,000 or at least that amount.
 
 !!! exercise "Check your understanding"
     1. Does a diamond with an X send work down every outgoing arrow?

@@ -174,13 +174,13 @@ Open the same skill file. Keep the five existing rules and add this line at the 
 <ol class="steps" markdown="1">
 <li markdown="1">Add rule 6 to the end of `SKILL.md` for 「hanbit-quote-format」.</li>
 <li markdown="1">Click 「Save」 in the editor.</li>
-<li markdown="1">In 「No Git Repository」, click 「깃 없이 저장」.</li>
-<li markdown="1">Check for 「스킬 파일이 성공적으로 저장되었습니다.」.</li>
+<li markdown="1">In 「No Git Repository」, click 「Save without Git」.</li>
+<li markdown="1">Check for the confirmation that the skill file was saved successfully.</li>
 </ol>
 
-The last button and confirmation message remain in Korean. 「깃 없이 저장」 means save without Git. 「스킬 파일이 성공적으로 저장되었습니다.」 means the skill file was saved successfully.
+The current version still shows this button and the confirmation message in Korean. 「Save without Git」 is the middle button; the message says the skill file was saved successfully.
 
-The 「No Git Repository」 dialog explains that the skill has no linked Git repository. Its buttons are 「Cancel」, 「깃 없이 저장」, and 「Create Repository & Save」. This exercise saves only the file.
+The 「No Git Repository」 dialog explains that the skill has no linked Git repository. Its buttons are 「Cancel」, 「Save without Git」, and 「Create Repository & Save」. This exercise saves only the file.
 
 ![Save without Git — No Git Repository dialog with the Korean save-without-Git button](img/sk-nogit.webp)
 
