@@ -20,7 +20,7 @@
 | 파일 | 하는 일 |
 |---|---|
 | `schema/delivery.sql` | 테이블 7개(customer · store · menu · orders · order_item · rider · delivery) |
-| `order/OrderService.java` | 주문하기 · 접수 · 거절 · 조리 시작 · 취소 — 상태 바꾸기는 모두 `changeStatus` 하나로 |
+| `order/OrderService.java` | 주문하기 · 접수 · 거절 · 조리 시작 · 취소 — 접수 · 거절 · 조리 시작은 `changeStatus` 하나로, 취소는 따로 UPDATE |
 | `store/StoreService.java` | 영업 시작 · 영업 종료(대기 주문 일괄 거절) |
 | `menu/MenuService.java` · `delivery/DeliveryService.java` · `report/SettlementReport.java` | 메뉴 · 배달 · 일 정산 |
 
@@ -56,7 +56,7 @@
 분석이 끝나면 왼쪽 **NAVIGATOR**가 패키지 › 클래스 › 메서드 트리가 됩니다. 이 튜토리얼에서는 클래스 6개, 메서드 18개, 테이블 7개(컬럼 32개)였고, 메서드가 테이블을 읽고 쓰는 곳 23군데와 호출 46개가 이어졌습니다.
 
 <ol class="steps" markdown="1">
-<li markdown="1">트리에서 **order › OrderService**를 펼칩니다. 메서드 이름을 **더블클릭**하면 캔버스에 올라갑니다 — `placeOrder` · `acceptOrder` · `rejectOrder` · `startCooking` · `cancelOrder` · `changeStatus` 를 올려 봅니다. 접수 · 거절 · 조리 · 취소가 모두 `changeStatus` 를 **호출**하는 것이 선으로 보입니다.</li>
+<li markdown="1">트리에서 **order › OrderService**를 펼칩니다. 메서드 이름을 **더블클릭**하면 캔버스에 올라갑니다 — `placeOrder` · `acceptOrder` · `rejectOrder` · `startCooking` · `cancelOrder` · `changeStatus` 를 올려 봅니다. 접수 · 거절 · 조리 시작이 모두 `changeStatus` 를 **호출**하는 것이 선으로 보입니다(취소만 자기 UPDATE 를 따로 씁니다).</li>
 <li markdown="1">트리에서 `rejectOrder` 를 한 번 누르면 오른쪽에 상세가 열립니다 — 논리명 「접수 대기 주문 거절」, 역할 **명령(Command)**, 개요, **업무 규칙**, 원문 코드, 연결.</li>
 </ol>
 
