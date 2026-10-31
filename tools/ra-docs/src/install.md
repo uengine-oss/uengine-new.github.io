@@ -23,7 +23,7 @@ Neo4j는 쓰지 않습니다. 예전 Robo Architect는 설계를 Neo4j에 두었
 | Docker Desktop | 설치하고 **켜 둡니다**. 디스크 여유 20GB, 메모리 16GB 이상을 권장합니다 |
 | Claude Code | 터미널에서 `claude` 를 한 번 실행해 로그인해 둡니다. 프로포절의 분석·계획·구현이 모두 이것으로 돕니다 |
 | Git | `git --version` 이 나오면 됩니다 |
-| OpenAI API 키 | 요구사항 탭의 문서 업로드와 레거시 코드 분석(13장)에 씁니다. 3~12장은 키 없이 따라 할 수 있습니다 |
+| OpenAI API 키 | 요구사항 탭의 문서 업로드에만 씁니다. 이 튜토리얼(3~14장)은 키 없이 따라 할 수 있습니다 — 레거시 코드 분석(13장)도 Claude Code로 돕니다 |
 
 !!! note "Claude Code가 맡는 일"
     Robo Architect의 엔진은 자체 AI 파이프라인이 아니라 **Claude Code의 스킬**입니다. 프로포절을 만들면 앱이 내 컴퓨터의 `claude` 를 불러 스킬 파일(10장)을 따라 일을 시킵니다. 그래서 API 키를 따로 넣지 않아도 되고, 같은 스킬을 터미널의 Claude Code에서 그대로 쓸 수도 있습니다.
@@ -56,7 +56,7 @@ New-Item -ItemType Directory -Force -Path $dst | Out-Null
 Copy-Item .\robo-images.tar -Destination $dst -Force
 ```
 </li>
-<li markdown="1">(13장을 하거나 요구사항 탭의 문서 업로드를 쓸 때) OpenAI 키를 사용자 환경 변수로 넣고 로그아웃·재로그인합니다. 서비스마다 읽는 이름이 달라 같은 값을 다섯 이름에 넣습니다.
+<li markdown="1">(요구사항 탭의 문서 업로드를 쓸 때만) OpenAI 키를 사용자 환경 변수로 넣고 로그아웃·재로그인합니다. 서비스마다 읽는 이름이 달라 같은 값을 다섯 이름에 넣습니다.
 
 ```powershell
 foreach ($n in 'OPENAI_API_KEY','LLM_API_KEY','ROBO_LLM_API_KEY','ROBO_EMBED_API_KEY','ROBO_SEARCH_LLM_API_KEY') {
@@ -134,5 +134,5 @@ Robo Architect의 **프로젝트**는 그래프 DB 안의 그래프 하나입니
 <summary>정답</summary>
 
 1. 그래프 DB(Ontological DB) 안의 **그래프** 하나입니다. 그래프 DB는 하나이고, 프로젝트마다 그래프가 따로 생겨 서로 섞이지 않습니다.
-2. 아닙니다. 프로포절 작업은 내 컴퓨터의 **Claude Code**가 스킬을 따라 합니다. OpenAI 키는 요구사항 탭의 문서 업로드와 레거시 코드 분석(13장)에만 씁니다.
+2. 아닙니다. 프로포절 작업은 내 컴퓨터의 **Claude Code**가 스킬을 따라 합니다. OpenAI 키는 요구사항 탭의 문서 업로드에만 씁니다. 레거시 코드 분석(13장)도 Claude Code가 합니다.
 </details>

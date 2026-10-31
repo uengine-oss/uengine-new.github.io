@@ -63,4 +63,4 @@
 | 실습 옛 DB | `ra-tut-legacy-pg` · `127.0.0.1:25433` · `legacy` / `legacy1234` · DB `hanbit` · 스키마 `delivery` |
 | 데이터 소스 Host (내 PC의 DB) | `host.docker.internal` — `localhost` 는 컨테이너 자신이라 실패 |
 | 컨테이너 | graph-db · graph-bolt · fabric · catalog · analyzer · parser · gateway (7개) |
-| OpenAI API 키가 필요한 곳 | 요구사항 탭의 문서 업로드 · 레거시 분석(13장) — 12장의 「문서를 프로포절에 붙여 넣기」는 키 없이 |
+| OpenAI API 키가 필요한 곳 | 요구사항 탭의 문서 업로드 · 설계 탭의 채팅 수정 — 12장의 「문서를 프로포절에 붙여 넣기」와 13장의 레거시 분석은 키 없이 |
