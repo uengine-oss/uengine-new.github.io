@@ -64,6 +64,13 @@ node render_check.mjs en/index.html en/contents/processgpt.html   # SITE_URL ove
 - **English videos**: `VIDEO_OVERRIDES` in `apply.py` maps a YouTube id to a locally hosted
   English recording, which replaces that embed on the English side only. `YOUTUBE_OVERRIDES` maps a
   Korean YouTube id to an English YouTube id of the same walkthrough (embeds and links).
+- **English documents**: `DOC_OVERRIDES` maps a Korean PDF (its site path as written in hrefs) to its English
+  edition, e.g. the Process GPT · uEngine Cloud · Robo Architect brochures and the BPM6 · Ontologic ·
+  Robo Analyzer · OpenSource decks. `PLAYLIST_OVERRIDES` does the same for YouTube playlists, and
+  `YOUTUBE_OVERRIDES` also swaps gallery thumbnails (`i.ytimg.com/vi/<id>`) and click-to-play buttons (`data-yt`).
+- **Products not offered in English**: `EN_MENU_HIDDEN` (uEngine Cloud, uEngine PAL, Ontologic, AI Tools,
+  DreamVibe) drops those menu items from every English nav and footer; their pages still build and stay
+  reachable by direct link. `hide_menu_items()` is idempotent, so it can also be run over existing en/ files.
 - **Docs with an English edition** (`en/docs/...`, e.g. the Ontological Studio tutorial): links stay
   inside `en/` instead of gaining `../`. Heading anchors that differ are mapped in `DOC_ANCHORS`.
   A docs site listed in `EN_DOCS` (the Process GPT Lite tutorial) is treated the same way before its
