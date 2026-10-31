@@ -63,7 +63,7 @@ Tactical Design에 만들 것(CREATE)이 우선순위(HIGH/MEDIUM)와 함께 나
 
 <ol class="steps" markdown="1">
 <li markdown="1">맨 아래로 내려 요약을 읽고 **Plan 확정**을 누릅니다.</li>
-<li markdown="1">「✓ Plan 이 확정되었습니다.」가 나오고 프로포절이 **SUBMITTED**(제출됨) 상태가 됩니다. 아래에 **샌드박스 구현 열기**가 생깁니다(6장).</li>
+<li markdown="1">「✓ Plan 이 확정되었습니다.」가 나옵니다. 프로포절 상태는 **Plan 단계로 진행 →** 을 누를 때 이미 **SUBMITTED**(목록에서는 PLAN)가 되었고, 확정하면 구현으로 넘어갈 수 있습니다. 아래에 **샌드박스 구현 열기**가 생깁니다(6장).</li>
 </ol>
 
 ![Plan 확정 — 영향 목록, 요약, 「Plan 이 확정되었습니다」, 샌드박스 구현 열기](img/plan-06-confirmed.webp)
