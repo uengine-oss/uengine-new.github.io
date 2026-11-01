@@ -137,7 +137,15 @@
 <p>Robo Architect's engine is not a built-in AI pipeline but <strong>Claude Code skills</strong>. When you create a proposal, the app calls <code>claude</code> on your computer and has it do the work by following a skill file (Chapter 10). That's why you don't need to enter a separate API key, and why you can also use the same skills directly from Claude Code in a terminal.</p>
 </div>
 <h2 id="hands-on-1-install">Hands-on 1 — Install<a class="anchor" href="#hands-on-1-install" title="Permanent link">#</a></h2>
-<p>The Lite installer comes as three files (ask uEngine for them). These steps are for Windows.</p>
+<p>The macOS (Apple silicon) installer is a direct download. The Windows installer is available from uEngine on request.</p>
+<h3 id="macos-apple-silicon">macOS (Apple silicon)<a class="anchor" href="#macos-apple-silicon" title="Permanent link">#</a></h3>
+<ol class="steps">
+<li>Download <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-mac-arm64.dmg">Robo-Architect-Lite-mac-arm64.dmg</a>, open it and drag <strong>Robo Architect Lite</strong> to <strong>Applications</strong>. It is for M1 or later Macs (to check your chip: 🍎 menu → About This Mac). All installer files are on <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases">GitHub Releases</a>.</li>
+<li>Open the app. When macOS says it “could not verify ‘Robo Architect Lite’ is free of malware”, click <strong>Done</strong>, open <strong>System Settings › Privacy &amp; Security</strong>, click <strong>Open Anyway</strong> next to Robo Architect Lite and enter your password. Click <strong>Open</strong> in the dialog that follows. The build is not notarized by Apple yet, so this is needed only the first time (on macOS 14 and earlier, right-click the app and choose <strong>Open</strong>).</li>
+<li>On first launch the app downloads the seven container images (about 1.1 GB to download, about 4.8 GB on disk) from the GitHub Container Registry (<code>ghcr.io/uengine-oss/robo-architect-lite-*</code>). Home shows which image is downloading and how far it is. Later launches skip the download.</li>
+</ol>
+<h3 id="windows">Windows<a class="anchor" href="#windows" title="Permanent link">#</a></h3>
+<p>The Windows installer comes as three files (ask uEngine for them).</p>
 <table>
 <thead>
 <tr>
@@ -198,11 +206,11 @@
 </li>
 </ol>
 <div class="admonition note">
-<p class="admonition-title">macOS</p>
-<p>The screens in this tutorial were captured on macOS (Apple silicon) running the same setup. There is no macOS installer yet, so on macOS the app is started with the development team's run-from-source procedure. Once the app is up, its screens and behavior are the same as on Windows.</p>
+<p class="admonition-title">Screens are from macOS</p>
+<p>The screens in this tutorial were captured on macOS (Apple silicon). Once the app is up, its screens and behavior are the same as on Windows.</p>
 </div>
 <h2 id="hands-on-2-first-launch">Hands-on 2 — First launch<a class="anchor" href="#hands-on-2-first-launch" title="Permanent link">#</a></h2>
-<p>Start the app from the <strong>Robo-Architect</strong> icon on your desktop. The top of the window is the <strong>tab strip</strong>, and the first tab that opens is <strong>Home</strong>. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (with the installer, the first start takes 4–5 minutes because the image bundle is unpacked). Until then the feature cards are dimmed and locked.</p>
+<p>Start the app (on macOS, <strong>Robo Architect Lite</strong> in Applications; on Windows, the <strong>Robo-Architect</strong> icon on your desktop). The top of the window is the <strong>tab strip</strong>, and the first tab that opens is <strong>Home</strong>. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (with the Windows installer, the first start takes 4–5 minutes because the image bundle is unpacked; with the macOS installer, downloading the images adds a few minutes depending on your network). Until then the feature cards are dimmed and locked.</p>
 <figure><a href="img/install-boot.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left" src="img/install-boot.webp" / loading="lazy" decoding="async"></a><figcaption>Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left</figcaption></figure>
 <p>When everything is up, the status at bottom left changes to <strong>Ontological connected</strong>, and the project picker opens in the middle. There is no sign-in — Lite is a single-user app with no accounts, and your name and email are read from Git on your computer.</p>
 <figure><a href="img/install-home-empty.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home after start-up — project robo (default), the new project name field, the code folder" src="img/install-home-empty.webp" / loading="lazy" decoding="async"></a><figcaption>Home after start-up — project robo (default), the new project name field, the code folder</figcaption></figure>
@@ -258,7 +266,7 @@ git init -b main &amp;&amp; git commit --allow-empty -m init</code></p>
     <nav class="pager"><a class="prev" href="index.html"><span>Previous</span>Robo Architect Tutorial</a><a class="next" href="tour.html"><span>Next</span>A tour of the screens</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from the Robo Architect Lite desktop app, actually run.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-gets-installed">What gets installed</a></li><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#hands-on-1-install">Hands-on 1 — Install</a></li><li><a href="#hands-on-2-first-launch">Hands-on 2 — First launch</a></li><li><a href="#hands-on-3-create-your-first-project">Hands-on 3 — Create your first project</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#what-gets-installed">What gets installed</a></li><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#hands-on-1-install">Hands-on 1 — Install</a><ul><li><a href="#macos-apple-silicon">macOS (Apple silicon)</a></li><li><a href="#windows">Windows</a></li></ul></li><li><a href="#hands-on-2-first-launch">Hands-on 2 — First launch</a></li><li><a href="#hands-on-3-create-your-first-project">Hands-on 3 — Create your first project</a></li><li><a href="#what-to-check">What to check</a></li><li><a href="#quiz">Quiz</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

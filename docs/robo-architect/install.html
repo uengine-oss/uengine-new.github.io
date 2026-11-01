@@ -137,7 +137,15 @@
 <p>Robo Architect의 엔진은 자체 AI 파이프라인이 아니라 <strong>Claude Code의 스킬</strong>입니다. 프로포절을 만들면 앱이 내 컴퓨터의 <code>claude</code> 를 불러 스킬 파일(10장)을 따라 일을 시킵니다. 그래서 API 키를 따로 넣지 않아도 되고, 같은 스킬을 터미널의 Claude Code에서 그대로 쓸 수도 있습니다.</p>
 </div>
 <h2 id="따라-하기-1-설치">따라 하기 1 — 설치<a class="anchor" href="#따라-하기-1-설치" title="Permanent link">#</a></h2>
-<p>Lite 설치본은 세 파일로 받습니다(uEngine에 요청). Windows 기준입니다.</p>
+<p>macOS(Apple silicon) 설치본은 바로 내려받고, Windows 설치본은 uEngine에 요청해 받습니다.</p>
+<h3 id="macos-apple-silicon">macOS (Apple silicon)<a class="anchor" href="#macos-apple-silicon" title="Permanent link">#</a></h3>
+<ol class="steps">
+<li><a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-mac-arm64.dmg">Robo-Architect-Lite-mac-arm64.dmg</a> 를 내려받아 열고 <strong>Robo Architect Lite</strong> 를 <strong>Applications</strong> 로 끌어다 놓습니다. M1 이상 Mac용입니다(칩 확인: 🍎 메뉴 → 이 Mac에 관하여). 설치 파일 목록은 <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases">GitHub Releases</a>에 있습니다.</li>
+<li>앱을 엽니다. “Apple은 ‘Robo Architect Lite’에 … 악성 코드가 없음을 확인할 수 없습니다” 창이 뜨면 <strong>완료</strong>를 누르고, <strong>시스템 설정 → 개인정보 보호 및 보안</strong>에서 Robo Architect Lite 옆의 <strong>그래도 열기</strong>를 누른 뒤 암호를 넣습니다. 다시 뜨는 창에서 <strong>열기</strong>를 누릅니다. Apple 공증 전 빌드라 처음 한 번만 필요합니다(macOS 14 이하에서는 앱을 우클릭 → <strong>열기</strong>).</li>
+<li>처음 실행하면 앱이 컨테이너 이미지 일곱 개(내려받기 약 1.1GB, 디스크에서 약 4.8GB)를 GitHub 컨테이너 레지스트리(<code>ghcr.io/uengine-oss/robo-architect-lite-*</code>)에서 받습니다. 홈 화면에 어떤 이미지를 얼마나 받았는지 보입니다. 다음부터는 받지 않습니다.</li>
+</ol>
+<h3 id="windows">Windows<a class="anchor" href="#windows" title="Permanent link">#</a></h3>
+<p>Windows 설치본은 세 파일로 받습니다(uEngine에 요청).</p>
 <table>
 <thead>
 <tr>
@@ -198,11 +206,11 @@
 </li>
 </ol>
 <div class="admonition note">
-<p class="admonition-title">macOS</p>
-<p>이 튜토리얼의 화면은 macOS(Apple silicon)에서 같은 구성을 띄워 찍었습니다. macOS 설치본은 아직 배포하지 않으므로, macOS에서는 개발팀의 소스 실행 방법으로 띄웁니다. 앱을 띄운 뒤의 화면과 동작은 Windows와 같습니다.</p>
+<p class="admonition-title">화면은 macOS</p>
+<p>이 튜토리얼의 화면은 macOS(Apple silicon)에서 찍었습니다. 앱을 띄운 뒤의 화면과 동작은 Windows와 같습니다.</p>
 </div>
 <h2 id="따라-하기-2-처음-띄우기">따라 하기 2 — 처음 띄우기<a class="anchor" href="#따라-하기-2-처음-띄우기" title="Permanent link">#</a></h2>
-<p>바탕화면의 <strong>Robo-Architect</strong> 아이콘으로 앱을 띄웁니다. 창 맨 위는 <strong>탭 줄</strong>이고, 처음 열리는 탭은 <strong>홈</strong>입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(설치본은 이미지 묶음을 풀어 넣느라 처음에 4~5분 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.</p>
+<p>앱을 띄웁니다(macOS는 응용 프로그램의 <strong>Robo Architect Lite</strong>, Windows는 바탕화면의 <strong>Robo-Architect</strong> 아이콘). 창 맨 위는 <strong>탭 줄</strong>이고, 처음 열리는 탭은 <strong>홈</strong>입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(Windows 설치본은 이미지 묶음을 풀어 넣느라 처음에 4~5분, macOS 설치본은 이미지를 내려받느라 네트워크에 따라 몇 분 더 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.</p>
 <figure><a href="img/install-boot.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」" src="img/install-boot.webp" / loading="lazy" decoding="async"></a><figcaption>처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」</figcaption></figure>
 <p>다 올라오면 왼쪽 아래 상태가 <strong>Ontological 연결됨</strong>으로 바뀌고, 가운데에 프로젝트를 고르는 칸이 열립니다. 로그인은 묻지 않습니다 — Lite는 혼자 쓰는 앱이라 계정이 없고, 이름과 이메일은 내 컴퓨터의 Git 설정에서 읽습니다.</p>
 <figure><a href="img/install-home-empty.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="기동이 끝난 홈 — 프로젝트 robo(기본), 새 프로젝트 이름 칸, 코드 폴더" src="img/install-home-empty.webp" / loading="lazy" decoding="async"></a><figcaption>기동이 끝난 홈 — 프로젝트 robo(기본), 새 프로젝트 이름 칸, 코드 폴더</figcaption></figure>
@@ -258,7 +266,7 @@ git init -b main &amp;&amp; git commit --allow-empty -m init</code></p>
     <nav class="pager"><a class="prev" href="index.html"><span>이전</span>Robo Architect 튜토리얼</a><a class="next" href="tour.html"><span>다음</span>화면 둘러보기</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Robo Architect Lite 데스크톱 앱을 설치해 실제로 실행해 얻었습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇이-설치되나">무엇이 설치되나</a></li><li><a href="#준비">준비</a></li><li><a href="#따라-하기-1-설치">따라 하기 1 — 설치</a></li><li><a href="#따라-하기-2-처음-띄우기">따라 하기 2 — 처음 띄우기</a></li><li><a href="#따라-하기-3-첫-프로젝트-만들기">따라 하기 3 — 첫 프로젝트 만들기</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇이-설치되나">무엇이 설치되나</a></li><li><a href="#준비">준비</a></li><li><a href="#따라-하기-1-설치">따라 하기 1 — 설치</a><ul><li><a href="#macos-apple-silicon">macOS (Apple silicon)</a></li><li><a href="#windows">Windows</a></li></ul></li><li><a href="#따라-하기-2-처음-띄우기">따라 하기 2 — 처음 띄우기</a></li><li><a href="#따라-하기-3-첫-프로젝트-만들기">따라 하기 3 — 첫 프로젝트 만들기</a></li><li><a href="#확인할-것">확인할 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>
