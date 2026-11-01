@@ -30,7 +30,7 @@ Neo4j is not used. Earlier versions of Robo Architect kept the design in Neo4j, 
 
 ## Hands-on 1 — Install
 
-The macOS (Apple silicon) installer is a direct download. The Windows installer is available from uEngine on request.
+Download the installer for macOS (Apple silicon) or Windows (x64) from [GitHub Releases](https://github.com/uengine-oss/robo-architect-lite-releases/releases).
 
 ### macOS (Apple silicon)
 
@@ -42,32 +42,13 @@ The macOS (Apple silicon) installer is a direct download. The Windows installer 
 
 ### Windows
 
-The Windows installer comes as three files (ask uEngine for them).
-
-| File | Size | Contents |
-|---|---|---|
-| `Robo-Architect-Setup-<version>.exe` | about 100 MB | Desktop app installer |
-| `robo-images.tar` | about 1.5 GB | Bundle of the seven container images |
-| `SHA256SUMS` | two lines | Checksums that confirm both files are intact |
+For Windows 10/11 (x64). Keep Docker Desktop running on its default **WSL 2 backend (Linux containers)**, and install [Git for Windows](https://git-scm.com/downloads/win) as well — Claude Code needs it.
 
 <ol class="steps" markdown="1">
-<li markdown="1">Open PowerShell in the download folder and check that the hashes of both files match `SHA256SUMS`.
-
-```powershell
-Get-Content .\SHA256SUMS
-Get-ChildItem .\Robo-Architect-Setup-*.exe, .\robo-images.tar |
-  ForEach-Object { "{0}  {1}" -f (Get-FileHash -Algorithm SHA256 $_).Hash.ToLower(), $_.Name }
-```
-</li>
-<li markdown="1">Run `Robo-Architect-Setup-<version>.exe`. You don't need administrator rights. **Uncheck the “Run” option on the last screen** — an app launched from the installer inherits the environment the installer started with.</li>
-<li markdown="1">Move the image bundle into the app's data folder. If you skip this step, the app stops at start-up — Home shows “Ontological stopped · Could not start — see the logs folder”, and the log in the logs folder says `docker.image_archive_missing`.
-
-```powershell
-$dst = "$env:APPDATA\robo-architect-desktop\runtime"
-New-Item -ItemType Directory -Force -Path $dst | Out-Null
-Copy-Item .\robo-images.tar -Destination $dst -Force
-```
-</li>
+<li markdown="1">Download [Robo-Architect-Lite-Setup-win-x64.exe](https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-Setup-win-x64.exe) (about 190 MB) and run it.</li>
+<li markdown="1">When “Windows protected your PC” appears, click **More info**, then **Run anyway**. The build is not code-signed yet, so this appears the first time.</li>
+<li markdown="1">Choose where to install and finish (over 20,000 files, so it takes a few minutes). Leave the install scope at its default (the current user) and you don't need administrator rights. **Uncheck the “Run” option on the last screen** — an app launched from the installer inherits the environment the installer started with. Open the app from the Start menu.</li>
+<li markdown="1">On first launch the app downloads the seven container images (about 1.1 GB) from the GitHub Container Registry, as on macOS. Later launches skip the download.</li>
 <li markdown="1">(Only if you will use document upload in the Requirements tab) Set your OpenAI key as a user environment variable, then sign out and sign back in. Each service reads a different name, so put the same value under five names.
 
 ```powershell
@@ -83,7 +64,7 @@ foreach ($n in 'OPENAI_API_KEY','LLM_API_KEY','ROBO_LLM_API_KEY','ROBO_EMBED_API
 
 ## Hands-on 2 — First launch
 
-Start the app (on macOS, **Robo Architect Lite** in Applications; on Windows, the **Robo-Architect** icon on your desktop). The top of the window is the **tab strip**, and the first tab that opens is **Home**. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (with the Windows installer, the first start takes 4–5 minutes because the image bundle is unpacked; with the macOS installer, downloading the images adds a few minutes depending on your network). Until then the feature cards are dimmed and locked.
+Start the app (on macOS, **Robo Architect Lite** in Applications; on Windows, **Robo Architect Lite** in the Start menu). The top of the window is the **tab strip**, and the first tab that opens is **Home**. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (the first time, downloading the images adds a few minutes depending on your network). Until then the feature cards are dimmed and locked.
 
 ![Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left](img/install-boot.webp)
 

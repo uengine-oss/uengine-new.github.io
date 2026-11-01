@@ -26,7 +26,7 @@ The skills live in three bundle folders — `robo-proposals/` (proposal stages),
 
 | Location | Used for |
 |---|---|
-| `resources/runtime/architect/app/skills/` in the app's install folder | The originals the app hands to `claude` at each stage. For a default Windows install, that's `%LOCALAPPDATA%\Programs\Robo-Architect\resources\runtime\architect\app\skills\` |
+| `resources/runtime/architect/app/skills/` in the app's install folder | The originals the app hands to `claude` at each stage. On macOS that's `/Applications/Robo Architect Lite.app/Contents/Resources/runtime/architect/app/skills/`; for a default Windows install, `%LOCALAPPDATA%\Programs\Robo Architect Lite\resources\runtime\architect\app\skills\` |
 | `~/.claude/skills/` in your home folder | Copies used as slash commands such as `/robo-implement` in the Code tab's Claude Code cell. When you first open the Code tab, it asks whether to install any missing skills |
 
 ## Hands-on 1 — Create a practice project

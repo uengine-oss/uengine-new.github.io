@@ -137,7 +137,7 @@
 <p>Robo Architect's engine is not a built-in AI pipeline but <strong>Claude Code skills</strong>. When you create a proposal, the app calls <code>claude</code> on your computer and has it do the work by following a skill file (Chapter 10). That's why you don't need to enter a separate API key, and why you can also use the same skills directly from Claude Code in a terminal.</p>
 </div>
 <h2 id="hands-on-1-install">Hands-on 1 — Install<a class="anchor" href="#hands-on-1-install" title="Permanent link">#</a></h2>
-<p>The macOS (Apple silicon) installer is a direct download. The Windows installer is available from uEngine on request.</p>
+<p>Download the installer for macOS (Apple silicon) or Windows (x64) from <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases">GitHub Releases</a>.</p>
 <h3 id="macos-apple-silicon">macOS (Apple silicon)<a class="anchor" href="#macos-apple-silicon" title="Permanent link">#</a></h3>
 <ol class="steps">
 <li>Download <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-mac-arm64.dmg">Robo-Architect-Lite-mac-arm64.dmg</a>, open it and drag <strong>Robo Architect Lite</strong> to <strong>Applications</strong>. It is for M1 or later Macs (to check your chip: 🍎 menu → About This Mac). All installer files are on <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases">GitHub Releases</a>.</li>
@@ -145,55 +145,12 @@
 <li>On first launch the app downloads the seven container images (about 1.1 GB to download, about 4.8 GB on disk) from the GitHub Container Registry (<code>ghcr.io/uengine-oss/robo-architect-lite-*</code>). Home shows which image is downloading and how far it is. Later launches skip the download.</li>
 </ol>
 <h3 id="windows">Windows<a class="anchor" href="#windows" title="Permanent link">#</a></h3>
-<p>The Windows installer comes as three files (ask uEngine for them).</p>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Size</th>
-<th>Contents</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Robo-Architect-Setup-&lt;version&gt;.exe</code></td>
-<td>about 100 MB</td>
-<td>Desktop app installer</td>
-</tr>
-<tr>
-<td><code>robo-images.tar</code></td>
-<td>about 1.5 GB</td>
-<td>Bundle of the seven container images</td>
-</tr>
-<tr>
-<td><code>SHA256SUMS</code></td>
-<td>two lines</td>
-<td>Checksums that confirm both files are intact</td>
-</tr>
-</tbody>
-</table>
+<p>For Windows 10/11 (x64). Keep Docker Desktop running on its default <strong>WSL 2 backend (Linux containers)</strong>, and install <a href="https://git-scm.com/downloads/win">Git for Windows</a> as well — Claude Code needs it.</p>
 <ol class="steps">
-<li>Open PowerShell in the download folder and check that the hashes of both files match <code>SHA256SUMS</code>.
-
-
-<div class="hl"><pre><span></span><code><span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">SHA256SUMS</span>
-<span class="nb">Get-ChildItem</span> <span class="p">.\</span><span class="n">Robo-Architect-Setup</span><span class="p">-*.</span><span class="n">exe</span><span class="p">,</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="p">|</span>
-  <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span> <span class="s2">&quot;{0}  {1}&quot;</span> <span class="o">-f</span> <span class="p">(</span><span class="nb">Get-FileHash</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span> <span class="nv">$_</span><span class="p">).</span><span class="n">Hash</span><span class="p">.</span><span class="n">ToLower</span><span class="p">(),</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Name</span> <span class="p">}</span>
-</code></pre></div>
-
-
-</li>
-<li>Run <code>Robo-Architect-Setup-&lt;version&gt;.exe</code>. You don't need administrator rights. <strong>Uncheck the “Run” option on the last screen</strong> — an app launched from the installer inherits the environment the installer started with.</li>
-<li>Move the image bundle into the app's data folder. If you skip this step, the app stops at start-up — Home shows “Ontological stopped · Could not start — see the logs folder”, and the log in the logs folder says <code>docker.image_archive_missing</code>.
-
-
-<div class="hl"><pre><span></span><code><span class="nv">$dst</span> <span class="p">=</span> <span class="s2">&quot;$env:APPDATA\robo-architect-desktop\runtime&quot;</span>
-<span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="nv">$dst</span> <span class="p">|</span> <span class="nb">Out-Null</span>
-<span class="nb">Copy-Item</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="n">-Destination</span> <span class="nv">$dst</span> <span class="n">-Force</span>
-</code></pre></div>
-
-
-</li>
+<li>Download <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-Setup-win-x64.exe">Robo-Architect-Lite-Setup-win-x64.exe</a> (about 190 MB) and run it.</li>
+<li>When “Windows protected your PC” appears, click <strong>More info</strong>, then <strong>Run anyway</strong>. The build is not code-signed yet, so this appears the first time.</li>
+<li>Choose where to install and finish (over 20,000 files, so it takes a few minutes). Leave the install scope at its default (the current user) and you don't need administrator rights. <strong>Uncheck the “Run” option on the last screen</strong> — an app launched from the installer inherits the environment the installer started with. Open the app from the Start menu.</li>
+<li>On first launch the app downloads the seven container images (about 1.1 GB) from the GitHub Container Registry, as on macOS. Later launches skip the download.</li>
 <li>(Only if you will use document upload in the Requirements tab) Set your OpenAI key as a user environment variable, then sign out and sign back in. Each service reads a different name, so put the same value under five names.
 
 
@@ -210,7 +167,7 @@
 <p>The screens in this tutorial were captured on macOS (Apple silicon). Once the app is up, its screens and behavior are the same as on Windows.</p>
 </div>
 <h2 id="hands-on-2-first-launch">Hands-on 2 — First launch<a class="anchor" href="#hands-on-2-first-launch" title="Permanent link">#</a></h2>
-<p>Start the app (on macOS, <strong>Robo Architect Lite</strong> in Applications; on Windows, the <strong>Robo-Architect</strong> icon on your desktop). The top of the window is the <strong>tab strip</strong>, and the first tab that opens is <strong>Home</strong>. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (with the Windows installer, the first start takes 4–5 minutes because the image bundle is unpacked; with the macOS installer, downloading the images adds a few minutes depending on your network). Until then the feature cards are dimmed and locked.</p>
+<p>Start the app (on macOS, <strong>Robo Architect Lite</strong> in Applications; on Windows, <strong>Robo Architect Lite</strong> in the Start menu). The top of the window is the <strong>tab strip</strong>, and the first tab that opens is <strong>Home</strong>. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (the first time, downloading the images adds a few minutes depending on your network). Until then the feature cards are dimmed and locked.</p>
 <figure><a href="img/install-boot.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left" src="img/install-boot.webp" / loading="lazy" decoding="async"></a><figcaption>Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left</figcaption></figure>
 <p>When everything is up, the status at bottom left changes to <strong>Ontological connected</strong>, and the project picker opens in the middle. There is no sign-in — Lite is a single-user app with no accounts, and your name and email are read from Git on your computer.</p>
 <figure><a href="img/install-home-empty.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home after start-up — project robo (default), the new project name field, the code folder" src="img/install-home-empty.webp" / loading="lazy" decoding="async"></a><figcaption>Home after start-up — project robo (default), the new project name field, the code folder</figcaption></figure>
