@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>갈피 — 맥락 정리와 맥락 팩 — 한장 튜토리얼</title>
+<meta name="description" content="Claude 대화 내보내기를 가져와 목적별 조각과 묶음으로 정리하고, 필요한 맥락만 골라 맥락 팩으로 만든 뒤, Claude Code 가 MCP 로 그 팩을 읽어 문서를 쓰고 계보를 남기게 합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/hanjang/galpi.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="갈피 — 맥락 정리와 맥락 팩 — 한장 튜토리얼">
+<meta property="og:description" content="Claude 대화 내보내기를 가져와 목적별 조각과 묶음으로 정리하고, 필요한 맥락만 골라 맥락 팩으로 만든 뒤, Claude Code 가 MCP 로 그 팩을 읽어 문서를 쓰고 계보를 남기게 합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/hanjang/galpi.html">
+<meta property="og:image" content="https://www.uengine.org/docs/hanjang/img/home.webp">
+<link rel="icon" href="../../images/hanjang/hanjang-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('hjdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/hanjang/hanjang-mark.svg" alt="" width="28" height="28"><span>한장 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 직무 기술서, 주간 회의, 맥락 팩)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/hanjang.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>한장 튜토리얼</a></li>
+<li><a href="start.html"><span class="n">01</span>시작하기 — 설치와 첫 로그인</a></li>
+</ul>
+<div class="nav-part">한팀 — 직원과 회의</div><ul>
+<li><a href="hire.html"><span class="n">02</span>채용과 직무 기술서</a></li>
+<li><a href="weekly.html"><span class="n">03</span>주간 회의</a></li>
+</ul>
+<div class="nav-part">한눈 — 결재함</div><ul>
+<li><a href="hannun.html"><span class="n">04</span>긴급 결재 — 한눈</a></li>
+</ul>
+<div class="nav-part">갈피 — 맥락과 기억</div><ul>
+<li><a href="galpi.html" class="on" aria-current="page"><span class="n">05</span>갈피 — 맥락 정리와 맥락 팩</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">갈피 — 맥락과 기억<span class="chap">5</span></div>
+    <h1>갈피 — 맥락 정리와 맥락 팩</h1>
+    <article>
+<blockquote>
+<p>Claude 대화 내보내기를 가져와 목적별 조각과 묶음으로 정리하고, 필요한 맥락만 골라 맥락 팩으로 만든 뒤, Claude Code 가 MCP 로 그 팩을 읽어 문서를 쓰고 계보를 남기게 합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/sLFim6orsjE" title="갈피 — 맥락 정리와 맥락 팩 — 영상 2:32" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>AI 도구를 오래 쓰면 한 채팅방에 여러 목적이 섞이고, 한 목적은 여러 채팅방에 흩어집니다. 어떤 과거 대화를 참고할지도 AI 의 검색이 정합니다. 갈피는 맥락을 나누고, 묶고, 고정하는 통제권을 사용자에게 돌려줍니다.</p>
+<table>
+<thead>
+<tr>
+<th>개념</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대화</td>
+<td>원래 채팅방. 원본은 그대로 둔다</td>
+</tr>
+<tr>
+<td>맥락 조각</td>
+<td>한 목적에 해당하는 연속된 대화 구간</td>
+</tr>
+<tr>
+<td>맥락 묶음</td>
+<td>채팅방과 관계없이 같은 목적의 조각을 모은 것. 결정 사항·열린 질문·용어를 가진다</td>
+</tr>
+<tr>
+<td>산출물 계보</td>
+<td>산출물의 각 버전이 어느 조각과 결정에서 나왔는지</td>
+</tr>
+<tr>
+<td>맥락 팩</td>
+<td>묶음·산출물·선호를 골라 새 대화나 AI 직원, 외부 AI 에 넘기는 꾸러미</td>
+</tr>
+</tbody>
+</table>
+<p>자동 분할은 이렇게 판단합니다. 발언 사이의 유사도(Process GPT judge 의 bge-m3 임베딩)가 크게 떨어지는 곳을 경계 후보로 잡습니다. 후보마다 주제 전환인지, 같은 주제의 하위 논의인지를 Process GPT context-router 의 <code>/decide</code> 로 판정합니다. 사용자가 "이번엔 다른 얘기"라고 밝힌 곳과 새 산출물을 만든 곳은 강한 경계입니다. 대표가 경계를 고친 이력은 다음 분할에 반영됩니다. 결과는 <strong>승인 전까지 제안</strong>입니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>준비물: Claude 의 <strong>설정 › 개인정보 › 데이터 내보내기</strong>로 받은 파일(zip 이나 그 안의 <code>conversations.json</code>)입니다. 이 장에서는 저장소의 <code>fixtures/claude-export/conversations.json</code> 을 씁니다. 이 기획서를 만든 대화를 재구성한 것으로, 목적이 다섯 번 바뀌는 대화 하나와 다른 날의 짧은 대화 둘이 들어 있습니다.</p>
+<ol class="steps">
+<li><strong>가져오기.</strong> 위 막대의 <strong>갈피</strong> › <strong>가져오기·분할 제안</strong>에서 <strong>내보내기 파일 고르기</strong>를 누르고 파일을 고릅니다. 「나누는 중…」이 10~15초 이어진 뒤 "대화 3개 · 메시지 56개 → 조각 N개 제안"이 나옵니다.
+
+<img alt="분할 제안 — 조각 띠와 제안 표시" src="img/galpi-proposed.webp" />
+</li>
+<li><strong>판정 이유 보기.</strong> 오른쪽 대화가 조각별 색 띠로 나뉘고, 조각마다 빗금 친 <strong>제안</strong> 표시와 판정 이유가 붙습니다. 판정 이유에는 대화 시작, 사용자가 전환을 밝힘, 유사도와 주제 전환 판정 확률, 산출물 생성이 있습니다.
+
+<img alt="조각마다 판정 이유" src="img/galpi-why.webp" />
+</li>
+<li><strong>다른 날의 대화.</strong> 왼쪽 <strong>G2 사용 메모</strong>를 누르면 그 조각이 첫 대화의 첫 조각과 같은 새 묶음 제안에 들어가 있습니다. 채팅방이 달라도 같은 목적이면 모입니다.
+
+<img alt="G2 사용 메모가 같은 묶음 제안에 합류" src="img/galpi-g2.webp" />
+</li>
+<li><strong>경계 고치기.</strong> 「맥락 관리」 조각 위 경계에서 <strong>▲ 경계 위로</strong>를 눌러 한 차례 옮기고, 마지막 경계에서 <strong>두 조각 합치기</strong>를 누릅니다. 조각 요약은 1~2초 뒤 다시 계산되고, <strong>편집 이력 반영</strong> 카드에 옮기기·합치기 횟수와 바뀐 분할 기준이 보입니다.
+
+<img alt="경계를 한 차례 위로" src="img/galpi-moved.webp" />
+</li>
+<li><strong>묶음 이름 바꾸기와 승인.</strong> 첫 조각의 <strong>묶음 이름 바꾸기</strong>로 <code>알림 허브</code>, 합친 조각은 <code>제품군 기획</code> 으로 바꿉니다. <strong>제안 모두 승인</strong>을 누르면(7~12초) 묶음이 확정되고, 묶음마다 결정 사항·열린 질문·용어가 그 조각을 출처로 추출됩니다.
+
+<img alt="이름을 바꾸고 편집 이력이 쌓인 모습" src="img/galpi-renamed.webp" />
+</li>
+<li><strong>맥락 지도.</strong> <strong>맥락 지도에서 보기 →</strong>를 누릅니다. 「제품군 기획」 묶음에 결정 사항, 열린 질문, 관련 사람이 보입니다. 「알림 허브」는 조각 2개(다른 날 메모 포함)입니다. 「비용과 계약」에는 외부 AI 차단 표시가 붙어 있습니다. <strong>시간순 보기</strong>로 바꿀 수도 있습니다.
+
+<img alt="맥락 지도" src="img/galpi-map.webp" />
+</li>
+<li><strong>맥락 팩 만들기.</strong> <strong>맥락 팩</strong> › <strong>새 맥락 팩</strong>에서 이름을 <code>제품군 기획 팩</code> 으로 하고 「제품군 기획」, 「알림 허브」, 「비용과 계약」을 고른 뒤 <strong>팩 만들기</strong>를 누릅니다. 출처 번호가 붙은 마크다운이 버전 1로 저장됩니다.
+
+<img alt="맥락 팩 v1" src="img/galpi-pack.webp" />
+</li>
+<li><strong>외부 AI 가 받는 본.</strong> <strong>외부 AI 가 받는 본</strong>을 누르면 「외부 차단: 「비용과 계약」」만 있고 그 묶음의 문장은 빠져 있습니다. <strong>마크다운으로 내보내기</strong>로 파일을 받을 수도 있습니다.
+
+<img alt="외부 AI 가 받는 본 — 차단 묶음은 이름만" src="img/galpi-external.webp" />
+</li>
+<li><strong>외부 AI 연결.</strong> <strong>외부 AI 연결</strong>에서 <strong>개인 키 만들기</strong>를 누르면 키가 한 번만 보이고, Claude Code 용 <code>claude mcp add --transport http hanjang …/mcp --header "Authorization: Bearer &lt;키&gt;"</code> 명령과 Claude Desktop 설정 조각이 함께 나옵니다. 키는 화면 밖에 보관하세요.
+
+<img alt="외부 AI 연결 — 설정 조각" src="img/galpi-connect.webp" />
+</li>
+<li><strong>Claude Code 로 문서 쓰기.</strong> 터미널에서 Claude Code 에게 「제품군 기획 팩」을 불러 1단계 범위 요약 문서를 쓰게 합니다. Claude 는 <code>galpi_get_pack</code> 으로 팩을 읽습니다. 문서를 쓴 뒤 <code>galpi_record_segment</code> 로 "이 구간은 제품군 기획 묶음", <code>galpi_link_artifact</code> 로 "이 파일은 그 산출물"을 남깁니다. 저장소의 <code>scripts/galpi-claude-demo.sh</code> 가 이 과정을 그대로 돌립니다(키는 끝나면 지움).
+</li>
+<li><strong>계보 확인.</strong> 맥락 지도의 「제품군 기획」 묶음에 산출물 「한장 1단계 범위 요약 v1」이 생겼습니다. 누르면 버전 1이 어느 조각(「1단계 범위 요약 작성」)에서 나왔는지 계보가 열립니다. 한장 페이지 아래에도 같은 계보 블록이 붙습니다.
+
+<img alt="산출물 계보" src="img/galpi-lineage.webp" />
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">AI 직원도 같은 도구를 씁니다</p>
+<p>hanjang-mcp 를 mcp-hub 에 등록하면(<code>scripts/register-mcp.mjs</code>) Process GPT 테넌트 MCP 설정에 반영됩니다. 그러면 한장의 AI 직원(deepagents)도 같은 갈피 도구로 묶음을 읽습니다. 직원은 직무 기술서의 읽기 범위 밖 묶음을 받지 못합니다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">PoC 의 한계</p>
+<p>1단계는 Claude 내보내기만 받습니다(ChatGPT 는 2단계). 묶음 이름은 모델이 붙이므로 실행마다 조금 다를 수 있습니다. 승인한 조각은 더 옮기거나 합칠 수 없습니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>자동 분할 결과는 언제 확정되나요?</li>
+<li>「비용과 계약」 묶음을 고른 팩을 Claude Code 가 읽으면 무엇이 보이나요?</li>
+<li>경계를 합친 이력은 어디에 쓰이나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>대표가 <strong>승인</strong>할 때입니다. 그 전까지는 모두 제안입니다.</li>
+<li>묶음 이름과 「외부 차단」 표시만 보이고, 그 안의 기록과 결정은 나가지 않습니다.</li>
+<li>다음 분할의 기준에 쓰입니다. 합치기가 많으면 경계를 덜 나눕니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="hannun.html"><span>이전</span>긴급 결재 — 한눈</a><span></span></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 한장 1단계 PoC(Process GPT 백엔드)에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
