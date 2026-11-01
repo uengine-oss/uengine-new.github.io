@@ -30,7 +30,7 @@ Neo4j는 쓰지 않습니다. 예전 Robo Architect는 설계를 Neo4j에 두었
 
 ## 따라 하기 1 — 설치
 
-macOS(Apple silicon) 설치본은 바로 내려받고, Windows 설치본은 uEngine에 요청해 받습니다.
+macOS(Apple silicon)용과 Windows(x64)용 설치본을 [GitHub Releases](https://github.com/uengine-oss/robo-architect-lite-releases/releases)에서 내려받습니다.
 
 ### macOS (Apple silicon)
 
@@ -42,32 +42,13 @@ macOS(Apple silicon) 설치본은 바로 내려받고, Windows 설치본은 uEng
 
 ### Windows
 
-Windows 설치본은 세 파일로 받습니다(uEngine에 요청).
-
-| 파일 | 크기 | 내용 |
-|---|---|---|
-| `Robo-Architect-Setup-<버전>.exe` | 약 100MB | 데스크톱 앱 설치 프로그램 |
-| `robo-images.tar` | 약 1.5GB | 컨테이너 이미지 일곱 개 묶음 |
-| `SHA256SUMS` | 두 줄 | 두 파일이 온전한지 확인하는 값 |
+Windows 10/11(x64)용입니다. Docker Desktop은 기본값인 **WSL 2 기반(Linux 컨테이너)**으로 켜 두고, Claude Code를 쓰려면 [Git for Windows](https://git-scm.com/downloads/win)도 설치해 둡니다.
 
 <ol class="steps" markdown="1">
-<li markdown="1">받은 폴더에서 PowerShell을 열고 두 파일의 해시가 `SHA256SUMS` 와 같은지 봅니다.
-
-```powershell
-Get-Content .\SHA256SUMS
-Get-ChildItem .\Robo-Architect-Setup-*.exe, .\robo-images.tar |
-  ForEach-Object { "{0}  {1}" -f (Get-FileHash -Algorithm SHA256 $_).Hash.ToLower(), $_.Name }
-```
-</li>
-<li markdown="1">`Robo-Architect-Setup-<버전>.exe` 를 실행합니다. 관리자 권한은 필요 없습니다. **마지막 화면의 「실행」 체크는 끕니다** — 설치 프로그램에서 띄운 앱은 설치 프로그램이 시작될 때의 환경을 물려받습니다.</li>
-<li markdown="1">이미지 묶음을 앱의 데이터 폴더로 옮깁니다. 이 단계를 빼면 앱이 「이미지 묶음이 없습니다」로 멈춥니다.
-
-```powershell
-$dst = "$env:APPDATA\robo-architect-desktop\runtime"
-New-Item -ItemType Directory -Force -Path $dst | Out-Null
-Copy-Item .\robo-images.tar -Destination $dst -Force
-```
-</li>
+<li markdown="1">[Robo-Architect-Lite-Setup-win-x64.exe](https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-Setup-win-x64.exe)(약 190MB)를 내려받아 실행합니다.</li>
+<li markdown="1">“Windows의 PC 보호” 창이 뜨면 **추가 정보**를 누르고 **실행**을 누릅니다. 코드 서명 전 빌드라 처음 한 번 나옵니다.</li>
+<li markdown="1">설치 위치를 고르고 설치를 마칩니다(파일이 2만 개가 넘어 몇 분 걸립니다). 설치 범위를 기본값(현재 사용자)으로 두면 관리자 권한은 필요 없습니다. **마지막 화면의 「실행」 체크는 끕니다** — 설치 프로그램에서 띄운 앱은 설치 프로그램이 시작될 때의 환경을 물려받습니다. 앱은 시작 메뉴에서 엽니다.</li>
+<li markdown="1">처음 실행하면 macOS와 마찬가지로 컨테이너 이미지 일곱 개(내려받기 약 1.1GB)를 GitHub 컨테이너 레지스트리에서 받습니다. 다음부터는 받지 않습니다.</li>
 <li markdown="1">(요구사항 탭의 문서 업로드를 쓸 때만) OpenAI 키를 사용자 환경 변수로 넣고 로그아웃·재로그인합니다. 서비스마다 읽는 이름이 달라 같은 값을 다섯 이름에 넣습니다.
 
 ```powershell
@@ -83,7 +64,7 @@ foreach ($n in 'OPENAI_API_KEY','LLM_API_KEY','ROBO_LLM_API_KEY','ROBO_EMBED_API
 
 ## 따라 하기 2 — 처음 띄우기
 
-앱을 띄웁니다(macOS는 응용 프로그램의 **Robo Architect Lite**, Windows는 바탕화면의 **Robo-Architect** 아이콘). 창 맨 위는 **탭 줄**이고, 처음 열리는 탭은 **홈**입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(Windows 설치본은 이미지 묶음을 풀어 넣느라 처음에 4~5분, macOS 설치본은 이미지를 내려받느라 네트워크에 따라 몇 분 더 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.
+앱을 띄웁니다(macOS는 응용 프로그램의 **Robo Architect Lite**, Windows는 시작 메뉴의 **Robo Architect Lite**). 창 맨 위는 **탭 줄**이고, 처음 열리는 탭은 **홈**입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(설치본은 처음에 이미지를 내려받느라 네트워크에 따라 몇 분 더 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.
 
 ![처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」](img/install-boot.webp)
 

@@ -26,7 +26,7 @@
 
 | 위치 | 쓰임 |
 |---|---|
-| 앱 설치 폴더의 `resources/runtime/architect/app/skills/` | 단계마다 앱이 `claude` 에 건네는 원본. Windows 기본 설치라면 `%LOCALAPPDATA%\Programs\Robo-Architect\resources\runtime\architect\app\skills\` 입니다 |
+| 앱 설치 폴더의 `resources/runtime/architect/app/skills/` | 단계마다 앱이 `claude` 에 건네는 원본. macOS는 `/Applications/Robo Architect Lite.app/Contents/Resources/runtime/architect/app/skills/`, Windows 기본 설치라면 `%LOCALAPPDATA%\Programs\Robo Architect Lite\resources\runtime\architect\app\skills\` 입니다 |
 | 홈 폴더의 `~/.claude/skills/` | 코드 탭의 Claude Code 셀에서 `/robo-implement` 같은 슬래시 명령으로 쓰는 사본. 코드 탭을 처음 열 때 빠진 스킬이 있으면 설치할지 묻습니다 |
 
 ## 따라 하기 1 — 연습용 프로젝트 만들기

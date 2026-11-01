@@ -137,7 +137,7 @@
 <p>Robo Architect의 엔진은 자체 AI 파이프라인이 아니라 <strong>Claude Code의 스킬</strong>입니다. 프로포절을 만들면 앱이 내 컴퓨터의 <code>claude</code> 를 불러 스킬 파일(10장)을 따라 일을 시킵니다. 그래서 API 키를 따로 넣지 않아도 되고, 같은 스킬을 터미널의 Claude Code에서 그대로 쓸 수도 있습니다.</p>
 </div>
 <h2 id="따라-하기-1-설치">따라 하기 1 — 설치<a class="anchor" href="#따라-하기-1-설치" title="Permanent link">#</a></h2>
-<p>macOS(Apple silicon) 설치본은 바로 내려받고, Windows 설치본은 uEngine에 요청해 받습니다.</p>
+<p>macOS(Apple silicon)용과 Windows(x64)용 설치본을 <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases">GitHub Releases</a>에서 내려받습니다.</p>
 <h3 id="macos-apple-silicon">macOS (Apple silicon)<a class="anchor" href="#macos-apple-silicon" title="Permanent link">#</a></h3>
 <ol class="steps">
 <li><a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-mac-arm64.dmg">Robo-Architect-Lite-mac-arm64.dmg</a> 를 내려받아 열고 <strong>Robo Architect Lite</strong> 를 <strong>Applications</strong> 로 끌어다 놓습니다. M1 이상 Mac용입니다(칩 확인: 🍎 메뉴 → 이 Mac에 관하여). 설치 파일 목록은 <a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases">GitHub Releases</a>에 있습니다.</li>
@@ -145,55 +145,12 @@
 <li>처음 실행하면 앱이 컨테이너 이미지 일곱 개(내려받기 약 1.1GB, 디스크에서 약 4.8GB)를 GitHub 컨테이너 레지스트리(<code>ghcr.io/uengine-oss/robo-architect-lite-*</code>)에서 받습니다. 홈 화면에 어떤 이미지를 얼마나 받았는지 보입니다. 다음부터는 받지 않습니다.</li>
 </ol>
 <h3 id="windows">Windows<a class="anchor" href="#windows" title="Permanent link">#</a></h3>
-<p>Windows 설치본은 세 파일로 받습니다(uEngine에 요청).</p>
-<table>
-<thead>
-<tr>
-<th>파일</th>
-<th>크기</th>
-<th>내용</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Robo-Architect-Setup-&lt;버전&gt;.exe</code></td>
-<td>약 100MB</td>
-<td>데스크톱 앱 설치 프로그램</td>
-</tr>
-<tr>
-<td><code>robo-images.tar</code></td>
-<td>약 1.5GB</td>
-<td>컨테이너 이미지 일곱 개 묶음</td>
-</tr>
-<tr>
-<td><code>SHA256SUMS</code></td>
-<td>두 줄</td>
-<td>두 파일이 온전한지 확인하는 값</td>
-</tr>
-</tbody>
-</table>
+<p>Windows 10/11(x64)용입니다. Docker Desktop은 기본값인 <strong>WSL 2 기반(Linux 컨테이너)</strong>으로 켜 두고, Claude Code를 쓰려면 <a href="https://git-scm.com/downloads/win">Git for Windows</a>도 설치해 둡니다.</p>
 <ol class="steps">
-<li>받은 폴더에서 PowerShell을 열고 두 파일의 해시가 <code>SHA256SUMS</code> 와 같은지 봅니다.
-
-
-<div class="hl"><pre><span></span><code><span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">SHA256SUMS</span>
-<span class="nb">Get-ChildItem</span> <span class="p">.\</span><span class="n">Robo-Architect-Setup</span><span class="p">-*.</span><span class="n">exe</span><span class="p">,</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="p">|</span>
-  <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span> <span class="s2">&quot;{0}  {1}&quot;</span> <span class="o">-f</span> <span class="p">(</span><span class="nb">Get-FileHash</span> <span class="n">-Algorithm</span> <span class="n">SHA256</span> <span class="nv">$_</span><span class="p">).</span><span class="n">Hash</span><span class="p">.</span><span class="n">ToLower</span><span class="p">(),</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Name</span> <span class="p">}</span>
-</code></pre></div>
-
-
-</li>
-<li><code>Robo-Architect-Setup-&lt;버전&gt;.exe</code> 를 실행합니다. 관리자 권한은 필요 없습니다. <strong>마지막 화면의 「실행」 체크는 끕니다</strong> — 설치 프로그램에서 띄운 앱은 설치 프로그램이 시작될 때의 환경을 물려받습니다.</li>
-<li>이미지 묶음을 앱의 데이터 폴더로 옮깁니다. 이 단계를 빼면 앱이 「이미지 묶음이 없습니다」로 멈춥니다.
-
-
-<div class="hl"><pre><span></span><code><span class="nv">$dst</span> <span class="p">=</span> <span class="s2">&quot;$env:APPDATA\robo-architect-desktop\runtime&quot;</span>
-<span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="nv">$dst</span> <span class="p">|</span> <span class="nb">Out-Null</span>
-<span class="nb">Copy-Item</span> <span class="p">.\</span><span class="n">robo-images</span><span class="p">.</span><span class="n">tar</span> <span class="n">-Destination</span> <span class="nv">$dst</span> <span class="n">-Force</span>
-</code></pre></div>
-
-
-</li>
+<li><a href="https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-Setup-win-x64.exe">Robo-Architect-Lite-Setup-win-x64.exe</a>(약 190MB)를 내려받아 실행합니다.</li>
+<li>“Windows의 PC 보호” 창이 뜨면 <strong>추가 정보</strong>를 누르고 <strong>실행</strong>을 누릅니다. 코드 서명 전 빌드라 처음 한 번 나옵니다.</li>
+<li>설치 위치를 고르고 설치를 마칩니다(파일이 2만 개가 넘어 몇 분 걸립니다). 설치 범위를 기본값(현재 사용자)으로 두면 관리자 권한은 필요 없습니다. <strong>마지막 화면의 「실행」 체크는 끕니다</strong> — 설치 프로그램에서 띄운 앱은 설치 프로그램이 시작될 때의 환경을 물려받습니다. 앱은 시작 메뉴에서 엽니다.</li>
+<li>처음 실행하면 macOS와 마찬가지로 컨테이너 이미지 일곱 개(내려받기 약 1.1GB)를 GitHub 컨테이너 레지스트리에서 받습니다. 다음부터는 받지 않습니다.</li>
 <li>(요구사항 탭의 문서 업로드를 쓸 때만) OpenAI 키를 사용자 환경 변수로 넣고 로그아웃·재로그인합니다. 서비스마다 읽는 이름이 달라 같은 값을 다섯 이름에 넣습니다.
 
 
@@ -210,7 +167,7 @@
 <p>이 튜토리얼의 화면은 macOS(Apple silicon)에서 찍었습니다. 앱을 띄운 뒤의 화면과 동작은 Windows와 같습니다.</p>
 </div>
 <h2 id="따라-하기-2-처음-띄우기">따라 하기 2 — 처음 띄우기<a class="anchor" href="#따라-하기-2-처음-띄우기" title="Permanent link">#</a></h2>
-<p>앱을 띄웁니다(macOS는 응용 프로그램의 <strong>Robo Architect Lite</strong>, Windows는 바탕화면의 <strong>Robo-Architect</strong> 아이콘). 창 맨 위는 <strong>탭 줄</strong>이고, 처음 열리는 탭은 <strong>홈</strong>입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(Windows 설치본은 이미지 묶음을 풀어 넣느라 처음에 4~5분, macOS 설치본은 이미지를 내려받느라 네트워크에 따라 몇 분 더 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.</p>
+<p>앱을 띄웁니다(macOS는 응용 프로그램의 <strong>Robo Architect Lite</strong>, Windows는 시작 메뉴의 <strong>Robo Architect Lite</strong>). 창 맨 위는 <strong>탭 줄</strong>이고, 처음 열리는 탭은 <strong>홈</strong>입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(설치본은 처음에 이미지를 내려받느라 네트워크에 따라 몇 분 더 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.</p>
 <figure><a href="img/install-boot.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」" src="img/install-boot.webp" / loading="lazy" decoding="async"></a><figcaption>처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」</figcaption></figure>
 <p>다 올라오면 왼쪽 아래 상태가 <strong>Ontological 연결됨</strong>으로 바뀌고, 가운데에 프로젝트를 고르는 칸이 열립니다. 로그인은 묻지 않습니다 — Lite는 혼자 쓰는 앱이라 계정이 없고, 이름과 이메일은 내 컴퓨터의 Git 설정에서 읽습니다.</p>
 <figure><a href="img/install-home-empty.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="기동이 끝난 홈 — 프로젝트 robo(기본), 새 프로젝트 이름 칸, 코드 폴더" src="img/install-home-empty.webp" / loading="lazy" decoding="async"></a><figcaption>기동이 끝난 홈 — 프로젝트 robo(기본), 새 프로젝트 이름 칸, 코드 폴더</figcaption></figure>
