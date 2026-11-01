@@ -30,7 +30,19 @@ Neo4j는 쓰지 않습니다. 예전 Robo Architect는 설계를 Neo4j에 두었
 
 ## 따라 하기 1 — 설치
 
-Lite 설치본은 세 파일로 받습니다(uEngine에 요청). Windows 기준입니다.
+macOS(Apple silicon) 설치본은 바로 내려받고, Windows 설치본은 uEngine에 요청해 받습니다.
+
+### macOS (Apple silicon)
+
+<ol class="steps" markdown="1">
+<li markdown="1">[Robo-Architect-Lite-mac-arm64.dmg](https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-mac-arm64.dmg) 를 내려받아 열고 **Robo Architect Lite** 를 **Applications** 로 끌어다 놓습니다. M1 이상 Mac용입니다(칩 확인: 🍎 메뉴 → 이 Mac에 관하여). 설치 파일 목록은 [GitHub Releases](https://github.com/uengine-oss/robo-architect-lite-releases/releases)에 있습니다.</li>
+<li markdown="1">앱을 엽니다. “Apple은 ‘Robo Architect Lite’에 … 악성 코드가 없음을 확인할 수 없습니다” 창이 뜨면 **완료**를 누르고, **시스템 설정 → 개인정보 보호 및 보안**에서 Robo Architect Lite 옆의 **그래도 열기**를 누른 뒤 암호를 넣습니다. 다시 뜨는 창에서 **열기**를 누릅니다. Apple 공증 전 빌드라 처음 한 번만 필요합니다(macOS 14 이하에서는 앱을 우클릭 → **열기**).</li>
+<li markdown="1">처음 실행하면 앱이 컨테이너 이미지 일곱 개(내려받기 약 1.1GB, 디스크에서 약 4.8GB)를 GitHub 컨테이너 레지스트리(`ghcr.io/uengine-oss/robo-architect-lite-*`)에서 받습니다. 홈 화면에 어떤 이미지를 얼마나 받았는지 보입니다. 다음부터는 받지 않습니다.</li>
+</ol>
+
+### Windows
+
+Windows 설치본은 세 파일로 받습니다(uEngine에 요청).
 
 | 파일 | 크기 | 내용 |
 |---|---|---|
@@ -66,12 +78,12 @@ foreach ($n in 'OPENAI_API_KEY','LLM_API_KEY','ROBO_LLM_API_KEY','ROBO_EMBED_API
 </li>
 </ol>
 
-!!! note "macOS"
-    이 튜토리얼의 화면은 macOS(Apple silicon)에서 같은 구성을 띄워 찍었습니다. macOS 설치본은 아직 배포하지 않으므로, macOS에서는 개발팀의 소스 실행 방법으로 띄웁니다. 앱을 띄운 뒤의 화면과 동작은 Windows와 같습니다.
+!!! note "화면은 macOS"
+    이 튜토리얼의 화면은 macOS(Apple silicon)에서 찍었습니다. 앱을 띄운 뒤의 화면과 동작은 Windows와 같습니다.
 
 ## 따라 하기 2 — 처음 띄우기
 
-바탕화면의 **Robo-Architect** 아이콘으로 앱을 띄웁니다. 창 맨 위는 **탭 줄**이고, 처음 열리는 탭은 **홈**입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(설치본은 이미지 묶음을 풀어 넣느라 처음에 4~5분 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.
+앱을 띄웁니다(macOS는 응용 프로그램의 **Robo Architect Lite**, Windows는 바탕화면의 **Robo-Architect** 아이콘). 창 맨 위는 **탭 줄**이고, 처음 열리는 탭은 **홈**입니다. 홈의 가운데에 「그래프 DB 와 서비스를 올리는 중입니다…」가 보이는 동안 앱이 Docker 컨테이너 일곱 개를 올립니다. 이 튜토리얼의 컴퓨터에서는 처음 한 번 약 50초 걸렸습니다(Windows 설치본은 이미지 묶음을 풀어 넣느라 처음에 4~5분, macOS 설치본은 이미지를 내려받느라 네트워크에 따라 몇 분 더 걸립니다). 그동안 기능 카드는 흐리게 잠겨 있습니다.
 
 ![처음 띄운 홈 — 그래프 DB 와 서비스를 올리는 중, 기능 카드는 잠김, 왼쪽 아래 「Ontological 시작 중」](img/install-boot.webp)
 

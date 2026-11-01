@@ -30,7 +30,19 @@ Neo4j is not used. Earlier versions of Robo Architect kept the design in Neo4j, 
 
 ## Hands-on 1 — Install
 
-The Lite installer comes as three files (ask uEngine for them). These steps are for Windows.
+The macOS (Apple silicon) installer is a direct download. The Windows installer is available from uEngine on request.
+
+### macOS (Apple silicon)
+
+<ol class="steps" markdown="1">
+<li markdown="1">Download [Robo-Architect-Lite-mac-arm64.dmg](https://github.com/uengine-oss/robo-architect-lite-releases/releases/latest/download/Robo-Architect-Lite-mac-arm64.dmg), open it and drag **Robo Architect Lite** to **Applications**. It is for M1 or later Macs (to check your chip: 🍎 menu → About This Mac). All installer files are on [GitHub Releases](https://github.com/uengine-oss/robo-architect-lite-releases/releases).</li>
+<li markdown="1">Open the app. When macOS says it “could not verify ‘Robo Architect Lite’ is free of malware”, click **Done**, open **System Settings › Privacy & Security**, click **Open Anyway** next to Robo Architect Lite and enter your password. Click **Open** in the dialog that follows. The build is not notarized by Apple yet, so this is needed only the first time (on macOS 14 and earlier, right-click the app and choose **Open**).</li>
+<li markdown="1">On first launch the app downloads the seven container images (about 1.1 GB to download, about 4.8 GB on disk) from the GitHub Container Registry (`ghcr.io/uengine-oss/robo-architect-lite-*`). Home shows which image is downloading and how far it is. Later launches skip the download.</li>
+</ol>
+
+### Windows
+
+The Windows installer comes as three files (ask uEngine for them).
 
 | File | Size | Contents |
 |---|---|---|
@@ -66,12 +78,12 @@ foreach ($n in 'OPENAI_API_KEY','LLM_API_KEY','ROBO_LLM_API_KEY','ROBO_EMBED_API
 </li>
 </ol>
 
-!!! note "macOS"
-    The screens in this tutorial were captured on macOS (Apple silicon) running the same setup. There is no macOS installer yet, so on macOS the app is started with the development team's run-from-source procedure. Once the app is up, its screens and behavior are the same as on Windows.
+!!! note "Screens are from macOS"
+    The screens in this tutorial were captured on macOS (Apple silicon). Once the app is up, its screens and behavior are the same as on Windows.
 
 ## Hands-on 2 — First launch
 
-Start the app from the **Robo-Architect** icon on your desktop. The top of the window is the **tab strip**, and the first tab that opens is **Home**. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (with the installer, the first start takes 4–5 minutes because the image bundle is unpacked). Until then the feature cards are dimmed and locked.
+Start the app (on macOS, **Robo Architect Lite** in Applications; on Windows, the **Robo-Architect** icon on your desktop). The top of the window is the **tab strip**, and the first tab that opens is **Home**. While “Starting the graph DB and services…” is shown in the middle of Home, the app is bringing up the seven Docker containers. On the computer used for this tutorial, the first start took about 50 seconds (with the Windows installer, the first start takes 4–5 minutes because the image bundle is unpacked; with the macOS installer, downloading the images adds a few minutes depending on your network). Until then the feature cards are dimmed and locked.
 
 ![Home on first launch — starting the graph DB and services, feature cards locked, “Ontological starting” at bottom left](img/install-boot.webp)
 
