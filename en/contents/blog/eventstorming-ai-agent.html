@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Deriving AI Agents from EventStorming | uEngine Blog</title>
+        <meta name="description" content="A report on how EventStorming’s domain events, commands, policies, read models and bounded contexts carry over into an AI agent’s triggers, tool calls, guardrails, RAG context and boundaries of responsibility. It also covers how to pick agent opportunities from hotspots, a five-stage enterprise adoption roadmap, and the practical limits of the approach.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/eventstorming-ai-agent.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Deriving AI Agents from EventStorming | uEngine Blog">
+        <meta property="og:description" content="A report on how EventStorming’s domain events, commands, policies, read models and bounded contexts carry over into an AI agent’s triggers, tool calls, guardrails, RAG context and boundaries of responsibility. It also covers how to pick agent opportunities from hotspots, a five-stage enterprise adoption roadmap, and the practical limits of the approach.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/eventstorming-ai-agent.html">
+        <meta property="og:image" content="https://www.uengine.org/images/en/blog/eventstorming-ai-agent.jpg">
+        <meta property="og:image:alt" content="Deriving AI Agents from EventStorming | uEngine Blog">
+        <meta property="article:published_time" content="2026-11-01">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Deriving AI Agents from EventStorming | uEngine Blog">
+        <meta name="twitter:description" content="A report on how EventStorming’s domain events, commands, policies, read models and bounded contexts carry over into an AI agent’s triggers, tool calls, guardrails, RAG context and boundaries of responsibility. It also covers how to pick agent opportunities from hotspots, a five-stage enterprise adoption roadmap, and the practical limits of the approach.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/en/blog/eventstorming-ai-agent.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Deriving AI Agents from EventStorming","description":"A report on how EventStorming’s domain events, commands, policies, read models and bounded contexts carry over into an AI agent’s triggers, tool calls, guardrails, RAG context and boundaries of responsibility. It also covers how to pick agent opportunities from hotspots, a five-stage enterprise adoption roadmap, and the practical limits of the approach.","image":["https://www.uengine.org/images/en/blog/eventstorming-ai-agent.jpg"],"url":"https://www.uengine.org/en/contents/blog/eventstorming-ai-agent.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/eventstorming-ai-agent.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-11-01","dateModified":"2026-11-01"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Deriving AI Agents from EventStorming","item":"https://www.uengine.org/en/contents/blog/eventstorming-ai-agent.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/eventstorming-ai-agent.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/eventstorming-ai-agent.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/eventstorming-ai-agent.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/eventstorming-ai-agent.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ax-lite-course.html" style="font-size: 18px;">AI Work Class for Your Company</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/eventstorming-ai-agent.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Deriving AI Agents from EventStorming</span>
+                                    </h1>
+
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  November 1, 2026</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+
+                               </div>
+                               <!-- End Page Title -->
+
+                            </div>
+                        </div>
+                        <!-- End Section Content -->
+
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+
+                        <div class="row">
+
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+
+                                    <div class="blog-item-body chat-gpt">
+
+                                        <div class="mb-50">
+                                            <img src="../../../images/en/blog/eventstorming-ai-agent.jpg" alt="Deriving AI Agents from EventStorming — domain event, command, policy, read model and hotspot sticky notes leading to an agent’s trigger, tool call, guardrail, RAG context and agent opportunity" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(26,26,46,0.10);" decoding="async" />
+                                        </div>
+
+                                        <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
+                                            <p style="margin-left: 20px;">
+                                                We are publishing our report, “Identifying AI Agents and Innovating Processes with EventStorming and Domain-Driven Design.”
+                                                It walks through how the sticky notes placed in an EventStorming workshop carry over into an AI agent’s triggers, tool calls, guardrails, knowledge base and boundaries of responsibility,
+                                                which bottlenecks should get an agent first, and finally the enterprise adoption roadmap and its realistic limits.
+                                            </p>
+                                            <ol style="margin-left: 20px; font-size: 15px;">
+                                                <li><a href="#sec-1">Overview and research trends</a></li>
+                                                <li><a href="#sec-2">Mapping EventStorming artifacts to AI agent architecture</a></li>
+                                                <li><a href="#sec-3">Diagnosing process bottlenecks (hotspots) and prioritizing agent adoption</a></li>
+                                                <li><a href="#sec-4">Multi-agent system design and a five-stage enterprise roadmap</a></li>
+                                                <li><a href="#sec-5">Business process innovation benefits and technical limits</a></li>
+                                                <li><a href="#sec-6">Conclusion</a></li>
+                                            </ol>
+                                        </div>
+
+                                        <blockquote id="sec-1" style="scroll-margin-top: 110px;">
+                                            <p>
+                                                &nbsp; 1. Overview and Research Trends: The Rise of DDD- and EventStorming-Based AI Agent Modeling
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                The technical maturity of generative AI and large language models (LLMs) is accelerating the shift beyond simple question-answering assistants toward agentic workflows and multi-agent systems (MAS) that autonomously plan complex business workflows and call tools to execute them<sup><a href="#ref-1">1</a></sup>.
+                                                Yet attempts to deploy intelligent agents into real enterprise processes keep running into structural obstacles<sup><a href="#ref-4">4</a></sup>.
+                                                The cause is less a lack of general reasoning ability in the models themselves than system-level defects that stem from missing company-specific domain knowledge and poorly defined work boundaries<sup><a href="#ref-4">4</a></sup>.
+                                                An LLM without domain context behaves in ways that look plausible on the surface but violate actual business rules and invariants, and in multi-agent environments unclear ownership, data leaking across contexts and unexpected coupling have been shown to reproduce software engineering’s classic &lsquo;Big Ball of Mud&rsquo; anti-pattern at the agent layer<sup><a href="#ref-2">2</a></sup>.
+                                            </p>
+                                            <p>
+                                                To remove this bottleneck, academic researchers and industry architects are adopting domain-driven design (DDD) and its hands-on analysis technique, EventStorming, as core tools for identifying AI agents and engineering agent systems<sup><a href="#ref-1">1</a></sup>.
+                                                DDD’s bounded context and EventStorming’s event-driven analysis provide an ideal engineering foundation for fixing each autonomous agent’s cognitive boundary and for establishing asynchronous collaboration contracts between agents<sup><a href="#ref-1">1</a></sup>.
+                                            </p>
+                                            <p>
+                                                In academia, framework studies that systematize scalable multi-agent architectures from the outputs of EventStorming workshops continue to be published<sup><a href="#ref-1">1</a></sup>.
+                                                In enterprise architecture practice, Amazon Web Services (AWS) has demonstrated a method that splits large-scale processes spanning flight operations and the customer journey into bounded contexts, derives a dedicated AI agent for each, and builds a collaboration topology among the agents for disruptions such as flight cancellations<sup><a href="#ref-7">7</a></sup>.
+                                                Global digital transformation consultancies such as Orium and Composable have also applied EventStorming to business process reengineering (BPR), establishing and fielding practical frameworks that diagnose manual-work bottlenecks and derive priorities and execution roadmaps for intelligent agent adoption<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                        </div>
+
+                                        <blockquote id="sec-2" style="scroll-margin-top: 110px;">
+                                            <p>
+                                                &nbsp; 2. How EventStorming Artifacts Map to AI Agent Architecture
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                EventStorming is a collaborative technique for visually modeling the flow of events in a business domain along a timeline that runs from left to right<sup><a href="#ref-6">6</a></sup>.
+                                                The standard visual artifacts produced in the workshop correspond strictly one-to-one with the building blocks of a multi-agent system: triggers, tool-call interfaces, system-prompt guardrails, persistent state stores and more<sup><a href="#ref-4">4</a></sup>.
+                                            </p>
+                                            <p>
+                                                A <b>domain event</b> is a business-relevant fact that has already happened in the system, written on an orange sticky note<sup><a href="#ref-6">6</a></sup>.
+                                                In an agentic architecture, a domain event either acts as the asynchronous trigger (input event) that starts an agent, or becomes the result message (output event) that an agent publishes to a distributed message bus after completing a piece of reasoning and work<sup><a href="#ref-6">6</a></sup>.
+                                                This is the foundation of the communication interface that lets individual agents interact in a loosely coupled way, without direct dependencies, in an event-driven architecture (EDA)<sup><a href="#ref-6">6</a></sup>.
+                                            </p>
+                                            <p>
+                                                A <b>command</b> represents a user’s intent or a system’s work instruction to change system state, shown on a blue sticky note<sup><a href="#ref-6">6</a></sup>.
+                                                In an agent system, a command becomes the explicit task goal an agent must complete and the specification of a tool call (tool execution / function calling) that invokes external tools and APIs<sup><a href="#ref-4">4</a></sup>.
+                                                User-initiated commands are execution instructions derived from an operator’s or customer’s natural-language prompt, while system-triggered commands are backend transactions invoked automatically in response to an event from the previous step<sup><a href="#ref-6">6</a></sup>.
+                                                Policy-driven commands, triggered by business rules, are actions an agent executes after judging on its own whether their conditions are met, and invariant-enforcing commands act as interceptors that validate an agent’s output in advance so it cannot compromise system integrity<sup><a href="#ref-6">6</a></sup>.
+                                            </p>
+                                            <p>
+                                                A <b>business policy</b>, written on a lilac sticky note, expresses a reactive causal rule: &ldquo;whenever an event occurs, run a given command&rdquo;<sup><a href="#ref-9">9</a></sup>.
+                                                In agent engineering, policies translate directly into system prompts, conditional routing rules and guardrails that block model hallucination and drift<sup><a href="#ref-4">4</a></sup>.
+                                                Business rules stated on the EventStorming board act as clear constraints when an LLM generates code or makes autonomous decisions<sup><a href="#ref-4">4</a></sup>.
+                                                For example, once a policy states that users cannot rate their own posts, the LLM reflects that rule and produces a specification that includes an explicit HTTP 403 Forbidden response or blocking logic for the prohibited case<sup><a href="#ref-4">4</a></sup>.
+                                            </p>
+                                            <p>
+                                                A <b>read model</b>, on a green sticky note, is the set of information an actor consults when making a decision; it maps to the RAG (retrieval-augmented generation) knowledge base, vector database indexes and runtime memory views an AI agent uses while reasoning<sup><a href="#ref-6">6</a></sup>.
+                                                An <b>aggregate</b>, grouped in yellow, is the unit that guarantees the transactional integrity of state changes, and it defines the scope of data an agent may write to and persist (state persistence)<sup><a href="#ref-2">2</a></sup>.
+                                            </p>
+                                            <p>
+                                                A <b>bounded context</b> is the logical boundary within which the ubiquitous language keeps a single business meaning<sup><a href="#ref-2">2</a></sup>.
+                                                In multi-agent design, a bounded context takes one of two architectural forms<sup><a href="#ref-2">2</a></sup>.
+                                                The first is the cognitive agent style, which models the context itself as a single intelligent agent with its own expertise and prompts; the second is the workspace style, in which many fine-grained specialist agents interacting inside the context share a common domain model<sup><a href="#ref-2">2</a></sup>.
+                                                Both act as isolation walls that keep agents from intruding directly into domains they are not authorized for or leaking data indiscriminately<sup><a href="#ref-2">2</a></sup>.
+                                            </p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 14px; border: 1px solid #ddd; text-align: left;">EventStorming artifact</th>
+                                                        <th style="padding: 12px 14px; border: 1px solid #ddd; text-align: left;">Visual notation (color)</th>
+                                                        <th style="padding: 12px 14px; border: 1px solid #ddd; text-align: left;">Meaning in domain engineering</th>
+                                                        <th style="padding: 12px 14px; border: 1px solid #ddd; text-align: left;">Corresponding AI agent architecture element</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Domain Event</b></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #FFA94D; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Orange</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">A fact that has already happened in the domain</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Asynchronous agent trigger (input) and the completion message the agent publishes (output)<sup><a href="#ref-6">6</a></sup></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Command</b></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #74C0FC; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Blue</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">An instruction that causes a state change, and the actor’s intent</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Agent task instruction, API parameters, tool call (tool execution)<sup><a href="#ref-4">4</a></sup></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Policy</b> (Reactive Rule)</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #D0BFFF; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Lilac</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Conditional, reactive business rules and constraints</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Agent system prompt, conditional routing, guardrail constraints<sup><a href="#ref-4">4</a></sup></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Read Model</b></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #8CE99A; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Green</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Information views and data projections needed for decisions</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">RAG retrieval context, runtime in-memory state, data lookup views<sup><a href="#ref-6">6</a></sup></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Aggregate</b></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #FFE066; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Yellow (group)</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">The smallest unit of transactional consistency and state change</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Persistent state store the agent manages, and the scope of its write permissions<sup><a href="#ref-2">2</a></sup></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Actor</b> / Agent</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 9px; height: 9px; background: #FFE066; border-radius: 2px; vertical-align: 0; margin-right: 6px;"></span>Small yellow</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">The party that performs work in the system</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Autonomous AI agent or human operator (human-in-the-loop)<sup><a href="#ref-6">6</a></sup></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>External System</b></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #F7A8C8; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Pink</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Third-party service or legacy system outside the domain</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">External SaaS and legacy core-system APIs the agent must integrate with<sup><a href="#ref-6">6</a></sup></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Hotspot</b></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #FF4D79; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Red / neon pink</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Friction, delays, bottlenecks, open questions, risks</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Prime candidate for automation and process innovation through agent intervention<sup><a href="#ref-5">5</a></sup></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>Bounded Context</b></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; border: 2px dashed #555; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>Outer boundary line</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">The limit within which a ubiquitous language and domain model apply</td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">Area of responsibility of a single cognitive agent, or a collaborating multi-agent team<sup><a href="#ref-2">2</a></sup></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Table 1. EventStorming artifacts and the AI agent architecture elements they map to</p>
+                                        </div>
+
+                                        <blockquote id="sec-3" style="scroll-margin-top: 110px;">
+                                            <p>
+                                                &nbsp; 3. A Framework for Diagnosing Process Bottlenecks (Hotspots) and Prioritizing AI Agent Adoption
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                The most important value of bringing EventStorming into business process innovation and AI adoption analysis is that it exposes the company’s &lsquo;as-is&rsquo; reality without embellishment<sup><a href="#ref-5">5</a></sup>.
+                                                Formal process diagrams and internal policy documents describe only idealized workflows with the exceptions removed, whereas an EventStorming session with diverse stakeholders lays bare the manual workarounds, system gaps and informal collaboration that actually happen on the ground<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <p>
+                                                As participants validate the timeline and trace cause and effect between domain events, red or neon-pink hotspot stickies are placed wherever they disagree or delays keep recurring<sup><a href="#ref-9">9</a></sup>.
+                                                These hotspots typically cluster around delays in manually processing unstructured data, manual handoffs over Excel or email because departmental systems are not connected, implicit decisions that rely only on one person’s experience and were never turned into rules, and cognitive overload where people must cross-check several monitors<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <p>
+                                                In agent-centric EventStorming analysis, each hotspot cluster is examined to see whether an intelligent agent could observe the situation at that point of friction, decide with the context in mind, and act appropriately<sup><a href="#ref-5">5</a></sup>.
+                                                Bottlenecks that meet these conditions are immediately reclassified as green-sticky <b>&lsquo;agent opportunities&rsquo;</b><sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <p>
+                                                Not every hotspot identified, however, is a good fit for an AI agent<sup><a href="#ref-5">5</a></sup>.
+                                                Work driven by structured data and deterministic business rules is better handled, in both cost and stability, by conventional API integration or RPA (robotic process automation); conversely, areas with extremely high regulatory risk or enormous costs of failure should be excluded from full autonomy<sup><a href="#ref-5">5</a></sup>.
+                                                Companies therefore need to choose the technical approach carefully, based on whether the work is deterministic, what form the data takes, and how much risk can be tolerated<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 14px; word-break: keep-all;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left;">Automation type</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left;">Decision complexity</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left;">Form of data</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left;">Tolerance for failure risk</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left;">Main technology stack</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left;">Typical business areas</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;"><b>Traditional rules and RPA</b></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Deterministic</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Structured data (DB records, standard CSV)</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Very low (errors not acceptable)</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Enterprise workflow engines, ETL scripts</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Account provisioning, simple data migration, fixed-amount approvals on structured data</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;"><b>Intelligent AI agents</b></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Contextual and adaptive (heuristic)</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Unstructured text, complex system state</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Medium (guardrails and human intervention can be designed in)</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">LLMs, LangGraph, multi-agent frameworks</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Assisting unstructured claims review, predicting and responding to supply-chain bottlenecks, re-planning complex journeys</td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;"><b>Fully human</b> (manual)</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Highly strategic and political judgment</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Tacit knowledge, complex political interests</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Extremely low (legal and ethical accountability is concentrated)</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Expert workspaces, internal review and approval lines</td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd;">Final approval of large credit reviews, reorganizations, strategy for new domains</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Table 2. Choosing an automation type by the nature of the work</p>
+                                            <p>
+                                                At the prioritization stage, the severity of the friction is cross-analyzed against implementation risk, and the first pilot is a single task that causes the business real pain while its system risk stays controllable (high impact, low risk)<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                        </div>
+
+                                        <blockquote id="sec-4" style="scroll-margin-top: 110px;">
+                                            <p>
+                                                &nbsp; 4. Designing Multi-Agent Systems (MAS) and a Five-Stage Roadmap for Enterprise AI Adoption
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                Once domain events, bounded contexts and agent opportunities are identified, they are turned into a distributed architecture on LangGraph, CrewAI, AutoGen, cloud-based runtime services and the like<sup><a href="#ref-7">7</a></sup>.
+                                                The core principle of multi-agent system design is to confine each agent’s responsibility strictly within the boundary of a specific bounded context<sup><a href="#ref-2">2</a></sup>.
+                                            </p>
+                                            <p>
+                                                For example, if a complex airline operations and travel management domain is built as one large AI model, flight scheduling, fare policies and passenger compensation rules collide inside a single context, which easily leads to hallucination and loss of control<sup><a href="#ref-2">2</a></sup>.
+                                                Applying DDD principles instead isolates the system into clear bounded contexts—flight operations, reservations and customer service—each staffed by a dedicated agent specialized for that context<sup><a href="#ref-7">7</a></sup>.
+                                            </p>
+                                            <p>
+                                                In a disruption scenario where bad weather causes mass cancellations, the flight operations agent publishes a cancellation-confirmed event, the reservation agent receives it and publishes an event for finding seats on alternative flights, and finally the customer service agent gives passengers their new itinerary and hotel vouchers, so the agents work together seamlessly<sup><a href="#ref-7">7</a></sup>.
+                                                Each agent is responsible only for its own domain’s ubiquitous language and invariants, and communication between contexts happens asynchronously through predefined domain event interfaces<sup><a href="#ref-2">2</a></sup>.
+                                            </p>
+
+                                            <div style="max-width: 520px; margin: 40px auto 10px;">
+                                                <div style="border: 2px dashed #b9bfd0; border-radius: 12px; padding: 14px 18px;">
+                                                    <div style="font-size: 13px; color: #888;">Flight operations context</div>
+                                                    <div style="font-size: 17px; font-weight: 700; color: #1a1a2e;">Flight operations agent</div>
+                                                    <div style="font-size: 14px; color: #555;">Confirms mass cancellations due to bad weather</div>
+                                                </div>
+                                                <div style="text-align: center; padding: 10px 0;">
+                                                    <div style="color: #999; font-size: 18px; line-height: 1;">&darr;</div>
+                                                    <span style="display: inline-block; background: #FFA94D; color: #1b1b1b; font-size: 14px; font-weight: 700; padding: 6px 14px; border-radius: 3px; box-shadow: 0 3px 8px rgba(0,0,0,0.12); margin: 6px 0;">Cancellation Confirmed event</span>
+                                                    <div style="color: #999; font-size: 18px; line-height: 1;">&darr;</div>
+                                                </div>
+                                                <div style="border: 2px dashed #b9bfd0; border-radius: 12px; padding: 14px 18px;">
+                                                    <div style="font-size: 13px; color: #888;">Reservations context</div>
+                                                    <div style="font-size: 17px; font-weight: 700; color: #1a1a2e;">Reservation agent</div>
+                                                    <div style="font-size: 14px; color: #555;">Receives the event and searches for seats on alternative flights</div>
+                                                </div>
+                                                <div style="text-align: center; padding: 10px 0;">
+                                                    <div style="color: #999; font-size: 18px; line-height: 1;">&darr;</div>
+                                                    <span style="display: inline-block; background: #FFA94D; color: #1b1b1b; font-size: 14px; font-weight: 700; padding: 6px 14px; border-radius: 3px; box-shadow: 0 3px 8px rgba(0,0,0,0.12); margin: 6px 0;">Alternative Seats Found event</span>
+                                                    <div style="color: #999; font-size: 18px; line-height: 1;">&darr;</div>
+                                                </div>
+                                                <div style="border: 2px dashed #b9bfd0; border-radius: 12px; padding: 14px 18px;">
+                                                    <div style="font-size: 13px; color: #888;">Customer service context</div>
+                                                    <div style="font-size: 17px; font-weight: 700; color: #1a1a2e;">Customer service agent</div>
+                                                    <div style="font-size: 14px; color: #555;">Gives passengers their new itinerary and hotel vouchers</div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Figure 1. In the cancellation scenario, the agent of each bounded context collaborates through domain events</p>
+
+                                            <p>
+                                                To embed such multi-agent systems across the organization, industry applies a five-stage execution roadmap (the 5-Stage Agentic Roadmap)<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <ol>
+                                                <li><b>Align</b> — Domain experts, software developers and AI engineers join a big-picture EventStorming session to surface raw events and visualize the end-to-end flow of work<sup><a href="#ref-5">5</a></sup>.</li>
+                                                <li><b>Prioritize</b> — The agent opportunities found in hotspot clusters are assessed for business impact and risk, and exactly one core pilot task is chosen<sup><a href="#ref-5">5</a></sup>.</li>
+                                                <li><b>Design</b> — An Architecture on a Page is written, specifying the trigger and output events the agent will handle, the external APIs and tools it may access, the RAG knowledge base schema, and the approval points that require human intervention<sup><a href="#ref-4">4</a></sup>.</li>
+                                                <li><b>Build</b> — A lightweight agent is developed on a modern framework such as LangGraph or CrewAI, observability tooling is connected, and a minimal deployment is made against real operational data<sup><a href="#ref-5">5</a></sup>.</li>
+                                                <li><b>Iterate &amp; Scale</b> — Operational data is evaluated on a four-week cycle, prompts are fine-tuned, and agents that have proven themselves are gradually extended and linked into adjacent bounded contexts<sup><a href="#ref-5">5</a></sup>.</li>
+                                            </ol>
+                                            <div style="overflow-x: auto;">
+                                                <table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 14px; word-break: keep-all;">
+                                                    <tr style="background-color: #1a1a2e; color: #fff;">
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left; width: 16%;">Roadmap stage</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left; width: 32%;">Key activities</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left; width: 28%;">Artifacts</th>
+                                                        <th style="padding: 12px 12px; border: 1px solid #ddd; text-align: left; width: 24%;">Engineering milestones and outcomes</th>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><b>1. Align</b></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Run a big-picture workshop with cross-functional stakeholders</li><li>Surface domain events and align them consistently on the timeline</li><li>Identify actors and external system boundaries<sup><a href="#ref-5">5</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Unified event timeline board</li><li>Candidate bounded context boundaries</li><li>Ubiquitous language glossary<sup><a href="#ref-6">6</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;">Organization-wide shared understanding of enterprise processes and a single mental model<sup><a href="#ref-8">8</a></sup></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><b>2. Prioritize</b></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Mark hotspots of manual work and process delays</li><li>Turn hotspots into green agent opportunities</li><li>Evaluate the backlog by impact and risk<sup><a href="#ref-5">5</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Agent adoption backlog</li><li>Single pilot task definition</li><li>Quantitative key performance indicators (KPIs)<sup><a href="#ref-5">5</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;">First agent implementation target with the highest odds of success and ROI<sup><a href="#ref-5">5</a></sup></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><b>3. Design</b></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Define data schemas for trigger and output events</li><li>Define the RAG knowledge base to consult and the persistent state model</li><li>Establish human approval (human-in-the-loop) guardrails<sup><a href="#ref-4">4</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Architecture on a Page summary</li><li>API specification per context (OpenAPI)</li><li>Agent decision guardrail specification<sup><a href="#ref-4">4</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;">A system contract the engineering team can start implementing immediately<sup><a href="#ref-4">4</a></sup></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><b>4. Build</b></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Build the agent orchestration runtime</li><li>Integrate tool calling and set permissions</li><li>Initial rollout to a limited group of business users<sup><a href="#ref-5">5</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Executable agentic workflow code</li><li>Runtime monitoring and tracing dashboard</li><li>System test and evaluation suite<sup><a href="#ref-5">5</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;">An initial AI agent deployed in production, processing real data<sup><a href="#ref-5">5</a></sup></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><b>5. Iterate &amp; Scale</b></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Evaluate agent decision accuracy periodically (every four weeks)</li><li>Tune prompts and guardrails with feedback from the business</li><li>Link orchestration between agents in adjacent contexts<sup><a href="#ref-5">5</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;"><ul style="margin: 0; padding-left: 18px;"><li>Agent performance evaluation report</li><li>Enterprise context map diagram</li><li>Multi-agent governance operating guidelines<sup><a href="#ref-7">7</a></sup></li></ul></td>
+                                                        <td style="padding: 12px 12px; border: 1px solid #ddd; vertical-align: top;">An enterprise MAS ecosystem that collaborates autonomously across departmental boundaries<sup><a href="#ref-7">7</a></sup></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p class="text-center mt-20" style="font-size: 14px; color: #888;">Table 3. Five-stage roadmap for enterprise AI agent adoption</p>
+                                        </div>
+
+                                        <blockquote id="sec-5" style="scroll-margin-top: 110px;">
+                                            <p>
+                                                &nbsp; 5. Business Process Innovation (BPR) Benefits and Current Technical Limits
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>What EventStorming delivers</b></p>
+                                            <p>
+                                                The signature result of using EventStorming as a combined tool for business process innovation and AI adoption is uncovering the tacit knowledge hidden inside the organization<sup><a href="#ref-8">8</a></sup>.
+                                                A company’s core competitive strengths and its real points of friction live not in documented manuals but in practitioners’ everyday habits and experience<sup><a href="#ref-8">8</a></sup>.
+                                            </p>
+                                            <p>
+                                                EventStorming works as a kind of organizational-anthropology probe, drawing out the manual workarounds and implicit exception-handling rules that staff have informally maintained and turning them into an explicit visual model<sup><a href="#ref-8">8</a></sup>.
+                                                This makes it possible to plan agents that solve the real problems actual users face<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <p>
+                                                And because business staff, developers and AI engineers share the same visual model, departmental silos dissolve and the requirement mismatches that surface late in projects are cut off at the source<sup><a href="#ref-5">5</a></sup>.
+                                                Even non-technical staff can clearly understand, and agree on, when an agent steps in and at what point it must hand a decision to a person for approval, simply from where the sticky notes are placed<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <p>
+                                                The domain boundaries and policy stickies clarified through EventStorming also give the LLM precise context, preventing the architectural debt of generating code outside the system’s scope and keeping hallucination-driven malfunctions within a controllable range<sup><a href="#ref-4">4</a></sup>.
+                                            </p>
+                                            <p style="text-decoration: underline;"><b>Limits and risks in practice</b></p>
+                                            <p>
+                                                There are, however, clear technical limits and organizational risks that must not be overlooked in practice<sup><a href="#ref-5">5</a></sup>.
+                                                The &lsquo;cold-start&rsquo; problem of having to come up with domain events in front of a blank wall at the start of a workshop causes participants considerable psychological resistance<sup><a href="#ref-20">20</a></sup>.
+                                                AI assistants such as Qlerify and StormSpace now generate an initial event board automatically, but if participants sink uncritically into the model’s draft, anchoring bias can set in and the company’s unique exception handling and domain specifics get lost<sup><a href="#ref-20">20</a></sup>.
+                                            </p>
+                                            <p>
+                                                Another major cause of failure is that an organization which has uncovered vast inefficiencies through EventStorming is easily tempted to automate the entire process with multiple agents at once, in a big-bang approach<sup><a href="#ref-5">5</a></sup>.
+                                                As agent autonomy grows, system-wide unpredictability, token costs and debugging complexity increase exponentially, so an incremental approach that first validates a lightweight pilot on a single hotspot is essential<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                            <p>
+                                                Most important of all, the essential judgment of domain modeling cannot be replaced by AI<sup><a href="#ref-21">21</a></sup>.
+                                                AI tools can help order events or draft API specifications, but strategic decisions—which bounded context is the real boundary of business ownership, which aggregates must be protected for business reasons, which domain terms should become the standard—still require the insight and judgment of domain experts<sup><a href="#ref-21">21</a></sup>.
+                                                In addition, the regulatory violations and legal liability that can arise when human approval (human-in-the-loop) guardrails are not properly designed into high-risk decision points are what to guard against most carefully when building agent systems<sup><a href="#ref-5">5</a></sup>.
+                                            </p>
+                                        </div>
+
+                                        <blockquote id="sec-6" style="scroll-margin-top: 110px;">
+                                            <p>
+                                                &nbsp; 6. Conclusion: Where a Domain-Engineered Agentic Enterprise Should Aim
+                                            </p>
+                                        </blockquote>
+
+                                        <div class="mb-50 prose">
+                                            <p>
+                                                Using EventStorming and domain-driven design to identify AI agents and innovate existing processes is not a mere academic hypothesis; it is a core current of modern software engineering, systematically validated by global cloud vendors, academic researchers and enterprise consulting practice<sup><a href="#ref-1">1</a></sup>.
+                                            </p>
+                                            <p>
+                                                What decides the success of an enterprise AI system is not limited to the parameter count or fine-tuning technique of the underlying language model; it depends on <b>how clearly the boundaries and responsibilities of business processes are defined and handed to the agents</b><sup><a href="#ref-4">4</a></sup>.
+                                            </p>
+                                            <p>
+                                                EventStorming makes the hidden friction and hotspots of real work visible, selects the best opportunities for agents to step in, and establishes boundaries of responsibility and communication contracts between agents through bounded contexts and domain events, providing the most practical engineering analysis framework for building a stable, step-by-step enterprise AI roadmap<sup><a href="#ref-2">2</a></sup>.
+                                            </p>
+                                            <p>
+                                                Organizations that want to innovate their existing processes should therefore avoid adopting agent technology blindly, first face the reality of their domain through EventStorming, and hold to a domain-centric engineering strategy that gradually expands domain-specific agents that are clearly isolated and verifiable under the bounded context principle<sup><a href="#ref-2">2</a></sup>.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-50 prose">
+                                            <p style="text-decoration: underline;"><b>References</b></p>
+                                            <ol style="font-size: 14px;">
+                                                <li id="ref-1" style="scroll-margin-top: 110px;"><a href="https://www.researchgate.net/publication/391084293_Designing_Scalable_Multi-Agent_AI_Systems_Leveraging_Domain-Driven_Design_and_Event_Storming" target="_blank" rel="noopener noreferrer">Designing Scalable Multi-Agent AI Systems: Leveraging Domain-Driven Design and Event Storming</a> — ResearchGate</li>
+                                                <li id="ref-2" style="scroll-margin-top: 110px;"><a href="https://medium.com/@philippkostyra/agent-as-bounded-context-part-1-5f43b7c56b4b" target="_blank" rel="noopener noreferrer">Agent as Bounded Context — Part 1</a> — Philipp Kostyra, Medium</li>
+                                                <li id="ref-3" style="scroll-margin-top: 110px;"><a href="https://medium.com/marklin-hehe/day-21-event-storming-to-code-2a94aadf675c" target="_blank" rel="noopener noreferrer">Day-21: Event Storming To Code</a> — Medium</li>
+                                                <li id="ref-4" style="scroll-margin-top: 110px;"><a href="https://www.codecentric.de/en/knowledge-hub/blog/from-stories-to-code-how-domain-storytelling-and-eventstorming-give-llms-the-context-they-need" target="_blank" rel="noopener noreferrer">From Stories to Code: Collaborative Modeling and LLMs</a> — codecentric</li>
+                                                <li id="ref-5" style="scroll-margin-top: 110px;"><a href="https://orium.com/blog/eventstorming-agentic-ai-roadmap" target="_blank" rel="noopener noreferrer">EventStorming for Agentic AI: From Alignment to Action</a> — Orium</li>
+                                                <li id="ref-6" style="scroll-margin-top: 110px;"><a href="https://dzone.com/articles/multi-agent-ai-ddd-event-storming" target="_blank" rel="noopener noreferrer">Designing Scalable Multi-Agent AI Systems</a> — DZone</li>
+                                                <li id="ref-7" style="scroll-margin-top: 110px;"><a href="https://builder.aws.com/content/2zekpyfAR8iOjHq8OElYPB61kuq/transforming-travel-how-domain-driven-design-unlocks-the-power-of-agentic-ai-systems" target="_blank" rel="noopener noreferrer">Transforming Travel: How Domain-Driven Design Unlocks the Power of Agentic AI Systems</a> — AWS Builder Center</li>
+                                                <li id="ref-8" style="scroll-margin-top: 110px;"><a href="https://composable.com/insights/eventstorming-intelligent-agent-roadmap" target="_blank" rel="noopener noreferrer">From Sticky Notes to Intelligent Agents</a> — Composable.com</li>
+                                                <li id="ref-9" style="scroll-margin-top: 110px;"><a href="https://ddd-crew.github.io/eventstorming-glossary-cheat-sheet/" target="_blank" rel="noopener noreferrer">EventStorming Glossary &amp; Cheat sheet</a> — Domain-Driven Design Crew</li>
+                                                <li id="ref-10" style="scroll-margin-top: 110px;"><a href="https://www.k8mak.com/skills/event-storm/" target="_blank" rel="noopener noreferrer">Event Storm - AI Agent Skill</a> — k8mak</li>
+                                                <li id="ref-11" style="scroll-margin-top: 110px;"><a href="https://florian-kraemer.net/ddd/event-storming/" target="_blank" rel="noopener noreferrer">Event Storming</a> — Florian Krämer</li>
+                                                <li id="ref-12" style="scroll-margin-top: 110px;"><a href="https://www.rubicon-world.com/resources/event-storming-guide" target="_blank" rel="noopener noreferrer">What is Event Storming? A practical guide with example</a> — Rubicon</li>
+                                                <li id="ref-13" style="scroll-margin-top: 110px;"><a href="https://xebia.com/blog/eventstorming-cheat-sheet/" target="_blank" rel="noopener noreferrer">EventStorming Cheat Sheet</a> — Xebia</li>
+                                                <li id="ref-14" style="scroll-margin-top: 110px;"><a href="https://www.port.io/blog/developers-role-changes-ai" target="_blank" rel="noopener noreferrer">How developers' role changes with AI</a> — Port.io</li>
+                                                <li id="ref-15" style="scroll-margin-top: 110px;"><a href="https://blog.eduardomatos.me/using-eventstorming-to-prioritize-technical-and-product-improvements-cc7aa291a75" target="_blank" rel="noopener noreferrer">Using EventStorming to prioritize technical and product improvements</a> — Eduardo Matos</li>
+                                                <li id="ref-16" style="scroll-margin-top: 110px;"><a href="https://blog.datachef.co/event-storming-context-mapping-data-ai-product-managers/" target="_blank" rel="noopener noreferrer">Event Storming and Context Mapping for Data &amp; AI Product Managers</a> — DataChef</li>
+                                                <li id="ref-17" style="scroll-margin-top: 110px;"><a href="../../../images/MSASchool-Curriculum-Proposal.pdf" target="_blank">Cloud Native Professional Course Proposal (PDF, Korean)</a> — uEngine Solutions</li>
+                                                <li id="ref-18" style="scroll-margin-top: 110px;"><a href="http://www.msaschool.io/operation/introduction/schedule/" target="_blank" rel="noopener noreferrer">MSA School curriculum</a> — MSA School</li>
+                                                <li id="ref-19" style="scroll-margin-top: 110px;"><a href="https://www.xgate.io/2026/03/12/the-evolution-of-ai-assisted-development/" target="_blank" rel="noopener noreferrer">The Evolution of AI-Assisted Development</a> — X Gate</li>
+                                                <li id="ref-20" style="scroll-margin-top: 110px;"><a href="https://medium.com/@tanstorm/leveraging-the-power-of-event-storming-for-domain-driven-design-3350913f7fe8" target="_blank" rel="noopener noreferrer">Leveraging the power of Event Storming and AI for domain-driven design</a> — Medium</li>
+                                                <li id="ref-21" style="scroll-margin-top: 110px;"><a href="https://www.codecentric.de/wissens-hub/blog/der-synergetic-blueprint-revisited-und-warum-ki-alles-veraendert" target="_blank" rel="noopener noreferrer">Der Synergetic Blueprint revisited – und warum KI alles verändert</a> — codecentric</li>
+                                                <li id="ref-22" style="scroll-margin-top: 110px;"><a href="https://github.com/matt-bentley/StormSpace" target="_blank" rel="noopener noreferrer">StormSpace — collaborative interactive Event Storming</a> — GitHub</li>
+                                            </ol>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- End Post -->
+
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="../ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="../ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../ax-lite-course.html">AI Work Class for Your Company</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
