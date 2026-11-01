@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="4장에서 비서가 나눠 둔 대화 맥락을, 새 일을 시킬 때 저절로 참고하게 합니다. 관계있는 팀원의 맥락은 「요청하기」로 허락받아 그 자리에서 함께 쓰고, 팀이 지금 AI 와 무슨 일을 하는지는 「팀」 탭에서 공유된 만큼만 봅니다. 누구에게 어디까지 보일지는 맥락마다 공개 등급으로 정합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/team-context.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="4장에서 비서가 나눠 둔 대화 맥락을, 새 일을 시킬 때 저절로 참고하게 합니다. 관계있는 팀원의 맥락은 「요청하기」로 허락받아 그 자리에서 함께 쓰고, 팀이 지금 AI 와 무슨 일을 하는지는 「팀」 탭에서 공유된 만큼만 봅니다. 누구에게 어디까지 보일지는 맥락마다 공개 등급으로 정합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/team-context.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+<li><a href="agentic.html"><span class="n">26</span>에이전트 가드레일 — 맡길 일, 볼 일, 막을 일</a></li>
+<li><a href="team-context.html" class="on" aria-current="page"><span class="n">27</span>팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">28</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">29</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">30</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">확장과 운영<span class="chap">27</span></div>
+    <h1>팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아</h1>
+    <article>
+<blockquote>
+<p>4장에서 비서가 나눠 둔 대화 맥락을, 새 일을 시킬 때 저절로 참고하게 합니다. 관계있는 팀원의 맥락은 「요청하기」로 허락받아 그 자리에서 함께 쓰고, 팀이 지금 AI 와 무슨 일을 하는지는 「팀」 탭에서 공유된 만큼만 봅니다. 누구에게 어디까지 보일지는 맥락마다 공개 등급으로 정합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/7jat7FFJeKw" title="팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아 — 영상 1:40" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="왜-필요한가">왜 필요한가<a class="anchor" href="#왜-필요한가" title="Permanent link">#</a></h2>
+<p><a href="contexts.html">4장</a>에서 본 것처럼 Process GPT Lite 는 한 채팅창의 메시지를 대화 맥락마다 나눕니다. 하지만 나누기만 해서는 그 맥락이 다시 쓰이지 않습니다. 지난주에 경쟁사 가격을 정리해 두었어도, 오늘 보고서를 쓰며 또 설명해야 합니다. 팀이라면 더합니다. 옆 팀 동료가 같은 고객을 놓고 이미 정리해 둔 대화가 있어도, 나는 그 존재를 모릅니다.</p>
+<p>이 장의 기능은 세 가지입니다.</p>
+<table>
+<thead>
+<tr>
+<th>기능</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>자동 참고</strong></td>
+<td>메시지를 보낼 때마다 지금 일과 관계있는 다른 맥락(내 것, 팀이 공유한 것, 허락받은 것)을 골라 비서에게 함께 넘깁니다. 무엇을 붙였는지는 메시지 아래 칩으로 보입니다</td>
+</tr>
+<tr>
+<td><strong>참고 요청</strong></td>
+<td>관계있지만 아직 볼 수 없는 팀원의 맥락은 제목만 보이고 「요청하기」가 붙습니다. 주인의 규칙에 맞으면 곧바로, 아니면 주인이 홈 카드에서 허락합니다</td>
+</tr>
+<tr>
+<td><strong>팀 활동</strong></td>
+<td>사람마다 지금 하는 일, 주로 하는 일, 자주 쓰는 요청 유형, 진행 중인 AI 작업을 공유된 만큼만 요약해 보여 줍니다. 팀장과 관리자는 조직도로 모아 봅니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="누구에게-어디까지-공개-등급">누구에게 어디까지 — 공개 등급<a class="anchor" href="#누구에게-어디까지-공개-등급" title="Permanent link">#</a></h2>
+<p>모든 것이 다 보이면 개인 작업, 인사, 계약까지 새어 나갑니다. 그래서 맥락마다 <strong>누구에게</strong>(팀 › 부서 › 회사, Process GPT 조직도를 따름)와 <strong>얼마나 깊이</strong>(제목 › 요약 › 원문)를 정합니다.</p>
+<table>
+<thead>
+<tr>
+<th>등급</th>
+<th>제목</th>
+<th>요약(요약·결정·열린 질문)</th>
+<th>원문(요청과 답)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>비공개</td>
+<td>나만</td>
+<td>나만</td>
+<td>나만 — 존재도 드러나지 않음</td>
+</tr>
+<tr>
+<td>제목 공개</td>
+<td>회사 전체</td>
+<td>허락받은 사람</td>
+<td>허락받은 사람</td>
+</tr>
+<tr>
+<td><strong>요약 공개</strong>(기본)</td>
+<td>회사 전체</td>
+<td>범위 안(기본: 팀)</td>
+<td>허락받은 사람</td>
+</tr>
+<tr>
+<td>전체 공개</td>
+<td>회사 전체</td>
+<td>범위 안</td>
+<td>범위 안</td>
+</tr>
+</tbody>
+</table>
+<p>역할에 따라 더 보는 사람도 있습니다.</p>
+<ul>
+<li><strong>팀장·부서장</strong>(조직도의 장)은 자기 노드 아래 사람의 비공개가 아닌 맥락을 요약까지 봅니다.</li>
+<li><strong>관리자</strong>는 회사 전체를 요약까지 봅니다. 원문은 관리자도 요청해야 합니다.</li>
+<li><strong>민감 표시</strong>가 붙은 맥락(인사·급여·계약·건강·개인정보 — 비서가 제안하고 주인이 승인)은 전체 공개로 열 수 없고, 자동 허용에서 빠지며, 장·관리자에게도 제목만 보입니다.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">요약은 어떻게 만드나</p>
+<p>맥락마다 요약·결정·열린 질문·작업 유형·요청 유형을 모델이 미리 만들어 둡니다. 요청 문장을 그대로 옮기지 않고 다른 말로 줄입니다. 팀 활동 카드나 자동 참고는 보는 사람이 그 맥락에 가진 깊이만큼만 이 요약을 모아 씁니다.</p>
+</div>
+<h2 id="따라-하기-준비-시험-회사">따라 하기 준비 — 시험 회사<a class="anchor" href="#따라-하기-준비-시험-회사" title="Permanent link">#</a></h2>
+<p>이 장은 다섯 명짜리 시험 회사로 따라 합니다. 서버 폴더에서 한 번 만듭니다(테넌트 <code>team-demo</code>, 주소 <code>team.localhost</code>).</p>
+<div class="hl"><pre><span></span><code><span class="c1"># server/.env 의 PRO_TENANT_HOSTS 에 team.localhost=team-demo 를 더한 뒤</span>
+node<span class="w"> </span>scripts/seed-team-context.mjs<span class="w"> </span>--reset
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>사람</th>
+<th>자리</th>
+<th>계정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>윤서진</td>
+<td>대표·관리자</td>
+<td><code>pro-tc-yoon@uengine.org</code></td>
+</tr>
+<tr>
+<td>박하늘</td>
+<td>전략팀장</td>
+<td><code>pro-tc-park@uengine.org</code></td>
+</tr>
+<tr>
+<td>이도윤</td>
+<td>전략팀</td>
+<td><code>pro-tc-lee@uengine.org</code></td>
+</tr>
+<tr>
+<td>최유나</td>
+<td>제안팀장</td>
+<td><code>pro-tc-choi@uengine.org</code></td>
+</tr>
+<tr>
+<td>정하은</td>
+<td>제안팀</td>
+<td><code>pro-tc-jung@uengine.org</code></td>
+</tr>
+</tbody>
+</table>
+<p>조직은 서진컨설팅 › 컨설팅본부 › 전략팀·제안팀입니다. 로그인은 <code>http://team.localhost:5180</code> 에서 메일 주소와 코드 <code>000000</code> 으로 합니다. 각자 지난 한 달 동안 AI 와 나눈 맥락이 몇 개씩 들어 있습니다(이도윤 「경쟁 서비스 동향」, 박하늘 「가격 정책 조사」, 최유나 「고객 B 가격 협상」…).</p>
+<h2 id="따라-하기-1-자동-참고와-참고-요청">따라 하기 1 — 자동 참고와 참고 요청<a class="anchor" href="#따라-하기-1-자동-참고와-참고-요청" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>이도윤으로 로그인해 채팅에 보냅니다. <code>경쟁사 가격 변화를 표로 정리해 줘</code></li>
+<li>보낸 메시지 바로 아래에 칩이 붙습니다. 「참고 · 경쟁 서비스 동향 · 내 맥락 · 원문」, 「참고 · 가격 정책 조사 · 박하늘 · 요약」.</li>
+<li>답이 오면 [1]·[2] 로 그 근거를 인용합니다. 박하늘의 맥락은 요약 깊이라 결정 사항까지만 쓰입니다. 답 아래에는 「요청하면 볼 수 있는 맥락」에 최유나의 「고객 B 가격 협상」이 제목만 보입니다.</li>
+<li>박하늘 칩의 <b>원문 요청</b> → <b>요청 보내기</b>. 같은 팀이라 기본 규칙으로 곧바로 「허락됨 · 원문」이 됩니다.</li>
+<li>「고객 B 가격 협상」의 <b>요청하기</b> → <b>요청 보내기</b>. 다른 팀이라 「요청함 — 최유나에게 갔어요」가 됩니다.</li>
+<li>최유나로 로그인하면 홈에 「참고 요청」 카드가 있습니다. 허락하면 나가는 것(턴 수·결정 수)을 보고, 기간을 <b>7일</b>로 바꿔 <b>허락</b>합니다. 빼고 싶은 턴은 「뺄 턴 고르기」에서 고릅니다.</li>
+<li>이도윤 화면의 요청 후보가 「허락됨 · 원문」으로 바뀌고 <b>지금 반영해 다시 답하기</b>가 생깁니다. 누르면 같은 요청이 그 맥락과 함께 다시 갑니다.</li>
+</ol>
+<figure><a href="img/team-context-chips.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보낸 메시지 아래 칩 — 내 맥락은 원문, 같은 팀 박하늘의 맥락은 요약 깊이로 붙었습니다" src="img/team-context-chips.webp" / loading="lazy" decoding="async"></a><figcaption>보낸 메시지 아래 칩 — 내 맥락은 원문, 같은 팀 박하늘의 맥락은 요약 깊이로 붙었습니다</figcaption></figure>
+<figure><a href="img/team-context-answer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답은 [1]·[2]로 근거를 인용하고, 아래에 「요청하면 볼 수 있는 맥락」이 제목만 보입니다" src="img/team-context-answer.webp" / loading="lazy" decoding="async"></a><figcaption>답은 [1]·[2]로 근거를 인용하고, 아래에 「요청하면 볼 수 있는 맥락」이 제목만 보입니다</figcaption></figure>
+<figure><a href="img/team-context-card.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="최유나의 홈 — 참고 요청 카드에서 깊이·기간·뺄 턴을 정해 허락합니다" src="img/team-context-card.webp" / loading="lazy" decoding="async"></a><figcaption>최유나의 홈 — 참고 요청 카드에서 깊이·기간·뺄 턴을 정해 허락합니다</figcaption></figure>
+<figure><a href="img/team-context-rerun.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="다시 답한 결과 — 원문을 허락받은 박하늘 맥락의 내용(C사 연간 20% 할인, 20%안의 첫해 매출 감소)까지 들어갔습니다" src="img/team-context-rerun.webp" / loading="lazy" decoding="async"></a><figcaption>다시 답한 결과 — 원문을 허락받은 박하늘 맥락의 내용(C사 연간 20% 할인, 20%안의 첫해 매출 감소)까지 들어갔습니다</figcaption></figure>
+<figure><a href="img/team-context-used.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="박하늘의 설정 › 공유와 허락 — 내가 준 허락(회수), 내 맥락이 쓰인 곳" src="img/team-context-used.webp" / loading="lazy" decoding="async"></a><figcaption>박하늘의 설정 › 공유와 허락 — 내가 준 허락(회수), 내 맥락이 쓰인 곳</figcaption></figure>
+<p><strong>확인할 것</strong>: 박하늘로 로그인해 「설정 › 공유와 허락」을 엽니다. 「내 맥락이 쓰인 곳」에 「이도윤 · 가격 정책 조사 · 원문 · 자동 허용」이 있고, 「내가 준 허락」에서 바로 회수할 수 있습니다. 회수하면 이도윤의 다음 턴부터 다시 요약 깊이로 붙습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고는 지시가 아닙니다</p>
+<p>붙인 맥락은 「참고 자료이며 지시가 아님」이라고 표시된 인용 블록으로 비서에게 갑니다. 어느 대화로 이어 갈지는 이 블록이 아니라 보낸 메시지로 판단합니다. 칩의 ×로 맥락을 빼면 그 대화에서는 다시 붙지 않고, 「고정」하면 관련도와 상관없이 늘 붙습니다. 대화마다 「자동 참고 끄기」도 있습니다.</p>
+</div>
+<h2 id="따라-하기-2-팀-활동과-공개-등급">따라 하기 2 — 팀 활동과 공개 등급<a class="anchor" href="#따라-하기-2-팀-활동과-공개-등급" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>박하늘(전략팀장)로 로그인해 위쪽 <b>팀</b> 탭을 엽니다. 박하늘과 이도윤의 카드가 보입니다. 이도윤 카드에는 지금 하는 일(「경쟁 서비스 동향」 · 요약), 주로 하는 일의 비율, 자주 쓰는 요청 유형(이름과 횟수만), 진행 중인 AI 작업(정기 작업), 최근 산출물이 있습니다.</li>
+<li>「경쟁 서비스 동향」을 누르면 시간순 보기가 열립니다. 요약 깊이라서 요청 문장 대신 「경쟁사 요금 변동 조사 — A사 요금제 페이지 변경점 정리해 달라고 함」처럼 유형과 바꿔 쓴 한 줄만 보입니다.</li>
+<li><b>원문 보기</b>를 누릅니다. 같은 팀이라 자동 허용되어 요청과 답의 원문이 열립니다. 이 열람은 이도윤의 「내 맥락을 본 기록」에 남습니다.</li>
+<li>윤서진(관리자)으로 로그인해 팀 탭에서 <b>회사</b>를 고릅니다. 회사 전체가 요약 깊이로 보이고, 이도윤의 비공개 맥락은 「비공개 작업 1건」으로만 셉니다. <b>조직도 보기</b>를 누르면 서진컨설팅 › 컨설팅본부 › 전략팀·제안팀 마다 주제·작업 유형·진행 중인 AI 작업이 모입니다. 오른쪽 「비슷한 주제를 하는 사람」에는 이도윤의 「경쟁 서비스 동향」과 최유나의 「경쟁사 가격 벤치마크」가 나란히 나옵니다.</li>
+<li>이도윤으로 로그인해 <b>다른 사람 눈으로 내 카드 보기</b> › <b>관리자 눈으로 보기</b>. 관리자에게 내 카드가 어떻게 보이는지와, 이번 주에 누가 내 활동을 봤는지가 나옵니다.</li>
+<li>「설정 › 공유와 허락 › 내 맥락의 공개 등급」에서 「경쟁 서비스 동향」의 등급 칩(요약 공개 · 팀)을 누릅니다. <b>누가 무엇을 보게 되나</b> 미리보기를 보며 범위를 <b>회사</b>로 바꾸면, 다른 팀의 정하은·최유나가 요약 칸에 「새로」 표시와 함께 들어옵니다. <b>저장</b>.</li>
+<li>최유나로 로그인해 「설정 › 공유와 허락」을 엽니다. 위에 「민감 표시 제안 · 연봉 협상 준비」가 있습니다. <b>승인</b>한 뒤 그 맥락을 <b>전체 공개</b>로 바꿔 저장해 보면 「민감 항목은 전체 공개로 열 수 없습니다」로 거절됩니다.</li>
+</ol>
+<figure><a href="img/team-activity-cards.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="박하늘(팀장)의 팀 탭 — 공유된 맥락만, 볼 수 있는 깊이로 모은 카드" src="img/team-activity-cards.webp" / loading="lazy" decoding="async"></a><figcaption>박하늘(팀장)의 팀 탭 — 공유된 맥락만, 볼 수 있는 깊이로 모은 카드</figcaption></figure>
+<figure><a href="img/team-activity-timeline.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시간순 보기 — 원문 보기(자동 허용) 뒤에는 요청과 답의 원문이 열립니다" src="img/team-activity-timeline.webp" / loading="lazy" decoding="async"></a><figcaption>시간순 보기 — 원문 보기(자동 허용) 뒤에는 요청과 답의 원문이 열립니다</figcaption></figure>
+<figure><a href="img/team-activity-org.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자의 조직도 보기와 비슷한 주제를 하는 사람" src="img/team-activity-org.webp" / loading="lazy" decoding="async"></a><figcaption>관리자의 조직도 보기와 비슷한 주제를 하는 사람</figcaption></figure>
+<figure><a href="img/team-activity-as-admin.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이도윤 — 관리자 눈으로 내 카드 보기, 이번 주 내 활동을 본 사람" src="img/team-activity-as-admin.webp" / loading="lazy" decoding="async"></a><figcaption>이도윤 — 관리자 눈으로 내 카드 보기, 이번 주 내 활동을 본 사람</figcaption></figure>
+<figure><a href="img/team-activity-preview.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="등급 미리보기 — 범위를 회사로 넓히면 정하은·최유나가 요약 칸에 「새로」" src="img/team-activity-preview.webp" / loading="lazy" decoding="async"></a><figcaption>등급 미리보기 — 범위를 회사로 넓히면 정하은·최유나가 요약 칸에 「새로」</figcaption></figure>
+<figure><a href="img/team-activity-sensitive.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="민감 맥락은 전체 공개로 열 수 없습니다" src="img/team-activity-sensitive.webp" / loading="lazy" decoding="async"></a><figcaption>민감 맥락은 전체 공개로 열 수 없습니다</figcaption></figure>
+<p>영상: <a href="https://youtu.be/VJpa1aKFbUo">팀 맥락 공유 ② 팀 활동과 공개 등급</a> (1:48)</p>
+<h2 id="알아-둘-점">알아 둘 점<a class="anchor" href="#알아-둘-점" title="Permanent link">#</a></h2>
+<ul>
+<li>관련도는 판단 서버의 임베딩으로, 애매한 것(유사도 0.45~0.55)은 기본 AI 모델에 「이 기록이 지금 일에 직접 쓰이나」를 물어 고릅니다. 고르기가 2초를 넘으면 참고 없이 보냅니다.</li>
+<li>「이 작업 동안」 허락은 요청을 누른 대화에서만, 7일까지 쓰입니다.</li>
+<li>받은 맥락은 내 기록에 복사되지 않습니다. 내 맥락에는 「어느 맥락을 참고했는지」 출처만 남고, 그 출처를 여는 사람은 자기 권한으로 다시 판정받습니다.</li>
+<li>조직도에 없는 사람과, 공유 규칙을 정하지 않은 사람의 맥락은 비공개로 다룹니다. 이 기능을 쓰지 않는 설치는 아무것도 바뀌지 않습니다.</li>
+</ul>
+<p>이것으로 7부를 마칩니다. 다음 장에서는 지금까지 배운 것을 새 고객 요청 한 건에 처음부터 끝까지 써 보는 종합 과제를 합니다(<a href="project.html">28장</a>).</p>
+<div class="admonition exercise">
+<p class="admonition-title">확인 문제</p>
+<ol>
+<li>박하늘의 「가격 정책 조사」는 요약 공개·팀 범위입니다. 제안팀 정하은에게는 무엇이 보입니까?</li>
+<li>관리자 윤서진이 이도윤의 비공개 맥락을 주소로 직접 열면 어떻게 됩니까?</li>
+<li>최유나의 「연봉 협상 준비」에 민감 표시가 승인되었습니다. 같은 팀 정하은이 원문을 요청하면 자동 허용됩니까?</li>
+<li>최유나의 「분기 정리」(제목 공개)는 답에만 경쟁사 가격 이야기가 있습니다. 이도윤이 경쟁사 가격을 물을 때 요청 후보로 뜹니까?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>답</summary>
+<ol>
+<li>제목, 주인, 기간, 한 줄 목적만 보입니다. 요약은 범위(전략팀) 안에만 보입니다.</li>
+<li>「볼 수 없는 맥락입니다」만 나옵니다(404). 비공개 맥락은 관리자에게도 존재가 드러나지 않고, 팀 활동에서 건수로만 셉니다.</li>
+<li>아닙니다. 민감 맥락에는 자동 허용 규칙이 적용되지 않고, 언제나 최유나의 홈에 요청 카드가 갑니다.</li>
+<li>뜨지 않습니다. 요청 후보의 관련도는 내가 볼 수 있는 깊이의 글(제목과 한 줄 목적)로만 매깁니다. 볼 수 없는 내용으로 관련도를 매기면, 질문을 바꿔 가며 남의 원문을 떠볼 수 있기 때문입니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="agentic.html"><span>이전</span>에이전트 가드레일 — 맡길 일, 볼 일, 막을 일</a><a class="next" href="project.html"><span>다음</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-필요한가">왜 필요한가</a></li><li><a href="#누구에게-어디까지-공개-등급">누구에게 어디까지 — 공개 등급</a></li><li><a href="#따라-하기-준비-시험-회사">따라 하기 준비 — 시험 회사</a></li><li><a href="#따라-하기-1-자동-참고와-참고-요청">따라 하기 1 — 자동 참고와 참고 요청</a></li><li><a href="#따라-하기-2-팀-활동과-공개-등급">따라 하기 2 — 팀 활동과 공개 등급</a></li><li><a href="#알아-둘-점">알아 둘 점</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
