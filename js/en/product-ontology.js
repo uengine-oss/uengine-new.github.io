@@ -8,7 +8,7 @@
   const svg = $('#ontology-map');
   const ns = 'http://www.w3.org/2000/svg';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const colors = ['#66eee0', '#ad97ff', '#81b5ff', '#ffc383'];
+  const colors = ['#111111', '#4a4a4a', '#6e6e6e', '#8f8f8f'];
   // The edges describe a solution architecture, not a promise of prebuilt integrations.
   const products = [
     {id:'ontologystudio', name:'Ontology Studio', group:0, tag:'KNOWLEDGE', category:'KNOWLEDGE & CONTEXT', role:'The starting point for connecting enterprise knowledge', pos:[-235,-125,0], icon:'graph', description:'Connects information scattered across documents and databases as entities and relationships. Data stays at its source while we build the enterprise context AI can understand.', vision:'A future where scattered information|becomes your enterprise\'s memory.', future:'Instead of gathering data all over again for every new question, find answers in knowledge that is already connected.'},
@@ -125,7 +125,7 @@
     make('circle',{cx:(i*137.51)%820,cy:(i*83.17)%590,r:i%7===0?1.15:.6,fill:i%3?'#9baecb':'#78ede4',opacity:.12+(i%5)*.08},starGroup);
   }
   const orbitGroup = $('.ontology-orbits');
-  const orbitPaths = [0,1,2].map(() => make('path',{fill:'none',stroke:'#5b97b8','stroke-width':.65,'stroke-opacity':.24},orbitGroup));
+  const orbitPaths = [0,1,2].map(() => make('path',{fill:'none',stroke:'#333333','stroke-width':.65,'stroke-opacity':.24},orbitGroup));
   const orbitBeams = [0,1,2].map((_,i) => make('path',{class:'ontology-orbit-beam',stroke:colors[i],opacity:.5,'stroke-dasharray':'55 1100','pathLength':1155},orbitGroup));
   const center = $('.ontology-center');
   const rays=make('g',{class:'ontology-core-rays'},center);
@@ -134,17 +134,17 @@
     make('path',{d:`M${Math.cos(a)*70} ${Math.sin(a)*70}L${Math.cos(a)*(i%4?73:80)} ${Math.sin(a)*(i%4?73:80)}`},rays);
   }
   make('circle',{r:145,fill:'url(#ontology-halo)'},center);
-  make('ellipse',{rx:53,ry:53,fill:'none',stroke:'#71cbd5','stroke-opacity':.18},center);
-  make('ellipse',{rx:62,ry:62,fill:'none',stroke:'#71cbd5','stroke-opacity':.09,'stroke-dasharray':'2 6'},center);
+  make('ellipse',{rx:53,ry:53,fill:'none',stroke:'#111111','stroke-opacity':.18},center);
+  make('ellipse',{rx:62,ry:62,fill:'none',stroke:'#111111','stroke-opacity':.09,'stroke-dasharray':'2 6'},center);
   make('circle',{cy:-21,r:15,fill:'url(#ontology-core)'},center);
-  make('circle',{cy:-21,r:4,fill:'#b9fff0',filter:'url(#ontology-glow)'},center);
+  make('circle',{cy:-21,r:4,fill:'#ffffff',filter:'url(#ontology-glow)'},center);
   make('text',{y:12,class:'ontology-core-label'},center).textContent='uEngine';
   make('text',{y:28,class:'ontology-core-sub'},center).textContent='CONNECTED INTELLIGENCE';
   const edgeGroup = $('.ontology-edges');
   const edgeViews = edges.map(([a,b,label]) => ({
     a,b,label,
     path:make('path',{class:'ontology-edge'},edgeGroup),
-    particle:make('circle',{r:2.2,fill:'#b9fff6'},edgeGroup),
+    particle:make('circle',{r:2.2,fill:'#111111'},edgeGroup),
     arrow:make('path',{d:'M-4-3L2 0-4 3',fill:'none','stroke-width':1},edgeGroup),
     text:make('text',{class:'ontology-edge-label','text-anchor':'middle'},edgeGroup)
   }));
@@ -308,13 +308,13 @@
       const insetA=e.a===selected?45:29,insetB=e.b===selected?45:29;
       const ax=a.x+dx/len*insetA,ay=a.y+dy/len*insetA,bx=b.x-dx/len*insetB,by=b.y-dy/len*insetB;
       e.path.setAttribute('d',`M${ax} ${ay}L${bx} ${by}`);
-      e.path.setAttribute('stroke',active?colors[products[selected].group]:'#52728e');e.path.setAttribute('opacity',active?.65:.16);
+      e.path.setAttribute('stroke',active?colors[products[selected].group]:'#555555');e.path.setAttribute('opacity',active?.65:.16);
       e.path.setAttribute('stroke-dasharray',active?'none':'3 6');
       const t=(rotationTime/3100+j*.173)%1;
       e.particle.setAttribute('cx',ax+(bx-ax)*t);e.particle.setAttribute('cy',ay+(by-ay)*t);
       e.particle.setAttribute('opacity',active?.9:.13);e.particle.setAttribute('r',active?2.4:1.2);
       e.arrow.setAttribute('transform',`translate(${bx} ${by}) rotate(${Math.atan2(dy,dx)*180/Math.PI})`);
-      e.arrow.setAttribute('stroke',active?colors[products[selected].group]:'#52728e');e.arrow.setAttribute('opacity',active?.9:.2);
+      e.arrow.setAttribute('stroke',active?colors[products[selected].group]:'#555555');e.arrow.setAttribute('opacity',active?.9:.2);
       e.text.setAttribute('x',(ax+bx)/2);e.text.setAttribute('y',(ay+by)/2-8);
       // Only nearby relation labels are shown, keeping the network readable.
       e.text.setAttribute('opacity',active&&len>135&&introElapsed===introDuration?1:0);
