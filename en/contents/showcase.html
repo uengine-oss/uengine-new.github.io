@@ -46,23 +46,24 @@
   --font-global:'Pretendard','Pretendard Variable','DM Sans',sans-serif;
   --c-primary-1:#4567ed; --c-primary-2:#7752e7; --c-primary-3:#b947d9; --c-primary-4:#e748b1;
   --gradient-primary-1:linear-gradient(90deg,var(--c-primary-4) 0%,var(--c-primary-3) 33%,var(--c-primary-2) 67%,var(--c-primary-1) 100%);
-  --l1:#7fc3a8; --l2:#9ec1de; --l3:#e7c375; --l4:#aab2c8;
+  --l1:#111111; --l2:#4a4a4a; --l3:#6e6e6e; --l4:#8f8f8f;
 }
 *{box-sizing:border-box;}
 h1,h2,h3,p,.rail-tx,.chip span,.lg span{word-break:keep-all;overflow-wrap:break-word;}
-html,body{margin:0;padding:0;height:100%;background:#000;overflow:hidden;
+html,body{margin:0;padding:0;height:100%;background:#f1f1f1;overflow:hidden;
   font-family:var(--font-global);-webkit-font-smoothing:antialiased;}
-#kiosk{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;}
+#kiosk{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(rgba(252,252,252,.9),rgba(252,252,252,.9)),url(../../images/full-width-images/section-bg-2.jpg) center/cover no-repeat,#f1f1f1;}
 #stage{
   position:relative;width:1920px;height:1080px;flex:0 0 auto;
-  transform-origin:center center;color:#fff;background:#0a0a0c;overflow:hidden;
+  transform-origin:center center;color:#111;background:transparent;overflow:hidden;
 }
-/* 스플래시와 같은 보라·블루 라디얼 글로우 */
+/* 흑백 배경: 메인 페이지 첫 화면과 같은 밝은 회색 무늬는 #kiosk 가 깐다 */
 #stage .bgfx{position:absolute;inset:0;
-  background:radial-gradient(60% 80% at 78% 44%, rgba(69,103,237,.20) 0%, rgba(183,71,217,.10) 45%, rgba(10,10,12,0) 75%);
+  background:none;
   z-index:0;transition:opacity 1s ease;}
 #stage .grain{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
-  background:radial-gradient(120% 90% at 50% 120%, rgba(255,255,255,.05) 0%, rgba(0,0,0,0) 60%);}
+  background:none;}
 
 /* ---------- 4계층 스택 (스플래시 자산 재사용) ---------- */
 .stackwrap{position:absolute;top:0;left:0;width:520px;z-index:3;pointer-events:none;
@@ -72,7 +73,7 @@ html,body{margin:0;padding:0;height:100%;background:#000;overflow:hidden;
 .stackwrap.m-off{transform:translate(646px,252px) scale(.86);opacity:0;}
 .stackwrap.m-left{transform:translate(150px,150px) scale(.86);}
 .stackwrap.m-rail{transform:translate(56px,268px) scale(.325);}
-.vision-stack{width:100%;}
+.vision-stack{width:100%;filter:grayscale(1) contrast(1.06);}
 .vision-stack .ls-stack{display:block;width:100%;height:auto;}
 .vision-stack .ls-stack text{font-family:'Pretendard','Pretendard Variable',sans-serif;white-space:pre;}
 .vision-stack.ls-armed .ls-layer{opacity:0;transform:translate(0px,-70px);
@@ -98,25 +99,22 @@ html,body{margin:0;padding:0;height:100%;background:#000;overflow:hidden;
 .stackwrap[data-focus="2"] #vision-stack.ls-armed .ls-layer.is-in[data-ls-layer="2"],
 .stackwrap[data-focus="3"] #vision-stack.ls-armed .ls-layer.is-in[data-ls-layer="3"],
 .stackwrap[data-focus="4"] #vision-stack.ls-armed .ls-layer.is-in[data-ls-layer="4"]{
-  opacity:1;filter:drop-shadow(0 0 26px rgba(255,255,255,.30));}
+  opacity:1;filter:drop-shadow(0 12px 22px rgba(0,0,0,.16));}
 
 /* ---------- 좌측 진행 레일 ---------- */
 .rail{position:absolute;left:56px;top:632px;width:200px;z-index:4;
   transition:opacity .7s ease;}
 .rail-title{font-size:11px;letter-spacing:.20em;text-transform:uppercase;
-  color:rgba(255,255,255,.38);margin-bottom:14px;}
+  color:#888;margin-bottom:14px;}
 .rail-item{display:flex;align-items:center;gap:10px;padding:7px 0;
-  border-top:1px solid rgba(255,255,255,.07);}
-.rail-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.22);flex:0 0 8px;
+  border-top:1px solid rgba(0,0,0,.08);}
+.rail-dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.16);flex:0 0 8px;
   transition:background .5s ease, box-shadow .5s ease, transform .5s ease;}
-.rail-item[data-layer="1"] .rail-dot.on{background:var(--l1);box-shadow:0 0 0 5px rgba(127,195,168,.16);}
-.rail-item[data-layer="2"] .rail-dot.on{background:var(--l2);box-shadow:0 0 0 5px rgba(158,193,222,.16);}
-.rail-item[data-layer="3"] .rail-dot.on{background:var(--l3);box-shadow:0 0 0 5px rgba(231,195,117,.16);}
-.rail-item[data-layer="4"] .rail-dot.on{background:var(--l4);box-shadow:0 0 0 5px rgba(170,178,200,.16);}
-.rail-dot.on{transform:scale(1.15);}
-.rail-tx{font-size:13px;line-height:1.35;color:rgba(255,255,255,.34);transition:color .5s ease;}
+/* 지금 다루는 층 표시만 보라 */
+.rail-dot.on{background:var(--c-primary-2);box-shadow:0 0 0 5px color-mix(in srgb,var(--c-primary-2) 16%,transparent);transform:scale(1.15);}
+.rail-tx{font-size:13px;line-height:1.35;color:#888;transition:color .5s ease;}
 .rail-tx b{display:block;font-weight:500;font-size:14px;}
-.rail-item.on .rail-tx{color:rgba(255,255,255,.92);}
+.rail-item.on .rail-tx{color:#111;}
 
 /* ---------- 상단/하단 HUD ---------- */
 html.embed .hud-top,html.embed .hud-bot{display:none!important}
@@ -125,19 +123,18 @@ html.embed{cursor:default}
   display:flex;align-items:center;justify-content:space-between;}
 .hud-brand{display:flex;align-items:center;gap:16px;pointer-events:auto;text-decoration:none;}
 .hud-brand img{height:26px;width:auto;opacity:.92;}
-.hud-brand span{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.42);}
+.hud-brand span{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#757575;}
 .hud-chapter{font-size:13px;letter-spacing:.18em;text-transform:uppercase;
-  background:var(--gradient-primary-1);-webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;transition:opacity .5s ease;}
+  color:var(--c-primary-2);transition:opacity .5s ease;}
 .hud-bot{position:absolute;left:0;right:0;bottom:0;z-index:6;padding:0 56px 30px;}
-.bar{position:relative;height:3px;background:rgba(255,255,255,.10);border-radius:3px;overflow:hidden;}
-.bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gradient-primary-1);border-radius:3px;}
-.bar u{position:absolute;top:-3px;width:1px;height:9px;background:rgba(255,255,255,.28);}
+.bar{position:relative;height:3px;background:rgba(0,0,0,.08);border-radius:3px;overflow:hidden;}
+.bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:#111;border-radius:3px;}
+.bar u{position:absolute;top:-3px;width:1px;height:9px;background:rgba(0,0,0,.25);}
 .hud-meta{display:flex;justify-content:space-between;align-items:center;margin-top:12px;
-  font-size:12px;letter-spacing:.10em;color:rgba(255,255,255,.34);}
+  font-size:12px;letter-spacing:.10em;color:#888;}
 .hud-hint{transition:opacity .6s ease;}
 .hud-hint kbd{display:inline-block;padding:1px 6px;margin:0 2px;border-radius:4px;
-  border:1px solid rgba(255,255,255,.18);font-family:var(--font-global);font-size:11px;}
+  border:1px solid rgba(0,0,0,.2);font-family:var(--font-global);font-size:11px;}
 
 /* ---------- 씬 공통 ---------- */
 .scene-host{position:absolute;inset:0;z-index:2;}
@@ -149,26 +146,26 @@ html.embed{cursor:default}
 /* ---------- 데모 화면 씬 ---------- */
 .shot .txt{position:absolute;left:300px;top:210px;width:436px;}
 .badge{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border-radius:100px;
-  border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);
-  font-size:19px;font-weight:600;letter-spacing:.01em;color:rgba(255,255,255,.95);}
+  border:1px solid #111;background:#fff;
+  font-size:19px;font-weight:600;letter-spacing:.01em;color:#111;}
 .badge em{font-style:normal;font-size:14px;font-weight:500;letter-spacing:.04em;
-  color:rgba(255,255,255,.55);padding-right:11px;margin-right:1px;
-  border-right:1px solid rgba(255,255,255,.22);white-space:nowrap;}
+  color:#757575;padding-right:11px;margin-right:1px;
+  border-right:1px solid rgba(0,0,0,.15);white-space:nowrap;}
 .badge i{width:9px;height:9px;border-radius:50%;background:var(--l2);display:inline-block;}
 .badge[data-layer="1"] i{background:var(--l1);} .badge[data-layer="3"] i{background:var(--l3);}
 .badge[data-layer="4"] i{background:var(--l4);}
-.shot .step{margin-top:26px;font-size:13px;letter-spacing:.22em;color:rgba(255,255,255,.34);}
+.shot .step{margin-top:26px;font-size:13px;letter-spacing:.22em;color:var(--c-primary-2);}
 .shot h3{margin:12px 0 0;font-size:40px;line-height:1.24;font-weight:500;letter-spacing:-.01em;}
-.shot p{margin:20px 0 0;font-size:20px;line-height:1.62;color:rgba(255,255,255,.62);}
+.shot p{margin:20px 0 0;font-size:20px;line-height:1.62;color:#555;}
 .shot .live{position:absolute;left:300px;bottom:150px;font-size:12px;letter-spacing:.18em;
-  color:rgba(255,255,255,.30);}
+  color:#888;}
 .frame{position:absolute;left:796px;top:150px;width:1050px;height:790px;
-  border-radius:16px;border:1px solid rgba(255,255,255,.13);background:#0e1116;overflow:hidden;
-  box-shadow:0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.03) inset;}
+  border-radius:16px;border:1px solid #e5e5e5;background:#fff;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.12);}
 .frame .bar-mac{position:absolute;left:0;right:0;top:0;height:34px;z-index:2;
-  background:rgba(255,255,255,.045);border-bottom:1px solid rgba(255,255,255,.07);}
+  background:#f5f5f5;border-bottom:1px solid #e5e5e5;}
 .frame .bar-mac s{position:absolute;top:13px;width:8px;height:8px;border-radius:50%;
-  background:rgba(255,255,255,.20);}
+  background:#d5d5d5;}
 .frame .bar-mac s:nth-child(1){left:16px;} .frame .bar-mac s:nth-child(2){left:32px;}
 .frame .bar-mac s:nth-child(3){left:48px;}
 .frame .pane{position:absolute;left:0;right:0;top:34px;bottom:0;overflow:hidden;}
@@ -179,72 +176,70 @@ html.embed{cursor:default}
 
 /* ---------- 챕터 카드 ---------- */
 .chapter .txt{position:absolute;left:700px;top:300px;width:1090px;}
-.chapter .eye{font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.chapter .eye{font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:var(--c-primary-2);}
 .chapter .eye b{font-weight:600;}
 .chapter h2{margin:20px 0 0;font-size:78px;line-height:1.1;font-weight:500;letter-spacing:-.02em;}
-.chapter h2 em{font-style:normal;background:var(--gradient-primary-1);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.chapter p{margin:28px 0 0;font-size:25px;line-height:1.62;color:rgba(255,255,255,.66);max-width:960px;}
-.chapter .rule{width:96px;height:2px;margin:34px 0 0;background:var(--gradient-primary-1);}
+.chapter h2 em{font-style:normal;color:var(--c-primary-2);}
+.chapter p{margin:28px 0 0;font-size:25px;line-height:1.62;color:#555;max-width:960px;}
+.chapter .rule{width:96px;height:2px;margin:34px 0 0;background:#111;}
 
 /* ---------- 오프닝 / 타이틀 ---------- */
 .center{position:absolute;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;}
 .center img.logo{height:56px;width:auto;margin-bottom:34px;}
 .center h1{margin:0;font-size:92px;line-height:1.08;font-weight:500;letter-spacing:-.025em;}
-.center h1 em{font-style:normal;background:var(--gradient-primary-1);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.center p{margin:30px 0 0;font-size:26px;line-height:1.6;color:rgba(255,255,255,.62);max-width:1000px;}
+.center h1 em{font-style:normal;color:var(--c-primary-2);}
+.center p{margin:30px 0 0;font-size:26px;line-height:1.6;color:#555;max-width:1000px;}
 .center .kicker{font-size:15px;letter-spacing:.28em;text-transform:uppercase;
-  color:rgba(255,255,255,.42);margin-bottom:26px;}
+  color:#757575;margin-bottom:26px;}
 
 /* 스택 빌드 씬의 텍스트 (스택은 중앙, 텍스트는 위/아래) */
 .build .top{position:absolute;left:200px;right:200px;top:118px;text-align:center;}
 .build .top h2{margin:0;font-size:58px;font-weight:500;letter-spacing:-.02em;}
-.build .top p{margin:18px 0 0;font-size:22px;color:rgba(255,255,255,.55);}
+.build .top p{margin:18px 0 0;font-size:22px;color:#555;}
 .build .legend{position:absolute;right:110px;top:300px;width:430px;}
 .build .lg{display:flex;gap:14px;align-items:flex-start;padding:16px 0;
-  border-top:1px solid rgba(255,255,255,.08);opacity:0;transform:translateX(18px);
+  border-top:1px solid rgba(0,0,0,.1);opacity:0;transform:translateX(18px);
   animation:lgIn .8s ease forwards;}
 @keyframes lgIn{to{opacity:1;transform:translateX(0);}}
 .build .lg s{width:10px;height:10px;border-radius:3px;margin-top:7px;flex:0 0 10px;}
 .build .lg b{display:block;font-size:19px;font-weight:500;}
-.build .lg span{display:block;margin-top:5px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.5);}
+.build .lg span{display:block;margin-top:5px;font-size:15px;line-height:1.5;color:#666;}
 
 /* ---------- 로고 그리드 ---------- */
 .grid-wrap{position:absolute;left:300px;right:150px;top:250px;}
 .grid-wrap h3{margin:0 0 12px;font-size:44px;font-weight:500;letter-spacing:-.01em;}
-.grid-wrap p{margin:0 0 40px;font-size:21px;color:rgba(255,255,255,.58);}
+.grid-wrap p{margin:0 0 40px;font-size:21px;color:#555;}
 .lg-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;}
-.lg-grid div{background:#fff;border-radius:10px;height:86px;display:flex;align-items:center;
+.lg-grid div{background:#fff;border:1px solid #e5e5e5;border-radius:10px;height:86px;display:flex;align-items:center;
   justify-content:center;padding:12px;opacity:0;animation:lgIn .7s ease forwards;}
 .lg-grid img{max-width:100%;max-height:100%;object-fit:contain;}
 
 /* ---------- 아웃트로 라인업 ---------- */
 .lineup{position:relative;overflow:hidden;max-width:1060px;margin-top:38px;
-  border-top:1px solid rgba(255,255,255,.10);}
+  border-top:1px solid rgba(0,0,0,.1);}
 .lu-row{display:grid;grid-template-columns:250px 1fr;align-items:center;gap:22px;
-  padding:17px 0;border-bottom:1px solid rgba(255,255,255,.08);
+  padding:17px 0;border-bottom:1px solid rgba(0,0,0,.08);
   opacity:0;animation:lgIn .7s ease forwards;}
 .lu-layer{display:flex;align-items:center;gap:13px;}
 .lu-layer s{width:11px;height:11px;border-radius:3px;flex:0 0 11px;}
 .lu-layer b{display:block;font-size:20px;font-weight:600;letter-spacing:.01em;}
-.lu-layer span{display:block;margin-top:3px;font-size:13.5px;color:rgba(255,255,255,.48);}
+.lu-layer span{display:block;margin-top:3px;font-size:13.5px;color:#757575;}
 .lu-tiles{display:flex;gap:14px;flex-wrap:wrap;}
 .lu-tile{min-width:250px;padding:13px 18px 14px;border-radius:12px;
-  border:1px solid rgba(255,255,255,.14);border-left:3px solid;
-  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+  border:1px solid #e5e5e5;border-left:3px solid;
+  background:#fff;
   opacity:0;transform:translateY(16px) scale(.94);
   animation:luPop .6s cubic-bezier(.2,.85,.3,1.15) forwards;}
 .lu-tile b{display:block;font-size:19px;font-weight:600;}
-.lu-tile span{display:block;margin-top:4px;font-size:13px;color:rgba(255,255,255,.55);}
+.lu-tile span{display:block;margin-top:4px;font-size:13px;color:#666;}
 @keyframes luPop{
   60%{opacity:1;transform:translateY(-3px) scale(1.02);
-      box-shadow:0 8px 30px rgba(255,255,255,.10);}
+      box-shadow:0 8px 30px rgba(0,0,0,.08);}
   100%{opacity:1;transform:translateY(0) scale(1);box-shadow:none;}}
 /* 라인업 완성 후 빛 스윕 */
 .lineup::after{content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(100deg,transparent 32%,rgba(255,255,255,.13) 50%,transparent 68%);
+  background:linear-gradient(100deg,transparent 32%,rgba(255,255,255,.6) 50%,transparent 68%);
   transform:translateX(-130%);animation:luSweep 1.5s ease 6.6s forwards;}
 @keyframes luSweep{to{transform:translateX(130%);}}
 
@@ -252,14 +247,14 @@ html.embed{cursor:default}
 .outro .txt{position:absolute;left:660px;top:150px;width:1160px;}
 .outro h2{margin:0 0 6px;font-size:56px;font-weight:500;letter-spacing:-.02em;}
 .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:1000px;}
-.chip{padding:17px 20px;border:1px solid rgba(255,255,255,.16);border-radius:14px;
-  background:rgba(255,255,255,.03);opacity:0;animation:lgIn .7s ease forwards;}
+.chip{padding:17px 20px;border:1px solid #e5e5e5;border-radius:14px;
+  background:#fff;opacity:0;animation:lgIn .7s ease forwards;}
 .chip s{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:9px;vertical-align:1px;}
 .chip b{font-size:19px;font-weight:500;}
-.chip span{display:block;margin-top:7px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.58);}
+.chip span{display:block;margin-top:7px;font-size:15px;line-height:1.5;color:#555;}
 .outro .cta{position:absolute;left:660px;bottom:104px;display:flex;align-items:center;gap:26px;}
-.outro .cta .url{font-size:30px;font-weight:500;}
-.outro .cta .sub{font-size:16px;color:rgba(255,255,255,.5);margin-top:6px;}
+.outro .cta .url{font-size:30px;font-weight:500;color:var(--c-primary-2);}
+.outro .cta .sub{font-size:16px;color:#757575;margin-top:6px;}
 
 /* 화면이 좁을 때(모바일 등) 안내 */
 @media (prefers-reduced-motion: reduce){
@@ -753,7 +748,7 @@ html.inline-portrait .outro .cta{left:40px;bottom:35px}
 
     <header class="hud-top">
       <a class="hud-brand" href="../index.html" title="Back to uengine.org">
-        <img src="../../images/logo-w.png" alt="uEngine">
+        <img src="../../images/logo-b.png" alt="uEngine">
         <span>AI-Native Enterprise Stack</span>
       </a>
       <div class="hud-chapter" id="hudChapter"></div>
@@ -914,10 +909,10 @@ var SCENES = [
   h2:'AI-Native Enterprise Stack',
   p:'We build one layer at a time, starting with the foundation. Once the stack is complete, we work down from the top to explore what it takes to implement each layer.',
   legend:[
-    ['#7fc3a8','Orchestration','The top layer completes the stack. Processes orchestrate all collaboration between people and AI agents. This is uEngine’s vision for the enterprise.'],
-    ['#9ec1de','Agents','Built on that knowledge, AI agents understand instructions and carry out work on their own.'],
-    ['#e7c375','Ontology','We connect that data through concepts and relationships to create enterprise knowledge AI can understand.'],
-    ['#aab2c8','Data Sources','The foundation is documents, databases, APIs, and legacy code. We start with the data your enterprise already has.']
+    ['#111111','Orchestration','The top layer completes the stack. Processes orchestrate all collaboration between people and AI agents. This is uEngine’s vision for the enterprise.'],
+    ['#4a4a4a','Agents','Built on that knowledge, AI agents understand instructions and carry out work on their own.'],
+    ['#6e6e6e','Ontology','We connect that data through concepts and relationships to create enterprise knowledge AI can understand.'],
+    ['#8f8f8f','Data Sources','The foundation is documents, databases, APIs, and legacy code. We start with the data your enterprise already has.']
   ] },
 
 /* ===== ACT 1 · LAYER 1 : 오케스트레이션 — 기본 → 복잡 → 부수 → 레퍼런스 ===== */
@@ -1312,13 +1307,13 @@ var SCENES = [
 { t:'outro', act:'end', dur:17, short:1, stack:'left',
   h2:'When the four layers interlock,<br>the enterprise starts making its own decisions',
   rows:[
-    ['#7fc3a8','Orchestration','Processes orchestrate collaboration',[
+    ['#111111','Orchestration','Processes orchestrate collaboration',[
       ['uEngine6 BPM','Process execution engine'],['Process GPT','Agentic BPM']]],
-    ['#9ec1de','Agents','AI carries out the work',[
+    ['#4a4a4a','Agents','AI carries out the work',[
       ['Process GPT','Agentic BPM'],['Robo Architect','Spec-based development automation']]],
-    ['#e7c375','Ontology','Knowledge grounds decisions',[
+    ['#6e6e6e','Ontology','Knowledge grounds decisions',[
       ['Ontological Studio','Ontology workbench'],['Ontologic Platform','Data intelligence']]],
-    ['#aab2c8','Data Sources','Unlock dormant data',[
+    ['#8f8f8f','Data Sources','Unlock dormant data',[
       ['Robo Analyzer','Legacy code and DB analysis'],['Robo Architect Legacy','Legacy modernization']]]
   ],
   url:'uengine.org', sub:'AI-Native Enterprise Stack — See a live demo at our booth' },
@@ -1401,7 +1396,7 @@ var SCENES = [
     if (sc.t === 'logo') {
       el.innerHTML =
         '<div class="center sc-in">' +
-        '<img class="logo" src="../../images/logo-w.png" alt="uEngine">' +
+        '<img class="logo" src="../../images/logo-b.png" alt="uEngine">' +
         '<div class="kicker">' + esc(sc.kicker) + '</div>' +
         '<h1>' + esc(sc.h1) + '</h1>' +
         '<p>' + esc(sc.p) + '</p></div>';
