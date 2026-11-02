@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>재보충에서 적치까지 — uEngine WMS 튜토리얼</title>
+<meta name="description" content="부족한 재고 하나를 RFQ, 승인, PO, 도착, 입고, 품질 검사, 적치까지 역할을 바꿔 가며 채웁니다. 불합격 폐기와 감사 로그도 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/wms/inbound.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="재보충에서 적치까지 — uEngine WMS 튜토리얼">
+<meta property="og:description" content="부족한 재고 하나를 RFQ, 승인, PO, 도착, 입고, 품질 검사, 적치까지 역할을 바꿔 가며 채웁니다. 불합격 폐기와 감사 로그도 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/wms/inbound.html">
+<meta property="og:image" content="https://www.uengine.org/docs/wms/img/inbound-po.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine WMS <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: RFQ, 입고 검수, WCS 설비)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/wms.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">입고와 재고</div><ul>
+<li><a href="inbound.html" class="on" aria-current="page"><span class="n">01</span>재보충에서 적치까지</a></li>
+</ul>
+<div class="nav-part">창고 자동화</div><ul>
+<li><a href="automation.html"><span class="n">02</span>작업 지시와 설비 제어</a></li>
+<li><a href="ops.html"><span class="n">03</span>서열 출고와 시뮬레이션</a></li>
+</ul>
+<div class="nav-part">AI 연결</div><ul>
+<li><a href="agent.html"><span class="n">04</span>Process GPT 에이전트 연동</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">입고와 재고<span class="chap">1</span></div>
+    <h1>재보충에서 적치까지</h1>
+    <article>
+<blockquote>
+<p>부족한 재고 하나를 RFQ, 승인, PO, 도착, 입고, 품질 검사, 적치까지 역할을 바꿔 가며 채웁니다. 불합격 폐기와 감사 로그도 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/c1AkIm0Sbr0" title="재보충에서 적치까지 — 영상 2:17" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>재고가 최소 기준 아래로 내려가면 구매 담당, 승인자, 입고 담당, 품질 담당이 차례로 같은 문서를 넘겨받습니다. 각 단계는 데이터베이스 함수(RPC) 하나이고, 함수가 역할과 문서 버전을 검사합니다. 받은 물건은 품질 검사를 통과하고 적치가 끝나야 가용 재고가 됩니다.</p>
+<div class="admonition note">
+<p class="admonition-title">샘플의 범위</p>
+<ul>
+<li>화면 이름은 RFQ 지만 <strong>견적을 비교하는 화면은 없습니다.</strong> RFQ 를 만들면 바로 승인 대기(<code>TO_APPROVE</code>) 문서가 됩니다.</li>
+<li>도착, 입고, 품질, 적치는 사람이 누르는 대로 기록합니다. 스캐너나 실물 확인과 연결되어 있지 않습니다.</li>
+<li>값은 시드 데이터 그대로입니다. 앞 장의 역할 비교에서 문서를 만들었다면 <code>cd supabase &amp;&amp; supabase db reset</code> 으로 처음 상태로 돌린 뒤 따라 하세요.</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>부족 확인.</strong> <code>buyer-a@demo.local</code> 로 로그인합니다. <strong>Overview</strong> 에서 <code>SKU-A-001</code> 은 Available 30, Reorder Min / Max 50 / 200, 상태 <code>BELOW MIN</code> 입니다.
+
+<figure><a href="img/inbound-shortage.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Overview 의 부족 재고" src="img/inbound-shortage.webp" loading="lazy" decoding="async"></a><figcaption>Overview 의 부족 재고</figcaption></figure>
+</li>
+<li><strong>RFQ 만들기.</strong> <strong>Replenishment</strong> 를 엽니다. 최소 기준 아래인 상품만 모여 있습니다. <code>SKU-A-001</code> 카드의 <strong>Qty</strong> 를 비워 두면 최대 200 에서 현재 30 을 뺀 170 이 들어갑니다. <strong>Supplier</strong> 에서 <code>Acme Packaging Co.</code> 를 고르고 <strong>Create RFQ</strong> 를 누릅니다.
+
+<figure><a href="img/inbound-replen.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Replenishment" src="img/inbound-replen.webp" loading="lazy" decoding="async"></a><figcaption>Replenishment</figcaption></figure>
+</li>
+<li><strong>문서 확인.</strong> <strong>Purchase Orders</strong> 에 <code>SKU-A-001</code>, Qty 170, <code>TO_APPROVE</code>, Version 1 이 생깁니다. 구매 담당자에게는 승인 버튼이 없습니다.
+
+<figure><a href="img/inbound-po.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인 대기 문서" src="img/inbound-po.webp" loading="lazy" decoding="async"></a><figcaption>승인 대기 문서</figcaption></figure>
+</li>
+<li><strong>승인.</strong> <strong>Sign out</strong> 후 <code>approver-a@demo.local</code> 로 로그인해 <strong>Purchase Orders</strong> 에서 <strong>Approve</strong> 를 누릅니다. 상태는 <code>APPROVED</code>, Version 은 2 가 됩니다. 버전은 두 사람이 같은 문서를 동시에 고치는 일을 막습니다. 화면을 연 뒤 다른 사람이 먼저 고쳤다면 <code>CONFLICT</code> 오류가 납니다.
+
+<figure><a href="img/inbound-approve.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인됨" src="img/inbound-approve.webp" loading="lazy" decoding="async"></a><figcaption>승인됨</figcaption></figure>
+</li>
+<li><strong>PO 확정.</strong> <code>buyer-a@demo.local</code> 로 다시 들어와 <strong>Confirm PO</strong> 를 누릅니다. 상태는 <code>CONFIRMED_PO</code>, Version 3 입니다. 이때 입고 문서가 자동으로 만들어집니다.
+</li>
+<li><strong>도착 등록.</strong> <code>inbound-a@demo.local</code> 로 로그인해 <strong>Receiving</strong> 을 엽니다. Expected / Received 가 170 / 0, 상태 <code>EXPECTED</code> 입니다. <strong>Register Arrival</strong> 을 누르면 <code>ARRIVED</code> 가 됩니다.
+
+<figure><a href="img/inbound-arrival.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="도착 등록" src="img/inbound-arrival.webp" loading="lazy" decoding="async"></a><figcaption>도착 등록</figcaption></figure>
+</li>
+<li><strong>입고.</strong> 수량 칸에 170 을 넣고 <strong>Receive</strong> 를 누릅니다. 비워 두면 예정 수량이 들어갑니다. 170 / 170, <code>QC_PENDING</code> 이 됩니다.
+</li>
+<li><strong>품질 칸 확인.</strong> <strong>Overview</strong> 를 봅니다. <code>SKU-A-001</code> 의 Available 은 그대로 30, In QC 가 170 입니다. 받은 물건은 아직 가용 재고가 아니므로 상태도 <code>BELOW MIN</code> 그대로입니다.
+
+<figure><a href="img/inbound-inqc.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="In QC 170" src="img/inbound-inqc.webp" loading="lazy" decoding="async"></a><figcaption>In QC 170</figcaption></figure>
+</li>
+<li><strong>합격 처리.</strong> <code>quality-a@demo.local</code> 로 로그인해 <strong>Quality</strong> 에서 <strong>Pass</strong> 를 누릅니다. <code>PUTAWAY_PENDING</code> 으로 바뀝니다. 적치 버튼은 품질 담당자에게 보이지 않습니다.
+
+<figure><a href="img/inbound-quality.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="합격 처리" src="img/inbound-quality.webp" loading="lazy" decoding="async"></a><figcaption>합격 처리</figcaption></figure>
+</li>
+<li><strong>적치.</strong> <code>inbound-a@demo.local</code> 로 로그인해 <strong>Quality</strong> 에서 <strong>Putaway (→ Available)</strong> 를 누릅니다. 목록이 비면서 「대기 중인 검수/처분 건이 없습니다」가 보입니다.
+</li>
+<li><strong>결과 확인.</strong> <strong>Overview</strong> 에서 <code>SKU-A-001</code> 의 Available 은 200, In QC 는 0, 상태는 <code>OK</code> 입니다.
+
+<figure><a href="img/inbound-ok.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Available 200" src="img/inbound-ok.webp" loading="lazy" decoding="async"></a><figcaption>Available 200</figcaption></figure>
+</li>
+<li><strong>불합격 길.</strong> <code>SKU-A-003</code> 을 Qty 50 으로 위와 같은 순서로 <strong>Receive</strong> 까지 진행합니다. <code>quality-a@demo.local</code> 로 <strong>Quality</strong> 에서 <strong>Fail</strong> 을 누르면 <code>QC_COMPLETED</code> 가 되고, 폐기 사유 코드(예: <code>DAMAGED</code>)를 넣어 <strong>Scrap</strong> 을 누르면 끝납니다. <strong>Overview</strong> 의 <code>SKU-A-003</code> Available 은 0 그대로입니다.
+
+<figure><a href="img/inbound-scrap.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="폐기 뒤 Overview" src="img/inbound-scrap.webp" loading="lazy" decoding="async"></a><figcaption>폐기 뒤 Overview</figcaption></figure>
+</li>
+<li><strong>감사 로그.</strong> <code>auditor-a@demo.local</code> 로 로그인해 <strong>Audit Log</strong> 를 엽니다. 위의 모든 단계가 시각, 행위자, 명령, 한국어 요약으로 남아 있습니다. 예를 들면 「입고 수량이 확정되었다 — 수령 50 / 예정 50, 상태 QC_PENDING.」입니다. 두 흐름을 끝까지 하면 14건입니다.
+
+<figure><a href="img/inbound-audit.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="감사 로그" src="img/inbound-audit.webp" loading="lazy" decoding="async"></a><figcaption>감사 로그</figcaption></figure>
+</li>
+</ol>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>입고 직후 Overview 의 Available 이 왜 늘지 않나요?</summary>
+<p>받은 수량은 품질 칸(In QC)에 잡힙니다. 품질 합격 뒤 적치가 끝나야 재고 원장에 가용 재고로 기록됩니다.</p>
+</details>
+<details class="answer">
+<summary>구매 담당자가 자기가 만든 문서를 승인할 수 있나요?</summary>
+<p>없습니다. 승인은 <code>PURCHASE_APPROVER</code> 나 <code>WMS_ADMIN</code> 만 할 수 있습니다. 화면에 버튼이 없을 뿐 아니라 함수도 거부합니다.</p>
+</details>
+<details class="answer">
+<summary>Fail 을 누른 뒤 무엇을 더 해야 하나요?</summary>
+<p>문서는 <code>QC_COMPLETED</code> 에 머뭅니다. 폐기 사유 코드를 넣고 <strong>Scrap</strong> 을 눌러야 끝납니다. 사유 코드가 없으면 폐기할 수 없습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기</a><a class="next" href="automation.html"><span>다음</span>작업 지시와 설비 제어</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 공개 저장소의 샘플 앱(커밋 fc82ea2)을 실제 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>작업 지시와 설비 제어 — uEngine WMS 튜토리얼</title>
+<meta name="description" content="설비를 등록해 명령을 보내고, 장애를 해소하고, 웨이브로 업무 오더를 내보내고, 분류기와 병목 회피까지 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/wms/automation.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="작업 지시와 설비 제어 — uEngine WMS 튜토리얼">
+<meta property="og:description" content="설비를 등록해 명령을 보내고, 장애를 해소하고, 웨이브로 업무 오더를 내보내고, 분류기와 병목 회피까지 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/wms/automation.html">
+<meta property="og:image" content="https://www.uengine.org/docs/wms/img/inbound-po.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine WMS <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: RFQ, 입고 검수, WCS 설비)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/wms.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">입고와 재고</div><ul>
+<li><a href="inbound.html"><span class="n">01</span>재보충에서 적치까지</a></li>
+</ul>
+<div class="nav-part">창고 자동화</div><ul>
+<li><a href="automation.html" class="on" aria-current="page"><span class="n">02</span>작업 지시와 설비 제어</a></li>
+<li><a href="ops.html"><span class="n">03</span>서열 출고와 시뮬레이션</a></li>
+</ul>
+<div class="nav-part">AI 연결</div><ul>
+<li><a href="agent.html"><span class="n">04</span>Process GPT 에이전트 연동</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">창고 자동화<span class="chap">2</span></div>
+    <h1>작업 지시와 설비 제어</h1>
+    <article>
+<blockquote>
+<p>설비를 등록해 명령을 보내고, 장애를 해소하고, 웨이브로 업무 오더를 내보내고, 분류기와 병목 회피까지 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/qx312jHZdMI" title="작업 지시와 설비 제어 — 영상 2:35" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>창고의 자동화 쪽은 두 층입니다. WES(작업 실행)는 「무엇을 언제 옮길지」를 업무 오더와 웨이브로 묶고, WCS(설비 제어)는 설비마다 명령을 내리고 상태와 장애를 받습니다. 명령을 내리는 쪽과 결과를 보고하는 쪽은 역할이 나뉘어 있어서, 관리자나 에이전트는 설비의 완료를 대신 보고할 수 없습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">샘플의 범위</p>
+<ul>
+<li><strong>실제 설비는 없습니다.</strong> 설비 쪽 보고는 게이트웨이 전용 계정 <code>wcs-gateway-a@demo.local</code> 로 보냅니다. 이 장에서는 MCP 도구(<code>report_equipment_status</code>, <code>report_command_result</code>, <code>raise_equipment_fault</code>)를 직접 호출했습니다. PLC 프로토콜 연동은 범위 밖입니다. 다음 장의 시뮬레이터 워커를 쓰면 이 보고를 자동으로 시킬 수 있습니다.</li>
+<li>경로 계획이나 교통 제어는 없습니다. 후보 설비를 골라 명령을 보내는 데까지입니다.</li>
+</ul>
+</div>
+<p>MCP 도구는 터미널에서 이렇게 부릅니다. 설비 ID 와 버전은 <strong>WCS Monitor</strong> 나 <code>get_equipment_status</code> 도구로 확인합니다.</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8199/mcp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;content-type: application/json&#39;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json, text/event-stream&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;method&quot;:&quot;tools/call&quot;,&quot;params&quot;:{&quot;name&quot;:&quot;report_equipment_status&quot;,</span>
+<span class="s1">       &quot;arguments&quot;:{&quot;equipment_id&quot;:&quot;&lt;설비 ID&gt;&quot;,&quot;new_status&quot;:&quot;IDLE&quot;,&quot;expected_version&quot;:1}}}&#39;</span>
+</code></pre></div>
+
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>처음 상태에서 시작합니다: <code>cd supabase &amp;&amp; supabase db reset</code>. 업무 오더가 가리킬 입고 문서가 필요하므로 앞 장의 순서로 RFQ 를 만들고 <strong>Confirm PO</strong> 까지 해 둡니다.</p>
+<ol class="steps">
+<li><strong>설비 등록.</strong> <code>wh-manager-a@demo.local</code> 로 로그인해 <strong>WCS Equipment</strong> 를 엽니다. Equipment Code <code>AGV-07</code>, Type <code>AGV</code>, Zone <code>ZONE-B</code> 를 넣고 <strong>Register Equipment</strong> 를 누릅니다. 상태는 <code>OFFLINE</code>, Version 1 입니다.
+
+<figure><a href="img/automation-register.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="AGV-07 등록" src="img/automation-register.webp" loading="lazy" decoding="async"></a><figcaption>AGV-07 등록</figcaption></figure>
+</li>
+<li><strong>기동 보고.</strong> 게이트웨이 계정으로 <code>IDLE</code> 을 보고합니다(<code>report_equipment_status</code>). 화면을 새로 고치면 <code>IDLE</code>, Version 2 이고 <strong>Dispatch MOVE</strong> 칸이 열립니다.
+
+<figure><a href="img/automation-idle.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="IDLE" src="img/automation-idle.webp" loading="lazy" decoding="async"></a><figcaption>IDLE</figcaption></figure>
+</li>
+<li><strong>이동 명령.</strong> to_zone 칸에 <code>ZONE-C</code> 를 넣고 <strong>Dispatch MOVE</strong> 를 누릅니다. 설비는 <code>RUNNING</code>, In-flight 는 <code>MOVE / PENDING</code> 입니다.
+
+<figure><a href="img/automation-dispatch.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이동 명령" src="img/automation-dispatch.webp" loading="lazy" decoding="async"></a><figcaption>이동 명령</figcaption></figure>
+</li>
+<li><strong>모니터.</strong> <strong>WCS Monitor</strong> 에 같은 명령이 보입니다. 게이트웨이가 <code>ACKNOWLEDGED</code>, <code>IN_PROGRESS</code>, <code>COMPLETED</code> 를 차례로 보고(<code>report_command_result</code>)한 뒤 <strong>Refresh</strong> 하면 <code>COMMAND_COMPLETED</code> 이벤트가 쌓이고 설비는 <code>IDLE</code> 로 돌아옵니다.
+
+<figure><a href="img/automation-monitor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="모니터 이벤트" src="img/automation-monitor.webp" loading="lazy" decoding="async"></a><figcaption>모니터 이벤트</figcaption></figure>
+</li>
+<li><strong>장애.</strong> <code>ZONE-D</code> 로 명령을 하나 더 보낸 뒤 게이트웨이가 <code>MOTOR_OVERHEAT</code> / <code>CRITICAL</code> 을 보고합니다(<code>raise_equipment_fault</code>). 설비는 <code>FAULT</code>, 진행 중이던 명령은 실패(<code>COMMAND_FAILED</code>)가 되고, <strong>WCS Equipment</strong> 의 Dispatch 칸에는 「장애 해소 후 가능」이 보입니다.
+
+<figure><a href="img/automation-fault.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="장애" src="img/automation-fault.webp" loading="lazy" decoding="async"></a><figcaption>장애</figcaption></figure>
+</li>
+<li><strong>장애 해소.</strong> 장애 해소는 사람 몫입니다. <code>wcs-operator-a@demo.local</code> 로 로그인해 <strong>WCS Monitor</strong> 에서 해소 사유(예: 과열 센서 교체 및 냉각팬 청소 완료)를 적고 <strong>Resolve Fault</strong> 를 누릅니다. <code>FAULT_CLEARED</code> 가 남고 <code>IDLE</code> 로 돌아옵니다.
+
+<figure><a href="img/automation-resolve.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="장애 해소" src="img/automation-resolve.webp" loading="lazy" decoding="async"></a><figcaption>장애 해소</figcaption></figure>
+</li>
+<li><strong>웨이브와 업무 오더.</strong> 같은 방법으로 <code>AGV-08</code>(<code>ZONE-B</code>)을 등록하고 기동시킵니다. <code>wh-manager-a@demo.local</code> 로 <strong>WES Dispatch</strong> 를 열어 <strong>Open Wave</strong> 를 누르고, Equipment Type <code>AGV</code>, Target Zone <code>ZONE-B</code>, to_zone 을 <code>ZONE-C</code>, <code>ZONE-D</code>, <code>ZONE-E</code> 로 바꿔 가며 <strong>Create Work Order</strong> 를 세 번 누릅니다. 릴리즈 전까지 세 건 모두 <code>QUEUED</code> 입니다.
+
+<figure><a href="img/automation-wave.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="QUEUED 3건" src="img/automation-wave.webp" loading="lazy" decoding="async"></a><figcaption>QUEUED 3건</figcaption></figure>
+</li>
+<li><strong>릴리즈.</strong> <strong>Release Wave</strong> 를 누릅니다. 쉬고 있는 운반차 두 대에 두 건이 나가 <code>DISPATCHED</code> 가 되고, 남은 한 건은 <code>NO_EQUIPMENT_AVAILABLE: 1 work order(s) stay QUEUED</code> 경고와 함께 <code>QUEUED</code> 로 남습니다.
+
+<figure><a href="img/automation-release.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="릴리즈" src="img/automation-release.webp" loading="lazy" decoding="async"></a><figcaption>릴리즈</figcaption></figure>
+</li>
+<li><strong>재시도.</strong> 한 대의 명령을 완료로 보고한 뒤 새로 고치면 업무 오더도 <code>COMPLETED</code> 로 따라갑니다. 남은 건의 <strong>Retry</strong> 를 누르면 비어 있는 운반차로 나갑니다.
+
+<figure><a href="img/automation-retry.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재시도" src="img/automation-retry.webp" loading="lazy" decoding="async"></a><figcaption>재시도</figcaption></figure>
+</li>
+<li><strong>분류기 프로파일.</strong> <code>SORT-01</code>(Type <code>SORTER</code>, Zone <code>ZONE-S</code>)을 등록하고 기동시킵니다. <strong>WCS Sortation</strong> 에서 Min Carton Gap 150, Speed Mode <code>FIXED</code>, Min Speed 0.5, Max Speed 2, Unit <code>MPS</code>, Sensor Window 80 을 넣고 <strong>Create Profile</strong> 을 누릅니다. 프로파일이 없으면 분류 명령을 보낼 수 없습니다. Speed Value 에 3.5 를 넣어 <strong>Dispatch SET_SPEED</strong> 를 누르면 <code>INVALID: speed_value 3.5 is outside the profile range 0.5..2 MPS for SORT-01</code> 로 거부됩니다.
+
+<figure><a href="img/automation-profile.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="속도 범위 거부" src="img/automation-profile.webp" loading="lazy" decoding="async"></a><figcaption>속도 범위 거부</figcaption></figure>
+</li>
+<li><strong>걸림과 자동 장애.</strong> Target Chute <code>CHUTE-12</code>, Item Identifier <code>BC-0001</code> 을 넣고 <strong>Dispatch DIVERT</strong> 를 누릅니다. 게이트웨이가 <code>detail.outcome = JAM</code> 으로 실패를 보고하면, 아무도 장애를 등록하지 않아도 <code>SORTATION_JAM</code> / <code>CRITICAL</code> 장애가 올라옵니다.
+
+<figure><a href="img/automation-jam.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="SORTATION_JAM" src="img/automation-jam.webp" loading="lazy" decoding="async"></a><figcaption>SORTATION_JAM</figcaption></figure>
+</li>
+<li><strong>병목 판정.</strong> 운반차 두 대의 진행 중 명령을 모두 완료로 보고합니다. <strong>WCS Routing</strong> 을 엽니다. <code>AGV-07</code> 은 최근 장애 1 / 1 로 기준에 닿아 <code>병목</code>(FAULT_FREQUENCY_EXCEEDED), <code>AGV-08</code> 은 최근 장애 0 / 1 입니다. 판정은 저장된 값이 아니라 조회할 때 계산합니다. 관찰 구간은 30분으로 고정되어 있고, 임계값은 설비 유형별 정책으로 바꿀 수 있습니다.
+
+<figure><a href="img/automation-routing.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="병목 판정" src="img/automation-routing.webp" loading="lazy" decoding="async"></a><figcaption>병목 판정</figcaption></figure>
+</li>
+<li><strong>병목 회피.</strong> <strong>WES Dispatch</strong> 에서 Dispatch Mode <code>WAVELESS</code> 로 업무 오더를 만듭니다. 즉시 배정되어 병목이 아닌 <code>AGV-08</code> 로 갑니다.
+
+<figure><a href="img/automation-avoid.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="AGV-08 로 배정" src="img/automation-avoid.webp" loading="lazy" decoding="async"></a><figcaption>AGV-08 로 배정</figcaption></figure>
+</li>
+<li><strong>강제 제외.</strong> <code>AGV-08</code> 의 명령을 완료로 보고한 뒤 <strong>WCS Routing</strong> 에서 제외 사유(예: 계획 정비)를 넣고 <strong>Exclude from Routing</strong> 을 누릅니다. 다시 <code>WAVELESS</code> 업무 오더를 만들면 남은 <code>AGV-07</code> 로 갑니다. 병목은 금지가 아니라 후순위이고, 강제 제외만 금지입니다.
+
+<figure><a href="img/automation-exclude.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="AGV-07 로 배정" src="img/automation-exclude.webp" loading="lazy" decoding="async"></a><figcaption>AGV-07 로 배정</figcaption></figure>
+</li>
+</ol>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>창고 관리자가 명령 완료를 직접 보고할 수 있나요?</summary>
+<p>없습니다. 결과 보고는 <code>WCS_GATEWAY</code> 역할만 할 수 있습니다. 명령을 내리는 쪽과 보고하는 쪽을 데이터베이스 권한에서 나눴습니다.</p>
+</details>
+<details class="answer">
+<summary>에이전트나 게이트웨이가 장애를 해소할 수 있나요?</summary>
+<p>없습니다. 장애 해소는 <code>WCS_OPERATOR</code>, <code>WAREHOUSE_MANAGER</code>, <code>WMS_ADMIN</code> 만 할 수 있습니다. 현장 확인을 거친 사람의 판단으로 봅니다.</p>
+</details>
+<details class="answer">
+<summary>병목으로 표시된 설비는 업무를 받지 않나요?</summary>
+<p>받습니다. 병목은 후순위일 뿐이라 다른 후보가 없으면 그 설비가 선택됩니다. 업무를 아예 받지 않게 하려면 <strong>Exclude from Routing</strong> 으로 강제 제외합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="inbound.html"><span>이전</span>재보충에서 적치까지</a><a class="next" href="ops.html"><span>다음</span>서열 출고와 시뮬레이션</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 공개 저장소의 샘플 앱(커밋 fc82ea2)을 실제 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

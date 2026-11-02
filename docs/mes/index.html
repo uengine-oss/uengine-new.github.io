@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시작하기 — uEngine MES 튜토리얼</title>
+<meta name="description" content="uEngine MES 가 무엇인지, 시연 환경은 어떻게 받는지 알아보고, 화면 구성과 메뉴, 그리드, 변경 이력을 직접 둘러봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/mes/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="시작하기 — uEngine MES 튜토리얼">
+<meta property="og:description" content="uEngine MES 가 무엇인지, 시연 환경은 어떻게 받는지 알아보고, 화면 구성과 메뉴, 그리드, 변경 이력을 직접 둘러봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/mes/">
+<meta property="og:image" content="https://www.uengine.org/docs/mes/img/anomaly-monitor.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine MES <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 설비 정지, 시점 조회, 시맨틱 레이어)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/mes.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">현장 대응</div><ul>
+<li><a href="anomaly.html"><span class="n">01</span>설비 이상 대응</a></li>
+</ul>
+<div class="nav-part">이력과 추적</div><ul>
+<li><a href="events.html"><span class="n">02</span>이벤트 추적</a></li>
+</ul>
+<div class="nav-part">AI 연결</div><ul>
+<li><a href="semantic.html"><span class="n">03</span>시맨틱 레이어</a></li>
+<li><a href="agent.html"><span class="n">04</span>에이전트 협업과 사람의 결정</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap"></span></div>
+    <h1>시작하기</h1>
+    <article>
+<blockquote>
+<p>uEngine MES 가 무엇인지, 시연 환경은 어떻게 받는지 알아보고, 화면 구성과 메뉴, 그리드, 변경 이력을 직접 둘러봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/M2reVd1F-qs" title="시작하기 — 영상 2:06" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>uEngine MES 는 모든 변경을 이벤트로 저장하는 <strong>이벤트 기반 MES 의 시연용 참조 구현</strong>입니다. 설비가 멈추면 영향 범위를 계산하고, 대응과 그 근거를 이벤트로 남기며, 그때 공장 상태를 다시 복원해 볼 수 있습니다. 나중에 온톨로지와 에이전트를 붙일 자리도 이 이벤트 위에 마련되어 있습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li><strong>소스는 공개하지 않습니다.</strong> 튜토리얼을 혼자 설치해 따라 할 수는 없습니다.</li>
+<li><strong>데이터는 모두 합성입니다.</strong> 회사, 거래처, 제품, 수주 이름과 값은 시연을 위해 만든 것입니다.</li>
+<li><strong>시연 환경은 요청하면 제공합니다.</strong> <a href="https://www.uengine.org/contents/contactus.html">문의하기</a>로 요청하면 접속 주소와 계정을 안내해 드립니다. 튜토리얼은 그 환경에서 화면을 따라 하도록 쓰여 있습니다.</li>
+<li>운영 실적이나 성능 수치를 제시하는 자료가 아닙니다.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>서비스</td>
+<td>바운디드 컨텍스트 10개(사용자·기준정보·영업·구매·생산·품질·설비·금형·창고·분석)와 게이트웨이</td>
+</tr>
+<tr>
+<td>기술</td>
+<td>Java 17, Spring Boot, Kafka, PostgreSQL, 화면은 Vue 3</td>
+</tr>
+<tr>
+<td>화면</td>
+<td>대메뉴 9개, 중메뉴 60개, 화면 145개</td>
+</tr>
+<tr>
+<td>이벤트</td>
+<td>추가만 하는 이벤트 스토어와 아웃박스, 상관(correlation)·원인(causation) 연결, 시점 조회, 프로젝션 재구축</td>
+</tr>
+</tbody>
+</table>
+<p>이 튜토리얼의 장은 이렇게 이어집니다.</p>
+<table>
+<thead>
+<tr>
+<th>장</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시작하기</td>
+<td>화면 구성, 메뉴, 그리드, 이력 (이 장)</td>
+</tr>
+<tr>
+<td>설비 이상 대응</td>
+<td>설비 정지 → 영향 분석 → 재계획 → 복구</td>
+</tr>
+<tr>
+<td>이벤트 추적</td>
+<td>이벤트 스토어, 인과 추적, 스트림 재생, 시점 조회, 프로젝션 재구축</td>
+</tr>
+<tr>
+<td>시맨틱 레이어</td>
+<td>여러 원천 시스템을 묶어 주문 질의에 답하고 근거를 보여 주기</td>
+</tr>
+<tr>
+<td>에이전트 협업</td>
+<td>에이전트 협업, 사람 승인, 실행</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>로그인.</strong> 안내받은 주소로 들어가 <strong>회사코드</strong>, <strong>ID</strong>, <strong>비밀번호</strong>를 넣고 <strong>로그인</strong>을 누릅니다. 이 튜토리얼의 화면은 회사코드 <code>standard</code>, ID <code>guest</code> 입니다. 회사코드가 테넌트입니다.
+
+<figure><a href="img/index-login.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="로그인 화면" src="img/index-login.webp" loading="lazy" decoding="async"></a><figcaption>로그인 화면</figcaption></figure>
+</li>
+<li><strong>기초 대시보드 보기.</strong> 첫 화면은 <strong>기초 대시보드</strong>입니다. 등록 제품 7개, 거래처 8곳, 사용자 8명, 설비 8대가 보입니다. 아래 그래프는 시스템 전체의 변경 이벤트입니다. 값은 시연 환경의 상태에 따라 다를 수 있습니다.
+
+<figure><a href="img/index-home.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="기초 대시보드" src="img/index-home.webp" loading="lazy" decoding="async"></a><figcaption>기초 대시보드</figcaption></figure>
+</li>
+<li><strong>대메뉴와 중메뉴.</strong> 위쪽 줄이 대메뉴입니다. 기초, 영업, 구매, 생산, 품질, 외주, 금형, 설비, 창고 9개입니다. 대메뉴를 고르면 왼쪽 중메뉴가 바뀝니다.
+</li>
+<li><strong>전체 메뉴 열기.</strong> 왼쪽 위 격자 아이콘을 누르면 중메뉴 60개가 한 번에 펼쳐집니다. 그 아래 화면은 모두 145개입니다. 다시 누르면 닫힙니다.
+
+<figure><a href="img/index-mega.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="전체 메뉴" src="img/index-mega.webp" loading="lazy" decoding="async"></a><figcaption>전체 메뉴</figcaption></figure>
+</li>
+<li><strong>생산 대시보드.</strong> 대메뉴 <strong>생산</strong>을 누릅니다. 진행중 작업지시와 보류 작업지시 건수가 바로 보입니다.
+</li>
+<li><strong>작업지시 그리드에서 찾기.</strong> 왼쪽 <strong>작업지시 › 작업지시 현황</strong>을 엽니다. 기본 기간은 이번 달이므로 기간 칩에서 <strong>년</strong>을 누릅니다. 13건이 나옵니다. 검색 칸에 <code>CNC-M01</code> 을 넣고 Enter 를 누르면 3건이 남습니다.
+
+<figure><a href="img/index-grid.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="CNC-M01 작업지시 3건" src="img/index-grid.webp" loading="lazy" decoding="async"></a><figcaption>CNC-M01 작업지시 3건</figcaption></figure>
+</li>
+<li><strong>컬럼 설정.</strong> 그리드 도구 줄 오른쪽 끝의 조절 아이콘을 누릅니다. 열 보기와 고정, 보기 밀도, 세로 경계선을 바꿀 수 있습니다. 다른 곳을 누르면 닫힙니다. 정렬, 엑셀, 이력 버튼도 그리드마다 같은 자리에 있습니다.
+
+<figure><a href="img/index-cols.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="컬럼 설정" src="img/index-cols.webp" loading="lazy" decoding="async"></a><figcaption>컬럼 설정</figcaption></figure>
+</li>
+<li><strong>상세 패널.</strong> 작업지시번호 <strong>2610-0002</strong> 를 누르면 오른쪽에 상세가 열립니다. 상태는 진행, 지시 1,180개 중 양품 590개, 납기는 2026-10-25 입니다. 납기가 지나 「납기 경과 — 공정 지연 이벤트가 발생했습니다」 표시가 있습니다.
+
+<figure><a href="img/index-detail.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="작업지시 상세" src="img/index-detail.webp" loading="lazy" decoding="async"></a><figcaption>작업지시 상세</figcaption></figure>
+</li>
+<li><strong>변경 이력.</strong> 상세 아래 <strong>이력</strong>을 누릅니다. 이 작업지시에 쌓인 이벤트가 최신순으로 보입니다. 발행(<code>WorkOrderIssued</code>), 자재 투입, 시작, 실적 등록, 지연(<code>WorkOrderDelayed</code>)까지 5건입니다. 지금 상태는 저장된 값이 아니라 이 이벤트를 차례로 적용한 결과입니다. 오른쪽 위 <strong>X</strong> 로 닫습니다.
+
+<figure><a href="img/index-history.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="변경 이력" src="img/index-history.webp" loading="lazy" decoding="async"></a><figcaption>변경 이력</figcaption></figure>
+</li>
+<li><strong>범용 화면 보기.</strong> 대메뉴 <strong>영업</strong>에서 <strong>견적 › 견적 관리</strong>를 열고 <strong>등록</strong>을 누릅니다. 입력 양식이 열립니다. 이 화면은 메타데이터로 움직이는 범용 그리드입니다. 확인했으면 <strong>취소</strong>를 누릅니다.
+
+<figure><a href="img/index-generic.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적 관리 등록 양식" src="img/index-generic.webp" loading="lazy" decoding="async"></a><figcaption>견적 관리 등록 양식</figcaption></figure>
+</li>
+<li><strong>다음 장 입구.</strong> 오른쪽 위 모니터 아이콘이 <strong>모니터링</strong>, 그 옆 분기 아이콘이 <strong>이벤트 소싱 탐색기</strong>입니다. 다음 장부터 씁니다.
+
+<figure><a href="img/index-icons.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="모니터링과 이벤트 소싱 탐색기 아이콘" src="img/index-icons.webp" loading="lazy" decoding="async"></a><figcaption>모니터링과 이벤트 소싱 탐색기 아이콘</figcaption></figure>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">알려진 한계</p>
+<ul>
+<li>범용 화면(견적, 거래명세서, 세금계산서, 예비부품, 점검 등)은 등록·수정과 이벤트 이력은 되지만, 상태 전이나 금액 검증 같은 업무 규칙이 없습니다.</li>
+<li>권한 관리 화면의 데이터는 저장되지만 메뉴와 API 접근 제어에는 아직 적용되지 않습니다. 지금은 인증과 테넌트 격리만 적용됩니다.</li>
+<li>서비스 컨테이너 이미지가 아직 없습니다. 로컬 JVM 프로세스로 실행합니다.</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>이 튜토리얼을 따라 하려면 무엇이 필요한가요?</li>
+<li>그리드에 찾는 작업지시가 보이지 않을 때 먼저 확인할 것은 무엇인가요?</li>
+<li>범용 화면과 작업지시 현황 같은 전용 화면의 차이는 무엇인가요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>시연 환경입니다. 소스를 공개하지 않으므로 <a href="https://www.uengine.org/contents/contactus.html">문의하기</a>로 요청해 접속 정보를 받습니다.</li>
+<li>기간입니다. 기본 기간이 이번 달이라 지난달에 시작한 작업지시는 <strong>년</strong>으로 넓혀야 보입니다.</li>
+<li>전용 화면은 보류, 재개, 재계획 같은 업무 명령과 규칙이 있습니다. 범용 화면은 등록·수정과 이력만 있고 업무 규칙이 없습니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="anomaly.html"><span>다음</span>설비 이상 대응</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 시연용 참조 구현을 합성 데이터로 실제 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
