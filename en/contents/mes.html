@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>uEngine MES — A Manufacturing Execution System That Records Events and Responds with AI Agents</title>
+        <meta name="description" content="A demonstration reference implementation of an MES that stores every change as an event, showing impact analysis, point-in-time views, a semantic layer and AI agents that act on human decisions.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/mes.html">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="uEngine MES — A Manufacturing Execution System That Records Events and Responds with AI Agents">
+        <meta property="og:description" content="A demonstration reference implementation of an MES that stores every change as an event, showing impact analysis, point-in-time views, a semantic layer and AI agents that act on human decisions.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/mes.html">
+        <meta property="og:image" content="https://www.uengine.org/docs/mes/img/anomaly-impact.webp">
+        <meta property="og:image:alt" content="uEngine MES — A Manufacturing Execution System That Records Events and Responds with AI Agents">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="uEngine MES — A Manufacturing Execution System That Records Events and Responds with AI Agents">
+        <meta name="twitter:description" content="A demonstration reference implementation of an MES that stores every change as an event, showing impact analysis, point-in-time views, a semantic layer and AI agents that act on human decisions.">
+        <meta name="twitter:image" content="https://www.uengine.org/docs/mes/img/anomaly-impact.webp">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"uEngine MES","description":"A demonstration reference implementation of an MES that stores every change as an event, showing impact analysis, point-in-time views, a semantic layer and AI agents that act on human decisions.","url":"https://www.uengine.org/en/contents/mes.html","image":"https://www.uengine.org/docs/mes/img/anomaly-impact.webp","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"en","publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}}}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"uEngine MES","item":"https://www.uengine.org/en/contents/mes.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/mes.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/mes.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/mes.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    </head>
+    
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../index.html" class="logo">
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../contents/mes.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Process Solutions · Agent&nbsp;Orchestrator&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Ontology Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="agentstorming.html" style="font-size: 18px;">Agent Storming Workshop</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                            <li>
+                                                <a href="ax-lite-course.html" style="font-size: 18px;">AI Work Class for Your Company</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Industry Solutions <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="industry.html" style="font-size: 18px;">Industry Solutions Overview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Manufacturing&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="mes.html" style="font-size: 18px;">uEngine MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="../../docs/mes/index.html" style="font-size: 18px;">MES Tutorial (Korean)</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Logistics&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="wms.html" style="font-size: 18px;">uEngine WMS</a>
+                                            </li>
+                                            <li>
+                                                <a href="../../docs/wms/index.html" style="font-size: 18px;">WMS Tutorial (Korean)</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                               
+                            <li class="pc-chat lang-switch"><a href="../../contents/mes.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+                <style>
+                .plite-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform .3s ease; width: 100%; }
+                .plite-card:hover { transform: translateY(-4px); }
+                .plite-card-img { overflow: hidden; aspect-ratio: 16 / 9; border-bottom: 1px solid #eee; }
+                .plite-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+                .plite-card-body { padding: 26px 26px 32px; }
+                .plite-card-title { font-size: 1.45rem; font-weight: 700; margin: 0 0 14px; text-align: left; line-height: 1.4; }
+                .plite-card-desc { font-size: 1.02rem; color: #666; line-height: 1.65; margin: 0; text-align: left; }
+                .plite-theme { margin-bottom: 90px; }
+                .plite-theme:last-child { margin-bottom: 0; }
+                .plite-theme-img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #e5e5ea; box-shadow: 0 10px 30px rgba(26,26,46,.12); }
+                .plite-theme-cat { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #1e88e5; margin: 0 0 8px; }
+                .plite-theme-title { font-size: 1.75rem; font-weight: 700; line-height: 1.4; margin: 0 0 14px; }
+                .plite-theme-lead { font-size: 1.08rem; color: #555; line-height: 1.7; margin: 0 0 20px; }
+                .plite-theme-list { list-style: none; padding: 0; margin: 0 0 18px; }
+                .plite-theme-list li { padding: 12px 0 12px 18px; border-top: 1px solid #eee; position: relative; }
+                .plite-theme-list li::before { content: ""; position: absolute; left: 0; top: 21px; width: 7px; height: 7px; border-radius: 50%; background: #7c5cff; }
+                .plite-theme-list strong { display: block; font-size: 1.05rem; color: #111; margin-bottom: 4px; }
+                .plite-theme-list span { display: block; font-size: .98rem; color: #666; line-height: 1.65; }
+                .plite-vlinks { display: flex; flex-wrap: wrap; gap: 8px; }
+                .plite-vlink { font-size: 14px; padding: 6px 14px; border-radius: 20px; border: 1px solid #d5d5de; color: #333; text-decoration: none; }
+                .plite-vlink:hover { border-color: #111; color: #111; }
+                .plite-card-vlinks { margin-top: 20px; }
+                .plite-vlink { cursor: pointer; background: #fff; }
+                .plite-theme-media { position: relative; display: block; cursor: pointer; }
+                .plite-theme-media .plite-media-badge { position: absolute; left: 16px; bottom: 16px; padding: 8px 16px; border-radius: 20px; background: rgba(17,17,17,.82); color: #fff; font-size: 14px; font-weight: 600; pointer-events: none; transition: background .2s; }
+                .plite-theme-media:hover .plite-media-badge, .plite-theme-media:focus-visible .plite-media-badge { background: #f00; }
+                .plite-modal { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.78); }
+                .plite-modal.open { display: flex; }
+                .plite-modal-box { position: relative; width: min(1100px, 100%); }
+                .plite-modal-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+                .plite-modal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+                .plite-modal-title { color: #fff; font-size: 1rem; font-weight: 600; margin: 0 48px 10px 2px; }
+                .plite-modal-close { position: absolute; right: 0; top: -6px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255,255,255,.15); color: #fff; font-size: 22px; line-height: 36px; cursor: pointer; }
+                .plite-modal-close:hover { background: rgba(255,255,255,.3); }
+                .plite-gal-head { font-size: 1.3rem; font-weight: 700; margin: 10px 0 24px; padding-bottom: 12px; border-bottom: 2px solid #111; }
+                .plite-yt { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #000; cursor: pointer; box-shadow: 0 6px 20px rgba(26,26,46,.12); }
+                .plite-yt img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease, opacity .3s ease; }
+                .plite-yt:hover img, .plite-yt:focus-visible img { transform: scale(1.03); opacity: .85; }
+                .plite-yt-play { position: absolute; left: 50%; top: 50%; width: 64px; height: 44px; margin: -22px 0 0 -32px; border-radius: 12px; background: rgba(20,20,20,.82); }
+                .plite-yt:hover .plite-yt-play { background: #f00; }
+                .plite-yt-play::after { content: ""; position: absolute; left: 26px; top: 13px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent #fff; }
+                .plite-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+                .plite-v-title { font-size: 1.1rem; font-weight: 700; margin: 14px 0 6px; }
+                .plite-v-cap { font-size: .95rem; color: #666; line-height: 1.6; margin: 0; }
+                .plite-diff-note { font-size: 1.05rem; color: #444; line-height: 1.8; }
+                @media (max-width: 991px) { .plite-theme { margin-bottom: 60px; } .plite-theme-img { margin-bottom: 24px; } }
+                </style>
+
+                <style>
+                .hj-tag { display:inline-block; font-size:12px; font-weight:700; letter-spacing:.06em; color:#1F4E79; background:#E3EBF4; border-radius:999px; padding:4px 12px; margin-bottom:12px; }
+                .hj-arch td, .hj-arch th { padding:12px 14px; border-top:1px solid #e5e5ea; vertical-align:top; font-size:1rem; }
+                .hj-arch th { background:#f6f7f9; text-align:left; }
+                .hj-arch { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                .hj-principle { background:#fff; border-radius:14px; padding:22px 24px; height:100%; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                .hj-principle b { display:block; font-size:1.1rem; margin-bottom:8px; }
+                .hj-principle span { color:#555; line-height:1.65; }
+                .hj-note { font-size:.95rem; color:#666; }
+                </style>
+
+                
+                <!-- Header Section -->
+                <section class="page-section pb-100 pb-sm-60 bg-gray-light-1 bg-light-alpha-90 bg-scroll" style="background-image: url(../../images/full-width-images/section-bg-2.jpg)">
+                    <div class="container position-relative pt-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h2 class="section-caption-border mb-30 mb-xs-20 wow fadeInUp" data-wow-duration="1.2s">Industry Solutions · Manufacturing</h2>
+                                    <h1 class="hs-title-1 mb-20"><span class="wow charsAnimIn" data-splitting="chars">uEngine MES</span></h1>
+                                    <p class="section-descr mb-40 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 760px; margin-left: auto; margin-right: auto;">
+                                        A manufacturing execution system that records every change as an event &mdash; it calculates the impact when equipment stops, keeps the grounds for each judgment and action, and has AI agents respond under human approval
+                                    </p>
+                                    <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                        <a href="#videos" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">Demo Videos</span></a><a href="../../docs/mes/index.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;"><span style="font-size: 16px;">Tutorial (Korean)</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;"><span style="font-size: 16px;">Contact Us</span></a>
+                                    </div>
+                                    <p class="hj-note mt-30 mb-0">This is a demonstration reference implementation. The source is not public, and the companies, products and figures on screen are all synthetic. Contact us for a demo environment.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section class="page-section" id="about">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 mb-sm-0 mt-n10"><div class="video-box"><iframe src="https://www.youtube.com/embed/sGOKoBT5yNA?hl=en&cc_lang_pref=en" title="uEngine MES product demo" frameborder="0" scrolling="no" loading="lazy" allowfullscreen=""></iframe></div></div>
+                            <div class="col-md-6 col-xl-5 offset-xl-1 mt-n10 mt-sm-20">
+                                <p class="section-descr"><span style="font-size: 1.8rem; color: #111; font-weight: 600;">From an MES That Records to an MES That Judges and Responds</span></p>
+                                <p class="lead mt-0 mb-30 mb-sm-20" style="font-size: 19px;">
+                                    If you store only the current state, the reason it got there is lost. uEngine MES <b>stores every change as an event</b>. When equipment stops, it calculates which work orders, sales orders and due dates are affected, and the person's judgment and the result of the action continue in the same history.<br><br>On top of that sit <b>Process GPT agents</b> and <b>a semantic layer</b>. Agents gather evidence from several systems and propose options; once a person decides, they execute and read the source again to confirm. A decision the person marks "apply from now on" becomes a new version of the rule, so the same failure is handled without a decision next time.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 주요 기능 -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" id="features" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;"><span class="wow charsAnimIn" data-splitting="chars">From Floor Response to AI</span></h3>
+                            <p class="section-descr mb-70 mb-sm-40 wow fadeInUp">Every screen was captured from an actual run. Click a screen to play that chapter's video (Korean narration).</p>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-anomaly">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/mes/img/anomaly-impact.webp" alt="Anomaly and impact analysis on the monitoring screen" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">FLOOR RESPONSE</p>
+                                <h3 class="plite-theme-title">When Equipment Stops, Impact Comes First</h3>
+                                <p class="plite-theme-lead">Registering a stop opens an anomaly case, with the impact and alternative equipment candidates right away.</p>
+                                <ul class="plite-theme-list"><li><strong>Impact analysis</strong><span>Follows the links from equipment to work orders, sales orders and due dates to calculate remaining quantity and the nearest due date.</span></li><li><strong>A response people choose</strong><span>Holds and replanning to alternative equipment run with a reason and an approver.</span></li><li><strong>Response metrics</strong><span>Impact analysis, response, replanning and recovery times and lost quantity are calculated from event timestamps.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-3lJYRt79bM8">▶ Chapter 1: Responding to an Equipment Stop</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-events">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/mes/img/events-trace.webp" alt="Process trace in the event sourcing explorer" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">HISTORY AND TRACING</p>
+                                <h3 class="plite-theme-title">Trace Why It Happened, Through Events</h3>
+                                <p class="plite-theme-lead">Cause and effect across services stay on record, and you can see the factory as it was at that moment.</p>
+                                <ul class="plite-theme-list"><li><strong>Change history</strong><span>Every screen shows field-level before and after, the reason and the approver.</span></li><li><strong>Process trace</strong><span>Events tied by a correlation ID are laid out in service lanes with causal arrows.</span></li><li><strong>Point-in-time view and rebuild</strong><span>Replays events to restore equipment state at that time, and rebuilds read models from events.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-cFVHO_krx-8">▶ Chapter 2: Event Tracing</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-semantic">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/mes/img/semantic-answer.webp" alt="Shippable quantity from the semantic layer compared with ERP accounting stock" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">AI</p>
+                                <h3 class="plite-theme-title">Tie Scattered Systems into One Judgment</h3>
+                                <p class="plite-theme-lead">Questions no single system can answer, such as "Can we deliver 2,000 by 17:00 today?", get an answer with lot-by-lot evidence.</p>
+                                <ul class="plite-theme-list"><li><strong>Sources stay in place</strong><span>Seven sources (ERP, SCM, APS, MMS, QMS, MES, Edge) are read at query time without copying.</span></li><li><strong>Judgment concepts</strong><span>Concepts no system holds, such as shippable quantity, are defined together with their rules.</span></li><li><strong>Functions and regression</strong><span>Existing procedures and services are promoted to read·plan·exec functions and rechecked with Golden Questions.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-stegYnW7PFs">▶ Chapter 3: The Semantic Layer</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-agent">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/mes/img/agent-exec.webp" alt="Execution ledger for quarantine and replanning" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">AI</p>
+                                <h3 class="plite-theme-title">Agents Propose, People Decide, Rules Learn</h3>
+                                <p class="plite-theme-lead">Departmental agents pass along one welding anomaly and work it through. The person only chooses on a decision card.</p>
+                                <ul class="plite-theme-list"><li><strong>Departmental agents</strong><span>They take on risk assessment, suspect lot tracing, delivery impact and option simulation in turn.</span></li><li><strong>Execution and re-read</strong><span>They execute only on an approved decision and read the source again after every write.</span></li><li><strong>Automatic handling on recurrence</strong><span>A decision marked "apply from now on" becomes a new rule version, so the next case is checked against conditions and executed automatically.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-IVmYn_nEDtQ">▶ Chapter 4: Agent Collaboration and Human Decisions</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="page-section" id="status">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">What It Is and Where It Stands</span></h3>
+                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">What is done and what is not, stated plainly.</p>
+                        </div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>Category</th><th>Description</th></tr></thead><tbody><tr><td>Backend</td><td>10 business services and a gateway. Java 17, Spring Boot, Kafka, PostgreSQL</td></tr><tr><td>UI</td><td>Vue 3. 9 top menus, 60 mid menus, 145 screens. Most are generic grid screens; core screens for production, equipment, quality and warehouse are purpose-built</td></tr><tr><td>Event sourcing</td><td>Append-only event store, outbox, correlation and causation IDs, point-in-time views, projection rebuild</td></tr><tr><td>AI</td><td>Process GPT processes and agents, semantic layer, read·plan·exec functions, human decision cards</td></tr><tr><td>Not yet</td><td>Generic screens have no domain rules. Permission data is not yet enforced on menus or APIs. There are no container images. The semantic layer and data fabric are lightweight demo implementations, and vision inference is imitated with pixel rules rather than a trained model</td></tr></tbody></table></div>
+                        
+                    </div>
+                </section>
+
+                <!-- 영상 -->
+                <section class="page-section bg-gray-light-1" id="videos">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">Watch the Videos</span></h3>
+                            <p class="section-descr mb-60 mb-sm-40 wow fadeInUp">Recorded while actually running on synthetic data, with Korean narration and subtitles. Click a thumbnail to play.</p>
+                        </div>
+                        <h3 class="plite-gal-head">Product Demo</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-sGOKoBT5yNA">
+                                <button type="button" class="plite-yt" data-yt="sGOKoBT5yNA" aria-label="Play product demo video">
+                                    <img src="https://i.ytimg.com/vi/sGOKoBT5yNA/hqdefault.jpg" alt="Product demo video preview" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Product Demo</h4>
+                                <p class="plite-v-cap">Equipment stop response, event tracing, the semantic layer and agents in one video.</p>
+                            </div>
+                        </div>
+                        <h3 class="plite-gal-head">Tutorial (Korean)</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-M2reVd1F-qs">
+                                <button type="button" class="plite-yt" data-yt="M2reVd1F-qs" aria-label="Play video: Chapter 0: Getting Started">
+                                    <img src="https://i.ytimg.com/vi/M2reVd1F-qs/hqdefault.jpg" alt="Video preview: Chapter 0: Getting Started" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 0: Getting Started</h4>
+                                <p class="plite-v-cap">A tour of the layout, menus, grids and change history.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-3lJYRt79bM8">
+                                <button type="button" class="plite-yt" data-yt="3lJYRt79bM8" aria-label="Play video: Chapter 1: Responding to an Equipment Stop">
+                                    <img src="https://i.ytimg.com/vi/3lJYRt79bM8/hqdefault.jpg" alt="Video preview: Chapter 1: Responding to an Equipment Stop" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 1: Responding to an Equipment Stop</h4>
+                                <p class="plite-v-cap">From an equipment stop through impact analysis, replanning, restart and resolution.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-cFVHO_krx-8">
+                                <button type="button" class="plite-yt" data-yt="cFVHO_krx-8" aria-label="Play video: Chapter 2: Event Tracing">
+                                    <img src="https://i.ytimg.com/vi/cFVHO_krx-8/hqdefault.jpg" alt="Video preview: Chapter 2: Event Tracing" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 2: Event Tracing</h4>
+                                <p class="plite-v-cap">Causal tracing, the event store, stream replay, point-in-time views and projection rebuild.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-stegYnW7PFs">
+                                <button type="button" class="plite-yt" data-yt="stegYnW7PFs" aria-label="Play video: Chapter 3: The Semantic Layer">
+                                    <img src="https://i.ytimg.com/vi/stegYnW7PFs/hqdefault.jpg" alt="Video preview: Chapter 3: The Semantic Layer" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 3: The Semantic Layer</h4>
+                                <p class="plite-v-cap">One delivery question leads through sources, the ontology, functions and the regression set.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-IVmYn_nEDtQ">
+                                <button type="button" class="plite-yt" data-yt="IVmYn_nEDtQ" aria-label="Play video: Chapter 4: Agent Collaboration and Human Decisions">
+                                    <img src="https://i.ytimg.com/vi/IVmYn_nEDtQ/hqdefault.jpg" alt="Video preview: Chapter 4: Agent Collaboration and Human Decisions" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 4: Agent Collaboration and Human Decisions</h4>
+                                <p class="plite-v-cap">A real run of detection, agents, a human decision, execution, learning and automatic handling on recurrence.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Call Action -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative mt-n30 mt-sm-0">
+                        <div class="row wow fadeInUp get-started-content"><div>
+                            <p class="mb-20 mt-n10" style="font-size: 2.2rem; font-weight: 600;">Start with a Look at the Demo</p>
+                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">Go through the demo environment together, then find which work should go to agents in an <a href="agentstorming.html">Agent Storming Workshop</a>.</p>
+                            <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                <a href="#contact" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">Request a Demo</span></a><a href="../../docs/mes/index.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border: 2px solid #111;"><span style="font-size: 16px;">Tutorial (Korean)</span></a>
+                            </div>
+                        </div></div>
+                    </div>
+                </section>
+<hr class="mt-0 mb-0"/>
+                <!-- Contact us Section -->
+                <section class="page-section mt-n10 mt-sm-0 mb-sm-20" id="contact">
+                    <div class="container position-relative">
+                        
+                        <div class="row text-center wow fadeInUp">
+                            <div class="col-md-8 offset-md-2 col-lg-10 offset-lg-1">
+                                <p class="section-title-tiny mb-10" style="font-size: 2rem;">
+                                    Have more questions?
+                                </p>
+                                <p class="section-title-tiny mb-50 mb-sm-30">
+                                    Want to know more about <b>uEngine MES</b> or have a question? Get in touch anytime.
+                                </p>
+                                <div class="local-scroll">
+                                    <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
+                                        <span>Contact us</span>
+                                    </a>
+                                </div>
+
+                                <!-- Contact Form (초기 숨김) -->
+                                <div id="contact_form_container" class="contact-form-container" style="display: none;">
+                                    <div class="form-header">
+                                        <div></div>
+                                        <h2>Contact Us</h2>
+                                        <button id="close_btn" class="close-button">✖</button>
+                                    </div>
+                                    
+                                    <form id="contact_form" action="https://formspree.io/f/mjkydzab" method="POST" class="form contact-form fadeInUp wch-unset">
+                                        <div class="row">
+                                            <input type="hidden" name="classification" value="uEngineMES">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">Name <span>*</span></label>
+                                                    <input type="text" name="name" id="name" class="input-lg round form-control" placeholder="Please enter your name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email <span>*</span></label>
+                                                    <input type="email" name="email" id="email" class="input-lg round form-control" placeholder="Please enter the email address where you would like to receive our reply">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="company">Company <span>*</span></label>
+                                                    <input type="text" name="company" id="company" class="input-lg round form-control" placeholder="Please enter your company or organization name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="position">Job Title</label>
+                                                    <input type="text" name="position" id="position" class="input-lg round form-control" placeholder="Please enter your job title">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="message">Message <span>*</span></label>
+                                            <textarea name="message" id="message" class="input-lg round form-control" placeholder="Please enter your message"></textarea>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-tip pt-0">
+                                                    <div class="contact_form_policy">
+                                                        <label style="color: var(--color-gray-light-6);">
+                                                            <input type="checkbox" name="contact_policy" id="contact_policy" value="I agree" style="vertical-align: middle; width: 15px; height: 15px;">
+                                                            <span style="color: var(--color-gray-light-6);">(Required)</span>
+                                                            <button id="contact_form_modal_open" data-modal="contact_form_policy_modal" type="button">Collection and Use of Personal Information</button>
+                                                            <span style="color: var(--color-gray-light-6);"> to the terms above.</span>
+                                                        </label>
+                                                        <div class="contact_form_msg_error" id="contact_policy_error"></div>
+                                                        <div class="contact_form_modal blind" id="contact_form_policy_modal">
+                                                            <div class="contact_form_modal_body">
+                                                                <h2 class="contact_form_modal_title">
+                                                                    Collection and Use of Personal Information
+                                                                </h2>
+                                                                <div class="contact_form_modal_text">
+                                                                    When uEngine Solutions (the "Company") collects and uses personal information in order to respond to your inquiry, your consent is required under the Personal Information Protection Act and other applicable laws.
+                                                                    <br>The Company collects and uses only the minimum personal information needed to answer inquiries about purchasing its products and consulting, and to use the services it provides.
+                                                                    <br>The information collected is not used for any purpose other than sending the reply, and is destroyed as soon as the service ends.
+                                                                </div>
+                                                                <div class="contact_form_modal_btn">
+                                                                    <button id="contact_form_modal_close" 
+                                                                        class="contact_form_modal_close_btn btn btn-mod btn-round" 
+                                                                        data-modal="contact_form_policy_modal" 
+                                                                        type="button"
+                                                                        style="background-color: var(--color-dark-3); 
+                                                                        color: var(--color-gray-light-3);">Close</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="contact_form_modal_bg" id="contact_form_modal_bg"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="text-end pt-20 pt-xs-40">
+                                                    <button class="submit_btn btn btn-mod btn-large btn-round btn-hover-anim" id="submit_btn" aria-controls="result">
+                                                        <span>Send Message</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                       <div id="result" role="region" aria-live="polite" aria-atomic="true"></div>
+                                    </form>
+
+                                </div>
+
+                            </div>                             
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+                <script>
+                (function () {
+                    document.querySelectorAll('a[href="#contact"]').forEach(function (a) {
+                        a.addEventListener('click', function () {
+                            var form = document.getElementById('contact_form_container');
+                            var btn = document.getElementById('contact_btn');
+                            if (form && btn && form.style.display === 'none') { btn.click(); }
+                        });
+                    });
+                    // feature links play the video in place instead of jumping to the gallery
+                    var modal = document.createElement('div');
+                    modal.className = 'plite-modal';
+                    modal.setAttribute('role', 'dialog');
+                    modal.setAttribute('aria-modal', 'true');
+                    modal.innerHTML = '<div class="plite-modal-box"><p class="plite-modal-title"></p><button type="button" class="plite-modal-close" aria-label="Close">&times;</button><div class="plite-modal-frame"></div></div>';
+                    document.body.appendChild(modal);
+                    var frame = modal.querySelector('.plite-modal-frame'), lastFocus = null;
+                    function closeVideo() { modal.classList.remove('open'); frame.innerHTML = ''; if (lastFocus) lastFocus.focus(); }
+                    function openVideo(id, title) {
+                        lastFocus = document.activeElement;
+                        modal.querySelector('.plite-modal-title').textContent = title;
+                        var f = document.createElement('iframe');
+                        f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                        f.title = title;
+                        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                        f.allowFullscreen = true;
+                        frame.innerHTML = '';
+                        frame.appendChild(f);
+                        modal.classList.add('open');
+                        modal.querySelector('.plite-modal-close').focus();
+                    }
+                    modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('plite-modal-close')) closeVideo(); });
+                    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeVideo(); });
+                    function linkTitle(a) { return a.textContent.replace(/^\s*▶\s*/, ''); }
+                    document.querySelectorAll('a.plite-vlink[href^="#v-"]').forEach(function (a) {
+                        a.setAttribute('role', 'button');
+                        a.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
+                    });
+                    // the screenshot of each feature theme plays its first video
+                    document.querySelectorAll('.plite-theme').forEach(function (row) {
+                        var a = row.querySelector('a.plite-vlink[href^="#v-"]'), img = row.querySelector('.plite-theme-img');
+                        if (!a || !img) return;
+                        var w = document.createElement('a');
+                        w.href = a.getAttribute('href');
+                        w.className = 'plite-theme-media';
+                        w.setAttribute('aria-label', linkTitle(a) + ' — play video');
+                        img.parentNode.insertBefore(w, img);
+                        w.appendChild(img);
+                        var badge = document.createElement('span');
+                        badge.className = 'plite-media-badge';
+                        badge.textContent = '▶ Watch video';
+                        w.appendChild(badge);
+                        w.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
+                    });
+                    document.querySelectorAll('.plite-yt').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var id = btn.getAttribute('data-yt');
+                            var f = document.createElement('iframe');
+                            f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                            f.title = btn.getAttribute('aria-label') || 'YouTube video';
+                            f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                            f.allowFullscreen = true;
+                            btn.replaceWith((function () { var w = document.createElement('div'); w.className = 'plite-yt'; w.appendChild(f); return w; })());
+                        });
+                    });
+                })();
+                </script>
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+                            
+                            <div>                                
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="agentstorming.html">Agent Storming Workshop</a></li>
+                                        <li><a href="educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="ax-lite-course.html">AI Work Class for Your Company</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Industry Solutions</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="industry.html">Industry Solutions Overview</a></li>
+                                        <li><a href="mes.html">uEngine MES</a></li>
+                                        <li><a href="../../docs/mes/index.html">MES Tutorial (Korean)</a></li>
+                                        <li><a href="wms.html">uEngine WMS</a></li>
+                                        <li><a href="../../docs/wms/index.html">WMS Tutorial (Korean)</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="showcase.html">Showcase</a></li><li><a href="history.html">History</a></li>
+                                        <li><a href="partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="newsroom.html">Newsroom</a></li>
+                                        <li><a href="newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="interview.html">Interview</a></li>
+                                        <li><a href="webinars.html">Webinars</a></li>
+                                        <li><a href="bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/en/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
+

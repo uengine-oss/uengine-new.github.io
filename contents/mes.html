@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>uEngine MES — 이벤트로 기록하고 AI 에이전트가 대응하는 제조 실행 시스템</title>
+        <meta name="description" content="모든 변경을 이벤트로 저장하는 MES의 시연용 참조 구현입니다. 설비 이상의 영향 계산, 시점 조회, 시맨틱 레이어, 사람의 결정을 받아 실행하는 AI 에이전트를 영상과 튜토리얼로 보여 드립니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/mes.html">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="uEngine MES — 이벤트로 기록하고 AI 에이전트가 대응하는 제조 실행 시스템">
+        <meta property="og:description" content="모든 변경을 이벤트로 저장하는 MES의 시연용 참조 구현입니다. 설비 이상의 영향 계산, 시점 조회, 시맨틱 레이어, 사람의 결정을 받아 실행하는 AI 에이전트를 영상과 튜토리얼로 보여 드립니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/mes.html">
+        <meta property="og:image" content="https://www.uengine.org/docs/mes/img/anomaly-impact.webp">
+        <meta property="og:image:alt" content="uEngine MES — 이벤트로 기록하고 AI 에이전트가 대응하는 제조 실행 시스템">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="uEngine MES — 이벤트로 기록하고 AI 에이전트가 대응하는 제조 실행 시스템">
+        <meta name="twitter:description" content="모든 변경을 이벤트로 저장하는 MES의 시연용 참조 구현입니다. 설비 이상의 영향 계산, 시점 조회, 시맨틱 레이어, 사람의 결정을 받아 실행하는 AI 에이전트를 영상과 튜토리얼로 보여 드립니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/docs/mes/img/anomaly-impact.webp">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"uEngine MES","description":"모든 변경을 이벤트로 저장하는 MES의 시연용 참조 구현입니다. 설비 이상의 영향 계산, 시점 조회, 시맨틱 레이어, 사람의 결정을 받아 실행하는 AI 에이전트를 영상과 튜토리얼로 보여 드립니다.","url":"https://www.uengine.org/contents/mes.html","image":"https://www.uengine.org/docs/mes/img/anomaly-impact.webp","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"ko","publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}}}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"uEngine MES","item":"https://www.uengine.org/contents/mes.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/style.css?after">
+        <link rel="stylesheet" href="../css/style-responsive.css">
+        <link rel="stylesheet" href="../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../css/magnific-popup.css">
+        <link rel="stylesheet" href="../css/owl.carousel.css">
+        <link rel="stylesheet" href="../css/splitting.css">
+        <link rel="stylesheet" href="../css/YTPlayer.css">
+        <link rel="stylesheet" href="../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    </head>
+    
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../index.html" class="logo">
+                            <img src="../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../en/contents/processgptlite.html" class="opacity-1 no-hover mobile-chat lang-switch" title="English">EN</a><!--/lang-switch-->
+                        <a href="contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/enterprisebrain.html" style="font-size: 18px;">AI-Native Enterprise란?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Process Solutions · Agent&nbsp;Orchestrator&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Ontology Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="agentstorming.html" style="font-size: 18px;">Agent Storming 워크숍</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationax.html" style="font-size: 18px">AX 전환 컨설팅 교육</a>
+                                            </li>
+                                            <li>
+                                                <a href="ax-lite-course.html" style="font-size: 18px;">우리 회사 AI 업무교실</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/aidevoutlook.html" style="font-size: 18px;">AI 기반 개발의 현재와 향후 전망</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="leaddevelopment.html" style="font-size: 18px;">선도개발 구현 컨설팅</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Industry Solutions <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="industry.html" style="font-size: 18px;">산업별 솔루션 개요</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Manufacturing&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="mes.html" style="font-size: 18px;">uEngine MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="../docs/mes/index.html" style="font-size: 18px;">MES 튜토리얼</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Logistics&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="wms.html" style="font-size: 18px;">uEngine WMS</a>
+                                            </li>
+                                            <li>
+                                                <a href="../docs/wms/index.html" style="font-size: 18px;">WMS 튜토리얼</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/bpmalive.html" style="font-size: 18px;">BPM 은 죽지 않았다</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                        <li><a href="uengine-pal.html" style="font-size: 18px;">uEngine PAL</a></li>
+                                            <li>
+                                                <a href="uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/whymsahard.html" style="font-size: 18px;">왜 클라우드 네이티브는 어려운가?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">MSA School 바로가기</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                               
+                            <li class="pc-chat lang-switch"><a href="../en/contents/processgptlite.html" class="opacity-1 no-hover" title="English" hreflang="en"><span class="link-hover-anim underline" data-link-animate="y">EN</span></a></li>
+                            <li class="pc-chat"><a href="contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a></li>
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+                <style>
+                .plite-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform .3s ease; width: 100%; }
+                .plite-card:hover { transform: translateY(-4px); }
+                .plite-card-img { overflow: hidden; aspect-ratio: 16 / 9; border-bottom: 1px solid #eee; }
+                .plite-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+                .plite-card-body { padding: 26px 26px 32px; }
+                .plite-card-title { font-size: 1.45rem; font-weight: 700; margin: 0 0 14px; text-align: left; line-height: 1.4; }
+                .plite-card-desc { font-size: 1.02rem; color: #666; line-height: 1.65; margin: 0; text-align: left; }
+                .plite-theme { margin-bottom: 90px; }
+                .plite-theme:last-child { margin-bottom: 0; }
+                .plite-theme-img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #e5e5ea; box-shadow: 0 10px 30px rgba(26,26,46,.12); }
+                .plite-theme-cat { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #1e88e5; margin: 0 0 8px; }
+                .plite-theme-title { font-size: 1.75rem; font-weight: 700; line-height: 1.4; margin: 0 0 14px; }
+                .plite-theme-lead { font-size: 1.08rem; color: #555; line-height: 1.7; margin: 0 0 20px; }
+                .plite-theme-list { list-style: none; padding: 0; margin: 0 0 18px; }
+                .plite-theme-list li { padding: 12px 0 12px 18px; border-top: 1px solid #eee; position: relative; }
+                .plite-theme-list li::before { content: ""; position: absolute; left: 0; top: 21px; width: 7px; height: 7px; border-radius: 50%; background: #7c5cff; }
+                .plite-theme-list strong { display: block; font-size: 1.05rem; color: #111; margin-bottom: 4px; }
+                .plite-theme-list span { display: block; font-size: .98rem; color: #666; line-height: 1.65; }
+                .plite-vlinks { display: flex; flex-wrap: wrap; gap: 8px; }
+                .plite-vlink { font-size: 14px; padding: 6px 14px; border-radius: 20px; border: 1px solid #d5d5de; color: #333; text-decoration: none; }
+                .plite-vlink:hover { border-color: #111; color: #111; }
+                .plite-card-vlinks { margin-top: 20px; }
+                .plite-vlink { cursor: pointer; background: #fff; }
+                .plite-theme-media { position: relative; display: block; cursor: pointer; }
+                .plite-theme-media .plite-media-badge { position: absolute; left: 16px; bottom: 16px; padding: 8px 16px; border-radius: 20px; background: rgba(17,17,17,.82); color: #fff; font-size: 14px; font-weight: 600; pointer-events: none; transition: background .2s; }
+                .plite-theme-media:hover .plite-media-badge, .plite-theme-media:focus-visible .plite-media-badge { background: #f00; }
+                .plite-modal { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.78); }
+                .plite-modal.open { display: flex; }
+                .plite-modal-box { position: relative; width: min(1100px, 100%); }
+                .plite-modal-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+                .plite-modal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+                .plite-modal-title { color: #fff; font-size: 1rem; font-weight: 600; margin: 0 48px 10px 2px; }
+                .plite-modal-close { position: absolute; right: 0; top: -6px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255,255,255,.15); color: #fff; font-size: 22px; line-height: 36px; cursor: pointer; }
+                .plite-modal-close:hover { background: rgba(255,255,255,.3); }
+                .plite-gal-head { font-size: 1.3rem; font-weight: 700; margin: 10px 0 24px; padding-bottom: 12px; border-bottom: 2px solid #111; }
+                .plite-yt { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #000; cursor: pointer; box-shadow: 0 6px 20px rgba(26,26,46,.12); }
+                .plite-yt img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease, opacity .3s ease; }
+                .plite-yt:hover img, .plite-yt:focus-visible img { transform: scale(1.03); opacity: .85; }
+                .plite-yt-play { position: absolute; left: 50%; top: 50%; width: 64px; height: 44px; margin: -22px 0 0 -32px; border-radius: 12px; background: rgba(20,20,20,.82); }
+                .plite-yt:hover .plite-yt-play { background: #f00; }
+                .plite-yt-play::after { content: ""; position: absolute; left: 26px; top: 13px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent #fff; }
+                .plite-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+                .plite-v-title { font-size: 1.1rem; font-weight: 700; margin: 14px 0 6px; }
+                .plite-v-cap { font-size: .95rem; color: #666; line-height: 1.6; margin: 0; }
+                .plite-diff-note { font-size: 1.05rem; color: #444; line-height: 1.8; }
+                @media (max-width: 991px) { .plite-theme { margin-bottom: 60px; } .plite-theme-img { margin-bottom: 24px; } }
+                </style>
+
+                <style>
+                .hj-tag { display:inline-block; font-size:12px; font-weight:700; letter-spacing:.06em; color:#1F4E79; background:#E3EBF4; border-radius:999px; padding:4px 12px; margin-bottom:12px; }
+                .hj-arch td, .hj-arch th { padding:12px 14px; border-top:1px solid #e5e5ea; vertical-align:top; font-size:1rem; }
+                .hj-arch th { background:#f6f7f9; text-align:left; }
+                .hj-arch { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                .hj-principle { background:#fff; border-radius:14px; padding:22px 24px; height:100%; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                .hj-principle b { display:block; font-size:1.1rem; margin-bottom:8px; }
+                .hj-principle span { color:#555; line-height:1.65; }
+                .hj-note { font-size:.95rem; color:#666; }
+                </style>
+
+                
+                <!-- Header Section -->
+                <section class="page-section pb-100 pb-sm-60 bg-gray-light-1 bg-light-alpha-90 bg-scroll" style="background-image: url(../images/full-width-images/section-bg-2.jpg)">
+                    <div class="container position-relative pt-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h2 class="section-caption-border mb-30 mb-xs-20 wow fadeInUp" data-wow-duration="1.2s">Industry Solutions · Manufacturing</h2>
+                                    <h1 class="hs-title-1 mb-20"><span class="wow charsAnimIn" data-splitting="chars">uEngine MES</span></h1>
+                                    <p class="section-descr mb-40 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 760px; margin-left: auto; margin-right: auto;">
+                                        모든 변경을 이벤트로 기록하는 제조 실행 시스템 &mdash; 설비가 멈추면 영향을 계산하고, 판단과 실행의 근거를 남기며, AI 에이전트가 사람의 승인 아래 대응합니다
+                                    </p>
+                                    <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                        <a href="#videos" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">시연 영상</span></a><a href="../docs/mes/index.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;"><span style="font-size: 16px;">튜토리얼</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;"><span style="font-size: 16px;">문의하기</span></a>
+                                    </div>
+                                    <p class="hj-note mt-30 mb-0">시연용 참조 구현입니다. 소스는 공개하지 않고, 화면의 회사·제품·수치는 모두 합성 데이터입니다. 시연 환경은 문의해 주세요.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section class="page-section" id="about">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 mb-sm-0 mt-n10"><div class="video-box"><iframe src="https://www.youtube.com/embed/sGOKoBT5yNA" title="uEngine MES 제품 시연" frameborder="0" scrolling="no" loading="lazy" allowfullscreen=""></iframe></div></div>
+                            <div class="col-md-6 col-xl-5 offset-xl-1 mt-n10 mt-sm-20">
+                                <p class="section-descr"><span style="font-size: 1.8rem; color: #111; font-weight: 600;">기록하는 MES에서, 판단하고 대응하는 MES로</span></p>
+                                <p class="lead mt-0 mb-30 mb-sm-20" style="font-size: 19px;">
+                                    현재 상태만 저장하면 왜 그렇게 됐는지가 남지 않습니다. uEngine MES 는 <b>모든 변경을 이벤트로 저장</b>합니다. 설비가 멈추면 어떤 작업지시와 수주, 납기가 걸리는지 계산하고, 담당자의 판단과 실행 결과가 같은 이력에 이어집니다.<br><br>그 위에 <b>Process GPT 에이전트</b>와 <b>시맨틱 레이어</b>를 올렸습니다. 에이전트는 여러 시스템의 근거를 모아 대안을 내고, 사람이 결정하면 실행한 뒤 원천을 다시 읽어 확인합니다. 사람이 「앞으로 적용」이라고 정한 결정은 규칙의 새 버전이 되어, 같은 이상이 다시 생기면 결정 없이 처리됩니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 주요 기능 -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" id="features" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;"><span class="wow charsAnimIn" data-splitting="chars">현장 대응에서 AI 연결까지</span></h3>
+                            <p class="section-descr mb-70 mb-sm-40 wow fadeInUp">모두 실제로 실행해 찍은 화면입니다. 화면을 누르면 그 장의 영상이 재생됩니다.</p>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-anomaly">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../docs/mes/img/anomaly-impact.webp" alt="모니터링 화면의 이상 상황과 영향 분석" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">현장 대응</p>
+                                <h3 class="plite-theme-title">설비가 멈추면, 영향부터 계산합니다</h3>
+                                <p class="plite-theme-lead">정지를 등록하면 이상 상황이 열리고, 영향 범위와 대체 설비 후보가 바로 나옵니다.</p>
+                                <ul class="plite-theme-list"><li><strong>영향 분석</strong><span>설비에서 작업지시, 수주, 납기로 관계를 따라가 잔량과 최단 납기를 계산합니다.</span></li><li><strong>사람이 고르는 대응</strong><span>보류와 대체 설비 재계획을 사유·승인자와 함께 실행합니다.</span></li><li><strong>대응 지표</strong><span>영향 분석, 대응, 재계획, 복구 시간과 손실 수량을 이벤트 시각에서 계산합니다.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-3lJYRt79bM8">▶ 1장 설비 이상 대응</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-events">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../docs/mes/img/events-trace.webp" alt="이벤트 소싱 탐색기의 프로세스 추적 화면" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">이력과 추적</p>
+                                <h3 class="plite-theme-title">왜 그렇게 됐는지, 이벤트로 되짚습니다</h3>
+                                <p class="plite-theme-lead">서비스를 가로지른 원인과 결과가 그대로 남고, 그때 공장 상태도 다시 볼 수 있습니다.</p>
+                                <ul class="plite-theme-list"><li><strong>변경 이력</strong><span>화면마다 필드별 변경 전후와 사유, 승인자를 봅니다.</span></li><li><strong>프로세스 추적</strong><span>상관 ID 로 묶인 이벤트를 서비스 레인과 인과 화살표로 펼칩니다.</span></li><li><strong>시점 조회 · 재구축</strong><span>그때의 설비 상태를 재생으로 복원하고, 읽기 모델을 이벤트로 다시 만듭니다.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-cFVHO_krx-8">▶ 2장 이벤트 추적</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-semantic">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../docs/mes/img/semantic-answer.webp" alt="시맨틱 레이어의 출하 가능 수량과 ERP 회계 재고 비교" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">AI 연결</p>
+                                <h3 class="plite-theme-title">흩어진 시스템을 하나의 판단으로 묶습니다</h3>
+                                <p class="plite-theme-lead">「오늘 17시까지 2,000개 납품할 수 있나?」처럼 어느 시스템도 혼자 답하지 못하는 질문에, LOT 별 근거와 함께 답합니다.</p>
+                                <ul class="plite-theme-list"><li><strong>원천은 그대로</strong><span>ERP, SCM, APS, MMS, QMS, MES, Edge 7종을 복제 없이 질의할 때 읽습니다.</span></li><li><strong>판단 개념</strong><span>출하 가능 수량처럼 어느 시스템에도 없는 개념을 규칙과 함께 정의합니다.</span></li><li><strong>함수와 회귀</strong><span>기존 프로시저와 서비스를 read·plan·exec 함수로 올리고, Golden Question 으로 다시 검증합니다.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-stegYnW7PFs">▶ 3장 시맨틱 레이어</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-agent">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../docs/mes/img/agent-exec.webp" alt="격리와 재계획 실행 원장 화면" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">AI 연결</p>
+                                <h3 class="plite-theme-title">에이전트가 제안하고, 사람이 결정하고, 규칙으로 배웁니다</h3>
+                                <p class="plite-theme-lead">용접 이상 한 건을 부서별 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 고르기만 합니다.</p>
+                                <ul class="plite-theme-list"><li><strong>부서별 에이전트</strong><span>위험 판정, 의심 LOT 추적, 납기 영향, 대안 시뮬레이션을 차례로 맡습니다.</span></li><li><strong>실행과 재조회</strong><span>승인된 결정으로만 실행하고, 쓰기마다 원천을 다시 읽어 확인합니다.</span></li><li><strong>재발 시 자동 처리</strong><span>「앞으로 적용」한 결정은 규칙의 새 버전이 되어 다음 사건은 조건을 따져 자동으로 실행합니다.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-IVmYn_nEDtQ">▶ 4장 에이전트 협업과 사람의 결정</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="page-section" id="status">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">구성과 현재 상태</span></h3>
+                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">무엇이 되어 있고 무엇이 아직인지 그대로 적었습니다.</p>
+                        </div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody><tr><td>백엔드</td><td>업무 서비스 10개와 게이트웨이. Java 17, Spring Boot, Kafka, PostgreSQL</td></tr><tr><td>화면</td><td>Vue 3. 대메뉴 9개, 중메뉴 60개, 화면 145개. 대부분 범용 그리드 화면이고 생산·설비·품질·창고 등 핵심 화면은 전용으로 만들었습니다</td></tr><tr><td>이벤트 소싱</td><td>추가만 되는 이벤트 저장소, 아웃박스, 상관·인과 ID, 시점 조회, 프로젝션 재구축</td></tr><tr><td>AI 연결</td><td>Process GPT 프로세스와 에이전트, 시맨틱 레이어, read·plan·exec 함수, 사람의 결정 카드</td></tr><tr><td>아직 없는 것</td><td>범용 화면에는 도메인 규칙이 없습니다. 권한 데이터는 메뉴·API 접근 제어에 아직 쓰이지 않습니다. 컨테이너 이미지가 없습니다. 시맨틱 레이어와 데이터 패브릭은 시연용 경량 구현이고, 비전 추론은 학습된 모델이 아니라 픽셀 규칙으로 흉내 낸 것입니다</td></tr></tbody></table></div>
+                        
+                    </div>
+                </section>
+
+                <!-- 영상 -->
+                <section class="page-section bg-gray-light-1" id="videos">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">영상으로 보기</span></h3>
+                            <p class="section-descr mb-60 mb-sm-40 wow fadeInUp">합성 데이터로 실제로 돌리며 녹화한 영상입니다. 썸네일을 누르면 재생됩니다.</p>
+                        </div>
+                        <h3 class="plite-gal-head">제품 시연</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-sGOKoBT5yNA">
+                                <button type="button" class="plite-yt" data-yt="sGOKoBT5yNA" aria-label="제품 시연 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/sGOKoBT5yNA/hqdefault.jpg" alt="제품 시연 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">제품 시연</h4>
+                                <p class="plite-v-cap">설비 이상 대응부터 이벤트 추적, 시맨틱 레이어, 에이전트까지 한 번에 봅니다.</p>
+                            </div>
+                        </div>
+                        <h3 class="plite-gal-head">튜토리얼</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-M2reVd1F-qs">
+                                <button type="button" class="plite-yt" data-yt="M2reVd1F-qs" aria-label="0장 시작하기 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/M2reVd1F-qs/hqdefault.jpg" alt="0장 시작하기 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">0장 시작하기</h4>
+                                <p class="plite-v-cap">화면 구성과 메뉴, 그리드, 변경 이력을 둘러봅니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-3lJYRt79bM8">
+                                <button type="button" class="plite-yt" data-yt="3lJYRt79bM8" aria-label="1장 설비 이상 대응 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/3lJYRt79bM8/hqdefault.jpg" alt="1장 설비 이상 대응 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">1장 설비 이상 대응</h4>
+                                <p class="plite-v-cap">설비 정지부터 영향 분석, 재계획, 재가동, 해소까지 따라갑니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-cFVHO_krx-8">
+                                <button type="button" class="plite-yt" data-yt="cFVHO_krx-8" aria-label="2장 이벤트 추적 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/cFVHO_krx-8/hqdefault.jpg" alt="2장 이벤트 추적 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">2장 이벤트 추적</h4>
+                                <p class="plite-v-cap">인과 추적, 이벤트 저장소, 스트림 재생, 시점 조회, 프로젝션 재구축을 봅니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-stegYnW7PFs">
+                                <button type="button" class="plite-yt" data-yt="stegYnW7PFs" aria-label="3장 시맨틱 레이어 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/stegYnW7PFs/hqdefault.jpg" alt="3장 시맨틱 레이어 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">3장 시맨틱 레이어</h4>
+                                <p class="plite-v-cap">납품 가능 질문 하나로 원천, 온톨로지, 함수, 회귀 세트를 따라갑니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-IVmYn_nEDtQ">
+                                <button type="button" class="plite-yt" data-yt="IVmYn_nEDtQ" aria-label="4장 에이전트 협업과 사람의 결정 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/IVmYn_nEDtQ/hqdefault.jpg" alt="4장 에이전트 협업과 사람의 결정 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">4장 에이전트 협업과 사람의 결정</h4>
+                                <p class="plite-v-cap">이상 감지, 에이전트, 사람의 결정, 실행, 학습, 재발 자동 처리까지 실제로 돌립니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Call Action -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative mt-n30 mt-sm-0">
+                        <div class="row wow fadeInUp get-started-content"><div>
+                            <p class="mb-20 mt-n10" style="font-size: 2.2rem; font-weight: 600;">우리 공장의 이벤트로 먼저 살펴보세요</p>
+                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">시연 환경을 함께 보고, 어느 업무에 에이전트를 둘지 찾는 일은 <a href="agentstorming.html">Agent Storming 워크숍</a>으로 이어 갈 수 있습니다.</p>
+                            <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                <a href="#contact" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">시연 요청</span></a><a href="../docs/mes/index.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border: 2px solid #111;"><span style="font-size: 16px;">튜토리얼</span></a>
+                            </div>
+                        </div></div>
+                    </div>
+                </section>
+<hr class="mt-0 mb-0"/>
+                <!-- Contact us Section -->
+                <section class="page-section mt-n10 mt-sm-0 mb-sm-20" id="contact">
+                    <div class="container position-relative">
+                        
+                        <div class="row text-center wow fadeInUp">
+                            <div class="col-md-8 offset-md-2 col-lg-10 offset-lg-1">
+                                <p class="section-title-tiny mb-10" style="font-size: 2rem;">
+                                    더 궁금한 점이 있으신가요?
+                                </p>
+                                <p class="section-title-tiny mb-50 mb-sm-30">
+                                    <b>uEngine MES</b>에 대해 더 알고 싶으시거나 문의 사항이 있으시면 언제든지 연락해 주세요.
+                                </p>
+                                <div class="local-scroll">
+                                    <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
+                                        <span>Contact us</span>
+                                    </a>
+                                </div>
+
+                                <!-- Contact Form (초기 숨김) -->
+                                <div id="contact_form_container" class="contact-form-container" style="display: none;">
+                                    <div class="form-header">
+                                        <div></div>
+                                        <h2>문의하기</h2>
+                                        <button id="close_btn" class="close-button">✖</button>
+                                    </div>
+                                    
+                                    <form id="contact_form" action="https://formspree.io/f/mjkydzab" method="POST" class="form contact-form fadeInUp wch-unset">
+                                        <div class="row">
+                                            <input type="hidden" name="classification" value="uEngineMES">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">이름 <span>*</span></label>
+                                                    <input type="text" name="name" id="name" class="input-lg round form-control" placeholder="이름을 입력해 주세요">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email">이메일 <span>*</span></label>
+                                                    <input type="email" name="email" id="email" class="input-lg round form-control" placeholder="답변받으실 이메일 주소를 입력해 주세요">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="company">회사 <span>*</span></label>
+                                                    <input type="text" name="company" id="company" class="input-lg round form-control" placeholder="회사명 또는 소속기관을 입력해 주세요">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="position">직급</label>
+                                                    <input type="text" name="position" id="position" class="input-lg round form-control" placeholder="직급을 입력해 주세요">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="message">문의 내용 <span>*</span></label>
+                                            <textarea name="message" id="message" class="input-lg round form-control" placeholder="문의 내용을 입력해 주세요"></textarea>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-tip pt-0">
+                                                    <div class="contact_form_policy">
+                                                        <label style="color: var(--color-gray-light-6);">
+                                                            <input type="checkbox" name="contact_policy" id="contact_policy" value="동의" style="vertical-align: middle; width: 15px; height: 15px;">
+                                                            <span style="color: var(--color-gray-light-6);">(필수)</span>
+                                                            <button id="contact_form_modal_open" data-modal="contact_form_policy_modal" type="button">개인정보 수집 및 이용</button>
+                                                            <span style="color: var(--color-gray-light-6);">에 동의합니다.</span>
+                                                        </label>
+                                                        <div class="contact_form_msg_error" id="contact_policy_error"></div>
+                                                        <div class="contact_form_modal blind" id="contact_form_policy_modal">
+                                                            <div class="contact_form_modal_body">
+                                                                <h2 class="contact_form_modal_title">
+                                                                    개인정보 수집 및 이용
+                                                                </h2>
+                                                                <div class="contact_form_modal_text">
+                                                                    유엔진솔루션즈(이하 "회사")가 문의하신 내용에 대한 답변을 제공하기 위해 개인정보를 수집·이용하고자 하는 경우에는 ｢개인정보 보호법｣ 등 관계 법령에 따라 본인의 동의가 필요합니다.
+                                                                    <br>회사 제품 구매 및 컨설팅 문의에 답변하고 회사가 제공하는 서비스를 이용하는 데 필요한 최소한의 개인정보를 수집하고 이용합니다.
+                                                                    <br>수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료될 경우 즉시 파기됩니다.
+                                                                </div>
+                                                                <div class="contact_form_modal_btn">
+                                                                    <button id="contact_form_modal_close" 
+                                                                        class="contact_form_modal_close_btn btn btn-mod btn-round" 
+                                                                        data-modal="contact_form_policy_modal" 
+                                                                        type="button"
+                                                                        style="background-color: var(--color-dark-3); 
+                                                                        color: var(--color-gray-light-3);">닫기</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="contact_form_modal_bg" id="contact_form_modal_bg"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="text-end pt-20 pt-xs-40">
+                                                    <button class="submit_btn btn btn-mod btn-large btn-round btn-hover-anim" id="submit_btn" aria-controls="result">
+                                                        <span>Send Message</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                       <div id="result" role="region" aria-live="polite" aria-atomic="true"></div>
+                                    </form>
+
+                                </div>
+
+                            </div>                             
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+                <script>
+                (function () {
+                    document.querySelectorAll('a[href="#contact"]').forEach(function (a) {
+                        a.addEventListener('click', function () {
+                            var form = document.getElementById('contact_form_container');
+                            var btn = document.getElementById('contact_btn');
+                            if (form && btn && form.style.display === 'none') { btn.click(); }
+                        });
+                    });
+                    // feature links play the video in place instead of jumping to the gallery
+                    var modal = document.createElement('div');
+                    modal.className = 'plite-modal';
+                    modal.setAttribute('role', 'dialog');
+                    modal.setAttribute('aria-modal', 'true');
+                    modal.innerHTML = '<div class="plite-modal-box"><p class="plite-modal-title"></p><button type="button" class="plite-modal-close" aria-label="닫기">&times;</button><div class="plite-modal-frame"></div></div>';
+                    document.body.appendChild(modal);
+                    var frame = modal.querySelector('.plite-modal-frame'), lastFocus = null;
+                    function closeVideo() { modal.classList.remove('open'); frame.innerHTML = ''; if (lastFocus) lastFocus.focus(); }
+                    function openVideo(id, title) {
+                        lastFocus = document.activeElement;
+                        modal.querySelector('.plite-modal-title').textContent = title;
+                        var f = document.createElement('iframe');
+                        f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                        f.title = title;
+                        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                        f.allowFullscreen = true;
+                        frame.innerHTML = '';
+                        frame.appendChild(f);
+                        modal.classList.add('open');
+                        modal.querySelector('.plite-modal-close').focus();
+                    }
+                    modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('plite-modal-close')) closeVideo(); });
+                    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeVideo(); });
+                    function linkTitle(a) { return a.textContent.replace(/^\s*▶\s*/, ''); }
+                    document.querySelectorAll('a.plite-vlink[href^="#v-"]').forEach(function (a) {
+                        a.setAttribute('role', 'button');
+                        a.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
+                    });
+                    // the screenshot of each feature theme plays its first video
+                    document.querySelectorAll('.plite-theme').forEach(function (row) {
+                        var a = row.querySelector('a.plite-vlink[href^="#v-"]'), img = row.querySelector('.plite-theme-img');
+                        if (!a || !img) return;
+                        var w = document.createElement('a');
+                        w.href = a.getAttribute('href');
+                        w.className = 'plite-theme-media';
+                        w.setAttribute('aria-label', linkTitle(a) + ' 영상 보기');
+                        img.parentNode.insertBefore(w, img);
+                        w.appendChild(img);
+                        var badge = document.createElement('span');
+                        badge.className = 'plite-media-badge';
+                        badge.textContent = '▶ 영상 보기';
+                        w.appendChild(badge);
+                        w.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
+                    });
+                    document.querySelectorAll('.plite-yt').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var id = btn.getAttribute('data-yt');
+                            var f = document.createElement('iframe');
+                            f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                            f.title = btn.getAttribute('aria-label') || 'YouTube video';
+                            f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                            f.allowFullscreen = true;
+                            btn.replaceWith((function () { var w = document.createElement('div'); w.className = 'plite-yt'; w.appendChild(f); return w; })());
+                        });
+                    });
+                })();
+                </script>
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                유엔진솔루션즈는 2003년 이래 업무 프로세스 관리 (Business Process Management), AI, MSA, 기업용 SNS, PaaS 를 포함한 클라우드 플랫폼, 도메인 기반 개발 방법을 지향하는 개발 프레임워크 등을 개발하고 오픈소스 프로젝트로 제공하는 기술 집약적 기업입니다.
+                            </p>
+                            
+                            <div>                                
+                                본사: 서울 서초구 사임당로 31 궁현빌딩 3층 301호<br>
+                                지사: 경상남도 창원시 성산구 상남로37
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/enterprisebrain.html">AI-Native Enterprise란?</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="agentstorming.html">Agent Storming 워크숍</a></li>
+                                        <li><a href="educationax.html">AX 전환 컨설팅 교육</a></li>
+                                        <li><a href="ax-lite-course.html">우리 회사 AI 업무교실</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/aidevoutlook.html">AI 기반 개발의 현재와 향후 전망</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="leaddevelopment.html">선도개발 구현 컨설팅</a></li>
+                                        <li><a href="casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Industry Solutions</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="industry.html">산업별 솔루션 개요</a></li>
+                                        <li><a href="mes.html">uEngine MES</a></li>
+                                        <li><a href="../docs/mes/index.html">MES 튜토리얼</a></li>
+                                        <li><a href="wms.html">uEngine WMS</a></li>
+                                        <li><a href="../docs/wms/index.html">WMS 튜토리얼</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/bpmalive.html">BPM 은 죽지 않았다</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="uengine-pal.html">uEngine PAL</a></li>
+                                        <li><a href="uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="blog/whymsahard.html">왜 클라우드 네이티브는 어려운가?</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">MSA School 바로가기</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="showcase.html">Showcase</a></li><li><a href="history.html">History</a></li>
+                                        <li><a href="partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="newsroom.html">Newsroom</a></li>
+                                        <li><a href="newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="interview.html">Interview</a></li>
+                                        <li><a href="webinars.html">Webinars</a></li>
+                                        <li><a href="bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">유엔진솔루션즈 | 사업자등록번호: 2118795355 | 대표: 장진영</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../js/contact-form.js"></script>        
+        <script src="../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
+

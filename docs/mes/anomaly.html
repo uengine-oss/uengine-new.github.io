@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설비 이상 대응 — uEngine MES 튜토리얼</title>
+<meta name="description" content="CNC 설비 한 대가 멈춘 순간부터 영향 분석, 관리자 확인, 대체 설비 재계획, 재가동과 해소까지 한 사건을 따라갑니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/mes/anomaly.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="설비 이상 대응 — uEngine MES 튜토리얼">
+<meta property="og:description" content="CNC 설비 한 대가 멈춘 순간부터 영향 분석, 관리자 확인, 대체 설비 재계획, 재가동과 해소까지 한 사건을 따라갑니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/mes/anomaly.html">
+<meta property="og:image" content="https://www.uengine.org/docs/mes/img/anomaly-monitor.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine MES <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 설비 정지, 시점 조회, 시맨틱 레이어)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/mes.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">현장 대응</div><ul>
+<li><a href="anomaly.html" class="on" aria-current="page"><span class="n">01</span>설비 이상 대응</a></li>
+</ul>
+<div class="nav-part">이력과 추적</div><ul>
+<li><a href="events.html"><span class="n">02</span>이벤트 추적</a></li>
+</ul>
+<div class="nav-part">AI 연결</div><ul>
+<li><a href="semantic.html"><span class="n">03</span>시맨틱 레이어</a></li>
+<li><a href="agent.html"><span class="n">04</span>에이전트 협업과 사람의 결정</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">현장 대응<span class="chap">1</span></div>
+    <h1>설비 이상 대응</h1>
+    <article>
+<blockquote>
+<p>CNC 설비 한 대가 멈춘 순간부터 영향 분석, 관리자 확인, 대체 설비 재계획, 재가동과 해소까지 한 사건을 따라갑니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/3lJYRt79bM8" title="설비 이상 대응 — 영상 3:11" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>설비가 멈추면 담당자는 어느 작업지시가 걸렸는지, 어느 수주의 납기가 위험한지, 어느 설비로 옮길 수 있는지를 찾아다닙니다. uEngine MES 는 정지를 이벤트로 기록하고, 그 이벤트를 받은 서비스들이 관계를 따라 영향 범위를 계산합니다. 사람은 찾는 대신 판단합니다. 판단과 실행은 다시 이벤트로 남습니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>하는 일</th>
+<th>남는 이벤트</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>정지 등록</td>
+<td>현장 담당자가 사유와 예상 복구 시간을 입력</td>
+<td><code>EquipmentStopped</code></td>
+</tr>
+<tr>
+<td>감지 · 영향 분석</td>
+<td>분석 서비스가 사건을 열고, 생산 서비스가 작업지시·수주·납기·대체 설비를 산출</td>
+<td><code>AnomalyOpened</code>, <code>ProductionImpactAssessed</code>, <code>ImpactAttached</code></td>
+</tr>
+<tr>
+<td>확인</td>
+<td>생산관리자가 대응 시작</td>
+<td><code>AnomalyAcknowledged</code></td>
+</tr>
+<tr>
+<td>보류 · 재계획 · 재개</td>
+<td>담당자가 작업지시를 옮김</td>
+<td><code>WorkOrderHeld</code>, <code>WorkOrderRescheduled</code>, <code>ReplanRecorded</code>, <code>WorkOrderResumed</code></td>
+</tr>
+<tr>
+<td>재가동 · 해소</td>
+<td>수리 후 재가동하면 사건이 닫히고 손실이 계산됨</td>
+<td><code>EquipmentRestarted</code>, <code>AnomalyResolved</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">이 시연 환경의 동작</p>
+<p>시연 환경의 생산 서비스는 <strong>영향 평가만 하는 모드</strong>(<code>ASSESS_ONLY</code>)로 돌아갑니다. 설비가 멈춰도 작업지시를 자동으로 보류하지 않고, 영향만 계산해 결정을 사람에게 남깁니다. 정지 등록 창의 안내문에는 자동 보류라고 적혀 있지만 이 환경에서는 그렇게 동작하지 않습니다. 자동 보류는 설정(<code>HOLD_ALL</code>)으로 켜는 동작이며 이 튜토리얼에서는 다루지 않습니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>그리드는 앞 장에서 본 컬럼 설정으로 작업지시번호, 설비코드, 품명, 납기, 상태, 수주번호, 고객사, 보류사유만 켜 두면 보기 편합니다. 설비 현황은 설비코드, 설비명, 설비 공정, 가동상태, 상태변경, 정지사유, RPH 를 켭니다.</p>
+<ol class="steps">
+<li><strong>모니터링 확인.</strong> 오른쪽 위 모니터 아이콘으로 <strong>모니터링</strong>을 엽니다. <strong>미해소 이상</strong>이 0 이고 설비 타일이 가동 또는 대기인지 봅니다. <strong>평균 복구시간</strong>이 크게 나오면 시드 데이터의 지난 공정 지연 사건을 정리하며 잡힌 값입니다. 뒤에서 볼 이번 사건의 복구 시간은 사건 상세에 따로 나옵니다.
+
+<figure><a href="img/anomaly-before.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="정지 전 모니터링" src="img/anomaly-before.webp" loading="lazy" decoding="async"></a><figcaption>정지 전 모니터링</figcaption></figure>
+</li>
+<li><strong>걸려 있는 작업지시 보기.</strong> <strong>생산 › 작업지시 › 작업지시 현황</strong>에서 기간을 <strong>년</strong>으로 넓히고 <code>CNC-M01</code> 을 검색합니다. 3건입니다. 2610-0002 는 진행, 나머지 둘은 대기입니다.
+
+<figure><a href="img/anomaly-wo-before.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="CNC-M01 의 작업지시 3건" src="img/anomaly-wo-before.webp" loading="lazy" decoding="async"></a><figcaption>CNC-M01 의 작업지시 3건</figcaption></figure>
+</li>
+<li><strong>정지 등록.</strong> <strong>설비 › 설비 현황</strong>에서 <strong>CNC-M01</strong> 을 누르면 오른쪽에 상세가 열립니다. <strong>정지 등록</strong>을 누르고 정지 사유는 <code>설비고장 &gt; 기계적 고장 &gt; 스핀들 이상</code>, 예상 복구는 <code>120</code>, 상세 내용은 <code>스핀들 과열 알람 발생, 가공 중단</code> 으로 적은 뒤 <strong>정지 등록</strong>을 누릅니다.
+
+<figure><a href="img/anomaly-stop.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="설비 정지 등록 창" src="img/anomaly-stop.webp" loading="lazy" decoding="async"></a><figcaption>설비 정지 등록 창</figcaption></figure>
+
+상세 위쪽에 빨간 정지 표시가 나오고 가동상태가 <strong>정지</strong>로 바뀝니다.
+
+<figure><a href="img/anomaly-stopped.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="정지된 CNC-M01" src="img/anomaly-stopped.webp" loading="lazy" decoding="async"></a><figcaption>정지된 CNC-M01</figcaption></figure>
+</li>
+<li><strong>사건과 영향 보기.</strong> <strong>모니터링</strong>으로 돌아갑니다. 미해소 이상이 1 로 늘고 CNC-M01 타일이 빨갛게 바뀌며, 이상 상황 목록 맨 위에 설비 정지 사건이 <strong>CRITICAL</strong> 로 올라옵니다. 최단 납기가 지났거나 사흘 안이면 CRITICAL 로 판정합니다. 지금 시드의 납기는 이미 지났습니다.
+
+<figure><a href="img/anomaly-monitor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="정지 직후 모니터링" src="img/anomaly-monitor.webp" loading="lazy" decoding="async"></a><figcaption>정지 직후 모니터링</figcaption></figure>
+
+오른쪽 사건 상세에 영향 분석이 있습니다. 작업지시 3건, 잔량 1,890, 최단 납기 2026-10-25, 수주 3건입니다. <strong>대체 설비 후보</strong>는 CNC-M03(부하 0h), CNC-M02(부하 7.3h)입니다.
+
+<figure><a href="img/anomaly-impact.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="영향 분석과 대체 설비 후보" src="img/anomaly-impact.webp" loading="lazy" decoding="async"></a><figcaption>영향 분석과 대체 설비 후보</figcaption></figure>
+</li>
+<li><strong>판단 근거 보기.</strong> 상세 아래 <strong>판단 근거 · 실행 이력</strong>에는 같은 correlation 으로 묶인 이벤트가 시간순으로 나옵니다. 설비 정지(설비), 이상 상황 감지(분석), 생산 영향 분석(생산), 영향 분석 연결(분석)입니다.
+
+<figure><a href="img/anomaly-chain.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="판단 근거 · 실행 이력" src="img/anomaly-chain.webp" loading="lazy" decoding="async"></a><figcaption>판단 근거 · 실행 이력</figcaption></figure>
+</li>
+<li><strong>확인 · 대응 시작.</strong> <strong>확인 · 대응 시작</strong>을 누르고 사유에 <code>생산관리 확인, 대체 설비 검토 착수</code> 를 적은 뒤 <strong>확인</strong>을 누릅니다. 사건 상태가 미확인에서 <strong>대응중</strong>으로 바뀌고, 감지부터 확인까지의 시간이 <strong>대응(확인)</strong> 칸에 기록됩니다.
+
+<figure><a href="img/anomaly-ack.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이상 상황 확인 창" src="img/anomaly-ack.webp" loading="lazy" decoding="async"></a><figcaption>이상 상황 확인 창</figcaption></figure>
+</li>
+<li><strong>자동 보류가 없음을 확인.</strong> <strong>작업지시 현황</strong>에서 다시 <code>CNC-M01</code> 을 검색합니다. 설비는 멈췄지만 3건의 상태는 그대로이고 보류사유도 비어 있습니다.
+
+<figure><a href="img/anomaly-wo-after.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="정지 뒤에도 상태가 그대로인 작업지시" src="img/anomaly-wo-after.webp" loading="lazy" decoding="async"></a><figcaption>정지 뒤에도 상태가 그대로인 작업지시</figcaption></figure>
+</li>
+<li><strong>보류.</strong> 납기가 가장 급한 <strong>2610-0002</strong> 를 눌러 상세를 엽니다. 아래 <strong>보류</strong>를 누르고 사유에 <code>CNC-M01 정지, 납기가 가장 급해 대체 설비로 전환</code> 을 적어 확인합니다. 상세 위쪽에 <strong>보류 중</strong>과 <strong>대체 설비 재계획</strong> 버튼이 나옵니다. 원인은 수동 보류로 표시됩니다.
+
+<figure><a href="img/anomaly-held.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보류된 작업지시" src="img/anomaly-held.webp" loading="lazy" decoding="async"></a><figcaption>보류된 작업지시</figcaption></figure>
+</li>
+<li><strong>대체 설비로 재계획.</strong> <strong>대체 설비 재계획</strong>을 누릅니다. 같은 공정의 설비가 가용 여부와 부하 순으로 나오고 CNC-M03 이 먼저 선택됩니다. 사유는 보류 사유로 채워져 있습니다. <strong>승인자</strong>에 <code>박과장(생산관리)</code> 를 적고 <strong>재계획 적용</strong>을 누릅니다. 설비가 CNC-M03 으로 바뀝니다.
+
+<figure><a href="img/anomaly-replan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재계획 창" src="img/anomaly-replan.webp" loading="lazy" decoding="async"></a><figcaption>재계획 창</figcaption></figure>
+</li>
+<li><strong>재개.</strong> 수동 보류는 재계획만으로 풀리지 않습니다. <strong>재개</strong>를 누르고 사유에 <code>대체 설비 CNC-M03 준비 완료</code> 를 적어 확인합니다. 상태가 다시 <strong>진행</strong>이 됩니다.
+
+<figure><a href="img/anomaly-resumed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="CNC-M03 으로 옮겨 재개된 작업지시" src="img/anomaly-resumed.webp" loading="lazy" decoding="async"></a><figcaption>CNC-M03 으로 옮겨 재개된 작업지시</figcaption></figure>
+</li>
+<li><strong>재계획 기록 확인.</strong> <strong>모니터링</strong>의 사건 상세에 <strong>재계획 실행</strong> 줄이 생깁니다. <code>2610-0002: CNC-M01 → CNC-M03</code> 과 감지 후 걸린 시간입니다. <strong>재계획</strong> 칸에도 같은 시간이 들어갑니다.
+
+<figure><a href="img/anomaly-replans.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재계획 실행 기록" src="img/anomaly-replans.webp" loading="lazy" decoding="async"></a><figcaption>재계획 실행 기록</figcaption></figure>
+</li>
+<li><strong>재가동.</strong> <strong>설비 현황</strong>에서 CNC-M01 을 눌러 <strong>재가동</strong>을 누르고 사유에 <code>스핀들 베어링 교체 완료</code> 를 적어 확인합니다. 가동상태가 <strong>가동</strong>으로 돌아오고 최근 비가동 이력에 종료된 정지와 분 수가 남습니다.
+
+<figure><a href="img/anomaly-restarted.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재가동된 CNC-M01" src="img/anomaly-restarted.webp" loading="lazy" decoding="async"></a><figcaption>재가동된 CNC-M01</figcaption></figure>
+</li>
+<li><strong>해소와 수치 보기.</strong> <strong>모니터링</strong>에서 <strong>해소 포함</strong>을 켜고 맨 위 사건을 누릅니다. 상태가 <strong>해소</strong>이고 영향 분석, 대응(확인), 재계획, 복구, 손실 칸이 모두 채워져 있습니다. 손실은 비가동 시간에 설비의 시간당 생산량(RPH)을 곱한 값입니다. 위쪽 지표도 이벤트에서 계산한 값입니다.
+
+<figure><a href="img/anomaly-facts.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="해소된 사건의 수치" src="img/anomaly-facts.webp" loading="lazy" decoding="async"></a><figcaption>해소된 사건의 수치</figcaption></figure>
+</li>
+<li><strong>작업지시 이력 보기.</strong> <strong>작업지시 현황</strong>에서 <code>2610-0002</code> 를 검색해 상세의 <strong>이력</strong>을 누릅니다. 보류, 재계획, 재개가 차례로 쌓여 있고, 재계획에는 사유와 승인자가 함께 남아 있습니다.
+
+<figure><a href="img/anomaly-history.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보류·재계획·재개 이력" src="img/anomaly-history.webp" loading="lazy" decoding="async"></a><figcaption>보류·재계획·재개 이력</figcaption></figure>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">다시 해 볼 때</p>
+<p>재계획한 작업지시는 CNC-M03 에 그대로 있습니다. 다시 따라 하려면 2610-0002 를 <strong>재계획</strong>으로 CNC-M01 에 되돌리거나, 남은 2610-0003 으로 진행합니다. 이벤트는 지워지지 않고 계속 쌓입니다. 값(시간, 손실)은 실행할 때마다 달라집니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>이 시연 환경에서 설비가 멈추면 작업지시 상태는 어떻게 되나요?</li>
+<li>영향 분석의 대체 설비 후보는 어떤 순서로 나오나요?</li>
+<li>재계획의 승인자는 어디에 남나요?</li>
+<li>사건의 <strong>복구</strong> 시간과 위쪽 <strong>평균 복구시간</strong>이 크게 다를 수 있는 이유는 무엇인가요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<ol>
+<li>그대로입니다. 시연 환경은 <code>ASSESS_ONLY</code> 로 설정되어 영향만 계산합니다. 보류할지는 담당자가 정합니다.</li>
+<li>같은 공정의 설비 중 가용 여부와 부하 시간 순입니다.</li>
+<li><code>WorkOrderRescheduled</code> 이벤트의 메타데이터에 사유와 함께 남습니다. 작업지시 <strong>이력</strong>에서 볼 수 있습니다.</li>
+<li>평균 복구시간은 모든 사건의 평균이기 때문입니다. 시드의 지난 공정 지연 사건은 감지 후 며칠 뒤에 정리되어 평균을 크게 끌어올립니다.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기</a><a class="next" href="events.html"><span>다음</span>이벤트 추적</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 시연용 참조 구현을 합성 데이터로 실제 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

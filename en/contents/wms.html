@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>uEngine WMS — A Warehouse Management Sample for Use with Process GPT Agents</title>
+        <meta name="description" content="A public sample app for stock shortages, purchase approval, receiving, quality, putaway and warehouse equipment control. Follow along from installation to connecting Process GPT agents through MCP tools.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/wms.html">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="uEngine WMS — A Warehouse Management Sample for Use with Process GPT Agents">
+        <meta property="og:description" content="A public sample app for stock shortages, purchase approval, receiving, quality, putaway and warehouse equipment control. Follow along from installation to connecting Process GPT agents through MCP tools.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/wms.html">
+        <meta property="og:image" content="https://www.uengine.org/docs/wms/img/inbound-po.webp">
+        <meta property="og:image:alt" content="uEngine WMS — A Warehouse Management Sample for Use with Process GPT Agents">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="uEngine WMS — A Warehouse Management Sample for Use with Process GPT Agents">
+        <meta name="twitter:description" content="A public sample app for stock shortages, purchase approval, receiving, quality, putaway and warehouse equipment control. Follow along from installation to connecting Process GPT agents through MCP tools.">
+        <meta name="twitter:image" content="https://www.uengine.org/docs/wms/img/inbound-po.webp">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"uEngine WMS","description":"A public sample app for stock shortages, purchase approval, receiving, quality, putaway and warehouse equipment control. Follow along from installation to connecting Process GPT agents through MCP tools.","url":"https://www.uengine.org/en/contents/wms.html","image":"https://www.uengine.org/docs/wms/img/inbound-po.webp","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"en","publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}}}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"uEngine WMS","item":"https://www.uengine.org/en/contents/wms.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/wms.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/wms.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/wms.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    </head>
+    
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../index.html" class="logo">
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../contents/wms.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Process Solutions · Agent&nbsp;Orchestrator&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Ontology Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="agentstorming.html" style="font-size: 18px;">Agent Storming Workshop</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                            <li>
+                                                <a href="ax-lite-course.html" style="font-size: 18px;">AI Work Class for Your Company</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Industry Solutions <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="industry.html" style="font-size: 18px;">Industry Solutions Overview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Manufacturing&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="mes.html" style="font-size: 18px;">uEngine MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="../../docs/mes/index.html" style="font-size: 18px;">MES Tutorial (Korean)</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Logistics&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="wms.html" style="font-size: 18px;">uEngine WMS</a>
+                                            </li>
+                                            <li>
+                                                <a href="../../docs/wms/index.html" style="font-size: 18px;">WMS Tutorial (Korean)</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="blog/whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+                               
+                            <li class="pc-chat lang-switch"><a href="../../contents/wms.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                        </ul>                        
+                        
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+                <style>
+                .plite-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; overflow: hidden; transition: transform .3s ease; width: 100%; }
+                .plite-card:hover { transform: translateY(-4px); }
+                .plite-card-img { overflow: hidden; aspect-ratio: 16 / 9; border-bottom: 1px solid #eee; }
+                .plite-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+                .plite-card-body { padding: 26px 26px 32px; }
+                .plite-card-title { font-size: 1.45rem; font-weight: 700; margin: 0 0 14px; text-align: left; line-height: 1.4; }
+                .plite-card-desc { font-size: 1.02rem; color: #666; line-height: 1.65; margin: 0; text-align: left; }
+                .plite-theme { margin-bottom: 90px; }
+                .plite-theme:last-child { margin-bottom: 0; }
+                .plite-theme-img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #e5e5ea; box-shadow: 0 10px 30px rgba(26,26,46,.12); }
+                .plite-theme-cat { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #1e88e5; margin: 0 0 8px; }
+                .plite-theme-title { font-size: 1.75rem; font-weight: 700; line-height: 1.4; margin: 0 0 14px; }
+                .plite-theme-lead { font-size: 1.08rem; color: #555; line-height: 1.7; margin: 0 0 20px; }
+                .plite-theme-list { list-style: none; padding: 0; margin: 0 0 18px; }
+                .plite-theme-list li { padding: 12px 0 12px 18px; border-top: 1px solid #eee; position: relative; }
+                .plite-theme-list li::before { content: ""; position: absolute; left: 0; top: 21px; width: 7px; height: 7px; border-radius: 50%; background: #7c5cff; }
+                .plite-theme-list strong { display: block; font-size: 1.05rem; color: #111; margin-bottom: 4px; }
+                .plite-theme-list span { display: block; font-size: .98rem; color: #666; line-height: 1.65; }
+                .plite-vlinks { display: flex; flex-wrap: wrap; gap: 8px; }
+                .plite-vlink { font-size: 14px; padding: 6px 14px; border-radius: 20px; border: 1px solid #d5d5de; color: #333; text-decoration: none; }
+                .plite-vlink:hover { border-color: #111; color: #111; }
+                .plite-card-vlinks { margin-top: 20px; }
+                .plite-vlink { cursor: pointer; background: #fff; }
+                .plite-theme-media { position: relative; display: block; cursor: pointer; }
+                .plite-theme-media .plite-media-badge { position: absolute; left: 16px; bottom: 16px; padding: 8px 16px; border-radius: 20px; background: rgba(17,17,17,.82); color: #fff; font-size: 14px; font-weight: 600; pointer-events: none; transition: background .2s; }
+                .plite-theme-media:hover .plite-media-badge, .plite-theme-media:focus-visible .plite-media-badge { background: #f00; }
+                .plite-modal { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.78); }
+                .plite-modal.open { display: flex; }
+                .plite-modal-box { position: relative; width: min(1100px, 100%); }
+                .plite-modal-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+                .plite-modal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+                .plite-modal-title { color: #fff; font-size: 1rem; font-weight: 600; margin: 0 48px 10px 2px; }
+                .plite-modal-close { position: absolute; right: 0; top: -6px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255,255,255,.15); color: #fff; font-size: 22px; line-height: 36px; cursor: pointer; }
+                .plite-modal-close:hover { background: rgba(255,255,255,.3); }
+                .plite-gal-head { font-size: 1.3rem; font-weight: 700; margin: 10px 0 24px; padding-bottom: 12px; border-bottom: 2px solid #111; }
+                .plite-yt { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #000; cursor: pointer; box-shadow: 0 6px 20px rgba(26,26,46,.12); }
+                .plite-yt img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease, opacity .3s ease; }
+                .plite-yt:hover img, .plite-yt:focus-visible img { transform: scale(1.03); opacity: .85; }
+                .plite-yt-play { position: absolute; left: 50%; top: 50%; width: 64px; height: 44px; margin: -22px 0 0 -32px; border-radius: 12px; background: rgba(20,20,20,.82); }
+                .plite-yt:hover .plite-yt-play { background: #f00; }
+                .plite-yt-play::after { content: ""; position: absolute; left: 26px; top: 13px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent #fff; }
+                .plite-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+                .plite-v-title { font-size: 1.1rem; font-weight: 700; margin: 14px 0 6px; }
+                .plite-v-cap { font-size: .95rem; color: #666; line-height: 1.6; margin: 0; }
+                .plite-diff-note { font-size: 1.05rem; color: #444; line-height: 1.8; }
+                @media (max-width: 991px) { .plite-theme { margin-bottom: 60px; } .plite-theme-img { margin-bottom: 24px; } }
+                </style>
+
+                <style>
+                .hj-tag { display:inline-block; font-size:12px; font-weight:700; letter-spacing:.06em; color:#1F4E79; background:#E3EBF4; border-radius:999px; padding:4px 12px; margin-bottom:12px; }
+                .hj-arch td, .hj-arch th { padding:12px 14px; border-top:1px solid #e5e5ea; vertical-align:top; font-size:1rem; }
+                .hj-arch th { background:#f6f7f9; text-align:left; }
+                .hj-arch { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                .hj-principle { background:#fff; border-radius:14px; padding:22px 24px; height:100%; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                .hj-principle b { display:block; font-size:1.1rem; margin-bottom:8px; }
+                .hj-principle span { color:#555; line-height:1.65; }
+                .hj-note { font-size:.95rem; color:#666; }
+                </style>
+
+                
+                <!-- Header Section -->
+                <section class="page-section pb-100 pb-sm-60 bg-gray-light-1 bg-light-alpha-90 bg-scroll" style="background-image: url(../../images/full-width-images/section-bg-2.jpg)">
+                    <div class="container position-relative pt-50">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h2 class="section-caption-border mb-30 mb-xs-20 wow fadeInUp" data-wow-duration="1.2s">Industry Solutions · Logistics</h2>
+                                    <h1 class="hs-title-1 mb-20"><span class="wow charsAnimIn" data-splitting="chars">uEngine WMS</span></h1>
+                                    <p class="section-descr mb-40 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 760px; margin-left: auto; margin-right: auto;">
+                                        From stock shortage to receiving, inspection, putaway and warehouse equipment control &mdash; a warehouse management sample built for Process GPT agents to use as tools
+                                    </p>
+                                    <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                        <a href="#videos" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">Demo Videos</span></a><a href="../../docs/wms/index.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;"><span style="font-size: 16px;">Tutorial (Korean)</span></a><a href="https://github.com/uengine-oss/process-gpt-sample-app-wms" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10" style="border: 2px solid #111;"><span style="font-size: 16px;">GitHub</span></a>
+                                    </div>
+                                    <p class="hj-note mt-30 mb-0">This is a Process GPT sample app. The source is public and it is built at demo scale. The tutorial follows commit fc82ea2, where a fresh install is confirmed to work.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section class="page-section" id="about">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 mb-sm-0 mt-n10"><div class="video-box"><iframe src="https://www.youtube.com/embed/J7o0f-4gg9E?hl=en&cc_lang_pref=en" title="uEngine WMS product demo" frameborder="0" scrolling="no" loading="lazy" allowfullscreen=""></iframe></div></div>
+                            <div class="col-md-6 col-xl-5 offset-xl-1 mt-n10 mt-sm-20">
+                                <p class="section-descr"><span style="font-size: 1.8rem; color: #111; font-weight: 600;">A Warehouse System Agents Can Actually Use</span></p>
+                                <p class="lead mt-0 mb-30 mb-sm-20" style="font-size: 19px;">
+                                    A stock shortage leads to a purchase request, approval, order, receiving, quality inspection and putaway. uEngine WMS is a <b>Process GPT sample app</b> that shows this flow and warehouse equipment control in one app. Each role can do different things, and every write goes into the audit log.<br><br>Its functions are offered as <b>MCP tools</b>, so Process GPT agents use them under the same permission checks. When the replenishment process runs with a real LLM agent, the agent reads stock and creates the purchase request, while approval and quality judgment stay with people.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 주요 기능 -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" id="features" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;"><span class="wow charsAnimIn" data-splitting="chars">From Receiving to Equipment and Agents</span></h3>
+                            <p class="section-descr mb-70 mb-sm-40 wow fadeInUp">Screens captured by actually running the app from the public repository. Click a screen to play that chapter's video (Korean narration).</p>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-inbound">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/wms/img/inbound-approve.webp" alt="A purchase approver approving an RFQ" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">RECEIVING AND STOCK</p>
+                                <h3 class="plite-theme-title">Follow One Short Item All the Way to Putaway</h3>
+                                <p class="plite-theme-lead">Work passes between roles, and each step leaves a document state and an audit entry.</p>
+                                <ul class="plite-theme-list"><li><strong>Purchasing flow</strong><span>From a stock shortage to RFQ, approval and PO confirmation.</span></li><li><strong>Receiving and quality</strong><span>Register arrival and receipt, then put away on pass or scrap on fail.</span></li><li><strong>Roles and isolation</strong><span>The same document shows different buttons by role, and tenants are separated by row-level security.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-c1AkIm0Sbr0">▶ Chapter 1: From Replenishment to Putaway</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-automation">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/wms/img/automation-routing.webp" alt="Bottleneck detection and routing exclusion" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">WAREHOUSE AUTOMATION</p>
+                                <h3 class="plite-theme-title">Turn Work Orders into Equipment Commands</h3>
+                                <p class="plite-theme-lead">Release a wave and commands go to idle equipment. A gateway account and a simulator respond in place of real equipment.</p>
+                                <ul class="plite-theme-list"><li><strong>Work orders</strong><span>Receipts become work orders, sent by wave or immediate dispatch.</span></li><li><strong>Equipment control</strong><span>Covers equipment registration, commands and status reports. Only a person can resolve a fault.</span></li><li><strong>Sortation and bottlenecks</strong><span>Sorter profiles, jam faults, and threshold-based bottleneck detection and avoidance.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-qx312jHZdMI">▶ Chapter 2: Work Orders and Equipment Control</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-ops">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/wms/img/ops-dispatch.webp" alt="Dispatching a sequenced outbound pallet" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">WAREHOUSE AUTOMATION</p>
+                                <h3 class="plite-theme-title">Group in Sequence and Send to the Robot Cell</h3>
+                                <p class="plite-theme-lead">Store outbound units are grouped onto pallets in sequence, and you check the simulator worker's responses and the failure path.</p>
+                                <ul class="plite-theme-list"><li><strong>Sequence assignment</strong><span>Position and weight are validated against declared values and grouped into pallets.</span></li><li><strong>Simulation</strong><span>With no real equipment, a worker reports acknowledgement, progress, completion and failure.</span></li><li><strong>What-if scenarios</strong><span>Change equipment and command counts to see an optimistic estimate, shown along with its limits.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-B2NxFTeYegA">▶ Chapter 3: Sequenced Dispatch and Simulation</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-agent">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/wms/img/agent-board.webp" alt="Kanban board of the replenishment process" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">AI</p>
+                                <h3 class="plite-theme-title">Agents Use the Tools, People Approve</h3>
+                                <p class="plite-theme-lead">The replenishment process ran to the end with a real LLM agent. People handle the start, purchase approval and quality judgment.</p>
+                                <ul class="plite-theme-list"><li><strong>83 MCP tools</strong><span>The app's database functions are offered as tools, and the agent account goes through role checks too.</span></li><li><strong>Proposal review</strong><span>A warehouse manager approves or rejects agent proposals. An agent cannot approve its own.</span></li><li><strong>Audit log</strong><span>Writes by people and agents read as sentences in the same history.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-r9rs0YCppmc">▶ Chapter 4: Connecting Process GPT Agents</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-twin">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../images/industry/wms-twin.webp" alt="Digital twin screen" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">IN DEVELOPMENT</p>
+                                <h3 class="plite-theme-title">Digital Twin: Equipment Status on the Floor Plan</h3>
+                                <p class="plite-theme-lead">A screen still in development that is not yet in the public repository. The tutorial does not cover it; the product demo video shows it.</p>
+                                <ul class="plite-theme-list"><li><strong>Live floor plan</strong><span>Equipment and docks are drawn over zones in the color of their current state.</span></li><li><strong>Fault response</strong><span>A reported fault raises an alarm without a refresh and can be resolved from this screen.</span></li><li><strong>Bottleneck and what-if lenses</strong><span>Queues and thresholds per machine, with estimates and their limits.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-J7o0f-4gg9E">▶ See it in the product demo</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="page-section" id="status">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">What It Is and Where It Stands</span></h3>
+                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">What is done and what is not, stated plainly.</p>
+                        </div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>Category</th><th>Details (as of commit fc82ea2)</th></tr></thead><tbody><tr><td>UI</td><td>17 business screens. Buttons and table headers are in English; descriptions are in Korean</td></tr><tr><td>Data</td><td>Supabase (Postgres, auth, row-level security). 37 tables, 115 functions, 35 RLS policies, 10 roles</td></tr><tr><td>Agent connection</td><td>FastMCP server with 83 MCP tools and a Process GPT install script</td></tr><tr><td>Verification</td><td>12 Playwright E2E tests</td></tr><tr><td>Not yet</td><td>It demonstrates with a simulator rather than real equipment. Outbound does not reduce stock. The replenishment process runs to the end, but the instance still shows as running. The install script needs a patch script to run to the end. A fresh install of the latest main currently fails, so the tutorial pins commit fc82ea2</td></tr></tbody></table></div>
+                        
+                    </div>
+                </section>
+
+                <!-- 영상 -->
+                <section class="page-section bg-gray-light-1" id="videos">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">Watch the Videos</span></h3>
+                            <p class="section-descr mb-60 mb-sm-40 wow fadeInUp">Recorded while actually running the app from the public repository, with Korean narration and subtitles. Click a thumbnail to play.</p>
+                        </div>
+                        <h3 class="plite-gal-head">Product Demo</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-J7o0f-4gg9E">
+                                <button type="button" class="plite-yt" data-yt="J7o0f-4gg9E" aria-label="Play product demo video">
+                                    <img src="https://i.ytimg.com/vi/J7o0f-4gg9E/hqdefault.jpg" alt="Product demo video preview" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Product Demo</h4>
+                                <p class="plite-v-cap">A stock shortage, agent collaboration, equipment control, the digital twin and the audit log in one video.</p>
+                            </div>
+                        </div>
+                        <h3 class="plite-gal-head">Tutorial (Korean)</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-nfEE_11Cuu4">
+                                <button type="button" class="plite-yt" data-yt="nfEE_11Cuu4" aria-label="Play video: Chapter 0: Install, Sign-in and Roles">
+                                    <img src="https://i.ytimg.com/vi/nfEE_11Cuu4/hqdefault.jpg" alt="Video preview: Chapter 0: Install, Sign-in and Roles" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 0: Install, Sign-in and Roles</h4>
+                                <p class="plite-v-cap">Install from the public repository and check roles and tenant isolation.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-c1AkIm0Sbr0">
+                                <button type="button" class="plite-yt" data-yt="c1AkIm0Sbr0" aria-label="Play video: Chapter 1: From Replenishment to Putaway">
+                                    <img src="https://i.ytimg.com/vi/c1AkIm0Sbr0/hqdefault.jpg" alt="Video preview: Chapter 1: From Replenishment to Putaway" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 1: From Replenishment to Putaway</h4>
+                                <p class="plite-v-cap">Follow the RFQ, approval, PO, receiving, quality, putaway and scrap on failure.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-qx312jHZdMI">
+                                <button type="button" class="plite-yt" data-yt="qx312jHZdMI" aria-label="Play video: Chapter 2: Work Orders and Equipment Control">
+                                    <img src="https://i.ytimg.com/vi/qx312jHZdMI/hqdefault.jpg" alt="Video preview: Chapter 2: Work Orders and Equipment Control" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 2: Work Orders and Equipment Control</h4>
+                                <p class="plite-v-cap">Equipment commands, faults, waves, sorters and bottleneck avoidance.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-B2NxFTeYegA">
+                                <button type="button" class="plite-yt" data-yt="B2NxFTeYegA" aria-label="Play video: Chapter 3: Sequenced Dispatch and Simulation">
+                                    <img src="https://i.ytimg.com/vi/B2NxFTeYegA/hqdefault.jpg" alt="Video preview: Chapter 3: Sequenced Dispatch and Simulation" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 3: Sequenced Dispatch and Simulation</h4>
+                                <p class="plite-v-cap">Palletizing, the simulator worker and what-if scenarios.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-r9rs0YCppmc">
+                                <button type="button" class="plite-yt" data-yt="r9rs0YCppmc" aria-label="Play video: Chapter 4: Connecting Process GPT Agents">
+                                    <img src="https://i.ytimg.com/vi/r9rs0YCppmc/hqdefault.jpg" alt="Video preview: Chapter 4: Connecting Process GPT Agents" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Chapter 4: Connecting Process GPT Agents</h4>
+                                <p class="plite-v-cap">A real run of MCP tools, the replenishment process, proposal review and the audit log.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Call Action -->
+                <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative mt-n30 mt-sm-0">
+                        <div class="row wow fadeInUp get-started-content"><div>
+                            <p class="mb-20 mt-n10" style="font-size: 2.2rem; font-weight: 600;">Install It and Follow Along</p>
+                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">Chapter 0 of the tutorial covers installation. For a demo fitted to your warehouse, or to find which work should go to agents, continue with an <a href="agentstorming.html">Agent Storming Workshop</a>.</p>
+                            <div class="local-scroll wow fadeInUp" data-wow-offset="0">
+                                <a href="../../docs/wms/index.html" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">Tutorial (Korean)</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border: 2px solid #111;"><span style="font-size: 16px;">Contact Us</span></a>
+                            </div>
+                        </div></div>
+                    </div>
+                </section>
+<hr class="mt-0 mb-0"/>
+                <!-- Contact us Section -->
+                <section class="page-section mt-n10 mt-sm-0 mb-sm-20" id="contact">
+                    <div class="container position-relative">
+                        
+                        <div class="row text-center wow fadeInUp">
+                            <div class="col-md-8 offset-md-2 col-lg-10 offset-lg-1">
+                                <p class="section-title-tiny mb-10" style="font-size: 2rem;">
+                                    Have more questions?
+                                </p>
+                                <p class="section-title-tiny mb-50 mb-sm-30">
+                                    Want to know more about <b>uEngine WMS</b> or have a question? Get in touch anytime.
+                                </p>
+                                <div class="local-scroll">
+                                    <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
+                                        <span>Contact us</span>
+                                    </a>
+                                </div>
+
+                                <!-- Contact Form (초기 숨김) -->
+                                <div id="contact_form_container" class="contact-form-container" style="display: none;">
+                                    <div class="form-header">
+                                        <div></div>
+                                        <h2>Contact Us</h2>
+                                        <button id="close_btn" class="close-button">✖</button>
+                                    </div>
+                                    
+                                    <form id="contact_form" action="https://formspree.io/f/mjkydzab" method="POST" class="form contact-form fadeInUp wch-unset">
+                                        <div class="row">
+                                            <input type="hidden" name="classification" value="uEngineWMS">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">Name <span>*</span></label>
+                                                    <input type="text" name="name" id="name" class="input-lg round form-control" placeholder="Please enter your name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email <span>*</span></label>
+                                                    <input type="email" name="email" id="email" class="input-lg round form-control" placeholder="Please enter the email address where you would like to receive our reply">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="company">Company <span>*</span></label>
+                                                    <input type="text" name="company" id="company" class="input-lg round form-control" placeholder="Please enter your company or organization name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="position">Job Title</label>
+                                                    <input type="text" name="position" id="position" class="input-lg round form-control" placeholder="Please enter your job title">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="message">Message <span>*</span></label>
+                                            <textarea name="message" id="message" class="input-lg round form-control" placeholder="Please enter your message"></textarea>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-tip pt-0">
+                                                    <div class="contact_form_policy">
+                                                        <label style="color: var(--color-gray-light-6);">
+                                                            <input type="checkbox" name="contact_policy" id="contact_policy" value="I agree" style="vertical-align: middle; width: 15px; height: 15px;">
+                                                            <span style="color: var(--color-gray-light-6);">(Required)</span>
+                                                            <button id="contact_form_modal_open" data-modal="contact_form_policy_modal" type="button">Collection and Use of Personal Information</button>
+                                                            <span style="color: var(--color-gray-light-6);"> to the terms above.</span>
+                                                        </label>
+                                                        <div class="contact_form_msg_error" id="contact_policy_error"></div>
+                                                        <div class="contact_form_modal blind" id="contact_form_policy_modal">
+                                                            <div class="contact_form_modal_body">
+                                                                <h2 class="contact_form_modal_title">
+                                                                    Collection and Use of Personal Information
+                                                                </h2>
+                                                                <div class="contact_form_modal_text">
+                                                                    When uEngine Solutions (the "Company") collects and uses personal information in order to respond to your inquiry, your consent is required under the Personal Information Protection Act and other applicable laws.
+                                                                    <br>The Company collects and uses only the minimum personal information needed to answer inquiries about purchasing its products and consulting, and to use the services it provides.
+                                                                    <br>The information collected is not used for any purpose other than sending the reply, and is destroyed as soon as the service ends.
+                                                                </div>
+                                                                <div class="contact_form_modal_btn">
+                                                                    <button id="contact_form_modal_close" 
+                                                                        class="contact_form_modal_close_btn btn btn-mod btn-round" 
+                                                                        data-modal="contact_form_policy_modal" 
+                                                                        type="button"
+                                                                        style="background-color: var(--color-dark-3); 
+                                                                        color: var(--color-gray-light-3);">Close</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="contact_form_modal_bg" id="contact_form_modal_bg"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="text-end pt-20 pt-xs-40">
+                                                    <button class="submit_btn btn btn-mod btn-large btn-round btn-hover-anim" id="submit_btn" aria-controls="result">
+                                                        <span>Send Message</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                       <div id="result" role="region" aria-live="polite" aria-atomic="true"></div>
+                                    </form>
+
+                                </div>
+
+                            </div>                             
+                        </div>
+                        
+                    </div>
+                </section>
+                <!-- End Call Action Section -->
+
+                <script>
+                (function () {
+                    document.querySelectorAll('a[href="#contact"]').forEach(function (a) {
+                        a.addEventListener('click', function () {
+                            var form = document.getElementById('contact_form_container');
+                            var btn = document.getElementById('contact_btn');
+                            if (form && btn && form.style.display === 'none') { btn.click(); }
+                        });
+                    });
+                    // feature links play the video in place instead of jumping to the gallery
+                    var modal = document.createElement('div');
+                    modal.className = 'plite-modal';
+                    modal.setAttribute('role', 'dialog');
+                    modal.setAttribute('aria-modal', 'true');
+                    modal.innerHTML = '<div class="plite-modal-box"><p class="plite-modal-title"></p><button type="button" class="plite-modal-close" aria-label="Close">&times;</button><div class="plite-modal-frame"></div></div>';
+                    document.body.appendChild(modal);
+                    var frame = modal.querySelector('.plite-modal-frame'), lastFocus = null;
+                    function closeVideo() { modal.classList.remove('open'); frame.innerHTML = ''; if (lastFocus) lastFocus.focus(); }
+                    function openVideo(id, title) {
+                        lastFocus = document.activeElement;
+                        modal.querySelector('.plite-modal-title').textContent = title;
+                        var f = document.createElement('iframe');
+                        f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                        f.title = title;
+                        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                        f.allowFullscreen = true;
+                        frame.innerHTML = '';
+                        frame.appendChild(f);
+                        modal.classList.add('open');
+                        modal.querySelector('.plite-modal-close').focus();
+                    }
+                    modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('plite-modal-close')) closeVideo(); });
+                    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeVideo(); });
+                    function linkTitle(a) { return a.textContent.replace(/^\s*▶\s*/, ''); }
+                    document.querySelectorAll('a.plite-vlink[href^="#v-"]').forEach(function (a) {
+                        a.setAttribute('role', 'button');
+                        a.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
+                    });
+                    // the screenshot of each feature theme plays its first video
+                    document.querySelectorAll('.plite-theme').forEach(function (row) {
+                        var a = row.querySelector('a.plite-vlink[href^="#v-"]'), img = row.querySelector('.plite-theme-img');
+                        if (!a || !img) return;
+                        var w = document.createElement('a');
+                        w.href = a.getAttribute('href');
+                        w.className = 'plite-theme-media';
+                        w.setAttribute('aria-label', linkTitle(a) + ' — play video');
+                        img.parentNode.insertBefore(w, img);
+                        w.appendChild(img);
+                        var badge = document.createElement('span');
+                        badge.className = 'plite-media-badge';
+                        badge.textContent = '▶ Watch video';
+                        w.appendChild(badge);
+                        w.addEventListener('click', function (e) { e.preventDefault(); openVideo(a.getAttribute('href').slice(3), linkTitle(a)); });
+                    });
+                    document.querySelectorAll('.plite-yt').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var id = btn.getAttribute('data-yt');
+                            var f = document.createElement('iframe');
+                            f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+                            f.title = btn.getAttribute('aria-label') || 'YouTube video';
+                            f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                            f.allowFullscreen = true;
+                            btn.replaceWith((function () { var w = document.createElement('div'); w.className = 'plite-yt'; w.appendChild(f); return w; })());
+                        });
+                    });
+                })();
+                </script>
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+                    
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+                                                
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+                            
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+                            
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+                            
+                            <div>                                
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+                            
+                            <div class="clearlinks">                                
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">                                
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+                            
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">                            
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="agentstorming.html">Agent Storming Workshop</a></li>
+                                        <li><a href="educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="ax-lite-course.html">AI Work Class for Your Company</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Industry Solutions</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="industry.html">Industry Solutions Overview</a></li>
+                                        <li><a href="mes.html">uEngine MES</a></li>
+                                        <li><a href="../../docs/mes/index.html">MES Tutorial (Korean)</a></li>
+                                        <li><a href="wms.html">uEngine WMS</a></li>
+                                        <li><a href="../../docs/wms/index.html">WMS Tutorial (Korean)</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="processgpt.html">Process GPT</a></li>
+                                        <li><a href="uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="blog/whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="showcase.html">Showcase</a></li><li><a href="history.html">History</a></li>
+                                        <li><a href="partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="newsroom.html">Newsroom</a></li>
+                                        <li><a href="newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="interview.html">Interview</a></li>
+                                        <li><a href="webinars.html">Webinars</a></li>
+                                        <li><a href="bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+                        
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                        </div>
+                        
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+                            
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">                                
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- End Footer Text --> 
+                    
+                 </div>                 
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/en/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
+
