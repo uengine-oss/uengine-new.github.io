@@ -490,7 +490,7 @@
                                     <div class="blog-item-body chat-gpt">
 
                                         <div class="mb-50">
-                                            <img src="../../images/blog/eventstorming-ai-agent.jpg" alt="이벤트 스토밍 기반 AI 에이전트 도출 — 도메인 이벤트·커맨드·정책·읽기 모델·핫스팟 스티커가 에이전트의 트리거·도구 호출·가드레일·RAG 컨텍스트·에이전트 기회로 이어지는 그림" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(26,26,46,0.10);" decoding="async" />
+                                            <img src="../../images/blog/eventstorming-ai-agent.jpg" alt="이벤트 스토밍 기반 AI 에이전트 도출 — 도메인 이벤트·커맨드·정책·읽기 모델·애그리게잇·핫스팟 스티커가 에이전트의 트리거·도구 호출·가드레일·RAG 컨텍스트·본체(지식 그래프·온톨로지·데이터)·에이전트 기회로 이어지는 그림" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(26,26,46,0.10);" decoding="async" />
                                         </div>
 
                                         <div class="mb-50 prose" style="border-left: 5px solid #ddd;">
@@ -567,6 +567,11 @@
                                                 노란색으로 그룹화되는 <b>집합체(Aggregate)</b>는 상태 변경의 트랜잭션 무결성을 보장하는 단위로서, 에이전트가 쓰기 작업을 수행하고 영속화(State Persistence)할 수 있는 데이터 권한의 범위를 정의한다<sup><a href="#ref-2">2</a></sup>.
                                             </p>
                                             <p>
+                                                노란 스티커의 몫은 쓰기 권한에서 끝나지 않는다. 애그리게잇은 데이터일 수도 있고, 온톨로지나 지식 그래프일 수도 있다.
+                                                에이전트가 무엇을 알고 어디까지 바꿀 수 있는지가 여기서 정해지므로, 유엔진은 애그리게잇을 에이전트의 본체가 될 수 있는 것 중 하나로 본다.
+                                                바운디드 컨텍스트가 에이전트의 책임 경계라면, 애그리게잇은 그 안에서 에이전트의 가장 작은 단위가 될 수 있다.
+                                            </p>
+                                            <p>
                                                 <b>바운디드 컨텍스트(Bounded Context)</b>는 유비쿼터스 언어(Ubiquitous Language)가 동일한 비즈니스 의미를 유지하는 논리적 경계다<sup><a href="#ref-2">2</a></sup>.
                                                 멀티 에이전트 설계에서 바운디드 컨텍스트는 두 가지 아키텍처 양식으로 구체화된다<sup><a href="#ref-2">2</a></sup>.
                                                 첫째는 컨텍스트 자체를 고유한 전문 지식과 프롬프트를 갖춘 단일 지능형 에이전트로 모델링하는 인지 에이전트(Cognitive Agent) 방식이며, 둘째는 해당 컨텍스트 내부에서 상호작용하는 다수의 미세 전문 에이전트들이 공통의 도메인 모델을 공유하는 작업공간(Workspace) 방식이다<sup><a href="#ref-2">2</a></sup>.
@@ -608,7 +613,7 @@
                                                         <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>애그리게잇</b> (Aggregate)</td>
                                                         <td style="padding: 12px 14px; border: 1px solid #ddd;"><span style="display: inline-block; width: 14px; height: 14px; background: #FFE066; border-radius: 2px; vertical-align: -2px; margin-right: 6px;"></span>노란색 (Yellow / Group)</td>
                                                         <td style="padding: 12px 14px; border: 1px solid #ddd;">트랜잭션 일관성과 상태 변경의 최소 단위</td>
-                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">에이전트가 관리하는 영속 상태 저장소 및 쓰기 권한 범위<sup><a href="#ref-2">2</a></sup></td>
+                                                        <td style="padding: 12px 14px; border: 1px solid #ddd;">에이전트가 관리하는 영속 상태 저장소 및 쓰기 권한 범위<sup><a href="#ref-2">2</a></sup>. 데이터·온톨로지·지식 그래프로서 에이전트의 본체가 될 수 있는 가장 작은 단위</td>
                                                     </tr>
                                                     <tr>
                                                         <td style="padding: 12px 14px; border: 1px solid #ddd;"><b>행위자</b> (Actor / Agent)</td>
@@ -924,14 +929,18 @@
                                                         <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Ontological Studio</b>에서 발행한 온톨로지를 에이전트가 읽고 관계를 따라가 답하며, 답마다 <b>근거 노드·관계</b>가 화면에 남습니다(Graph RAG). 같은 지식을 MCP로 다른 AI 에이전트에도 제공합니다.<br><a href="../ontologystudio.html#feat-ask" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
                                                     </tr>
                                                     <tr>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd; vertical-align: top;"><b>애그리게잇: 데이터·온톨로지·지식 그래프</b><br>(에이전트의 본체가 될 수 있는 가장 작은 단위)</td>
+                                                        <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>Ontological Studio</b>에서 근거로 삼을 문서나 데이터베이스를 고르면 에이전트가 <b>개념과 관계를 설계</b>하고 사실을 인스턴스로 옮겨 온톨로지를 만듭니다. 발행 여부는 사람이 결정합니다. <b>Ontological DB</b>는 그래프를 다룰 에이전트에게 스키마 요약과 오류 정정 후보를 직접 제공합니다.<br><a href="../ontologystudio.html#feat-build" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ Ontological Studio 소개</a> &nbsp; <a href="../ontologicaldb.html#feat-agent" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ Ontological DB 소개</a></td>
+                                                    </tr>
+                                                    <tr style="background-color: #f7f7fa;">
                                                         <td style="padding: 12px 16px; border: 1px solid #ddd; vertical-align: top;"><b>커맨드: 도구 호출과 외부 시스템 연동</b><br>(애그리게잇의 쓰기 권한 범위)</td>
                                                         <td style="padding: 12px 16px; border: 1px solid #ddd;">수행할 지시를 <b>Golden Command</b>로 적어 두면 에이전트가 업무 시스템의 API를 살펴 액션과 보상, 사용 정책을 만들고 드라이런으로 검증합니다. 실행은 언제나 사람의 승인을 거칩니다. Process GPT의 <b>MCP 허브</b>는 서버가 아니라 툴 단위로 권한을 주고, 되돌릴 수 없는 툴만 따로 차단할 수 있습니다.<br><a href="../ontologystudio.html#feat-act" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ Golden Command 보기</a> &nbsp; <a href="../processgpt.html#feat-mcphub" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ MCP 허브 보기</a></td>
                                                     </tr>
-                                                    <tr style="background-color: #f7f7fa;">
+                                                    <tr>
                                                         <td style="padding: 12px 16px; border: 1px solid #ddd; vertical-align: top;"><b>핫스팟: 병목의 실측</b><br>(로드맵 2·5단계)</td>
                                                         <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>리드타임 분해</b>가 전체 경과 시간을 사람 판단·에이전트 수행·큐 대기로 나누고, 여러 인스턴스를 모아 프로세스 정의 단위의 병목을 드러냅니다. 워크숍에서 붙인 핫스팟을 운영 데이터로 다시 확인할 수 있습니다.<br><a href="../processgpt.html#feat-leadtime" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr style="background-color: #f7f7fa;">
                                                         <td style="padding: 12px 16px; border: 1px solid #ddd; vertical-align: top;"><b>관측성과 토큰 비용</b><br>(로드맵 4단계, 5장의 한계)</td>
                                                         <td style="padding: 12px 16px; border: 1px solid #ddd;"><b>실행 프로파일러</b>가 워터폴 → 태스크 → 언어 모델 호출 → 툴 호출을 부모-자식으로 이어 보여 주고, 인스턴스마다 소요 시간과 토큰 비용을 함께 엽니다.<br><a href="../processgpt.html#feat-profiler" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td>
                                                     </tr>
