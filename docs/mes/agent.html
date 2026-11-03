@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>에이전트 협업과 사람의 결정 — uEngine MES 튜토리얼</title>
-<meta name="description" content="용접 이상 한 건을 부서별 AI 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 고르고, 그 결정은 규칙의 새 버전이 되어 같은 이상이 다시 생기면 결정 없이 실행됩니다.">
+<meta name="description" content="용접 이상 한 건을 부서별 AI 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 대안을 고르고, 그 결정은 규칙의 새 버전이 되어 같은 이상이 다시 생기면 결정 없이 실행됩니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/mes/agent.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="에이전트 협업과 사람의 결정 — uEngine MES 튜토리얼">
-<meta property="og:description" content="용접 이상 한 건을 부서별 AI 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 고르고, 그 결정은 규칙의 새 버전이 되어 같은 이상이 다시 생기면 결정 없이 실행됩니다.">
+<meta property="og:description" content="용접 이상 한 건을 부서별 AI 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 대안을 고르고, 그 결정은 규칙의 새 버전이 되어 같은 이상이 다시 생기면 결정 없이 실행됩니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/mes/agent.html">
 <meta property="og:image" content="https://www.uengine.org/docs/mes/img/anomaly-monitor.webp">
 <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
@@ -52,11 +52,11 @@
     <h1>에이전트 협업과 사람의 결정</h1>
     <article>
 <blockquote>
-<p>용접 이상 한 건을 부서별 AI 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 고르고, 그 결정은 규칙의 새 버전이 되어 같은 이상이 다시 생기면 결정 없이 실행됩니다.</p>
+<p>용접 이상 한 건을 부서별 AI 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 대안을 고르고, 그 결정은 규칙의 새 버전이 되어 같은 이상이 다시 생기면 결정 없이 실행됩니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/IVmYn_nEDtQ" title="에이전트 협업과 사람의 결정 — 영상 3:44" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
-<p>에이전트에게 공장의 쓰기를 맡기려면 세 가지가 필요합니다. 근거를 시스템에서 직접 읽어야 하고, 승인 없이는 아무것도 바꾸지 못해야 하며, 실행한 뒤 정말 바뀌었는지 다시 확인해야 합니다. 이 장은 그 세 가지가 한 사건에서 어떻게 돌아가는지 보여 줍니다.</p>
+<p>에이전트에게 공장 데이터의 쓰기 작업을 맡기려면 세 가지가 필요합니다. 근거를 시스템에서 직접 읽어야 하고, 승인 없이는 아무것도 바꾸지 못해야 하며, 실행한 뒤 정말 바뀌었는지 다시 확인해야 합니다. 이 장은 그 세 가지가 한 사건에서 어떻게 이루어지는지 보여 줍니다.</p>
 <table>
 <thead>
 <tr>
@@ -126,7 +126,7 @@
 <div class="admonition note">
 <p class="admonition-title">먼저 알아 둘 것</p>
 <ul>
-<li>에이전트는 실제로 실행됩니다. 활동 하나에 1분 안팎 걸리고, 재발 사건까지 합쳐 16분쯤 걸렸습니다. 영상에서는 기다리는 시간을 줄였습니다.</li>
+<li>에이전트는 실제로 실행됩니다. 활동 하나를 실행하는 데 1분 안팎이 걸리고, 재발 사건까지 합쳐 16분쯤 걸렸습니다. 영상에서는 기다리는 시간을 줄였습니다.</li>
 <li>데이터와 시나리오는 합성이고, 비전 추론은 학습된 모델이 아니라 픽셀 규칙으로 흉내 낸 것입니다.</li>
 <li>이상 신호는 시연을 위해 주입합니다. 실제 설비에서 수집한 값이 아닙니다.</li>
 </ul>
@@ -137,39 +137,39 @@
 
 <figure><a href="img/agent-episode.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="조건 에피소드가 열린 콘솔" src="img/agent-episode.webp" loading="lazy" decoding="async"></a><figcaption>조건 에피소드가 열린 콘솔</figcaption></figure>
 </li>
-<li><strong>프로세스 보기.</strong> Process GPT 에서 <strong>용접 품질 이상 대응</strong> 정의를 엽니다. 레인은 부서별 팀이고, 활동마다 그 팀의 전문 에이전트가 맡습니다. 사건이 열리면 이 프로세스가 자동으로 시작됩니다.
+<li><strong>프로세스 보기.</strong> Process GPT에서 <strong>용접 품질 이상 대응</strong> 정의를 엽니다. 레인은 부서별 팀을 나타내고, 각 활동은 그 팀의 전문 에이전트가 맡습니다. 사건이 열리면 이 프로세스가 자동으로 시작됩니다.
 
 <figure><a href="img/agent-process.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="부서별 레인으로 나눈 프로세스" src="img/agent-process.webp" loading="lazy" decoding="async"></a><figcaption>부서별 레인으로 나눈 프로세스</figcaption></figure>
 </li>
-<li><strong>위험 판정.</strong> 첫 활동의 작업 화면을 엽니다. 전류 편차 최대 17.2%가 186초 이어졌고, 보호가스는 10.4 L/min 까지 떨어졌으며, 비전 NG+REVIEW 는 22%입니다. 규칙 <code>R-WLD-01</code> 의 세 조건을 모두 충족해 위험 등급은 <strong>HIGH</strong> 입니다.
+<li><strong>위험 판정.</strong> 첫 활동의 작업 화면을 엽니다. 최대 17.2%의 전류 편차가 186초 동안 이어졌고, 보호가스는 10.4 L/min까지 떨어졌으며, 비전 NG+REVIEW는 22%입니다. 규칙 <code>R-WLD-01</code>의 세 조건을 모두 충족해 위험 등급은 <strong>HIGH</strong>입니다.
 
 <figure><a href="img/agent-risk.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="위험 판정" src="img/agent-risk.webp" loading="lazy" decoding="async"></a><figcaption>위험 판정</figcaption></figure>
 </li>
-<li><strong>의심 LOT 추적.</strong> 의심은 <strong>360EA</strong>, LOT 4개입니다. Edge, MMS, QMS, MES, SCM 을 차례로 읽습니다. 노즐을 교체한 10:35 이전은 제외합니다. 외주로 나간 W03 은 대응표가 없어 <strong>추정</strong>으로 표시하고 보류 판단에만 씁니다.
+<li><strong>의심 LOT 추적.</strong> 의심 대상은 <strong>360EA</strong>로, LOT 4개입니다. Edge, MMS, QMS, MES, SCM을 차례로 읽습니다. 노즐을 교체한 10:35 이전은 제외합니다. 외주로 나간 W03은 대응표가 없어 <strong>추정</strong>으로 표시하고 보류 판단에만 씁니다.
 
 <figure><a href="img/agent-trace.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="의심 LOT 추적" src="img/agent-trace.webp" loading="lazy" decoding="async"></a><figcaption>의심 LOT 추적</figcaption></figure>
 </li>
-<li><strong>납기 영향.</strong> ERP 회계 재고는 2,300, 이상 전 출하 가능은 2,000, 의심분을 빼면 <strong>1,640</strong> 입니다. 주문 2,000EA 에 360EA 가 부족합니다. 아래 표에 LOT 별 근거가 있습니다.
+<li><strong>납기 영향.</strong> ERP 회계 재고는 2,300이고, 이상 전 출하 가능 수량은 2,000이며, 의심분을 빼면 <strong>1,640</strong>입니다. 주문 수량 2,000EA에서 360EA가 부족합니다. 아래 표에 LOT별 근거가 있습니다.
 
 <figure><a href="img/agent-impact.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="출하 가능 수량 재계산" src="img/agent-impact.webp" loading="lazy" decoding="async"></a><figcaption>출하 가능 수량 재계산</figcaption></figure>
 </li>
-<li><strong>대안 비교.</strong> 대안 3개가 나옵니다. A 는 사내 의심분 재검과 노즐 교체(17시 출하 1,880, 480,000원), B 는 MAG-01 전환(1,640, 180,000원), C 는 분할 납품(1,640, 74,700원)입니다. 이 단계에서 어느 원천도 바뀌지 않습니다.
+<li><strong>대안 비교.</strong> 대안 3개가 나옵니다. A는 사내 의심분 재검과 노즐 교체(17시 출하 1,880, 480,000원), B는 MAG-01 전환(1,640, 180,000원), C는 분할 납품(1,640, 74,700원)입니다. 이 단계에서 어느 원천도 바뀌지 않습니다.
 
 <figure><a href="img/agent-options.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="대안 시뮬레이션" src="img/agent-options.webp" loading="lazy" decoding="async"></a><figcaption>대안 시뮬레이션</figcaption></figure>
 </li>
-<li><strong>경로 결정.</strong> 품질 대응 조정 에이전트가 자동 실행 조건 <code>R-AUTO-01@v1</code> 을 따집니다. 승인된 대응이 아직 없어 <strong>불충족</strong>이고, 품질팀장에게 결정을 요청합니다. 승인 전에는 어느 원천도 바뀌지 않습니다.
+<li><strong>경로 결정.</strong> 품질 대응 조정 에이전트가 자동 실행 조건 <code>R-AUTO-01@v1</code>의 충족 여부를 확인합니다. 승인된 대응이 아직 없어 <strong>불충족</strong>이고, 품질팀장에게 결정을 요청합니다. 승인 전에는 어느 원천도 바뀌지 않습니다.
 
 <figure><a href="img/agent-propose.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="자동 실행 조건과 결정 요청" src="img/agent-propose.webp" loading="lazy" decoding="async"></a><figcaption>자동 실행 조건과 결정 요청</figcaption></figure>
 </li>
-<li><strong>사람이 결정하기.</strong> 품질팀장의 <strong>할 일</strong>에 <strong>대응 결정</strong> 건이 들어옵니다. 열어서 대안 <strong>A</strong> 를 고르고, 범위를 <strong>앞으로 적용할 규칙으로</strong> 정한 뒤 의견을 적고 <strong>A 승인</strong>을 누릅니다.
+<li><strong>사람이 결정하기.</strong> 품질팀장의 <strong>할 일</strong>에 <strong>대응 결정</strong> 건이 들어옵니다. 열어서 대안 <strong>A</strong>를 고르고, 범위를 <strong>앞으로 적용할 규칙으로</strong> 정한 뒤 의견을 적고 <strong>A 승인</strong>을 누릅니다.
 
 <figure><a href="img/agent-decide.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 카드" src="img/agent-decide.webp" loading="lazy" decoding="async"></a><figcaption>결정 카드</figcaption></figure>
 </li>
-<li><strong>실행 원장 확인.</strong> 업무 실행 에이전트가 승인된 결정으로만 실행합니다. <code>Lot.hold</code>, <code>Inspection.raiseLevel</code>, <code>Outsource.hold</code>, <code>Aps.reschedule</code>, <code>WorkOrder.reschedule</code> 다섯 건이 <strong>VERIFIED</strong> 입니다. 재조회 칸이 쓰기 뒤 원천을 다시 읽은 결과입니다. 아래에 학습 결과 <code>R-WLD-01@v2</code> 가 있습니다.
+<li><strong>실행 원장 확인.</strong> 업무 실행 에이전트가 승인된 결정으로만 실행합니다. <code>Lot.hold</code>, <code>Inspection.raiseLevel</code>, <code>Outsource.hold</code>, <code>Aps.reschedule</code>, <code>WorkOrder.reschedule</code> 다섯 건이 <strong>VERIFIED</strong>입니다. 재조회 칸에는 쓰기 뒤 원천을 다시 읽은 결과가 표시됩니다. 아래에 학습 결과 <code>R-WLD-01@v2</code>가 있습니다.
 
 <figure><a href="img/agent-exec.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="실행 원장과 학습" src="img/agent-exec.webp" loading="lazy" decoding="async"></a><figcaption>실행 원장과 학습</figcaption></figure>
 </li>
-<li><strong>복구 계획.</strong> 공정복구 에이전트는 노즐 교체 7분 뒤 편차가 시작된 점을 근거로 장착 불량을 먼저 의심합니다. 예상 정지는 20분이고, 재가동 작업지시까지 MES 에 반영합니다.
+<li><strong>복구 계획.</strong> 공정복구 에이전트는 노즐 교체 7분 뒤 편차가 시작된 점을 근거로 장착 불량을 먼저 의심합니다. 예상 정지 시간은 20분이고, 재가동 작업지시까지 MES에 반영합니다.
 
 <figure><a href="img/agent-recovery.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="공정복구 계획" src="img/agent-recovery.webp" loading="lazy" decoding="async"></a><figcaption>공정복구 계획</figcaption></figure>
 </li>
@@ -177,11 +177,11 @@
 
 <figure><a href="img/agent-propose2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재발 사건의 자동 실행 판단" src="img/agent-propose2.webp" loading="lazy" decoding="async"></a><figcaption>재발 사건의 자동 실행 판단</figcaption></figure>
 </li>
-<li><strong>자동 실행 기록.</strong> 쓰기 네 건이 <strong>VERIFIED</strong> 입니다. 결정 ID 가 <code>AUTO-</code> 로 시작해, 사람이 아니라 규칙으로 실행했다는 것이 원장에 남습니다.
+<li><strong>자동 실행 기록.</strong> 쓰기 작업 네 건이 <strong>VERIFIED</strong>입니다. 결정 ID가 <code>AUTO-</code>로 시작해, 사람이 아니라 규칙으로 실행했다는 것이 원장에 남습니다.
 
 <figure><a href="img/agent-exec2.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="자동 실행 원장" src="img/agent-exec2.webp" loading="lazy" decoding="async"></a><figcaption>자동 실행 원장</figcaption></figure>
 </li>
-<li><strong>운영 감독.</strong> 콘솔의 <strong>운영 감독</strong> 탭을 엽니다. 처리 사건 2건, 사건당 사람 개입 0.5회, 잘못된 자동 처리 0건, 학습 후 자동 처리 1건입니다. 합성 시나리오 두 건의 값이므로 성능 수치로 읽지 마세요. <strong>일시 중지</strong>를 누르면 자율 실행을 멈출 수 있습니다.
+<li><strong>운영 감독.</strong> 콘솔의 <strong>운영 감독</strong> 탭을 엽니다. 처리 사건 2건, 사건당 사람 개입 0.5회, 잘못된 자동 처리 0건, 학습 후 자동 처리 1건입니다. 합성 시나리오 두 건의 값이므로 성능 수치로 해석해서는 안 됩니다. <strong>일시 중지</strong>를 누르면 자율 실행을 멈출 수 있습니다.
 
 <figure><a href="img/agent-hotl.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="운영 감독" src="img/agent-hotl.webp" loading="lazy" decoding="async"></a><figcaption>운영 감독</figcaption></figure>
 </li>
@@ -197,9 +197,9 @@
 <summary>정답</summary>
 <ol>
 <li>바뀌지 않습니다. 쓰기는 승인된 결정이 있어야 실행 단계에서 일어납니다.</li>
-<li>첫 사건은 자동 실행 조건 중 「승인된 대응」이 없어 불충족이었습니다. 품질팀장이 「앞으로 적용」으로 결정해 규칙이 <code>R-WLD-01@v2</code> 가 되었고, 재발 사건은 비용이 한도 안이어서 조건을 모두 충족했습니다.</li>
+<li>첫 사건은 자동 실행 조건 중 「승인된 대응」이 없어 불충족이었습니다. 품질팀장이 「앞으로 적용」으로 결정해 규칙이 <code>R-WLD-01@v2</code>가 되었고, 재발 사건은 비용이 한도 안이어서 조건을 모두 충족했습니다.</li>
 <li>쓰기를 한 뒤 원천을 다시 읽어 확인한 값입니다. 쓰기 요청이 성공했다는 응답만 믿지 않습니다.</li>
-<li>결정 ID 가 <code>AUTO-</code> 로 시작하고, 운영 감독의 그 사건 행에 결정자가 규칙으로, 사람 개입이 0 으로 나옵니다.</li>
+<li>결정 ID가 <code>AUTO-</code>로 시작하고, 운영 감독에서 해당 사건의 행에 결정자가 규칙으로, 사람 개입이 0으로 나옵니다.</li>
 </ol>
 </details>
     </article>
