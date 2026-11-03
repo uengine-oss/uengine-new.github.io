@@ -56,28 +56,28 @@
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/B2NxFTeYegA" title="서열 출고와 시뮬레이션 — 영상 2:18" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
-<p>출고는 매장별로 쌓는 순서가 중요합니다. 이 화면은 출고 단위에 서열 위치와 목표 팔레트를 정하고, 같은 팔레트로 묶인 항목을 한 번의 <code>PALLETIZE</code> 명령으로 로봇 셀에 보냅니다. 설비가 없어도 끝까지 돌려 볼 수 있도록 저장소에 시뮬레이터 워커가 들어 있습니다. 워커는 게이트웨이 계정으로 로그인해 실제 설비와 똑같은 함수로 결과를 보고합니다.</p>
+<p>출고는 매장별로 쌓는 순서가 중요합니다. 이 화면은 출고 단위에 서열 위치와 목표 팔레트를 정하고, 같은 팔레트로 묶인 항목을 한 번의 <code>PALLETIZE</code> 명령으로 로봇 셀에 보냅니다. 설비가 없어도 끝까지 실행해 볼 수 있도록 저장소에 시뮬레이터 워커가 들어 있습니다. 워커는 게이트웨이 계정으로 로그인해 실제 설비와 똑같은 함수로 결과를 보고합니다.</p>
 <div class="admonition note">
 <p class="admonition-title">샘플의 범위</p>
 <ul>
 <li>출고 단위는 <strong>재고를 확인하거나 예약하지 않습니다.</strong> 완료되어도 재고 원장에서 빠지지 않습니다.</li>
 <li>서열 위치와 팔레트는 <strong>화면이 계산하지 않습니다.</strong> 운영자가 정한 값을 저장하고 검증합니다.</li>
 <li>시뮬레이터는 타이밍과 실패율만 흉내 냅니다. 물리 시뮬레이션이나 3차원 동작은 이 커밋에 없습니다.</li>
-<li>가정 시나리오의 추정은 <code>회전 수 = 명령 수 / 설비 수</code> 에 평균 시간을 곱한 단순 계산입니다. 대기열과 재시도를 반영하지 않으며 화면에도 <code>OPTIMISTIC_ESTIMATE</code> 로 표시됩니다.</li>
+<li>가정 시나리오의 추정은 <code>회전 수 = 명령 수 / 설비 수</code>에 평균 시간을 곱한 단순 계산입니다. 대기열과 재시도를 반영하지 않으며 화면에도 <code>OPTIMISTIC_ESTIMATE</code>로 표시됩니다.</li>
 </ul>
 </div>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
-<p>처음 상태에서 시작합니다: <code>cd supabase &amp;&amp; supabase db reset</code>. <strong>WCS Equipment</strong> 에서 <code>wh-manager-a@demo.local</code> 로 <code>CELL-01</code>, <code>CELL-02</code>(Type <code>ROBOT_CELL</code>, Zone <code>ZONE-PACK</code>)를 등록하고, 앞 장처럼 게이트웨이 보고로 <code>IDLE</code> 로 만듭니다.</p>
+<p><code>cd supabase &amp;&amp; supabase db reset</code>으로 처음 상태로 되돌린 뒤 시작합니다. <strong>WCS Equipment</strong>에서 <code>wh-manager-a@demo.local</code>로 <code>CELL-01</code>, <code>CELL-02</code>(Type <code>ROBOT_CELL</code>, Zone <code>ZONE-PACK</code>)를 등록하고, 앞 장처럼 게이트웨이 보고로 상태를 <code>IDLE</code>로 바꿉니다.</p>
 <ol class="steps">
-<li><strong>시뮬레이션 켜기.</strong> <strong>WCS Simulation</strong> 을 엽니다. 두 대 모두 <code>REAL</code> 입니다. <code>CELL-01</code> 의 <strong>Simulate</strong> 를 누르면 <code>SIMULATED</code> 가 되고 Source 는 <code>기본값</code> 입니다. 기본값은 ack 500ms~1.5s, progress 1.0s~3.0s, completion 2.0s~5.0s, 실패율 5% 입니다.
+<li><strong>시뮬레이션 켜기.</strong> <strong>WCS Simulation</strong>을 엽니다. 두 대 모두 <code>REAL</code>입니다. <code>CELL-01</code>의 <strong>Simulate</strong>를 누르면 <code>SIMULATED</code>가 되고 Source는 <code>기본값</code>입니다. 기본값은 ack 500ms~1.5s, progress 1.0s~3.0s, completion 2.0s~5.0s, 실패율 5%입니다.
 
 <figure><a href="img/ops-simon.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Simulate" src="img/ops-simon.webp" loading="lazy" decoding="async"></a><figcaption>Simulate</figcaption></figure>
 </li>
-<li><strong>프로파일.</strong> 결과가 흔들리지 않도록 Ack 500~800, Progress 800~1200, Completion 1200~1800, Failure rate 0 을 넣고 <strong>Save Profile</strong> 을 누릅니다. Source 가 <code>등록 프로파일</code> 로 바뀝니다.
+<li><strong>프로파일.</strong> 결과의 변동을 줄이도록 Ack 500~800, Progress 800~1200, Completion 1200~1800, Failure rate 0을 넣고 <strong>Save Profile</strong>을 누릅니다. Source가 <code>등록 프로파일</code>로 바뀝니다.
 
 <figure><a href="img/ops-profile.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로파일" src="img/ops-profile.webp" loading="lazy" decoding="async"></a><figcaption>프로파일</figcaption></figure>
 </li>
-<li><strong>출고 단위 등록.</strong> <strong>WCS Sequencing</strong> 에서 <strong>Open Wave</strong> 를 누르고 아래 세 건을 <strong>Create Outbound Order</strong> 로 넣습니다.
+<li><strong>출고 단위 등록.</strong> <strong>WCS Sequencing</strong>에서 <strong>Open Wave</strong>를 누르고 아래 세 건을 <strong>Create Outbound Order</strong>로 넣습니다.
 
 | Order Number | Store Code | Product | Qty | Weight (kg) | Volume (L) |
 |---|---|---|---|---|---|
@@ -87,19 +87,19 @@
 
 <figure><a href="img/ops-orders.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="출고 단위" src="img/ops-orders.webp" loading="lazy" decoding="async"></a><figcaption>출고 단위</figcaption></figure>
 </li>
-<li><strong>서열 배정.</strong> <strong>Assign Sequence</strong> 로 OB-0001 은 위치 1, OB-0002 는 위치 2, 둘 다 팔레트 <code>PLT-042-01</code> 에, OB-0003 은 위치 3, 팔레트 <code>PLT-077-01</code> 에 넣습니다. 팔레트 현황에서 <code>PLT-042-01</code> 의 선언 중량 합계는 10.2 kg, 용적은 8.1 L 입니다.
+<li><strong>서열 배정.</strong> <strong>Assign Sequence</strong>로 OB-0001은 위치 1, OB-0002는 위치 2에 배정하고 둘 다 팔레트 <code>PLT-042-01</code>에 넣습니다. OB-0003은 위치 3에 배정하고 팔레트 <code>PLT-077-01</code>에 넣습니다. 팔레트 현황에서 <code>PLT-042-01</code>의 선언 중량 합계는 10.2 kg, 용적은 8.1 L입니다.
 
 <figure><a href="img/ops-assign.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팔레트 현황" src="img/ops-assign.webp" loading="lazy" decoding="async"></a><figcaption>팔레트 현황</figcaption></figure>
 </li>
-<li><strong>상한 확인.</strong> Robot Cell <code>CELL-01</code>, Target Pallet <code>PLT-077-01</code>, Max Weight 100 으로 <strong>Dispatch PALLETIZE</strong> 를 누릅니다. <code>INVALID: declared weight 240 kg exceeds max_weight_kg 100 for pallet PLT-077-01</code> 로 거부되고 아무것도 나가지 않습니다.
+<li><strong>상한 확인.</strong> Robot Cell <code>CELL-01</code>, Target Pallet <code>PLT-077-01</code>, Max Weight 100으로 <strong>Dispatch PALLETIZE</strong>를 누릅니다. <code>INVALID: declared weight 240 kg exceeds max_weight_kg 100 for pallet PLT-077-01</code>로 거부되고 명령은 전송되지 않습니다.
 
 <figure><a href="img/ops-ceiling.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="상한 거부" src="img/ops-ceiling.webp" loading="lazy" decoding="async"></a><figcaption>상한 거부</figcaption></figure>
 </li>
-<li><strong>명령 보내기.</strong> Target Pallet <code>PLT-042-01</code>, Max Weight 250, Max Volume 500 으로 <strong>Dispatch PALLETIZE</strong> 를 누릅니다. 「CELL-01에 2건 (선언 10.2kg / 8.1L)」이 보이고, 두 항목이 명령 하나에 실려 <code>DISPATCHED</code> 가 됩니다.
+<li><strong>명령 보내기.</strong> Target Pallet <code>PLT-042-01</code>, Max Weight 250, Max Volume 500으로 <strong>Dispatch PALLETIZE</strong>를 누릅니다. 「CELL-01에 2건 (선언 10.2kg / 8.1L)」이 보이고, 두 항목이 명령 하나로 묶여 <code>DISPATCHED</code>가 됩니다.
 
 <figure><a href="img/ops-dispatch.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="DISPATCHED" src="img/ops-dispatch.webp" loading="lazy" decoding="async"></a><figcaption>DISPATCHED</figcaption></figure>
 </li>
-<li><strong>워커 실행.</strong> <code>mcp</code> 폴더에서 워커를 돌립니다. <code>--once</code> 는 밀린 명령을 끝까지 진행하고 끝납니다. 계속 띄워 두려면 <code>--loop --interval 1</code> 을 씁니다.
+<li><strong>워커 실행.</strong> <code>mcp</code> 폴더에서 워커를 실행합니다. <code>--once</code>는 대기 중인 명령을 끝까지 처리하고 종료합니다. 계속 실행하려면 <code>--loop --interval 1</code>을 씁니다.
 
 
 <div class="hl"><pre><span></span><code>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>wms_mcp.simulator.wcs_gateway_simulator<span class="w"> </span>--once
@@ -111,25 +111,25 @@
 
 <figure><a href="img/ops-worker.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="워커 로그" src="img/ops-worker.webp" loading="lazy" decoding="async"></a><figcaption>워커 로그</figcaption></figure>
 </li>
-<li><strong>매니페스트.</strong> <strong>WCS Sequencing</strong> 을 새로 고칩니다. 위치 1, 2 가 <code>COMPLETED</code>, Load Pos 1, 2 입니다. <strong>팔레트 매니페스트</strong> 의 <code>PLT-042-01</code> 은 <code>SUCCESS</code>, 두 항목 모두 <code>LOADED</code> 입니다. 실측 중량은 시뮬레이터가 선언값을 그대로 돌려준 것입니다.
+<li><strong>매니페스트.</strong> <strong>WCS Sequencing</strong>을 새로 고칩니다. 위치 1, 2의 상태는 <code>COMPLETED</code>, Load Pos는 1, 2입니다. <strong>팔레트 매니페스트</strong>의 <code>PLT-042-01</code>은 <code>SUCCESS</code>, 두 항목 모두 <code>LOADED</code>입니다. 실측 중량은 시뮬레이터가 선언값을 그대로 돌려준 것입니다.
 
 <figure><a href="img/ops-manifest.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="매니페스트" src="img/ops-manifest.webp" loading="lazy" decoding="async"></a><figcaption>매니페스트</figcaption></figure>
 </li>
-<li><strong>실패 경로.</strong> <strong>WCS Simulation</strong> 에서 Failure rate 를 1 로 저장합니다. <strong>WCS Sequencing</strong> 에서 <code>PLT-077-01</code> 을 Max Weight 300 으로 보냅니다. 워커를 <code>--tick</code> 으로 한 번 돌리면 <strong>진행 중인 계획</strong> 에 Planned outcome <code>FAILED</code> / <code>ABORTED</code> 가 보입니다. 결과는 계획을 세울 때 이미 정해집니다.
+<li><strong>실패 경로.</strong> <strong>WCS Simulation</strong>에서 Failure rate를 1로 저장합니다. <strong>WCS Sequencing</strong>에서 <code>PLT-077-01</code>을 Max Weight 300으로 보냅니다. 워커를 <code>--tick</code>으로 한 번 실행하면 <strong>진행 중인 계획</strong>에 Planned outcome <code>FAILED</code> / <code>ABORTED</code>가 보입니다. 결과는 계획을 세울 때 이미 정해집니다.
 
 <figure><a href="img/ops-failure.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="계획 미리 보기" src="img/ops-failure.webp" loading="lazy" decoding="async"></a><figcaption>계획 미리 보기</figcaption></figure>
 </li>
-<li><strong>실패 결과.</strong> 워커를 <code>--once</code> 로 돌립니다. <code>PLT-077-01</code> 은 <code>FAILED</code> / <code>ABORTED</code>, 항목은 <code>SKIPPED</code>(<code>SIMULATED_ABORT</code>), 서열 3 은 <code>FAILED</code> 입니다.
+<li><strong>실패 결과.</strong> 워커를 <code>--once</code>로 실행합니다. <code>PLT-077-01</code>은 <code>FAILED</code> / <code>ABORTED</code>, 항목은 <code>SKIPPED</code>(<code>SIMULATED_ABORT</code>), 서열 3은 <code>FAILED</code>입니다.
 
 <figure><a href="img/ops-aborted.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="ABORTED" src="img/ops-aborted.webp" loading="lazy" decoding="async"></a><figcaption>ABORTED</figcaption></figure>
 </li>
-<li><strong>가정 시나리오.</strong> <strong>WCS Simulation</strong> 의 what-if 에서 Name <code>야간 축소 운전</code>, Command count 10, Linked entity <code>dispatch_wave</code>, <code>CELL-01</code> 과 <code>CELL-02</code> 를 고르고 <strong>Create Scenario</strong> 후 <strong>Run</strong> 을 누릅니다. 이 실행에서는 「5회전 · 20.1s · 실패 5건」이 나왔습니다. <code>CELL-01</code> 의 실패율을 1 로 바꿔 둔 상태라 실패가 많고, 값은 프로파일에 따라 달라집니다. <code>CELL-02</code> 는 프로파일이 없어 <code>DEFAULT_PROFILE_APPLIED</code> 경고가 붙습니다. 이 동안 설비 명령은 한 건도 늘지 않습니다.
+<li><strong>가정 시나리오.</strong> <strong>WCS Simulation</strong>의 what-if에서 Name <code>야간 축소 운전</code>, Command count 10, Linked entity <code>dispatch_wave</code>, <code>CELL-01</code>과 <code>CELL-02</code>를 고르고 <strong>Create Scenario</strong>를 누른 뒤 <strong>Run</strong>을 누릅니다. 이 실행에서는 「5회전 · 20.1s · 실패 5건」이 나왔습니다. <code>CELL-01</code>의 실패율을 1로 바꿔 둔 상태라 실패가 많고, 값은 프로파일에 따라 달라집니다. <code>CELL-02</code>는 프로파일이 없어 <code>DEFAULT_PROFILE_APPLIED</code> 경고가 표시됩니다. 이 과정에서 설비 명령은 한 건도 늘지 않습니다.
 
 <figure><a href="img/ops-scenario.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시나리오" src="img/ops-scenario.webp" loading="lazy" decoding="async"></a><figcaption>시나리오</figcaption></figure>
 </li>
 </ol>
 <h2 id="같은-영역의-다른-화면">같은 영역의 다른 화면<a class="anchor" href="#같은-영역의-다른-화면" title="Permanent link">#</a></h2>
-<p>이 장은 합성 데이터 없이 끝까지 돌아가는 서열 출고와 시뮬레이션을 골랐습니다. 다른 세 화면도 저장소에 있고, 흐름은 <code>frontend/playwright/e2e/</code> 의 스펙이 그대로 보여 줍니다.</p>
+<p>이 장에서는 합성 데이터 없이 끝까지 실행할 수 있는 서열 출고와 시뮬레이션을 다룹니다. 다른 세 화면도 저장소에 있고, 그 흐름은 <code>frontend/playwright/e2e/</code>의 스펙에서 확인할 수 있습니다.</p>
 <table>
 <thead>
 <tr>
@@ -142,7 +142,7 @@
 <tr>
 <td><strong>Dock Schedule</strong></td>
 <td>도크 예약, 체크인, 도킹, 출차. 같은 도크의 겹치는 시간은 거부</td>
-<td>입고 예약에는 확정된 PO 가 필요합니다</td>
+<td>입고 예약에는 확정된 PO가 필요합니다</td>
 </tr>
 <tr>
 <td><strong>Labor</strong></td>
@@ -159,11 +159,11 @@
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>왜 240kg 팔레트는 로봇 셀까지 가지 않았나요?</summary>
-<p>명령을 보낼 때 선언 중량 합계를 상한과 비교합니다. 상한을 넘으면 함수가 <code>INVALID</code> 로 거부해 명령 행이 만들어지지 않습니다.</p>
+<p>명령을 보낼 때 선언 중량 합계를 상한과 비교합니다. 상한을 넘으면 함수가 <code>INVALID</code>로 거부해 명령 행이 만들어지지 않습니다.</p>
 </details>
 <details class="answer">
 <summary>시뮬레이터는 왜 데이터베이스 안의 예약 작업이 아니라 바깥 프로세스인가요?</summary>
-<p>결과 보고 함수는 로그인한 <code>WCS_GATEWAY</code> 세션을 요구합니다. 바깥 프로세스가 실제 설비 연동과 똑같이 로그인해 호출하므로, 업무 오더 전파나 걸림 자동 장애 같은 뒤따르는 처리도 그대로 돕니다.</p>
+<p>결과 보고 함수는 로그인한 <code>WCS_GATEWAY</code> 세션을 요구합니다. 바깥 프로세스가 실제 설비 연동과 똑같이 로그인해 호출하므로, 업무 오더 전파나 걸림 자동 장애 같은 후속 처리도 그대로 실행됩니다.</p>
 </details>
 <details class="answer">
 <summary>가정 시나리오를 실행하면 설비가 움직이나요?</summary>

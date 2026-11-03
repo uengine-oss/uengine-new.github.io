@@ -529,7 +529,7 @@
                             <div class="col-md-6 col-xl-5 offset-xl-1 mt-n10 mt-sm-20">
                                 <p class="section-descr"><span style="font-size: 1.8rem; color: #111; font-weight: 600;">기록하는 MES에서, 판단하고 대응하는 MES로</span></p>
                                 <p class="lead mt-0 mb-30 mb-sm-20" style="font-size: 19px;">
-                                    현재 상태만 저장하면 왜 그렇게 됐는지가 남지 않습니다. uEngine MES 는 <b>모든 변경을 이벤트로 저장</b>합니다. 설비가 멈추면 어떤 작업지시와 수주, 납기가 걸리는지 계산하고, 담당자의 판단과 실행 결과가 같은 이력에 이어집니다.<br><br>그 위에 <b>Process GPT 에이전트</b>와 <b>시맨틱 레이어</b>를 올렸습니다. 에이전트는 여러 시스템의 근거를 모아 대안을 내고, 사람이 결정하면 실행한 뒤 원천을 다시 읽어 확인합니다. 사람이 「앞으로 적용」이라고 정한 결정은 규칙의 새 버전이 되어, 같은 이상이 다시 생기면 결정 없이 처리됩니다.
+                                    현재 상태만 저장하면 왜 그렇게 됐는지가 남지 않습니다. uEngine MES는 <b>모든 변경을 이벤트로 저장</b>합니다. 설비가 멈추면 어떤 작업지시와 수주, 납기가 영향을 받는지 계산하고, 담당자의 판단과 실행 결과가 같은 이력에 이어집니다.<br><br>그 위에 <b>Process GPT 에이전트</b>와 <b>시맨틱 레이어</b>를 연결했습니다. 에이전트는 여러 시스템의 근거를 모아 대안을 내고, 사람이 결정하면 실행한 뒤 원천을 다시 읽어 확인합니다. 사람이 「앞으로 적용」이라고 정한 결정은 규칙의 새 버전이 되어, 같은 이상이 또 생기면 다시 결정하지 않아도 처리됩니다.
                                 </p>
                             </div>
                         </div>
@@ -549,7 +549,7 @@
                                 <p class="plite-theme-cat">현장 대응</p>
                                 <h3 class="plite-theme-title">설비가 멈추면, 영향부터 계산합니다</h3>
                                 <p class="plite-theme-lead">정지를 등록하면 이상 상황이 열리고, 영향 범위와 대체 설비 후보가 바로 나옵니다.</p>
-                                <ul class="plite-theme-list"><li><strong>영향 분석</strong><span>설비에서 작업지시, 수주, 납기로 관계를 따라가 잔량과 최단 납기를 계산합니다.</span></li><li><strong>사람이 고르는 대응</strong><span>보류와 대체 설비 재계획을 사유·승인자와 함께 실행합니다.</span></li><li><strong>대응 지표</strong><span>영향 분석, 대응, 재계획, 복구 시간과 손실 수량을 이벤트 시각에서 계산합니다.</span></li></ul>
+                                <ul class="plite-theme-list"><li><strong>영향 분석</strong><span>설비와 작업지시, 수주, 납기의 관계를 따라가며 잔량과 최단 납기를 계산합니다.</span></li><li><strong>사람이 고르는 대응</strong><span>사유와 승인자를 기록하고 보류와 대체 설비 재계획을 실행합니다.</span></li><li><strong>대응 지표</strong><span>영향 분석, 대응, 재계획, 복구 시간과 손실 수량을 이벤트 시각을 기준으로 계산합니다.</span></li></ul>
                                 <div class="plite-vlinks"><a class="plite-vlink" href="#v-3lJYRt79bM8">▶ 1장 설비 이상 대응</a></div>
                             </div>
                         </div>
@@ -558,8 +558,8 @@
                             <div class="col-lg-5">
                                 <p class="plite-theme-cat">이력과 추적</p>
                                 <h3 class="plite-theme-title">왜 그렇게 됐는지, 이벤트로 되짚습니다</h3>
-                                <p class="plite-theme-lead">서비스를 가로지른 원인과 결과가 그대로 남고, 그때 공장 상태도 다시 볼 수 있습니다.</p>
-                                <ul class="plite-theme-list"><li><strong>변경 이력</strong><span>화면마다 필드별 변경 전후와 사유, 승인자를 봅니다.</span></li><li><strong>프로세스 추적</strong><span>상관 ID 로 묶인 이벤트를 서비스 레인과 인과 화살표로 펼칩니다.</span></li><li><strong>시점 조회 · 재구축</strong><span>그때의 설비 상태를 재생으로 복원하고, 읽기 모델을 이벤트로 다시 만듭니다.</span></li></ul>
+                                <p class="plite-theme-lead">여러 서비스에 걸친 원인과 결과가 그대로 남고, 그때의 공장 상태도 다시 볼 수 있습니다.</p>
+                                <ul class="plite-theme-list"><li><strong>변경 이력</strong><span>화면마다 필드별 변경 전후와 사유, 승인자를 봅니다.</span></li><li><strong>프로세스 추적</strong><span>상관 ID로 묶인 이벤트를 서비스 레인과 인과 화살표로 펼칩니다.</span></li><li><strong>시점 조회 · 재구축</strong><span>그때의 설비 상태를 재생으로 복원하고, 읽기 모델을 이벤트로 다시 만듭니다.</span></li></ul>
                                 <div class="plite-vlinks"><a class="plite-vlink" href="#v-cFVHO_krx-8">▶ 2장 이벤트 추적</a></div>
                             </div>
                         </div>
@@ -568,8 +568,8 @@
                             <div class="col-lg-5">
                                 <p class="plite-theme-cat">AI 연결</p>
                                 <h3 class="plite-theme-title">흩어진 시스템을 하나의 판단으로 묶습니다</h3>
-                                <p class="plite-theme-lead">「오늘 17시까지 2,000개 납품할 수 있나?」처럼 어느 시스템도 혼자 답하지 못하는 질문에, LOT 별 근거와 함께 답합니다.</p>
-                                <ul class="plite-theme-list"><li><strong>원천은 그대로</strong><span>ERP, SCM, APS, MMS, QMS, MES, Edge 7종을 복제 없이 질의할 때 읽습니다.</span></li><li><strong>판단 개념</strong><span>출하 가능 수량처럼 어느 시스템에도 없는 개념을 규칙과 함께 정의합니다.</span></li><li><strong>함수와 회귀</strong><span>기존 프로시저와 서비스를 read·plan·exec 함수로 올리고, Golden Question 으로 다시 검증합니다.</span></li></ul>
+                                <p class="plite-theme-lead">「오늘 17시까지 2,000개 납품할 수 있나?」처럼 어느 시스템도 단독으로 답하지 못하는 질문에 LOT별 근거와 함께 답합니다.</p>
+                                <ul class="plite-theme-list"><li><strong>원천은 그대로</strong><span>ERP, SCM, APS, MMS, QMS, MES, Edge 7종의 데이터를 복제하지 않고 질의할 때 읽습니다.</span></li><li><strong>판단 개념</strong><span>출하 가능 수량처럼 어느 시스템에도 없는 개념을 규칙과 함께 정의합니다.</span></li><li><strong>함수와 회귀</strong><span>기존 프로시저와 서비스를 read·plan·exec 함수로 등록하고, Golden Question으로 다시 검증합니다.</span></li></ul>
                                 <div class="plite-vlinks"><a class="plite-vlink" href="#v-stegYnW7PFs">▶ 3장 시맨틱 레이어</a></div>
                             </div>
                         </div>
@@ -579,7 +579,7 @@
                                 <p class="plite-theme-cat">AI 연결</p>
                                 <h3 class="plite-theme-title">에이전트가 제안하고, 사람이 결정하고, 규칙으로 배웁니다</h3>
                                 <p class="plite-theme-lead">용접 이상 한 건을 부서별 에이전트가 넘겨받아 처리합니다. 사람은 결정 카드에서 고르기만 합니다.</p>
-                                <ul class="plite-theme-list"><li><strong>부서별 에이전트</strong><span>위험 판정, 의심 LOT 추적, 납기 영향, 대안 시뮬레이션을 차례로 맡습니다.</span></li><li><strong>실행과 재조회</strong><span>승인된 결정으로만 실행하고, 쓰기마다 원천을 다시 읽어 확인합니다.</span></li><li><strong>재발 시 자동 처리</strong><span>「앞으로 적용」한 결정은 규칙의 새 버전이 되어 다음 사건은 조건을 따져 자동으로 실행합니다.</span></li></ul>
+                                <ul class="plite-theme-list"><li><strong>부서별 에이전트</strong><span>위험 판정, 의심 LOT 추적, 납기 영향, 대안 시뮬레이션을 차례로 맡습니다.</span></li><li><strong>실행과 재조회</strong><span>승인된 결정으로만 실행하고, 쓰기마다 원천을 다시 읽어 확인합니다.</span></li><li><strong>재발 시 자동 처리</strong><span>「앞으로 적용」한 결정은 규칙의 새 버전이 되어 다음 사건이 발생하면 조건을 확인해 자동으로 실행합니다.</span></li></ul>
                                 <div class="plite-vlinks"><a class="plite-vlink" href="#v-IVmYn_nEDtQ">▶ 4장 에이전트 협업과 사람의 결정</a></div>
                             </div>
                         </div>
@@ -590,7 +590,7 @@
                     <div class="container position-relative">
                         <div class="col-md-10 offset-md-1 text-center">
                             <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">구성과 현재 상태</span></h3>
-                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">무엇이 되어 있고 무엇이 아직인지 그대로 적었습니다.</p>
+                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">구현된 기능과 아직 구현되지 않은 기능을 그대로 적었습니다.</p>
                         </div>
                         <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody><tr><td>백엔드</td><td>업무 서비스 10개와 게이트웨이. Java 17, Spring Boot, Kafka, PostgreSQL</td></tr><tr><td>화면</td><td>Vue 3. 대메뉴 9개, 중메뉴 60개, 화면 145개. 대부분 범용 그리드 화면이고 생산·설비·품질·창고 등 핵심 화면은 전용으로 만들었습니다</td></tr><tr><td>이벤트 소싱</td><td>추가만 되는 이벤트 저장소, 아웃박스, 상관·인과 ID, 시점 조회, 프로젝션 재구축</td></tr><tr><td>AI 연결</td><td>Process GPT 프로세스와 에이전트, 시맨틱 레이어, read·plan·exec 함수, 사람의 결정 카드</td></tr><tr><td>아직 없는 것</td><td>범용 화면에는 도메인 규칙이 없습니다. 권한 데이터는 메뉴·API 접근 제어에 아직 쓰이지 않습니다. 컨테이너 이미지가 없습니다. 시맨틱 레이어와 데이터 패브릭은 시연용 경량 구현이고, 비전 추론은 학습된 모델이 아니라 픽셀 규칙으로 흉내 낸 것입니다</td></tr></tbody></table></div>
                         
@@ -602,7 +602,7 @@
                     <div class="container position-relative">
                         <div class="col-md-10 offset-md-1 text-center">
                             <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">영상으로 보기</span></h3>
-                            <p class="section-descr mb-60 mb-sm-40 wow fadeInUp">합성 데이터로 실제로 돌리며 녹화한 영상입니다. 썸네일을 누르면 재생됩니다.</p>
+                            <p class="section-descr mb-60 mb-sm-40 wow fadeInUp">합성 데이터로 실제 실행하며 녹화한 영상입니다. 썸네일을 누르면 재생됩니다.</p>
                         </div>
                         <h3 class="plite-gal-head">제품 시연</h3>
                         <div class="row">
@@ -647,7 +647,7 @@
                                     <span class="plite-yt-play" aria-hidden="true"></span>
                                 </button>
                                 <h4 class="plite-v-title">3장 시맨틱 레이어</h4>
-                                <p class="plite-v-cap">납품 가능 질문 하나로 원천, 온톨로지, 함수, 회귀 세트를 따라갑니다.</p>
+                                <p class="plite-v-cap">납품 가능 여부를 묻는 질문 하나로 원천, 온톨로지, 함수, 회귀 세트를 따라갑니다.</p>
                             </div>
                             <div class="col-md-6 col-lg-6 mb-40" id="v-IVmYn_nEDtQ">
                                 <button type="button" class="plite-yt" data-yt="IVmYn_nEDtQ" aria-label="4장 에이전트 협업과 사람의 결정 영상 재생">
@@ -655,7 +655,7 @@
                                     <span class="plite-yt-play" aria-hidden="true"></span>
                                 </button>
                                 <h4 class="plite-v-title">4장 에이전트 협업과 사람의 결정</h4>
-                                <p class="plite-v-cap">이상 감지, 에이전트, 사람의 결정, 실행, 학습, 재발 자동 처리까지 실제로 돌립니다.</p>
+                                <p class="plite-v-cap">이상 감지, 에이전트, 사람의 결정, 실행, 학습, 재발 자동 처리까지 실제로 실행합니다.</p>
                             </div>
                         </div>
                     </div>
@@ -666,7 +666,7 @@
                     <div class="container position-relative mt-n30 mt-sm-0">
                         <div class="row wow fadeInUp get-started-content"><div>
                             <p class="mb-20 mt-n10" style="font-size: 2.2rem; font-weight: 600;">우리 공장의 이벤트로 먼저 살펴보세요</p>
-                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">시연 환경을 함께 보고, 어느 업무에 에이전트를 둘지 찾는 일은 <a href="agentstorming.html">Agent Storming 워크숍</a>으로 이어 갈 수 있습니다.</p>
+                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">시연 환경을 함께 보고, 에이전트를 활용할 업무를 찾는 일은 <a href="agentstorming.html">Agent Storming 워크숍</a>으로 이어 갈 수 있습니다.</p>
                             <div class="local-scroll wow fadeInUp" data-wow-offset="0">
                                 <a href="#contact" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">시연 요청</span></a><a href="../docs/mes/index.html" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim" style="border: 2px solid #111;"><span style="font-size: 16px;">튜토리얼</span></a>
                             </div>

@@ -59,7 +59,7 @@
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/u0GHfpj1YLA" title="구매·청구·회계 켜기 — 영상 3:01" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
-<p>세 모듈도 앞 장과 같은 방식으로 이벤트로만 이어집니다. 나중에 켤 때 과거를 어떻게 다루는지가 모듈마다 다릅니다.</p>
+<p>이 세 모듈도 앞 장처럼 이벤트로만 이어집니다. 나중에 켤 때 과거를 어떻게 다루는지가 모듈마다 다릅니다.</p>
 <table>
 <thead>
 <tr>
@@ -93,9 +93,9 @@
 <div class="admonition note">
 <p class="admonition-title">먼저 알아 둘 것</p>
 <ul>
-<li>가온가전은 가상 회사이고, 수치는 모두 가상 회사의 것입니다. 화면은 로컬 Supabase 로 찍었습니다.</li>
-<li><strong>이 장의 손익은 교육용 숫자입니다.</strong> 기초 재고를 장부 시작일에 재고 조정으로 넣었기 때문에, 그 금액 5,200,000 원이 재고자산감모손실의 대변으로 잡혀 비용이 마이너스로 보입니다. 실제 회사라면 켜기 화면의 안내대로 기초 잔액 전표로 넣습니다. <strong>회계 → 기초 잔액 입력</strong> 화면이 그 일을 합니다. 이 튜토리얼에서는 그 화면을 따라 하지 않습니다.</li>
-<li>시산표의 미착품 -15,700,000 은 입고한 물건의 공급사 청구서를 아직 처리하지 않아 남은 금액입니다.</li>
+<li>가온가전은 가상 회사이고, 수치는 모두 가상 회사의 것입니다. 화면은 로컬 Supabase에서 찍었습니다.</li>
+<li><strong>이 장의 손익은 교육용 숫자입니다.</strong> 기초 재고를 장부 시작일에 재고 조정으로 넣었기 때문에, 그 금액 5,200,000 원이 재고자산감모손실의 대변으로 잡혀 비용이 마이너스로 보입니다. 실제 회사라면 모듈을 켤 때 화면에 나오는 안내대로 기초 잔액 전표로 넣습니다. 입력하는 화면은 <strong>회계 → 기초 잔액 입력</strong>입니다. 이 튜토리얼에서는 그 화면을 따라 하지 않습니다.</li>
+<li>시산표의 미착품 -15,700,000은 입고한 물건의 공급사 청구서를 아직 처리하지 않아 남은 금액입니다.</li>
 </ul>
 </div>
 <div class="admonition note">
@@ -105,67 +105,67 @@
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <p><a href="modules.html">앞 장</a>을 마친 회사에서 시작합니다. 구성원 <strong>최구매</strong>(구매, 재고)와 <strong>정회계</strong>(회계, 영업)를 추가해 둡니다.</p>
 <ol class="steps">
-<li><strong>구매 켜기.</strong> 관리자로 <strong>설정 → 모듈</strong> 에서 구매의 <strong>켜기</strong> 를 누릅니다. 실측 납기, 납기·공급사 변경, 발주 필요 예측이 열리고, 켜기 전의 납기는 다시 만들 수 없다고 알려 줍니다.
+<li><strong>구매 켜기.</strong> 관리자로 <strong>설정 → 모듈</strong>에서 구매의 <strong>켜기</strong>를 누릅니다. 실측 납기, 납기·공급사 변경, 발주 필요 예측이 열리고, 켜기 전의 납기는 다시 만들 수 없다고 알려 줍니다.
 
 <figure><a href="img/buy-books-on.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구매 켜기" src="img/buy-books-on.webp" loading="lazy" decoding="async"></a><figcaption>구매 켜기</figcaption></figure>
 </li>
-<li><strong>공급사 넣기.</strong> <strong>연락처</strong> 에 회사 <code>바람부품</code> 을 만듭니다. <strong>제품</strong> 의 에어서큘레이터에서 <strong>공급사 가격</strong> 에 줄을 더해 공급사 <code>바람부품</code>, 단가 <code>50000</code>, 납기 일수 <code>10</code> 을 넣고 저장합니다.
+<li><strong>공급사 넣기.</strong> <strong>연락처</strong>에 회사 <code>바람부품</code>을 만듭니다. <strong>제품</strong>에서 에어서큘레이터를 열고 <strong>공급사 가격</strong>에 줄을 추가해 공급사 <code>바람부품</code>, 단가 <code>50000</code>, 납기 일수 <code>10</code>을 넣고 저장합니다.
 
 <figure><a href="img/buy-books-vendor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="공급사 가격" src="img/buy-books-vendor.webp" loading="lazy" decoding="async"></a><figcaption>공급사 가격</figcaption></figure>
 </li>
-<li><strong>재주문 규칙 만들기.</strong> 최구매로 들어와 <strong>재고 → 재주문 규칙 → 새로 만들기</strong> 에서 변형 <code>에어서큘레이터</code>, 위치 <code>재고</code>, 최소 <code>200</code>, 최대 <code>400</code>, 실행 <code>자동</code>, 공급사 <code>바람부품</code> 을 넣고 저장합니다.
+<li><strong>재주문 규칙 만들기.</strong> 최구매로 로그인해 <strong>재고 → 재주문 규칙 → 새로 만들기</strong>에서 변형 <code>에어서큘레이터</code>, 위치 <code>재고</code>, 최소 <code>200</code>, 최대 <code>400</code>, 실행 <code>자동</code>, 공급사 <code>바람부품</code>을 넣고 저장합니다.
 
 <figure><a href="img/buy-books-rule.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재주문 규칙" src="img/buy-books-rule.webp" loading="lazy" decoding="async"></a><figcaption>재주문 규칙</figcaption></figure>
 </li>
-<li><strong>견적 요청 확인.</strong> 주문이 한 건 더 확정되면(녹화에서는 화면 밖에서 박영업의 명령으로 넣었습니다) 재고 모듈이 최소 아래로 내려간 것을 보고 이벤트를 남기고, 구매 모듈이 견적 요청 초안을 만듭니다. <strong>구매 → 구매 주문</strong> 에 <code>P00001</code> 이 수량 314, 단가 50,000 으로 나타납니다.
+<li><strong>견적 요청 확인.</strong> 주문이 한 건 더 확정되면(녹화에서는 화면 밖에서 박영업의 명령으로 넣었습니다) 재고 모듈은 재고 수량이 최소값 아래로 내려간 것을 확인해 이벤트를 남기고, 구매 모듈이 견적 요청 초안을 만듭니다. <strong>구매 → 구매 주문</strong>에 <code>P00001</code>이 수량 314, 단가 50,000으로 나타납니다.
 
 <figure><a href="img/buy-books-rfq.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적 요청" src="img/buy-books-rfq.webp" loading="lazy" decoding="async"></a><figcaption>견적 요청</figcaption></figure>
 </li>
-<li><strong>구매 주문 확정.</strong> <strong>주문 확정</strong> 을 누르면 단계가 <strong>구매 주문</strong> 으로 옮겨 갑니다. 입고 전표는 재고 모듈이 이벤트를 받아 만듭니다.
+<li><strong>구매 주문 확정.</strong> <strong>주문 확정</strong>을 누르면 단계가 <strong>구매 주문</strong>으로 옮겨 갑니다. 입고 전표는 재고 모듈이 이벤트를 받아 만듭니다.
 
 <figure><a href="img/buy-books-po.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구매 주문" src="img/buy-books-po.webp" loading="lazy" decoding="async"></a><figcaption>구매 주문</figcaption></figure>
 </li>
-<li><strong>입고 완료.</strong> <strong>입출고 전표</strong> 에서 <code>WH/IN/00001</code> 을 열고 <strong>처리 완료</strong> 를 누릅니다. 재고가 95 에서 409 로 늡니다.
+<li><strong>입고 완료.</strong> <strong>입출고 전표</strong>에서 <code>WH/IN/00001</code>을 열고 <strong>처리 완료</strong>를 누릅니다. 재고가 95에서 409로 늘어납니다.
 
 <figure><a href="img/buy-books-receipt.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="입고 완료" src="img/buy-books-receipt.webp" loading="lazy" decoding="async"></a><figcaption>입고 완료</figcaption></figure>
 </li>
-<li><strong>입고 상태 확인.</strong> 전표 위쪽의 <code>P00001</code> 을 누르면 구매 주문의 입고 상태가 <strong>입고 완료</strong> 입니다.
+<li><strong>입고 상태 확인.</strong> 전표 위쪽의 <code>P00001</code>을 누르면 구매 주문의 입고 상태가 <strong>입고 완료</strong>입니다.
 
 <figure><a href="img/buy-books-received.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="입고 상태" src="img/buy-books-received.webp" loading="lazy" decoding="async"></a><figcaption>입고 상태</figcaption></figure>
 </li>
-<li><strong>실측 납기 확인.</strong> <strong>분석 → 예측·what-if</strong> 의 실측 납기는 <strong>근거 부족</strong>, <code>입고 10건 필요 (지금 1건)</code> 입니다. 입고가 쌓이면 열립니다. 발주 필요 예측은 입고 30건이 필요합니다.
+<li><strong>실측 납기 확인.</strong> <strong>분석 → 예측·what-if</strong>의 실측 납기는 <strong>근거 부족</strong>, <code>입고 10건 필요 (지금 1건)</code>입니다. 입고 기록이 쌓이면 사용할 수 있습니다. 발주 필요 예측은 입고 30건이 필요합니다.
 
 <figure><a href="img/buy-books-lead.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="실측 납기" src="img/buy-books-lead.webp" loading="lazy" decoding="async"></a><figcaption>실측 납기</figcaption></figure>
 </li>
-<li><strong>청구 켜기.</strong> 관리자로 청구의 <strong>켜기</strong> 를 누르고 <strong>이 날짜 이후의 주문을 청구 대상으로 봅니다</strong> 에 오늘을 넣습니다. 켜기 전의 입금 기록은 다시 만들 수 없다고 알려 줍니다.
+<li><strong>청구 켜기.</strong> 관리자로 청구의 <strong>켜기</strong>를 누르고 <strong>이 날짜 이후의 주문을 청구 대상으로 봅니다</strong>에 오늘을 넣습니다. 켜기 전의 입금 기록은 다시 만들 수 없다고 알려 줍니다.
 
 <figure><a href="img/buy-books-billon.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="청구 켜기" src="img/buy-books-billon.webp" loading="lazy" decoding="async"></a><figcaption>청구 켜기</figcaption></figure>
 </li>
-<li><strong>청구서 만들기.</strong> 정회계로 들어와 <strong>청구 → 청구 대상</strong> 을 엽니다. 청구할 금액이 남은 주문이 보입니다. 납품한 <code>S00002</code>(489,500)의 <strong>청구서 만들기</strong> 를 누릅니다.
+<li><strong>청구서 만들기.</strong> 정회계로 로그인해 <strong>청구 → 청구 대상</strong>을 엽니다. 청구할 금액이 남은 주문이 보입니다. 납품한 <code>S00002</code>(489,500)의 <strong>청구서 만들기</strong>를 누릅니다.
 
 <figure><a href="img/buy-books-targets.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="청구 대상" src="img/buy-books-targets.webp" loading="lazy" decoding="async"></a><figcaption>청구 대상</figcaption></figure>
 </li>
-<li><strong>게시.</strong> <strong>게시</strong> 를 누르면 번호 <code>INV/2026/00001</code> 이 붙고 결제 상태는 <strong>미결제</strong> 입니다. 게시한 청구서는 고칠 수 없습니다.
+<li><strong>게시.</strong> <strong>게시</strong>를 누르면 번호 <code>INV/2026/00001</code>이 붙고 결제 상태는 <strong>미결제</strong>입니다. 게시한 청구서는 고칠 수 없습니다.
 
 <figure><a href="img/buy-books-post.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="게시" src="img/buy-books-post.webp" loading="lazy" decoding="async"></a><figcaption>게시</figcaption></figure>
 </li>
-<li><strong>입금 등록.</strong> <strong>입금 등록</strong> 을 누르면 금액이 남은 금액으로 채워져 있습니다. 확인하면 <strong>결제 완료</strong> 입니다.
+<li><strong>입금 등록.</strong> <strong>입금 등록</strong>을 누르면 금액란에 남은 금액이 채워져 있습니다. 확인하면 상태가 <strong>결제 완료</strong>로 바뀝니다.
 
 <figure><a href="img/buy-books-paid.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결제 완료" src="img/buy-books-paid.webp" loading="lazy" decoding="async"></a><figcaption>결제 완료</figcaption></figure>
 </li>
-<li><strong>회계 켜기.</strong> 관리자로 회계의 <strong>켜기</strong> 를 누릅니다. 청구 모듈이 없던 기간에는 매출 전표를 만들 수 없다고 알려 줍니다. <strong>이 날짜부터 장부를 만듭니다</strong> 에 청구를 켠 날을 넣습니다.
+<li><strong>회계 켜기.</strong> 관리자로 회계의 <strong>켜기</strong>를 누릅니다. 청구 모듈이 없던 기간에는 매출 전표를 만들 수 없다고 알려 줍니다. <strong>이 날짜부터 장부를 만듭니다</strong>에 청구를 켠 날을 넣습니다.
 
 <figure><a href="img/buy-books-bookson.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="회계 켜기" src="img/buy-books-bookson.webp" loading="lazy" decoding="async"></a><figcaption>회계 켜기</figcaption></figure>
 </li>
-<li><strong>전표 확인.</strong> 정회계로 <strong>회계 → 전표</strong> 를 엽니다. 켜기 전에 게시한 청구서와 입금, 재고 전표로 자동 전표 5건이 만들어졌습니다. 자동 전표는 고칠 수 없고 원본 문서에서 정정합니다.
+<li><strong>전표 확인.</strong> 정회계로 로그인해 <strong>회계 → 전표</strong>를 엽니다. 켜기 전에 게시한 청구서와 입금, 재고 전표로 자동 전표 5건이 만들어졌습니다. 자동 전표는 고칠 수 없고 원본 문서에서 정정합니다.
 
 <figure><a href="img/buy-books-entries.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="전표" src="img/buy-books-entries.webp" loading="lazy" decoding="async"></a><figcaption>전표</figcaption></figure>
 </li>
-<li><strong>시산표 확인.</strong> <strong>시산표</strong> 는 차변과 대변 합계가 모두 22,139,000 이고 <code>차변과 대변이 맞습니다.</code> 라고 표시합니다.
+<li><strong>시산표 확인.</strong> <strong>시산표</strong>에는 차변과 대변 합계가 모두 22,139,000으로 나오고 <code>차변과 대변이 맞습니다.</code>라고 표시됩니다.
 
 <figure><a href="img/buy-books-trial.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시산표" src="img/buy-books-trial.webp" loading="lazy" decoding="async"></a><figcaption>시산표</figcaption></figure>
 </li>
-<li><strong>손익 확인.</strong> <strong>손익계산서</strong> 는 수익 445,000, 비용 합계 -4,940,000, 순이익 5,385,000 입니다. 비용이 마이너스인 이유는 위의 안내를 보세요.
+<li><strong>손익 확인.</strong> <strong>손익계산서</strong>는 수익 445,000, 비용 합계 -4,940,000, 순이익 5,385,000입니다. 비용이 마이너스인 이유는 위의 안내에 나와 있습니다.
 
 <figure><a href="img/buy-books-pnl.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="손익계산서" src="img/buy-books-pnl.webp" loading="lazy" decoding="async"></a><figcaption>손익계산서</figcaption></figure>
 </li>
@@ -173,19 +173,19 @@
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>회계를 나중에 켜도 지난 청구서의 전표가 생기는 이유는 무엇인가요?</summary>
-<p>게시 청구서와 입금은 이벤트로 원장에 남아 있습니다. 회계 구독이 고른 날짜부터 그 이벤트를 다시 읽어 전표를 만듭니다. 처음부터 회계를 켠 회사와 같은 이벤트를 준 회사의 시산표가 같은지는 저장소의 시험이 확인합니다.</p>
+<p>게시한 청구서와 입금은 이벤트로 원장에 남아 있습니다. 회계 구독이 선택한 날짜부터 그 이벤트를 다시 읽어 전표를 만듭니다. 처음부터 회계를 켠 회사와 같은 이벤트를 준 회사의 시산표가 같은지는 저장소의 시험으로 확인합니다.</p>
 </details>
 <details class="answer">
 <summary>청구 모듈이 없던 기간의 매출은 어떻게 하나요?</summary>
-<p>그 기간의 매출 전표는 만들 수 없습니다. 재고 전표만 과거로 올라가 손익이 어긋나지 않도록, 청구를 시작한 날을 장부 시작일로 고르고 그 전은 기초 잔액 전표로 넣습니다.</p>
+<p>그 기간의 매출 전표는 만들 수 없습니다. 재고 전표만 과거까지 소급해 손익이 어긋나지 않도록, 청구를 시작한 날을 장부 시작일로 고르고 그 이전 금액은 기초 잔액 전표로 입력합니다.</p>
 </details>
 <details class="answer">
 <summary>게시한 청구서를 잘못 만들었으면 어떻게 하나요?</summary>
-<p>되돌리지 않습니다. 세금 신고된 문서를 시스템만 되돌리면 안 되므로 대변 메모로 정정합니다. 다음 장에서 이 차단을 봅니다.</p>
+<p>되돌리지 않습니다. 세금 신고된 문서를 시스템만 되돌리면 안 되므로 대변 메모로 정정합니다. 다음 장에서 되돌리기가 차단되는 상황을 확인합니다.</p>
 </details>
     </article>
     <nav class="pager"><a class="prev" href="modules.html"><span>이전</span>재고를 켜고, 고장 나도 판매는 계속</a><a class="next" href="history.html"><span>다음</span>과거 시점 보기와 되돌리기</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 돌려 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 실행해 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
