@@ -95,6 +95,25 @@ curl -s "$API_URL/rest/v1/rpc/erp_mcp" -H "apikey: $ANON_KEY" -H "x-erp-key: $ER
 
 ![MCP](img/connect-mcp.webp)
 </li>
+<li markdown="1">**에이전트의 실수 되돌리기.** 에이전트가 수량 50인 주문을 500으로 넣어 확정했다고 가정합니다. 재고 모듈은 그 이벤트를 받아 이미 출고 전표를 만들었습니다.
+
+먼저 `erp_read`의 `history`로 그 작업의 `correlation_id`를 찾습니다. `erp_read`에 `rollback`을 넣으면 되돌릴 범위를 미리 봅니다. 이 미리보기는 아무것도 바꾸지 않습니다. 결과의 `streams`에는 주문(`sale` → `draft`)과 다른 모듈의 출고 전표(`confirmed` → 없던 상태)가 함께 나오고, `hash`도 받습니다.
+
+`erp_create`의 `type: "rollback"`에 `correlation_id`, `plan_hash`, `reason`을 넣어 실행합니다. 도구는 4개 그대로입니다.
+
+```js
+const hist = await call('erp_read', { id: order.id, history: true })
+const corr = hist.at(-1).correlation_id
+const plan = await call('erp_read', { rollback: { correlation_id: corr } })
+await call('erp_create', { type: 'rollback', values: { correlation_id: corr, plan_hash: plan.hash }, reason: '수량 오입력: 50을 500으로 넣음' })
+```
+
+주문은 `draft`로, 출고 전표는 없던 상태로 돌아갑니다. 이력에는 앞의 기록이 그대로 남고 마지막에 `Reverted`가 더해집니다. 출처는 `rollback`, 행위자는 그 키의 구성원으로 기록되고 사유도 남습니다. 미리보기 뒤에 데이터가 바뀌면 `plan_hash`가 맞지 않아 `ERP_CONFLICT`로 거부됩니다.
+
+에이전트는 자기가 MCP로 한 일을, 그 위에 다른 작업이 없을 때만 스스로 되돌립니다. 다른 에이전트의 일, 사람이 화면에서 한 일, 다른 사람이 이어 간 일은 `ERP_FORBIDDEN`으로 거부되고 관리자가 처리합니다. 게시된 청구서가 걸리면 관리자도 되돌릴 수 없으며 대변 메모로 정정합니다.
+
+이 단계는 6장 영상에 나오지 않습니다. 공식 MCP SDK로 실제 HTTP에서 돌린 시험(`test/api.e2e.mjs`)의 결과입니다.
+</li>
 <li markdown="1">**키 폐기.** 키 줄의 **폐기**를 누릅니다. 되살릴 수 없습니다. 같은 클라이언트를 다시 실행하면 연결이 거부됩니다.
 
 ![폐기 뒤](img/connect-revoked.webp)
@@ -113,4 +132,8 @@ curl -s "$API_URL/rest/v1/rpc/erp_mcp" -H "apikey: $ANON_KEY" -H "x-erp-key: $ER
 
 <details class="answer" markdown="1"><summary>연동 키가 유출되면 어떻게 하나요?</summary>
 키 줄에서 폐기합니다. 데이터베이스에는 해시만 있고, 키는 그 구성원의 권한을 넘지 못합니다. 그래서 필요한 역할만 가진 구성원을 따로 만들어 키를 연결하는 것이 좋습니다.
+</details>
+
+<details class="answer" markdown="1"><summary>에이전트는 자기가 한 일이면 언제나 되돌릴 수 있나요?</summary>
+그 위에 다른 사람의 작업이 없고, 잠긴 기간이나 게시된 청구서에 걸리지 않을 때만입니다. 다른 작업이 이어졌으면 관리자가 함께 돌아갈 작업을 확인하고 동의해야 합니다.
 </details>

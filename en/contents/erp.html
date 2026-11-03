@@ -161,6 +161,26 @@
                                         </ul>
                                     </li>
                                     <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Event-Sourced, Reversible Industry Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="industry.html" style="font-size: 18px;">Why Event Sourcing?</a>
+                                            </li>
+                                            <li>
+                                                <a href="erp.html" style="font-size: 18px;">uEngine ERP</a>
+                                            </li>
+                                            <li>
+                                                <a href="mes.html" style="font-size: 18px;">uEngine MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="wms.html" style="font-size: 18px;">uEngine WMS (audit-log based)</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
                                 </ul>
                                 <!-- End Sub Megamenu -->
 
@@ -279,23 +299,6 @@
                                     </li>
                                     <!-- End Sub Column -->
 
-                                    <!-- Sub Column -->
-                                    <li class="mn-sub-multi">
-                                        <span class="mn-group-title">&lt;Industry Solutions&gt;</span>
-                                        <ul>
-                                            <li>
-                                                <a href="industry.html" style="font-size: 18px;">Industry Solutions Overview</a>
-                                            </li>
-                                            <li>
-                                                <a href="mes.html" style="font-size: 18px;">uEngine MES</a>
-                                            </li>
-                                            <li>
-                                                <a href="wms.html" style="font-size: 18px;">uEngine WMS</a>
-                                                <a href="erp.html" style="font-size: 18px;">uEngine ERP</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <!-- End Sub Column -->
                                 </ul>
                                 <!-- End Sub Megamenu -->
 
@@ -589,7 +592,7 @@
                                 <p class="plite-theme-cat">Integration</p>
                                 <h3 class="plite-theme-title">REST and MCP without building them by hand</h3>
                                 <p class="plite-theme-lead">Define a type and its REST resource appears. Agents work with the documents of enabled modules through four tools. There is no separate server process.</p>
-                                <ul class="plite-theme-list"><li><strong>REST</strong><span>Standard CRUD, version checks, idempotency keys.</span></li><li><strong>MCP</strong><span>Four tools: read, create, update, delete. A state change is the business action.</span></li><li><strong>API keys</strong><span>Never exceed the member's rights and can be revoked at any time. Only a hash is stored.</span></li></ul>
+                                <ul class="plite-theme-list"><li><strong>REST</strong><span>Standard CRUD, version checks, idempotency keys.</span></li><li><strong>MCP</strong><span>Four MCP tools—read, create, update, and delete—handle documents; changing a document's state is the business operation itself. Agents use the same tools to undo their own mistakes, but only for their own MCP operations with no dependent work.</span></li><li><strong>API keys</strong><span>Never exceed the member's rights and can be revoked at any time. Only a hash is stored.</span></li></ul>
                                 <div class="plite-vlinks"><a class="plite-vlink" href="#v-00S6uQixUeM">▶ Ch. 6 Plugins and integration</a></div>
                             </div>
                         </div>
@@ -603,7 +606,7 @@
                             <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">What It Is and Where It Stands</span></h3>
                             <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">What is done and what is not, stated plainly.</p>
                         </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>Category</th><th>Description</th></tr></thead><tbody><tr><td>App release</td><td>The app address and source repository will be public soon. Until then, the tutorial and videos show how it works.</td></tr><tr><td>Modules</td><td>Sales, inventory, purchasing, invoicing and accounting. All 32 combinations are tested.</td></tr><tr><td>Basic feature coverage</td><td>Checked against 256 basic features of a major ERP: 226 provided, 22 partly, 3 missing, and 5 need a mail server. Of the advanced features, only those needed for order processing are included.</td></tr><tr><td>Not included</td><td>Email sending, e-tax invoices, automatic bank feeds, currency conversion (foreign-currency input is refused), XML import, PDF attachments on invoices.</td></tr><tr><td>Tests</td><td>714 SQL tests and 166 browser tests, all run on a local Supabase stack. It has not yet been measured on Supabase's cloud.</td></tr><tr><td>Capacity</td><td>The free plan's 500 MB holds about 130,000 events, or about 10,000 orders, with all five modules on. At 10 orders a day that is about three years.</td></tr><tr><td>Forecast accuracy</td><td>Measured on made-up companies whose true demand is known. Where stockouts are frequent, reorder and discontinuation what-ifs were much closer than using sales history alone. Where stock is plentiful the difference is small, and moving stock between warehouses mostly comes back as cannot be distinguished. Real companies may see worse results.</td></tr><tr><td>Delay between modules</td><td>Modules connect through events, so there is a short delay between confirming an order and its delivery appearing. Modules cannot be scaled separately.</td></tr><tr><td>MCP</td><td>The four tools were called with the official MCP SDK. It has not been run connected to Process GPT.</td></tr></tbody></table></div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>Category</th><th>Description</th></tr></thead><tbody><tr><td>App release</td><td>The app address and source repository will be public soon. Until then, the tutorial and videos show how it works.</td></tr><tr><td>Modules</td><td>Sales, inventory, purchasing, invoicing and accounting. All 32 combinations are tested.</td></tr><tr><td>Basic feature coverage</td><td>Checked against 256 basic features of a major ERP: 226 provided, 22 partly, 3 missing, and 5 need a mail server. Of the advanced features, only those needed for order processing are included.</td></tr><tr><td>Not included</td><td>Email sending, e-tax invoices, automatic bank feeds, currency conversion (foreign-currency input is refused), XML import, PDF attachments on invoices.</td></tr><tr><td>Tests</td><td>714 SQL tests and 166 browser tests, all run on a local Supabase stack. It has not yet been measured on Supabase's cloud.</td></tr><tr><td>Capacity</td><td>The free plan's 500 MB holds about 130,000 events, or about 10,000 orders, with all five modules on. At 10 orders a day that is about three years.</td></tr><tr><td>Forecast accuracy</td><td>Measured on made-up companies whose true demand is known. Where stockouts are frequent, reorder and discontinuation what-ifs were much closer than using sales history alone. Where stock is plentiful the difference is small, and moving stock between warehouses mostly comes back as cannot be distinguished. Real companies may see worse results.</td></tr><tr><td>Delay between modules</td><td>Modules connect through events, so there is a short delay between confirming an order and its delivery appearing. Modules cannot be scaled separately.</td></tr><tr><td>MCP</td><td>The four tools were called with the official MCP SDK. It has not been run connected to Process GPT.</td></tr><tr><td>MCP rollback</td><td>Agents can undo only their own MCP operations with no dependent work, and their integration keys cannot exceed the permissions of the members they are linked to. An administrator handles all other cases. If there is dependent work, the administrator must review and approve the operations that will be rolled back together before execution.</td></tr></tbody></table></div>
                     </div>
                 </section>
 
@@ -943,6 +946,10 @@
                                         <li><a href="ax-lite-course.html">AI Work Class for Your Company</a></li>
                                         <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
                                         <li><a href="casestudiesbpm.html">Case Studies</a></li>
+                                        <li><a href="industry.html">Why Event Sourcing?</a></li>
+                                        <li><a href="erp.html">uEngine ERP</a></li>
+                                        <li><a href="mes.html">uEngine MES</a></li>
+                                        <li><a href="wms.html">uEngine WMS (audit-log based)</a></li>
                                     </ul>
 
                                 </div>
@@ -976,10 +983,6 @@
                                         <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
                                         <li><a href="processgpt.html">Process GPT</a></li>
                                         <li><a href="uenginerpa.html">uEngine RPA</a></li>
-                                        <li><a href="industry.html">Industry Solutions Overview</a></li>
-                                        <li><a href="mes.html">uEngine MES</a></li>
-                                        <li><a href="wms.html">uEngine WMS</a></li>
-                                        <li><a href="erp.html">uEngine ERP</a></li>
                                         <li><a href="educationbpm.html">Education for BPM</a></li>
                                         <li><a href="consultingbpm.html">BPM Consulting</a></li>
                                         <li><a href="casestudiesbpm.html">Case Studies</a></li>
