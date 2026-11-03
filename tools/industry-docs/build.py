@@ -3,6 +3,7 @@
 
     python3 tools/industry-docs/build.py mes
     python3 tools/industry-docs/build.py wms
+    python3 tools/industry-docs/build.py erp
 
 <제품>/src/*.md (장마다 하나) → docs/<제품>/*.html. 목차·순서는 아래 PRODUCTS 가 정한다.
 이미지는 docs/<제품>/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
@@ -21,6 +22,9 @@ from pygments.formatters import HtmlFormatter
 
 HERE = Path(__file__).resolve().parent
 PRODUCTS = {
+    "erp": dict(name="uEngine ERP", page="erp.html", og="whatif-policy.webp", search="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)",
+                foot="이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 돌려 얻었습니다. 실제 회사의 성능이 아닙니다.",
+                chapters=[("index", "시작하기"), ("modules", "모듈 더하기"), ("buy-books", "모듈 더하기"), ("history", "이력과 되돌리기"), ("whatif", "예측과 what-if"), ("connect", "연동")]),
     "mes": dict(name="uEngine MES", page="mes.html", og="anomaly-monitor.webp", search="튜토리얼 검색 (예: 설비 정지, 시점 조회, 시맨틱 레이어)",
                 foot="이 튜토리얼의 화면과 결과는 시연용 참조 구현을 합성 데이터로 실제 실행해 얻었습니다.",
                 chapters=[("index", "시작하기"), ("anomaly", "현장 대응"), ("events", "이력과 추적"), ("semantic", "AI 연결"), ("agent", "AI 연결")]),
@@ -30,6 +34,7 @@ PRODUCTS = {
 }
 KEY = sys.argv[1] if sys.argv[1:] and sys.argv[1] in PRODUCTS else sys.exit(__doc__)
 P = PRODUCTS[KEY]
+FIRST = 1 if KEY == "erp" else 0
 SRC = HERE / KEY / "src"
 OUT = HERE.parents[1] / "docs" / KEY
 VIDEOS = HERE / KEY / "videos.json"
@@ -116,7 +121,7 @@ def main():
                 out.append(f'<div class="nav-part">{html.escape(p["part"])}</div><ul>')
                 last = p["part"]
             on = ' class="on" aria-current="page"' if p["slug"] == cur else ""
-            num = f'<span class="n">{i:02d}</span>' if i else '<span class="n">·</span>'
+            num = f'<span class="n">{i + FIRST:02d}</span>' if i + FIRST else '<span class="n">·</span>'
             out.append(f'<li><a href="{page_name(p["slug"])}"{on}>{num}{html.escape(p["title"])}</a></li>')
         out.append("</ul>")
         return "\n".join(out)
@@ -139,7 +144,7 @@ def main():
         pager += (f'<a class="prev" href="{page_name(prev["slug"])}"><span>이전</span>{html.escape(prev["title"])}</a>' if prev else "<span></span>")
         pager += (f'<a class="next" href="{page_name(nxt["slug"])}"><span>다음</span>{html.escape(nxt["title"])}</a>' if nxt else "<span></span>")
         pager += "</nav>"
-        chap = str(i) if i else ""
+        chap = str(i + FIRST) if i + FIRST else ""
         out = (tpl.replace("{{title}}", html.escape(p["title"]))
                .replace("{{product}}", P["name"])
                .replace("{{key}}", KEY)
