@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>과거 시점 보기와 되돌리기 — uEngine ERP 튜토리얼</title>
+<meta name="description" content="모든 변경이 이벤트로 쌓이므로 문서 하나든 회사 전체든 과거 모습을 그대로 볼 수 있습니다. 잘못 확정한 주문은 모듈을 넘는 범위를 확인한 뒤 되돌리고, 원장에는 사유가 남습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/erp/history.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="과거 시점 보기와 되돌리기 — uEngine ERP 튜토리얼">
+<meta property="og:description" content="모든 변경이 이벤트로 쌓이므로 문서 하나든 회사 전체든 과거 모습을 그대로 볼 수 있습니다. 잘못 확정한 주문은 모듈을 넘는 범위를 확인한 뒤 되돌리고, 원장에는 사유가 남습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/erp/history.html">
+<meta property="og:image" content="https://www.uengine.org/docs/erp/img/whatif-policy.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine ERP <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/erp.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">01</span>설치하고 판매로 시작하기</a></li>
+</ul>
+<div class="nav-part">모듈 더하기</div><ul>
+<li><a href="modules.html"><span class="n">02</span>재고를 켜고, 고장 나도 판매는 계속</a></li>
+<li><a href="buy-books.html"><span class="n">03</span>구매·청구·회계 켜기</a></li>
+</ul>
+<div class="nav-part">이력과 되돌리기</div><ul>
+<li><a href="history.html" class="on" aria-current="page"><span class="n">04</span>과거 시점 보기와 되돌리기</a></li>
+</ul>
+<div class="nav-part">예측과 what-if</div><ul>
+<li><a href="whatif.html"><span class="n">05</span>예측과 what-if</a></li>
+</ul>
+<div class="nav-part">연동</div><ul>
+<li><a href="connect.html"><span class="n">06</span>플러그인과 REST·MCP 연동</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">이력과 되돌리기<span class="chap">4</span></div>
+    <h1>과거 시점 보기와 되돌리기</h1>
+    <article>
+<blockquote>
+<p>모든 변경이 이벤트로 쌓이므로 문서 하나든 회사 전체든 과거 모습을 그대로 볼 수 있습니다. 잘못 확정한 주문은 모듈을 넘는 범위를 확인한 뒤 되돌리고, 원장에는 사유가 남습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/3TsEptyoehg" title="과거 시점 보기와 되돌리기 — 영상 2:29" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>이벤트를 지우지 않습니다. 되돌리기는 스트림마다 <code>Reverted</code> 이벤트를 하나 새로 씁니다. 원장에 "그때 정말 확정됐었다"와 "누가 왜 되돌렸다"가 모두 남고, 되돌리기 자체도 다시 되돌릴 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>뒤에 다른 작업이 이어짐</td>
+<td>미리보기에 연쇄 범위를 보여 주고, 동의 없이는 실행하지 않음</td>
+</tr>
+<tr>
+<td>합계가 깨짐</td>
+<td>차단. 문서 간 인과가 없어도 재고가 음수면 막음</td>
+</tr>
+<tr>
+<td>게시된 청구서</td>
+<td>차단. 대변 메모로 정정하도록 안내</td>
+</tr>
+<tr>
+<td>고객에게 이미 보낸 견적</td>
+<td>경고. 시스템만 되돌아가니 상대에게 따로 알려야 함</td>
+</tr>
+<tr>
+<td>미리보기 후 데이터 변경</td>
+<td>충돌로 거부하고 다시 미리보기</td>
+</tr>
+<tr>
+<td>구성원·회사 설정·모듈</td>
+<td>되돌리기 대상에서 제외</td>
+</tr>
+<tr>
+<td>권한</td>
+<td>관리자만, 사유 필수</td>
+</tr>
+</tbody>
+</table>
+<p>되돌린 문서의 번호는 재사용하지 않습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li><strong>이 장부터 3년치 기록이 있는 가상 회사를 씁니다.</strong> 회사를 만들 때 <strong>가상 회사(가온가전)로 먼저 체험하기</strong> 를 고르면 됩니다(약 250 MB, 몇 분). 숫자는 모두 지어낸 것입니다. 화면 위쪽에 <code>가상 회사입니다</code> 라고 표시됩니다.</li>
+<li>녹화에서는 같은 생성기를 시험 스크립트(<code>scripts/seed-demo.mjs</code>)로 돌렸습니다. 화면으로 고르는 경로의 시험은 저장소에 있고, 클라우드에서 끝까지 돌려 보지는 않았습니다.</li>
+<li>녹화 중 가상 회사를 여러 번 새로 만들었는데 주문 건수는 3,287건으로 같았습니다. 잘못된 주문을 여러 번 만들면 문서 번호는 달라집니다.</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>관리자(김대표)로 로그인해 시작합니다.</p>
+<ol class="steps">
+<li><strong>문서 이력 보기.</strong> <strong>견적·주문</strong> 에서 <code>S02541</code> 을 엽니다. 오른쪽 <strong>이력</strong> 에 이 문서에 일어난 일 7건이 있습니다. 재고나 청구 모듈이 바꾼 일에는 <code>다른 모듈</code> 이라고 표시됩니다.
+
+<figure><a href="img/history-doc.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="문서 이력" src="img/history-doc.webp" loading="lazy" decoding="async"></a><figcaption>문서 이력</figcaption></figure>
+</li>
+<li><strong>슬라이더 옮기기.</strong> 이력 위의 슬라이더를 맨 앞으로 옮깁니다. <code>v1 / v7</code> 시점의 모습이 읽기 전용으로 나오고, 단계 표시는 <strong>견적</strong> 입니다. <strong>현재로 돌아가기</strong> 로 나옵니다.
+
+<figure><a href="img/history-slider.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="슬라이더" src="img/history-slider.webp" loading="lazy" decoding="async"></a><figcaption>슬라이더</figcaption></figure>
+</li>
+<li><strong>회사 전체 시점 보기.</strong> 위쪽 <strong>시점 보기</strong> 에 <code>2026-03-31</code> 을 넣습니다. <code>2026-03-31 시점을 보고 있습니다. 읽기 전용입니다.</code> 라는 띠가 뜨고 <strong>새로 만들기</strong> 가 사라집니다.
+
+<figure><a href="img/history-pick.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시점 보기" src="img/history-pick.webp" loading="lazy" decoding="async"></a><figcaption>시점 보기</figcaption></figure>
+</li>
+<li><strong>주문 목록 비교.</strong> 가상 회사를 막 만들었다면 오늘은 3,287건, 그 시점에는 2,646건입니다. 영상에서는 앞서 되돌린 주문 1건이 견적으로 남아 오늘이 3,288건으로 보입니다. 과거 시점에서는 검색과 정렬을 쓸 수 없다고 안내합니다.
+</li>
+<li><strong>재고 현황 보기.</strong> <strong>재고 현황</strong> 은 그날까지의 입출고를 더한 수량입니다. 제습기의 수도권 창고가 266 입니다. 그때의 예약과 금액은 이 화면에 없다고 밝힙니다.
+
+<figure><a href="img/history-stock.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="과거의 재고" src="img/history-stock.webp" loading="lazy" decoding="async"></a><figcaption>과거의 재고</figcaption></figure>
+</li>
+<li><strong>미수금 보기.</strong> <strong>미수금·미지급금</strong> 의 기준일이 2026-03-31 이 되고, 합계는 860,876,500 입니다. <strong>현재로 돌아가기</strong> 로 나옵니다.
+
+<figure><a href="img/history-aged.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="과거의 미수금" src="img/history-aged.webp" loading="lazy" decoding="async"></a><figcaption>과거의 미수금</figcaption></figure>
+</li>
+<li><strong>잘못된 주문 만들기.</strong> 고객 <code>가온마트 본점</code>, 창고 <code>수도권 창고</code>, 제습기 <code>30</code> 개로 주문을 확정합니다. 재고 모듈이 출고 전표를 만들고 30개를 예약합니다. 재고 현황의 수도권 제습기는 재고 77, 예약 30, 가용 47 입니다.
+
+녹화에서는 이 주문을 명령으로 만들었습니다.
+
+<figure><a href="img/history-wrong.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="잘못된 주문" src="img/history-wrong.webp" loading="lazy" decoding="async"></a><figcaption>잘못된 주문</figcaption></figure>
+</li>
+<li><strong>미리보기.</strong> 그 주문의 <strong>이력</strong> 에서 <code>주문 확정</code> 항목의 <strong>이 작업 되돌리기</strong> 를 누릅니다. 미리보기에 <code>모듈이 달라도 함께 되돌아갑니다 (판매, 재고)</code> 와 함께 주문(<code>주문 → 견적</code>)과 출고 전표(<code>없던 문서가 됩니다</code>, <code>재고 1줄</code>)가 보입니다.
+
+<figure><a href="img/history-preview.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="미리보기" src="img/history-preview.webp" loading="lazy" decoding="async"></a><figcaption>미리보기</figcaption></figure>
+</li>
+<li><strong>사유 적고 실행.</strong> 사유 없이 누르면 <code>되돌리는 사유를 적어 주세요.</code> 라고 합니다. <code>고객이 다른 주문과 착각함</code> 을 적고 <strong>되돌리기</strong> 를 누릅니다. 주문은 <strong>견적</strong> 으로 돌아갑니다.
+
+<figure><a href="img/history-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="되돌린 뒤" src="img/history-done.webp" loading="lazy" decoding="async"></a><figcaption>되돌린 뒤</figcaption></figure>
+</li>
+<li><strong>재고 확인.</strong> 재고 현황의 예약이 0, 가용이 77 로 돌아왔습니다. 출고 전표는 없던 문서가 됩니다.
+
+<figure><a href="img/history-restored.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재고 복구" src="img/history-restored.webp" loading="lazy" decoding="async"></a><figcaption>재고 복구</figcaption></figure>
+</li>
+<li><strong>원장 확인.</strong> 주문의 이벤트를 <strong>이벤트 원장</strong> 에서 보면 <code>주문 확정</code> 은 그대로 있고 <code>되돌림</code> 이 더해져 있습니다. <code>되돌림</code> 을 누르면 사유와, 함께 되돌아간 문서의 <strong>인과 사슬</strong> 이 보입니다.
+
+<figure><a href="img/history-ledger.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="원장" src="img/history-ledger.webp" loading="lazy" decoding="async"></a><figcaption>원장</figcaption></figure>
+</li>
+<li><strong>막히는 경우.</strong> 게시된 청구서가 있는 <code>S03287</code> 을 열고 같은 <strong>이 작업 되돌리기</strong> 를 누릅니다. <code>게시된 청구서는 되돌릴 수 없습니다. 대변 메모로 정정하세요</code> 라고 막고, 실행 버튼이 없습니다. <strong>닫기</strong> 로 나옵니다.
+
+<figure><a href="img/history-blocked.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="되돌릴 수 없음" src="img/history-blocked.webp" loading="lazy" decoding="async"></a><figcaption>되돌릴 수 없음</figcaption></figure>
+</li>
+</ol>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>되돌리면 이벤트가 지워지나요?</summary>
+<p>지워지지 않습니다. <code>Reverted</code> 이벤트가 새로 쓰입니다. 그래서 그때 확정됐었다는 사실과 누가 왜 되돌렸는지가 함께 남고, 되돌리기를 다시 되돌릴 수도 있습니다.</p>
+</details>
+<details class="answer">
+<summary>과거 시점을 보는 동안 저장할 수 있나요?</summary>
+<p>없습니다. 쓰기 버튼이 모두 사라집니다. 데이터베이스에서 바뀌는 것은 없고, 화면만 그 시점의 이벤트로 다시 읽습니다.</p>
+</details>
+<details class="answer">
+<summary>게시된 청구서가 얽힌 주문을 왜 막나요?</summary>
+<p>세금 신고된 문서를 시스템만 되돌리면 안 되기 때문입니다. 대변 메모로 정정해 정정한 사실 자체가 문서로 남게 합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="buy-books.html"><span>이전</span>구매·청구·회계 켜기</a><a class="next" href="whatif.html"><span>다음</span>예측과 what-if</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 돌려 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

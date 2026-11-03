@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>예측과 what-if — uEngine ERP 튜토리얼</title>
+<meta name="description" content="모델은 잠김, 근거 부족, 사용 가능의 세 상태로 보입니다. 수요 예측을 구간으로 보고, 증산·단종·재배치·납기·결제 조건을 바꾸기 전에 시험합니다. 원장은 바꾸지 않습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/erp/whatif.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="예측과 what-if — uEngine ERP 튜토리얼">
+<meta property="og:description" content="모델은 잠김, 근거 부족, 사용 가능의 세 상태로 보입니다. 수요 예측을 구간으로 보고, 증산·단종·재배치·납기·결제 조건을 바꾸기 전에 시험합니다. 원장은 바꾸지 않습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/erp/whatif.html">
+<meta property="og:image" content="https://www.uengine.org/docs/erp/img/whatif-policy.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine ERP <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/erp.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">01</span>설치하고 판매로 시작하기</a></li>
+</ul>
+<div class="nav-part">모듈 더하기</div><ul>
+<li><a href="modules.html"><span class="n">02</span>재고를 켜고, 고장 나도 판매는 계속</a></li>
+<li><a href="buy-books.html"><span class="n">03</span>구매·청구·회계 켜기</a></li>
+</ul>
+<div class="nav-part">이력과 되돌리기</div><ul>
+<li><a href="history.html"><span class="n">04</span>과거 시점 보기와 되돌리기</a></li>
+</ul>
+<div class="nav-part">예측과 what-if</div><ul>
+<li><a href="whatif.html" class="on" aria-current="page"><span class="n">05</span>예측과 what-if</a></li>
+</ul>
+<div class="nav-part">연동</div><ul>
+<li><a href="connect.html"><span class="n">06</span>플러그인과 REST·MCP 연동</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">예측과 what-if<span class="chap">5</span></div>
+    <h1>예측과 what-if</h1>
+    <article>
+<blockquote>
+<p>모델은 잠김, 근거 부족, 사용 가능의 세 상태로 보입니다. 수요 예측을 구간으로 보고, 증산·단종·재배치·납기·결제 조건을 바꾸기 전에 시험합니다. 원장은 바꾸지 않습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/Uedg3m0eMAI" title="예측과 what-if — 영상 3:42" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>예측과 what-if 는 모듈의 표가 아니라 <strong>원장의 이벤트</strong> 를 읽습니다. 숫자만 내놓고 틀리는 일을 막기 위해 모든 모델은 세 상태 중 하나로 보입니다.</p>
+<table>
+<thead>
+<tr>
+<th>상태</th>
+<th>뜻</th>
+<th>화면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>잠김</td>
+<td>필요한 모듈이 꺼져 있다</td>
+<td>어떤 모듈을 켜면 되는지 안내</td>
+</tr>
+<tr>
+<td>근거 부족</td>
+<td>모듈은 있으나 이벤트가 모자란다</td>
+<td>무엇이 얼마나 더 필요한지 표시, 범위만 제시</td>
+</tr>
+<tr>
+<td>사용 가능</td>
+<td>계산한다</td>
+<td>결과 + 80% 구간 + 근거(기간, 사례 수)</td>
+</tr>
+</tbody>
+</table>
+<p>결과 구간이 0을 포함하면 what-if 는 효과를 구분할 수 없다고 말합니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">이 장의 숫자는 실제 회사의 성능이 아닙니다</p>
+<p>모든 숫자는 생성기로 만든 <strong>가상 회사</strong> 의 결과입니다. 생성기와 추정기는 같은 가정(부드러운 계절, 일정한 발주 방식, 품절이면 못 판 수요)을 공유하므로 실제 회사에서는 이보다 나쁠 것으로 보아야 합니다. 임계값도 가상 회사로 재서 정했고, 실제 회사에서는 다시 재야 합니다.</p>
+</div>
+<p><strong>재고의 값은 예측 정확도보다 what-if 에 있습니다.</strong> 이 가상 회사 시험에서는 판매가 끊긴 구간만 빼도 재고 이력을 쓴 것과 수요 예측 오차가 같았습니다. 품절이 깨끗한 공백으로 나타나는 생성기의 성질 때문일 수 있고, 일부만 품절되는 실제 회사에서는 재고 기록이 더 나을 수 있습니다. 재고 기록이 있어야 열리는 것은 발주 정책 변경과 창고 재배치입니다.</p>
+<p>계산은 이 브라우저에서 합니다. 저장되는 것은 없습니다. 무료 플랜에서의 속도는 재지 않았습니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p><a href="history.html">앞 장</a>과 같은 가상 회사에 관리자로 로그인합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">숫자가 조금 다를 수 있습니다</p>
+<p>가상 회사를 새로 만들면 what-if 의 숫자가 조금 달라집니다. 주문 건수는 같고, 같은 회사에서 다시 돌리면 같은 숫자가 나옵니다. 원인은 아직 확인하지 못했습니다. 아래 숫자는 이 장과 제품 소개 영상을 찍은 회사의 것입니다.</p>
+</div>
+<ol class="steps">
+<li><strong>세 상태 보기.</strong> <strong>분석 → 예측·what-if</strong> 를 엽니다. 오늘 기준으로 14개 모델이 모두 <strong>사용 가능</strong> 입니다.
+
+<figure><a href="img/whatif-states.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="모델 목록" src="img/whatif-states.webp" loading="lazy" decoding="async"></a><figcaption>모델 목록</figcaption></figure>
+</li>
+<li><strong>재고를 켜기 전으로 가기.</strong> <strong>시점 보기</strong> 에 <code>2024-06-01</code> 을 넣습니다. 재고 모듈을 켜기 전이라 <strong>품절 보정 수요 예측</strong> 은 잠김(<code>재고 모듈을 켜면 열립니다</code>), <strong>판매 기준 수요 예측</strong> 은 근거 부족(<code>판매 15개월 필요 (지금 8개월)</code>)입니다. <strong>현재로 돌아가기</strong> 로 나옵니다.
+
+<figure><a href="img/whatif-past.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="2024-06 시점" src="img/whatif-past.webp" loading="lazy" decoding="async"></a><figcaption>2024-06 시점</figcaption></figure>
+</li>
+<li><strong>통계 보기.</strong> <strong>시점 보기</strong> 에 <code>2026-05-31</code> 을 넣고 <strong>매출 통계</strong> 를 엽니다. 지난 1년 매출이 지역별, 제품별로 나옵니다. 수도권이 3,165,463,000 으로 가장 큽니다.
+
+<figure><a href="img/whatif-stats.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="통계" src="img/whatif-stats.webp" loading="lazy" decoding="async"></a><figcaption>통계</figcaption></figure>
+</li>
+<li><strong>수요 예측 보기.</strong> <strong>품절 보정 수요 예측</strong> 을 엽니다. 앞으로 92일 수량이 11,506 ~ 13,781(중앙값 12,625)입니다. 아래 <strong>근거</strong> 에 재고 이력 516일, 기록된 품절일 645 가 적혀 있습니다.
+
+<figure><a href="img/whatif-demand.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="수요 예측" src="img/whatif-demand.webp" loading="lazy" decoding="async"></a><figcaption>수요 예측</figcaption></figure>
+</li>
+<li><strong>여름 상품 발주 2배.</strong> <strong>발주 정책 변경</strong> 에서 <code>에어서큘레이터</code> 를 고르고 <strong>제품 더하기</strong> 로 <code>제습기</code> 를 더합니다. 발주량 배수와 발주점 배수는 2 입니다. <strong>시험해 보기</strong> 를 누릅니다. 매출 변화는 P50 +286,361,000, 80% 구간 +224,017,900 ~ +357,395,100 이고, 품절일은 245 에서 123 으로, 재고 금액은 +68,221,707 입니다.
+
+<figure><a href="img/whatif-policy.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="발주 2배" src="img/whatif-policy.webp" loading="lazy" decoding="async"></a><figcaption>발주 2배</figcaption></figure>
+</li>
+<li><strong>단종.</strong> <strong>단종</strong> 에서 <code>공기청정기 보급형</code> 을 고릅니다. 매출 변화는 P50 -258,250,000 입니다. 아래 표가 근거입니다. 공기청정기 프로로 옮겨 가는 대체율이 24% ~ 40% 이고, 품절 사례 19건에서 추정했습니다.
+
+<figure><a href="img/whatif-drop.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="단종" src="img/whatif-drop.webp" loading="lazy" decoding="async"></a><figcaption>단종</figcaption></figure>
+</li>
+<li><strong>창고 재배치.</strong> <strong>창고 재배치</strong> 에서 제품 <code>제습기</code>, 덜 보낼 창고 <code>수도권 창고</code>, 더 보낼 창고 <code>호남 창고</code> 를 고릅니다. <code>효과를 구분할 수 없습니다</code> 가 숫자보다 먼저 나옵니다. 매출 변화의 80% 구간이 -50,025,900 ~ +21,097,000 으로 0을 포함하기 때문입니다.
+
+<figure><a href="img/whatif-realloc.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재배치" src="img/whatif-realloc.webp" loading="lazy" decoding="async"></a><figcaption>재배치</figcaption></figure>
+</li>
+<li><strong>납기 줄이기.</strong> <strong>납기·공급사 변경</strong> 의 새 납기에 <code>6</code> 을 넣습니다. 평균 납기 11.4일의 절반쯤입니다. 품절일은 245 에서 96 으로 줄고, 매출 변화는 P50 +316,625,500, 구간 +244,311,700 ~ +381,645,800 입니다. 그런 납기를 공급사와 합의할 수 있는지는 이 표가 말해 주지 않습니다.
+
+<figure><a href="img/whatif-lead.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="납기" src="img/whatif-lead.webp" loading="lazy" decoding="async"></a><figcaption>납기</figcaption></figure>
+</li>
+<li><strong>결제 조건.</strong> <strong>결제 조건 변경</strong> 에서 지금 조건 <code>30일</code>, 새 조건 <code>15</code> 로 시험합니다. 이 시점에는 조건이 바뀐 거래처가 없어 근거 부족입니다. <code>0 KRW ~ 297,227,764 KRW</code> 범위로만 말합니다.
+
+<figure><a href="img/whatif-terms.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결제 조건 2026-05-31" src="img/whatif-terms.webp" loading="lazy" decoding="async"></a><figcaption>결제 조건 2026-05-31</figcaption></figure>
+</li>
+<li><strong>현재에서 다시.</strong> <strong>현재로 돌아가기</strong> 를 누르고 같은 시험을 합니다. 조건이 바뀐 거래처 5곳의 기록이 있어 계산합니다. 앞으로 92일 입금 변화는 P50 +40,779,190, 구간 +23,840,142 ~ +60,311,206 입니다.
+
+<figure><a href="img/whatif-termsnow.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결제 조건 현재" src="img/whatif-termsnow.webp" loading="lazy" decoding="async"></a><figcaption>결제 조건 현재</figcaption></figure>
+</li>
+</ol>
+<p>녹화에서는 시험 전후로 원장의 이벤트 수가 42,220건으로 같았습니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>재배치 결과에 숫자가 있는데도 "구분할 수 없음"이라고 하는 이유는 무엇인가요?</summary>
+<p>가운데 값은 있지만 80% 구간이 0을 포함합니다. 늘어날지 줄어들지 말할 수 없다는 뜻이므로, 숫자로 이득이나 손해를 말하지 않습니다.</p>
+</details>
+<details class="answer">
+<summary>결제 조건 시험이 같은 회사인데 시점에 따라 다른 이유는 무엇인가요?</summary>
+<p>시점을 고르면 그 시점까지 시스템이 알던 것으로 계산합니다. 고객이 새 조건을 얼마나 따르는지는 조건이 바뀐 거래처만 말해 줄 수 있고, 2026-05-31 까지는 그런 거래처가 없었습니다.</p>
+</details>
+<details class="answer">
+<summary>재고 모듈을 켜면 수요 예측이 정확해지나요?</summary>
+<p>이 가상 회사 시험에서는 거의 그렇지 않았습니다. 재고를 켜서 얻는 것은 발주, 재배치 같은 what-if 와 품절 예상일입니다. 실제 회사에서는 다시 재야 합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="history.html"><span>이전</span>과거 시점 보기와 되돌리기</a><a class="next" href="connect.html"><span>다음</span>플러그인과 REST·MCP 연동</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 돌려 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
