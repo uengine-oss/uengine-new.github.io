@@ -169,8 +169,10 @@
 </table>
 <p>macOS, Linux, Windows(WSL2)에서 설치할 수 있습니다. Windows는 WSL2 안에 Docker Engine을 설치해 쓰는 것을 권장합니다.</p>
 <h2 id="설치하기">설치하기<a class="anchor" href="#설치하기" title="Permanent link">#</a></h2>
-<p>터미널에서 한 줄을 실행합니다. 저장소를 <code>~/process-gpt-lite</code>에 받고 설치 스크립트를 실행합니다.</p>
-<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/main/install/get.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<p>터미널에서 아래 명령을 실행합니다. v0.2.0 릴리스에 고정된 설치 스크립트를 내려받아 확인값(SHA-256)을 검사한 뒤 실행하세요. 확인값이 맞지 않으면 실행하지 마세요. 스크립트는 저장소의 v0.2.0을 <code>~/process-gpt-lite</code>에 받고 설치를 실행합니다.</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-fsSLO<span class="w"> </span>https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/v0.2.0/install/get.sh
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;d659b9b09cc7c05c914c06bd5ecf3ba72042ef3bb5cf1d5f13f89e23a43907a9  get.sh&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>shasum<span class="w"> </span>-a<span class="w"> </span><span class="m">256</span><span class="w"> </span>-c<span class="w"> </span>-
+bash<span class="w"> </span>get.sh
 </code></pre></div>
 
 <p>저장소를 직접 받아도 같습니다.</p>

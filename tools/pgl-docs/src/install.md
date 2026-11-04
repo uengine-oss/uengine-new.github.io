@@ -30,10 +30,12 @@ macOS, Linux, Windows(WSL2)에서 설치할 수 있습니다. Windows는 WSL2 �
 
 ## 설치하기
 
-터미널에서 한 줄을 실행합니다. 저장소를 `~/process-gpt-lite`에 받고 설치 스크립트를 실행합니다.
+터미널에서 아래 명령을 실행합니다. v0.2.0 릴리스에 고정된 설치 스크립트를 내려받아 확인값(SHA-256)을 검사한 뒤 실행하세요. 확인값이 맞지 않으면 실행하지 마세요. 스크립트는 저장소의 v0.2.0을 `~/process-gpt-lite`에 받고 설치를 실행합니다.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/main/install/get.sh | bash
+curl -fsSLO https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/v0.2.0/install/get.sh
+echo "d659b9b09cc7c05c914c06bd5ecf3ba72042ef3bb5cf1d5f13f89e23a43907a9  get.sh" | shasum -a 256 -c -
+bash get.sh
 ```
 
 저장소를 직접 받아도 같습니다.
