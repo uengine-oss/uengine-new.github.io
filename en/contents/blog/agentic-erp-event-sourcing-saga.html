@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback? | uEngine Blog</title>
+        <meta name="description" content="ERP agents need ways to act, undo work, and ask what may happen before they act. Tests with uEngine ERP and Process GPT Lite show how one ledger supports compensation, quarterly forecasts, and what-if analysis.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/agentic-erp-event-sourcing-saga.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback? | uEngine Blog">
+        <meta property="og:description" content="ERP agents need ways to act, undo work, and ask what may happen before they act. Tests with uEngine ERP and Process GPT Lite show how one ledger supports compensation, quarterly forecasts, and what-if analysis.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/agentic-erp-event-sourcing-saga.html">
+        <meta property="og:image" content="https://www.uengine.org/images/en/blog/agentic-erp-event-sourcing-saga.jpg">
+        <meta property="og:image:alt" content="Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback? | uEngine Blog">
+        <meta property="article:published_time" content="2026-11-04">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback? | uEngine Blog">
+        <meta name="twitter:description" content="ERP agents need ways to act, undo work, and ask what may happen before they act. Tests with uEngine ERP and Process GPT Lite show how one ledger supports compensation, quarterly forecasts, and what-if analysis.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/en/blog/agentic-erp-event-sourcing-saga.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback?","description":"ERP agents need ways to act, undo work, and ask what may happen before they act. Tests with uEngine ERP and Process GPT Lite show how one ledger supports compensation, quarterly forecasts, and what-if analysis.","image":["https://www.uengine.org/images/en/blog/agentic-erp-event-sourcing-saga.jpg"],"url":"https://www.uengine.org/en/contents/blog/agentic-erp-event-sourcing-saga.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/agentic-erp-event-sourcing-saga.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-11-04","dateModified":"2026-11-04"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback?","item":"https://www.uengine.org/en/contents/blog/agentic-erp-event-sourcing-saga.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/agentic-erp-event-sourcing-saga.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/agentic-erp-event-sourcing-saga.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/agentic-erp-event-sourcing-saga.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/agentic-erp-event-sourcing-saga.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Process Solutions · Agent&nbsp;Orchestrator&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Ontology Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../agentstorming.html" style="font-size: 18px;">Agent Storming Workshop</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ax-lite-course.html" style="font-size: 18px;">AI Work Class for Your Company</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Event-Sourced, Reversible Industry Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../industry.html" style="font-size: 18px;">Why Event Sourcing?</a>
+                                            </li>
+                                            <li>
+                                                <a href="../blog/agentic-erp-event-sourcing-saga.html" style="font-size: 18px;">AI Agents and Event Sourcing</a>
+                                            </li>
+                                            <li>
+                                                <a href="../erp.html" style="font-size: 18px;">uEngine ERP</a>
+                                            </li>
+                                            <li>
+                                                <a href="../mes.html" style="font-size: 18px;">uEngine MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="../wms.html" style="font-size: 18px;">uEngine WMS (audit-log based)</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/agentic-erp-event-sourcing-saga.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback?</span>
+                                    </h1>
+
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  November 04, 2026</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+
+                               </div>
+                               <!-- End Page Title -->
+
+                            </div>
+                        </div>
+                        <!-- End Section Content -->
+
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+
+                        <div class="row">
+
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+
+                                    <div class="blog-item-body chat-gpt">
+<div class="mb-50"><img src="../../../images/en/blog/agentic-erp-event-sourcing-saga.jpg" alt="Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback?" style="width:100%;height:auto;border-radius:12px;" decoding="async"></div>
+<blockquote><p>&nbsp; 1. Beyond Chatbots: Long-Running Agentic AI That Executes Business Work</p></blockquote>
+<div class="mb-50 prose"><p>What businesses want AI to do is changing. Answering questions and summarizing reports is no longer enough. They expect agents to detect material shortages, find alternative suppliers, request purchase approval, and handle receipts and payments. Agents are entering enterprise systems to execute real business work.</p></div>
+<div class="mb-50 prose"><p>Waiting for supplier responses, approvals, and goods receipts takes hours or days. Agents move across ERP, SCM, WMS, and MES, read earlier results, and choose the next tool. This is the work of long-running agentic AI.</p></div>
+<div class="mb-50 prose"><p>While an agent waits, other employees reserve materials and warehouses ship goods. The agent may make a wrong decision, a partner may run out of stock, or a manager may reject the purchase. The assumption that everything will finish as planned can quickly break down.</p></div>
+<div class="mb-50 prose"><p>“Processing failed” is not an adequate response. What happens to the materials already reserved, purchase orders already issued, and entries already recorded in the books?</p></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">Before giving an agent authority to act, check how it can safely undo work it has already performed.</p></div>
+<blockquote><p>&nbsp; 2. Why MCP Emerged and How It Works</p></blockquote>
+<div class="mb-50 prose"><p>Building custom integrations for each system increases maintenance work as an agent gains tools. MCP is a common protocol connecting AI applications to external tools. Its official documentation explains: “Think of MCP like a USB-C port for AI applications.” The analogy is a USB-C port for AI applications.</p></div>
+<div class="mb-50 prose"><p>An agent's work follows this flow.</p></div>
+<div class="mb-50 prose"><ol><li><b style="font-weight: bold;">Observe and query (Read)</b>: Read component inventory and recent supplier prices to understand the current situation.</li><li><b style="font-weight: bold;">Decide and plan (Plan)</b>: Choose the tools and call sequence needed to meet the goal within its constraints.</li><li><b style="font-weight: bold;">Act and execute (Exec)</b>: Reserve materials, create purchase orders, and request shipping.</li></ol></div>
+<div class="mb-50 prose"><p>What if approval is rejected after materials have been reserved and a purchase order created? Explaining the last error does not resolve the effects of earlier steps.</p></div>
+<div class="mb-50 prose"><p>The 2025-06-18 version of the MCP tools specification does not define tool transactions, rollback, or compensation. It also states that tool annotations should not be trusted unless they come from a trusted server. A tool description is not sufficient evidence of safety.</p></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">MCP defines how to call tools, but does not define how to undo their effects. The system behind each tool must handle that. This is a division of responsibilities, rather than a flaw in MCP.</p></div>
+<blockquote><p>&nbsp; 3. Why Traditional ERP That Overwrites Data (CRUD) Breaks Down with Agents</p></blockquote>
+<div class="mb-50 prose"><p>ERP is a System of Record (SoR) for business operations. Agents need to read both the current numbers and the changes they made, along with the reasons. An overwrite-based design without sufficient history has three problems.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Current Values Cannot Identify an Agent's Work</b></p></div>
+<div class="mb-50 prose"><p>Suppose inventory changes from 1,000 units to 800. Reading the current inventory of 800 does not tell you which order caused the reduction of 200. The number does not say whether those units were reserved or shipped, or whether an agent or an employee performed the action.</p></div>
+<div class="mb-50 prose"><p>A request to “undo what you did then” must not change the books based on guesses from a conversation. The actual execution record must identify the items, quantities, and linked documents. CRUD systems can do this with separate history. The problem arises when the latest state is treated as the source of truth and execution context as supplementary information.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Other Work Continues While an Agent Waits</b></p></div>
+<div class="mb-50 prose"><p>Materials may be reserved on Monday morning and approval rejected on Tuesday afternoon. ROLLBACK cannot undo a committed transaction. A database transaction rollback and withdrawal of completed business work the next day are different operations.</p></div>
+<div class="mb-50 prose"><p>Restoring an earlier inventory snapshot can cause lost updates by overwriting other employees' reservations and shipments. The agent must reverse the effect of its own reservation without affecting those operations.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Erasing Mistakes Also Erases Evidence of Their Resolution</b></p></div>
+<div class="mb-50 prose"><p>Deleting an incorrectly posted voucher makes it harder to explain what the agent did and how it was reversed. The person responsible needs to see who acted, why, and how the problem was resolved, as well as the final numbers.</p></div>
+<div class="mb-50 prose"><p>For covered records, the US FDA's 21 CFR 11.10(e) requires secure audit trails that independently record the date and time of creation, modification, and deletion, and specifies that changes must not obscure previous records. Event sourcing fits these requirements well. However, the regulation does not mandate a particular storage method, and adopting event sourcing does not by itself ensure compliance. Operational policies and access controls for agent activity records are also necessary.</p></div>
+<blockquote><p>&nbsp; 4. The Solution: Combining Event Sourcing with Saga Rollback</p></blockquote>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Event Sourcing: A Digital Ledger That Retains What an Agent Did</b></p></div>
+<div class="mb-50 prose"><p>Event sourcing records business events as the source of truth instead of storing just the current value. Like a bank account that records deposits and withdrawals in sequence and calculates the balance, it builds current inventory and accounting states from accumulated events.</p></div>
+<div class="mb-50 prose"><p>An agent's reservation, purchase order, and rejected approval are recorded as events like these. This is an illustrative example.</p></div>
+<div class="mb-50"><pre style="background:#1a1a2e;color:#e8e8f0;padding:18px 20px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.6;white-space:pre;"><code>StockReservedByAgent: 200 parts reserved
+PurchaseOrderCreated: purchase order written
+ManagerApprovalRejected: manager refused approval</code></pre></div>
+<div class="mb-50 prose"><p>In “Immutability Changes Everything,” Pat Helland writes: “The truth is the log. The database is a cache of a subset of the log.” In this view, the log holds the truth and the database caches part of it. The same paper's analogy, “Accountants Don’t Use Erasers,” fits this context. Resolving an agent's mistake should add a record of the correction rather than erase the original record. ([Source](https://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf))</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>The Saga Pattern: Undo Effects Through Actions, Without Erasing What Happened</b></p></div>
+<div class="mb-50 prose"><p>Event sourcing records what happened; a saga addresses how to resolve the effects of work that stopped partway through. It executes compensating transactions to release reservations and cancel purchase orders. Saga rollback here means compensation appropriate to the business operation, rather than ROLLBACK of an already committed database transaction.</p></div>
+<div class="mb-50 prose"><p>Garcia-Molina and Salem's “Sagas” (1987) describes compensation as undoing the effects of earlier actions in business terms. It does not necessarily return the database to its state before those actions began. Canceling an airline reservation should reduce the reservation count by one. Restoring the seat count from the time of booking would ignore reservations made in the meantime. The same principle applies when an agent cancels a material reservation.</p></div>
+<div class="mb-50 prose"><p>The paper's guarantee is execution of all of T1…Tn, or execution of T1…Tj followed by compensation Cj…C1. Since the entire long-running operation is not locked, compensation conditions, retries, and human exception handling also need to be designed.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="min-width: 640px; width: 100%; border-collapse: collapse; word-break: keep-all;"><thead><tr><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Comparison</th><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Undo Based on Current Values and Past Snapshots</th><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Event Sourcing + Saga Compensation</th></tr></thead><tbody><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Evidence of agent execution</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Targets and conditions must be found in separate history</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Original events provide facts from the time of execution</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Cancellation method</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Restoring previous values risks overwriting intervening changes</td><td style="padding: 12px 16px; border: 1px solid #ddd;">New events offset the effects of the operation itself</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Relationship to other work</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Snapshots alone make subsequent work difficult to distinguish</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Causality and versions are checked to determine whether compensation can proceed</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Review by the responsible person</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Original execution and cancellation records are compared separately</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Linked execution and compensation records explain what happened</td></tr></tbody></table></div>
+<blockquote><p>&nbsp; 5. Why Event Sourcing Matters for Reliable Saga Rollback</p></blockquote>
+<div class="mb-50 prose"><p>“Could we add a saga orchestrator on top of an existing CRUD ERP?” Yes. Sagas were originally designed for conventional databases in 1987 and can be built on ERP systems that overwrite data. Event sourcing is not a prerequisite storage method for implementing a saga.</p></div>
+<div class="mb-50 prose"><p>But when agents become the main executors, the starting point for design changes.</p></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">In a classical saga, developers design the steps and compensation in advance. An agent's work is not designed in advance.</p></div>
+<div class="mb-50 prose"><p>A fixed workflow defines its steps and failure compensation ahead of time. Agents choose tools according to the situation. This time an agent uses an existing business partner; next time it starts by creating one. Even with predefined compensation rules for each tool, the actual combination, sequence, and reasons for execution must be established from the records afterward.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Evidence of Execution Must Remain Even When Plans Change</b></p></div>
+<div class="mb-50 prose"><p>Suppose an agent applies exchange rates and discounts to reserve 100 units of raw material at 1,250 won per unit. Cancellation requires the conditions applied at that time and the quantity actually reserved, rather than today's unit price. The system must also know which purchase order the reservation was linked to and whether it subsequently led to receipt or payment.</p></div>
+<div class="mb-50 prose"><p>Implementing this on an overwrite-based ERP requires separate change history, call group identifiers, versions, retry keys, and causal tracing. Building these records amounts to recreating an event log. Supplementary records may be missing or inconsistent when managed separately from actual changes. In event sourcing, those records are themselves the source of truth. The numbers on the current screen and the basis for reversal come from the same business facts.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Retries and Compensation Must Be Part of the System Contract</b></p></div>
+<div class="mb-50 prose"><p>An agent that receives no response may request the same cancellation again. Without a retry key, a request to cancel 100 units could execute twice and cancel 200. Event sourcing does not automatically prevent duplicate execution. Saga identifiers, operation identifiers, version checks, and duplicate-request handling must work together.</p></div>
+<div class="mb-50 prose"><p>A transactional outbox can address the dual-write problem in which a database write succeeds but message publication fails; this benefit is not exclusive to event sourcing. What matters is a structure that makes it possible to determine what has finished and what needs to be retried, from the agent's request through processing by downstream modules.</p></div>
+<div class="mb-50 prose"><p>Oracle's “When AI Agents Meet Enterprise Reality” (2026) explains that durable execution withstands infrastructure failures, compensation patterns resolve partial business effects, and reliable enterprise automation needs both. In that article, developers also define business compensation logic in advance. An agent's ability to plan does not mean it should invent compensation rules as it goes.</p></div>
+<div class="mb-50 prose"><p>The Zavora paper also proposes a reference architecture with agents as the main operators, storing significant actions as immutable events for commitments, obligations, evidence, and settlement. It should not be read as proven production results. It is a design proposal for the records and controls that should support agent execution.</p></div>
+<blockquote><p>&nbsp; 6. Read the Past and Simulate Before Acting with the Retained Ledger</p></blockquote>
+<div class="mb-50 prose"><p>To work in ERP, agents need somewhere to ask questions before acting, as much as they need execution and cancellation. Current values cannot answer “What will sell most in each quarter next year?”, “How much revenue will we make?”, or “What happens if we change this?”</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Read History That Today's Numbers Do Not Contain</b></p></div>
+<div class="mb-50 prose"><p>Today's inventory number does not show how many days dehumidifier stock was at 0 last summer. If the system cannot distinguish low sales caused by stockouts from low demand, it will forecast too little, order too little, and run out again. The ledger lets it recalculate inventory for that day. An overwrite-based system can do similar work with separate history or a data warehouse. The distinction is whether that record is the source of truth or a supplement.</p></div>
+<div class="mb-50 prose"><p>Agents can also reconstruct what the system knew at a given time. Running the same forecast with the ledger as it stood 1 year earlier and comparing it with subsequent actual results validates predictions against the company's own records. Facts learned later do not leak into the historical forecast.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Run What-If Analysis Without Writing to the Ledger</b></p></div>
+<div class="mb-50 prose"><p>The agent runs the baseline and proposed change side by side with the same demand and lead times, presenting the difference as an interval. If the interval includes 0, it answers “cannot distinguish.” Nothing is recorded in the ledger, and when evidence is insufficient, it explains what is missing instead of supplying a number.</p></div>
+<div class="mb-50 prose"><p>The LLM does not invent the numbers. It translates the question into a choice of model and inputs. The same model used by the ERP screen calculates results from ledger facts, so people and agents receive consistent answers. Access rights are the same: an agent cannot receive an answer calculated from documents it cannot read.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>What Tests with Synthetic Companies Established</b></p></div>
+<div class="mb-50 prose"><p>Using ledgers through early November 2025 from 60 generator-created synthetic companies, we forecast the four quarters of 2026 and compared them with actual outcomes. In this synthetic company test, the median quarterly revenue error was 6.6%, and 80% intervals contained actual revenue in 91% of cases. The predicted top product for a quarter matched the actual demand leader in 75% of cases.</p></div>
+<div class="mb-50 prose"><p>We separately tested what-if analysis looking 1 year ahead. Across 30 synthetic companies, we doubled summer-product order quantities by a factor of 2, discontinued products, or increased lead times by a factor of 1.6. The direction of change was correct in every case, with errors in the size of the change of 10~13.5%. However, 80% intervals contained actual outcomes in 53~80% of cases, below their stated level. The model therefore warns that prediction intervals are too narrow for horizons beyond 180 days.</p></div>
+<div class="mb-50 prose"><p>In the same synthetic company test, top-product accuracy was 98% in the summer quarter and 47% in the 4th quarter, when two products were closely matched. The model's stated probabilities of ranking first were 98% and 44%, respectively: it reports uncertainty when it does not know.</p></div>
+<div class="mb-50 prose"><p>For synthetic companies with frequent stockouts, reading sales records directly produced a summer demand error of 32% and understated demand by 30%. Including inventory history reduced the error to 9.5%. Treating gaps in sales as stockouts and excluding them gave similar results, so inventory history is not the sole approach. But one approach relies on inference and the other on records. Since the generator and estimator share assumptions, results for real companies should be expected to be worse.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Responses Beyond the Records Remain Assumptions</b></p></div>
+<div class="mb-50 prose"><p>How many customers leave after a price change is not read from the records. For “What if we raise the selling price by 10%?”, the model gives the break-even point—revenue stays the same even if volume falls by 9.1%—without predicting a direction. If given an assumption, it labels it as an assumption and calculates accordingly. New products, promotions, and market changes are not included.</p></div>
+<div class="mb-50 prose"><p>We have implemented the flow in which a person asks and an agent answers. Having agents simulate independently and make decisions is the next step.</p></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">Simulate first, execute, and undo if something goes wrong. All three draw on the same ledger.</p></div>
+<blockquote><p>&nbsp; 7. A Working Example: Execution and Reversal with Our Agent and ERP</p></blockquote>
+<div class="mb-50 prose"><p>The Process GPT Lite integration and uEngine ERP app have completed testing and will be released soon.</p></div>
+<div class="mb-50 prose"><p>We connected our event-sourced uEngine ERP to our Process GPT Lite agent through MCP and ran it. Accountant Jeong at the synthetic company Gaon Appliances handles the process from file input through execution and cancellation. The product screens shown are in Korean.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Scenario: Upload a Tax Invoice</b></p></div>
+<div class="mb-50"><div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;"><iframe src="https://www.youtube.com/embed/7rCkiexnp1A?hl=en&cc_lang_pref=en" title="The whole flow on video (Korean UI and narration)" loading="lazy" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe></div><p class="text-center mt-20" style="font-size: 14px; color: #888;">The whole flow on video (Korean UI and narration)</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">1. Upload: Attach a file without a message.</b> Accountant Jeong attaches a tax invoice file to the Process GPT Lite chat. The agent reads the file for clues about the work to start.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/01-upload.webp" alt="Just the tax invoice file, no words (Korean UI)" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">Just the tax invoice file, no words (Korean UI)</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">2. Ask: Reading does not trigger immediate execution.</b> Lite identifies the supplier as Hanbit Parts Co., Ltd., the approval number as 20261103-41000000-00001234, and the amount as 1,100,000 won, then asks, “Shall I process this in ERP?” If the document is unsuitable for voucher processing, it does not offer to process it; if the amounts do not match, it explains the discrepancy.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/02-offer.webp" alt="Lite reads the file and asks whether to process it in the ERP" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">Lite reads the file and asks whether to process it in the ERP</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">3. Workflow: Acceptance starts work across modules.</b> Through MCP, the agent looks up business partners and products, creates missing records, and handles voucher posting and payment through a single voucher-entry command. The server groups every call in this process under saga identifier <code style="background:#f4f4f8;padding:1px 6px;border-radius:4px;font-size:.92em;">dbf3657a…</code>. Inventory, accounting, and tax modules subscribe to the events and create goods receipts, accounting vouchers, and VAT reporting aggregates. The system traces derived results to determine the scope of cancellation.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/03-running.webp" alt="Once accepted, the work runs over MCP and the steps show" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">Once accepted, the work runs over MCP and the steps show</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">4. Results: Report verified facts.</b> Success of the first request does not mean the entire operation is declared complete. The agent waits for subscribers to finish processing events, then reports confirmed results such as voucher BILL/2026/11/0001 and payment PAY/2026/00001. The ERP screen shows the same results.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/04-done.webp" alt="The result is reported only after the subscribers have finished" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">The result is reported only after the subscribers have finished</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/05-erp-before.webp" alt="The same result seen in uEngine ERP" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">The same result seen in uEngine ERP</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">5. Cancel in words: Request “Cancel what you just did.”</b> The user identifies the work to cancel, and the agent links the request to the saga identifier. <b style="font-weight: bold;">Compensation is not delegated to the LLM.</b> The server reads the execution scope and linked results and checks whether compensation is allowed. It directly performs two compensating actions—canceling the payment and posting a credit note—in reverse execution order. Subscribers respond to those events by creating inventory returns, reversing entries, and reporting aggregates. For products using average costing, the unit cost changed at receipt is also restored. The system also warns that a revised tax invoice must be requested from the supplier, because compensation inside ERP does not correct external tax documents.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/06-cancel.webp" alt="&quot;Cancel that&quot; runs the compensation, and the net change comes out as zero" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">"Cancel that" runs the compensation, and the net change comes out as zero</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">6. Ledger: Verify through numbers, beyond the agent's words.</b> Both the original execution and compensation remain, with no records deleted. Calculating the net inventory change by location and the net accounting change by account for this saga and its compensation gives 0 in every case. This means the effects of this operation have been offset; it does not refer to the company's total balances.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/07-erp-ledger.webp" alt="The ledger keeps both the original work and the compensation" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">The ledger keeps both the original work and the compensation</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="min-width: 640px; width: 100%; border-collapse: collapse; word-break: keep-all;"><thead><tr><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Item</th><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Net Change on Processing</th><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Net Change After Reversal</th></tr></thead><tbody><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Bank deposits</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">-1,100,000 won</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">0</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Input VAT</td><td style="padding: 12px 16px; border: 1px solid #ddd;">+100,000 won</td><td style="padding: 12px 16px; border: 1px solid #ddd;">0</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Merchandise</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">+1,000,000 won</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">0</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Air circulator motors</td><td style="padding: 12px 16px; border: 1px solid #ddd;">+20 units</td><td style="padding: 12px 16px; border: 1px solid #ddd;">0</td></tr></tbody></table></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">7. When to stop: Check conditions that prohibit cancellation.</b> If goods have since shipped, the accounting period is locked, or someone else has continued the work, compensation does not proceed. The server explains the blocker and who must handle the follow-up. In this implementation, a compensation request proceeds in full or not at all. It does not skip blocked operations and arbitrarily cancel the rest. This behavior must not be generalized into an atomicity guarantee across arbitrary external systems.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/08-blocked.webp" alt="When it must not proceed, it says why and changes nothing" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">When it must not proceed, it says why and changes nothing</p></div>
+<div class="mb-50"><div style="max-width:760px;margin:0 auto;border:2px solid #1a1a2e;border-radius:14px;background:linear-gradient(180deg,#f4f6fb 0%,#eceff7 100%);padding:22px;box-shadow:0 8px 24px rgba(26,26,46,.08);"><div style="text-align:center;font-weight:700;font-size:14px;color:#1a1a2e;margin-top:6px;">The work, under one saga id</div><div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:10px 0;"><span style="background:#fff;border:1px solid #c3cbe0;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Find supplier and product</span><span style="color:#888;">→</span><span style="background:#fff;border:1px solid #c3cbe0;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Post voucher and pay</span><span style="color:#888;">→</span><span style="background:#fff;border:1px solid #c3cbe0;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Receipt (inventory subscribes)</span><span style="color:#888;">→</span><span style="background:#fff;border:1px solid #c3cbe0;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Entry (accounting subscribes)</span><span style="color:#888;">→</span><span style="background:#fff;border:1px solid #c3cbe0;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">VAT entry (tax subscribes)</span></div><div style="text-align:center;font-weight:700;font-size:14px;color:#1a1a2e;margin-top:6px;">Cancel that</div><div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:10px 0;"><span style="background:#f3effd;border:1px solid #7c4dbc;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Cancel payment</span><span style="color:#888;">→</span><span style="background:#f3effd;border:1px solid #7c4dbc;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Post credit note</span><span style="color:#888;">→</span><span style="background:#f3effd;border:1px solid #7c4dbc;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Return (inventory subscribes)</span><span style="color:#888;">→</span><span style="background:#f3effd;border:1px solid #7c4dbc;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">Reversing entry (accounting subscribes)</span><span style="color:#888;">→</span><span style="background:#f3effd;border:1px solid #7c4dbc;border-radius:20px;padding:6px 14px;font-size:13px;white-space:nowrap;">VAT offset (tax subscribes)</span></div><div style="text-align:center;font-weight:700;font-size:14px;color:#1a1a2e;margin-top:6px;;color:#7c4dbc;">Ledger: both remain, and the net change in stock and accounts is 0</div></div><p class="text-center mt-20" style="font-size: 14px; color: #888;">Compensation runs in reverse order, and subscribers follow from the events</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Scenario: Ask a Question in Chat</b></p></div>
+<div class="mb-50"><div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;"><iframe src="https://www.youtube.com/embed/xWD3pdr-QrI?hl=en&cc_lang_pref=en" title="Forecast and what-if asked in chat, on video (Korean UI and narration)" loading="lazy" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe></div><p class="text-center mt-20" style="font-size: 14px; color: #888;">Forecast and what-if asked in chat, on video (Korean UI and narration)</p></div>
+<div class="mb-50 prose"><p>This time, the synthetic company has 3 years of history. The user asks a question in the usual Process GPT Lite chat window, without finding a menu or completing a form.</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">1. “What will sell most in each quarter next year?”</b> Cards show each quarter's top product, quantity interval, and probability of ranking first. For the synthetic company, air circulators are forecast to lead sales in the 3rd quarter of 2027 at around 6,457 units. The 80% interval is 5,352~8,077 units, with a probability of at least 99% of ranking first that quarter. Humidifiers, forecast to lead in the 4th quarter, have a probability of just 39%. The answer explains that basic air purifiers have a similar chance.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/s19-quarters.webp" alt="Ask in the chat and it gives the top product per quarter and how likely that is" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">Ask in the chat and it gives the top product per quarter and how likely that is</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">2. “How much revenue will we make next year?”</b> The answer separates the synthetic company's next-year revenue into a scenario with current supply and one where all demand is met. In hundreds of millions of won, the estimates are around 61.4 and 70.3, respectively; the difference of 8.9 is revenue lost to stockouts. Calculating air circulator demand for the 3rd quarter from sales records alone gives 3,972 units. Accounting for 146 stockout days over the past 1 year, identified from inventory history, raises the estimate to 6,545 units.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/s19-revenue.webp" alt="Revenue if supply stays as it is, and if all demand is met" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">Revenue if supply stays as it is, and if all demand is met</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">3. “Can I trust this forecast?”</b> The agent runs the same calculation on the ledger as it stood 1 year earlier and compares it with actual results. For the synthetic company, it checks predictions based on facts known through November 2, 2025. Actual revenue for all 3 completed quarters fell within the prediction intervals, and the top product was correct in 2 of those quarters. In the 2nd quarter, the forecast placed basic air purifiers first, but air circulators actually sold the most.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/s19-backtest.webp" alt="The same forecast from the ledger of a year ago, held against what happened" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">The same forecast from the ledger of a year ago, held against what happened</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">4. “What happens if we increase order quantities for that product by a factor of 1.5?”</b> The agent runs a what-if analysis for the product in the previous answer. For the synthetic company, increasing air circulator order quantities by a factor of 1.5 is forecast to increase revenue over the next 1 year. Expressed in tens of thousands of won, the estimated increase is around 4,664, with an 80% interval of +694~+9,535. Stockout days summed across product and warehouse combinations are forecast to fall by around 33 days, while inventory value rises by around 772, also in tens of thousands of won.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/s19-policy.webp" alt="A what-if on the product from the previous answer" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">A what-if on the product from the previous answer</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">5. “What if we raise the price by 10%?”</b> The answer explains the break-even point instead of predicting the direction of change. For the synthetic company, profit stays the same even if sales volume falls by 19.4%. Revenue stays the same even if volume falls by 9.1%. If the user supplies an assumption for price elasticity, the agent labels the calculation as based on that assumption and presents the result.</p></div>
+<div class="mb-50"><img src="../../../images/blog/agentic-erp-event-sourcing-saga/s19-price.webp" alt="How customers respond is not on record, so it gives the break-even" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid #e5e5e5;border-radius:12px;"><p class="text-center mt-20" style="font-size: 14px; color: #888;">How customers respond is not on record, so it gives the break-even</p></div>
+<div class="mb-50 prose"><p><b style="font-weight: bold;">6. This conversation created 0 events in the ledger.</b> It queried the synthetic company's ledger without making changes.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>What the MCP Calls Look Like</b></p></div>
+<div class="mb-50 prose"><p>There are 4 MCP tools, and they also handle reversal. The first call reads the plan without making changes. A change request then uses the mode determined by the server and the plan hash, followed by checks on subscriber processing and net changes.</p></div>
+<div class="mb-50"><pre style="background:#1a1a2e;color:#e8e8f0;padding:18px 20px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.6;white-space:pre;"><code>// Inspect what will be reversed and how. Nothing changes
+const plan = await call('erp_read', { rollback: { correlation_id: saga_id } })
+// plan.mode: rollback | compensate | blocked
+
+await call('erp_create', {
+  type: 'rollback',
+  values: { correlation_id: saga_id, plan_hash: plan.hash },
+  reason: 'Cancel that',
+})
+
+// Check that subscribers have finished and the net change is 0
+const status = await call('erp_read', { saga: saga_id })</code></pre></div>
+<div class="mb-50 prose"><p>Calculations run on the caller's side. ERP's MCP supplies facts, and the agent-side server runs the same model used by the screen.</p></div>
+<div class="mb-50"><pre style="background:#1a1a2e;color:#e8e8f0;padding:18px 20px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.6;white-space:pre;"><code>// Read facts through MCP. Read the historical ledger through the same route
+const rpc = (fn, args) =&gt; call('erp_read', { analytics: { fn, args } })
+const now = buildPanel(await loadLedger(rpc))
+const then = buildPanel(await loadLedger(rpc, { asOf: '2025-11-03' }))
+
+quarterOutlook(now)            // Next year's quarterly leaders and revenue
+quarterBacktest(now, then)     // Repeat with facts known then; compare with actual results
+whatIfPolicy(now, { changes }) // Run baseline and proposed change side by side</code></pre></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="min-width: 640px; width: 100%; border-collapse: collapse; word-break: keep-all;"><thead><tr><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Mode</th><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Processing Determined by the Server</th></tr></thead><tbody><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;"><code style="background:#f4f4f8;padding:1px 6px;border-radius:4px;font-size:.92em;">rollback</code></td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">If nothing blocks it, reverse the entire target operation. Original records remain.</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><code style="background:#f4f4f8;padding:1px 6px;border-radius:4px;font-size:.92em;">compensate</code></td><td style="padding: 12px 16px; border: 1px solid #ddd;">Offset work that cannot be deleted, such as posted vouchers, with opposing transactions.</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;"><code style="background:#f4f4f8;padding:1px 6px;border-radius:4px;font-size:.92em;">blocked</code></td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Explain why the operation is prohibited and make no changes.</td></tr></tbody></table></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>What Testing Established and What It Has Not</b></p></div>
+<div class="mb-50 prose"><p>We tested the final code with a real LLM and real MCP. Voucher processing passed 5 out of 5 runs, conversational cancellation passed 5 out of 5, and question-and-answer conversations passed 5 out of 5. In a run of the version immediately before the final code, part of a test supplier's name was omitted once when reading it. When the model gateway stalled for a few minutes, the response asked the user to resend, without displaying a card. The supplier name is not checked twice, so a person must verify it on the card. These are test results from a synthetic company in a local environment, not production results.</p></div>
+<div class="mb-50 prose"><p>Permissions are also limited. An agent may compensate for its own MCP work when no one else has built on that work. An administrator handles other cases. Integration keys cannot exceed the member's permissions.</p></div>
+<div class="mb-50 prose"><p>Tax-related screens have not yet undergone expert review. The app does not directly issue electronic tax invoices or submit electronic tax filings.</p></div>
+<div class="mb-50 prose"><p>Because ledger records cannot be deleted, sensitive information is kept outside the ledger.</p></div>
+<div class="mb-20 prose"><p style="text-decoration: underline;"><b>Our Industrial Solutions</b></p></div>
+<div class="mb-50 prose"><p>Here are uEngine's <b style="font-weight: bold;">event-sourced industry solutions with reversible operations</b> and related integration samples. WMS differs from ERP and MES in implementation and scope.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="min-width: 640px; width: 100%; border-collapse: collapse; word-break: keep-all;"><thead><tr><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Solution</th><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">Current Scope and Release Status</th></tr></thead><tbody><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;"><a href="../erp.html#theme-history" style="font-weight: 600; text-decoration: underline;">uEngine ERP</a></td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Implements event sourcing and MCP reversal. Provides agents with next-year quarterly outlooks and what-if analysis. It is free to use by connecting your own Supabase. The app will be released soon.</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><a href="../mes.html" style="font-weight: 600; text-decoration: underline;">uEngine MES</a></td><td style="padding: 12px 16px; border: 1px solid #ddd;">A demonstration reference implementation of an event-sourced manufacturing execution system. Source code is private; contact us for a demonstration. There is no human-facing undo screen, and exec functions have compensation counterparts.</td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;"><a href="../wms.html" style="font-weight: 600; text-decoration: underline;">uEngine WMS</a></td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">A Process GPT sample app with 83 MCP tools and public source code. It uses audit logs rather than event sourcing and has no reversal feature.</td></tr></tbody></table></div>
+<blockquote><p>&nbsp; 8. Conclusion: Adopting AI Agents Requires Modernizing the Backend SoR</p></blockquote>
+<div class="mb-50 prose"><p>Start by understanding the costs. Not every system needs event sourcing. Microsoft's Event Sourcing pattern also explains that traditional data management is sufficient for most systems and their components. Migrating an existing system is costly, and adoption constrains later design choices. Read projections are eventually consistent with original events, so the design must specify when agents read which state and how they determine completion.</p></div>
+<div class="mb-50 prose"><p>The same document explains that cancellation adds compensating events. Start where there is a clear reason to accept the cost: the SoR where agents change real transactions, inventory, and payments. Examine work with substantial accountability first.</p></div>
+<div class="mb-50 prose"><p>Do not base adoption decisions just on the latest LLM's performance and prompts. Can you ask what will change before execution? Can you explain what the agent did in ERP? Can it undo its work without interfering with someone else's? Can it stop and hand the issue to a responsible person when reversal cannot proceed?</p></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">Success depends on an architecture that can handle mistakes, beyond the model's intelligence.</p></div>
+<div class="mb-50 prose"><p>To expand autonomy along the execution path MCP opens, systems need event-sourced records, saga compensation, human approval, and access controls. Build a flow that simulates first, executes, and reverses mistakes using the same ledger.</p></div>
+<div class="mb-50 prose"><p>uEngine addresses this beyond the storage design of a single ERP. We provide the broader agentic AI architecture: processes where agents work, reversible business records, semantic connections between systems, and discovery of work suitable for agents.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="min-width: 640px; width: 100%; border-collapse: collapse; word-break: keep-all;"><thead><tr><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">What Is Needed</th><th style="padding: 12px 16px; border: 1px solid #ddd; background-color: #1a1a2e; color: #fff; text-align: left;">What We Provide</th></tr></thead><tbody><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">Processes where agents work and people approve</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;"><a href="../processgpt.html#diff-agent" style="font-weight: 600; text-decoration: underline;">Process GPT</a>, <a href="../processgptlite.html" style="font-weight: 600; text-decoration: underline;">Process GPT Lite</a></td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Reversible business records</td><td style="padding: 12px 16px; border: 1px solid #ddd;"><a href="../erp.html#theme-history" style="font-weight: 600; text-decoration: underline;">uEngine ERP</a>, <a href="../mes.html" style="font-weight: 600; text-decoration: underline;">uEngine MES</a></td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;">A layer connecting meaning across systems</td><td style="padding: 12px 16px; border: 1px solid #ddd; background-color: #f7f7fa;"><a href="../ontologystudio.html" style="font-weight: 600; text-decoration: underline;">Ontological Studio</a>, <a href="../ontologicaldb.html" style="font-weight: 600; text-decoration: underline;">Ontological DB</a></td></tr><tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Finding work suitable for agents</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Agent Storming workshops</td></tr></tbody></table></div>
+<blockquote><p>&nbsp; References</p></blockquote>
+<div class="mb-50 prose"><ul style="font-size: 14px;"><li>Model Context Protocol, Introduction: <a href="https://modelcontextprotocol.io/introduction" target="_blank" rel="noopener">https://modelcontextprotocol.io/introduction</a></li><li>Model Context Protocol, Tools (2025-06-18): <a href="https://modelcontextprotocol.io/specification/2025-06-18/server/tools" target="_blank" rel="noopener">https://modelcontextprotocol.io/specification/2025-06-18/server/tools</a></li><li>H. Garcia-Molina, K. Salem, "Sagas" (1987): <a href="https://www.cs.princeton.edu/techreports/1987/070.pdf" target="_blank" rel="noopener">https://www.cs.princeton.edu/techreports/1987/070.pdf</a></li><li>P. Helland, "Immutability Changes Everything" (CIDR 2015): <a href="https://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf" target="_blank" rel="noopener">https://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf</a></li><li>Oracle, "When AI Agents Meet Enterprise Reality" (2026): <a href="https://blogs.oracle.com/database/ai-agents-enterprise-reality-workflows-transactions-runtime-controls" target="_blank" rel="noopener">https://blogs.oracle.com/database/ai-agents-enterprise-reality-workflows-transactions-runtime-controls</a></li><li>"Zavora: An AI-Powered Agentic ERP System with Commitment-Driven, Event-Sourced Architecture" (IJSRCSEIT): <a href="https://ijsrcseit.com/home/article/view/CSEIT2612585" target="_blank" rel="noopener">https://ijsrcseit.com/home/article/view/CSEIT2612585</a></li><li>Microsoft, Event Sourcing pattern: <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing" target="_blank" rel="noopener">https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing</a></li><li>C. Richardson, Pattern: Transactional outbox: <a href="https://microservices.io/patterns/data/transactional-outbox.html" target="_blank" rel="noopener">https://microservices.io/patterns/data/transactional-outbox.html</a></li><li>21 CFR 11.10: <a href="https://www.law.cornell.edu/cfr/text/21/11.10" target="_blank" rel="noopener">https://www.law.cornell.edu/cfr/text/21/11.10</a></li></ul></div>
+</div>
+                                <!-- End Post -->
+
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="../ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="../ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../agentstorming.html">Agent Storming Workshop</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../ax-lite-course.html">AI Work Class for Your Company</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                        <li><a href="../industry.html">Why Event Sourcing?</a></li>
+                                        <li><a href="../blog/agentic-erp-event-sourcing-saga.html">AI Agents and Event Sourcing</a></li>
+                                        <li><a href="../erp.html">uEngine ERP</a></li>
+                                        <li><a href="../mes.html">uEngine MES</a></li>
+                                        <li><a href="../wms.html">uEngine WMS (audit-log based)</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
