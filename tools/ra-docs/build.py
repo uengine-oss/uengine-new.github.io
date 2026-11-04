@@ -34,7 +34,7 @@ EN_PARTS = {"시작하기": "Getting started", "프로포절 라이프사이클"
             "설계와 변경": "Design and change", "레거시와 데이터": "Legacy and data",
             "마무리": "Final project", "부록": "Appendix"}
 # 「준비 중」 장의 영문 제목 (CHAPTERS 의 세 번째 값이 한국어라)
-EN_SOON = {"ingest": "Start from a requirements document", "legacy": "Analyze legacy code", "constitution": "Set the project constitution", "plan": "Plan — tactical design and architecture", "implement": "Implement in a sandbox", "verify": "Validate and accept", "design": "Tour the design", "change": "A second proposal — change impact", "skills": "Change the engine with skill files", "fabric": "Connect data sources — the data fabric", "project": "Final project", "cheatsheet": "Cheat sheet", "faq": "FAQ"}
+EN_SOON = {"ingest": "Start from a requirements document", "legacy": "Analyze legacy code", "constitution": "Set the project constitution", "plan": "Plan — tactical design and architecture", "implement": "Implement in a sandbox", "verify": "Validate and accept", "design": "Tour the design", "change": "A second proposal — change impact", "skills": "Change the engine with skill files", "fabric": "Connect data sources — the data fabric", "mvp": "Customer MVP preview", "project": "Final project", "cheatsheet": "Cheat sheet", "faq": "FAQ"}
 
 # (파일, 파트[, "준비 중" 제목]) — 제목은 각 md 의 첫 줄(# …)에서 읽는다. 장 번호 = 이 목록의 순서(index = 0장).
 # 세 번째 값은 「준비 중」일 때 사이드바에 보일 제목 — 그 언어의 md(src/·src-en/)가 생기면 그 장을 만든다.
@@ -46,6 +46,7 @@ CHAPTERS = [
     ("proposal", "프로포절 라이프사이클"),
     ("constitution", "프로포절 라이프사이클", "프로젝트 헌장 정하기"),
     ("plan", "프로포절 라이프사이클", "Plan — 전술 설계와 아키텍처"),
+    ("mvp", "프로포절 라이프사이클", "고객용 MVP 미리 보기"),
     ("implement", "프로포절 라이프사이클", "샌드박스에서 구현하기"),
     ("verify", "프로포절 라이프사이클", "검증하고 수락하기"),
     ("design", "설계와 변경", "설계 둘러보기 — 요구사항 · 프로세스 · 설계 · 데이터"),
@@ -55,10 +56,24 @@ CHAPTERS = [
     ("ingest", "레거시와 데이터", "요구사항 문서로 설계 시작하기"),
     ("legacy", "레거시와 데이터", "레거시 코드 분석"),
     ("project", "마무리", "종합 과제"),
-    ("mvp", "고객과 함께", "고객용 MVP 미리 보기"),
     ("cheatsheet", "부록", "치트시트"),
     ("faq", "부록", "자주 묻는 질문"),
 ]
+
+# 보충 장: 앞 장(값)에 붙어 그 번호를 함께 쓴다(「5장 보충」). 번호를 세지 않으므로 뒤 장 번호와 영상 제목이 그대로다.
+SUPPLEMENTS = {"mvp": "plan"}
+
+
+def chapter_numbers():
+    """slug → 장 번호. 보충 장은 앞 장의 번호."""
+    numbers, n = {}, 0
+    for slug, *_ in CHAPTERS:
+        if slug in SUPPLEMENTS:
+            numbers[slug] = numbers[SUPPLEMENTS[slug]]
+            continue
+        numbers[slug] = n
+        n += 1
+    return numbers
 
 
 def page_name(slug):
@@ -133,17 +148,23 @@ def main():
             body = video(body, videos[slug], title)
         pages.append(dict(slug=slug, part=EN_PARTS.get(part, part) if EN else part, title=title, summary=summary, body=body, toc=toc))
 
-    # 사이드바 — 파트별, 장 번호는 index 를 0 으로.
+    numbers = chapter_numbers()
+
+    # 사이드바 — 파트별, 장 번호는 index 를 0 으로. 보충 장은 「05+」.
     def sidebar(cur):
         out, last = [], None
-        for i, p in enumerate(pages):
+        for p in pages:
             if p["part"] != last:
                 if last is not None:
                     out.append("</ul>")
                 out.append(f'<div class="nav-part">{html.escape(p["part"])}</div><ul>')
                 last = p["part"]
             on = ' class="on" aria-current="page"' if p["slug"] == cur else ""
-            num = f'<span class="n">{i:02d}</span>' if i else '<span class="n">·</span>'
+            no = numbers[p["slug"]]
+            if p["slug"] in SUPPLEMENTS:
+                num = f'<span class="n sup">{no:02d}+</span>'
+            else:
+                num = f'<span class="n">{no:02d}</span>' if no else '<span class="n">·</span>'
             if p.get("soon"):
                 out.append(f'<li><span class="soon">{num}{html.escape(p["title"])}<em>{"Coming soon" if EN else "준비 중"}</em></span></li>')
                 continue
@@ -164,7 +185,7 @@ def main():
     index = []
     ready = [p for p in pages if not p.get("soon")]
     for p in ready:
-        i = pages.index(p)
+        i = numbers[p["slug"]]
         k = ready.index(p)
         prev = ready[k - 1] if k else None
         nxt = ready[k + 1] if k + 1 < len(ready) else None
@@ -177,6 +198,7 @@ def main():
                .replace("{{desc}}", html.escape(p["summary"] or ("Robo Architect Tutorial" if EN else "Robo Architect 튜토리얼")))
                .replace("{{canonical}}", SITE + ("" if p["slug"] == "index" else page_name(p["slug"])))
                .replace("{{part}}", html.escape(p["part"]))
+               .replace('<span class="chap">{{chap}}', '<span class="chap sup">{{chap}}' if p["slug"] in SUPPLEMENTS else '<span class="chap">{{chap}}')
                .replace("{{chap}}", chap)
                .replace("{{sidebar}}", sidebar(p["slug"]))
                .replace("{{toc}}", toc_html(p["toc"]))
