@@ -32,7 +32,7 @@ VIDEOS = HERE / ("videos-en.json" if EN else "videos.json")
 SITE = f"https://www.uengine.org/{'en/' if EN else ''}docs/process-gpt-lite/"
 EN_PARTS = {"시작하기": "Getting started", "나와 AI 비서": "You and your AI assistant", "문서와 도구": "Documents and tools",
             "반복 줄이기": "Less repetition", "팀으로 일하기": "Working as a team", "프로세스로 일하기": "Working in processes",
-            "프로세스 개선": "Improving processes", "확장과 운영": "Extending and operating", "마무리": "Final project", "부록": "Appendix"}
+            "프로세스 개선": "Improving processes", "확장과 운영": "Extending and operating", "산업별 예시": "Industry examples", "마무리": "Final project", "부록": "Appendix"}
 
 # (파일, 파트) — 제목은 각 md 의 첫 줄(# …)에서 읽는다.
 CHAPTERS = [
@@ -64,7 +64,7 @@ CHAPTERS = [
     ("admin", "확장과 운영"),
     ("agentic", "확장과 운영"),
     ("team-context", "확장과 운영"),
-    ("prototype-request", "확장과 운영"),
+    ("prototype-request", "산업별 예시"),
     ("project", "마무리"),
     ("cheatsheet", "부록"),
     ("faq", "부록"),
