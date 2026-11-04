@@ -528,7 +528,7 @@
                                         AI가 발주와 지급까지 맡으면 이미 한 일을 안전하게 되돌릴 준비가 필요합니다. 감사 기록을 원본으로 삼아 실행과 취소를 남기고, 같은 장부로 실행 전 결과도 계산합니다.
                                     </p>
                                     <div class="local-scroll wow fadeInUp" data-wow-offset="0">
-                                        <a href="#problem" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">왜 필요한가요?</span></a><a href="#solutions" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">세 제품 보기</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">문의하기</span></a>
+                                        <a href="#compare" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">왜 필요한가요?</span></a><a href="#solutions" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">세 제품 보기</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">문의하기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -536,7 +536,18 @@
                     </div>
                 </section>
 
-                <section class="page-section" id="problem">
+                <section class="page-section" id="compare">
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.4;"><span class="wow charsAnimIn" data-splitting="chars">상태 기반 시스템과 이벤트 소싱 기반 시스템</span></h3>
+                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">업무 시스템이 무엇을 원본으로 저장하느냐에 따라 AI가 일을 할 때 할 수 있는 일이 달라집니다.</p>
+                        </div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>비교 항목</th><th>상태 기반 시스템 (현재 값을 덮어씁니다)</th><th>이벤트 소싱 기반 시스템 (일어난 일을 쌓습니다)</th></tr></thead><tbody><tr><td>저장하는 것</td><td>재고 800개처럼 지금의 값만 원본으로 저장합니다.</td><td>1,000개에서 200개가 줄어든 일처럼 일어난 일 전부를 원본으로 저장합니다. 현재 값은 그 기록에서 계산합니다.</td></tr><tr><td>되돌리기</td><td>이전 값으로 덮어쓰면 그사이 다른 사람이 한 일을 잃을 수 있습니다.</td><td>취소 기록을 더해 자기 일의 효과만 상쇄합니다.</td></tr><tr><td>감사와 추적</td><td>따로 남긴 로그에 기대므로 기록이 빠지거나 원본과 어긋날 수 있습니다.</td><td>기록이 곧 원본이라 누가 언제 왜 했는지 남습니다.</td></tr><tr><td>과거 분석</td><td>그때의 모습은 백업이나 별도 이력에서 찾아야 합니다.</td><td>기록에서 원하는 시점의 모습을 다시 계산합니다. 지난여름 판매가 적었던 이유가 수요 부족인지 품절인지 구별합니다.</td></tr><tr><td>미래 예측</td><td>판매 기록으로 예측합니다. 품절로 못 판 수요는 낮게 읽히기 쉬워 추정으로 보정합니다.</td><td>재고 기록으로 품절을 확인해 반영합니다. 1년 전 장부로 같은 예측을 돌려 실제와 대조합니다.</td></tr><tr><td>실행 전 시험(what-if)</td><td>조건을 바꿔 계산하려면 필요한 이력부터 따로 모아야 합니다.</td><td>쌓인 기록으로 원안과 변경안을 나란히 계산합니다. 장부에는 아무것도 남지 않습니다.</td></tr><tr><td>에이전트의 실행</td><td>무엇을 했는지 대화나 별도 기록에서 찾아야 합니다.</td><td>한 일에 번호를 붙여 범위를 읽고, 안 되면 멈춥니다.</td></tr><tr><td>비용</td><td>단순하고 익숙합니다. 대부분의 시스템에는 이것으로 충분합니다.</td><td>저장 공간이 늘고 모듈 사이에 짧은 지연이 있습니다. 기존 시스템을 옮기는 비용도 큽니다.</td></tr></tbody></table></div>
+                        <p class="hj-note mt-20 mb-0 text-center">상태 기반 시스템도 이력 테이블이나 데이터 창고를 더해 상당 부분 보완할 수 있습니다. 차이는 그 기록이 원본이냐 덧붙인 것이냐입니다.</p>
+                    </div>
+                </section>
+
+                <section class="page-section bg-gray-light-1" id="problem">
                     <div class="container position-relative">
                         <div class="col-md-10 offset-md-1 text-center">
                             <h3 class="section-title mb-20 mt-n20" style="line-height: 1.4;"><span class="wow charsAnimIn" data-splitting="chars">답하는 AI에서 일하는 AI로, 연결 다음은 되돌리기입니다</span></h3>
@@ -575,7 +586,6 @@
                             <div class="col-md-6 mb-30"><div class="hj-principle"><b>이벤트 소싱: 지우지 않는 장부</b><span>통장에 +10만 원, -3만 원, +5만 원을 적고 잔고를 합으로 구하듯, 일어난 일을 순서대로 남깁니다. 화면의 재고와 되돌릴 근거가 같은 기록에서 나옵니다.</span></div></div>
                             <div class="col-md-6 mb-30"><div class="hj-principle"><b>사가: 지우는 대신 취소하는 행동을 더합니다</b><span>사가는 여러 단계의 업무가 멈추면 끝낸 단계를 거꾸로 취소하는 방식입니다. 비행기 예약을 취소할 때 과거 좌석 수로 덮지 않고 예약 철회를 더하듯, 자기 일의 효과를 상쇄합니다.</span></div></div>
                         </div>
-                        <div class="mt-20"><div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>비교 항목</th><th>덮어쓰기 ERP의 되돌리기</th><th>이벤트 소싱 + 사가</th></tr></thead><tbody><tr><td>처리 방식</td><td>이전 값으로 덮어씁니다</td><td>반대 효과를 내는 취소 기록을 더합니다</td></tr><tr><td>과거 맥락</td><td>당시 조건을 별도 이력에서 찾습니다</td><td>처음 실행과 실패, 취소가 함께 남습니다</td></tr><tr><td>다른 업무와의 간섭</td><td>중간 변경을 잃을 수 있습니다</td><td>후속 업무를 확인하고 자기 일의 효과만 상쇄합니다</td></tr><tr><td>감사와 추적</td><td>별도 기록이 없으면 경위를 알기 어렵습니다</td><td>무엇을 했고 왜 취소했는지 남습니다</td></tr></tbody></table></div></div>
                     </div>
                 </section>
 
