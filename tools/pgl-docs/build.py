@@ -64,6 +64,7 @@ CHAPTERS = [
     ("admin", "확장과 운영"),
     ("agentic", "확장과 운영"),
     ("team-context", "확장과 운영"),
+    ("prototype-request", "확장과 운영"),
     ("project", "마무리"),
     ("cheatsheet", "부록"),
     ("faq", "부록"),

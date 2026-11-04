@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="전자 제품 시작품을 요청하는 고객 메일이 오면 비서는 첨부된 PSpice 회로를 실제로 실행해 이득과 대역폭을 측정합니다. 외함을 STEP·IGES로 모델링하고 같은 치수의 2D 도면을 그린 뒤, 그 값으로 제안서와 견적서를 작성해 둡니다. 사람이 검토한 뒤 보냅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/prototype-request.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="전자 제품 시작품을 요청하는 고객 메일이 오면 비서는 첨부된 PSpice 회로를 실제로 실행해 이득과 대역폭을 측정합니다. 외함을 STEP·IGES로 모델링하고 같은 치수의 2D 도면을 그린 뒤, 그 값으로 제안서와 견적서를 작성해 둡니다. 사람이 검토한 뒤 보냅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/prototype-request.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+<li><a href="agentic.html"><span class="n">26</span>에이전트 가드레일 — 맡길 일, 볼 일, 막을 일</a></li>
+<li><a href="team-context.html"><span class="n">27</span>팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아</a></li>
+<li><a href="prototype-request.html" class="on" aria-current="page"><span class="n">28</span>시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">29</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">30</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">31</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">확장과 운영<span class="chap">28</span></div>
+    <h1>시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서</h1>
+    <article>
+<blockquote>
+<p>전자 제품 시작품을 요청하는 고객 메일이 오면 비서는 첨부된 PSpice 회로를 실제로 실행해 이득과 대역폭을 측정합니다. 외함을 STEP·IGES로 모델링하고 같은 치수의 2D 도면을 그린 뒤, 그 값으로 제안서와 견적서를 작성해 둡니다. 사람이 검토한 뒤 보냅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/GuUOpGCo8Hw" title="시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서 — 영상 3:02" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="이-장의-흐름">이 장의 흐름<a class="anchor" href="#이-장의-흐름" title="Permanent link">#</a></h2>
+<p><a href="email-to-quote.html">메일 한 통에서 평면도·제안서·견적서까지</a>에서 본 흐름을 전자 제품에 적용합니다. 고객이 <strong>회로 파일과 3D 파일</strong>을 보내고, 회신에 <strong>회로 검토 결과와 3D 모델</strong>이 포함된다는 점이 다릅니다.</p>
+<div class="hl"><pre><span></span><code> 고객 메일 ─▶ 시작품 요청으로 알아봄 ─▶ 첨부 받기(.cir .lib .step)
+                                          │
+        ┌─────────────────────────────────┼───────────────────────────┐
+        ▼                                 ▼                           ▼
+ ① 회로 돌리기 (CircuitCraft)     ② 외함 모델링 (SolidCraft)   ③ 2D 도면 (CADCraft)
+    이득·대역폭 재기                 STEP·IGES, 고객 PCB 넣기      같은 치수의 삼면도
+        └─────────────────────────────────┼───────────────────────────┘
+                                          ▼
+                    ④ 제안서(워드)·견적서(엑셀): 위의 값 그대로
+                                          ▼
+                              사람: 열어 보고 · 고치고 · 회신
+</code></pre></div>
+
+<p>핵심은 두 가지입니다.</p>
+<ol>
+<li><strong>값은 도구에서만 나옵니다.</strong> 이득과 대역폭은 시뮬레이션에서, 크기와 무게는 3D 형상에서 측정합니다. 메일에 없는 치수와 표면 처리, 단가는 가정한 값이라고 적습니다.</li>
+<li><strong>실행할 수 없으면 값을 내지 않습니다.</strong> 시뮬레이터에서 변환할 수 없는 회로는 잘못된 값을 내는 대신 어느 부품에 어떤 문제가 있는지 알립니다.</li>
+</ol>
+<h2 id="따라-하기-1-요청-메일이-도착한다">따라 하기 1 — 요청 메일이 도착한다<a class="anchor" href="#따라-하기-1-요청-메일이-도착한다" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>연습 메일을 고릅니다.</strong> 데모 메일함을 쓰고 있다면 「설정 › 시스템 설정」의 「연습 메일 받기」에서 <strong>한빛센서 HS-200 시작품 제작·견적 요청</strong>을 고릅니다.
+</li>
+<li><strong>「연습 메일 받기」를 누릅니다.</strong> 메일에는 PSpice 회로(<code>HS-200_frontend.cir</code>, <code>HS-200.lib</code>)와 PCB 3D 모델(<code>HS-200_pcb.step</code>)이 첨부되어 있고, 외함 치수와 회신에 포함할 문서 다섯 가지가 적혀 있습니다.
+</li>
+<li><strong>채팅으로 돌아옵니다.</strong> 잠시 뒤 「시작품 자료 요청을 찾았어요」와 「첨부 3개를 받았어요」가 올라오고, 이어서 회로 결과와 파일 카드가 차례로 나타납니다.
+</li>
+</ol>
+<figure><a href="img/prototype-picked.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="연습 메일 받기에서 시작품 요청을 고른 화면" src="img/prototype-picked.webp" / loading="lazy" decoding="async"></a><figcaption>연습 메일 받기에서 시작품 요청을 고른 화면</figcaption></figure>
+<h2 id="따라-하기-2-회로를-열어-본다">따라 하기 2 — 회로를 열어 본다<a class="anchor" href="#따라-하기-2-회로를-열어-본다" title="Permanent link">#</a></h2>
+<p>채팅에는 측정한 값이 다음과 같이 나타납니다.</p>
+<div class="hl"><pre><span></span><code>PSpice 회로를 돌렸어요. RF=100k: 이득 19.9 dB(9.9배), 대역폭 95.2 kHz / RF=220k: 이득 26.8 dB(21.8배), 대역폭 55.4 kHz
+확인해 주세요: 소스 안의 LIMIT 은 tanh 로 부드럽게 옮겼어요. 한계에 아주 가까운 값은 조금 낮게 나와요
+</code></pre></div>
+
+<p>회로의 <code>.STEP</code> 값마다 따로 측정하고, 근사 처리한 부분이 있으면 함께 알립니다.</p>
+<ol class="steps">
+<li><strong><code>.cir</code> 카드를 누릅니다.</strong> CircuitCraft가 라이브러리와 함께 파일을 열고, 넷리스트에서 회로도를 자동으로 그립니다.
+</li>
+<li><strong>Run을 누릅니다.</strong> 시뮬레이터는 브라우저 안에서 WebAssembly로 실행됩니다.
+</li>
+<li><strong>TRAN, AC를 바꿔 봅니다.</strong> AC에서 <code>All</code>을 누르면 저항 값별 주파수 응답이 겹쳐 보입니다. <code>Vectors</code>에서 보고 싶은 노드만 고릅니다.
+</li>
+</ol>
+<figure><a href="img/prototype-cir-all.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="CircuitCraft에서 회로도와 저항 값별 주파수 응답을 함께 본 화면" src="img/prototype-cir-all.webp" / loading="lazy" decoding="async"></a><figcaption>CircuitCraft에서 회로도와 저항 값별 주파수 응답을 함께 본 화면</figcaption></figure>
+<h2 id="따라-하기-3-3d-모델을-본다">따라 하기 3 — 3D 모델을 본다<a class="anchor" href="#따라-하기-3-3d-모델을-본다" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong><code>.step</code> 카드를 누릅니다.</strong> SolidCraft에 메일의 치수(90 × 60 × 30 mm, 벽 2 mm)로 만든 외함이 열립니다.
+</li>
+<li><strong>돌려 봅니다.</strong> Shift를 누른 채 마우스 가운데 버튼으로 끌면 모델이 회전합니다. 휠로 확대합니다.
+</li>
+<li><strong>뚜껑을 숨깁니다.</strong> 왼쪽 목록에서 둘째 파트의 눈 아이콘을 누르면 고객이 보낸 PCB가 보스 위에 놓인 모습이 보입니다.
+</li>
+<li><strong><code>.igs</code> 카드도 엽니다.</strong> 같은 모델의 IGES 파일입니다. IGES에는 솔리드가 없어서 면으로 바뀝니다.
+</li>
+</ol>
+<figure><a href="img/prototype-step-inside.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="SolidCraft에서 뚜껑을 숨겨 안의 PCB를 본 화면" src="img/prototype-step-inside.webp" / loading="lazy" decoding="async"></a><figcaption>SolidCraft에서 뚜껑을 숨겨 안의 PCB를 본 화면</figcaption></figure>
+<h2 id="따라-하기-4-2d-도면을-본다">따라 하기 4 — 2D 도면을 본다<a class="anchor" href="#따라-하기-4-2d-도면을-본다" title="Permanent link">#</a></h2>
+<p><code>.dxf</code> 카드를 누르면 CADCraft가 열립니다. 3D와 같은 치수로 그린 윗면, 앞면, 오른쪽 면에 치수가 표시되어 있습니다. 표제란에는 재질과 크기, 보스, 구멍이 적혀 있습니다.</p>
+<figure><a href="img/prototype-dxf-live.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="CADCraft에서 외함 삼면도를 연 화면" src="img/prototype-dxf-live.webp" / loading="lazy" decoding="async"></a><figcaption>CADCraft에서 외함 삼면도를 연 화면</figcaption></figure>
+<h2 id="따라-하기-5-제안서와-견적서를-본다">따라 하기 5 — 제안서와 견적서를 본다<a class="anchor" href="#따라-하기-5-제안서와-견적서를-본다" title="Permanent link">#</a></h2>
+<p>몇 분 뒤 워드 문서와 엑셀 카드가 올라옵니다.</p>
+<ol class="steps">
+<li><strong>제안서를 엽니다.</strong> 회로 검토 표에는 위에서 측정한 이득과 대역폭이 그대로 담겨 있고, 그래프와 3D 그림, 도면이 설명과 함께 들어 있습니다. 메일에 없던 표면 처리 같은 조건에는 「가정」이라고 적혀 있습니다.
+</li>
+<li><strong>견적서를 엽니다.</strong> 품목은 회로의 부품표에서 가져옵니다. 메일에서 지정한 부품 번호(<code>C1608C0G1H100D080AA</code>)가 해당 줄에 있고, 금액은 모두 수식으로 계산됩니다.
+</li>
+<li><strong>단가를 고칩니다.</strong> 단가는 가정값입니다. 공급사 견적을 받아 단가를 고치면 합계가 다시 계산됩니다.
+</li>
+</ol>
+<figure><a href="img/prototype-doc-table.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="제안서의 회로 검토 표" src="img/prototype-doc-table.webp" / loading="lazy" decoding="async"></a><figcaption>제안서의 회로 검토 표</figcaption></figure>
+<figure><a href="img/prototype-xls-live.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="견적서: 회로 부품표에서 나온 품목과 메일이 지정한 부품 번호" src="img/prototype-xls-live.webp" / loading="lazy" decoding="async"></a><figcaption>견적서: 회로 부품표에서 나온 품목과 메일이 지정한 부품 번호</figcaption></figure>
+<h2 id="따라-하기-6-orcad-회로도를-연다">따라 하기 6 — OrCAD 회로도를 연다<a class="anchor" href="#따라-하기-6-orcad-회로도를-연다" title="Permanent link">#</a></h2>
+<p>고객이 OrCAD Capture의 <code>.dsn</code> 파일을 보내기도 합니다. <code>.dsn</code> 카드를 누르면 서버가 PSpice 넷리스트로 바꾸고, CircuitCraft가 회로도를 그립니다.</p>
+<figure><a href="img/prototype-dsn.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="OrCAD .dsn 을 CircuitCraft에서 연 화면" src="img/prototype-dsn.webp" / loading="lazy" decoding="async"></a><figcaption>OrCAD .dsn 을 CircuitCraft에서 연 화면</figcaption></figure>
+<p><code>.dsn</code>에는 해석 명령이 없어서 동작점만 구합니다. 모델이 없는 부품이 있으면 시뮬레이션을 실행하지 않고 해당 부품의 이름을 알립니다. 라이브러리 파일을 함께 열면 실행됩니다.</p>
+<h2 id="어떤-파일을-읽고-쓰나">어떤 파일을 읽고 쓰나<a class="anchor" href="#어떤-파일을-읽고-쓰나" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>읽기</th>
+<th>쓰기</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PSpice 넷리스트·라이브러리 (<code>.cir</code> <code>.net</code> <code>.ckt</code> <code>.sp</code> <code>.lib</code> <code>.mod</code> <code>.inc</code>)</td>
+<td>됩니다</td>
+<td>됩니다. 받은 내용은 그대로 두고 수정한 줄만 바꿉니다</td>
+</tr>
+<tr>
+<td>OrCAD Capture (<code>.dsn</code>)</td>
+<td>부품, 값, 연결을 읽습니다</td>
+<td>안 됩니다. PSpice 넷리스트로 저장합니다</td>
+</tr>
+<tr>
+<td>STEP (<code>.step</code> <code>.stp</code>)</td>
+<td>됩니다</td>
+<td>됩니다. 솔리드가 유지됩니다</td>
+</tr>
+<tr>
+<td>IGES (<code>.igs</code> <code>.iges</code>)</td>
+<td>됩니다</td>
+<td>됩니다. 면으로 바뀝니다</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">벤더 부품 파일</p>
+<p>부품 회사가 배포하는 STEP과 SPICE 모델도 같은 방법으로 엽니다. 다만 재배포가 금지된 파일이 있으니 회사 안에서 사용할 수 있는 범위를 확인하세요. Cadence로 암호화된 모델은 PSpice 밖에서 실행할 수 없습니다.</p>
+</div>
+<h2 id="실행하지-않는-회로">실행하지 않는 회로<a class="anchor" href="#실행하지-않는-회로" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>비서와 CircuitCraft가 하는 말</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LAPLACE</code>, <code>FREQ</code>, 디지털 소자, IGBT</td>
+<td>어느 소자의 어떤 기능을 이 시뮬레이터가 지원하지 않는지 알립니다</td>
+</tr>
+<tr>
+<td>부품 정의가 어디에도 없음</td>
+<td>부품 이름을 알리고 라이브러리를 함께 달라고 합니다</td>
+</tr>
+<tr>
+<td>Cadence 암호화 모델</td>
+<td>그 부품은 PSpice 밖에서 실행할 수 없다고 알립니다</td>
+</tr>
+<tr>
+<td><code>.INC</code>한 넷리스트가 빠짐, 부품 정의만 있는 파일</td>
+<td>실행할 회로가 없다고 알립니다</td>
+</tr>
+<tr>
+<td><code>.MC</code>, <code>.WCASE</code></td>
+<td>해당 해석은 실행하지 않았다고 알립니다(나머지는 실행합니다)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="얼마나-믿을-수-있나">얼마나 믿을 수 있나<a class="anchor" href="#얼마나-믿을-수-있나" title="Permanent link">#</a></h2>
+<p>공개된 실제 파일로 측정했습니다(2026-11-04).</p>
+<table>
+<thead>
+<tr>
+<th>무엇을</th>
+<th>대상</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>실제 OrCAD 프로젝트 시뮬레이션</td>
+<td>180개</td>
+<td>167개 성공</td>
+</tr>
+<tr>
+<td>PSpice가 남긴 결과와 비교</td>
+<td>값이 있는 내부 노드 189개</td>
+<td>모두 2% 이내</td>
+</tr>
+<tr>
+<td>OrCAD <code>.dsn</code> 읽기, Capture 넷리스트와 대조</td>
+<td>설계 141개</td>
+<td>139개가 부품, 값, 연결까지 일치</td>
+</tr>
+<tr>
+<td>벤더가 배포한 STEP·IGES</td>
+<td>13개</td>
+<td>모두 읽고 쓰고 다시 읽음</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">알아 둘 한계</p>
+<p>결과 파일을 실제 OrCAD에서 열어 보지는 못했습니다. 부품이 수백 개인 보드는 넷리스트와 부품표가 정확하지만, 자동 배치된 회로도가 작아 화면에서 읽기 어렵습니다. 소스 안의 <code>LIMIT</code>은 수렴을 위해 부드러운 함수로 변환하므로 한계에 아주 가까운 값은 조금 낮게 나옵니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>
+<p>첨부에 회로 파일이 없는 시작품 메일이 오면 어떻게 되나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+회로 검토만 건너뛰고 그 사실을 알립니다. 외함, 도면, 제안서, 견적서는 만듭니다.
+</details></p>
+</li>
+<li>
+<p>메일에 외함 벽 두께가 없으면 어떻게 하나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+기본값으로 만들고, 제안서에 가정한 값이라고 적습니다.
+</details></p>
+</li>
+<li>
+<p><code>.dsn</code>을 고쳐서 다시 <code>.dsn</code>으로 보낼 수 있나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+아니요. 읽기만 합니다. 고친 내용은 PSpice 넷리스트(<code>.cir</code>)로 저장합니다.
+</details></p>
+</li>
+<li>
+<p>변환할 수 없는 문법이 포함된 회로를 열면 왜 값을 보여 주지 않나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+실행을 멈추는 것보다 잘못된 값을 내는 것이 더 나쁘기 때문입니다. 변환하지 않은 op-amp 회로는 오류 없이 99 kV를 낸 적이 있습니다.
+</details></p>
+</li>
+</ol>
+<p>이것으로 7부를 마칩니다. 다음 장에서는 지금까지 배운 것을 새 고객 요청 한 건에 처음부터 끝까지 써 보는 종합 과제를 합니다(<a href="project.html">29장</a>).</p>
+    </article>
+    <nav class="pager"><a class="prev" href="team-context.html"><span>이전</span>팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아</a><a class="next" href="project.html"><span>다음</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#이-장의-흐름">이 장의 흐름</a></li><li><a href="#따라-하기-1-요청-메일이-도착한다">따라 하기 1 — 요청 메일이 도착한다</a></li><li><a href="#따라-하기-2-회로를-열어-본다">따라 하기 2 — 회로를 열어 본다</a></li><li><a href="#따라-하기-3-3d-모델을-본다">따라 하기 3 — 3D 모델을 본다</a></li><li><a href="#따라-하기-4-2d-도면을-본다">따라 하기 4 — 2D 도면을 본다</a></li><li><a href="#따라-하기-5-제안서와-견적서를-본다">따라 하기 5 — 제안서와 견적서를 본다</a></li><li><a href="#따라-하기-6-orcad-회로도를-연다">따라 하기 6 — OrCAD 회로도를 연다</a></li><li><a href="#어떤-파일을-읽고-쓰나">어떤 파일을 읽고 쓰나</a></li><li><a href="#실행하지-않는-회로">실행하지 않는 회로</a></li><li><a href="#얼마나-믿을-수-있나">얼마나 믿을 수 있나</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
