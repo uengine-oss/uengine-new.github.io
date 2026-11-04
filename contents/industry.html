@@ -169,6 +169,9 @@
                                                 <a href="industry.html" style="font-size: 18px;">왜 이벤트 소싱인가요?</a>
                                             </li>
                                             <li>
+                                                <a href="blog/agentic-erp-event-sourcing-saga.html" style="font-size: 18px;">AI 에이전트와 이벤트 소싱</a>
+                                            </li>
+                                            <li>
                                                 <a href="erp.html" style="font-size: 18px;">uEngine ERP</a>
                                             </li>
                                             <li>
@@ -450,6 +453,14 @@
                 .plite-card-body { padding: 26px 26px 32px; }
                 .plite-card-title { font-size: 1.45rem; font-weight: 700; margin: 0 0 14px; text-align: left; line-height: 1.4; }
                 .plite-card-desc { font-size: 1.02rem; color: #666; line-height: 1.65; margin: 0; text-align: left; }
+                .as-article { display: block; background: #fff; border: 1px solid #e5e5e5; border-radius: 16px; overflow: hidden; color: inherit; text-decoration: none; max-width: 860px; margin: 0 auto; }
+                .as-article:hover { border-color: #7752e7; text-decoration: none; }
+                .as-article img { display: block; width: 100%; height: auto; }
+                .as-article-body { display: block; padding: 18px 20px 20px; word-break: keep-all; }
+                .as-article-body small { display: block; font-size: 12px; font-weight: 600; letter-spacing: .06em; color: #7752e7; margin-bottom: 6px; }
+                .as-article-body b { display: block; font-size: 1.12rem; font-weight: 600; line-height: 1.45; color: #111; margin-bottom: 8px; }
+                .as-article-body span { display: block; font-size: .95rem; line-height: 1.65; color: #555; }
+                .as-article-body em { display: block; font-style: normal; font-size: .92rem; font-weight: 600; color: #6a4fd0; margin-top: 10px; }
                 .plite-theme { margin-bottom: 90px; }
                 .plite-theme:last-child { margin-bottom: 0; }
                 .plite-theme-img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #e5e5ea; box-shadow: 0 10px 30px rgba(26,26,46,.12); }
@@ -517,7 +528,7 @@
                                     <div class="local-scroll wow fadeInUp" data-wow-offset="0">
                                         <a href="#problem" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">왜 필요한가요?</span></a><a href="#solutions" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">예제 구현 보기</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">문의하기</span></a>
                                     </div>
-                                    <p class="hj-note mt-30 mb-0">ERP는 공식 MCP SDK로 호출해 확인했으며, Process GPT에 실제로 연결해 실행한 것은 아직입니다. what-if는 지금 화면에서 사람이 쓰며, 에이전트가 호출하는 MCP 도구로는 아직 제공하지 않습니다.</p>
+                                    <p class="hj-note mt-30 mb-0">ERP를 Process GPT Lite에 실제로 연결해 가상 회사·로컬 환경에서 시험했습니다. what-if는 사람이 화면에서 쓰고 에이전트에게도 제공합니다. ERP의 MCP가 원장의 사실을 제공하고 Lite가 화면과 같은 모델로 채팅 질문에 답하며, 숫자는 LLM이 생성하지 않습니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -534,8 +545,22 @@
                             <div class="col-md-6 mb-sm-30"><div class="hj-principle"><b>현재 값만으로는 알 수 없는 것들</b><span>이전 값과 바뀐 이유가 기본적으로 남지 않아, 현재 상태에 이른 과정을 알기 어렵습니다.<br><br>따로 남긴 감사 기록은 업무 데이터와 어긋날 수 있고, 그 기록으로 상태를 다시 만들 수 없는 경우가 많습니다.<br><br>과거 모습을 확인하려면 백업이나 스냅샷에 기대게 됩니다.</span></div></div>
                             <div class="col-md-6"><div class="hj-principle"><b>에이전트는 잘못된 판단도 빠르게 실행합니다</b><span>사람은 천천히 일하며 화면에서 이상을 알아채고, 무엇을 왜 고쳤는지 기억하므로 나중에 물어볼 수 있습니다. 에이전트는 짧은 시간에 많은 값을 쓰고 잘못된 판단도 같은 속도로 실행하지만, 나중에 왜 그랬는지 물어볼 사람이 없어 기록에 의존해야 합니다.</span></div></div>
                         </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>상황</th><th>상태만 저장하는 시스템</th><th>이벤트 소싱</th></tr></thead><tbody><tr><td>실수를 되돌릴 때</td><td>이전 값이 없어 백업으로 복구하면 다른 사람이 한 일까지 돌아갑니다. 에이전트의 작업만 골라 복구하기 어렵습니다.</td><td>해당 작업을 보상 이벤트로 되돌립니다. 원래 기록은 지우지 않습니다.</td></tr><tr><td>영향 범위를 찾을 때</td><td>다른 모듈까지 이어진 변경의 연결 정보가 없어 사람이 찾아야 합니다.</td><td>같은 작업에서 이어진 이벤트를 묶어, 다른 모듈의 문서까지 영향 범위를 먼저 보여 줍니다.</td></tr><tr><td>누가 왜 했는지 물을 때</td><td>마지막 수정자 정도만 남고 이유는 남지 않습니다. 공용 서비스 계정으로 쓰면 사람과 구분하기 어렵습니다.</td><td>이벤트마다 행위자와 출처(mcp), 사유를 남깁니다.</td></tr><tr><td>판단 근거를 다시 볼 때</td><td>판단할 때 본 값이 덮어써져 당시 판단을 재현하기 어렵습니다.</td><td>그 시점의 모습을 기록에서 다시 계산해 보여 줍니다.</td></tr><tr><td>사람과 동시에 고칠 때</td><td>별도 버전 확인이 없으면 옛 값을 읽은 에이전트가 사람의 수정을 덮어써도 흔적이 남지 않습니다.</td><td>문서 버전을 확인해 앞선 버전으로 쓰면 거부합니다. 에이전트는 다시 읽고 판단합니다.</td></tr><tr><td>응답이 끊겨 다시 시도할 때</td><td>같은 주문이 두 번 생길 수 있고, 어느 쪽이 정상인지 가리기 어렵습니다.</td><td>uEngine ERP는 같은 요청 키로 재시도해도 중복 기록을 만들지 않습니다. 모든 쓰기는 원장에서 확인합니다.</td></tr><tr><td>바꾸기 전에 시험할 때</td><td>품절 시점과 변화 이력을 알기 어려워 행동의 결과를 미리 시험할 재료가 부족합니다.</td><td>쌓인 이력으로 what-if와 예측을 합니다. uEngine ERP의 what-if는 현재 사람용 화면에서만 쓰며 MCP 도구는 아직 없습니다.</td></tr></tbody></table></div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>상황</th><th>상태만 저장하는 시스템</th><th>이벤트 소싱</th></tr></thead><tbody><tr><td>실수를 되돌릴 때</td><td>이전 값이 없어 백업으로 복구하면 다른 사람이 한 일까지 돌아갑니다. 에이전트의 작업만 골라 복구하기 어렵습니다.</td><td>해당 작업을 보상 이벤트로 되돌립니다. 원래 기록은 지우지 않습니다.</td></tr><tr><td>영향 범위를 찾을 때</td><td>다른 모듈까지 이어진 변경의 연결 정보가 없어 사람이 찾아야 합니다.</td><td>같은 작업에서 이어진 이벤트를 묶어, 다른 모듈의 문서까지 영향 범위를 먼저 보여 줍니다.</td></tr><tr><td>누가 왜 했는지 물을 때</td><td>마지막 수정자 정도만 남고 이유는 남지 않습니다. 공용 서비스 계정으로 쓰면 사람과 구분하기 어렵습니다.</td><td>이벤트마다 행위자와 출처(mcp), 사유를 남깁니다.</td></tr><tr><td>판단 근거를 다시 볼 때</td><td>판단할 때 본 값이 덮어써져 당시 판단을 재현하기 어렵습니다.</td><td>그 시점의 모습을 기록에서 다시 계산해 보여 줍니다.</td></tr><tr><td>사람과 동시에 고칠 때</td><td>별도 버전 확인이 없으면 옛 값을 읽은 에이전트가 사람의 수정을 덮어써도 흔적이 남지 않습니다.</td><td>문서 버전을 확인해 앞선 버전으로 쓰면 거부합니다. 에이전트는 다시 읽고 판단합니다.</td></tr><tr><td>응답이 끊겨 다시 시도할 때</td><td>같은 주문이 두 번 생길 수 있고, 어느 쪽이 정상인지 가리기 어렵습니다.</td><td>uEngine ERP는 같은 요청 키로 재시도해도 중복 기록을 만들지 않습니다. 모든 쓰기는 원장에서 확인합니다.</td></tr><tr><td>바꾸기 전에 시험할 때</td><td>품절 시점과 변화 이력을 알기 어려워 행동의 결과를 미리 시험할 재료가 부족합니다.</td><td>쌓인 이력으로 what-if와 예측을 합니다. uEngine ERP의 what-if는 화면과 에이전트에 제공하며, Process GPT Lite가 화면과 같은 모델로 질문에 답합니다.</td></tr></tbody></table></div>
                         <p class="hj-note mt-30 mb-0 text-center">기존 시스템도 감사 테이블, 트리거, 백업, 버전 칸을 더해 이 문제들의 일부를 보완할 수 있습니다. 다만 나중에 덧붙인 기록은 빠지거나 어긋날 수 있는 반면 이벤트 소싱은 기록 자체가 원본이며, 그 대신 드는 비용은 아래 구역에서 설명합니다.</p>
+                    </div>
+                </section>
+
+                <section class="page-section pt-0" id="article">
+                    <div class="container position-relative">
+                        <a class="as-article" href="blog/agentic-erp-event-sourcing-saga.html">
+                            <img src="../images/blog/agentic-erp-event-sourcing-saga.jpg" alt="롱러닝 에이전틱 AI 시대를 위한 ERP 아키텍처 대전환: 왜 이벤트 소싱과 사가 롤백인가?" loading="lazy" width="1200" height="675">
+                            <span class="as-article-body">
+                                <small>uEngine Blog</small>
+                                <b>롱러닝 에이전틱 AI 시대를 위한 ERP 아키텍처 대전환: 왜 이벤트 소싱과 사가 롤백인가?</b>
+                                <span>에이전트가 ERP에서 일하려면 실행과 취소뿐 아니라 실행 전에 물어볼 곳이 필요합니다. 이벤트 소싱과 사가 보상으로 일을 되돌리고, 같은 원장으로 분기 전망과 what-if를 계산하는 구조를 uEngine ERP와 Process GPT Lite의 시험으로 살펴봅니다.</span>
+                                <em>글 전체 읽기 ↗</em>
+                            </span>
+                        </a>
                     </div>
                 </section>
 
@@ -548,7 +573,7 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>실수를 지우지 않고 되돌립니다</b><span>되돌리기는 이미 한 일을 상쇄하는 보상(compensation)입니다. 분산 시스템의 사가 패턴이 맡는 일처럼, 주문에서 다른 모듈의 출고 전표까지 이어진 작업을 함께 바로잡고 실수와 정정을 모두 기록합니다.</span></div></div>
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>그때의 기록에서 근거를 찾습니다</b><span>ERP는 어떤 과거 시점이든 그때 모습 그대로 보여 줍니다. 원장에는 누가 왜 실행하고 되돌렸는지도 남아, 현재 상태에 이른 과정을 확인할 수 있습니다.</span></div></div>
-                            <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>바꾸기 전에 결과를 시험합니다</b><span>ERP의 what-if 모델 14개는 쌓인 이력으로 발주, 단종, 재배치, 납기, 결제 조건을 바꾸기 전에 매출과 품절 변화를 시험합니다. 시험해도 원장은 바뀌지 않으며, 결과는 80% 구간으로 보여 주고 구간이 0을 포함하면 효과를 구분할 수 없다고 먼저 말합니다. 근거가 모자라면 숫자를 내지 않습니다. 지금은 화면에서 사람이 쓰며 MCP 도구로는 아직 제공하지 않으므로, 에이전트가 예측으로 자율 판단하는 것은 현재 기능이 아닌 지향점입니다.</span></div></div>
+                            <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>바꾸기 전에 결과를 시험합니다</b><span>ERP의 분석 모델 33개에는 what-if 9개와 예측 16개가 포함됩니다. what-if는 쌓인 이력으로 발주, 단종, 재배치, 납기, 결제 조건을 바꾸기 전에 매출과 품절 변화를 시험합니다. 시험해도 원장은 바뀌지 않으며, 결과는 80% 구간으로 보여 주고 구간이 0을 포함하면 효과를 구분할 수 없다고 먼저 말합니다. 근거가 모자라면 숫자를 내지 않습니다. 사람이 화면에서 쓰고 에이전트에게도 제공하며, 사람이 묻고 에이전트가 답하는 데까지 구현했습니다. 에이전트가 스스로 시뮬레이션해 결정하는 것은 지향점으로 삼습니다.</span></div></div>
                         </div>
                     </div>
                 </section>
@@ -591,7 +616,7 @@
                                     <div class="plite-card-img"><img src="../docs/erp/img/whatif-policy.webp" alt="uEngine ERP 실제 화면" loading="lazy" decoding="async"></div>
                                     <div class="plite-card-body">
                                         <h4 class="plite-card-title">uEngine ERP</h4>
-                                        <p class="plite-card-desc">이벤트 소싱으로 처음부터 새로 만든 ERP는 되돌릴 범위를 미리 보고 실행하며 MCP로도 되돌릴 수 있습니다. 과거 시점 조회와 what-if 모델 14개를 포함한 예측을 제공하지만, what-if는 아직 사람만 화면에서 쓰고 수치 평가는 가상 회사로 했습니다. 공식 MCP SDK로 호출해 확인했으며 Process GPT 실연결은 아직이고, 앱 주소와 소스 저장소는 곧 공개합니다.</p>
+                                        <p class="plite-card-desc">이벤트 소싱으로 처음부터 새로 만든 ERP는 되돌릴 범위를 미리 보고 실행하며 MCP로도 되돌릴 수 있습니다. 과거 시점 조회와 분석 모델 33개(what-if 9개, 예측 16개 포함)를 제공하며, 수치 평가는 가상 회사로 했습니다. Process GPT Lite에 실제로 연결해 가상 회사·로컬 환경에서 세금계산서 처리, 말로 취소(사가 보상), 내년 분기 전망, what-if 질문을 실제 LLM과 실제 MCP로 실행해 확인했습니다. 이 연동과 앱, 소스 저장소는 곧 공개합니다.</p>
                                         <div class="plite-vlinks plite-card-vlinks"><a class="plite-vlink" href="erp.html">제품 소개</a><a class="plite-vlink" href="../docs/erp/index.html">튜토리얼</a></div>
                                     </div>
                                 </div>
@@ -618,7 +643,7 @@
                             </div>
                         </div>
                         <h3 class="plite-gal-head mt-50">지금 상태</h3>
-                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>항목</th><th>uEngine ERP</th><th>uEngine MES</th><th>uEngine WMS</th></tr></thead><tbody><tr><td>기록 방식</td><td>이벤트 소싱</td><td>이벤트 소싱</td><td>값 저장 + 모든 쓰기 감사 로그. 이벤트 소싱 아님</td></tr><tr><td>되돌리기</td><td>범위 미리보기 후 실행, MCP로도 가능</td><td>시점 조회·재구축, exec 함수에 보상 짝. 사람용 되돌리기 화면 없음</td><td>되돌리기 기능 없음</td></tr><tr><td>미리 시험</td><td>what-if 모델 14개 포함 예측. 화면에서만 사용</td><td>대안 시뮬레이션. 원천 변경 없음</td><td>설비 시뮬레이션과 가정 시나리오</td></tr><tr><td>에이전트 연결</td><td>MCP 도구 4개, 별도 서버 없음</td><td>read·plan·exec 함수 카탈로그</td><td>MCP 도구 83개, MCP 서버 필요</td></tr><tr><td>Process GPT 실연결</td><td>아직</td><td>시연 완료</td><td>시연 완료</td></tr><tr><td>실행 환경</td><td>내 Supabase 프로젝트만 필요</td><td>Java, Kafka, PostgreSQL</td><td>Supabase와 MCP 서버 직접 설치</td></tr><tr><td>이용 방법</td><td>무료(MIT). 내 Supabase를 연결해 사용. 앱·소스 저장소 곧 공개</td><td>소스 비공개. 시연 환경 문의</td><td>무료. 소스 공개, 직접 설치</td></tr></tbody></table></div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>항목</th><th>uEngine ERP</th><th>uEngine MES</th><th>uEngine WMS</th></tr></thead><tbody><tr><td>기록 방식</td><td>이벤트 소싱</td><td>이벤트 소싱</td><td>값 저장 + 모든 쓰기 감사 로그. 이벤트 소싱 아님</td></tr><tr><td>되돌리기</td><td>범위 미리보기 후 실행, MCP로도 가능</td><td>시점 조회·재구축, exec 함수에 보상 짝. 사람용 되돌리기 화면 없음</td><td>되돌리기 기능 없음</td></tr><tr><td>미리 시험</td><td>분석 모델 33개(what-if 9개 포함)를 화면과 에이전트에 제공합니다.</td><td>대안 시뮬레이션. 원천 변경 없음</td><td>설비 시뮬레이션과 가정 시나리오</td></tr><tr><td>에이전트 연결</td><td>MCP 도구 4개, 별도 서버 없음</td><td>read·plan·exec 함수 카탈로그</td><td>MCP 도구 83개, MCP 서버 필요</td></tr><tr><td>Process GPT 실연결</td><td>아직</td><td>시연 완료</td><td>시연 완료</td></tr><tr><td>실행 환경</td><td>내 Supabase 프로젝트만 필요</td><td>Java, Kafka, PostgreSQL</td><td>Supabase와 MCP 서버 직접 설치</td></tr><tr><td>이용 방법</td><td>무료(MIT). 내 Supabase를 연결해 사용. 앱·소스 저장소 곧 공개</td><td>소스 비공개. 시연 환경 문의</td><td>무료. 소스 공개, 직접 설치</td></tr></tbody></table></div>
                     </div>
                 </section>
 
@@ -900,6 +925,7 @@
                                         <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
                                         <li><a href="casestudiesbpm.html">Case Studies</a></li>
                                         <li><a href="industry.html">왜 이벤트 소싱인가요?</a></li>
+                                        <li><a href="blog/agentic-erp-event-sourcing-saga.html">AI 에이전트와 이벤트 소싱</a></li>
                                         <li><a href="erp.html">uEngine ERP</a></li>
                                         <li><a href="mes.html">uEngine MES</a></li>
                                         <li><a href="wms.html">uEngine WMS (감사 로그 기반)</a></li>

@@ -170,6 +170,9 @@
                                                 <a href="industry.html" style="font-size: 18px;">Why Event Sourcing?</a>
                                             </li>
                                             <li>
+                                                <a href="blog/agentic-erp-event-sourcing-saga.html" style="font-size: 18px;">AI Agents and Event Sourcing</a>
+                                            </li>
+                                            <li>
                                                 <a href="erp.html" style="font-size: 18px;">uEngine ERP</a>
                                             </li>
                                             <li>
@@ -606,7 +609,7 @@
                             <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">What It Is and Where It Stands</span></h3>
                             <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">What is done and what is not, stated plainly.</p>
                         </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>Category</th><th>Description</th></tr></thead><tbody><tr><td>App release</td><td>The app address and source repository will be public soon. Until then, the tutorial and videos show how it works.</td></tr><tr><td>Modules</td><td>Sales, inventory, purchasing, invoicing and accounting. All 32 combinations are tested.</td></tr><tr><td>Basic feature coverage</td><td>Checked against 256 basic features of a major ERP: 226 provided, 22 partly, 3 missing, and 5 need a mail server. Of the advanced features, only those needed for order processing are included.</td></tr><tr><td>Not included</td><td>Email sending, e-tax invoices, automatic bank feeds, currency conversion (foreign-currency input is refused), XML import, PDF attachments on invoices.</td></tr><tr><td>Tests</td><td>714 SQL tests and 166 browser tests, all run on a local Supabase stack. It has not yet been measured on Supabase's cloud.</td></tr><tr><td>Capacity</td><td>The free plan's 500 MB holds about 130,000 events, or about 10,000 orders, with all five modules on. At 10 orders a day that is about three years.</td></tr><tr><td>Forecast accuracy</td><td>Measured on made-up companies whose true demand is known. Where stockouts are frequent, reorder and discontinuation what-ifs were much closer than using sales history alone. Where stock is plentiful the difference is small, and moving stock between warehouses mostly comes back as cannot be distinguished. Real companies may see worse results.</td></tr><tr><td>Delay between modules</td><td>Modules connect through events, so there is a short delay between confirming an order and its delivery appearing. Modules cannot be scaled separately.</td></tr><tr><td>MCP</td><td>The four tools were called with the official MCP SDK. It has not been run connected to Process GPT.</td></tr><tr><td>MCP rollback</td><td>Agents can undo only their own MCP operations with no dependent work, and their integration keys cannot exceed the permissions of the members they are linked to. An administrator handles all other cases. If there is dependent work, the administrator must review and approve the operations that will be rolled back together before execution.</td></tr></tbody></table></div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>Category</th><th>Description</th></tr></thead><tbody><tr><td>App release</td><td>The app address and source repository will be public soon. Until then, the tutorial and videos show how it works.</td></tr><tr><td>Modules</td><td>Sales, inventory, purchasing, invoicing and accounting. All 32 combinations are tested.</td></tr><tr><td>Basic feature coverage</td><td>Checked against 256 basic features of a major ERP: 226 provided, 22 partly, 3 missing, and 5 need a mail server. Of the advanced features, only those needed for order processing are included.</td></tr><tr><td>Not included</td><td>Email sending, e-tax invoices, automatic bank feeds, currency conversion (foreign-currency input is refused), XML import, PDF attachments on invoices.</td></tr><tr><td>Tests</td><td>714 SQL tests and 166 browser tests, all run on a local Supabase stack. It has not yet been measured on Supabase's cloud.</td></tr><tr><td>Capacity</td><td>The free plan's 500 MB holds about 130,000 events, or about 10,000 orders, with all five modules on. At 10 orders a day that is about three years.</td></tr><tr><td>Forecast accuracy</td><td>Measured on made-up companies whose true demand is known. Where stockouts are frequent, reorder and discontinuation what-ifs were much closer than using sales history alone. Where stock is plentiful the difference is small, and moving stock between warehouses mostly comes back as cannot be distinguished. Real companies may see worse results.</td></tr><tr><td>Delay between modules</td><td>Modules connect through events, so there is a short delay between confirming an order and its delivery appearing. Modules cannot be scaled separately.</td></tr><tr><td>MCP</td><td>Connected to Process GPT Lite and run with a real LLM and real MCP on a synthetic company in a local environment: tax invoice processing, undo by saying so (saga compensation), next year by the quarter, and what-if questions.</td></tr><tr><td>MCP rollback</td><td>Agents can undo only their own MCP operations with no dependent work, and their integration keys cannot exceed the permissions of the members they are linked to. An administrator handles all other cases. If there is dependent work, the administrator must review and approve the operations that will be rolled back together before execution.</td></tr></tbody></table></div>
                     </div>
                 </section>
 
@@ -626,6 +629,25 @@
                                 </button>
                                 <h4 class="plite-v-title">Product overview</h4>
                                 <p class="plite-v-cap">Turning on modules, time travel, rollback and what-ifs in one go.</p>
+                            </div>
+                        </div>
+                        <h3 class="plite-gal-head">With Process GPT Lite</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-7rCkiexnp1A">
+                                <button type="button" class="plite-yt" data-yt="7rCkiexnp1A" aria-label="Play the tax invoice processing and undo video">
+                                    <img src="https://i.ytimg.com/vi/7rCkiexnp1A/hqdefault.jpg" alt="Preview of the tax invoice processing and undo video" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Tax invoice processing and undo</h4>
+                                <p class="plite-v-cap">Upload a file and it asks. Accept and it works over MCP. Say cancel and the saga compensates. When it must not undo, it stops.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-xWD3pdr-QrI">
+                                <button type="button" class="plite-yt" data-yt="xWD3pdr-QrI" aria-label="Play the forecasts and what-ifs in chat video">
+                                    <img src="https://i.ytimg.com/vi/xWD3pdr-QrI/hqdefault.jpg" alt="Preview of the forecasts and what-ifs in chat video" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Forecasts and what-ifs asked in chat</h4>
+                                <p class="plite-v-cap">Ask what sells in which quarter next year and what happens if you order more. The same models as the screens work out the numbers.</p>
                             </div>
                         </div>
                         <h3 class="plite-gal-head">Tutorial (Korean)</h3>
@@ -947,6 +969,7 @@
                                         <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
                                         <li><a href="casestudiesbpm.html">Case Studies</a></li>
                                         <li><a href="industry.html">Why Event Sourcing?</a></li>
+                                        <li><a href="blog/agentic-erp-event-sourcing-saga.html">AI Agents and Event Sourcing</a></li>
                                         <li><a href="erp.html">uEngine ERP</a></li>
                                         <li><a href="mes.html">uEngine MES</a></li>
                                         <li><a href="wms.html">uEngine WMS (audit-log based)</a></li>

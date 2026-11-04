@@ -170,6 +170,9 @@
                                                 <a href="industry.html" style="font-size: 18px;">Why Event Sourcing?</a>
                                             </li>
                                             <li>
+                                                <a href="blog/agentic-erp-event-sourcing-saga.html" style="font-size: 18px;">AI Agents and Event Sourcing</a>
+                                            </li>
+                                            <li>
                                                 <a href="erp.html" style="font-size: 18px;">uEngine ERP</a>
                                             </li>
                                             <li>
@@ -446,6 +449,14 @@
                 .plite-card-body { padding: 26px 26px 32px; }
                 .plite-card-title { font-size: 1.45rem; font-weight: 700; margin: 0 0 14px; text-align: left; line-height: 1.4; }
                 .plite-card-desc { font-size: 1.02rem; color: #666; line-height: 1.65; margin: 0; text-align: left; }
+                .as-article { display: block; background: #fff; border: 1px solid #e5e5e5; border-radius: 16px; overflow: hidden; color: inherit; text-decoration: none; max-width: 860px; margin: 0 auto; }
+                .as-article:hover { border-color: #7752e7; text-decoration: none; }
+                .as-article img { display: block; width: 100%; height: auto; }
+                .as-article-body { display: block; padding: 18px 20px 20px; word-break: keep-all; }
+                .as-article-body small { display: block; font-size: 12px; font-weight: 600; letter-spacing: .06em; color: #7752e7; margin-bottom: 6px; }
+                .as-article-body b { display: block; font-size: 1.12rem; font-weight: 600; line-height: 1.45; color: #111; margin-bottom: 8px; }
+                .as-article-body span { display: block; font-size: .95rem; line-height: 1.65; color: #555; }
+                .as-article-body em { display: block; font-style: normal; font-size: .92rem; font-weight: 600; color: #6a4fd0; margin-top: 10px; }
                 .plite-theme { margin-bottom: 90px; }
                 .plite-theme:last-child { margin-bottom: 0; }
                 .plite-theme-img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #e5e5ea; box-shadow: 0 10px 30px rgba(26,26,46,.12); }
@@ -513,7 +524,7 @@
                                     <div class="local-scroll wow fadeInUp" data-wow-offset="0">
                                         <a href="#problem" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">Why is this needed?</span></a><a href="#solutions" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">View example implementations</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">Contact us</span></a>
                                     </div>
-                                    <p class="hj-note mt-30 mb-0">ERP has been tested through calls using the official MCP SDK, but it has not yet been connected to Process GPT and run through it. People currently use what-if through the UI; it is not yet available as an MCP tool that agents can call.</p>
+                                    <p class="hj-note mt-30 mb-0">ERP has been connected to Process GPT Lite and tested locally with a virtual company. What-if is available to people through the UI and to agents. ERP’s MCP supplies ledger facts, and Lite uses the same models as the UI to answer chat questions; the LLM does not generate the numbers.</p>
                                 </div>
                             </div>
                         </div>
@@ -530,8 +541,22 @@
                             <div class="col-md-6 mb-sm-30"><div class="hj-principle"><b>What current values alone do not tell you</b><span>Previous values and reasons for changes are not retained by default, making it hard to trace how the current state came about.<br><br>Separate audit records can diverge from business data, and often do not support rebuilding state.<br><br>Viewing past states means relying on backups or snapshots.</span></div></div>
                             <div class="col-md-6"><div class="hj-principle"><b>Agents act quickly, even on bad decisions</b><span>People work slowly, notice anomalies on screen, and remember what they changed and why, so you can ask them later. Agents write many values in a short time and act just as quickly on bad decisions. But there is no person to ask afterward why they acted, so you have to rely on records.</span></div></div>
                         </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>Situation</th><th>State-storing system</th><th>Event sourcing</th></tr></thead><tbody><tr><td>Undoing a mistake</td><td>Without previous values, restoring a backup also rolls back other people's work. Isolating an agent's work is difficult.</td><td>A compensating event undoes the operation. The original record stays.</td></tr><tr><td>Tracing the impact</td><td>No links trace changes across modules; a person must find them.</td><td>Groups events from the same operation and previews the impact, including documents in other modules.</td></tr><tr><td>Asking who acted and why</td><td>Typically keeps only the last editor, not the reason. Shared service accounts make agents hard to distinguish from people.</td><td>Each event records the actor, source (mcp), and reason.</td></tr><tr><td>Reviewing a decision’s basis</td><td>Overwritten inputs make the original decision hard to reproduce.</td><td>Recalculates and displays the state at that time from records.</td></tr><tr><td>Editing alongside a person</td><td>Without a separate version check, an agent using stale values can overwrite a person's edits without a trace.</td><td>Checks document versions and rejects writes based on an older version. The agent rereads and reassesses.</td></tr><tr><td>Retrying after a lost response</td><td>May create duplicate orders, making it hard to tell which is valid.</td><td>uEngine ERP creates no duplicate records on retries with the same idempotency key. Every write is checked in the ledger.</td></tr><tr><td>Testing before changing anything</td><td>Limited stockout timing and change history leave too little data to test outcomes in advance.</td><td>Uses accumulated history for what-if and predictions. uEngine ERP’s what-if is currently UI-only for people; no MCP tool yet.</td></tr></tbody></table></div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>Situation</th><th>State-storing system</th><th>Event sourcing</th></tr></thead><tbody><tr><td>Undoing a mistake</td><td>Without previous values, restoring a backup also rolls back other people's work. Isolating an agent's work is difficult.</td><td>A compensating event undoes the operation. The original record stays.</td></tr><tr><td>Tracing the impact</td><td>No links trace changes across modules; a person must find them.</td><td>Groups events from the same operation and previews the impact, including documents in other modules.</td></tr><tr><td>Asking who acted and why</td><td>Typically keeps only the last editor, not the reason. Shared service accounts make agents hard to distinguish from people.</td><td>Each event records the actor, source (mcp), and reason.</td></tr><tr><td>Reviewing a decision’s basis</td><td>Overwritten inputs make the original decision hard to reproduce.</td><td>Recalculates and displays the state at that time from records.</td></tr><tr><td>Editing alongside a person</td><td>Without a separate version check, an agent using stale values can overwrite a person's edits without a trace.</td><td>Checks document versions and rejects writes based on an older version. The agent rereads and reassesses.</td></tr><tr><td>Retrying after a lost response</td><td>May create duplicate orders, making it hard to tell which is valid.</td><td>uEngine ERP creates no duplicate records on retries with the same idempotency key. Every write is checked in the ledger.</td></tr><tr><td>Testing before changing anything</td><td>Limited stockout timing and change history leave too little data to test outcomes in advance.</td><td>Uses accumulated history for what-if and predictions. uEngine ERP offers what-if through the UI and to agents; Process GPT Lite answers questions using the same models.</td></tr></tbody></table></div>
                         <p class="hj-note mt-30 mb-0 text-center">Existing systems can address some of these issues by adding audit tables, triggers, backups, and version columns. However, records added later can be incomplete or inconsistent. In event sourcing, the records themselves are the authoritative source. The costs of this approach are explained in the section below.</p>
+                    </div>
+                </section>
+
+                <section class="page-section pt-0" id="article">
+                    <div class="container position-relative">
+                        <a class="as-article" href="blog/agentic-erp-event-sourcing-saga.html">
+                            <img src="../../images/en/blog/agentic-erp-event-sourcing-saga.jpg" alt="Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback?" loading="lazy" width="1200" height="675">
+                            <span class="as-article-body">
+                                <small>uEngine Blog</small>
+                                <b>Rethinking ERP Architecture for Long-Running Agentic AI: Why Event Sourcing and Saga Rollback?</b>
+                                <span>ERP agents need ways to act, undo work, and ask what may happen before they act. Tests with uEngine ERP and Process GPT Lite show how one ledger supports compensation, quarterly forecasts, and what-if analysis.</span>
+                                <em>Read the full article ↗</em>
+                            </span>
+                        </a>
                     </div>
                 </section>
 
@@ -544,7 +569,7 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>Undo mistakes without erasing them</b><span>Rollback uses compensation to offset work already done. Like the saga pattern in distributed systems, it corrects related operations together, from an order to a delivery order in another module, and records both the mistake and its correction.</span></div></div>
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>Find the evidence in records from that time</b><span>ERP shows the state exactly as it was at any point in the past. The ledger also records who performed and rolled back an operation and why, so you can trace how the current state came about.</span></div></div>
-                            <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>Test outcomes before making changes</b><span>ERP's 14 what-if models use accumulated history to test changes in revenue and stockouts before changing purchasing, product discontinuation, reallocation, delivery dates, or payment terms. Tests leave the ledger unchanged. Results are shown as an 80% range; if the range includes zero, the system states up front that the effect cannot be distinguished. It provides no numbers when the evidence is insufficient. People currently use these models through the UI, and they are not yet available as MCP tools. Agents making autonomous decisions based on predictions is therefore a goal, not a current capability.</span></div></div>
+                            <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>Test outcomes before making changes</b><span>ERP has 33 analytical models, including 9 what-if and 16 forecasting models. What-if uses accumulated history to test changes in revenue and stockouts before changing purchasing, product discontinuation, reallocation, delivery dates, or payment terms. Tests leave the ledger unchanged. Results are shown as an 80% range; if the range includes zero, the system states up front that the effect cannot be distinguished. It provides no numbers when the evidence is insufficient. What-if is available through the UI and to agents, which can now answer people’s questions. Agents independently running simulations and making decisions remains a goal.</span></div></div>
                         </div>
                     </div>
                 </section>
@@ -587,7 +612,7 @@
                                     <div class="plite-card-img"><img src="../../docs/erp/img/whatif-policy.webp" alt="uEngine ERP actual screen" loading="lazy" decoding="async"></div>
                                     <div class="plite-card-body">
                                         <h4 class="plite-card-title">uEngine ERP</h4>
-                                        <p class="plite-card-desc">Rebuilt from the ground up with event sourcing, ERP lets you preview the rollback scope and execute a rollback, including through MCP. It supports point-in-time queries and predictions, including 14 what-if models. However, what-if is still available only to people through the UI, and quantitative evaluations used a virtual company. Calls have been verified using the official MCP SDK, but an actual connection to Process GPT has not yet been made. The app URL and source repository will be released soon.</p>
+                                        <p class="plite-card-desc">Rebuilt from the ground up with event sourcing, ERP lets you preview the rollback scope and execute a rollback, including through MCP. It supports point-in-time queries and 33 analytical models, including 9 what-if and 16 forecasting models. Quantitative evaluations used a virtual company. Connected to Process GPT Lite, it was tested locally with a virtual company using a real LLM and real MCP for tax invoice processing, cancellation by natural language (saga compensation), next year’s quarterly outlook, and what-if questions. This integration, the app, and source repository will be released soon.</p>
                                         <div class="plite-vlinks plite-card-vlinks"><a class="plite-vlink" href="erp.html">Product overview</a><a class="plite-vlink" href="../../docs/erp/index.html">Tutorial</a></div>
                                     </div>
                                 </div>
@@ -614,7 +639,7 @@
                             </div>
                         </div>
                         <h3 class="plite-gal-head mt-50">Current status</h3>
-                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>Item</th><th>uEngine ERP</th><th>uEngine MES</th><th>uEngine WMS</th></tr></thead><tbody><tr><td>Recordkeeping</td><td>Event sourcing</td><td>Event sourcing</td><td>Stored values + audit log of all writes. Not event sourced</td></tr><tr><td>Rollback</td><td>Preview scope, then execute; also via MCP</td><td>Point-in-time query and rebuild; exec compensation counterparts. No rollback UI</td><td>No rollback feature</td></tr><tr><td>Testing before acting</td><td>Predictions with 14 what-if models. UI only</td><td>Alternative simulations. Source unchanged</td><td>Equipment simulations and hypothetical scenarios</td></tr><tr><td>Agent connection</td><td>4 MCP tools; no separate server</td><td>read·plan·exec function catalog</td><td>83 MCP tools; MCP server required</td></tr><tr><td>Actual Process GPT connection</td><td>Not yet</td><td>Demo completed</td><td>Demo completed</td></tr><tr><td>Runtime environment</td><td>Only your own Supabase project required</td><td>Java, Kafka, PostgreSQL</td><td>Install Supabase and MCP server yourself</td></tr><tr><td>Access</td><td>Free (MIT). Connect your own Supabase. App and source repository coming soon</td><td>Private source. Contact us for a demo environment</td><td>Free. Public source; self-installed</td></tr></tbody></table></div>
+                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>Item</th><th>uEngine ERP</th><th>uEngine MES</th><th>uEngine WMS</th></tr></thead><tbody><tr><td>Recordkeeping</td><td>Event sourcing</td><td>Event sourcing</td><td>Stored values + audit log of all writes. Not event sourced</td></tr><tr><td>Rollback</td><td>Preview scope, then execute; also via MCP</td><td>Point-in-time query and rebuild; exec compensation counterparts. No rollback UI</td><td>No rollback feature</td></tr><tr><td>Testing before acting</td><td>33 analytical models (9 what-if); available via UI and to agents.</td><td>Alternative simulations. Source unchanged</td><td>Equipment simulations and hypothetical scenarios</td></tr><tr><td>Agent connection</td><td>4 MCP tools; no separate server</td><td>read·plan·exec function catalog</td><td>83 MCP tools; MCP server required</td></tr><tr><td>Actual Process GPT connection</td><td>Not yet</td><td>Demo completed</td><td>Demo completed</td></tr><tr><td>Runtime environment</td><td>Only your own Supabase project required</td><td>Java, Kafka, PostgreSQL</td><td>Install Supabase and MCP server yourself</td></tr><tr><td>Access</td><td>Free (MIT). Connect your own Supabase. App and source repository coming soon</td><td>Private source. Contact us for a demo environment</td><td>Free. Public source; self-installed</td></tr></tbody></table></div>
                     </div>
                 </section>
 
@@ -895,6 +920,7 @@
                                         <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
                                         <li><a href="casestudiesbpm.html">Case Studies</a></li>
                                         <li><a href="industry.html">Why Event Sourcing?</a></li>
+                                        <li><a href="blog/agentic-erp-event-sourcing-saga.html">AI Agents and Event Sourcing</a></li>
                                         <li><a href="erp.html">uEngine ERP</a></li>
                                         <li><a href="mes.html">uEngine MES</a></li>
                                         <li><a href="wms.html">uEngine WMS (audit-log based)</a></li>
