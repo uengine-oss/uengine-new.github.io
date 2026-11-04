@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이벤트 소싱 ERP — 전표 처리, 말로 취소, 전망 묻기 — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="Lite 채팅에 세금계산서를 올려 전표 처리를 맡기고, 말로 취소하며, 원장에 기록된 사실로 전망을 묻습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/erp-voucher.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="이벤트 소싱 ERP — 전표 처리, 말로 취소, 전망 묻기 — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="Lite 채팅에 세금계산서를 올려 전표 처리를 맡기고, 말로 취소하며, 원장에 기록된 사실로 전망을 묻습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/erp-voucher.html">
+<meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
+<link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('pgldocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../images/processgptlite/pgl-mark.svg" alt="" width="28" height="28"><span>Process GPT Lite <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 대화 맥락, 스킬, 프로세스 마이닝)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/processgptlite.html">제품 소개</a>
+    <a href="https://github.com/uengine-oss/process-gpt-lite" target="_blank" rel="noopener">GitHub</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>Process GPT Lite 튜토리얼</a></li>
+<li><a href="install.html"><span class="n">01</span>설치와 첫 로그인</a></li>
+<li><a href="tour.html"><span class="n">02</span>화면 둘러보기</a></li>
+</ul>
+<div class="nav-part">나와 AI 비서</div><ul>
+<li><a href="first-chat.html"><span class="n">03</span>첫 대화 — 비서에게 일 맡기기</a></li>
+<li><a href="contexts.html"><span class="n">04</span>대화 맥락 — 알아서 나뉘는 대화와 산출물 더미</a></li>
+<li><a href="mail.html"><span class="n">05</span>메일 비서 — 들어온 메일에서 할 일 찾기</a></li>
+<li><a href="browser.html"><span class="n">06</span>브라우저 에이전트와 보관함</a></li>
+</ul>
+<div class="nav-part">문서와 도구</div><ul>
+<li><a href="office.html"><span class="n">07</span>이음오피스 — 한글·워드·엑셀을 대화로 고치기</a></li>
+<li><a href="craft.html"><span class="n">08</span>ArtCraft — 도면·이미지·소리·영상</a></li>
+<li><a href="email-to-quote.html"><span class="n">09</span>메일 한 통에서 평면도·제안서·견적서까지</a></li>
+</ul>
+<div class="nav-part">반복 줄이기</div><ul>
+<li><a href="skills.html"><span class="n">10</span>스킬 — 잘된 방법을 저장하고 나누기</a></li>
+<li><a href="missions.html"><span class="n">11</span>외부 연동과 예약 미션</a></li>
+<li><a href="panel-apps.html"><span class="n">12</span>패널 앱 — 말로 만드는 업무 미니앱</a></li>
+</ul>
+<div class="nav-part">팀으로 일하기</div><ul>
+<li><a href="folders.html"><span class="n">13</span>공유 폴더 — 팀이 함께 쓰는 파일 공간</a></li>
+<li><a href="sharing.html"><span class="n">14</span>산출물 공유와 @멘션</a></li>
+<li><a href="messenger.html"><span class="n">15</span>메신저와 대화방 도우미</a></li>
+<li><a href="meetings.html"><span class="n">16</span>원격 회의 — 도우미가 함께 듣고, 자료를 띄우고, 회의록을 남깁니다</a></li>
+</ul>
+<div class="nav-part">프로세스로 일하기</div><ul>
+<li><a href="process-create.html"><span class="n">17</span>대화로 프로세스 만들기 — 「달빛커피 제안」</a></li>
+<li><a href="process-run.html"><span class="n">18</span>프로세스 실행 — 할 일이 사람과 에이전트를 오가는 모습</a></li>
+<li><a href="mining.html"><span class="n">19</span>프로세스 마이닝 — 즉흥적으로 해 온 일이 정식 프로세스가 되기까지</a></li>
+</ul>
+<div class="nav-part">프로세스 개선</div><ul>
+<li><a href="bottleneck.html"><span class="n">20</span>병목 찾기 — 어디서 시간이 새는가</a></li>
+<li><a href="value-stream.html"><span class="n">21</span>가치 흐름과 제약 이론</a></li>
+<li><a href="critical-path.html"><span class="n">22</span>크리티컬 패스와 개선 실행</a></li>
+</ul>
+<div class="nav-part">확장과 운영</div><ul>
+<li><a href="workroom.html"><span class="n">23</span>에이전트 작업실 — Claude Code·Codex</a></li>
+<li><a href="architecture.html"><span class="n">24</span>구조 — Process GPT 백엔드 위의 Lite</a></li>
+<li><a href="admin.html"><span class="n">25</span>운영과 보안</a></li>
+<li><a href="agentic.html"><span class="n">26</span>에이전트 가드레일 — 맡길 일, 볼 일, 막을 일</a></li>
+<li><a href="team-context.html"><span class="n">27</span>팀 맥락 공유 — 정리된 대화를 기억처럼, 팀원의 맥락은 허락받아</a></li>
+</ul>
+<div class="nav-part">산업별 예시</div><ul>
+<li><a href="prototype-request.html"><span class="n">28</span>시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서</a></li>
+<li><a href="erp-voucher.html" class="on" aria-current="page"><span class="n">29</span>이벤트 소싱 ERP — 전표 처리, 말로 취소, 전망 묻기</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="project.html"><span class="n">30</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="cheatsheet.html"><span class="n">31</span>한 장 요약</a></li>
+<li><a href="faq.html"><span class="n">32</span>자주 묻는 질문</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">산업별 예시<span class="chap">29</span></div>
+    <h1>이벤트 소싱 ERP — 전표 처리, 말로 취소, 전망 묻기</h1>
+    <article>
+<blockquote>
+<p>Lite 채팅에 세금계산서를 올려 전표 처리를 맡기고, 말로 취소하며, 원장에 기록된 사실로 전망을 묻습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/7rCkiexnp1A" title="이벤트 소싱 ERP — 전표 처리, 말로 취소, 전망 묻기 — 영상 2:31" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="이-장의-흐름">이 장의 흐름<a class="anchor" href="#이-장의-흐름" title="Permanent link">#</a></h2>
+<p>이번 장은 달빛커피가 아니라 <strong>가상 회사 가온가전</strong>의 이야기입니다. ERP는 회사의 거래, 재고, 회계 같은 업무를 함께 관리하는 시스템입니다. 앞 장들에서 메일을 읽고 문서를 만들었다면, 여기서는 에이전트가 회사 장부를 바꿉니다.</p>
+<div class="hl"><pre><span></span><code>Lite 채팅에 세금계산서 올리기 → 읽은 값 확인 → ERP로 처리
+                                              ↓
+                                  말로 취소 → 서버가 보상 실행
+                                              ↓
+                              전망과 조건 변경 결과를 채팅으로 묻기
+</code></pre></div>
+
+<p>원장은 거래와 변화를 기록하는 장부이며, 이벤트는 처리나 취소처럼 일어난 일을 나타내는 기록입니다. 에이전트가 장부를 바꾸므로, 실행한 작업을 추적하고 그 효과를 되돌릴 수 있는 원장이 필요합니다. <strong>이벤트 소싱</strong>은 이런 이벤트를 남기는 방식으로, 취소할 때도 원래 기록을 지우지 않고 효과를 상쇄하는 보상 기록을 더합니다.</p>
+<p>핵심은 두 가지입니다.</p>
+<ol>
+<li><strong>처리와 취소는 장부에 남습니다.</strong> 파일에서 읽은 값을 사람이 확인한 뒤 처리하고, 말로 취소하면 서버가 보상을 실행합니다. 안전하게 되돌릴 수 없는 경우에는 이유를 알리고 멈춥니다.</li>
+<li><strong>전망 질문은 장부를 바꾸지 않습니다.</strong> 언어 모델이 문장을 해석하고 ERP 분석 화면과 같은 모델이 숫자를 계산합니다. 근거가 부족하면 숫자를 내지 않습니다.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>회사와 세금계산서는 가상입니다. 예측 영상의 가온가전(데모)은 ERP의 생성기로 만든 가상 회사이고, 숫자는 그 회사의 원장에서 계산한 값입니다. 실제 회사의 성능이 아닙니다.</li>
+<li>채팅과 서버를 잇는 BFF, 언어 모델, 에이전트, 외부 도구를 연결하는 MCP 호출, ERP는 모두 실제로 실행했습니다. 로컬 환경에서 찍었습니다.</li>
+<li>Process GPT Lite의 ERP 연결은 개발 중인 판으로 찍었고 공개 설치본에는 아직 들어 있지 않습니다.</li>
+<li>따라서 이 장은 지금 따라 하기보다 <strong>읽고 보는 장</strong>입니다. 아래 순서는 영상에서 진행한 작업을 설명합니다.</li>
+<li>부가세(부가가치세)와 회계 화면은 전문가 검수 전이므로, 검수가 끝난 화면으로 받아들이지 마세요.</li>
+<li>전표 처리는 정회계의 연동 키로 연결합니다. 에이전트는 연결된 구성원의 권한을 넘지 못합니다. 연결 화면은 키가 보이므로 영상에서 뺐습니다.</li>
+</ul>
+</div>
+<h2 id="영상으로-보기-1-전표를-맡기고-말로-되돌리기">영상으로 보기 1 — 전표를 맡기고 말로 되돌리기<a class="anchor" href="#영상으로-보기-1-전표를-맡기고-말로-되돌리기" title="Permanent link">#</a></h2>
+<p>전표는 거래 내용을 회계 장부에 반영하기 위한 기록입니다. 여기서 게시란 입력한 전표를 장부에 반영하는 일이고, 지급은 거래 대금을 내는 일입니다.</p>
+<ol class="steps">
+<li>
+<p><strong>파일만 올리기.</strong> 말없이 세금계산서 그림을 보냅니다. 가상 회사 주식회사 한빛부품의 세금계산서로, 공급가액(세금을 제외한 거래 금액) 1,000,000, 세액 100,000, 합계 1,100,000입니다.</p>
+</li>
+<li>
+<p><strong>묻기.</strong> Lite가 파일에서 읽은 값을 보여 주고 <code>ERP 전표 처리를 할까요?</code>라고 묻습니다. 사람이 확인하고 <strong>ERP로 처리</strong>를 누릅니다.</p>
+<figure><a href="img/erp-offer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="전표 처리 묻기" src="img/erp-offer.webp" / loading="lazy" decoding="async"></a><figcaption>전표 처리 묻기</figcaption></figure>
+</li>
+<li>
+<p><strong>처리.</strong> 거래처와 제품을 찾아 없으면 등록하고, 전표 입력·게시·지급을 진행합니다. 호출은 서버가 붙인 사가 번호 하나로 묶입니다. 사가는 여러 처리 단계를 하나로 묶어, 필요할 때 각 단계의 효과를 되돌리는 방식입니다.</p>
+</li>
+<li>
+<p><strong>결과.</strong> 이벤트를 받아 후속 작업을 하는 구독자가 입고와 회계 전표 3건, 세금 신고 집계를 이어서 만듭니다. 처리 결과를 확인한 뒤 ERP에서 읽은 변경 내용을 보여 줍니다. 보통예금(은행 예금) -1,100,000, 부가세대급금(매입할 때 지급한 부가세) +100,000, 상품 +1,000,000, 에어서큘레이터 모터 +20개입니다.</p>
+<figure><a href="img/erp-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="처리 결과" src="img/erp-done.webp" / loading="lazy" decoding="async"></a><figcaption>처리 결과</figcaption></figure>
+</li>
+<li>
+<p><strong>ERP에서 확인.</strong> 청구서 <code>BILL/2026/11/0001</code>은 게시와 결제가 완료된 상태이며, 승인번호는 그대로입니다. 이력에는 정회계와 함께 에이전트 표식이 남습니다.</p>
+<figure><a href="img/erp-erpdoc.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="ERP 청구서" src="img/erp-erpdoc.webp" / loading="lazy" decoding="async"></a><figcaption>ERP 청구서</figcaption></figure>
+</li>
+<li>
+<p><strong>말로 취소.</strong> <code>방금 그거 취소할게</code>라고 입력합니다. 되돌린 뒤에는 처리 전과의 차이가 모두 0이 됩니다. 회사 전체 잔액이 0이라는 뜻이 아니라, 이번 거래가 만든 효과를 반대 거래로 상쇄했다는 뜻입니다.</p>
+<figure><a href="img/erp-undone.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="되돌린 결과" src="img/erp-undone.webp" / loading="lazy" decoding="async"></a><figcaption>되돌린 결과</figcaption></figure>
+</li>
+<li>
+<p><strong>보상의 내용.</strong> 보상은 언어 모델이 아닌 서버가 실행합니다. 지급 취소와 대변 메모(원래 청구 금액을 상쇄하는 문서) 게시 뒤 구독자가 반품과 회계, 신고를 반영합니다. 거래처와 제품은 남습니다. 취소에 따른 수정세금계산서는 공급자에게 요청하세요.</p>
+<figure><a href="img/erp-warnings.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보상과 경고" src="img/erp-warnings.webp" / loading="lazy" decoding="async"></a><figcaption>보상과 경고</figcaption></figure>
+</li>
+<li>
+<p><strong>원장.</strong> 이 청구서의 이벤트 8건이 그대로 있습니다. 에이전트 표식 5건, 보상 표식 3건입니다. 지운 기록은 없습니다.</p>
+<figure><a href="img/erp-ledger.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이벤트 원장" src="img/erp-ledger.webp" / loading="lazy" decoding="async"></a><figcaption>이벤트 원장</figcaption></figure>
+</li>
+<li>
+<p><strong>되돌리면 안 될 때.</strong> 두 번째 세금계산서(대성정밀, 330,000)로 처리한 팬 블레이드 10개가 그사이 창고에서 출고됐습니다. 같은 말로 취소를 요청하면 <code>되돌리지 않았어요</code>, 재고가 음수가 된다(-10)는 이유와 다음에 할 일을 안내합니다. 일부만 취소하지 않고 장부는 그대로입니다.</p>
+<figure><a href="img/erp-blocked.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="되돌리지 않음" src="img/erp-blocked.webp" / loading="lazy" decoding="async"></a><figcaption>되돌리지 않음</figcaption></figure>
+</li>
+</ol>
+<h2 id="영상으로-보기-2-평범한-문장으로-전망-묻기">영상으로 보기 2 — 평범한 문장으로 전망 묻기<a class="anchor" href="#영상으로-보기-2-평범한-문장으로-전망-묻기" title="Permanent link">#</a></h2>
+<p>앞에서는 회사 장부를 바꿨지만, 이제는 원장에 기록된 사실을 바탕으로 전망을 묻습니다. 언어 모델은 질문을 해석해 계산 모델과 입력값을 정하고, 숫자는 ERP 분석 화면과 같은 모델이 계산합니다. 조건을 바꾸어 결과를 살펴보는 what-if 질문도 실제 발주나 가격 변경을 실행하는 것은 아닙니다.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/xWD3pdr-QrI" title="채팅으로 묻는 전망과 what-if — 영상" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<ol class="steps">
+<li>
+<p><strong><code>내년 어느 분기에 뭐가 제일 많이 팔릴까?</code></strong> 2027-Q3(3분기)의 에어서큘레이터가 80% 구간 5,352 ~ 8,077개, 1위일 가능성 99% 이상입니다. Q4(4분기)의 가습기는 39%로 낮고, 공기청정기 보급형도 비슷하다고 말합니다.</p>
+<figure><a href="img/erp-top.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="내년 분기" src="img/erp-top.webp" / loading="lazy" decoding="async"></a><figcaption>내년 분기</figcaption></figure>
+</li>
+<li>
+<p><strong><code>내년 매출은 얼마나 될까?</code></strong> 공급이 지금과 같으면 61.4억 원 안팎, 수요를 다 채우면 70.3억 원 안팎입니다. 차이 8.9억 원이 품절로 잃는 돈입니다. Q3의 에어서큘레이터는 판매 기록 3,972개이고, 품절 146일의 수요를 복원하면 6,545개입니다.</p>
+<figure><a href="img/erp-revenue.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="내년 매출" src="img/erp-revenue.webp" / loading="lazy" decoding="async"></a><figcaption>내년 매출</figcaption></figure>
+</li>
+<li>
+<p><strong><code>이 예측 믿어도 돼?</code></strong> 2025-11-02까지의 자료만으로 2026년을 계산해 실제와 대조합니다. 끝난 분기 3개가 모두 구간 안에 들었고, 1위 제품은 2개가 맞았습니다.</p>
+<figure><a href="img/erp-backtest.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="예측과 실제 대조" src="img/erp-backtest.webp" / loading="lazy" decoding="async"></a><figcaption>예측과 실제 대조</figcaption></figure>
+</li>
+<li>
+<p><strong><code>그 제품 발주량을 1.5배로 늘리면 어떻게 돼?</code></strong> "그 제품"은 앞선 답변의 에어서큘레이터입니다. 매출 4,664만 원 안팎 증가, 전체 품절일 33일 안팎 감소, 재고 금액 772만 원 증가입니다. 앞으로 365일을 계산한 결과입니다. 180일을 넘는 전망은 구간이 실제보다 좁을 수 있으니 해석에 주의하세요.</p>
+<figure><a href="img/erp-order.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="발주 변경" src="img/erp-order.webp" / loading="lazy" decoding="async"></a><figcaption>발주 변경</figcaption></figure>
+</li>
+<li>
+<p><strong><code>가격을 10% 올리면?</code></strong> 판매량이 어떻게 변할지는 기록에 없어 <code>구분할 수 없음</code>이라고 말합니다. 대신 판매량이 19.4% 줄면 이익이 같고, 9.1% 줄면 매출이 같다는 손익 분기점, 즉 변경 전과 이익이나 매출이 같아지는 기준을 보여 줍니다. 가격 변화에 따라 판매량이 얼마나 변하는지를 나타내는 탄력성을 정해 <code>탄력성 -1.2로 가정하면?</code>이라고 물으면 입력한 가정이라고 밝히고 계산합니다.</p>
+<figure><a href="img/erp-price.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="가격 변경" src="img/erp-price.webp" / loading="lazy" decoding="async"></a><figcaption>가격 변경</figcaption></figure>
+</li>
+<li>
+<p><strong>납기와 단종.</strong> 납기는 물건이 도착하기까지 걸리는 기간이고, 단종은 제품 공급을 중단하는 일입니다. <code>납기가 일주일 늘면?</code>이라고 물으면 납기는 평균 11.0일에서 18.0일로, 매출 8.4억 원 안팎 감소입니다. <code>이 제품을 단종하면?</code>이라고 물으면 매출 5.0억 원 안팎 감소이고, 제습기 쪽으로 옮겨 갈 비율 11% ~ 17%는 품절 사례 34건에서 추정했습니다.</p>
+</li>
+<li>
+<p><strong>근거가 모자랄 때.</strong> <code>2024-06-01 기준 내년 매출은 얼마나 될까?</code>에는 숫자를 내지 않고 <code>판매 24개월 필요 (지금 6개월)</code>이라고 말합니다.</p>
+<figure><a href="img/erp-early.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="근거 부족" src="img/erp-early.webp" / loading="lazy" decoding="async"></a><figcaption>근거 부족</figcaption></figure>
+</li>
+<li>
+<p><strong>원장은 그대로입니다.</strong> 질문만 했으므로 새 이벤트가 없습니다. 시작과 끝의 원장 건수가 같습니다.</p>
+</li>
+</ol>
+<p>이 예측을 가상 회사 60곳에서 검증하면 분기 매출 오차 중앙값 6.6%, 80% 구간이 실제 매출을 담은 비율 91%, 1위 제품이 실제 수요 1위인 비율 75%입니다. 생성기와 추정기가 가정을 공유하므로 실제 회사에서는 예측 성능이 이보다 낮을 것으로 보아야 합니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>
+<p>이 장의 ERP 연결을 공개 설치본에서 바로 따라 할 수 있나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+아니요. 개발 중인 판으로 촬영했으며 공개 설치본에는 아직 들어 있지 않습니다. 지금은 영상과 설명을 읽고 보는 장입니다.
+</details></p>
+</li>
+<li>
+<p><code>방금 그거 취소할게</code>라고 하면 누가 되돌리며, 원래 기록은 어떻게 되나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+언어 모델은 말을 해석하고, 보상은 서버가 실행합니다. 원래 기록을 지우지 않고 반대 거래로 효과를 상쇄하며, 처리와 보상을 모두 원장에 남깁니다. 순변화가 0이라는 것은 이번 거래의 효과가 상쇄됐다는 뜻입니다.
+</details></p>
+</li>
+<li>
+<p>처리한 물건이 그사이 출고되어 취소하면 재고가 음수가 되는 경우에는 어떻게 하나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+일부만 취소하지 않고 장부를 그대로 둡니다. 되돌리지 않은 이유와 다음에 할 일을 안내합니다.
+</details></p>
+</li>
+<li>
+<p>전망 질문에 답하는 숫자는 어디서 나오며, 질문하면 원장이 바뀌나요?</p>
+<p><details class="answer" markdown="1"><summary>정답 보기</summary>
+언어 모델이 질문에서 모델과 입력값을 정하면, ERP 분석 화면과 같은 모델이 원장의 사실로 계산합니다. 근거가 부족하면 숫자를 내지 않습니다. 이 장의 전망과 조건 변경 질문으로는 새 이벤트가 생기지 않습니다.
+</details></p>
+</li>
+</ol>
+<h2 id="erp를-더-알고-싶다면">ERP를 더 알고 싶다면<a class="anchor" href="#erp를-더-알고-싶다면" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="../erp/index.html">uEngine ERP 튜토리얼</a></li>
+<li><a href="../../contents/erp.html">제품 소개</a></li>
+<li><a href="../../contents/blog/agentic-erp-event-sourcing-saga.html">블로그: 왜 이벤트 소싱과 사가 롤백인가</a></li>
+</ul>
+<p>8부 「산업별 예시」를 마칩니다. 다음 장에서는 지금까지 배운 것을 활용해 새 고객 요청 한 건을 처음부터 끝까지 처리하는 종합 과제를 합니다(<a href="project.html">30장</a>).</p>
+    </article>
+    <nav class="pager"><a class="prev" href="prototype-request.html"><span>이전</span>시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서</a><a class="next" href="project.html"><span>다음</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#이-장의-흐름">이 장의 흐름</a></li><li><a href="#영상으로-보기-1-전표를-맡기고-말로-되돌리기">영상으로 보기 1 — 전표를 맡기고 말로 되돌리기</a></li><li><a href="#영상으로-보기-2-평범한-문장으로-전망-묻기">영상으로 보기 2 — 평범한 문장으로 전망 묻기</a></li><li><a href="#확인-문제">확인 문제</a></li><li><a href="#erp를-더-알고-싶다면">ERP를 더 알고 싶다면</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
