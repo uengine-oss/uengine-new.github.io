@@ -1426,11 +1426,13 @@
  <div class="container">
   <p class="section-caption-border mb-30">INSTALL</p>
   <h2 class="section-title" id="install-title">설치하기</h2>
-  <p class="pgpt-story-lead">Docker가 있는 PC 한 대에 명령 한 줄로 설치합니다. 데이터베이스, 로그인, AI 에이전트, 문서 편집기까지 한 번에 실행되고, 이후에는 같은 명령으로 업그레이드합니다.</p>
+  <p class="pgpt-story-lead">Docker가 있는 PC 한 대에 명령 세 줄로 설치합니다. 데이터베이스, 로그인, AI 에이전트, 문서 편집기까지 한 번에 실행되고, 새 릴리스가 나오면 그 릴리스의 명령으로 업그레이드합니다.</p>
 
   <div class="pi-cmd"><span class="c"># macOS · Linux · Windows(WSL2) 터미널에서</span>
-curl -fsSL https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/main/install/get.sh | bash</div>
-  <p class="pgpt-story-note">설치 중에 LLM 주소·API 키·모델 이름과 첫 관리자 이메일을 묻습니다. 저장소를 직접 받아도 됩니다:
+curl -fsSLO https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/v0.2.0/install/get.sh
+echo "d659b9b09cc7c05c914c06bd5ecf3ba72042ef3bb5cf1d5f13f89e23a43907a9  get.sh" | shasum -a 256 -c -
+bash get.sh</div>
+  <p class="pgpt-story-note">v0.2.0 릴리스에 고정된 설치 스크립트를 내려받아 확인값(SHA-256)을 검사한 뒤 실행하세요. 확인값이 맞지 않으면 실행하지 마세요. 설치 중에 LLM 주소·API 키·모델 이름과 첫 관리자 이메일을 묻습니다. 저장소를 직접 받아도 됩니다:
    <code>git clone https://github.com/uengine-oss/process-gpt-lite.git &amp;&amp; cd process-gpt-lite/install &amp;&amp; ./install.sh</code></p>
 
   <div class="pi-steps">

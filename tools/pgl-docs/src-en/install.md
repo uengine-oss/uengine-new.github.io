@@ -30,10 +30,12 @@ You can install on macOS, Linux and Windows (WSL2). On Windows, we recommend ins
 
 ## Install
 
-Run one line in a terminal. It downloads the repository to `~/process-gpt-lite` and runs the install script.
+Run the commands below in a terminal. Download the installation script pinned to release v0.2.0, verify its SHA-256 checksum, then run it. Do not run it if the checksum does not match. The script downloads v0.2.0 of the repository to `~/process-gpt-lite` and runs the installation.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/main/install/get.sh | bash
+curl -fsSLO https://raw.githubusercontent.com/uengine-oss/process-gpt-lite/v0.2.0/install/get.sh
+echo "d659b9b09cc7c05c914c06bd5ecf3ba72042ef3bb5cf1d5f13f89e23a43907a9  get.sh" | shasum -a 256 -c -
+bash get.sh
 ```
 
 Cloning the repository yourself works the same way.
