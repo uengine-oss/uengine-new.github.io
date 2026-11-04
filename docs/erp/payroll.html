@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>급여 · 전표 · 이체 · 원천세 — uEngine ERP 튜토리얼</title>
+<meta name="description" content="항목과 요율, 세액표를 회사가 넣고 달마다 대장을 만듭니다. 확정하면 값이 고정되고, 이체 파일을 내려받아 사람이 은행에서 이체한 뒤 지급 완료를 기록합니다. 회계를 나중에 켜도 같은 전표가 만들어지고, 원천세 집계는 옮겨 적을 값으로 내보냅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/erp/payroll.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="급여 · 전표 · 이체 · 원천세 — uEngine ERP 튜토리얼">
+<meta property="og:description" content="항목과 요율, 세액표를 회사가 넣고 달마다 대장을 만듭니다. 확정하면 값이 고정되고, 이체 파일을 내려받아 사람이 은행에서 이체한 뒤 지급 완료를 기록합니다. 회계를 나중에 켜도 같은 전표가 만들어지고, 원천세 집계는 옮겨 적을 값으로 내보냅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/erp/payroll.html">
+<meta property="og:image" content="https://www.uengine.org/docs/erp/img/whatif-policy.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine ERP <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/erp.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">01</span>설치하고 판매로 시작하기</a></li>
+</ul>
+<div class="nav-part">모듈 더하기</div><ul>
+<li><a href="modules.html"><span class="n">02</span>재고를 켜고, 고장 나도 판매는 계속</a></li>
+<li><a href="buy-books.html"><span class="n">03</span>구매·청구·회계 켜기</a></li>
+</ul>
+<div class="nav-part">이력과 되돌리기</div><ul>
+<li><a href="history.html"><span class="n">04</span>과거 시점 보기와 되돌리기</a></li>
+</ul>
+<div class="nav-part">예측과 what-if</div><ul>
+<li><a href="whatif.html"><span class="n">05</span>예측과 what-if</a></li>
+</ul>
+<div class="nav-part">연동</div><ul>
+<li><a href="connect.html"><span class="n">06</span>플러그인과 REST·MCP 연동</a></li>
+</ul>
+<div class="nav-part">세금과 장부</div><ul>
+<li><a href="voucher-tax.html"><span class="n">07</span>증빙 한 장이 신고까지</a></li>
+<li><a href="books-assets.html"><span class="n">08</span>장부·결산·고정자산</a></li>
+</ul>
+<div class="nav-part">인사와 급여</div><ul>
+<li><a href="people.html"><span class="n">09</span>인사·휴가·근태</a></li>
+<li><a href="payroll.html" class="on" aria-current="page"><span class="n">10</span>급여 · 전표 · 이체 · 원천세</a></li>
+</ul>
+<div class="nav-part">제조</div><ul>
+<li><a href="mrp.html"><span class="n">11</span>자재 명세와 제조 지시</a></li>
+</ul>
+<div class="nav-part">경비</div><ul>
+<li><a href="expense.html"><span class="n">12</span>경비</a></li>
+</ul>
+<div class="nav-part">영업과 프로젝트</div><ul>
+<li><a href="crm-project.html"><span class="n">13</span>CRM과 프로젝트</a></li>
+</ul>
+<div class="nav-part">Process GPT Lite</div><ul>
+<li><a href="lite.html"><span class="n">14</span>Process GPT Lite 연결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">인사와 급여<span class="chap">10</span></div>
+    <h1>급여 · 전표 · 이체 · 원천세</h1>
+    <article>
+<blockquote>
+<p>항목과 요율, 세액표를 회사가 넣고 달마다 대장을 만듭니다. 확정하면 값이 고정되고, 이체 파일을 내려받아 사람이 은행에서 이체한 뒤 지급 완료를 기록합니다. 회계를 나중에 켜도 같은 전표가 만들어지고, 원천세 집계는 옮겨 적을 값으로 내보냅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/OaEV3Pu16_E" title="급여 · 전표 · 이체 · 원천세 — 영상 2:51" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>급여 모듈은 인사가 있어야 켜집니다. 개인별 금액과 계좌는 원장에 넣지 않습니다. 원장은 지울 수 없기 때문입니다. 원장 밖의 표에 저장하고 접근 권한을 나누며, 이벤트에는 회사 합계와 집계에 필요한 값만 싣습니다.</p>
+<table>
+<thead>
+<tr>
+<th>앱이 하는 일</th>
+<th>앱이 하지 않는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>요율과 간이세액표로 대장 계산, 고친 칸 표시</td>
+<td>요율과 세액표 제공(회사가 출처와 함께 넣습니다)</td>
+</tr>
+<tr>
+<td>이체 파일 내려받기, 지급 완료 기록</td>
+<td>돈 옮기기</td>
+</tr>
+<tr>
+<td>원천세 집계, 옮겨 적을 값 내보내기, 마감</td>
+<td>전자신고 파일, 전송, 연말정산</td>
+</tr>
+<tr>
+<td>월 중 입사·퇴사 표시</td>
+<td>일할 계산(금액은 사람이 고칩니다)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">전문가 검수 전입니다</p>
+<p>급여 화면은 근거를 문서에 적어 두었지만 세무·노무 전문가의 검수를 받지 않았습니다. 화면에도 그렇게 표시합니다. 세액과 공제를 확인하고 신고할 책임은 회사에 있습니다. 이 장에 넣은 요율과 세액표 값은 시연용이니, 실제로 쓸 때는 회사가 출처를 확인해 넣으세요.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>가온가전은 가상 회사이고, 사람, 금액, 계좌번호는 모두 가상입니다. 화면은 로컬 Supabase에서 찍었습니다.</li>
+<li>녹화 전에 인사와 청구 모듈을 켜고, 구성원 <strong>한인사</strong>(인사, 급여), <strong>박영업</strong>, <strong>오수도</strong>, 부서 <code>영업</code>, 직원 3명을 명령으로 넣었습니다. 오수도와 신입사의 급여 정보는 화면 밖에서 입력했습니다.</li>
+<li>대장의 금액은 시험 코드에 넣은 손 계산 결과와 같습니다.</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>급여 켜기.</strong> 관리자로 <strong>설정 → 모듈</strong>에서 급여의 <strong>켜기</strong>를 누릅니다. 요율과 세액표는 제품에 들어 있지 않으므로 회사가 출처와 함께 넣는다고 알려 줍니다.
+
+<figure><a href="img/payroll-on.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="급여 켜기" src="img/payroll-on.webp" loading="lazy" decoding="async"></a><figcaption>급여 켜기</figcaption></figure>
+</li>
+<li><strong>지급 항목.</strong> 한인사로 로그인해 <strong>급여 → 급여 항목</strong>에서 <code>기본급</code>을 만듭니다. <code>식대</code>는 <strong>과세</strong>를 끄고 비과세 월 한도 <code>200000</code>을 적습니다.
+
+<figure><a href="img/payroll-items.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="급여 항목" src="img/payroll-items.webp" loading="lazy" decoding="async"></a><figcaption>급여 항목</figcaption></figure>
+</li>
+<li><strong>요율 자료.</strong> <strong>급여 → 4대보험 요율 자료 → 새로 만들기</strong>를 엽니다. 기본값이 없어 칸이 비어 있습니다. 자료 이름, 시작일, 출처, 확인한 날과 요율을 적습니다.
+
+<figure><a href="img/payroll-rates.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="요율 자료" src="img/payroll-rates.webp" loading="lazy" decoding="async"></a><figcaption>요율 자료</figcaption></figure>
+</li>
+<li><strong>간이세액표.</strong> <strong>급여 → 간이세액표</strong>에서 자료 이름, 시작일, 출처, 확인한 날을 적고 파일을 올립니다. 읽은 줄 수가 나옵니다. 녹화에서는 646줄입니다.
+
+<figure><a href="img/payroll-table.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="간이세액표" src="img/payroll-table.webp" loading="lazy" decoding="async"></a><figcaption>간이세액표</figcaption></figure>
+</li>
+<li><strong>직원 급여 정보.</strong> <strong>급여 → 직원 급여 정보</strong>에서 박영업의 <strong>고치기</strong>를 누르고 은행, 계좌번호, 기본급 <code>3000000</code>, 식대 <code>200000</code>을 넣습니다. 목록에는 계좌가 <code>있음</code>으로만 나옵니다. 주민등록번호는 받지 않습니다.
+
+<figure><a href="img/payroll-profile.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="직원 급여 정보" src="img/payroll-profile.webp" loading="lazy" decoding="async"></a><figcaption>직원 급여 정보</figcaption></figure>
+</li>
+<li><strong>대장 만들기.</strong> <strong>급여 → 급여 대장 → 새로 만들기</strong>에서 귀속월 <code>2026-10</code>, 지급일 <code>2026-10-25</code>를 넣고 저장합니다. 박영업은 지급 3,200,000, 공제 373,300, 차인지급 2,826,700입니다. 오수도는 지급 2,005,000, 공제 194,810, 차인지급 1,810,190입니다.
+
+<figure><a href="img/payroll-register.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="대장" src="img/payroll-register.webp" loading="lazy" decoding="async"></a><figcaption>대장</figcaption></figure>
+</li>
+<li><strong>계산 근거.</strong> 대장 위에 계산에 쓴 요율과 세액표가 표시되고 <code>전문가 검수 전입니다</code>가 나옵니다.
+
+<figure><a href="img/payroll-source.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="계산 근거" src="img/payroll-source.webp" loading="lazy" decoding="async"></a><figcaption>계산 근거</figcaption></figure>
+</li>
+<li><strong>월 중 입사.</strong> 10월 12일에 들어온 신입사에게는 <code>월 중 입사·퇴사, 금액 확인</code>이 붙습니다. 일할 계산은 하지 않으므로 사람이 금액을 고칩니다. 이 장에서는 <strong>빼기</strong>를 눌러 제외합니다. 합계는 2명, 차인지급 4,636,890이 됩니다.
+
+<figure><a href="img/payroll-partial.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="월 중 입사" src="img/payroll-partial.webp" loading="lazy" decoding="async"></a><figcaption>월 중 입사</figcaption></figure>
+</li>
+<li><strong>사람이 고치기.</strong> 오수도 줄을 눌러 고용보험을 <code>18000</code>으로 고치면 그 칸에 표시가 남습니다. 칸을 비우면 다시 계산한 18,040으로 돌아옵니다.
+
+<figure><a href="img/payroll-edit.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="고친 칸" src="img/payroll-edit.webp" loading="lazy" decoding="async"></a><figcaption>고친 칸</figcaption></figure>
+</li>
+<li><strong>확정.</strong> <strong>확정</strong>을 누르면 명세서가 발행되고 값을 고칠 수 없습니다. <code>요율이 바뀌어도 움직이지 않습니다</code>라고 적혀 있습니다.
+
+<figure><a href="img/payroll-post.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="확정" src="img/payroll-post.webp" loading="lazy" decoding="async"></a><figcaption>확정</figcaption></figure>
+</li>
+<li><strong>이체 양식.</strong> <strong>급여 → 은행 이체 양식</strong>에서 <code>가온은행 대량이체</code>를 만들고 입금은행, 계좌번호, 금액, 받는 분 순서로 열을 정합니다.
+
+<figure><a href="img/payroll-format.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이체 양식" src="img/payroll-format.webp" loading="lazy" decoding="async"></a><figcaption>이체 양식</figcaption></figure>
+</li>
+<li><strong>이체 파일.</strong> 대장으로 돌아와 양식을 고르고 <strong>이체 파일 내려받기</strong>를 누릅니다. 내려받기 전에 오수도의 계좌가 없다는 안내가 나옵니다. 파일의 머리글은 <code>입금은행,계좌번호,금액,받는 분</code>입니다.
+
+<figure><a href="img/payroll-transfer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이체 파일" src="img/payroll-transfer.webp" loading="lazy" decoding="async"></a><figcaption>이체 파일</figcaption></figure>
+</li>
+<li><strong>지급 완료.</strong> 사람이 은행에서 이체한 뒤 <strong>지급 완료</strong>를 누르고 날짜를 넣습니다. <code>앱은 돈을 옮기지 않습니다</code>라고 적혀 있습니다.
+
+<figure><a href="img/payroll-paid.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="지급 완료" src="img/payroll-paid.webp" loading="lazy" decoding="async"></a><figcaption>지급 완료</figcaption></figure>
+</li>
+<li><strong>전표.</strong> 관리자로 회계를 켜고 <strong>회계 → 시산표</strong>를 엽니다. 나중에 켜도 지난 대장으로 전표가 만들어집니다. 급여 5,205,000, 예수금 -568,110, 보통예금 -4,636,890입니다.
+
+<figure><a href="img/payroll-books.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시산표" src="img/payroll-books.webp" loading="lazy" decoding="async"></a><figcaption>시산표</figcaption></figure>
+</li>
+<li><strong>원천세.</strong> 한인사로 <strong>급여 → 원천세</strong>에서 <code>2026-10</code>을 고릅니다. 간이세액 2명, 총지급액 5,205,000, 소득세 74,350, 지방소득세 7,430입니다. 줄을 누르면 대장이 나옵니다. <strong>옮겨 적을 값 내보내기</strong>로 내려받고 <strong>이 달 마감</strong>을 누르면 <code>마감 1회차</code>가 됩니다. 앱은 어디에도 전송하지 않습니다.
+
+<figure><a href="img/payroll-withholding.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="원천세" src="img/payroll-withholding.webp" loading="lazy" decoding="async"></a><figcaption>원천세</figcaption></figure>
+</li>
+<li><strong>내 명세서.</strong> 박영업으로 <strong>급여 → 내 명세서</strong>를 엽니다. 자기 명세서만 보이고 대장 메뉴와 다른 사람의 금액은 보이지 않습니다.
+
+<figure><a href="img/payroll-slip.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="내 명세서" src="img/payroll-slip.webp" loading="lazy" decoding="async"></a><figcaption>내 명세서</figcaption></figure>
+</li>
+</ol>
+<p>녹화에서 계좌번호로 원장을 검색해 값이 없는 것을 확인했습니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>요율이 바뀌면 지난 대장의 금액도 바뀌나요?</summary>
+<p>바뀌지 않습니다. 확정한 대장은 그때의 자료로 고정됩니다. 틀린 대장은 고치지 않고 정정 대장으로 바로잡습니다.</p>
+</details>
+<details class="answer">
+<summary>지급 완료를 누르면 돈이 나가나요?</summary>
+<p>아닙니다. 앱은 돈을 옮기지 않습니다. 사람이 은행에서 이체한 뒤 그 사실을 기록하는 단추입니다.</p>
+</details>
+<details class="answer">
+<summary>직원은 어디까지 볼 수 있나요?</summary>
+<p>자기 명세서만 봅니다. 대장 메뉴와 다른 사람의 금액은 보이지 않습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="people.html"><span>이전</span>인사·휴가·근태</a><a class="next" href="mrp.html"><span>다음</span>자재 명세와 제조 지시</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 실행해 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
