@@ -532,12 +532,12 @@
                             <h3 class="section-title mb-20 mt-n20" style="line-height: 1.4;"><span class="wow charsAnimIn" data-splitting="chars">왜 ERP를 새로 만들어야 하나요?</span></h3>
                             <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">에이전트가 ERP에서 전표를 올리고, 지급하고, 재고를 움직이기 시작했습니다. 이제 ERP는 지금 숫자뿐 아니라 누가 어떤 요청으로 무엇을 했고 그 일이 무엇과 묶였는지를 원본으로 가져야 합니다. 그래야 잘못된 일만 골라 되돌리고, 감사에 답할 수 있습니다.</p>
                         </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch erp-why-table" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>데이터</th><th>덮어쓰는 ERP에 남는 것</th><th>에이전트가 일할 때 필요한 것</th><th>uEngine ERP 장부에 쌓이는 줄</th></tr></thead><tbody><tr><td>매입 청구서</td><td>BILL/2026/11/0001, 상태 "지급 완료"</td><td>누가, 어떤 요청으로, 얼마를 게시했는지</td><td><code>InvoicePosted</code> 1,100,000원. 행위자 정회계, 출처 에이전트(MCP), 사유 "매입 전표 처리(승인번호 20261103-41000000-00001234)"</td></tr><tr><td>지급</td><td>PAY/2026/00001, 상태</td><td>취소할 때 그때 금액으로 반대 거래를 만들 근거</td><td><code>PaymentPosted</code>. 취소하면 지우지 않고 <code>PaymentCancelled</code>를 더합니다</td></tr><tr><td>재고</td><td>에어서큘레이터 모터 20개</td><td>이 20개가 어느 청구서 때문에 들어왔는지</td><td>재고 모듈이 <code>PickingValidated</code> WH/IN/00001을 같은 업무 번호로 남깁니다</td></tr><tr><td>회계 전표와 부가세</td><td>계정 잔액과 신고 칸의 합계</td><td>어느 업무에서 나온 분개와 신고 금액인지</td><td>회계 모듈의 <code>JournalEntryPosted</code>, 세금 모듈의 <code>VatEntryRecorded</code>가 같은 업무 번호로 쌓입니다</td></tr><tr><td>되돌린 뒤</td><td>이전 값으로 덮인 숫자</td><td>실수와 정정이 둘 다 남는 것</td><td>처리 21줄과 취소 21줄. 지운 줄은 없고, 이번 업무의 재고와 계정 순변화는 0입니다</td></tr></tbody></table></div>
+                        <div style="overflow-x: auto;"><table class="hj-arch erp-why-table" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>데이터</th><th>상태 기반 데이터</th><th>에이전트가 일할 때 필요한 것</th><th>이벤트 기반 데이터(이벤트 소싱)</th></tr></thead><tbody><tr><td>매입 청구서</td><td>BILL/2026/11/0001, 상태 "지급 완료"</td><td>누가, 어떤 요청으로, 얼마를 게시했는지</td><td><code>InvoicePosted</code> 1,100,000원. 행위자 정회계, 출처 에이전트(MCP), 사유 "매입 전표 처리(승인번호 20261103-41000000-00001234)"</td></tr><tr><td>지급</td><td>PAY/2026/00001, 상태</td><td>취소할 때 그때 금액으로 반대 거래를 만들 근거</td><td><code>PaymentPosted</code>. 취소하면 지우지 않고 <code>PaymentCancelled</code>를 더합니다</td></tr><tr><td>재고</td><td>에어서큘레이터 모터 20개</td><td>이 20개가 어느 청구서 때문에 들어왔는지</td><td>재고 모듈이 <code>PickingValidated</code> WH/IN/00001을 같은 업무 번호로 남깁니다</td></tr><tr><td>회계 전표와 부가세</td><td>계정 잔액과 신고 칸의 합계</td><td>어느 업무에서 나온 분개와 신고 금액인지</td><td>회계 모듈의 <code>JournalEntryPosted</code>, 세금 모듈의 <code>VatEntryRecorded</code>가 같은 업무 번호로 쌓입니다</td></tr><tr><td>되돌린 뒤</td><td>이전 값으로 덮인 숫자</td><td>실수와 정정이 둘 다 남는 것</td><td>처리 21줄과 취소 21줄. 지운 줄은 없고, 이번 업무의 재고와 계정 순변화는 0입니다</td></tr></tbody></table></div>
                         <p class="hj-note mt-20 mb-50 text-center">이 업무 번호를 사가 번호라고 합니다. 위 표는 Process GPT Lite가 MCP로 가상 회사 가온가전의 세금계산서 한 장을 처리하고 “방금 그거 취소할게”라는 요청으로 되돌린 실제 실행 기록이며, 줄 이름은 장부에 남는 이름 그대로입니다.</p>
                         <div class="row">
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>장부가 원본입니다</b><span>현재 숫자는 장부의 줄에서 계산합니다. 그래서 어느 시점이든 그때 숫자를 다시 만들 수 있습니다.</span></div></div>
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>업무 하나에 번호 하나</b><span>에이전트의 요청 하나에서 이어진 청구서, 지급, 입고, 전표, 신고 집계가 같은 번호로 묶입니다. 되돌릴 범위를 이 번호로 읽습니다.</span></div></div>
-                            <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>덧붙이지 않고 처음부터</b><span>덮어쓰는 ERP도 이력을 덧붙여 보완할 수 있지만, 장부를 하나 더 만드는 셈이라 두 장부가 어긋날 수 있습니다. 그래서 저장 방식부터 새로 만들었습니다.</span></div></div>
+                            <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>덧붙이지 않고 처음부터</b><span>상태 기반 ERP도 이력을 덧붙여 보완할 수 있지만, 장부를 하나 더 만드는 셈이라 두 장부가 어긋날 수 있습니다. 그래서 저장 방식부터 새로 만들었습니다.</span></div></div>
                         </div>
                         <p class="hj-note mt-10 mb-30 text-center">모든 시스템에 이 방식이 필요한 것은 아니며, 저장 공간과 모듈 사이의 짧은 지연이라는 비용이 있으니 에이전트가 거래와 재고와 지급을 바꾸는 곳부터 검토하세요.</p>
                         <div class="text-center"><a href="blog/agentic-erp-event-sourcing-saga.html" class="btn btn-mod btn-large btn-round btn-hover-anim"><span style="font-size: 16px;">왜 이벤트 소싱인지 자세히 보기</span></a></div>
@@ -564,7 +564,7 @@
                 <section class="page-section bg-gray-light-1 bg-light-alpha-90" id="features" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">
                     <div class="container position-relative">
                         <div class="col-md-10 offset-md-1 text-center">
-                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;"><span class="wow charsAnimIn" data-splitting="chars">회사가 성장하는 만큼 더합니다</span></h3>
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.5;"><span class="wow charsAnimIn" data-splitting="chars">회사가 작을 때는 기본 모듈만, 성장하면서 모듈을 추가해도 모든 데이터는 연결됩니다</span></h3>
                             <p class="section-descr mb-70 mb-sm-40 wow fadeInUp">실제 앱을 실행해 찍은 화면입니다. 데이터는 가상 회사 가온가전의 것입니다.</p>
                         </div>
                         <div class="row align-items-center plite-theme" id="theme-grow">
@@ -625,15 +625,6 @@
                     </div>
                 </section>
 
-                <section class="page-section" id="status">
-                    <div class="container position-relative">
-                        <div class="col-md-10 offset-md-1 text-center">
-                            <h3 class="section-title mb-20 mt-n20"><span class="wow charsAnimIn" data-splitting="chars">구성과 현재 상태</span></h3>
-                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">구현된 기능과 아직 구현되지 않은 기능을 그대로 적었습니다.</p>
-                        </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch" style="min-width: 640px; word-break: keep-all;"><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody><tr><td>앱 공개</td><td>앱과 소스 저장소를 공개했습니다. 실제 Supabase 클라우드 설치는 아직 시험하지 않았습니다. 막히면 문의하세요.</td></tr><tr><td>모듈</td><td>판매, 재고, 구매, 청구, 회계, 세금 신고, 고정자산, 인사, 휴가, 근태, 급여, 제조, 경비, CRM, 프로젝트 15개를 제공합니다. 모듈별로 켜고 끌 수 있습니다. 판매·재고·구매·청구·회계 32개 조합과 나머지 모듈을 더한 조합을 시험합니다. 급여·휴가·근태·경비는 인사, 제조는 재고를 켜야 사용 가능합니다. 경비는 본인, 승인자, 대신 올린 사람, 회계, 관리자만 읽습니다.</td></tr><tr><td>기본 기능 범위</td><td>다섯 모듈 시점에 주요 ERP의 기본 기능 256개 항목과 대조했습니다. 226개 제공, 22개 일부, 3개 없음, 5개는 메일 서버가 필요합니다. 고급 기능은 주문 처리에 필요한 것만 넣었습니다. 이후 추가한 모듈은 대조표에 포함하지 않았습니다.</td></tr><tr><td>없는 것</td><td>메일 발송, 전자세금계산서 발행(승인번호만 기록합니다), 은행 자동 연결, 외화 환산(외화 입력은 거부합니다), XML 가져오기, 청구서 PDF 첨부는 제공하지 않습니다. 회계·세금·급여·노동 화면은 전문가 검수 전입니다.</td></tr><tr><td>시험</td><td>SQL 1,273개, HTTP 17개, 브라우저 277개 시험을 로컬 Supabase에서 모두 통과했습니다. 실제 Supabase 클라우드에서는 아직 측정하지 않았습니다.</td></tr><tr><td>용량</td><td>무료 플랜 500 MB에 이벤트 약 13만 건, 주문 약 1만 건이 들어갑니다(다섯 모듈을 모두 켠 기준). 하루 주문 10건이면 약 3년입니다. 나머지 모듈을 켠 경우는 아직 측정하지 않았습니다.</td></tr><tr><td>예측의 정확도</td><td>정답을 아는 가상 회사로 측정했습니다. 품절이 잦은 회사에서는 발주와 단종 what-if가 판매 이력만 쓴 것보다 정확도가 크게 높았지만, 재고가 넉넉한 회사에서는 차이가 작고, 창고 재배치는 대부분 구분할 수 없다고 답합니다. 실제 회사에서는 더 나쁠 수 있습니다.</td></tr><tr><td>모듈 사이 지연</td><td>모듈은 이벤트로 이어지므로 주문 확정과 출고 전표 사이에 짧은 지연이 있습니다. 모듈마다 따로 확장할 수는 없습니다.</td></tr><tr><td>MCP</td><td>Process GPT Lite에 실제로 연결해 가상 회사·로컬 환경에서 세금계산서 처리, 말로 취소(사가 보상), 내년 분기 전망, what-if 질문을 실제 LLM과 실제 MCP로 실행해 확인했습니다.</td></tr><tr><td>MCP 되돌리기</td><td>에이전트는 자기가 MCP로 한 일에 다른 작업이 이어지지 않았을 때만 되돌리며, 연동 키는 묶인 구성원의 권한을 넘지 못합니다. 그 밖에는 관리자가 처리하고, 다른 작업이 이어졌다면 함께 돌아갈 작업을 확인하고 동의해야 실행됩니다.</td></tr></tbody></table></div>
-                    </div>
-                </section>
 
                 <!-- 영상 -->
                 <section class="page-section bg-gray-light-1" id="videos">
