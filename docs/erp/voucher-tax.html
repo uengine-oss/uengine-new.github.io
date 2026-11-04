@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>증빙 한 장이 신고까지 — uEngine ERP 튜토리얼</title>
+<meta name="description" content="매입 세금계산서 한 장을 입력하면 재고, 세금계산서 기록, 장부, 부가세 신고서까지 이어집니다. 줄을 누르면 그 금액을 만든 전표가 나오고, 마감하면 그 기간의 문서가 잠깁니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/erp/voucher-tax.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="증빙 한 장이 신고까지 — uEngine ERP 튜토리얼">
+<meta property="og:description" content="매입 세금계산서 한 장을 입력하면 재고, 세금계산서 기록, 장부, 부가세 신고서까지 이어집니다. 줄을 누르면 그 금액을 만든 전표가 나오고, 마감하면 그 기간의 문서가 잠깁니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/erp/voucher-tax.html">
+<meta property="og:image" content="https://www.uengine.org/docs/erp/img/whatif-policy.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine ERP <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/erp.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">01</span>설치하고 판매로 시작하기</a></li>
+</ul>
+<div class="nav-part">모듈 더하기</div><ul>
+<li><a href="modules.html"><span class="n">02</span>재고를 켜고, 고장 나도 판매는 계속</a></li>
+<li><a href="buy-books.html"><span class="n">03</span>구매·청구·회계 켜기</a></li>
+</ul>
+<div class="nav-part">이력과 되돌리기</div><ul>
+<li><a href="history.html"><span class="n">04</span>과거 시점 보기와 되돌리기</a></li>
+</ul>
+<div class="nav-part">예측과 what-if</div><ul>
+<li><a href="whatif.html"><span class="n">05</span>예측과 what-if</a></li>
+</ul>
+<div class="nav-part">연동</div><ul>
+<li><a href="connect.html"><span class="n">06</span>플러그인과 REST·MCP 연동</a></li>
+</ul>
+<div class="nav-part">세금과 장부</div><ul>
+<li><a href="voucher-tax.html" class="on" aria-current="page"><span class="n">07</span>증빙 한 장이 신고까지</a></li>
+<li><a href="books-assets.html"><span class="n">08</span>장부·결산·고정자산</a></li>
+</ul>
+<div class="nav-part">인사와 급여</div><ul>
+<li><a href="people.html"><span class="n">09</span>인사·휴가·근태</a></li>
+<li><a href="payroll.html"><span class="n">10</span>급여 · 전표 · 이체 · 원천세</a></li>
+</ul>
+<div class="nav-part">제조</div><ul>
+<li><a href="mrp.html"><span class="n">11</span>자재 명세와 제조 지시</a></li>
+</ul>
+<div class="nav-part">경비</div><ul>
+<li><a href="expense.html"><span class="n">12</span>경비</a></li>
+</ul>
+<div class="nav-part">영업과 프로젝트</div><ul>
+<li><a href="crm-project.html"><span class="n">13</span>CRM과 프로젝트</a></li>
+</ul>
+<div class="nav-part">Process GPT Lite</div><ul>
+<li><a href="lite.html"><span class="n">14</span>Process GPT Lite 연결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">세금과 장부<span class="chap">7</span></div>
+    <h1>증빙 한 장이 신고까지</h1>
+    <article>
+<blockquote>
+<p>매입 세금계산서 한 장을 입력하면 재고, 세금계산서 기록, 장부, 부가세 신고서까지 이어집니다. 줄을 누르면 그 금액을 만든 전표가 나오고, 마감하면 그 기간의 문서가 잠깁니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/m6S58_rBmfw" title="증빙 한 장이 신고까지 — 영상 2:49" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>경리는 증빙을 보고 전표를 작성합니다. 이 전표를 바탕으로 장부와 세금 신고서를 만듭니다. 매입매출 전표 화면에서는 이 과정을 한 화면에서 처리합니다. 새 문서 종류를 만들지 않습니다. 저장하면 청구서 게시와 지급이 한 작업으로 처리되고, 재고, 회계, 세금 신고 모듈은 이벤트를 받아 반영합니다.</p>
+<table>
+<thead>
+<tr>
+<th>입력한 것</th>
+<th>이어지는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>증빙유형, 승인번호</td>
+<td>청구서의 증빙 칸, 부가세 신고서 칸</td>
+</tr>
+<tr>
+<td>품목과 재고 반영</td>
+<td>입고 전표, 재고 수량</td>
+</tr>
+<tr>
+<td>공급가액, 세액, 결제방법</td>
+<td>분개, 시산표, 매입매출장</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">전문가 검수 전입니다</p>
+<p>세액 계산과 서식의 근거 법령은 문서에 적어 두었지만 회계·세무 전문가의 검수를 받지 않았습니다. 화면에도 그렇게 표시합니다. 신고의 책임은 회사에 있습니다. 일반과세자만 다룹니다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>가온가전은 가상 회사이고, 거래처, 승인번호, 금액은 모두 가상입니다. 화면은 로컬 Supabase에서 찍었습니다.</li>
+<li>전자세금계산서 발행, 전자신고 파일 생성, 은행·카드 스크래핑은 하지 않습니다. 전자 발행은 대행 계약이 있어야 해서 이 앱이 하지 않습니다. 신고는 홈택스에서 직접 합니다.</li>
+<li>녹화 전에 판매, 재고, 구매, 청구, 회계, 세금 신고 모듈을 켜고, 구성원 <strong>정회계</strong>(회계, 재고), 거래처 <code>한빛부품</code>과 <code>가온마트</code>, 제품 <code>에어서큘레이터</code>, 매출 전표 1건(3,000,000 + 세액 300,000), 신용카드 전표 1건(70,000 + 세액 7,000)을 명령으로 넣었습니다.</li>
+<li>신고 마감은 신고 기간이 끝난 뒤에만 할 수 있어 지난 기간(2026년 제2기 예정, 7~9월)의 전표로 찍었습니다.</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>정회계로 로그인합니다.</p>
+<ol class="steps">
+<li><strong>증빙 입력.</strong> <strong>청구 → 매입매출 전표</strong>를 엽니다. 거래구분 <code>매입</code>, 증빙유형 <code>세금계산서</code>, 증빙 일자 <code>2026-09-15</code>, 승인번호 <code>20260915-41000000-00000077</code>을 적고 거래처 <code>한빛부품</code>을 고릅니다. 사업자등록번호 123-45-67890이 표시됩니다.
+
+<figure><a href="img/voucher-tax-evidence.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="증빙 입력" src="img/voucher-tax-evidence.webp" loading="lazy" decoding="async"></a><figcaption>증빙 입력</figcaption></figure>
+</li>
+<li><strong>품목과 결제.</strong> 제품 <code>에어서큘레이터</code>, 수량 <code>10</code>, 단가 <code>100000</code>을 넣습니다. 결제방법은 <code>보통예금</code>으로 고르고 <strong>재고 반영</strong>을 켭니다.
+
+<figure><a href="img/voucher-tax-line.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="품목" src="img/voucher-tax-line.webp" loading="lazy" decoding="async"></a><figcaption>품목</figcaption></figure>
+</li>
+<li><strong>분개 미리 보기.</strong> 저장하기 전에 공급가액 1,000,000, 세액 100,000, 합계 1,100,000과 <strong>저장하면 생길 분개</strong>가 보입니다. 미착품 1,000,000, 부가세대급금 100,000이 차변, 보통예금 1,100,000이 대변입니다. 외상매입금 1,100,000은 차변과 대변에 모두 나옵니다.
+
+<figure><a href="img/voucher-tax-preview.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="분개 미리 보기" src="img/voucher-tax-preview.webp" loading="lazy" decoding="async"></a><figcaption>분개 미리 보기</figcaption></figure>
+</li>
+<li><strong>저장.</strong> <strong>저장하고 게시</strong>를 누릅니다. <code>BILL/2026/09/0002 게시 완료. 결제까지 처리했습니다. 장부와 재고는 곧 뒤따릅니다.</code>가 나옵니다.
+
+<figure><a href="img/voucher-tax-saved.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="저장" src="img/voucher-tax-saved.webp" loading="lazy" decoding="async"></a><figcaption>저장</figcaption></figure>
+</li>
+<li><strong>재고 확인.</strong> <strong>재고 → 재고 현황</strong>을 열면 에어서큘레이터 재고는 10입니다. 재고 모듈이 이벤트를 받아 입고 전표 <code>WH/IN/00001</code>을 만들고 완료했습니다.
+
+<figure><a href="img/voucher-tax-stock.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재고" src="img/voucher-tax-stock.webp" loading="lazy" decoding="async"></a><figcaption>재고</figcaption></figure>
+</li>
+<li><strong>세금계산서 기록 확인.</strong> 전표의 번호를 눌러 청구서를 엽니다. 증빙은 세금계산서, 승인번호는 입력한 값, 결제 상태는 결제 완료입니다.
+
+<figure><a href="img/voucher-tax-doc.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="청구서" src="img/voucher-tax-doc.webp" loading="lazy" decoding="async"></a><figcaption>청구서</figcaption></figure>
+</li>
+<li><strong>양식 인쇄.</strong> 매출 전표 <code>INV/2026/00001</code>의 <strong>인쇄</strong>를 누르면 세금계산서 양식이 나옵니다. 아래에 <code>이 종이는 국세청에 전송된 전자세금계산서가 아닙니다.</code>라고 적혀 있습니다.
+
+<figure><a href="img/voucher-tax-print.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="세금계산서 양식" src="img/voucher-tax-print.webp" loading="lazy" decoding="async"></a><figcaption>세금계산서 양식</figcaption></figure>
+</li>
+<li><strong>장부 확인.</strong> <strong>회계 → 매입매출장</strong>에 2026년을 넣습니다. 매출 1건 3,000,000, 매입 2건 1,070,000입니다. <strong>회계 → 시산표</strong>의 차변과 대변은 6,654,000으로 맞고, 부가세대급금은 107,000입니다.
+
+<figure><a href="img/voucher-tax-books.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="매입매출장" src="img/voucher-tax-books.webp" loading="lazy" decoding="async"></a><figcaption>매입매출장</figcaption></figure>
+</li>
+<li><strong>부가세 신고서.</strong> <strong>세금 신고 → 부가세 신고</strong>에서 2026년 제2기 예정을 고릅니다. (1) 세금계산서 발급분 3,000,000 / 세액 300,000, (10) 세금계산서 수취분 1,000,000 / 세액 100,000입니다. 매출세액 300,000, 매입세액 107,000, 납부세액 193,000입니다. 다루지 않는 칸에는 <code>다루지 않음</code>이라고 적혀 있습니다.
+
+<figure><a href="img/voucher-tax-vat.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="부가세 신고서" src="img/voucher-tax-vat.webp" loading="lazy" decoding="async"></a><figcaption>부가세 신고서</figcaption></figure>
+</li>
+<li><strong>전표까지 되짚기.</strong> (10) 줄을 누르면 그 금액을 만든 전표 <code>BILL/2026/09/0002</code>와 승인번호가 나옵니다.
+
+<figure><a href="img/voucher-tax-drill.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="줄을 누른 화면" src="img/voucher-tax-drill.webp" loading="lazy" decoding="async"></a><figcaption>줄을 누른 화면</figcaption></figure>
+</li>
+<li><strong>전표를 고치면 칸이 달라진다.</strong> 카드 전표를 열어 <strong>전표 취소</strong>를 누릅니다. 수정 사유 <code>입력 실수(수정 발행 아님)</code>와 사유를 적으면 대변 메모가 게시됩니다. 원래 기록은 지우지 않습니다. 신고서의 카드 세액은 0, 매입세액은 100,000, 납부세액은 200,000이 됩니다.
+
+<figure><a href="img/voucher-tax-moved.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="칸이 달라진 신고서" src="img/voucher-tax-moved.webp" loading="lazy" decoding="async"></a><figcaption>칸이 달라진 신고서</figcaption></figure>
+</li>
+<li><strong>신고 마감.</strong> <strong>신고 마감</strong>을 누릅니다. <code>앱이 국세청에 보내는 것은 없습니다.</code>라고 알리고 2026-09-30까지 세금 잠금일을 겁니다. 상태가 <strong>마감</strong>으로 바뀝니다.
+
+<figure><a href="img/voucher-tax-file.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="신고 마감" src="img/voucher-tax-file.webp" loading="lazy" decoding="async"></a><figcaption>신고 마감</figcaption></figure>
+</li>
+<li><strong>잠긴 기간.</strong> 처음 입력한 전표에서 <strong>전표 취소</strong>를 시도하면 <code>세금 잠금일(2026-09-30) 안에 있어 바꿀 수 없습니다</code>라는 안내가 나오고 취소되지 않습니다.
+
+<figure><a href="img/voucher-tax-locked.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="잠금" src="img/voucher-tax-locked.webp" loading="lazy" decoding="async"></a><figcaption>잠금</figcaption></figure>
+</li>
+<li><strong>마감 시점으로 보기.</strong> 신고 화면에서 <strong>마감 시점으로 보기</strong>를 켜고 (1) 줄을 누르면 그때 신고한 금액의 근거 전표가 나옵니다.
+
+<figure><a href="img/voucher-tax-asfiled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="마감 시점" src="img/voucher-tax-asfiled.webp" loading="lazy" decoding="async"></a><figcaption>마감 시점</figcaption></figure>
+</li>
+</ol>
+<p>같은 승인번호를 다시 넣으면 저장 전에 알려 주고, 저장을 시도해도 거부합니다. 홈택스, 카드사, 은행에서 사람이 내려받은 파일을 전표 후보로 가져오는 화면은 <strong>파일로 가져오기</strong>입니다. 금융 ID, 비밀번호, 공동인증서를 받지 않습니다. 이 영상에서는 찍지 않았습니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>매입매출 전표를 저장하면 새로운 문서가 생기나요?</summary>
+<p>새 문서 종류는 없습니다. 기존 청구서가 게시되고 입금이 기록되며, 둘은 한 작업으로 묶입니다. 재고, 회계, 세금 신고는 그 이벤트를 받아 반영합니다.</p>
+</details>
+<details class="answer">
+<summary>신고 마감을 누르면 국세청에 신고되나요?</summary>
+<p>아닙니다. 앱은 어디에도 보내지 않습니다. 신고한 값을 남기고 그 기간의 문서를 잠급니다. 신고는 홈택스에서 직접 합니다.</p>
+</details>
+<details class="answer">
+<summary>마감한 기간의 전표가 틀렸으면 어떻게 되나요?</summary>
+<p>전표 취소가 세금 잠금일에 막힙니다. 화면은 날짜를 잠금일 뒤로 정하거나 관리자에게 잠금 예외를 요청하라고 안내합니다. 신고 내용을 어떻게 고칠지는 회사와 세무 전문가가 판단합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="connect.html"><span>이전</span>플러그인과 REST·MCP 연동</a><a class="next" href="books-assets.html"><span>다음</span>장부·결산·고정자산</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 실행해 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

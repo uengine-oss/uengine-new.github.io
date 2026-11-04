@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자재 명세와 제조 지시 — uEngine ERP 튜토리얼</title>
+<meta name="description" content="자재 명세를 만들고 제조 지시를 내리면 필요한 자재와 부족한 양이 보입니다. 자재가 부족해도 진행할 수 있으며, 재고가 음수가 된다는 안내가 나옵니다. 완료하면 재고 모듈이 자재를 줄이고 완제품을 늘리며, 되돌리면 재고도 함께 돌아갑니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/erp/mrp.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="자재 명세와 제조 지시 — uEngine ERP 튜토리얼">
+<meta property="og:description" content="자재 명세를 만들고 제조 지시를 내리면 필요한 자재와 부족한 양이 보입니다. 자재가 부족해도 진행할 수 있으며, 재고가 음수가 된다는 안내가 나옵니다. 완료하면 재고 모듈이 자재를 줄이고 완제품을 늘리며, 되돌리면 재고도 함께 돌아갑니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/erp/mrp.html">
+<meta property="og:image" content="https://www.uengine.org/docs/erp/img/whatif-policy.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine ERP <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/erp.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">01</span>설치하고 판매로 시작하기</a></li>
+</ul>
+<div class="nav-part">모듈 더하기</div><ul>
+<li><a href="modules.html"><span class="n">02</span>재고를 켜고, 고장 나도 판매는 계속</a></li>
+<li><a href="buy-books.html"><span class="n">03</span>구매·청구·회계 켜기</a></li>
+</ul>
+<div class="nav-part">이력과 되돌리기</div><ul>
+<li><a href="history.html"><span class="n">04</span>과거 시점 보기와 되돌리기</a></li>
+</ul>
+<div class="nav-part">예측과 what-if</div><ul>
+<li><a href="whatif.html"><span class="n">05</span>예측과 what-if</a></li>
+</ul>
+<div class="nav-part">연동</div><ul>
+<li><a href="connect.html"><span class="n">06</span>플러그인과 REST·MCP 연동</a></li>
+</ul>
+<div class="nav-part">세금과 장부</div><ul>
+<li><a href="voucher-tax.html"><span class="n">07</span>증빙 한 장이 신고까지</a></li>
+<li><a href="books-assets.html"><span class="n">08</span>장부·결산·고정자산</a></li>
+</ul>
+<div class="nav-part">인사와 급여</div><ul>
+<li><a href="people.html"><span class="n">09</span>인사·휴가·근태</a></li>
+<li><a href="payroll.html"><span class="n">10</span>급여 · 전표 · 이체 · 원천세</a></li>
+</ul>
+<div class="nav-part">제조</div><ul>
+<li><a href="mrp.html" class="on" aria-current="page"><span class="n">11</span>자재 명세와 제조 지시</a></li>
+</ul>
+<div class="nav-part">경비</div><ul>
+<li><a href="expense.html"><span class="n">12</span>경비</a></li>
+</ul>
+<div class="nav-part">영업과 프로젝트</div><ul>
+<li><a href="crm-project.html"><span class="n">13</span>CRM과 프로젝트</a></li>
+</ul>
+<div class="nav-part">Process GPT Lite</div><ul>
+<li><a href="lite.html"><span class="n">14</span>Process GPT Lite 연결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">제조<span class="chap">11</span></div>
+    <h1>자재 명세와 제조 지시</h1>
+    <article>
+<blockquote>
+<p>자재 명세를 만들고 제조 지시를 내리면 필요한 자재와 부족한 양이 보입니다. 자재가 부족해도 진행할 수 있으며, 재고가 음수가 된다는 안내가 나옵니다. 완료하면 재고 모듈이 자재를 줄이고 완제품을 늘리며, 되돌리면 재고도 함께 돌아갑니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/Pg-lOBdq0pk" title="자재 명세와 제조 지시 — 영상 2:33" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>제조는 재고가 있어야 켤 수 있습니다. 제조 모듈은 재고를 직접 움직이지 않습니다. 완료 이벤트를 내면 재고 모듈이 구독해 자재를 줄이고 완제품을 늘립니다. 회계가 켜져 있으면 재공품을 거쳐 전표가 생깁니다.</p>
+<p>자재가 모자라도 막지 않는 이유는 기록이 늦어 실제로 있는 자재가 반영되지 않을 수 있기 때문입니다. 음수 재고는 숨기지 않고 그대로 보여 줍니다.</p>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>가온가전은 가상 회사이고, 제품과 원가는 모두 가상입니다. 화면은 로컬 Supabase에서 찍었습니다.</li>
+<li>녹화 전에 구성원 <strong>오제조</strong>(제조), <strong>이재고</strong>(재고), 제품 4개(가온 선풍기, 모터 11,000, 날개 900, 하우징 4,200), 자재 재고(모터 100, 날개 12, 하우징 100)를 명령으로 넣었습니다. 날개를 실사해 300으로 맞춘 것, 남은 지시 취소, 되돌리기용 지시와 출고도 화면 밖에서 명령으로 처리했습니다.</li>
+<li><strong>이 장의 시산표는 교육용 숫자입니다.</strong> 기초 재고를 재고 조정으로 넣어 재고자산감모손실이 -1,804,400으로 보입니다. 실제 회사라면 기초 잔액 전표로 넣습니다.</li>
+<li>작업장, 라우팅, 품질, 제품 수명 주기는 다루지 않습니다.</li>
+<li>회계 화면은 전문가 검수 전입니다.</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>켜기.</strong> 관리자로 <strong>설정 → 모듈</strong>을 엽니다. 제조 카드에 <code>재고 모듈을 먼저 켜야 합니다</code>라고 적혀 있습니다. 재고를 켜고 제조를 켭니다. 켜기 전의 제조는 원장에 없다고 알려 줍니다.
+
+<figure><a href="img/mrp-on.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="제조 켜기" src="img/mrp-on.webp" loading="lazy" decoding="async"></a><figcaption>제조 켜기</figcaption></figure>
+</li>
+<li><strong>자재 명세.</strong> 오제조로 로그인해 <strong>제조 → 자재 명세 → 새로 만들기</strong>에서 완제품 <code>가온 선풍기</code>를 고르고 <strong>줄 추가</strong>로 모터 1, 날개 3, 하우징 1을 넣어 저장합니다.
+
+<figure><a href="img/mrp-bom.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="자재 명세" src="img/mrp-bom.webp" loading="lazy" decoding="async"></a><figcaption>자재 명세</figcaption></figure>
+</li>
+<li><strong>순환 막기.</strong> 새 자재 명세에서 완제품 <code>가온 모터</code>의 자재로 <code>가온 선풍기</code>를 넣으면 <code>자재 명세가 순환합니다: 가온 모터 → 가온 선풍기 → 가온 모터</code>라는 안내가 나오고 진행되지 않습니다.
+
+<figure><a href="img/mrp-cycle.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="순환" src="img/mrp-cycle.webp" loading="lazy" decoding="async"></a><figcaption>순환</figcaption></figure>
+</li>
+<li><strong>제조 지시.</strong> <strong>제조 → 제조 지시 → 새로 만들기</strong>에서 <code>가온 선풍기</code>를 고르면 자재가 나옵니다. 계획 수량을 <code>5</code>로 고치면 날개는 15가 필요하고 현재고가 12이므로 3이 부족합니다. <code>그래도 확정하고 완료할 수 있고, 완료하면 재고가 음수가 됩니다</code>라고 적혀 있습니다.
+
+<figure><a href="img/mrp-mo.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="부족 표시" src="img/mrp-mo.webp" loading="lazy" decoding="async"></a><figcaption>부족 표시</figcaption></figure>
+</li>
+<li><strong>시작.</strong> 저장하면 <code>MO/00001</code>이 됩니다. <strong>확정</strong>을 누르면 수량을 더 이상 고칠 수 없습니다. <strong>시작</strong>을 누르면 진행 단계가 됩니다.
+
+<figure><a href="img/mrp-progress.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="진행" src="img/mrp-progress.webp" loading="lazy" decoding="async"></a><figcaption>진행</figcaption></figure>
+</li>
+<li><strong>완료.</strong> <strong>완료</strong>를 누르고 날개 실제 사용량을 <code>16</code>으로 적습니다. <code>실제 사용량이 계획과 다릅니다: 가온 날개 계획 15, 실제 16</code>이라는 확인 문구가 나옵니다. <strong>그대로 완료</strong>를 누릅니다.
+
+<figure><a href="img/mrp-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사용량 차이" src="img/mrp-done.webp" loading="lazy" decoding="async"></a><figcaption>사용량 차이</figcaption></figure>
+</li>
+<li><strong>결과.</strong> 재고 반영이 <code>반영됨</code>, 자재비 90,400, 완제품 단가 18,080입니다.
+
+<figure><a href="img/mrp-result.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결과" src="img/mrp-result.webp" loading="lazy" decoding="async"></a><figcaption>결과</figcaption></figure>
+</li>
+<li><strong>재고 확인.</strong> 이재고로 <strong>재고 → 재고 현황</strong>을 엽니다. 날개는 -4, 모터 95, 하우징 95, 선풍기 5입니다.
+
+<figure><a href="img/mrp-stock.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재고 음수" src="img/mrp-stock.webp" loading="lazy" decoding="async"></a><figcaption>재고 음수</figcaption></figure>
+</li>
+<li><strong>적게 만들기.</strong> 날개를 300으로 맞춘 뒤 10대 지시 <code>MO/00002</code>를 확정하고, 완료 수량 <code>4</code>로 완료합니다. <code>계획보다 적게 만들었습니다</code>라는 확인 문구가 나옵니다. 남은 수량은 <strong>새 지시로 남겨 두기</strong>를 고릅니다. 목록에 <code>MO/00003</code> 6대가 확정 상태로 생깁니다.
+
+<figure><a href="img/mrp-backorder.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="남은 수량" src="img/mrp-backorder.webp" loading="lazy" decoding="async"></a><figcaption>남은 수량</figcaption></figure>
+</li>
+<li><strong>재주문 규칙.</strong> 이재고로 <strong>재고 → 재주문 규칙 → 새로 만들기</strong>에서 변형 <code>가온 선풍기</code>, 위치 <code>재고</code>, 최소 <code>20</code>, 최대 <code>50</code>, 실행 <code>수동</code>, 보충 방식 <code>제조</code>를 넣습니다.
+
+<figure><a href="img/mrp-rule.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="재주문 규칙" src="img/mrp-rule.webp" loading="lazy" decoding="async"></a><figcaption>재주문 규칙</figcaption></figure>
+</li>
+<li><strong>보충.</strong> <strong>재고 → 보충</strong>에 공급처 <code>직접 제조</code>, 주문 수량 41이 나옵니다. <strong>주문</strong>을 누르면 지시 초안이 생깁니다. 입고 예정 수량을 포함하므로 추가 주문은 필요 없고 예측 수량은 50입니다.
+
+<figure><a href="img/mrp-replenish.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보충" src="img/mrp-replenish.webp" loading="lazy" decoding="async"></a><figcaption>보충</figcaption></figure>
+</li>
+<li><strong>초안 열기.</strong> 오제조로 <strong>제조 → 제조 지시</strong>에서 <code>MO/00004</code> 41대 초안을 엽니다. 날개는 123으로 계산되어 있습니다.
+
+<figure><a href="img/mrp-draft.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="지시 초안" src="img/mrp-draft.webp" loading="lazy" decoding="async"></a><figcaption>지시 초안</figcaption></figure>
+</li>
+<li><strong>되돌리기.</strong> 관리자로 완료한 지시 <code>MO/00005</code>의 이력에서 <strong>이 작업 되돌리기</strong>를 누릅니다. 입출고 전표도 함께 되돌린다는 안내가 먼저 나옵니다. 사유를 적고 실행하면 선풍기는 11에서 9로, 모터는 89에서 91로 돌아옵니다.
+
+<figure><a href="img/mrp-rollback.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="되돌리기" src="img/mrp-rollback.webp" loading="lazy" decoding="async"></a><figcaption>되돌리기</figcaption></figure>
+</li>
+<li><strong>막는 경우.</strong> 같은 지시를 다시 완료하고 선풍기를 모두 출고한 뒤 되돌리기를 누르면 <code>가온 선풍기 재고가 음수가 됩니다(-2)</code>라는 안내가 나오고 진행되지 않습니다.
+
+<figure><a href="img/mrp-blocked.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="되돌리기 막힘" src="img/mrp-blocked.webp" loading="lazy" decoding="async"></a><figcaption>되돌리기 막힘</figcaption></figure>
+</li>
+<li><strong>회계.</strong> 회계를 켜고 <strong>회계 → 시산표</strong>를 엽니다. 나중에 켜도 재공품을 거쳐 전표가 생깁니다. 재공품은 차변과 대변이 197,800으로 같아 기말 잔액이 0입니다.
+
+<figure><a href="img/mrp-books.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시산표" src="img/mrp-books.webp" loading="lazy" decoding="async"></a><figcaption>시산표</figcaption></figure>
+</li>
+</ol>
+<p>제조 완료가 10건 쌓이면 실측 제조 기간, 자재 소요, 생산량 변경 what-if가 열립니다. 이 영상에서는 다루지 않습니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>자재가 모자란데 왜 막지 않나요?</summary>
+<p>기록이 늦어 실제로 있는 자재가 반영되지 않을 수 있기 때문입니다. 대신 화면에 부족한 수량을 표시하고, 완료하면 재고가 음수가 된다는 안내를 먼저 보여 줍니다.</p>
+</details>
+<details class="answer">
+<summary>재고 수량을 움직이는 것은 어느 모듈인가요?</summary>
+<p>재고 모듈입니다. 제조 모듈은 완료 이벤트를 내고, 재고 모듈이 구독해 자재를 줄이고 완제품을 늘립니다.</p>
+</details>
+<details class="answer">
+<summary>완료한 지시를 언제 되돌릴 수 없나요?</summary>
+<p>완제품이 이미 나가 재고가 음수가 될 때입니다. 화면에는 어느 제품의 재고가 얼마나 음수가 되는지 나옵니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="payroll.html"><span>이전</span>급여 · 전표 · 이체 · 원천세</a><a class="next" href="expense.html"><span>다음</span>경비</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 실행해 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
