@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""산업별 솔루션 튜토리얼 빌드 (uEngine MES · uEngine WMS).
+"""산업별 솔루션·교육 튜토리얼 빌드 (uEngine MES · uEngine WMS · AI 기획·설계 도구 실습).
 
     python3 tools/industry-docs/build.py mes
     python3 tools/industry-docs/build.py wms
+    python3 tools/industry-docs/build.py ai-planning
     python3 tools/industry-docs/build.py erp
 
 <제품>/src/*.md (장마다 하나) → docs/<제품>/*.html. 목차·순서는 아래 PRODUCTS 가 정한다.
@@ -31,6 +32,9 @@ PRODUCTS = {
     "wms": dict(name="uEngine WMS", page="wms.html", og="inbound-po.webp", search="튜토리얼 검색 (예: RFQ, 입고 검수, WCS 설비)",
                 foot="이 튜토리얼의 화면과 결과는 공개 저장소의 샘플 앱(커밋 fc82ea2)을 실제 실행해 얻었습니다.",
                 chapters=[("index", "시작하기"), ("inbound", "입고와 재고"), ("automation", "창고 자동화"), ("ops", "창고 자동화"), ("agent", "AI 연결")]),
+    "ai-planning": dict(name="AI 기획·설계 도구 실습", page="educationax.html", og="board1b.webp", search="교재 검색 (예: 역질문, 겹침 금지, OpenUI)",
+                foot="이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.",
+                chapters=[("index", "시작하기"), ("interview", "1부"), ("model", "2부"), ("screen", "3부"), ("wrap", "4부")]),
 }
 KEY = sys.argv[1] if sys.argv[1:] and sys.argv[1] in PRODUCTS else sys.exit(__doc__)
 P = PRODUCTS[KEY]
