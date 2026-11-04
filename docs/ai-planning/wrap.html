@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>도구 선택과 적용 과제 — AI 기획·설계 도구 실습 튜토리얼</title>
+<meta name="description" content="보안 요건에 맞는 도구 조합, 단계별 승인 체크리스트, 자기 업무에 적용하는 과제를 정리합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ai-planning/wrap.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="도구 선택과 적용 과제 — AI 기획·설계 도구 실습 튜토리얼">
+<meta property="og:description" content="보안 요건에 맞는 도구 조합, 단계별 승인 체크리스트, 자기 업무에 적용하는 과제를 정리합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ai-planning/wrap.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ai-planning/img/board1b.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AI 기획·설계 도구 실습 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 역질문, 겹침 금지, OpenUI)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/educationax.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>오리엔테이션</a></li>
+</ul>
+<div class="nav-part">1부</div><ul>
+<li><a href="interview.html"><span class="n">01</span>스마트 인터뷰</a></li>
+</ul>
+<div class="nav-part">2부</div><ul>
+<li><a href="model.html"><span class="n">02</span>이벤트 스토밍과 ERD</a></li>
+</ul>
+<div class="nav-part">3부</div><ul>
+<li><a href="screen.html"><span class="n">03</span>화면 흐름과 프로토타입</a></li>
+</ul>
+<div class="nav-part">4부</div><ul>
+<li><a href="wrap.html" class="on" aria-current="page"><span class="n">04</span>도구 선택과 적용 과제</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">4부<span class="chap">4</span></div>
+    <h1>도구 선택과 적용 과제</h1>
+    <article>
+<blockquote>
+<p>보안 요건에 맞는 도구 조합, 단계별 승인 체크리스트, 자기 업무에 적용하는 과제를 정리합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/HwT0i7s6mJE" title="도구 선택과 적용 과제 — 영상 1:28" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="보안-요건이-도구를-가릅니다">보안 요건이 도구를 가릅니다<a class="anchor" href="#보안-요건이-도구를-가릅니다" title="Permanent link">#</a></h2>
+<p>보안 요건이 도구를 가릅니다. 외부 전송이 금지된 곳은 설치형을, 속도와 협업이 먼저인 곳은 SaaS를 씁니다. 주의할 점이 있습니다. 설치형이 곧 외부 전송 없음은 아닙니다. AI-DLC와 스킬은 내 컴퓨터에서 돌지만 클로드 코드를 쓰면 문서가 모델 제공자로 갑니다. 폐쇄망이라면 사내 모델 연결부터 검증합니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>외부 전송 금지 (금융, 방산, 공공)</th>
+<th>속도와 협업 우선 (스타트업, PoC)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>인터뷰</td>
+<td>AI-DLC + 사내 승인 모델</td>
+<td>ChatPRD 또는 AI-DLC</td>
+</tr>
+<tr>
+<td>모델링</td>
+<td>ddd-starter + 사내 승인 모델</td>
+<td>ddd-starter, Eraser</td>
+</tr>
+<tr>
+<td>ERD</td>
+<td>Mermaid CLI, Azimutt 자체 설치</td>
+<td>Mermaid Live, Eraser</td>
+</tr>
+<tr>
+<td>화면</td>
+<td>OpenUI, bolt.diy + Ollama</td>
+<td>Uizard, Relume</td>
+</tr>
+</tbody>
+</table>
+<p><strong>"설치형"이 곧 "외부 전송 없음"은 아닙니다</strong></p>
+<p>AI-DLC와 스킬은 내 컴퓨터에서 돌지만, Claude Code를 쓰면 문서가 모델 제공자로 갑니다. 폐쇄망에서는 사내 모델을 연결할 수 있는지 먼저 검증합니다. 이 교재에서는 그 구성을 실행하지 않았습니다.</p>
+<h2 id="오늘-우리-데이터는-어디로-갔습니까">오늘 우리 데이터는 어디로 갔습니까?<a class="anchor" href="#오늘-우리-데이터는-어디로-갔습니까" title="Permanent link">#</a></h2>
+<p>오늘 데이터가 어디로 갔는지 정리합니다. AI-DLC와 스킬은 클로드 코드의 모델 제공자로, 오픈유아이는 내 컴퓨터에만, 렐룸 같은 SaaS는 서비스 서버로 갔습니다. 실제 회사 문서를 넣기 전에 이 표를 자기 회사 기준으로 다시 씁니다. 오늘 주제가 가상의 회사인 이유입니다.</p>
+<table>
+<thead>
+<tr>
+<th>도구</th>
+<th>모델과 처리 위치</th>
+<th>확인할 점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI-DLC, ddd-starter</td>
+<td>Claude Code의 모델 제공자</td>
+<td>구상 글과 답변이 전송됩니다</td>
+</tr>
+<tr>
+<td>OpenUI + Ollama</td>
+<td>내 컴퓨터 127.0.0.1</td>
+<td>프롬프트가 밖으로 나가지 않습니다</td>
+</tr>
+<tr>
+<td>Mermaid Live</td>
+<td>브라우저 화면</td>
+<td>주소에 코드가 담기니 링크 공유 주의</td>
+</tr>
+<tr>
+<td>Azimutt 웹판</td>
+<td>화면 문구: 내 컴퓨터에 머문다고 안내</td>
+<td>민감하면 자체 설치, 정책 재확인</td>
+</tr>
+<tr>
+<td>Relume, ChatPRD 등</td>
+<td>서비스 서버</td>
+<td>입력은 외부로 갑니다. 약관 확인</td>
+</tr>
+</tbody>
+</table>
+<p>실제 회사 문서를 넣기 전에 이 표를 자기 회사 기준으로 다시 씁니다. 오늘 주제가 가상의 회사인 이유입니다.</p>
+<h2 id="단계마다-사람이-확인할-일">단계마다 사람이 확인할 일<a class="anchor" href="#단계마다-사람이-확인할-일" title="Permanent link">#</a></h2>
+<p>단계마다 사람이 확인할 일입니다. 요구사항은 근거 없는 문장과 범위를, 모델은 핵심 규칙이 제약으로 있는지와 실패 경우를, 화면은 요구하지 않은 기능과 막아야 할 동작을 봅니다. 오늘 잡은 수령 기록, 반납일 당일, 잘못된 버튼 문제가 모두 이런 확인에서 나왔습니다.</p>
+<p><strong>요구사항</strong></p>
+<ul>
+<li>근거 표시 없는 문장이 있는가</li>
+<li>범위 밖 목록이 맞는가</li>
+<li>열린 질문의 담당자가 있는가</li>
+</ul>
+<p><strong>모델과 DDL</strong></p>
+<ul>
+<li>핵심 규칙이 제약으로 있는가</li>
+<li>실패 경우까지 실제로 돌렸는가</li>
+<li>AI의 가정을 업무 담당자가 봤는가</li>
+</ul>
+<p><strong>화면</strong></p>
+<ul>
+<li>요구하지 않은 기능이 생겼는가</li>
+<li>금지된 동작을 막고 있는가</li>
+<li>예시 값을 실제 값으로 바꿨는가</li>
+</ul>
+<p>오늘 잡은 문제 대부분은 이 질문들로 찾았습니다. 수령 기록, 반납일 당일, 잘못된 버튼, 눌리는 승인 버튼이 그랬습니다.</p>
+<h2 id="내-업무-하나로-다시-해-봅니다">내 업무 하나로 다시 해 봅니다<a class="anchor" href="#내-업무-하나로-다시-해-봅니다" title="Permanent link">#</a></h2>
+<p>마지막 15분은 자기 업무로 다시 해 봅니다. 엑셀과 메신저로 돌아가는 일을 다섯 줄로 쓰고, 실제 고객 정보는 뺍니다. 의도 정리까지 돌린 뒤, 절대 깨지면 안 되는 규칙을 한 문장으로 씁니다. 옆 사람과 바꿔 읽고 예외를 찾아 주면 수업이 끝납니다.</p>
+<table>
+<thead>
+<tr>
+<th>순서</th>
+<th>할 일</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>엑셀과 메신저로 돌아가는 일 하나를 다섯 줄로 씁니다. 실제 고객 정보는 뺍니다</td>
+<td>brief.md</td>
+</tr>
+<tr>
+<td>2</td>
+<td>/aidlc --scope poc 로 의도 정리까지 합니다</td>
+<td>내가 정하지 않았던 것 3개</td>
+</tr>
+<tr>
+<td>3</td>
+<td>"절대 깨지면 안 되는 규칙"을 한 문장으로 씁니다</td>
+<td>불변식 1개</td>
+</tr>
+<tr>
+<td>4</td>
+<td>그 규칙이 깨지는 화면을 말로 설명합니다</td>
+<td>정합성 표 1행</td>
+</tr>
+</tbody>
+</table>
+<p>옆 사람과 불변식을 바꿔 읽고, 예외를 하나씩 찾아 줍니다.</p>
+<h2 id="공식-자료-2026년-11월-4일-확인">공식 자료 (2026년 11월 4일 확인)<a class="anchor" href="#공식-자료-2026년-11월-4일-확인" title="Permanent link">#</a></h2>
+<p>참고 자료입니다. 요금과 무료 한도는 자주 바뀌니 수업 전날 다시 확인합니다. 오늘 기억할 한 문장입니다. AI가 묻게 하고, 사람이 승인하고, 돌려 보고 믿습니다. 수고하셨습니다.</p>
+<ul>
+<li><a href="https://github.com/awslabs/aidlc-workflows">AI-DLC Workflows</a></li>
+<li><a href="https://awslabs.github.io/aidlc-workflows/">AI-DLC 문서</a></li>
+<li><a href="https://github.com/uengine-oss/ddd-starter-skill-kor">ddd-starter 스킬</a></li>
+<li><a href="https://github.com/ddd-crew/ddd-starter-modelling-process">DDD Starter Modelling Process</a></li>
+<li><a href="https://mermaid.live/">Mermaid Live Editor</a></li>
+<li><a href="https://mermaid.ai/">Mermaid (구 Mermaid Chart)</a></li>
+<li>
+<p><a href="https://azimutt.app/">Azimutt</a></p>
+</li>
+<li>
+<p><a href="https://www.eraser.io/diagramgpt">Eraser DiagramGPT</a></p>
+</li>
+<li><a href="https://www.chatprd.ai/pricing">ChatPRD 요금</a></li>
+<li><a href="https://github.com/wandb/openui">W&amp;B OpenUI</a></li>
+<li><a href="https://www.relume.ai/">Relume</a></li>
+<li><a href="https://uizard.io/pricing/">Uizard 요금</a></li>
+<li><a href="https://github.com/stackblitz-labs/bolt.diy">bolt.diy</a></li>
+</ul>
+<p>요금, 무료 한도, 가입 조건은 자주 바뀝니다. 수업 전날 다시 확인합니다.</p>
+<p>기억할 한 문장: AI가 묻게 하고, 사람이 승인하고, 돌려 보고 믿습니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="screen.html"><span>이전</span>화면 흐름과 프로토타입</a><span></span></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#보안-요건이-도구를-가릅니다">보안 요건이 도구를 가릅니다</a></li><li><a href="#오늘-우리-데이터는-어디로-갔습니까">오늘 우리 데이터는 어디로 갔습니까?</a></li><li><a href="#단계마다-사람이-확인할-일">단계마다 사람이 확인할 일</a></li><li><a href="#내-업무-하나로-다시-해-봅니다">내 업무 하나로 다시 해 봅니다</a></li><li><a href="#공식-자료-2026년-11월-4일-확인">공식 자료 (2026년 11월 4일 확인)</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

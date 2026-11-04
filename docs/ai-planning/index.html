@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오리엔테이션 — AI 기획·설계 도구 실습 튜토리얼</title>
+<meta name="description" content="3시간 동안 사내 장비 대여 서비스 하나를 요구사항 인터뷰부터 ERD, 화면 프로토타입까지 설계합니다. 일정과 산출물, 실습 주제, 도구 지도를 안내합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ai-planning/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="오리엔테이션 — AI 기획·설계 도구 실습 튜토리얼">
+<meta property="og:description" content="3시간 동안 사내 장비 대여 서비스 하나를 요구사항 인터뷰부터 ERD, 화면 프로토타입까지 설계합니다. 일정과 산출물, 실습 주제, 도구 지도를 안내합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ai-planning/">
+<meta property="og:image" content="https://www.uengine.org/docs/ai-planning/img/board1b.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AI 기획·설계 도구 실습 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 역질문, 겹침 금지, OpenUI)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/educationax.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>오리엔테이션</a></li>
+</ul>
+<div class="nav-part">1부</div><ul>
+<li><a href="interview.html"><span class="n">01</span>스마트 인터뷰</a></li>
+</ul>
+<div class="nav-part">2부</div><ul>
+<li><a href="model.html"><span class="n">02</span>이벤트 스토밍과 ERD</a></li>
+</ul>
+<div class="nav-part">3부</div><ul>
+<li><a href="screen.html"><span class="n">03</span>화면 흐름과 프로토타입</a></li>
+</ul>
+<div class="nav-part">4부</div><ul>
+<li><a href="wrap.html"><span class="n">04</span>도구 선택과 적용 과제</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap"></span></div>
+    <h1>오리엔테이션</h1>
+    <article>
+<blockquote>
+<p>3시간 동안 사내 장비 대여 서비스 하나를 요구사항 인터뷰부터 ERD, 화면 프로토타입까지 설계합니다. 일정과 산출물, 실습 주제, 도구 지도를 안내합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/4mxg8YrlFwk" title="오리엔테이션 — 영상 1:54" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="3시간-일정">3시간 일정<a class="anchor" href="#3시간-일정" title="Permanent link">#</a></h2>
+<p>일정은 네 부분입니다. 1부에서 인터뷰로 요구사항을 만들고, 2부에서 이벤트 스토밍과 ERD를, 3부에서 화면을 만듭니다. 마지막 20분은 보안 기준으로 도구를 고르고 자기 업무에 적용합니다.</p>
+<table>
+<thead>
+<tr>
+<th>시간</th>
+<th>내용</th>
+<th>쓰는 도구</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0:00 ~ 0:15</td>
+<td>오리엔테이션</td>
+<td>실습 주제, 도구 지도</td>
+</tr>
+<tr>
+<td>0:15 ~ 0:55</td>
+<td>1부 스마트 인터뷰</td>
+<td>AI-DLC, ChatPRD</td>
+</tr>
+<tr>
+<td>0:55 ~ 1:05</td>
+<td>쉬는 시간</td>
+<td></td>
+</tr>
+<tr>
+<td>1:05 ~ 1:50</td>
+<td>2부 이벤트 스토밍과 ERD</td>
+<td>ddd-starter, Mermaid, Azimutt, Eraser</td>
+</tr>
+<tr>
+<td>1:50 ~ 2:00</td>
+<td>쉬는 시간</td>
+<td></td>
+</tr>
+<tr>
+<td>2:00 ~ 2:40</td>
+<td>3부 화면 흐름과 프로토타입</td>
+<td>OpenUI, Relume, Uizard, bolt.diy</td>
+</tr>
+<tr>
+<td>2:40 ~ 3:00</td>
+<td>4부 도구 선택과 적용 과제</td>
+<td>내 업무에 적용하기</td>
+</tr>
+</tbody>
+</table>
+<h2 id="오늘-손에-남는-산출물-다섯-가지">오늘 손에 남는 산출물 다섯 가지<a class="anchor" href="#오늘-손에-남는-산출물-다섯-가지" title="Permanent link">#</a></h2>
+<p>오늘 산출물은 다섯 가지입니다. 의도 문서, 요구사항, 이벤트 보드, ERD와 DDL, 그리고 화면입니다. 앞 단계 파일이 다음 단계의 입력이 됩니다. 이 교재의 화면은 모두 실제로 실행한 결과이고, AI 답변 문구는 직접 할 때 조금씩 다를 수 있습니다.</p>
+<p><strong>의도 문서</strong></p>
+<p>무엇을 왜 만드는지, 무엇을 뺄지</p>
+<p><strong>요구사항</strong></p>
+<p>시험할 수 있는 문장과 열린 질문</p>
+<p><strong>이벤트 보드</strong></p>
+<p>업무 사건, 명령, 정책, 애그리게잇</p>
+<p><strong>ERD · DDL</strong></p>
+<p>규칙까지 담아 실제로 돌려 본 스키마</p>
+<p><strong>화면</strong></p>
+<p>대화로 고친 프로토타입과 사이트맵</p>
+<p>앞 단계의 파일이 다음 단계의 입력이 됩니다. 도구가 바뀌어도 이 파일들은 저장소에 남습니다.</p>
+<p>이 교재의 화면과 결과는 2026년 11월 4일에 실제로 실행한 것입니다. 직접 해 보면 AI 답변의 문구는 조금씩 다를 수 있습니다.</p>
+<h2 id="기획-단계에-ai를-쓰는-두-가지-방식">기획 단계에 AI를 쓰는 두 가지 방식<a class="anchor" href="#기획-단계에-ai를-쓰는-두-가지-방식" title="Permanent link">#</a></h2>
+<p>기획에 AI를 쓰는 방식은 크게 둘입니다. 프롬프트 한 번에 맡기면 AI가 빈칸을 추측으로 채우고, 그럴듯한 문서 속 누락은 구현한 뒤에야 드러납니다. 오늘은 AI가 모르는 것을 되묻게 하고, 단계마다 사람이 승인하는 방식으로 진행합니다.</p>
+<p><strong>프롬프트 한 번에 맡기기</strong></p>
+<ul>
+<li>AI가 빈칸을 추측으로 채웁니다</li>
+<li>문서는 그럴듯한데 누락을 알아채기 어렵습니다</li>
+<li>구현한 뒤에 다시 만듭니다</li>
+</ul>
+<p><strong>되묻게 하고 사람이 승인하기</strong></p>
+<ul>
+<li>AI가 모르는 것을 질문합니다</li>
+<li>문서의 문장마다 근거가 남습니다</li>
+<li>단계마다 사람이 승인해야 넘어갑니다</li>
+</ul>
+<p>오늘은 오른쪽 방식을 인터뷰, 모델링, 화면 세 단계에 차례로 적용합니다.</p>
+<h2 id="실습-주제-사내-장비-대여-서비스">실습 주제: 사내 장비 대여 서비스<a class="anchor" href="#실습-주제-사내-장비-대여-서비스" title="Permanent link">#</a></h2>
+<p>실습 주제는 사내 장비 대여 서비스입니다. 가상의 회사를 가정한 짧은 구상 글이고, 빈틈을 그대로 남겼습니다. 문제는 세 가지가 적혀 있는데 무엇이 먼저인지 없습니다. AI가 이 빈틈을 어떻게 찾아내는지 보겠습니다.</p>
+<p>brief.md (이 글을 그대로 저장합니다)</p>
+<p>직원 300명 규모 회사입니다. 노트북, 빔프로젝터, 카메라, 촬영 조명 같은 공용 장비를 지금은 총무팀이 엑셀과 메신저로 관리합니다. 누가 무엇을 언제까지 빌렸는지 찾기 어렵고, 같은 장비를 두 사람에게 약속하는 일이 한 달에 몇 번씩 생깁니다. 반납이 늦어져도 총무 담당자가 일일이 연락해야 합니다.</p>
+<p>웹에서 직원이 장비를 찾아 대여를 신청하고, 총무 담당자가 승인한 뒤 수령과 반납까지 기록되면 좋겠습니다. 반납이 늦으면 자동으로 알려 주면 좋겠습니다.</p>
+<p>일부러 짧고 빈틈이 있게 썼습니다. 이 글은 가상의 회사를 가정한 것입니다.</p>
+<h2 id="도구-지도와-이-교재의-확인-범위">도구 지도와 이 교재의 확인 범위<a class="anchor" href="#도구-지도와-이-교재의-확인-범위" title="Permanent link">#</a></h2>
+<p>오늘 다루는 도구입니다. 표의 오른쪽 칸이 이 교재에서 실제로 확인한 범위입니다. AI-DLC, ddd-starter, Mermaid, OpenUI, Relume은 끝까지 실행했습니다. ChatPRD, Eraser, Uizard는 가입이 필요해 요금만 확인했고, bolt.diy는 설치까지만 했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>도구</th>
+<th>형태</th>
+<th>이 교재에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>인터뷰</td>
+<td>AI-DLC Workflows</td>
+<td>설치형</td>
+<td>끝까지 실행</td>
+</tr>
+<tr>
+<td>인터뷰</td>
+<td>ChatPRD</td>
+<td>SaaS, 가입 필요</td>
+<td>요금만 확인, 화면 미확인</td>
+</tr>
+<tr>
+<td>모델링</td>
+<td>ddd-starter 스킬</td>
+<td>Claude Code 스킬</td>
+<td>끝까지 실행</td>
+</tr>
+<tr>
+<td>ERD</td>
+<td>Mermaid Live</td>
+<td>웹, 가입 없음</td>
+<td>끝까지 실행</td>
+</tr>
+<tr>
+<td>ERD</td>
+<td>Azimutt</td>
+<td>웹 또는 Docker</td>
+<td>웹판 실행, Docker 미실행</td>
+</tr>
+<tr>
+<td>ERD</td>
+<td>Eraser DiagramGPT</td>
+<td>SaaS</td>
+<td>요금만 확인, AI 생성 미확인</td>
+</tr>
+<tr>
+<td>화면</td>
+<td>OpenUI + Ollama</td>
+<td>설치형, 로컬 모델</td>
+<td>끝까지 실행</td>
+</tr>
+<tr>
+<td>화면</td>
+<td>Relume</td>
+<td>SaaS, 가입 없이 생성</td>
+<td>끝까지 실행</td>
+</tr>
+<tr>
+<td>화면</td>
+<td>Uizard</td>
+<td>SaaS, 가입 필요</td>
+<td>요금만 확인, 화면 미확인</td>
+</tr>
+<tr>
+<td>화면</td>
+<td>bolt.diy</td>
+<td>설치형</td>
+<td>설치까지, 실행 미확인</td>
+</tr>
+</tbody>
+</table>
+<p>요금과 가입 조건은 2026년 11월 4일 공식 페이지 기준입니다. 수업 전에 다시 확인합니다.</p>
+<h2 id="실습-준비-확인">실습 준비 확인<a class="anchor" href="#실습-준비-확인" title="Permanent link">#</a></h2>
+<p>시작 전에 준비를 확인합니다. Claude Code와 로그인된 계정, 브라우저, git은 꼭 필요합니다. 3부의 로컬 실습에는 uv와 Ollama가 필요하고, 모델은 4.7기가바이트라 수업 전에 미리 받아 둡니다. 2부 DDL 실습에는 Docker를 씁니다.</p>
+<p><strong>꼭 필요한 것</strong></p>
+<ul>
+<li>Claude Code와 로그인된 계정</li>
+<li>Chrome 같은 최신 브라우저</li>
+<li>git</li>
+</ul>
+<p><strong>3부 로컬 실습에 필요한 것</strong></p>
+<ul>
+<li>uv와 Ollama</li>
+<li>모델 4.7GB를 내려받을 공간과 시간</li>
+<li>2부 DDL 실습용 Docker</li>
+</ul>
+<div class="hl"><pre><span></span><code>claude --version      # 이 교재는 2.1.316에서 확인
+uv --version; docker --version; ollama --version
+ollama pull qwen2.5-coder:7b  # 수업 전에 미리 받아 둡니다
+</code></pre></div>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="interview.html"><span>다음</span>스마트 인터뷰</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#3시간-일정">3시간 일정</a></li><li><a href="#오늘-손에-남는-산출물-다섯-가지">오늘 손에 남는 산출물 다섯 가지</a></li><li><a href="#기획-단계에-ai를-쓰는-두-가지-방식">기획 단계에 AI를 쓰는 두 가지 방식</a></li><li><a href="#실습-주제-사내-장비-대여-서비스">실습 주제: 사내 장비 대여 서비스</a></li><li><a href="#도구-지도와-이-교재의-확인-범위">도구 지도와 이 교재의 확인 범위</a></li><li><a href="#실습-준비-확인">실습 준비 확인</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
