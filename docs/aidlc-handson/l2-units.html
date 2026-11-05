@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6·7단계 유닛 나누기와 API 계약 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="컴포넌트를 따로 만들고 검증할 유닛으로 묶고 의존 그래프를 그린 뒤, 서비스 사이의 약속을 계약으로 정합니다. 계약은 첫 검토에서 NOT-READY였다가 고친 뒤 READY가 되었습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/l2-units.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6·7단계 유닛 나누기와 API 계약 — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="컴포넌트를 따로 만들고 검증할 유닛으로 묶고 의존 그래프를 그린 뒤, 서비스 사이의 약속을 계약으로 정합니다. 계약은 첫 검토에서 NOT-READY였다가 고친 뒤 READY가 되었습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/l2-units.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">레벨 1 · poc</div><ul>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+<li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
+<li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul>
+<div class="nav-part">레벨 2 · classic</div><ul>
+<li><a href="l2-overview.html"><span class="n">05</span>레벨 2 개요와 1단계 팀 규칙</a></li>
+<li><a href="l2-requirements.html"><span class="n">06</span>2단계 요구사항</a></li>
+<li><a href="l2-stories.html"><span class="n">07</span>3·4단계 유저 스토리와 화면</a></li>
+<li><a href="l2-domain.html"><span class="n">08</span>5단계 도메인 설계</a></li>
+<li><a href="l2-units.html" class="on" aria-current="page"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
+<li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
+<li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">레벨 2 · classic<span class="chap">9</span></div>
+    <h1>6·7단계 유닛 나누기와 API 계약</h1>
+    <article>
+<blockquote>
+<p>컴포넌트를 따로 만들고 검증할 유닛으로 묶고 의존 그래프를 그린 뒤, 서비스 사이의 약속을 계약으로 정합니다. 계약은 첫 검토에서 NOT-READY였다가 고친 뒤 READY가 되었습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/zAsW_rrbW48" title="6·7단계 유닛 나누기와 API 계약 — 영상 1:52" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="6단계-유닛-나누기-units-generation">6단계 유닛 나누기 (Units Generation)<a class="anchor" href="#6단계-유닛-나누기-units-generation" title="Permanent link">#</a></h2>
+<h3 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>정하는 것</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>유닛</td>
+<td>독립적으로 설계·구현·검증할 수 있는 단위 (서비스, 화면, 스크립트)</td>
+</tr>
+<tr>
+<td>종류와 크기</td>
+<td>service · ui · packaging, S · M · L</td>
+</tr>
+<tr>
+<td>의존 그래프</td>
+<td>만드는 순서의 근거 (DAG)</td>
+</tr>
+<tr>
+<td>스토리 맵</td>
+<td>어느 스토리를 어느 유닛이 맡나</td>
+</tr>
+</tbody>
+</table>
+<p>문서를 쓰기 전에 분할 계획을 먼저 보여 주고 승인을 받습니다. 답하고 승인하는 사람은 아키텍트입니다.</p>
+<h3 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h3>
+<p>서비스를 3개로 묶도록 답했습니다(search = QueryParser+Recommendation, reservation = Reservation+Notification, payment = Payment). 모의 PG는 payment 안에 두고, 승인 결과는 자신의 웹훅을 HTTP로 비동기 호출해 전달하도록 했습니다. 화면은 Vite 프록시로 연결하도록 답했습니다. 분할 계획(유닛 5개)을 승인했습니다.</p>
+<h3 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h3>
+<p><code>inception/units-generation/</code>에 세 문서가 작성됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>unit-of-work.md</code></td>
+<td>유닛 5개(u1 search, u2 reservation, u3 payment, u4 web-ui, u5 local-run)와 담당 컴포넌트·스토리·종류·크기</td>
+</tr>
+<tr>
+<td><code>unit-of-work-dependency.md</code></td>
+<td>의존 DAG(mermaid: u2→u1, u3→u2, u4→u1·u2·u3, u5→전부, 순환 없음)와 연동 지점 표</td>
+</tr>
+<tr>
+<td><code>unit-of-work-story-map.md</code></td>
+<td>스토리 → 유닛. 예: US4.1은 u3(웹훅 수신), u2(확정과 푸시), u4(표시)가 1초를 나눠 사용합니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7단계-api-계약-contract-design">7단계 API 계약 (Contract Design)<a class="anchor" href="#7단계-api-계약-contract-design" title="Permanent link">#</a></h2>
+<h3 id="무엇을-왜_1">무엇을 · 왜<a class="anchor" href="#무엇을-왜_1" title="Permanent link">#</a></h3>
+<p>서비스 사이에서 누가 제공하고 누가 사용하는지, 요청·응답 형식(OpenAPI), 오류 형식, 제한 시간과 재시도, 세션·웹훅 서명 같은 보안 약속을 정합니다. 계약 테스트의 기준이 됩니다. 답하고 승인하는 사람은 아키텍트·개발 리드입니다.</p>
+<h3 id="따라-하기_1">따라 하기<a class="anchor" href="#따라-하기_1" title="Permanent link">#</a></h3>
+<p>세션 전달(<code>X-Session-Id</code> 헤더), 웹훅 위변조 방지(HMAC 서명 + 이벤트 ID), 호출 실패 시 재시도(2초 제한, 되돌릴 수 있는 호출만 재시도)를 제안대로 답했습니다. 첫 검토 판정이 NOT-READY여서 주요 문제 4건을 수정하도록 요청했습니다.</p>
+<h3 id="산출물과-바뀐-점_1">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점_1" title="Permanent link">#</a></h3>
+<p><strong>① 첫 검토 NOT-READY → 재검토 READY</strong> (<code>reviews/review-01.md</code> → <code>review-02.md</code>)</p>
+<table>
+<thead>
+<tr>
+<th>지적</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R-01</td>
+<td>이용 시간(<code>durationHours</code>)의 출처가 어느 계약에도 없음</td>
+</tr>
+<tr>
+<td>R-02</td>
+<td>예약 생성이 시간 초과되면 재결제가 180초 동안 막힘(409)</td>
+</tr>
+<tr>
+<td>R-03</td>
+<td>브라우저 <code>EventSource</code>는 사용자 지정 헤더를 보낼 수 없음</td>
+</tr>
+<tr>
+<td>R-04</td>
+<td>웹훅 반영 실패 시 응답 코드와 <code>eventId</code> 기록 시점이 없음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>② 최종 계약</strong> <code>contract-summary.md</code>: 계약 6개(C1~C6)가 제공자·소비자·방식과 함께 표로 정리되고, 계약마다 OpenAPI 조각과 오류·제한 시간·재시도 표가 붙습니다.</p>
+<div class="hl"><pre><span></span><code><span class="c1"># C6 모의 PG 웹훅 (모의 PG → U3)</span>
+<span class="nt">/api/payments/webhook</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">X-Signature</span><span class="w">   </span><span class="c1"># sha256=&lt;hex&gt;, 본문에 대한 HMAC-SHA256, 키는 환경 변수 PAYMENT_WEBHOOK_SECRET</span>
+</code></pre></div>
+    </article>
+    <nav class="pager"><a class="prev" href="l2-domain.html"><span>이전</span>5단계 도메인 설계</a><a class="next" href="l2-bolts.html"><span>다음</span>8단계 볼트 계획</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#6단계-유닛-나누기-units-generation">6단계 유닛 나누기 (Units Generation)</a><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></li><li><a href="#7단계-api-계약-contract-design">7단계 API 계약 (Contract Design)</a><ul><li><a href="#무엇을-왜_1">무엇을 · 왜</a></li><li><a href="#따라-하기_1">따라 하기</a></li><li><a href="#산출물과-바뀐-점_1">산출물과 바뀐 점</a></li></ul></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

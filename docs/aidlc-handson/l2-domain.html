@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5단계 도메인 설계 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="책임과 데이터 소유로 컴포넌트를 나누고, 중요한 결정을 ADR로 기록합니다. 첫 검토에서 나온 순환 의존을 아키텍트가 수정 요청으로 고치고, 결정 기록이 어떻게 바뀌었는지 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/l2-domain.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5단계 도메인 설계 — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="책임과 데이터 소유로 컴포넌트를 나누고, 중요한 결정을 ADR로 기록합니다. 첫 검토에서 나온 순환 의존을 아키텍트가 수정 요청으로 고치고, 결정 기록이 어떻게 바뀌었는지 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/l2-domain.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">레벨 1 · poc</div><ul>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+<li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
+<li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul>
+<div class="nav-part">레벨 2 · classic</div><ul>
+<li><a href="l2-overview.html"><span class="n">05</span>레벨 2 개요와 1단계 팀 규칙</a></li>
+<li><a href="l2-requirements.html"><span class="n">06</span>2단계 요구사항</a></li>
+<li><a href="l2-stories.html"><span class="n">07</span>3·4단계 유저 스토리와 화면</a></li>
+<li><a href="l2-domain.html" class="on" aria-current="page"><span class="n">08</span>5단계 도메인 설계</a></li>
+<li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
+<li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
+<li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">레벨 2 · classic<span class="chap">8</span></div>
+    <h1>5단계 도메인 설계</h1>
+    <article>
+<blockquote>
+<p>책임과 데이터 소유로 컴포넌트를 나누고, 중요한 결정을 ADR로 기록합니다. 첫 검토에서 나온 순환 의존을 아키텍트가 수정 요청으로 고치고, 결정 기록이 어떻게 바뀌었는지 봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/m5AXsAMaIE0" title="5단계 도메인 설계 — 영상 1:35" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>정하는 것</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>컴포넌트</td>
+<td>변경 이유에 따라 나눈 구성 요소</td>
+</tr>
+<tr>
+<td>데이터 소유</td>
+<td>어떤 데이터를 누가 갖나</td>
+</tr>
+<tr>
+<td>의존 방향</td>
+<td>누가 누구를 부르나</td>
+</tr>
+<tr>
+<td>ADR</td>
+<td>결정(Decision)과 근거(Context), 결과(Consequences), 채택하지 않은 대안(Alternatives Rejected)</td>
+</tr>
+</tbody>
+</table>
+<p>단계 규칙에서 "결정마다 대안을 2개 이상 적을 것"을 요구합니다. 답하고 승인하는 사람은 아키텍트입니다. 결과 문서는 <code>inception/domain-design/components.md</code>, <code>decisions.md</code>입니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>컴포넌트 개수 정하기.</strong> 에이전트가 5개 안(QueryParser, Recommendation, Reservation, Payment, Notification)과 3개 안의 장단점을 제시했고, 5개 안을 골랐습니다.
+</li>
+<li><strong>첫 검토와 수정 요청.</strong> 주요 문제 2건이 나왔습니다. 아키텍트는 승인 대신 <strong>Request Changes</strong>를 고르고 두 문제를 함께 해결하는 안을 선택했습니다.
+</li>
+<li><strong>재검토 후 승인.</strong> 두 문제가 해결되었음을 확인하고 승인했습니다.
+</li>
+</ol>
+<h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
+<p><strong>① 컴포넌트와 데이터 소유</strong> <code>components.md</code>: 컴포넌트 구조도(mermaid)와 데이터 소유 표가 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Owning Component</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ParkingLot · ParkingPass</td>
+<td>Recommendation</td>
+</tr>
+<tr>
+<td>Reservation</td>
+<td>Reservation</td>
+</tr>
+<tr>
+<td>Payment · WebhookEvent</td>
+<td>Payment</td>
+</tr>
+<tr>
+<td>Subscription</td>
+<td>Notification</td>
+</tr>
+</tbody>
+</table>
+<p><strong>② 첫 검토</strong> <code>reviews/review-01.md</code>: 알림이 예약을 조회하면 예약 → 알림 이벤트와 맞물려 순환 의존이 생깁니다(R-01). 예약 상태를 확정하는 주체도 ADR마다 다릅니다(R-02).</p>
+<p><strong>③ 고친 결정</strong> <code>decisions.md</code>: 상태 확정은 Reservation에서만 원자 연산으로 처리하도록 바뀌었습니다(ADR-002). 호출 방향은 Payment → Reservation → Notification으로 통일되었습니다(ADR-003).</p>
+<div class="hl"><pre><span></span><code><span class="gu">## ADR-003: 호출 방향을 Payment에서 Reservation으로 둔다</span>
+<span class="k">-</span><span class="w"> </span>Decision: Payment가 Reservation을 호출한다. Reservation은 Payment를 호출하지 않는다. Reservation은 Notification에
+  상태 스냅샷을 이벤트로 밀어 넣고 Notification은 Reservation을 호출하지 않는다.
+<span class="k">-</span><span class="w"> </span>Alternatives Rejected: Reservation이 Payment를 호출하는 방식은 결과 반영에서 순환이 생겨 선택하지 않았다.
+</code></pre></div>
+
+<p><strong>④ 재검토</strong> <code>reviews/review-02.md</code>: R-01, R-02 해결로 기록되었습니다.</p>
+<p><strong>⑤ 다음에 쓰이는 곳.</strong> 이 컴포넌트와 의존 방향이 다음 단계에서 유닛(서비스)을 묶는 기준이 됩니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="l2-stories.html"><span>이전</span>3·4단계 유저 스토리와 화면</a><a class="next" href="l2-units.html"><span>다음</span>6·7단계 유닛 나누기와 API 계약</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
