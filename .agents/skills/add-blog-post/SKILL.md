@@ -134,6 +134,10 @@ python3 .claude/skills/seo-optimize/apply_seo.py
   날짜 형식이 `Month DD, YYYY` 가 아닌 것이다.
 - og:image 는 본문의 첫 로컬 이미지가 자동 선택된다. 특정 이미지를 쓰고 싶으면
   `.claude/skills/seo-optimize/seo-meta.json` 의 `pages["contents/blog/<slug>.html"]` 에 `image` 를 지정한다.
+- **공유 미리보기(페이스북·카카오톡)**: 표지 `images/blog/<slug>.jpg` 가 제목을 크게 담은 1200×630 이면 그게 카드다(글 이름과 같은
+  표지는 `apply_seo` 가 카드로 본다). 표지가 없거나 글자 없는 사진이면
+  `python3 .claude/skills/seo-optimize/og_card.py contents/blog/<slug>.html --shot <본문 대표 그림>` 으로 카드를 만들고 다시 적용한다.
+  표지 글도 사이트 용어를 따른다(비교는 「상태 기반 / 이벤트 기반(이벤트 소싱)」).
 - 자세한 규칙은 `seo-optimize` 스킬 참고.
 
 ### 7. 검증
@@ -176,5 +180,6 @@ open "http://127.0.0.1:8123/contents/blog/<slug>.html?v=2"
 - [ ] 제품 소개 페이지에서 기능 추출 → 개념-기능 매핑 표 + CTA 섹션
 - [ ] 매핑 표의 각 기능 셀 → 제품 소개 페이지의 해당 섹션 앵커(`#diff-…`)로 딥링크 (앵커 없으면 심고, 1:1 검증)
 - [ ] bloglist.html 첫 카드로 삽입, 날짜 형식 `Month DD, YYYY`, 요약문 60자 이상
+- [ ] 공유 미리보기 카드: 글 제목이 크게 든 표지(또는 `og_card.py` 카드)가 og:image 다
 - [ ] `apply_seo.py` 실행 후 경고 0건 (title·description·OG·JSON-LD·sitemap 반영 확인)
 - [ ] 태그 균형 검사 통과 (footer `</a>` 2건 제외)

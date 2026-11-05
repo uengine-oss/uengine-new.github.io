@@ -616,6 +616,7 @@ def main():
     pages = [p.replace(os.sep, "/") for p in pages]
 
     sitemap_entries, resolved, changed = [], {}, 0
+    no_card: list[str] = []
 
     for page in pages:
         path = os.path.join(ROOT, page)
@@ -675,6 +676,16 @@ def main():
                      f"썸네일이 뜹니다. 본문에 사진을 넣거나 seo-meta.json 의 "
                      f"pages[\"{page}\"].image 를 지정하세요.")
         meta.pop("fallbackImage", None)
+        # 공유 미리보기: 페이스북·카카오톡에 붙이면 og:image 가 작게 보인다. 글이 크게 들어간 카드(og_card.py)를 쓴다.
+        img = (meta.get("image") or "").lower()
+        stem = os.path.splitext(os.path.basename(page))[0].lower()
+        cover = (is_blog or is_news) and os.path.splitext(os.path.basename(img))[0] == stem  # 글 이름과 같은 표지는 카드다
+        if not (img.startswith("/images/og/") or "-og." in img or cover):
+            if args.only:
+                warn(f"{page}: 공유 미리보기 카드가 없습니다 (og:image {meta.get('image')}). "
+                     f"python3 .claude/skills/seo-optimize/og_card.py {page} 로 만드세요")
+            else:
+                no_card.append(page)
         if (is_blog or is_news) and "type" not in meta:
             meta["type"] = "article"
 
@@ -753,6 +764,8 @@ def main():
     if not a.get("naverSiteVerification"):
         note("네이버 웹마스터도구 확인 코드 미설정 — site.analytics.naverSiteVerification")
 
+    if no_card:
+        note(f"공유 미리보기 카드가 없는 페이지 {len(no_card)}개 — 새로 만들거나 고친 페이지는 og_card.py 로 카드를 만드세요")
     mode = "검사" if dry else "적용"
     print(f"[seo] {mode} 완료 — 페이지 {len(pages)}개 중 {changed}개 갱신, {sitemap_msg}")
     for m in notes:
