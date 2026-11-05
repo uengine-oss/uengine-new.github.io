@@ -36,10 +36,10 @@ PRODUCTS = {
     "bpm": dict(name="uEngine6 BPM", page="uengine6bpm.html", og="erp-process.webp", search="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)",
                 foot="이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.",
                 chapters=[("index", "시작하기"), ("install-local", "시작하기"), ("quickstart", "시작하기"), ("quickstart-api", "시작하기"), ("modeler-tour", "모델링"), ("process-data", "모델링"), ("lanes-and-roles", "모델링"), ("arguments-and-mapping", "모델링"), ("forms", "사람 작업"), ("tasklist", "사람 작업"), ("return-and-skip", "사람 작업"), ("external-task-screen", "사람 작업"), ("exclusive-gateway", "흐름 제어"), ("parallel-inclusive-gateway", "흐름 제어"), ("script-task", "흐름 제어"), ("business-rule-dmn", "흐름 제어"), ("call-activity", "흐름 제어"), ("multi-instance", "흐름 제어"), ("message-start", "이벤트"), ("event-completion", "이벤트"), ("error-and-compensation", "이벤트"), ("rest-service-task", "시스템 연동"), ("sql-task", "시스템 연동"), ("event-integration-kafka", "시스템 연동"), ("instance-monitoring", "운영"), ("fix-variables", "운영"), ("back-to-here", "운영"), ("test-before-deploy", "운영"), ("versions-and-deploy", "운영"), ("analytics-kpi", "운영"), ("rest-api", "API·보안"), ("security-keycloak", "API·보안"), ("industry-banking-sor", "산업 예제"), ("industry-erp-purchase", "산업 예제"), ("bpmn-coverage", "참고"), ("extend-engine", "참고")]),
-    "aidlc-handson": dict(name="Claude Code × AI-DLC 핸즈온", page="educationax.html", og="run-done.webp", search="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)",
+    "aidlc-handson": dict(name="Claude Code × AI-DLC 핸즈온", page="axschool.html", pagelabel="AX School", og="run-done.webp", search="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)",
                 foot="이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.",
-                chapters=[("index", "시작하기"), ("setup", "시작하기"), ("requirements", "착수"), ("construction", "구축"), ("run", "확인")]),
-    "ai-planning": dict(name="AI 기획·설계 도구 실습", page="educationax.html", og="board1b.webp", search="교재 검색 (예: 역질문, 겹침 금지, OpenUI)",
+                chapters=[("index", "시작하기"), ("setup", "레벨 1 · poc"), ("requirements", "레벨 1 · poc"), ("construction", "레벨 1 · poc"), ("run", "레벨 1 · poc"), ("concepts", "레벨 2 · classic"), ("level2", "레벨 2 · classic"), ("level2-build", "레벨 2 · classic"), ("artifacts", "레벨 2 · classic")]),
+    "ai-planning": dict(name="AI 기획·설계 도구 실습", page="axschool.html", pagelabel="AX School", og="board1b.webp", search="교재 검색 (예: 역질문, 겹침 금지, OpenUI)",
                 foot="이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.",
                 chapters=[("index", "시작하기"), ("interview", "1부"), ("model", "2부"), ("screen", "3부"), ("wrap", "4부")]),
 }
@@ -160,6 +160,7 @@ def main():
                .replace("{{product}}", P["name"])
                .replace("{{key}}", KEY)
                .replace("{{page}}", P["page"])
+               .replace("{{pagelabel}}", P.get("pagelabel", "제품 소개"))
                .replace("{{og}}", P["og"])
                .replace("{{search}}", P["search"])
                .replace("{{footnote}}", P["foot"])

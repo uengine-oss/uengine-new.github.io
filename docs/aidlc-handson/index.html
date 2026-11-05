@@ -28,7 +28,7 @@
     <div id="results" class="results" hidden></div>
   </div>
   <nav class="links">
-    <a href="../../contents/educationax.html">제품 소개</a>
+    <a href="../../contents/axschool.html">AX School</a>
     <a href="../../index.html">uEngine</a>
     <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
   </nav>
@@ -36,16 +36,18 @@
 <div class="wrap">
   <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
 <li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">레벨 1 · poc</div><ul>
 <li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
-</ul>
-<div class="nav-part">착수</div><ul>
 <li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
-</ul>
-<div class="nav-part">구축</div><ul>
 <li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
-</ul>
-<div class="nav-part">확인</div><ul>
 <li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul>
+<div class="nav-part">레벨 2 · classic</div><ul>
+<li><a href="concepts.html"><span class="n">05</span>개념과 스펙킷 비교</a></li>
+<li><a href="level2.html"><span class="n">06</span>레벨 2: 스펙에서 볼트 계획까지</a></li>
+<li><a href="level2-build.html"><span class="n">07</span>레벨 2: 유닛별 구현과 검증</a></li>
+<li><a href="artifacts.html"><span class="n">08</span>산출물 지도</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">시작하기<span class="chap"></span></div>
@@ -55,7 +57,7 @@
 <p>Claude Code에 AWS Labs의 AI-DLC v2를 연결해, 음성으로 주차권을 찾고 예약하는 VoiceParking 프로토타입(Vue 3 + Spring Boot 마이크로서비스 3개)을 요구사항 인터뷰부터 동작하는 앱까지 만듭니다. 모든 화면은 실제로 실행한 결과입니다.</p>
 </blockquote>
 <h2 id="무엇을-만드나">무엇을 만드나<a class="anchor" href="#무엇을-만드나" title="Permanent link">#</a></h2>
-<p>사용자가 "강남역 근처 2시간 주차권 찾아줘"라고 말하면(이 실습에서는 글자로 입력합니다) 가까운 주차권 세 개의 점수를 비교해 최적의 주차권 하나를 추천하고, 모의 결제가 승인되면 예약을 확정하는 서비스입니다. 실습을 마치면 다음 산출물이 남습니다.</p>
+<p>사용자가 "강남역 근처 2시간 주차권 찾아줘"라고 말하면 가까운 주차권 세 개의 점수를 비교해 최적의 주차권 하나를 추천합니다. 모의 결제가 승인되면 예약을 확정합니다. 이 실습에서는 음성 대신 텍스트로 입력합니다. 실습을 마치면 다음 산출물이 남습니다.</p>
 <table>
 <thead>
 <tr>
@@ -103,7 +105,7 @@
 </tbody>
 </table>
 <h2 id="원본-가이드와-실제가-다른-곳">원본 가이드와 실제가 다른 곳<a class="anchor" href="#원본-가이드와-실제가-다른-곳" title="Permanent link">#</a></h2>
-<p>이 튜토리얼은 「Claude Code 기반 AWS AI-DLC 실전 핸즈온 가이드」를 따라 하면서 시작했습니다. 실습 중 명령과 파일 이름이 가이드와 다른 곳을 많이 발견했습니다. 아래 표의 오른쪽은 2026년 11월 5일 AI-DLC 2.11.2로 확인한 결과입니다.</p>
+<p>이 튜토리얼은 「Claude Code 기반 AWS AI-DLC 실전 핸즈온 가이드」를 따라 하며 시작했습니다. 실습 중 여러 명령과 파일 이름이 가이드와 다르다는 점을 확인했습니다. 아래 표 오른쪽은 2026년 11월 5일 AI-DLC 2.11.2로 확인한 결과입니다.</p>
 <table>
 <thead>
 <tr>
@@ -118,7 +120,7 @@
 </tr>
 <tr>
 <td><code>aidlc init --harness claude-code --scope workshop</code></td>
-<td><code>aidlc config --harness claude</code>로 연결하고 <code>aidlc doctor</code>로 점검합니다. 스코프는 Claude Code 안에서 첫 요청 때 고릅니다(<code>/aidlc workshop …</code>, <code>/aidlc poc …</code>)</td>
+<td><code>aidlc config --harness claude</code>로 연결하고 <code>aidlc doctor</code>로 점검합니다. 스코프는 Claude Code에서 처음 요청할 때 고릅니다(<code>/aidlc workshop …</code>, <code>/aidlc poc …</code>)</td>
 </tr>
 <tr>
 <td>workshop 스코프 25개 스테이지</td>
@@ -154,7 +156,7 @@
 </tr>
 <tr>
 <td>131개 정형 감사 이벤트</td>
-<td>맞습니다. 이벤트 종류가 131가지이고, 이번 실행에서 남긴 기록은 4장에서 확인합니다</td>
+<td>맞습니다. 이벤트 종류가 131가지이고, 이번 실행의 기록은 4장에서 확인합니다</td>
 </tr>
 <tr>
 <td>Express/TypeScript, Jest</td>
@@ -179,6 +181,11 @@
 </thead>
 <tbody>
 <tr>
+<td><strong>레벨 1 · poc</strong></td>
+<td>가장 짧은 경로로 동작하는 프로토타입까지</td>
+<td></td>
+</tr>
+<tr>
 <td>1. 설치와 프로젝트 준비</td>
 <td>설치, <code>aidlc config</code>, <code>aidlc doctor</code></td>
 <td>약 2분</td>
@@ -198,9 +205,34 @@
 <td>실행, 브라우저 시연, 402 응답, 감사 기록</td>
 <td>약 10분</td>
 </tr>
+<tr>
+<td><strong>레벨 2 · classic</strong></td>
+<td>같은 요청을 스펙 → 설계 → TDD 구현으로</td>
+<td></td>
+</tr>
+<tr>
+<td>5. 개념과 스펙킷 비교</td>
+<td>스코프, 인텐트·유닛·볼트, 역할, 실패 루프</td>
+<td>읽기</td>
+</tr>
+<tr>
+<td>6. 스펙에서 볼트 계획까지</td>
+<td>팀 규칙(TDD) → 요구사항 → 스토리 → 화면 → 도메인 설계 → 유닛 → 계약 → 볼트</td>
+<td>약 55분(수정 요청 2번 포함)</td>
+</tr>
+<tr>
+<td>7. 유닛별 구현과 검증</td>
+<td>u1의 설계 → TDD 코드 → 검증 명령 (사용량 한도로 u1까지)</td>
+<td>약 52분</td>
+</tr>
+<tr>
+<td>8. 산출물 지도</td>
+<td>산출물 14가지를 하나씩: 내용, 쓰는 쪽·승인, 다음 쓰임, 스펙킷 대응</td>
+<td>읽기</td>
+</tr>
 </tbody>
 </table>
-<p>모델은 Claude Sonnet 5.5(노력 수준 medium)를 사용했습니다. AI-DLC가 권하는 모델은 Opus입니다. 모델이 작성하는 문장은 실행할 때마다 조금씩 달라지므로, 질문의 수와 문구가 이 튜토리얼과 다를 수 있습니다.</p>
+<p>모델은 Claude Sonnet 5.5(노력 수준 medium)를 사용했습니다. AI-DLC가 권하는 모델은 Opus입니다. 모델이 작성하는 문장은 실행할 때마다 조금씩 달라지므로, 질문 수와 문구가 이 튜토리얼과 다를 수 있습니다.</p>
     </article>
     <nav class="pager"><span></span><a class="next" href="setup.html"><span>다음</span>설치와 프로젝트 준비</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
