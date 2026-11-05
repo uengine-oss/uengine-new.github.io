@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>금융: 계정계와 이벤트로만 잇기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="은행 계정계(System of Record)가 업무를 처리하고 uEngine6 BPM이 흐름을 통제합니다. 둘은 Kafka 이벤트로만 연결하고, 서로의 API·DB를 부르지 않습니다. 「일반계좌신규」를 신규고객·기존고객 두 경우로 끝까지 실행합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/industry-banking-sor.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="금융: 계정계와 이벤트로만 잇기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="은행 계정계(System of Record)가 업무를 처리하고 uEngine6 BPM이 흐름을 통제합니다. 둘은 Kafka 이벤트로만 연결하고, 서로의 API·DB를 부르지 않습니다. 「일반계좌신규」를 신규고객·기존고객 두 경우로 끝까지 실행합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/industry-banking-sor.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html" class="on" aria-current="page"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">산업 예제<span class="chap">32</span></div>
+    <h1>금융: 계정계와 이벤트로만 잇기</h1>
+    <article>
+<blockquote>
+<p>은행 계정계(System of Record)가 업무를 처리하고 uEngine6 BPM이 흐름을 통제합니다. 둘은 Kafka 이벤트로만 연결하고, 서로의 API·DB를 부르지 않습니다. 「일반계좌신규」를 신규고객·기존고객 두 경우로 끝까지 실행합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/ducwgYj4rSQ" title="금융: 계정계와 이벤트로만 잇기 — 영상 4:10" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>계정계는 고객·계좌·서류 원장을 관리하는 시스템입니다. 창구에서 어떤 순서로 무엇을 확인하는지는 규정이 바뀔 때마다 달라집니다.
+그 순서를 BPM에 두면 계정계를 고치지 않고 흐름을 바꿀 수 있습니다. 어느 신청이 어디서 멈췄는지도 한곳에서 확인합니다.</p>
+<p><strong>핵심 원칙 — 업무는 계정계가, 흐름 통제는 BPM이.</strong> 계정계가 한 단계를 처리하면 도메인 이벤트를 발행합니다.
+BPM은 그 이벤트를 해당 작업의 <code>eventSynchronization</code>으로 받아 완료 처리하고 다음 단계를 큐에 올립니다.</p>
+<table>
+<thead>
+<tr>
+<th>토픽</th>
+<th>방향</th>
+<th>무엇</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bpm-topic</code></td>
+<td>계정계 → BPM</td>
+<td>도메인 이벤트. 헤더 <code>type</code>(이벤트 이름)·<code>corrKey</code>(신청 번호)</td>
+</tr>
+<tr>
+<td><code>bpm-brodcast</code></td>
+<td>BPM → 누구나</td>
+<td>진행 상황(<code>TASK_COMPLETED</code>). 계정계는 화면 표시에만 씁니다</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>예제 저장소: <a href="https://github.com/uengine-oss/bpm-sample-app-banking">uengine-oss/bpm-sample-app-banking</a> (uEngine6 저장소의 <code>sample-apps/</code> 서브모듈).</li>
+<li>이 튜토리얼의 시연 스택(<code>bmt/sds-process-test</code> 브랜치)에서는 이벤트로 사람 작업을 끝낼 때 행위자 헤더(<code>emnb</code>)를 요구하는 검사가 있습니다. 계정계 예제는 행위자 없이 보내므로, 시연 스택은 <code>uengine.messaging.require-event-actor: false</code>로 띄웠습니다.</li>
+<li>아래 영상 넷은 예제를 만들 때 촬영해 목소리와 화면 해상도가 이 튜토리얼의 다른 장과 다릅니다.</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>스택 띄우기.</strong> <a href="install-local.html">내 PC에 설치하기</a>의 스택에 계정계를 더합니다. Kafka·계정계 DB는 예제의 <code>docker-compose.yml</code>로, process-service는 예제의 <code>config/process-service.kafka.yml</code>을 추가해 Kafka 모드로 띄웁니다.
+
+
+<div class="hl"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>sample-apps/bpm-sample-app-banking
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w">                      </span><span class="c1"># PostgreSQL(5434) · Zookeeper · Kafka(9092)</span>
+<span class="nv">UENGINE_HOME</span><span class="o">=</span>../..<span class="w"> </span>bash<span class="w"> </span>deploy-definitions.sh<span class="w">   </span><span class="c1"># definitions/계정계 연동/ 에 정의 2개</span>
+</code></pre></div>
+
+
+</li>
+<li><strong>신청 접수.</strong> 디지털창구(<code>:5174</code>)에서 고객 이름·휴대폰·초입금으로 계좌 개설을 신청합니다. 계정계가 <code>AccountOpeningRequested</code>를 발행하면 BPM의 메시지 시작 이벤트가 인스턴스를 만듭니다(상관 키 = 신청 번호).
+</li>
+<li><strong>단계 처리.</strong> 상담 → 서류 징구 → 스캔 → 실명확인 → 개인정보 동의를 창구 화면에서 차례로 처리합니다. 단계마다 계정계가 이벤트를 발행합니다. 그러면 BPM 업무 목록에서 해당 작업이 끝나고 다음 작업이 생깁니다.
+</li>
+<li><strong>분기.</strong> 개인정보 동의 이벤트에 <code>NewCustomer</code>가 실려 와 프로세스 변수가 됩니다. 게이트웨이 「신규고객여부」가 <code>Y</code>면 고객정보등록/KYC로, <code>N</code>이면 계좌신규 등록으로 바로 갑니다.
+</li>
+<li><strong>끝.</strong> 계좌 개설 → 통장 교부 → 휴대폰 본인인증까지 처리하면 인스턴스가 완료됩니다. 시연 스택에서 신규고객은 작업 9건, 기존고객은 8건으로 끝났습니다.
+</li>
+<li><strong>되돌리기.</strong> 관리자 화면에서 완료된 단계를 골라 <strong>Back To Here</strong>로 다시 처리하게 할 수 있습니다. 업무 데이터의 보상(이미 만든 계좌 취소 등)은 계정계가 처리하고, BPM은 경로만 되돌립니다.
+</li>
+</ol>
+<h2 id="영상으로-더-보기">영상으로 더 보기<a class="anchor" href="#영상으로-더-보기" title="Permanent link">#</a></h2>
+<p>빌드타임(무엇을 어떻게 설정했나), 런타임(업무함·알림·딥링크와 되돌리기), 관리자 콘솔을 각각 촬영한 영상입니다.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/Vut_yoM1w_w" title="빌드타임 · 프로세스 설정 — 3:16" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="video"><iframe src="https://www.youtube.com/embed/wda06hMN4mc" title="런타임 · 업무함과 되돌리기 — 3:02" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<div class="video"><iframe src="https://www.youtube.com/embed/K9bex0NLM6s" title="BPM 관리자 콘솔 — 2:44" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<h2 id="어떻게-설정했나">어떻게 설정했나<a class="anchor" href="#어떻게-설정했나" title="Permanent link">#</a></h2>
+<p>일반계좌신규의 단계와 이벤트(상관 키 <code>applicationNo</code>):</p>
+<table>
+<thead>
+<tr>
+<th>BPM 작업</th>
+<th>이벤트 <code>type</code></th>
+<th>계정계가 하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시작 이벤트</td>
+<td><code>AccountOpeningRequested</code></td>
+<td>신청 원장 생성</td>
+</tr>
+<tr>
+<td>상담/권유</td>
+<td><code>ConsultationCompleted</code></td>
+<td>상담 기록</td>
+</tr>
+<tr>
+<td>필요 서류 조회 및 징구</td>
+<td><code>DocumentsCollected</code></td>
+<td>서류 상태 → 징구완료</td>
+</tr>
+<tr>
+<td>서류 스캔</td>
+<td><code>DocumentsScanned</code></td>
+<td>전자문서 번호 부여</td>
+</tr>
+<tr>
+<td>실명확인 및 고객확인</td>
+<td><code>IdentityVerified</code></td>
+<td>신분증 진위확인</td>
+</tr>
+<tr>
+<td>개인정보 이용동의서</td>
+<td><code>PrivacyConsentSigned</code></td>
+<td>동의 기록 + <code>NewCustomer</code> 판정</td>
+</tr>
+<tr>
+<td>고객정보등록/KYC</td>
+<td><code>CustomerRegistered</code></td>
+<td>고객 원장 채번</td>
+</tr>
+<tr>
+<td>계좌신규 등록</td>
+<td><code>AccountOpened</code></td>
+<td>계좌 원장 개설</td>
+</tr>
+<tr>
+<td>발급통장 및 계약서류 교부</td>
+<td><code>PassbookIssued</code></td>
+<td>통장 발행</td>
+</tr>
+<tr>
+<td>문자교부 시 휴대폰 본인인증</td>
+<td><code>MobileAuthConfirmed</code></td>
+<td>수령 확인</td>
+</tr>
+</tbody>
+</table>
+<p>작업마다 URL 작업으로 계정계 화면을 연결하고(<code>url</code>에 <code>&lt;%instance.corrkey%&gt;</code>), <code>eventSynchronizations</code>에 이벤트 이름과 상관 키 속성(<code>isCorrKey</code>)을 답니다.
+payload의 모든 필드는 프로세스 변수가 되므로, 게이트웨이는 <code>NewCustomer == 'Y'</code>처럼 이벤트 값을 바로 봅니다.</p>
+<p>계정계는 BPM이 만든 작업을 <code>GET /worklist</code>로 주기적으로 읽어 역할별 업무함을 만들고, 작업의 <code>tool</code>(URL)로 화면을 엽니다.
+같은 방식을 ERP에 적용하면서 업무함을 BPM 쪽에 두고 ERP 화면을 BPM 안에 띄운 것이 <a href="industry-erp-purchase.html">다음 장</a>입니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>계정계가 BPM의 REST API를 한 번도 부르지 않는데, 작업은 어떻게 끝나나요?</summary>
+<p>계정계가 Kafka <code>bpm-topic</code>에 도메인 이벤트를 보내면, process-service가 이벤트 이름(<code>type</code>)과 상관 키(<code>corrKey</code>)로 현재 대기 중인 작업을 찾아 완료합니다. 매핑은 정의를 배포할 때 <code>BPM_EVENT_MAPPING</code>에 등록됩니다.</p>
+</details>
+<details class="answer">
+<summary>기존고객이면 KYC 단계를 건너뛰는 판단은 누가 하나요?</summary>
+<p>계정계가 개인정보 동의 이벤트에 <code>NewCustomer</code>를 실어 보내고, BPM 게이트웨이가 그 값으로 경로를 고릅니다. 판정 규칙은 계정계에, 경로는 BPM에 있습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="security-keycloak.html"><span>이전</span>사용자·그룹·역할 (Keycloak)</a><a class="next" href="industry-erp-purchase.html"><span>다음</span>ERP: 구매 발주 결재와 대금 지급</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#영상으로-더-보기">영상으로 더 보기</a></li><li><a href="#어떻게-설정했나">어떻게 설정했나</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

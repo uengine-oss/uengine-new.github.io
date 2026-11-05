@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>업무 목록에서 일하기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="업무 목록(`/todolist`)은 내 작업과 내 그룹의 작업을 칸반으로 보여 줍니다. 카드를 골라 한꺼번에 선점하고, 작업 화면에서 현재 단계를 확인하고 입력 칸을 채워 완료합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/tasklist.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="업무 목록에서 일하기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="업무 목록(`/todolist`)은 내 작업과 내 그룹의 작업을 칸반으로 보여 줍니다. 카드를 골라 한꺼번에 선점하고, 작업 화면에서 현재 단계를 확인하고 입력 칸을 채워 완료합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/tasklist.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html" class="on" aria-current="page"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">사람 작업<span class="chap">9</span></div>
+    <h1>업무 목록에서 일하기</h1>
+    <article>
+<blockquote>
+<p>업무 목록(<code>/todolist</code>)은 내 작업과 내 그룹의 작업을 칸반으로 보여 줍니다. 카드를 골라 한꺼번에 선점하고, 작업 화면에서 현재 단계를 확인하고 입력 칸을 채워 완료합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/8KF2r_gP3VA" title="업무 목록에서 일하기 — 영상 1:18" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>사람 작업이 생기면 엔진은 <strong>작업 항목(work item)</strong> 한 행을 <code>bpm_worklist</code>에 씁니다. 업무 목록은 로그인한 사람에게 해당하는 행을 모아 보여 줍니다(Camunda Tasklist와 같은 역할).</p>
+<table>
+<thead>
+<tr>
+<th>누구의 작업인가</th>
+<th>조건</th>
+<th>카드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>내 작업</td>
+<td>담당자(<code>endpoint</code>)가 나</td>
+<td>바로 열어 완료</td>
+</tr>
+<tr>
+<td>그룹 작업</td>
+<td>담당자 없음 + 레인의 그룹이 내 Keycloak 그룹 + 선점 방식</td>
+<td>선점해야 내 것</td>
+</tr>
+</tbody>
+</table>
+<p>작업 항목의 상태는 <code>NEW</code>(생김) → <code>CONFIRMED</code>·<code>RUNNING</code>(열림·선점) → <code>COMPLETED</code>로 바뀌고, 반송·SKIP이면 <code>SUSPENDED</code>·<code>SKIPPED</code>가 됩니다(<a href="return-and-skip.html">반송과 SKIP</a>).</p>
+<div class="admonition note">
+<p class="admonition-title">이 장의 예제</p>
+<p>프로세스 <code>튜토리얼/업무목록/구매결재</code> — 최구매 「구매 요청」 → 팀장 레인(그룹 <code>구매결재</code> · 역할 <code>purchase-lead</code> · 선점) 「구매 결재」.
+「구매 결재」는 변수 품목·금액을 아규먼트로 받아(in) 보여 주고, 「결재의견」을 변수로 돌려줍니다(out). 녹화 전에 최구매가 키보드·모니터·노트북 세 건을 요청해 두었습니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>업무 목록.</strong> 윤팀장(<code>yoon</code>)으로 로그인하면 「업무 목록」에 「진행 중」「보류/반송」「완료됨」 칸이 있고, 「진행 중」에 「구매 결재」 카드 세 장이 있습니다. 카드에는 작업 이름, <code>BPM</code> 칩, <code>TaskId : &lt;작업 번호&gt; / InstId: &lt;인스턴스 번호&gt;</code>, 기간이 있습니다.
+
+<figure><a href="img/tasklist-board.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="업무 목록" src="img/tasklist-board.webp" loading="lazy" decoding="async"></a><figcaption>업무 목록</figcaption></figure>
+</li>
+<li><strong>정렬과 새로고침.</strong> 오른쪽 위 「최근 작업 순」으로 정렬을 바꾸고, 새로고침 아이콘으로 목록을 다시 읽습니다. 이 브랜치에는 실시간 갱신이 없어 새 작업은 새로고침해야 보입니다.
+</li>
+<li><strong>여러 장 선점.</strong> 카드 두 장의 체크 상자를 선택하면 위쪽 버튼이 「선택 2건 선점」으로 바뀝니다. 누르면 「다중 선점 결과」에 「총 2건 중 성공 2건」이 뜹니다.
+
+<figure><a href="img/tasklist-claim.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="선택 2건 선점" src="img/tasklist-claim.webp" loading="lazy" decoding="async"></a><figcaption>선택 2건 선점</figcaption></figure>
+</li>
+<li><strong>작업 화면.</strong> 카드를 누르면 <code>/todolist/&lt;작업 번호&gt;</code>가 열립니다. 위에 작업 이름과 상태 칩(「NEW」), 버튼 「선점하기」「반송」「SKIP」「중간 저장」「완료」가 있고, 왼쪽 「프로세스」 탭은 현재 단계를 그림에 표시합니다. 오른쪽 아규먼트 칸의 「품목」(<code>노트북 3대</code>)·「금액」(<code>2400000</code>)은 in 매핑으로 변수에서 채워져 있습니다.
+
+<figure><a href="img/tasklist-detail.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="작업 화면" src="img/tasklist-detail.webp" loading="lazy" decoding="async"></a><figcaption>작업 화면</figcaption></figure>
+</li>
+<li><strong>완료.</strong> 「결재의견」을 적고 「완료」를 누릅니다. 화면이 인스턴스(「Completed」, 「해당 업무 완료」)로 넘어가고, 업무 목록으로 돌아가면 그 카드가 사라집니다.
+</li>
+<li><strong>작업 화면의 「선점하기」는 쓰지 않기.</strong> 아직 그룹 작업인 카드를 열어 「선점하기」를 누르면 「업무를 성공적으로 가져왔습니다.」가 뜨고 버튼이 「선점 해제하기」로 바뀝니다. 이 브랜치에서는 이때 담당자를 <strong>이메일</strong>(<code>yoon@gaon.example</code>)로 저장해서, 이 작업은 윤팀장의 업무 목록에서 사라집니다. 그룹 작업은 목록의 「선택 N건 선점」으로 가져오세요.
+
+<figure><a href="img/tasklist-single.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="작업 화면의 선점하기" src="img/tasklist-single.webp" loading="lazy" decoding="async"></a><figcaption>작업 화면의 선점하기</figcaption></figure>
+</li>
+<li><strong>끝난 작업 보기.</strong> 「완료됨」 칸은 이 브랜치에서 비어 있습니다. 끝난 작업은 관리자 화면 <code>/admin/&lt;인스턴스 번호&gt;</code>의 「히스토리」 탭에서 봅니다(<a href="instance-monitoring.html">인스턴스 찾고 살피기</a>).
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="화면-api">화면 ↔ API<a class="anchor" href="#화면-api" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>화면</th>
+<th>API (process-service, <code>Authorization: Bearer</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>업무 목록 읽기</td>
+<td><code>GET /worklist/search/findToDo</code></td>
+</tr>
+<tr>
+<td>작업 화면 열기</td>
+<td><code>GET /work-item/{taskId}</code></td>
+</tr>
+<tr>
+<td>「선택 N건 선점」</td>
+<td><code>POST /instance/multi-claim</code> (ESB 봉투, <a href="lanes-and-roles.html">레인과 담당자</a>)</td>
+</tr>
+<tr>
+<td>「선점하기」(쓰지 말 것, 알려진 제약)</td>
+<td><code>POST /work-item/{taskId}/claim</code></td>
+</tr>
+<tr>
+<td>「완료」</td>
+<td><code>POST /work-item/{taskId}/complete</code> <code>{"parameterValues": {…}}</code></td>
+</tr>
+<tr>
+<td>「중간 저장」</td>
+<td><code>POST /instance/{instId}/variable/{이름}</code> (아래 제약)</td>
+</tr>
+<tr>
+<td>「반송」「SKIP」</td>
+<td><code>POST /work-item/{taskId}/return</code> · <code>/skip</code> (<a href="return-and-skip.html">반송과 SKIP</a>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="작업-항목-테이블-bpm_worklist의-주요-열">작업 항목 테이블 <code>bpm_worklist</code>의 주요 열<a class="anchor" href="#작업-항목-테이블-bpm_worklist의-주요-열" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>열</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task_id</code> · <code>inst_id</code></td>
+<td>작업 번호 · 인스턴스 번호(카드의 TaskId · InstId)</td>
+</tr>
+<tr>
+<td><code>title</code> · <code>trc_tag</code></td>
+<td>작업 이름 · 정의 안의 활동 ID</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td>담당자 사용자 이름. 그룹 작업은 선점 전까지 비어 있음</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>NEW</code> · <code>CONFIRMED</code> · <code>COMPLETED</code> · <code>SUSPENDED</code> · <code>SKIPPED</code> …</td>
+</tr>
+<tr>
+<td><code>tool</code></td>
+<td>업무 화면 종류: 기본, <code>formHandler:&lt;폼 id&gt;</code>, <code>urlHandler:&lt;주소&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="구매-결재-작업발췌">「구매 결재」 작업(발췌)<a class="anchor" href="#구매-결재-작업발췌" title="Permanent link">#</a></h3>
+<p>변수 값을 아규먼트에 미리 넣는 in 매핑과 의견을 돌려주는 out 매핑입니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.HumanActivity&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;팀장&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;품목&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Integer&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;결재의견&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">}],</span>
+<span class="w">   </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;품목&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;품목&quot;</span><span class="p">}},</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">}},</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;결재의견&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[Arguments].결재의견&quot;</span><span class="p">}}]}}}</span>
+</code></pre></div>
+
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">이 브랜치에서 확인한 것</p>
+<ul>
+<li><strong>「완료됨」 칸이 비어 있습니다.</strong> 끝낸 작업은 목록에서 사라질 뿐 「완료됨」에 쌓이지 않습니다. 관리자 화면 히스토리를 보세요.</li>
+<li><strong>「중간 저장」은 입력값을 작업이 아니라 프로세스 변수로 보내고, 다시 열면 칸이 비어 있습니다.</strong> 작성 중인 값을 보관하는 용도로 쓰지 마세요.</li>
+<li><strong>실시간 갱신이 없습니다</strong>(Kafka 모드라 SSE <code>/events/stream</code>이 없음). 새로고침 아이콘을 누르세요.</li>
+<li><strong>작업 화면의 「선점하기」(<code>POST /work-item/{taskId}/claim</code>)는 담당자를 이메일로 저장합니다.</strong> 업무 목록은 사용자 이름으로 찾으므로 그 작업은 목록에서 사라집니다(녹화에서 확인: 선점 뒤 <code>endpoint = yoon@gaon.example</code>). 「선택 N건 선점」을 쓰세요. 이미 이렇게 된 작업은 관리자가 <a href="rest-api.html">REST API</a>로 담당자를 고쳐야 합니다.</li>
+<li>「선택 N건 선점」으로 가져온 뒤에도 작업 화면에 「선점하기」 버튼이 남아 보입니다. 누르지 마세요.</li>
+<li>「선택 N건 위임」은 게이트웨이 라우트(<code>/work-items/**</code>)가 없어 아무 일도 일어나지 않습니다. 위임은 <a href="rest-api.html">REST API</a>로 하세요.</li>
+<li>「선택 N건 선점」은 시연 스택에서 프런트 패치와 <code>esb.inbound-unwrap.enabled: true</code>로 수정해 녹화했습니다(<a href="lanes-and-roles.html">레인과 담당자</a> 알려진 제약).</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>최구매가 방금 요청한 결재가 윤팀장의 업무 목록에 보이지 않습니다. 먼저 무엇을 해 보나요?</summary>
+<p>새로고침 아이콘을 누릅니다. 이 브랜치의 업무 목록은 실시간으로 갱신되지 않습니다. 그래도 없으면 레인의 그룹이 윤팀장의 Keycloak 그룹과 일치하는지 확인합니다.</p>
+</details>
+<details class="answer">
+<summary>그룹 작업을 처리하기 전에 무엇을 해야 하나요? 작업 화면의 「선점하기」를 눌러도 되나요?</summary>
+<p>선점해야 합니다. 그룹 작업은 담당자가 없어 선점한 뒤에 내 작업이 됩니다. 이 브랜치에서는 카드를 골라 「선택 N건 선점」을 누르세요. 작업 화면의 「선점하기」는 담당자를 이메일로 저장해 작업이 목록에서 사라집니다.</p>
+</details>
+<details class="answer">
+<summary>오늘 끝낸 결재를 다시 보려면 어디로 가나요?</summary>
+<p>관리자 화면 <code>/admin/&lt;인스턴스 번호&gt;</code>의 「히스토리」 탭입니다. 이 브랜치의 「완료됨」 칸은 비어 있습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="forms.html"><span>이전</span>폼 붙이기</a><a class="next" href="return-and-skip.html"><span>다음</span>반송과 SKIP</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#화면-api">화면 ↔ API</a></li><li><a href="#작업-항목-테이블-bpm_worklist의-주요-열">작업 항목 테이블 bpm_worklist의 주요 열</a></li><li><a href="#구매-결재-작업발췌">「구매 결재」 작업(발췌)</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

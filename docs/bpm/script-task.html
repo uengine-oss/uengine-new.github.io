@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스크립트로 값 계산 (스크립트 작업) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="구매 금액에서 부가세(10%)를 JavaScript로, 합계 문구를 Java로 계산해 프로세스 변수에 넣습니다. 스크립트 작업은 사람이 처리할 필요 없이 바로 실행되고, 결과는 관리자 화면의 변수로 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/script-task.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스크립트로 값 계산 (스크립트 작업) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="구매 금액에서 부가세(10%)를 JavaScript로, 합계 문구를 Java로 계산해 프로세스 변수에 넣습니다. 스크립트 작업은 사람이 처리할 필요 없이 바로 실행되고, 결과는 관리자 화면의 변수로 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/script-task.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html" class="on" aria-current="page"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">흐름 제어<span class="chap">14</span></div>
+    <h1>스크립트로 값 계산 (스크립트 작업)</h1>
+    <article>
+<blockquote>
+<p>구매 금액에서 부가세(10%)를 JavaScript로, 합계 문구를 Java로 계산해 프로세스 변수에 넣습니다. 스크립트 작업은 사람이 처리할 필요 없이 바로 실행되고, 결과는 관리자 화면의 변수로 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/mmgO0Blr1_o" title="스크립트로 값 계산 (스크립트 작업) — 영상 1:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>스크립트 작업</strong>(script task)은 엔진 안에서 짧은 코드를 실행하는 자동 작업입니다. 그림에서는 왼쪽 위에 두루마리 아이콘이 있는 사각형입니다.
+변수로 계산하거나 문자열을 만들고, 다음 게이트웨이에서 확인할 값을 미리 정리할 때 씁니다. 다른 시스템을 호출하는 일은 <a href="rest-service-task.html">REST 서비스 작업</a>에 맡기세요.</p>
+<p>uEngine6에서는 <code>org.uengine.kernel.ScriptActivity</code>가 맡습니다.</p>
+<table>
+<thead>
+<tr>
+<th>언어</th>
+<th><code>language</code></th>
+<th>실행기</th>
+<th>스크립트 형식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JavaScript</td>
+<td><code>"0"</code></td>
+<td>BSF + Rhino 1.7</td>
+<td>문장 + 마지막 <code>return 값;</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>"1"</code></td>
+<td>Janino(실행 시 컴파일)</td>
+<td><strong>메서드 몸통</strong>. 반드시 <code>return</code>이 있어야 하고, <code>instance.get</code>은 검사 예외를 던지므로 <code>try { … } catch (Exception e) { … }</code>로 감쌉니다</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>스크립트 안에서 쓸 수 있는 이름: <code>instance</code>(프로세스 인스턴스), <code>activity</code>(이 작업), <code>definition</code>(정의), <code>util</code>.</li>
+<li>변수 읽기: <code>instance.get("", "변수이름")</code> (첫 인자는 실행 범위, 보통 빈 문자열).</li>
+<li><code>return</code>으로 반환한 값은 「Return 값을 저장 할 변수」(JSON <code>out</code>)에 들어갑니다.</li>
+<li>이 장의 두 스크립트는 JDK 21 스택에서 둘 다 실행됐습니다.</li>
+</ul>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>정의 보기.</strong> 홍길동으로 <code>튜토리얼/스크립트/부가세계산</code>을 엽니다. 「구매 요청 → 부가세 계산 → 합계 계산 → 결재(윤팀장)」입니다. 가운데 두 작업이 스크립트 작업입니다.
+
+<figure><a href="img/script-task-diagram.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="부가세계산 정의" src="img/script-task-diagram.webp" loading="lazy" decoding="async"></a><figcaption>부가세계산 정의</figcaption></figure>
+</li>
+<li><strong>JavaScript 스크립트.</strong> 「부가세 계산」을 더블클릭합니다. 「스크립트 타입」은 Javascript이고, 「스크립트」에는 아래 코드가 들어 있습니다. 「Return 값을 저장 할 변수」는 <code>부가세</code>입니다.
+
+
+<div class="hl"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">instance</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/script-task-js.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="스크립트 작업 패널(JavaScript)" src="img/script-task-js.webp" loading="lazy" decoding="async"></a><figcaption>스크립트 작업 패널(JavaScript)</figcaption></figure>
+</li>
+<li><strong>Java 스크립트.</strong> 「합계 계산」은 「스크립트 타입」이 Java입니다. 메서드 몸통이므로 <code>return</code>으로 끝나고, 전체를 <code>try/catch</code>로 감쌌습니다. 반환 변수는 <code>합계</code>입니다.
+
+
+<div class="hl"><pre><span></span><code><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Long</span><span class="p">.</span><span class="na">parseLong</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">instance</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;금액&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">Number</span><span class="p">)</span><span class="w"> </span><span class="n">instance</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;부가세&quot;</span><span class="p">)).</span><span class="na">longValue</span><span class="p">();</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;합계 &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;원&quot;</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;오류 &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+</li>
+<li><strong>실행.</strong> 최구매로 같은 정의에서 「실행」을 누르고, 품목 <code>노트북</code>, 금액 <code>1250000</code>으로 「완료」합니다.
+</li>
+<li><strong>스크립트는 바로 실행됩니다.</strong> 윤팀장의 업무 목록에 「결재」가 곧바로 생깁니다. 작업 화면 그림에서 두 스크립트 작업이 완료된 경로(보라색)로 보입니다.
+</li>
+<li><strong>변수 확인.</strong> 홍길동이 관리자 상세(<code>/admin/&lt;인스턴스 ID&gt;</code>)의 「프로세스 변수」 탭을 엽니다. <code>부가세</code>가 <code>125000</code>, <code>합계</code>가 <code>합계 1375000원</code>입니다.
+
+<figure><a href="img/script-task-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자 상세의 계산 결과" src="img/script-task-vars.webp" loading="lazy" decoding="async"></a><figcaption>관리자 상세의 계산 결과</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="패널-json">패널 ↔ JSON<a class="anchor" href="#패널-json" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>패널 칸</th>
+<th>JSON 속성</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「스크립트 타입」 Javascript / Java</td>
+<td><code>language</code></td>
+<td><code>"0"</code> / <code>"1"</code></td>
+</tr>
+<tr>
+<td>「스크립트」</td>
+<td><code>script</code></td>
+<td>코드 문자열(줄 바꿈은 <code>\n</code>)</td>
+</tr>
+<tr>
+<td>「Return 값을 저장 할 변수」</td>
+<td><code>out.name</code> (+ <code>out.type</code>)</td>
+<td><code>{"name":"부가세","type":"java.lang.Number"}</code></td>
+</tr>
+<tr>
+<td>—</td>
+<td><code>_type</code></td>
+<td><code>org.uengine.kernel.ScriptActivity</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="이-장에서-배포한-정의발췌">이 장에서 배포한 정의(발췌)<a class="anchor" href="#이-장에서-배포한-정의발췌" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="nt">&lt;bpmn:scriptTask</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Vat&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;부가세 계산&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:extensionElements&gt;&lt;uengine:properties&gt;&lt;uengine:json&gt;</span>
+<span class="w">    </span>{&quot;_type&quot;:&quot;org.uengine.kernel.ScriptActivity&quot;,&quot;language&quot;:&quot;0&quot;,
+<span class="w">     </span>&quot;script&quot;:&quot;var<span class="w"> </span>a<span class="w"> </span>=<span class="w"> </span>instance.get(\&quot;\&quot;,<span class="w"> </span>\&quot;금액\&quot;);\nreturn<span class="w"> </span>Math.round(a<span class="w"> </span>*<span class="w"> </span>0.1);&quot;,
+<span class="w">     </span>&quot;out&quot;:{&quot;name&quot;:&quot;부가세&quot;,&quot;type&quot;:&quot;java.lang.Number&quot;}}
+<span class="w">  </span><span class="nt">&lt;/uengine:json&gt;&lt;/uengine:properties&gt;&lt;/bpmn:extensionElements&gt;</span>
+<span class="nt">&lt;/bpmn:scriptTask&gt;</span>
+<span class="nt">&lt;bpmn:scriptTask</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Sum&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;합계 계산&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span>…<span class="w"> </span>{&quot;_type&quot;:&quot;org.uengine.kernel.ScriptActivity&quot;,&quot;language&quot;:&quot;1&quot;,&quot;script&quot;:&quot;try<span class="w"> </span>{\n<span class="w">  </span>long<span class="w"> </span>a<span class="w"> </span>=<span class="w"> </span>…&quot;,&quot;out&quot;:{&quot;name&quot;:&quot;합계&quot;,&quot;type&quot;:&quot;java.lang.String&quot;}}<span class="w"> </span>…
+<span class="nt">&lt;/bpmn:scriptTask&gt;</span>
+</code></pre></div>
+
+<p>반환 변수(<code>부가세</code>·<code>합계</code>)도 정의의 프로세스 변수로 선언해 둡니다(<code>Number</code>, <code>Text</code>).</p>
+<h3 id="실행-결과이-장을-촬영할-때의-실행">실행 결과(이 장을 촬영할 때의 실행)<a class="anchor" href="#실행-결과이-장을-촬영할-때의-실행" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>변수</th>
+<th>값</th>
+<th>만든 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>금액</code></td>
+<td>1250000</td>
+<td>구매 요청(사람 입력)</td>
+</tr>
+<tr>
+<td><code>부가세</code></td>
+<td>125000</td>
+<td>부가세 계산(JavaScript)</td>
+</tr>
+<tr>
+<td><code>합계</code></td>
+<td><code>합계 1375000원</code></td>
+<td>합계 계산(Java)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="흔한-실수">흔한 실수<a class="anchor" href="#흔한-실수" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>고치는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java 스크립트가 컴파일되지 않음</td>
+<td><code>instance.get</code>의 검사 예외를 처리하지 않음</td>
+<td>몸통 전체를 <code>try { … } catch (Exception e) { … }</code>로</td>
+</tr>
+<tr>
+<td>Java에서 <code>ClassCastException</code></td>
+<td>화면 입력값이 문자열로 들어옴</td>
+<td><code>Long.parseLong(String.valueOf(…))</code>처럼 문자열을 거쳐 변환</td>
+</tr>
+<tr>
+<td>반환 변수가 비어 있음</td>
+<td>마지막에 <code>return</code>이 없음, 또는 변수 이름이 정의에 없음</td>
+<td><code>return</code>을 넣고 프로세스 변수를 선언</td>
+</tr>
+<tr>
+<td>스크립트가 길어짐</td>
+<td>외부 호출·복잡한 규칙을 스크립트에 넣음</td>
+<td>호출은 서비스 작업, 판단표는 <a href="business-rule-dmn.html">규칙표(DMN)</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>Java 스크립트에서 `try/catch`를 빼면 어떻게 되나요?</summary>
+<p><code>instance.get</code>이 검사 예외(<code>Exception</code>)를 던지도록 선언돼 있어 Janino가 컴파일하지 못합니다. Java 스크립트는 몸통 전체를 <code>try/catch</code>로 감싸세요.</p>
+</details>
+<details class="answer">
+<summary>부가세가 10만 원 이상이면 대표에게 보내려면 무엇이 필요한가요?</summary>
+<p>스크립트 작업 뒤에 <a href="exclusive-gateway.html">배타 게이트웨이</a>를 두고, 나가는 흐름에 <code>{"key":"부가세","condition":"&gt;=","value":100000}</code> 조건을 답니다. <code>부가세</code>는 반환 변수(<code>out</code>)이자 정의에 선언된 프로세스 변수이므로 조건에서 바로 읽을 수 있습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="parallel-inclusive-gateway.html"><span>이전</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a><a class="next" href="business-rule-dmn.html"><span>다음</span>결재선을 규칙표로 (DMN)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#패널-json">패널 ↔ JSON</a></li><li><a href="#이-장에서-배포한-정의발췌">이 장에서 배포한 정의(발췌)</a></li><li><a href="#실행-결과이-장을-촬영할-때의-실행">실행 결과(이 장을 촬영할 때의 실행)</a></li><li><a href="#흔한-실수">흔한 실수</a></li></ul></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

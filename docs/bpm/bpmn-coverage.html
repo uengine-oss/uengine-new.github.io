@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BPMN 지원 범위 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="uEngine6 `bmt/sds-process-test` 브랜치에서 BPMN 요소를 각각 실제로 실행해 본 결과입니다. 그대로 되는 것(✅), 우회하면 되는 것(◐), 안 되는 것(✗)을 요소 분류별로 모으고, 우회 방법과 해당 장을 적었습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/bpmn-coverage.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BPMN 지원 범위 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="uEngine6 `bmt/sds-process-test` 브랜치에서 BPMN 요소를 각각 실제로 실행해 본 결과입니다. 그대로 되는 것(✅), 우회하면 되는 것(◐), 안 되는 것(✗)을 요소 분류별로 모으고, 우회 방법과 해당 장을 적었습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/bpmn-coverage.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html" class="on" aria-current="page"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">참고<span class="chap">34</span></div>
+    <h1>BPMN 지원 범위</h1>
+    <article>
+<blockquote>
+<p>uEngine6 <code>bmt/sds-process-test</code> 브랜치에서 BPMN 요소를 각각 실제로 실행해 본 결과입니다. 그대로 되는 것(✅), 우회하면 되는 것(◐), 안 되는 것(✗)을 요소 분류별로 모으고, 우회 방법과 해당 장을 적었습니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>모델러 팔레트에 있는 요소가 모두 엔진에서 실행되지는 않습니다. 이 페이지는 Camunda 문서의 「BPMN coverage」처럼, 이 브랜치에서 각 요소를 실행할 수 있는지 정리합니다.</p>
+<ul>
+<li><strong>기준.</strong> uEngine6 <code>bmt/sds-process-test</code> 브랜치(시연 워크트리 <code>demo/bpm6-tutorial</code>, 커밋 <code>0e163f07</code>)와 그 프런트를 로컬 스택에서 실행해 확인했습니다. 다른 브랜치(<code>main</code> 등)에서는 결과가 다를 수 있습니다.</li>
+<li><strong>방법.</strong> 정의를 화면 또는 BPMN XML로 만들어 배포하고, REST API·업무 목록·Kafka로 실행한 뒤, 작업 목록 표(<code>bpm_worklist</code>)·프로세스 변수·관리자 화면으로 결과를 확인했습니다. 「확인하지 못함」은 실행해 보지 않았다는 뜻입니다.</li>
+<li><strong>판정.</strong> ✅ 그대로 됨 · ◐ 우회하면 됨(XML로 쓰기, API로 부르기 등) · ✗ 안 됨(엔진이나 화면을 고쳐야 함).</li>
+</ul>
+<p>엔진은 BPMN 요소를 태그 이름으로 클래스에 대응시킵니다. 사람 작업은 <code>org.uengine.kernel.HumanActivity</code>, 스크립트 작업은 <code>org.uengine.kernel.ScriptActivity</code>, 그 밖의 요소는 <code>org.uengine.kernel.bpmn.&lt;태그 이름&gt;</code>(예: <code>ServiceTask</code>, <code>ExclusiveGateway</code>)입니다. 요소의 <code>&lt;uengine:properties&gt;</code> JSON 맨 위에 <code>_type</code>이 있으면 그 클래스로 바뀝니다(예: 서비스 작업을 <code>org.uengine.kernel.bpmn.SQLTask</code>로). 아래 표의 <code>_type</code> 칸은 이 값입니다. 자세한 규칙은 <a href="extend-engine.html">엔진 확장하기</a>에 있습니다.</p>
+<h2 id="한눈에-보기">한눈에 보기<a class="anchor" href="#한눈에-보기" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>분류</th>
+<th>✅ 그대로</th>
+<th>◐ 우회</th>
+<th>✗ 안 됨</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>작업</td>
+<td>사람 작업, URL 작업, 스크립트, 규칙(DMN)</td>
+<td>폼 작업, REST 서비스 작업, SQL 작업, 콜 액티비티, REST 통지(보내기)</td>
+<td>보내기 작업(메일)</td>
+</tr>
+<tr>
+<td>게이트웨이</td>
+<td>배타, 병렬, 포괄</td>
+<td>—</td>
+<td>— (이벤트 기반·복합은 확인하지 못함)</td>
+</tr>
+<tr>
+<td>이벤트</td>
+<td>시작·종료, 메시지 시작, 메시지 중간 대기, 오류 종료·오류 경계</td>
+<td>메시지 경계, 보상 던지기, 이벤트 키 방송</td>
+<td>타이머 전부, 신호, 에스컬레이션, 조건, terminate</td>
+</tr>
+<tr>
+<td>하위 프로세스</td>
+<td>—</td>
+<td>다중 생성(몸통 작업 1개)</td>
+<td>임베디드 서브프로세스</td>
+</tr>
+<tr>
+<td>데이터</td>
+<td>프로세스 변수, 데이터 매핑, 인스턴스 이름 패턴</td>
+<td>—</td>
+<td>— (데이터 객체·저장소는 확인하지 못함)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="작업">작업<a class="anchor" href="#작업" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th><code>_type</code></th>
+<th>판정</th>
+<th>확인한 것 · 우회</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>사람 작업</td>
+<td><code>org.uengine.kernel.HumanActivity</code></td>
+<td>✅</td>
+<td>아규먼트(입력 칸), 레인 배정, 업무 목록에서 완료</td>
+<td><a href="quickstart.html">첫 프로세스</a>, <a href="tasklist.html">업무 목록</a></td>
+</tr>
+<tr>
+<td>폼 작업</td>
+<td><code>org.uengine.kernel.FormActivity</code> (<code>tool: "formHandler:&lt;폼 ID&gt;"</code>)</td>
+<td>◐</td>
+<td>실행·제출은 됩니다. 작업 패널 「폼」의 「폼 생성을 하시겠습니까?」에서 「예」를 눌러도 아무 동작이 없습니다 → 「아니오」를 누르고 미리 만든 폼을 고릅니다</td>
+<td><a href="forms.html">폼 붙이기</a></td>
+</tr>
+<tr>
+<td>URL 작업(외부 애플리케이션)</td>
+<td><code>org.uengine.kernel.URLActivity</code></td>
+<td>✅</td>
+<td>다른 앱 화면을 작업 화면 iframe으로 엽니다. URL은 게이트웨이와 같은 출처여야 합니다</td>
+<td><a href="external-task-screen.html">다른 앱 화면을 작업으로</a></td>
+</tr>
+<tr>
+<td>서비스 작업(REST)</td>
+<td><code>org.uengine.kernel.bpmn.ServiceTask</code></td>
+<td>◐</td>
+<td>GET·POST, 헤더·본문 템플릿, 응답 → 변수 매핑이 됩니다. ① 패널에서 저장하면 루트 <code>_type</code>이 지워져 배포가 실패합니다 → XML 보기에서 <code>_type</code>을 되살립니다 ② 본문에 <code>&lt;%=변수%&gt;</code>가 하나도 없으면 SpEL로 해석되어 오류가 납니다 ③ <code>skipIfNotFound</code>는 동작하지 않습니다</td>
+<td><a href="rest-service-task.html">REST API 부르기</a></td>
+</tr>
+<tr>
+<td>SQL 작업</td>
+<td><code>org.uengine.kernel.bpmn.SQLTask</code></td>
+<td>◐</td>
+<td>직접 SQL(조회·갱신)은 패널에서 설정할 수 있습니다. 조회 결과 → 변수 매핑(<code>selectMappings</code>)과 데이터베이스 매핑 방식은 패널이 저장하지 못합니다 → XML로 씁니다</td>
+<td><a href="sql-task.html">데이터베이스 읽고 쓰기</a></td>
+</tr>
+<tr>
+<td>스크립트 작업</td>
+<td><code>org.uengine.kernel.ScriptActivity</code></td>
+<td>✅</td>
+<td>JavaScript(Rhino, <code>language:"0"</code>)·Java(Janino, <code>language:"1"</code>) 모두 JDK 21에서 실행됩니다. Java는 <code>instance.get()</code>을 <code>try/catch</code>로 감쌉니다</td>
+<td><a href="script-task.html">스크립트로 값 계산</a></td>
+</tr>
+<tr>
+<td>비즈니스 규칙 작업(DMN)</td>
+<td><code>org.uengine.kernel.bpmn.BusinessRuleTask</code></td>
+<td>✅</td>
+<td>규칙표 결과로 분기합니다. 결과는 <code>outcome</code> 하나뿐이고(고정 목록), 메모는 결과로 나오지 않습니다</td>
+<td><a href="business-rule-dmn.html">결재선을 규칙표로</a></td>
+</tr>
+<tr>
+<td>콜 액티비티</td>
+<td><code>org.uengine.kernel.bpmn.CallActivity</code></td>
+<td>◐</td>
+<td>하위 인스턴스 생성, 변수 in/out, 역할 전달이 됩니다. 패널에서 고친 값은 저장되지 않습니다 → 정의 선택·바인딩은 XML로 씁니다</td>
+<td><a href="call-activity.html">공통 프로세스 불러 쓰기</a></td>
+</tr>
+<tr>
+<td>보내기 작업(메일)</td>
+<td><code>org.uengine.kernel.LocalEMailActivity</code></td>
+<td>✗</td>
+<td>SMTP가 없으면 앞 작업 완료까지 실패합니다. <code>mail.enabled: false</code> 설정은 코드가 읽지 않습니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>보내기 작업(REST 통지)</td>
+<td><code>org.uengine.kernel.bpmn.SendTask</code> + <code>sendType:"rest_api"</code></td>
+<td>◐</td>
+<td>XML로 작성하면 통지를 보내고 응답을 변수로 받습니다. 패널을 다시 열면 항상 「이메일 전송」이고, 그대로 저장하면 REST 칸이 지워집니다 → REST 서비스 작업으로 대신하세요</td>
+<td><a href="rest-service-task.html">REST API 부르기</a></td>
+</tr>
+<tr>
+<td>수신 작업 · 수동 작업 · 일반 작업</td>
+<td><code>ReceiveTask</code> · <code>DefaultActivity</code></td>
+<td>확인하지 못함</td>
+<td>코드상 수동 작업과 일반 작업은 <code>DefaultActivity</code>(바로 완료)이고, 수동 작업은 확장 JSON을 읽지 않습니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>작업의 다중 인스턴스·반복 표식</td>
+<td>(<code>multiInstanceLoopCharacteristics</code>)</td>
+<td>확인하지 못함</td>
+<td>렌치 메뉴에 「병렬/순차 다중 인스턴스」「반복」이 있지만, 엔진 파서는 이 표식 요소를 읽지 않습니다(코드). 다중 생성은 아래 서브프로세스 방식으로 하세요</td>
+<td><a href="multi-instance.html">다중 인스턴스</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="게이트웨이">게이트웨이<a class="anchor" href="#게이트웨이" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th><code>_type</code></th>
+<th>판정</th>
+<th>확인한 것 · 우회</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>배타 게이트웨이</td>
+<td><code>org.uengine.kernel.bpmn.ExclusiveGateway</code></td>
+<td>✅</td>
+<td>흐름 조건(<code>org.uengine.kernel.Evaluate</code>), 기본 흐름(<code>default</code> 속성), 우선순위</td>
+<td><a href="exclusive-gateway.html">조건으로 갈라지기</a></td>
+</tr>
+<tr>
+<td>병렬 게이트웨이</td>
+<td><code>org.uengine.kernel.bpmn.ParallelGateway</code></td>
+<td>✅</td>
+<td>분기 → 한쪽만 끝나면 대기 → 둘 다 끝나야 합류</td>
+<td><a href="parallel-inclusive-gateway.html">동시에 진행하고 기다리기</a></td>
+</tr>
+<tr>
+<td>포괄 게이트웨이</td>
+<td><code>org.uengine.kernel.bpmn.InclusiveGateway</code></td>
+<td>✅</td>
+<td>참인 갈래만 열리고, 열린 갈래가 모두 끝나야 합류</td>
+<td><a href="parallel-inclusive-gateway.html">동시에 진행하고 기다리기</a></td>
+</tr>
+<tr>
+<td>이벤트 기반 게이트웨이</td>
+<td><code>org.uengine.kernel.bpmn.EventBasedGateway</code></td>
+<td>확인하지 못함</td>
+<td>코드상 병렬 게이트웨이를 그대로 상속합니다(먼저 온 이벤트 하나만 고르는 동작이 따로 없음)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>복합 게이트웨이</td>
+<td>—</td>
+<td>확인하지 못함</td>
+<td>엔진에 해당 클래스가 없습니다</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="이벤트">이벤트<a class="anchor" href="#이벤트" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th><code>_type</code></th>
+<th>판정</th>
+<th>확인한 것 · 우회</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시작 · 종료 이벤트(none)</td>
+<td><code>StartEvent</code> · <code>EndEvent</code></td>
+<td>✅</td>
+<td>—</td>
+<td><a href="quickstart.html">첫 프로세스</a></td>
+</tr>
+<tr>
+<td>메시지 시작 이벤트</td>
+<td><code>org.uengine.kernel.bpmn.MessageStartEvent</code></td>
+<td>✅</td>
+<td>Kafka <code>bpm-topic</code> 이벤트(헤더 <code>type</code>)로 인스턴스를 시작합니다. 상관 키가 중복되면 새로 만들지 않습니다. 직접 작성한 XML은 프로세스 JSON에 <code>definitionName</code>이 있어야 합니다(없으면 첫 사람 작업에서 NPE)</td>
+<td><a href="message-start.html">외부 이벤트로 시작하기</a></td>
+</tr>
+<tr>
+<td>이벤트 동기화 작업(이벤트로 작업 끝내기)</td>
+<td>작업 JSON의 <code>eventSynchronization</code></td>
+<td>✅</td>
+<td>이벤트 payload가 변수가 되고 작업이 끝납니다. 「기본」 사용자 작업 패널에는 이벤트 키 칸이 없습니다 → XML, 또는 URL 작업 패널</td>
+<td><a href="event-completion.html">작업을 이벤트로 끝내기</a></td>
+</tr>
+<tr>
+<td>메시지 중간 대기(catch)</td>
+<td><code>org.uengine.kernel.bpmn.MessageIntermediateCatchEvent</code></td>
+<td>✅</td>
+<td>상관 키가 일치하는 인스턴스가 깨어납니다. 패널에 이벤트 키 칸이 없습니다 → XML</td>
+<td><a href="event-completion.html">작업을 이벤트로 끝내기</a></td>
+</tr>
+<tr>
+<td>이벤트 키 방송</td>
+<td>catch 이벤트의 <code>eventKey</code></td>
+<td>◐</td>
+<td>상관 키 <strong>없이</strong> 같은 이름의 이벤트를 보내면 그 이벤트를 기다리는 실행 중인 인스턴스가 <strong>모두</strong> 깹니다. 신호(signal) 대신 씁니다</td>
+<td><a href="event-completion.html">작업을 이벤트로 끝내기</a></td>
+</tr>
+<tr>
+<td>메시지 경계 이벤트(중단)</td>
+<td><code>org.uengine.kernel.bpmn.MessageBoundaryEvent</code></td>
+<td>◐</td>
+<td><code>POST /work-item/{작업}/boundary-message/{경계 id}</code>로 부르면 작업이 취소되고 경계 쪽으로 진행합니다. 화면에 이 API를 부르는 버튼이 없습니다 → 외부 앱·curl</td>
+<td><a href="event-completion.html">작업을 이벤트로 끝내기</a></td>
+</tr>
+<tr>
+<td>오류 종료 · 오류 경계</td>
+<td><code>ErrorEndEvent</code> · <code>ErrorBoundaryEvent</code></td>
+<td>✅</td>
+<td>서브프로세스 안 오류 종료 → 서브프로세스의 오류 경계, 실패한 서비스 작업 → 오류 경계 → 수기 처리 작업. <strong>오류 코드 구분은 없습니다</strong>(어떤 실패든 같은 경계로)</td>
+<td><a href="error-and-compensation.html">실패 경로와 되돌리기</a></td>
+</tr>
+<tr>
+<td>보상 던지기</td>
+<td><code>org.uengine.kernel.bpmn.CompensateIntermediateThrowEvent</code></td>
+<td>◐</td>
+<td>지정한 작업까지 되돌립니다(지나온 작업 COMPENSATED, 그 작업이 새로 생김). BPMN의 보상 핸들러(취소 작업 실행)가 아니라 「지정 작업으로 되돌리기」입니다</td>
+<td><a href="error-and-compensation.html">실패 경로와 되돌리기</a>, <a href="back-to-here.html">되돌리기</a></td>
+</tr>
+<tr>
+<td>타이머(시작·중간 대기·경계)</td>
+<td><code>TimerStartEvent</code> · <code>TimerIntermediateCatchEvent</code> · <code>TimerBoundaryEvent</code></td>
+<td>✗</td>
+<td>발화는 하지만 상태가 저장되지 않아, 발화로 생긴 작업을 완료하면 <code>500 Illegal completion</code>으로 인스턴스가 멈춥니다. 패널 기본값 <code>* * * * *</code>(5필드)는 시작부터 500 오류가 납니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>신호(시작·던지기·대기·경계)</td>
+<td><code>Signal*</code></td>
+<td>✗</td>
+<td><code>/instance/{id}/signal/{key}</code>에서 NPE가 발생합니다. 신호 던지기는 Kafka에 <code>type=ThrowEvent</code>로 나가 이벤트 키를 쓰지 않습니다 → 위 「이벤트 키 방송」으로 대신</td>
+<td>—</td>
+</tr>
+<tr>
+<td>에스컬레이션</td>
+<td><code>Escalation*</code></td>
+<td>✗</td>
+<td>경계 쪽 작업은 생기지만 던진 이벤트가 끝나지 않아 서브프로세스 안 흐름이 멈춥니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>조건 이벤트</td>
+<td><code>Conditional*</code></td>
+<td>✗</td>
+<td>조건이 참이어도 깨어나지 않습니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>terminate 종료</td>
+<td>(<code>terminateEventDefinition</code>)</td>
+<td>✗</td>
+<td>일반 종료로 처리되어 다른 갈래가 계속 실행됩니다</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="하위-프로세스">하위 프로세스<a class="anchor" href="#하위-프로세스" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th><code>_type</code></th>
+<th>판정</th>
+<th>확인한 것 · 우회</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>임베디드 서브프로세스</td>
+<td><code>org.uengine.kernel.bpmn.SubProcess</code></td>
+<td>✗</td>
+<td>서브프로세스가 끝나도 다음 작업이 <code>Ready</code>로 남아 완료하면 <code>500 Illegal completion</code> 오류가 납니다. 묶어 쓰려면 콜 액티비티로 하세요</td>
+<td><a href="call-activity.html">공통 프로세스 불러 쓰기</a></td>
+</tr>
+<tr>
+<td>다중 생성(변수 기반)</td>
+<td>서브프로세스 JSON <code>forEachVariable</code></td>
+<td>◐</td>
+<td>목록 변수(JSON 배열)의 항목마다 실행합니다. 병렬이 기본이고 루프는 <code>"multipleInstanceOption":"loop"</code>(XML). <strong>몸통은 사람 작업 1개</strong>여야 합니다(2단계 이상이면 첫 단계에서 끝난 것으로 처리합니다)</td>
+<td><a href="multi-instance.html">다중 인스턴스</a></td>
+</tr>
+<tr>
+<td>콜 액티비티</td>
+<td><code>org.uengine.kernel.bpmn.CallActivity</code></td>
+<td>◐</td>
+<td>위 「작업」 표 참고</td>
+<td><a href="call-activity.html">공통 프로세스 불러 쓰기</a></td>
+</tr>
+<tr>
+<td>이벤트 서브프로세스 · 트랜잭션</td>
+<td>—</td>
+<td>확인하지 못함</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="데이터와-사람">데이터와 사람<a class="anchor" href="#데이터와-사람" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>요소 · 기능</th>
+<th>설정</th>
+<th>판정</th>
+<th>확인한 것 · 우회</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로세스 변수</td>
+<td>프로세스 JSON의 <code>&lt;uengine:variable&gt;</code> (Text·Number·Date·Form)</td>
+<td>✅</td>
+<td>시작 값, 작업 입력, 이벤트 payload가 변수로</td>
+<td><a href="process-data.html">프로세스 변수와 인스턴스 이름</a></td>
+</tr>
+<tr>
+<td>인스턴스 이름 패턴</td>
+<td><code>instanceNamePattern</code> (예: <code>구매_&lt;%=instance.instanceId%&gt;</code>)</td>
+<td>✅</td>
+<td>인스턴스 목록·관리자 화면의 이름</td>
+<td><a href="process-data.html">프로세스 변수와 인스턴스 이름</a></td>
+</tr>
+<tr>
+<td>데이터 매핑(작업 ↔ 변수)</td>
+<td><code>eventSynchronization.mappingContext</code></td>
+<td>✅</td>
+<td>매퍼에서 선을 이어 저장</td>
+<td><a href="arguments-and-mapping.html">작업 입력값과 데이터 매핑</a></td>
+</tr>
+<tr>
+<td>데이터 객체 · 데이터 저장소</td>
+<td><code>dataObjectReference</code> · <code>dataStoreReference</code></td>
+<td>확인하지 못함</td>
+<td>데이터는 프로세스 변수로 다루세요</td>
+<td>—</td>
+</tr>
+<tr>
+<td>레인 = 사람 직접 지정</td>
+<td><code>DirectRoleResolutionContext</code> (<code>endpoint</code> = 사용자 이름)</td>
+<td>✅</td>
+<td>화면 「사용자 직접 지정」은 이메일을 저장해 어느 업무 목록에도 표시되지 않습니다 → XML에서 사용자 이름으로</td>
+<td><a href="lanes-and-roles.html">레인과 담당자</a></td>
+</tr>
+<tr>
+<td>레인 = 그룹·역할 + 선점</td>
+<td><code>IAMRoleResolutionContext</code> (<code>groupName</code>·<code>scope</code>) + <code>dispatchingOption: 1</code></td>
+<td>◐</td>
+<td>실행은 됩니다. 레인 패널의 기관·권한 목록이 Keycloak이 아닌 고정값이므로 XML로 씁니다</td>
+<td><a href="lanes-and-roles.html">레인과 담당자</a>, <a href="security-keycloak.html">Keycloak</a></td>
+</tr>
+<tr>
+<td>시작 레인</td>
+<td>첫 레인</td>
+<td>◐</td>
+<td>첫 레인에 배분 설정이 있으면 화면 「실행」에서 500 오류가 납니다 → 첫 레인은 비워 둡니다</td>
+<td><a href="lanes-and-roles.html">레인과 담당자</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="작업-처리와-운영-기능">작업 처리와 운영 기능<a class="anchor" href="#작업-처리와-운영-기능" title="Permanent link">#</a></h2>
+<p>BPMN 요소는 아니지만 같은 기준으로 확인한 화면·API 기능입니다.</p>
+<table>
+<thead>
+<tr>
+<th>기능</th>
+<th>판정</th>
+<th>확인한 것 · 우회</th>
+<th>장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>업무 목록·선점(다중 선점 포함)</td>
+<td>✅</td>
+<td>「완료됨」 칸은 비어 있습니다(완료 기록은 관리자 화면 히스토리)</td>
+<td><a href="tasklist.html">업무 목록에서 일하기</a></td>
+</tr>
+<tr>
+<td>중간 저장</td>
+<td>◐</td>
+<td>값은 변수로 가지만 다시 열면 칸이 비어 있습니다</td>
+<td><a href="tasklist.html">업무 목록에서 일하기</a></td>
+</tr>
+<tr>
+<td>반송 · SKIP(작업 주인)</td>
+<td>✅</td>
+<td>사유가 남으면 그 사람의 업무 목록에서 500 오류가 납니다 → 로컬 시연에서는 사유를 정리</td>
+<td><a href="return-and-skip.html">반송과 SKIP</a></td>
+</tr>
+<tr>
+<td>위임</td>
+<td>◐</td>
+<td>단건 위임 API만 됩니다. 위임 화면·다중 위임은 ✗</td>
+<td><a href="rest-api.html">REST API</a></td>
+</tr>
+<tr>
+<td>인스턴스 찾기·상세·변수 고치기</td>
+<td>✅</td>
+<td>변수 값은 JSON으로 해석합니다(문자열은 따옴표로 감쌉니다)</td>
+<td><a href="instance-monitoring.html">인스턴스 찾고 살피기</a>, <a href="fix-variables.html">변수 고치기</a></td>
+</tr>
+<tr>
+<td>되돌리기(Back To Here)</td>
+<td>✅</td>
+<td>관리자 화면 「이 위치로 되돌리기」</td>
+<td><a href="back-to-here.html">되돌리기와 실패한 작업</a></td>
+</tr>
+<tr>
+<td>관리자 SKIP(남의 작업)</td>
+<td>✗</td>
+<td>403 <code>No permission to skip</code> → 작업 주인이 업무 화면에서 SKIP</td>
+<td><a href="back-to-here.html">되돌리기와 실패한 작업</a></td>
+</tr>
+<tr>
+<td>실패한 작업 표시</td>
+<td>◐</td>
+<td>서비스 작업이 실패하면 앞 작업의 완료가 거절될 뿐 실패 상태가 남지 않습니다 → 원인을 고쳐 다시 완료하거나 오류 경계를 붙입니다</td>
+<td><a href="back-to-here.html">되돌리기와 실패한 작업</a></td>
+</tr>
+<tr>
+<td>정지 · 재개</td>
+<td>✗</td>
+<td>API 응답은 200이지만 상태가 바뀌지 않습니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>시뮬레이션 · 단위 테스트</td>
+<td>◐</td>
+<td>「실행 테스트」 탭과 단위 테스트 케이스 작성까지. 「시나리오 테스트」는 준비 중</td>
+<td><a href="test-before-deploy.html">배포 전에 시험하기</a></td>
+</tr>
+<tr>
+<td>버전</td>
+<td>◐</td>
+<td>화면 저장은 같은 버전을 덮어씁니다. 파일(archive)로 버전을 나누면 기존 인스턴스는 이전 버전으로 실행됩니다. 버전 관리자·버전 비교 화면은 ✗</td>
+<td><a href="versions-and-deploy.html">버전과 배포</a></td>
+</tr>
+<tr>
+<td>분석·KPI</td>
+<td>◐</td>
+<td>분석 서비스(analytics)를 따로 실행하고 ETL을 실행해야 합니다</td>
+<td><a href="analytics-kpi.html">분석과 KPI</a></td>
+</tr>
+<tr>
+<td>조직도 화면</td>
+<td>✗</td>
+<td>Keycloak과 이어지지 않습니다 → Keycloak 관리 콘솔</td>
+<td><a href="security-keycloak.html">사용자·그룹·역할</a></td>
+</tr>
+<tr>
+<td>감사 기록 API(<code>/audit</code>)</td>
+<td>✗</td>
+<td>감사 저장이 꺼져 있어 빈 목록입니다</td>
+<td><a href="rest-api.html">REST API</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">이 표는 한 브랜치의 결과입니다</p>
+<p>✗ 로 적은 요소(임베디드 서브프로세스, 타이머, 신호·에스컬레이션·조건·terminate, 메일)는 이 튜토리얼의 따라 하기에 넣지 않았습니다. 엔진을 수정한 빌드에서는 결과가 달라지므로, 업그레이드할 때 이 페이지의 시험(<code>research/verify-scripts/B-*.mjs</code>와 같은 방식)을 다시 실행해 보세요.</p>
+</div>
+<ul>
+<li>모델러 팔레트·렌치 메뉴에는 위의 ✗ 요소도 모두 나옵니다. 그릴 수 있다고 실행되는 것은 아닙니다.</li>
+<li>화면 패널이 일부 설정을 저장하지 못하는 요소(서비스·SQL·보내기·콜 액티비티·이벤트 키)는 XML 보기(<code>&lt;/&gt;</code>)에서 직접 고칩니다. 고친 뒤 루트 <code>_type</code>이 남아 있는지 확인하세요.</li>
+<li>시작자를 정적 필드에서 읽기 때문에, 동시에 여러 사용자가 시작하면 첫 작업 담당자가 바뀔 수 있습니다. API로 시작할 때는 <code>roleMappings</code>로 시작 레인 사람을 적어 주세요.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>결재가 사흘 안 끝나면 독촉 작업을 만들고 싶습니다. 타이머 경계 이벤트를 쓰면 되나요?</summary>
+<p>이 브랜치에서는 안 됩니다. 타이머는 발화하지만 발화로 생긴 작업을 완료할 수 없어 인스턴스가 멈춥니다. 외부 스케줄러가 기한을 넘긴 작업을 찾아 이벤트(Kafka)를 보내고, 그 이벤트를 메시지 경계·이벤트 동기화로 받는 식으로 우회합니다.</p>
+</details>
+<details class="answer">
+<summary>「견적 입력 → 검토」 두 단계를 공급사마다 반복하려면 어떻게 그리나요?</summary>
+<p>다중 생성 서브프로세스의 몸통은 사람 작업 하나여야 합니다. 「견적 입력」만 다중 생성하고, 「검토」는 서브프로세스 뒤에 한 번 둡니다. 두 단계를 꼭 묶어야 하면 두 단계짜리 프로세스를 따로 만들어 콜 액티비티로 부르는 방법을 검토하세요(콜 액티비티의 다중 생성은 확인하지 못했습니다).</p>
+</details>
+<details class="answer">
+<summary>서비스 작업 패널에서 URL을 고쳐 저장했더니 배포 실패 메시지가 나옵니다. 왜인가요?</summary>
+<p>패널이 저장하면서 서비스 작업 JSON 맨 위의 <code>_type</code>을 지우고, 헤더에는 <code>_type</code>을 남깁니다. 엔진은 JSON 어딘가에 <code>_type</code>이 있으면 맨 위에도 있어야 읽을 수 있습니다. XML 보기에서 <code>"_type":"org.uengine.kernel.bpmn.ServiceTask"</code>를 다시 넣고 저장하세요.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="industry-erp-purchase.html"><span>이전</span>ERP: 구매 발주 결재와 대금 지급</a><a class="next" href="extend-engine.html"><span>다음</span>엔진 확장하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#한눈에-보기">한눈에 보기</a></li><li><a href="#작업">작업</a></li><li><a href="#게이트웨이">게이트웨이</a></li><li><a href="#이벤트">이벤트</a></li><li><a href="#하위-프로세스">하위 프로세스</a></li><li><a href="#데이터와-사람">데이터와 사람</a></li><li><a href="#작업-처리와-운영-기능">작업 처리와 운영 기능</a></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

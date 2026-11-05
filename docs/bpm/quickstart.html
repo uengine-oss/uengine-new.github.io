@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>첫 프로세스 만들고 실행하기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="관리자 홍길동이 모델러에서 「구매 요청 → 결재」의 두 단계 프로세스를 그려 저장합니다. 이를 실행하고 업무 목록에서 작업을 끝낸 뒤 관리자 화면에서 완료를 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/quickstart.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="첫 프로세스 만들고 실행하기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="관리자 홍길동이 모델러에서 「구매 요청 → 결재」의 두 단계 프로세스를 그려 저장합니다. 이를 실행하고 업무 목록에서 작업을 끝낸 뒤 관리자 화면에서 완료를 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/quickstart.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html" class="on" aria-current="page"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap">2</span></div>
+    <h1>첫 프로세스 만들고 실행하기</h1>
+    <article>
+<blockquote>
+<p>관리자 홍길동이 모델러에서 「구매 요청 → 결재」의 두 단계 프로세스를 그려 저장합니다. 이를 실행하고 업무 목록에서 작업을 끝낸 뒤 관리자 화면에서 완료를 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/AaHDIoqgwms" title="첫 프로세스 만들고 실행하기 — 영상 1:43" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>프로세스 정의</strong>는 BPMN 2.0으로 그린 업무 흐름입니다. 정의를 실행할 때마다 <strong>인스턴스</strong>가 하나씩 생기고, 인스턴스는 흐름에 따라 사람이 처리할 <strong>작업</strong>을 만듭니다. 담당자는 <strong>업무 목록</strong>에서 자신의 작업을 열어 완료합니다.</p>
+<p>이 장에서 쓰는 BPMN 요소는 다섯 가지입니다.</p>
+<table>
+<thead>
+<tr>
+<th>BPMN 요소</th>
+<th>뜻</th>
+<th>uEngine6에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>풀(participant) · <strong>레인</strong>(lane)</td>
+<td>누가 하는가</td>
+<td>레인 = 담당자 규칙. 규칙이 없는 레인의 작업은 <strong>프로세스를 시작한 사람</strong>에게 갑니다</td>
+</tr>
+<tr>
+<td>시작 이벤트(start event)</td>
+<td>흐름의 시작</td>
+<td>「실행」이나 <code>POST /instance</code>로 인스턴스가 생기면 여기서 출발합니다</td>
+</tr>
+<tr>
+<td><strong>사용자 작업</strong>(user task)</td>
+<td>사람이 하는 일</td>
+<td><code>_type</code>이 <code>org.uengine.kernel.HumanActivity</code> 인 작업. 업무 목록에 카드로 뜹니다</td>
+</tr>
+<tr>
+<td>시퀀스 흐름(sequence flow)</td>
+<td>다음 순서</td>
+<td>화살표</td>
+</tr>
+<tr>
+<td>끝 이벤트(end event)</td>
+<td>흐름의 끝</td>
+<td>모든 경로가 끝나면 인스턴스 상태가 <code>Completed</code>가 됩니다</td>
+</tr>
+</tbody>
+</table>
+<p>사용자 작업에는 <strong>아규먼트</strong>를 둘 수 있습니다. 아규먼트는 해당 작업 화면의 입력 칸입니다. 정의에는 작업 속성 JSON의 <code>eventSynchronization.attributes</code>로 저장됩니다. 아규먼트 값을 프로세스 변수에 저장하는 방법(데이터 매핑)은 <a href="arguments-and-mapping.html">작업 입력값과 데이터 매핑</a>에서 다룹니다.</p>
+<p>이 장의 프로세스는 레인이 하나이고 담당자 규칙을 두지 않습니다. 그래서 「구매 요청」과 「결재」가 <strong>모두 시작한 사람(홍길동)에게</strong> 갑니다. 결재를 다른 사람(윤팀장)에게 보내는 방법은 <a href="lanes-and-roles.html">레인과 담당자</a>에서 다룹니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p><code>hong</code> / <code>1234</code>로 <code>http://localhost:8288</code>에 로그인한 상태에서 시작합니다.</p>
+<ol class="steps">
+<li><strong>새 프로세스를 엽니다.</strong> 주소 <code>/definitions/chat</code>을 열면 기본 템플릿이 나옵니다. 풀 「Process」, 레인 「Lane 1」 안에 「Start」 → 「User Task」 → 「End」가 이어져 있습니다.
+
+<figure><a href="img/quickstart-template.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="기본 템플릿" src="img/quickstart-template.webp" loading="lazy" decoding="async"></a><figcaption>기본 템플릿</figcaption></figure>
+</li>
+<li><strong>첫 작업을 「구매 요청」으로 바꿉니다.</strong> 「User Task」를 두 번 눌러 속성 패널을 엽니다. 「이름」을 <code>구매 요청</code>으로 바꾸고, 「아규먼트」 아래 입력 칸에 <code>품목</code>을 적고 Enter를 누릅니다. 다음 칸에 <code>금액</code>을 적고, 타입을 「정수」로 고른 뒤 Enter를 누릅니다. 패널 오른쪽 위의 디스켓 아이콘을 눌러 저장합니다.
+
+<figure><a href="img/quickstart-args.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="아규먼트 두 개" src="img/quickstart-args.webp" loading="lazy" decoding="async"></a><figcaption>아규먼트 두 개</figcaption></figure>
+</li>
+<li><strong>「결재」 작업을 덧붙입니다.</strong> 먼저 「End」를 오른쪽으로 끌어 자리를 만듭니다. 「구매 요청」을 한 번 누르면 옆에 컨텍스트 패드가 뜹니다. 「작업 덧붙이기」(사용자 작업 모양)를 누르면 새 작업이 「구매 요청」과 「End」 사이에 추가됩니다. 새 작업을 두 번 눌러 이름을 <code>결재</code>로 바꾸고, 아규먼트 <code>결재의견</code>(문자열)을 추가합니다.
+
+<figure><a href="img/quickstart-two-steps.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="두 단계 프로세스" src="img/quickstart-two-steps.webp" loading="lazy" decoding="async"></a><figcaption>두 단계 프로세스</figcaption></figure>
+</li>
+<li><strong>저장합니다.</strong> 오른쪽 위의 디스켓 아이콘을 누르면 「프로세스 저장」 대화상자가 뜹니다. 「아이디」에 <code>튜토리얼/빠른시작/구매결재</code>, 「이름」에 <code>구매 결재</code>를 넣고 「저장」을 누릅니다. 아이디는 폴더를 포함한 경로이고, 파일은 <code>definitions/튜토리얼/빠른시작/구매결재.bpmn</code>으로 저장됩니다.
+
+<figure><a href="img/quickstart-save.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 저장" src="img/quickstart-save.webp" loading="lazy" decoding="async"></a><figcaption>프로세스 저장</figcaption></figure>
+</li>
+<li><strong>실행합니다.</strong> 저장해도 주소는 <code>/definitions/chat</code> 그대로입니다. <code>/definitions/튜토리얼/빠른시작/구매결재</code>를 열고 오른쪽 위 재생 아이콘(「실행」)을 누릅니다. 「Process 실행」 창에 첫 작업 「구매 요청」의 입력 칸 「품목」·「금액」이 나옵니다. <code>노트북 5대</code>, <code>1500000</code>을 넣고 「완료」를 누릅니다. 이때 인스턴스가 만들어지고 첫 작업이 끝납니다.
+
+<figure><a href="img/quickstart-run.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="실행 창" src="img/quickstart-run.webp" loading="lazy" decoding="async"></a><figcaption>실행 창</figcaption></figure>
+</li>
+<li><strong>업무 목록에서 결재합니다.</strong> 업무 목록(<code>/todolist</code>)의 「진행 중」 칸에 「결재」 카드가 있습니다. 카드에는 작업 번호(<code>TaskId</code>)와 인스턴스 번호(<code>InstId</code>)가 적혀 있습니다. 카드를 눌러 열고 「결재의견」에 <code>승인합니다</code>를 적은 뒤 「완료」를 누릅니다.
+
+<figure><a href="img/quickstart-approve.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결재 작업" src="img/quickstart-approve.webp" loading="lazy" decoding="async"></a><figcaption>결재 작업</figcaption></figure>
+</li>
+<li><strong>관리자 화면에서 확인합니다.</strong> 완료한 작업은 업무 목록의 「완료됨」 칸에 나타나지 않습니다(이 브랜치의 결함). 관리자 화면(<code>/admin</code>)의 「인스턴스 목록」에서 방금 실행한 인스턴스 「구매 결재__&lt;날짜&gt;」의 상태는 「Completed」입니다. 인스턴스를 열고 「히스토리」 탭을 누르면 「구매 요청」과 「결재」가 모두 <code>COMPLETED</code>입니다.
+
+<figure><a href="img/quickstart-history.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="히스토리" src="img/quickstart-history.webp" loading="lazy" decoding="async"></a><figcaption>히스토리</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="패널-칸과-정의">패널 칸과 정의<a class="anchor" href="#패널-칸과-정의" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>화면</th>
+<th>정의(XML·JSON)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「프로세스 저장」의 「아이디」</td>
+<td>파일 경로 <code>definitions/&lt;아이디&gt;.bpmn</code>. 실행할 때 쓰는 사본은 <code>archive/&lt;아이디&gt;.bpmn/0.1.bpmn</code></td>
+</tr>
+<tr>
+<td>「프로세스 저장」의 「이름」</td>
+<td><code>bpmn:process@name</code>, <code>uengine:json</code>의 <code>definitionName</code></td>
+</tr>
+<tr>
+<td>작업 「이름」</td>
+<td><code>bpmn:userTask@name</code> (업무 목록 카드 제목)</td>
+</tr>
+<tr>
+<td>작업 「업무 ID」</td>
+<td><code>bpmn:userTask@id</code> (엔진의 tracing tag. 첫 작업은 <code>UserTask_1</code>, 덧붙인 작업은 <code>Activity_&lt;무작위&gt;</code>)</td>
+</tr>
+<tr>
+<td>「데이터 처리 방식」 「기본」</td>
+<td><code>_type: org.uengine.kernel.HumanActivity</code> (「폼」은 <a href="forms.html">폼 붙이기</a>)</td>
+</tr>
+<tr>
+<td>「아규먼트」의 이름·타입</td>
+<td><code>eventSynchronization.attributes[]</code>의 <code>name</code>·<code>className</code>(문자열 <code>String</code>, 정수 <code>Integer</code>)</td>
+</tr>
+<tr>
+<td>「고유 키」·「관계 키」</td>
+<td><code>isKey</code>·<code>isCorrKey</code> (이벤트로 작업을 끝낼 때 씁니다 — <a href="event-completion.html">작업을 이벤트로 끝내기</a>)</td>
+</tr>
+<tr>
+<td>레인 「Lane 1」</td>
+<td><code>bpmn:lane</code>에 담당자 설정이 없음 → 시작한 사람</td>
+</tr>
+</tbody>
+</table>
+<h3 id="저장된-정의발췌">저장된 정의(발췌)<a class="anchor" href="#저장된-정의발췌" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="nt">&lt;bpmn:process</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Process_1&quot;</span><span class="w"> </span><span class="na">isExecutable=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;구매 결재&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:extensionElements&gt;</span>
+<span class="w">    </span><span class="nt">&lt;uengine:properties&gt;&lt;uengine:json&gt;</span>{&quot;definitionName&quot;:&quot;구매<span class="w"> </span>결재&quot;,&quot;version&quot;:&quot;0.1&quot;,…}<span class="nt">&lt;/uengine:json&gt;&lt;/uengine:properties&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/bpmn:extensionElements&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:laneSet</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;LaneSet_1&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:lane</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Lane_1&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Lane 1&quot;</span><span class="nt">&gt;</span>…<span class="nt">&lt;/bpmn:lane&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/bpmn:laneSet&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:userTask</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;UserTask_1&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;구매 요청&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:extensionElements&gt;</span>
+<span class="w">      </span><span class="nt">&lt;uengine:properties</span><span class="w"> </span><span class="na">json=</span><span class="s">&quot;{&amp;quot;_type&amp;quot;:&amp;quot;org.uengine.kernel.HumanActivity&amp;quot;,</span>
+<span class="s">        &amp;quot;eventSynchronization&amp;quot;:{&amp;quot;eventType&amp;quot;:&amp;quot;&amp;quot;,&amp;quot;attributes&amp;quot;:[</span>
+<span class="s">          {&amp;quot;name&amp;quot;:&amp;quot;품목&amp;quot;,&amp;quot;className&amp;quot;:&amp;quot;String&amp;quot;,&amp;quot;isKey&amp;quot;:false,&amp;quot;isCorrKey&amp;quot;:false},</span>
+<span class="s">          {&amp;quot;name&amp;quot;:&amp;quot;금액&amp;quot;,&amp;quot;className&amp;quot;:&amp;quot;Integer&amp;quot;,&amp;quot;isKey&amp;quot;:false,&amp;quot;isCorrKey&amp;quot;:false}],</span>
+<span class="s">        &amp;quot;mappingContext&amp;quot;:{&amp;quot;mappingElements&amp;quot;:[]}}}&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/bpmn:extensionElements&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/bpmn:userTask&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:userTask</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Activity_…&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;결재&quot;</span><span class="nt">&gt;</span>…결재의견(String)…<span class="nt">&lt;/bpmn:userTask&gt;</span>
+<span class="nt">&lt;/bpmn:process&gt;</span>
+</code></pre></div>
+
+<p><code>uengine:properties</code>의 <code>json</code> 속성은 XML 안에 들어가므로 따옴표가 <code>&amp;quot;</code>로 바뀌어 저장됩니다. 읽기 쉽게 풀면 아래와 같습니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.HumanActivity&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;품목&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span><span class="w">  </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Integer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}],</span>
+<span class="w">   </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]}}}</span>
+</code></pre></div>
+
+<h3 id="화면에서-호출하는-api">화면에서 호출하는 API<a class="anchor" href="#화면에서-호출하는-api" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>화면 동작</th>
+<th>요청</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>편집 잠금</td>
+<td><code>PUT /definition/lock</code></td>
+</tr>
+<tr>
+<td>「저장」</td>
+<td><code>PUT /definition/raw?defPath=튜토리얼/빠른시작/구매결재.bpmn</code>, <code>PUT /definition/map</code></td>
+</tr>
+<tr>
+<td>「실행」 창 열기</td>
+<td><code>POST /dry-run</code> (첫 작업 화면을 미리 만듭니다)</td>
+</tr>
+<tr>
+<td>「실행」 창의 「완료」</td>
+<td><code>POST /start-and-complete</code> (헤더 <code>isSimulate: false</code>) — 인스턴스 시작 + 첫 작업 완료</td>
+</tr>
+<tr>
+<td>업무 목록</td>
+<td><code>GET /worklist/search/findToDo</code></td>
+</tr>
+<tr>
+<td>작업 「완료」</td>
+<td><code>POST /work-item/&lt;작업 번호&gt;/complete</code> (<code>{"parameterValues": {"결재의견": "승인합니다"}}</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>같은 일을 API로만 하는 방법은 <a href="quickstart-api.html">API로 같은 일 하기</a>에 있습니다.</p>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">첫 레인 패널은 열지 마세요</p>
+<p>프로세스를 시작하는 사람의 레인(이 장의 「Lane 1」)에 배분 설정이 들어가면 「실행」이 서버 500으로 실패하고, 실행 창에는 회색 뼈대만 계속 보입니다(오류 문구 없음). 레인 패널을 열고 「저장」만 눌러도 빈 배분 설정이 들어가 같은 오류가 발생합니다. 이미 이 문제가 발생했다면 XML 보기에서 그 레인의 <code>uengine:properties</code>를 지우세요.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>우회</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>업무 목록 「완료됨」 칸이 늘 비어 있음</td>
+<td>관리자 화면(<code>/admin/&lt;인스턴스&gt;</code>) 「히스토리」 탭으로 확인</td>
+</tr>
+<tr>
+<td>저장해도 주소가 <code>/definitions/chat</code> 그대로</td>
+<td>저장한 아이디로 <code>/definitions/&lt;아이디&gt;</code>를 다시 엽니다</td>
+</tr>
+<tr>
+<td>화면에서 새로 저장하면 <code>definitions/map.json</code>의 「미분류」에 항목이 생김</td>
+<td>정의 파일을 git으로 관리한다면 이 파일의 변경도 함께 봅니다</td>
+</tr>
+<tr>
+<td>저장 뒤에도 편집 잠금이 남음</td>
+<td>자물쇠 아이콘(저장 없이 잠금 해제)을 누릅니다 — <a href="modeler-tour.html">모델러 둘러보기</a></td>
+</tr>
+<tr>
+<td>실행 창의 「담당자 변경 및 완료」</td>
+<td>다음 작업의 배분 대상을 고르는 창이 뜹니다. 이 장에서는 「완료」만 씁니다</td>
+</tr>
+<tr>
+<td>덧붙이기 중 브라우저 콘솔에 <code>appendPreview is not defined</code></td>
+<td>동작에는 지장이 없습니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>「결재」 작업은 왜 홍길동의 업무 목록에 왔나요?</summary>
+<p>두 작업이 모두 담당자 규칙이 없는 레인 「Lane 1」에 있기 때문입니다. 규칙이 없는 레인의 작업은 프로세스를 시작한 사람에게 갑니다. 다른 사람에게 보내려면 레인을 나누고 담당자(그룹·역할·사용자)를 정합니다.</p>
+</details>
+<details class="answer">
+<summary>「실행」 창에서 「완료」를 누르기 전에 창을 닫으면 인스턴스가 생기나요?</summary>
+<p>생기지 않습니다. 창을 열 때는 <code>POST /dry-run</code>으로 첫 작업 화면만 만들고, 「완료」를 눌러야 <code>POST /start-and-complete</code>가 인스턴스를 만들고 첫 작업을 끝냅니다.</p>
+</details>
+<details class="answer">
+<summary>아규먼트 「금액」의 타입을 「정수」로 고르면 정의에는 무엇으로 남나요?</summary>
+<p><code>eventSynchronization.attributes</code>의 <code>{"name": "금액", "className": "Integer"}</code>로 남습니다. 문자열은 <code>String</code>입니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="install-local.html"><span>이전</span>내 PC에 설치하기</a><a class="next" href="quickstart-api.html"><span>다음</span>API로 같은 일 하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#패널-칸과-정의">패널 칸과 정의</a></li><li><a href="#저장된-정의발췌">저장된 정의(발췌)</a></li><li><a href="#화면에서-호출하는-api">화면에서 호출하는 API</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

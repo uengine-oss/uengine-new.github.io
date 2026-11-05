@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="결재가 끝나면 「예산 확보」와 「견적 요청」을 동시에 시작하고 둘 다 끝나야 「발주」로 갑니다(병렬). 품목에 하드웨어·소프트웨어가 섞였는지에 따라 필요한 견적만 열고, 연 것만 기다립니다(포괄).">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/parallel-inclusive-gateway.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="동시에 진행하고 기다리기 (병렬·포괄 게이트웨이) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="결재가 끝나면 「예산 확보」와 「견적 요청」을 동시에 시작하고 둘 다 끝나야 「발주」로 갑니다(병렬). 품목에 하드웨어·소프트웨어가 섞였는지에 따라 필요한 견적만 열고, 연 것만 기다립니다(포괄).">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/parallel-inclusive-gateway.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html" class="on" aria-current="page"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">흐름 제어<span class="chap">13</span></div>
+    <h1>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</h1>
+    <article>
+<blockquote>
+<p>결재가 끝나면 「예산 확보」와 「견적 요청」을 동시에 시작하고 둘 다 끝나야 「발주」로 갑니다(병렬). 품목에 하드웨어·소프트웨어가 섞였는지에 따라 필요한 견적만 열고, 연 것만 기다립니다(포괄).</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/-xzds1k9J7w" title="동시에 진행하고 기다리기 (병렬·포괄 게이트웨이) — 영상 2:26" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><a href="exclusive-gateway.html">배타 게이트웨이</a>는 경로 하나만 고릅니다. 여러 일을 <strong>동시에</strong> 처리해야 할 때는 두 가지 게이트웨이를 씁니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>병렬 게이트웨이 (AND, <code>+</code>)</th>
+<th>포괄 게이트웨이 (OR, <code>○</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>갈라질 때</td>
+<td>나가는 흐름을 <strong>모두</strong> 엽니다. 조건을 보지 않습니다</td>
+<td>조건이 <strong>참인 흐름만</strong> 엽니다(하나 이상)</td>
+</tr>
+<tr>
+<td>합칠 때</td>
+<td>들어오는 흐름이 <strong>모두</strong> 끝나야 다음으로</td>
+<td><strong>열렸던 흐름만</strong> 끝나면 다음으로</td>
+</tr>
+<tr>
+<td>언제</td>
+<td>늘 함께 해야 하는 일(예산 확보 ∥ 견적 요청)</td>
+<td>경우에 따라 일부만 필요한 일(HW 견적 · SW 견적)</td>
+</tr>
+<tr>
+<td>uEngine6 XML</td>
+<td><code>&lt;bpmn:parallelGateway&gt;</code> 두 개(분기·합류), 확장 JSON 없음</td>
+<td><code>&lt;bpmn:inclusiveGateway&gt;</code> 두 개, 나가는 흐름마다 <code>Evaluate</code> 조건</td>
+</tr>
+</tbody>
+</table>
+<p>분기와 합류는 <strong>같은 종류의 게이트웨이를 짝으로</strong> 둡니다. 엔진은 합류 게이트웨이에서 그 사이 블록(<code>BlockFinder</code>)에 아직 진행 중인 작업이 있는지 보고, 없을 때만 다음으로 넘어갑니다.
+그래서 포괄 합류는 열리지 않은 갈래를 기다리지 않습니다.</p>
+<p>두 사람이 나눠 맡는 병렬 작업은 레인으로 담당자를 구분합니다. 이 장의 병렬 예제에서 「예산 확보」는 회계 레인(정회계), 「견적 요청」은 요청자 레인(최구매)입니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>병렬 정의 보기.</strong> 홍길동으로 <code>튜토리얼/게이트웨이/예산견적병렬</code>을 엽니다. 「구매 요청 → 결재(윤팀장) → + → 예산 확보(정회계) ∥ 견적 요청(최구매) → + → 발주」입니다. 병렬 게이트웨이의 패널에는 레인만 있습니다.
+
+<figure><a href="img/parallel-inclusive-gateway-parallel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="예산견적병렬 정의" src="img/parallel-inclusive-gateway-parallel.webp" loading="lazy" decoding="async"></a><figcaption>예산견적병렬 정의</figcaption></figure>
+</li>
+<li><strong>두 사람에게 동시에.</strong> 구매 요청과 결재가 끝나면(이 장에서는 API로 미리 진행) 정회계의 업무 목록에 「예산 확보」가, 최구매의 업무 목록에 「견적 요청」이 같은 인스턴스 번호로 함께 생깁니다. 정회계가 「예산 확보」를 열어 「완료」합니다.
+</li>
+<li><strong>합류는 기다립니다.</strong> 최구매의 업무 목록에는 아직 「견적 요청」만 있고 「발주」가 없습니다. 「견적 요청」을 열면 작업 화면 그림에서 예산 확보 쪽은 보라색(끝남)이고 합류 게이트웨이에서 멈춰 있습니다.
+
+<figure><a href="img/parallel-inclusive-gateway-waiting.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="합류가 견적 요청을 기다리는 화면" src="img/parallel-inclusive-gateway-waiting.webp" loading="lazy" decoding="async"></a><figcaption>합류가 견적 요청을 기다리는 화면</figcaption></figure>
+</li>
+<li><strong>둘 다 끝나면 진행.</strong> 「견적 요청」을 「완료」하고 업무 목록으로 돌아오면 「발주」가 생깁니다.
+</li>
+<li><strong>포괄 정의 보기.</strong> <code>튜토리얼/게이트웨이/품목별견적포괄</code>을 엽니다. 「구매 요청」에서 품목과 함께 <code>HW</code>·<code>SW</code> 칸에 <code>Y</code>/<code>N</code>을 받습니다. 「HW」 흐름을 더블클릭하면 조건 <code>HW == Y</code>가, 「SW」 흐름에는 <code>SW == Y</code>가 있습니다.
+
+<figure><a href="img/parallel-inclusive-gateway-inclusive.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="포괄 게이트웨이의 조건" src="img/parallel-inclusive-gateway-inclusive.webp" loading="lazy" decoding="async"></a><figcaption>포괄 게이트웨이의 조건</figcaption></figure>
+</li>
+<li><strong>조건에 맞는 갈래만 열립니다.</strong> 두 건을 요청합니다. 하나는 <code>HW=Y, SW=N</code>, 다른 하나는 <code>HW=Y, SW=Y</code>입니다. 최구매의 업무 목록에서 첫 건은 「하드웨어 견적」 하나, 둘째 건은 「하드웨어 견적」과 「소프트웨어 견적」 두 개가 생깁니다.
+
+<figure><a href="img/parallel-inclusive-gateway-inc-todo.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="포괄 분기 결과" src="img/parallel-inclusive-gateway-inc-todo.webp" loading="lazy" decoding="async"></a><figcaption>포괄 분기 결과</figcaption></figure>
+</li>
+<li><strong>열린 갈래만 기다립니다.</strong> 첫 건의 「하드웨어 견적」을 완료하면 곧바로 「발주」가 생깁니다(열리지 않은 소프트웨어 쪽을 기다리지 않음). 둘째 건은 「하드웨어 견적」만 끝내면 「발주」가 없습니다. 작업을 완료하면 열리는 인스턴스 화면에서 하드웨어 견적은 완료 상태(보라색)로 보입니다. 소프트웨어 견적은 점선(진행 중)으로 남아 있어 합류가 기다립니다. 「소프트웨어 견적」까지 끝내야 「발주」가 생깁니다.
+
+<figure><a href="img/parallel-inclusive-gateway-inc-wait.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="둘째 건: 소프트웨어 견적을 기다리는 합류" src="img/parallel-inclusive-gateway-inc-wait.webp" loading="lazy" decoding="async"></a><figcaption>둘째 건: 소프트웨어 견적을 기다리는 합류</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="요소와-_type">요소와 <code>_type</code><a class="anchor" href="#요소와-_type" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>BPMN 요소</th>
+<th>XML</th>
+<th>확장 JSON</th>
+<th>패널</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>병렬 게이트웨이(분기·합류)</td>
+<td><code>&lt;bpmn:parallelGateway&gt;</code></td>
+<td>없음</td>
+<td>레인 표시만. 종류는 렌치 메뉴로 바꿈</td>
+</tr>
+<tr>
+<td>포괄 게이트웨이(분기·합류)</td>
+<td><code>&lt;bpmn:inclusiveGateway&gt;</code></td>
+<td>없음</td>
+<td>레인 표시만</td>
+</tr>
+<tr>
+<td>포괄 분기에서 나가는 흐름</td>
+<td><code>&lt;bpmn:sequenceFlow&gt;</code></td>
+<td><code>{"condition":{"_type":"org.uengine.kernel.Evaluate",…}}</code></td>
+<td>흐름 패널 「조건」</td>
+</tr>
+</tbody>
+</table>
+<h3 id="이-장에서-배포한-정의발췌">이 장에서 배포한 정의(발췌)<a class="anchor" href="#이-장에서-배포한-정의발췌" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="cm">&lt;!-- 병렬: 튜토리얼/게이트웨이/예산견적병렬 --&gt;</span>
+<span class="nt">&lt;bpmn:parallelGateway</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Split&quot;</span><span class="nt">&gt;&lt;bpmn:incoming&gt;</span>F3<span class="nt">&lt;/bpmn:incoming&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:outgoing&gt;</span>F4<span class="nt">&lt;/bpmn:outgoing&gt;&lt;bpmn:outgoing&gt;</span>F5<span class="nt">&lt;/bpmn:outgoing&gt;&lt;/bpmn:parallelGateway&gt;</span>
+<span class="nt">&lt;bpmn:userTask</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Quote&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;견적 요청&quot;</span><span class="nt">&gt;</span>…<span class="nt">&lt;/bpmn:userTask&gt;</span><span class="w">      </span><span class="cm">&lt;!-- 요청자 레인 --&gt;</span>
+<span class="nt">&lt;bpmn:userTask</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Budget&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;예산 확보&quot;</span><span class="nt">&gt;</span>…<span class="nt">&lt;/bpmn:userTask&gt;</span><span class="w">     </span><span class="cm">&lt;!-- 회계 레인(정회계) --&gt;</span>
+<span class="nt">&lt;bpmn:parallelGateway</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Join&quot;</span><span class="nt">&gt;&lt;bpmn:incoming&gt;</span>F6<span class="nt">&lt;/bpmn:incoming&gt;&lt;bpmn:incoming&gt;</span>F7<span class="nt">&lt;/bpmn:incoming&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:outgoing&gt;</span>F8<span class="nt">&lt;/bpmn:outgoing&gt;&lt;/bpmn:parallelGateway&gt;</span>
+
+<span class="cm">&lt;!-- 포괄: 튜토리얼/게이트웨이/품목별견적포괄 --&gt;</span>
+<span class="nt">&lt;bpmn:inclusiveGateway</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Split&quot;</span><span class="nt">&gt;</span>…<span class="nt">&lt;/bpmn:inclusiveGateway&gt;</span>
+<span class="nt">&lt;bpmn:sequenceFlow</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;F3&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;HW&quot;</span><span class="w"> </span><span class="na">sourceRef=</span><span class="s">&quot;Split&quot;</span><span class="w"> </span><span class="na">targetRef=</span><span class="s">&quot;HwQuote&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:extensionElements&gt;&lt;uengine:properties&gt;&lt;uengine:json&gt;</span>
+<span class="w">    </span>{&quot;condition&quot;:{&quot;_type&quot;:&quot;org.uengine.kernel.Evaluate&quot;,&quot;key&quot;:&quot;HW&quot;,&quot;condition&quot;:&quot;==&quot;,&quot;value&quot;:&quot;Y&quot;}}
+<span class="w">  </span><span class="nt">&lt;/uengine:json&gt;&lt;/uengine:properties&gt;&lt;/bpmn:extensionElements&gt;</span>
+<span class="nt">&lt;/bpmn:sequenceFlow&gt;</span>
+<span class="nt">&lt;bpmn:sequenceFlow</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;F4&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;SW&quot;</span><span class="w"> </span><span class="na">sourceRef=</span><span class="s">&quot;Split&quot;</span><span class="w"> </span><span class="na">targetRef=</span><span class="s">&quot;SwQuote&quot;</span><span class="nt">&gt;</span><span class="w"> </span>…<span class="w"> </span>&quot;key&quot;:&quot;SW&quot;<span class="w"> </span>…<span class="w"> </span><span class="nt">&lt;/bpmn:sequenceFlow&gt;</span>
+<span class="nt">&lt;bpmn:inclusiveGateway</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Join&quot;</span><span class="nt">&gt;</span>…<span class="nt">&lt;/bpmn:inclusiveGateway&gt;</span>
+</code></pre></div>
+
+<h3 id="실행-결과이-장을-촬영할-때-api로-확인한-열린-작업">실행 결과(이 장을 촬영할 때 API로 확인한 열린 작업)<a class="anchor" href="#실행-결과이-장을-촬영할-때-api로-확인한-열린-작업" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>정의 · 입력</th>
+<th>분기 직후</th>
+<th>한쪽만 끝냈을 때</th>
+<th>모두 끝냈을 때</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>병렬</td>
+<td>예산 확보 · 견적 요청</td>
+<td>남은 하나만(발주 없음)</td>
+<td>발주</td>
+</tr>
+<tr>
+<td>포괄 <code>HW=Y, SW=N</code></td>
+<td>하드웨어 견적</td>
+<td>—</td>
+<td>발주(곧바로)</td>
+</tr>
+<tr>
+<td>포괄 <code>HW=Y, SW=Y</code></td>
+<td>하드웨어 견적 · 소프트웨어 견적</td>
+<td>남은 하나만(발주 없음)</td>
+<td>발주</td>
+</tr>
+<tr>
+<td>포괄 <code>HW=N, SW=Y</code></td>
+<td>소프트웨어 견적</td>
+<td>—</td>
+<td>발주(곧바로)</td>
+</tr>
+<tr>
+<td>포괄 <code>HW=N, SW=N</code></td>
+<td>(없음) — 인스턴스가 바로 <code>Completed</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="흔한-실수">흔한 실수<a class="anchor" href="#흔한-실수" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>고치는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>한 갈래만 끝났는데 다음으로 감</td>
+<td>분기는 병렬인데 합류를 배타 게이트웨이로 둠(배타 합류는 먼저 끝난 갈래로 진행 — 코드 기준)</td>
+<td>분기와 같은 종류의 게이트웨이로 합류합니다</td>
+</tr>
+<tr>
+<td>발주 없이 인스턴스가 끝남</td>
+<td>포괄 분기의 조건이 모두 거짓이고 기본 흐름도 없음(<code>HW=N, SW=N</code>으로 확인)</td>
+<td>기본 흐름을 두거나 입력 단계에서 막습니다</td>
+</tr>
+<tr>
+<td>두 사람 일이 한 사람에게 감</td>
+<td>갈래의 작업이 같은 레인</td>
+<td>레인을 나눠 담당자를 정합니다(<a href="lanes-and-roles.html">레인과 담당자</a>)</td>
+</tr>
+<tr>
+<td>조건이 늘 거짓</td>
+<td>조건 변수가 정의에 선언되지 않았거나 작업 입력이 변수로 매핑되지 않음</td>
+<td>프로세스 변수 선언 + 데이터 매핑</td>
+</tr>
+</tbody>
+</table>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>병렬 예제에서 정회계가 「예산 확보」를 끝내지 않으면 최구매가 「견적 요청」을 끝내도 발주로 가나요?</summary>
+<p>가지 않습니다. 병렬 합류는 들어오는 갈래가 모두 끝나야 다음으로 갑니다. 「발주」는 「예산 확보」까지 끝난 뒤에 생깁니다.</p>
+</details>
+<details class="answer">
+<summary>포괄 예제에서 `HW=Y, SW=N`이면 합류는 소프트웨어 견적을 기다리나요?</summary>
+<p>기다리지 않습니다. 소프트웨어 갈래는 열리지 않았으므로, 하드웨어 견적이 끝나면 곧바로 발주로 갑니다.</p>
+</details>
+<details class="answer">
+<summary>`HW=N, SW=N`이면 어떻게 되나요? 어떻게 막나요?</summary>
+<p>열리는 갈래가 없어 「발주」 없이 인스턴스가 그대로 끝납니다(API로 실행해 확인: 열린 작업 없음, 상태 <code>Completed</code>). 「구매 요청」에서 둘 중 하나는 반드시 고르게 하거나, 포괄 분기에 기본 흐름(예: 「품목 확인」 작업)을 두어 그쪽으로 보내세요.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="exclusive-gateway.html"><span>이전</span>조건으로 갈라지기 (배타 게이트웨이)</a><a class="next" href="script-task.html"><span>다음</span>스크립트로 값 계산 (스크립트 작업)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#요소와-_type">요소와 _type</a></li><li><a href="#이-장에서-배포한-정의발췌">이 장에서 배포한 정의(발췌)</a></li><li><a href="#실행-결과이-장을-촬영할-때-api로-확인한-열린-작업">실행 결과(이 장을 촬영할 때 API로 확인한 열린 작업)</a></li><li><a href="#흔한-실수">흔한 실수</a></li></ul></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

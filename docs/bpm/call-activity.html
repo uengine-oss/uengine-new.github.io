@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공통 프로세스 불러 쓰기 (콜 액티비티) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="여러 프로세스가 함께 쓰는 「공통 결재」를 따로 정의해 두고, 구매 요청 프로세스에서 콜 액티비티로 불러 씁니다. 금액은 넘겨 주고(in) 결재 결과는 돌려받으며(out), 호출 쪽 「팀장」이 피호출 쪽 「결재자」가 됩니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/call-activity.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="공통 프로세스 불러 쓰기 (콜 액티비티) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="여러 프로세스가 함께 쓰는 「공통 결재」를 따로 정의해 두고, 구매 요청 프로세스에서 콜 액티비티로 불러 씁니다. 금액은 넘겨 주고(in) 결재 결과는 돌려받으며(out), 호출 쪽 「팀장」이 피호출 쪽 「결재자」가 됩니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/call-activity.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html" class="on" aria-current="page"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">흐름 제어<span class="chap">16</span></div>
+    <h1>공통 프로세스 불러 쓰기 (콜 액티비티)</h1>
+    <article>
+<blockquote>
+<p>여러 프로세스가 함께 쓰는 「공통 결재」를 따로 정의해 두고, 구매 요청 프로세스에서 콜 액티비티로 불러 씁니다. 금액은 넘겨 주고(in) 결재 결과는 돌려받으며(out), 호출 쪽 「팀장」이 피호출 쪽 「결재자」가 됩니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/dX3S7VFLOUA" title="공통 프로세스 불러 쓰기 (콜 액티비티) — 영상 1:58" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>콜 액티비티</strong>(call activity)는 다른 프로세스 정의를 하나의 단계처럼 실행합니다. 그림에서는 테두리가 굵은 사각형입니다.
+결재·검수처럼 여러 업무가 같은 절차를 쓸 때, 절차를 한곳에서 고치면 호출하는 모든 프로세스에 반영됩니다.</p>
+<ul>
+<li>실행하면 <strong>하위 인스턴스</strong>가 새로 생깁니다(<code>bpm_procinst.sub_process = 1</code>, <code>main_inst_id</code> = 상위 인스턴스, <code>main_act_trc_tag</code> = 콜 액티비티 id). 하위 인스턴스가 끝나야 상위가 다음 단계로 갑니다.</li>
+<li><strong>변수 바인딩</strong>(<code>variableBindings</code>): <code>in</code>은 상위 변수 값을 하위 변수로 복사하고, <code>out</code>은 하위가 끝날 때 하위 변수 값을 상위 변수로 복사합니다.</li>
+<li><strong>역할 바인딩</strong>(<code>roleBindings</code>): 상위의 역할(레인)에 배정된 사람을 하위의 역할로 넘깁니다. 하위 정의에서는 담당자를 지정하지 않아도 됩니다.</li>
+<li>바인딩에서 <code>argument</code>는 <strong>피호출(하위) 쪽 이름</strong>, <code>variable</code>·<code>role</code>은 <strong>호출(상위) 쪽 이름</strong>입니다.</li>
+</ul>
+<p>uEngine6의 <code>org.uengine.kernel.bpmn.CallActivity</code>는 <code>SubProcessActivity</code>를 상속합니다. 이 장에서 사용하는 두 정의는 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th>정의</th>
+<th>레인</th>
+<th>흐름</th>
+<th>변수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>튜토리얼/콜액티비티/공통결재</code> (피호출)</td>
+<td>결재자(비워 둠 — 호출 쪽이 넘김)</td>
+<td>공통 결재 → 결과 기록(스크립트: <code>"승인 " + 결재금액 + "원"</code>)</td>
+<td><code>결재금액</code>, <code>결재결과</code></td>
+</tr>
+<tr>
+<td><code>튜토리얼/콜액티비티/구매요청</code> (호출)</td>
+<td>요청자, 팀장(윤팀장)</td>
+<td>구매 요청 → 공통 결재 호출 → 발주</td>
+<td><code>품목</code>, <code>금액</code>, <code>결과</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">이 브랜치에서는 콜 액티비티 설정을 XML로 넣습니다</p>
+<p>모델러의 콜 액티비티 패널은 값을 <strong>읽어서 보여 주지만, 고친 값을 저장하지 못합니다</strong>(패널이 보내는 <code>update:uEngineProperties</code>와 부모가 받는 <code>update:uengineProperties</code>의 이름이 다르기 때문). 기존 값은 정의를 다시 저장해도 지워지지 않습니다. 이 장의 정의는 XML로 만들어 배포했고, 화면에서는 보기와 실행만 합니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>호출 정의 보기.</strong> 홍길동으로 <code>튜토리얼/콜액티비티/구매요청</code>을 엽니다. 「구매 요청 → 공통 결재 호출 → 발주」입니다.
+
+<figure><a href="img/call-activity-caller.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구매요청 정의" src="img/call-activity-caller.webp" loading="lazy" decoding="async"></a><figcaption>구매요청 정의</figcaption></figure>
+</li>
+<li><strong>콜 액티비티 패널.</strong> 「공통 결재 호출」을 더블클릭합니다. 「프로세스 정의 선택」에 <code>튜토리얼/콜액티비티/공통결재.bpmn</code>이 있고, 「이동」을 누르면 그 정의가 열립니다. 「파라미터 컨텍스트」에는 두 줄(피호출측 변수 · 연결방향 · Process Data), 화면을 아래로 내리면 「역할 매핑」에 한 줄(Callee Roles · 연결방향 · Caller Roles)이 있습니다. 패널의 칸이 좁아 이름이 「결…」처럼 잘려 보이므로, 값은 다음 단계의 XML로 확인합니다. 이 장의 값은 <code>결재금액</code> ← <code>금액</code>, <code>결재결과</code> → <code>결과</code>, <code>결재자</code> ← <code>팀장</code>입니다.
+
+<figure><a href="img/call-activity-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="콜 액티비티 패널" src="img/call-activity-panel.webp" loading="lazy" decoding="async"></a><figcaption>콜 액티비티 패널</figcaption></figure>
+</li>
+<li><strong>XML로 확인.</strong> 「XML 보기」에서 콜 액티비티의 <code>definitionId</code>·<code>variableBindings</code>·<code>roleBindings</code>를 확인합니다. 이 값을 바꿀 때는 XML(정의 파일)을 고쳐 배포합니다.
+</li>
+<li><strong>피호출 정의 보기.</strong> <code>튜토리얼/콜액티비티/공통결재</code>를 엽니다. 레인 「결재자」 하나에 「공통 결재 → 결과 기록」입니다.
+</li>
+<li><strong>요청.</strong> 인스턴스를 시작합니다(이 장에서는 API로 시작해 역할 「요청자」=최구매, 「팀장」=윤팀장을 넘김 — 아래 레퍼런스). 최구매가 업무 목록에서 「구매 요청」을 열어 품목 <code>서버</code>, 금액 <code>2400000</code>으로 「완료」합니다.
+</li>
+<li><strong>하위 인스턴스의 작업.</strong> 「공통 결재」는 하위 인스턴스에 생기고 윤팀장(<code>yoon</code>)에게 배정됩니다(<code>GET /worklist/search/findToDo</code>에도 나옵니다). 하지만 <strong>이 브랜치의 업무 목록 화면에는 보이지 않습니다</strong>(아래 「알려진 제약」). 작업 주소 <code>/todolist/&lt;작업 ID&gt;</code>로 직접 열면 작업 화면에 피호출 정의(공통결재) 그림이 보이고, 「완료」할 수 있습니다.
+
+<figure><a href="img/call-activity-sub-task.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="하위 인스턴스의 공통 결재" src="img/call-activity-sub-task.webp" loading="lazy" decoding="async"></a><figcaption>하위 인스턴스의 공통 결재</figcaption></figure>
+</li>
+<li><strong>상위로 돌아옴.</strong> 하위 인스턴스가 끝나면 최구매의 업무 목록에 상위 인스턴스의 「발주」가 생깁니다.
+</li>
+<li><strong>변수 확인.</strong> 관리자 상세에서 상위 인스턴스의 <code>결과</code>는 <code>승인 2400000원</code>(하위의 <code>결재결과</code>가 out으로), 하위 인스턴스의 <code>결재금액</code>은 <code>2400000</code>(상위의 <code>금액</code>이 in으로)입니다.
+
+<figure><a href="img/call-activity-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="상위 인스턴스의 결과 변수" src="img/call-activity-vars.webp" loading="lazy" decoding="async"></a><figcaption>상위 인스턴스의 결과 변수</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="콜-액티비티-json">콜 액티비티 JSON<a class="anchor" href="#콜-액티비티-json" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>속성</th>
+<th>뜻</th>
+<th>이 장의 값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>definitionId</code></td>
+<td>호출할 정의 경로(<code>.bpmn</code> 포함)</td>
+<td><code>튜토리얼/콜액티비티/공통결재.bpmn</code></td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>호출할 정의 버전(archive의 파일 이름)</td>
+<td><code>1.0</code></td>
+</tr>
+<tr>
+<td><code>variableBindings[]</code></td>
+<td><code>{argument:{text:&lt;하위 변수&gt;}, variable:{name:&lt;상위 변수&gt;}, direction:"in"\|"out"}</code></td>
+<td>결재금액 ← 금액(in), 결재결과 → 결과(out)</td>
+</tr>
+<tr>
+<td><code>roleBindings[]</code></td>
+<td><code>{argument:&lt;하위 역할&gt;, role:{name:&lt;상위 역할&gt;}, direction:"in"}</code></td>
+<td>결재자 ← 팀장</td>
+</tr>
+<tr>
+<td>XML 속성 <code>calledElement</code></td>
+<td>표준 BPMN 속성(참고용)</td>
+<td><code>Process_CommonApproval</code></td>
+</tr>
+</tbody>
+</table>
+<div class="hl"><pre><span></span><code><span class="nt">&lt;bpmn:callActivity</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Call&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;공통 결재 호출&quot;</span><span class="w"> </span><span class="na">calledElement=</span><span class="s">&quot;Process_CommonApproval&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:extensionElements&gt;&lt;uengine:properties&gt;&lt;uengine:json&gt;</span>
+<span class="w">    </span>{&quot;definitionId&quot;:&quot;튜토리얼/콜액티비티/공통결재.bpmn&quot;,&quot;version&quot;:&quot;1.0&quot;,
+<span class="w">     </span>&quot;variableBindings&quot;:[
+<span class="w">       </span>{&quot;argument&quot;:{&quot;text&quot;:&quot;결재금액&quot;},&quot;variable&quot;:{&quot;name&quot;:&quot;금액&quot;},&quot;direction&quot;:&quot;in&quot;},
+<span class="w">       </span>{&quot;argument&quot;:{&quot;text&quot;:&quot;결재결과&quot;},&quot;variable&quot;:{&quot;name&quot;:&quot;결과&quot;},&quot;direction&quot;:&quot;out&quot;}],
+<span class="w">     </span>&quot;roleBindings&quot;:[{&quot;argument&quot;:&quot;결재자&quot;,&quot;role&quot;:{&quot;name&quot;:&quot;팀장&quot;},&quot;direction&quot;:&quot;in&quot;}]}
+<span class="w">  </span><span class="nt">&lt;/uengine:json&gt;&lt;/uengine:properties&gt;&lt;/bpmn:extensionElements&gt;</span>
+<span class="nt">&lt;/bpmn:callActivity&gt;</span>
+</code></pre></div>
+
+<h3 id="패널-칸-json">패널 칸 ↔ JSON<a class="anchor" href="#패널-칸-json" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>패널 칸</th>
+<th>JSON</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「프로세스 정의 선택」(+ 「이동」)</td>
+<td><code>definitionId</code></td>
+</tr>
+<tr>
+<td>「파라미터 컨텍스트」의 피호출측 변수 · 연결방향 · Process Data</td>
+<td><code>variableBindings[].argument.text</code> · <code>direction</code> · <code>variable.name</code></td>
+</tr>
+<tr>
+<td>「역할 매핑」의 Callee Roles · 연결방향 · Caller Roles</td>
+<td><code>roleBindings[].argument</code> · <code>direction</code> · <code>role.name</code></td>
+</tr>
+<tr>
+<td>「변수 기반 다중 생성」</td>
+<td><code>forEachVariable</code>(하위 인스턴스를 목록 항목마다 — 이 장에서는 쓰지 않음)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="시작할-때-역할-넘기기">시작할 때 역할 넘기기<a class="anchor" href="#시작할-때-역할-넘기기" title="Permanent link">#</a></h3>
+<p>호출 쪽 역할이 정해져 있어야 하위로 넘어갑니다. 이 장에서는 시작할 때 두 역할을 넘겼습니다.</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/instance<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;processDefinitionId&quot;:&quot;튜토리얼/콜액티비티/구매요청&quot;,</span>
+<span class="s1">       &quot;roleMappings&quot;:[{&quot;name&quot;:&quot;요청자&quot;,&quot;endpoints&quot;:[&quot;choi&quot;]},{&quot;name&quot;:&quot;팀장&quot;,&quot;endpoints&quot;:[&quot;yoon&quot;]}]}&#39;</span>
+</code></pre></div>
+
+<h3 id="상위하위-인스턴스-찾기">상위·하위 인스턴스 찾기<a class="anchor" href="#상위하위-인스턴스-찾기" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="k">select</span><span class="w"> </span><span class="n">inst_id</span><span class="p">,</span><span class="w"> </span><span class="n">def_id</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">sub_process</span><span class="p">,</span><span class="w"> </span><span class="n">main_inst_id</span><span class="p">,</span><span class="w"> </span><span class="n">main_act_trc_tag</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="n">bpm_procinst</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">inst_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="err">상위</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">main_inst_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="err">상위</span><span class="p">;</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>inst</th>
+<th>def_id</th>
+<th>sub_process</th>
+<th>main_inst_id</th>
+<th>main_act_trc_tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>상위</td>
+<td>튜토리얼/콜액티비티/구매요청</td>
+<td>0</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>하위</td>
+<td>튜토리얼/콜액티비티/공통결재</td>
+<td>1</td>
+<td>상위</td>
+<td><code>Call</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="흔한-실수">흔한 실수<a class="anchor" href="#흔한-실수" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>고치는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>패널에서 바꾼 정의·바인딩이 저장 후 원래대로</td>
+<td>패널 저장 결함(위 경고)</td>
+<td>XML로 고쳐 배포</td>
+</tr>
+<tr>
+<td>하위의 작업이 아무에게도 안 감</td>
+<td>역할 바인딩이 없거나 상위 역할이 비어 있음</td>
+<td><code>roleBindings</code>를 두고, 시작할 때 상위 역할을 넘기거나 레인에 담당자를 지정합니다</td>
+</tr>
+<tr>
+<td>상위 <code>결과</code>가 비어 있음</td>
+<td><code>out</code> 방향이 아니거나 하위 변수 이름이 다름</td>
+<td><code>argument.text</code>는 하위 이름, <code>variable.name</code>은 상위 이름</td>
+</tr>
+<tr>
+<td>하위 작업이 업무 목록에 없음</td>
+<td>업무 목록 화면이 상위 인스턴스 기준으로 거름(알려진 제약)</td>
+<td>작업 주소로 열거나 API로 처리</td>
+</tr>
+</tbody>
+</table>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>패널 저장 안 됨</strong>: 콜 액티비티 패널은 값을 보여 주지만 고친 값을 저장하지 못합니다(맨 위 경고). 설정은 XML로 넣습니다.</li>
+<li><strong>하위 인스턴스 작업이 업무 목록에 안 보임</strong>: 업무 목록 화면(<code>TodolistCard.vue</code>의 <code>filterByCurrentActivities</code>)이 작업을 <code>rootInstId</code>(상위 인스턴스)의 진행 중 활동과 비교해 거릅니다. 상위에서 진행 중인 것은 콜 액티비티(<code>Call</code>)이므로 하위의 「공통 결재」(<code>Approve</code>)가 빠집니다. 서버의 <code>findToDo</code>는 이 작업을 돌려주므로, 작업 주소(<code>/todolist/&lt;작업 ID&gt;</code>)로 열거나 API(<code>POST /work-item/{id}/complete</code>)로 처리합니다. 알림·메일 등으로 작업 주소를 전달하는 것이 이 브랜치의 우회 방법입니다.</li>
+<li>패널의 칸이 좁아 바인딩 이름이 잘려 보입니다. 값은 「XML 보기」로 확인합니다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>「공통 결재」 정의에 레인 담당자를 직접 걸지 않은 이유는 무엇인가요?</summary>
+<p>호출하는 프로세스마다 결재자가 다르기 때문입니다. 역할 바인딩으로 호출 쪽이 「결재자」를 정해 넘기면, 공통 정의에서는 담당자를 지정하지 않아도 됩니다.</p>
+</details>
+<details class="answer">
+<summary>하위 인스턴스가 끝나기 전에 상위의 「발주」가 생기나요?</summary>
+<p>생기지 않습니다. 콜 액티비티는 하위 인스턴스가 끝나야 완료되고, 그때 <code>out</code> 바인딩으로 <code>결과</code>를 받은 뒤 다음 단계로 갑니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="business-rule-dmn.html"><span>이전</span>결재선을 규칙표로 (DMN)</a><a class="next" href="multi-instance.html"><span>다음</span>공급사마다 견적 받기 (다중 인스턴스)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#콜-액티비티-json">콜 액티비티 JSON</a></li><li><a href="#패널-칸-json">패널 칸 ↔ JSON</a></li><li><a href="#시작할-때-역할-넘기기">시작할 때 역할 넘기기</a></li><li><a href="#상위하위-인스턴스-찾기">상위·하위 인스턴스 찾기</a></li><li><a href="#흔한-실수">흔한 실수</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

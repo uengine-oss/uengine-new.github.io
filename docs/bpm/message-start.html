@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>외부 이벤트로 프로세스 시작하기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="다른 시스템이 Kafka로 보낸 이벤트 하나로 프로세스 인스턴스를 시작합니다. 이벤트의 payload는 프로세스 변수가 되고, 상관 키로 같은 요청을 두 번 시작하지 않습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/message-start.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="외부 이벤트로 프로세스 시작하기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="다른 시스템이 Kafka로 보낸 이벤트 하나로 프로세스 인스턴스를 시작합니다. 이벤트의 payload는 프로세스 변수가 되고, 상관 키로 같은 요청을 두 번 시작하지 않습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/message-start.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html" class="on" aria-current="page"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">이벤트<span class="chap">18</span></div>
+    <h1>외부 이벤트로 프로세스 시작하기</h1>
+    <article>
+<blockquote>
+<p>다른 시스템이 Kafka로 보낸 이벤트 하나로 프로세스 인스턴스를 시작합니다. 이벤트의 payload는 프로세스 변수가 되고, 상관 키로 같은 요청을 두 번 시작하지 않습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/hAp5x7xStqc" title="외부 이벤트로 프로세스 시작하기 — 영상 1:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>메시지 시작 이벤트</strong>(Message Start Event)는 사람이 「실행」을 누르는 대신, 외부 메시지가 인스턴스를 만드는 시작 이벤트입니다.
+사내 구매 포털에 구매 요청이 올라오거나, 계정계에 계좌 개설 신청이 들어오는 순간처럼 <strong>일의 시작이 다른 시스템에서 일어날 때</strong> 씁니다.
+BPM을 부르는 쪽은 BPM의 REST API나 토큰을 몰라도 됩니다. 정해진 토픽에 정해진 이름의 이벤트를 내기만 하면 됩니다.</p>
+<p>uEngine6에서는 이렇게 표현합니다.</p>
+<table>
+<thead>
+<tr>
+<th>BPMN</th>
+<th>uEngine6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;bpmn:startEvent&gt;</code> + <code>&lt;bpmn:messageEventDefinition/&gt;</code></td>
+<td>파서가 <code>MessageStartEvent</code>로 만듭니다</td>
+</tr>
+<tr>
+<td>메시지 이름</td>
+<td>시작 이벤트 JSON의 <strong><code>eventKey</code></strong>. 배포할 때 이 이름이 <code>BPM_EVENT_MAPPING</code>에 「시작 이벤트」로 등록됩니다</td>
+</tr>
+<tr>
+<td>메시지의 내용</td>
+<td><strong><code>eventSynchronization</code></strong>의 아규먼트 목록(<code>attributes</code>). 이 가운데 하나를 <strong>상관 키</strong>(<code>isCorrKey</code>)로 표시합니다</td>
+</tr>
+<tr>
+<td>상관(correlation)</td>
+<td>인스턴스의 <code>corr_key</code>. 같은 정의에 같은 상관 키로 <strong>실행 중인</strong> 인스턴스가 있으면 새로 시작하지 않습니다</td>
+</tr>
+</tbody>
+</table>
+<p>이벤트는 Kafka 토픽 <strong><code>bpm-topic</code></strong>으로 들어옵니다. process-service는 메시지 헤더 <strong><code>type</code></strong>을 이벤트 이름으로 보고 <code>BPM_EVENT_MAPPING</code>에서 그 이름을 찾습니다.
+시작 이벤트로 등록된 정의가 있으면 인스턴스를 시작하고, payload의 필드를 같은 이름의 프로세스 변수에 넣습니다.</p>
+<div class="hl"><pre><span></span><code>구매 포털 ──(Kafka bpm-topic, 헤더 type=TutPurchaseSubmitted)──▶ process-service
+                                                                  │ BPM_EVENT_MAPPING: TutPurchaseSubmitted → 튜토리얼/메시지시작/구매요청접수 #Start (시작, 상관 키 requestNo)
+                                                                  ▼
+                                               인스턴스 「구매요청_REQ-2611-0107」 시작, payload → 변수, 첫 작업 「팀장 결재」 → 윤팀장
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">이벤트 이름의 <code>Tut</code> 접두어</p>
+<p>이 튜토리얼의 이벤트는 모두 <code>Tut</code>으로 시작합니다. 같은 Kafka를 쓰는 다른 예제(ERP의 <code>PurchaseOrderApprovalRequested</code> 등)와 이름이 겹치지 않도록 정한 약속일 뿐, 엔진이 요구하는 규칙은 아닙니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>예제는 「구매 요청 접수」 프로세스입니다. 구매 포털(여기서는 이벤트 콘솔)이 <code>TutPurchaseSubmitted</code>를 보내면 인스턴스가 시작되고, 첫 작업 「팀장 결재」가 윤팀장에게 갑니다.</p>
+<ol class="steps">
+<li><strong>정의 보기.</strong> 홍길동으로 로그인해 <code>튜토리얼/메시지시작/구매요청접수</code>를 엽니다. 시작 이벤트에 봉투 모양(메시지)이 있고, 레인 「구매 팀장」 하나에 「팀장 결재」가 있습니다.
+
+<figure><a href="img/message-start-design.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="튜토리얼/메시지시작/구매요청접수" src="img/message-start-design.webp" loading="lazy" decoding="async"></a><figcaption>튜토리얼/메시지시작/구매요청접수</figcaption></figure>
+</li>
+<li><strong>시작 이벤트 패널.</strong> 시작 이벤트를 두 번 누르면 패널이 열립니다. 「이벤트 키」에 <code>TutPurchaseSubmitted</code>, 「아규먼트」에 <code>requestNo</code>·<code>item</code>·<code>qty</code>·<code>amount</code>·<code>requester</code>가 있고, <code>requestNo</code>에는 「고유 키」와 「관계 키」가 켜져 있습니다. 「관계 키」가 상관 키입니다.
+
+<figure><a href="img/message-start-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시작 이벤트 패널 — 이벤트 키와 아규먼트" src="img/message-start-panel.webp" loading="lazy" decoding="async"></a><figcaption>시작 이벤트 패널 — 이벤트 키와 아규먼트</figcaption></figure>
+</li>
+<li><strong>이벤트 보내기.</strong> 이벤트 콘솔(이 장의 <a href="#이벤트-콘솔">도구</a>)을 띄웁니다. 헤더 <code>type</code>에 <code>TutPurchaseSubmitted</code>, payload에 요청 내용을 넣고 <strong>보내기</strong>를 누릅니다. 오른쪽 「오간 메시지」에 <code>→ BPM 으로 · bpm-topic</code> 줄이 생깁니다.
+
+
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;requestNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REQ-2611-0107&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;item&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;노트북&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;qty&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4350000</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;requester&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;최구매&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/message-start-console.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이벤트 콘솔 — 보낸 이벤트와 이벤트 매핑 표" src="img/message-start-console.webp" loading="lazy" decoding="async"></a><figcaption>이벤트 콘솔 — 보낸 이벤트와 이벤트 매핑 표</figcaption></figure>
+</li>
+<li><strong>인스턴스 확인.</strong> 「관리자 페이지」(<code>/admin</code>)의 인스턴스 목록에 <code>구매요청_REQ-2611-0107</code>이 생깁니다. 이름은 정의의 인스턴스 이름 패턴 <code>구매요청_&lt;%=instance.corrkey%&gt;</code>에서 왔습니다. 행을 열면 「프로세스 변수」 탭에 payload의 다섯 필드가 그대로 변수로 들어 있습니다.
+
+<figure><a href="img/message-start-list.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자 화면 — 인스턴스 목록" src="img/message-start-list.webp" loading="lazy" decoding="async"></a><figcaption>관리자 화면 — 인스턴스 목록</figcaption></figure>
+
+<figure><a href="img/message-start-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 변수 탭 — payload 가 변수로" src="img/message-start-vars.webp" loading="lazy" decoding="async"></a><figcaption>프로세스 변수 탭 — payload 가 변수로</figcaption></figure>
+</li>
+<li><strong>첫 작업.</strong> 윤팀장으로 로그인하면 업무 목록에 「팀장 결재」가 와 있습니다. 이벤트로 시작한 인스턴스에는 「시작한 사람」이 없으므로, 레인에 담당자를 정해 두었습니다(아래 <a href="#레인-시작자가-없다">레인</a>).
+
+<figure><a href="img/message-start-task.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="윤팀장의 「팀장 결재」" src="img/message-start-task.webp" loading="lazy" decoding="async"></a><figcaption>윤팀장의 「팀장 결재」</figcaption></figure>
+</li>
+<li><strong>같은 요청을 한 번 더.</strong> 콘솔에서 같은 payload를 한 번 더 보냅니다. 관리자 화면의 인스턴스는 여전히 하나입니다. 같은 정의에 <code>corr_key = REQ-2611-0107</code>인 인스턴스가 실행 중이므로 새로 시작하지 않습니다.
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="패널-칸-정의-json">패널 칸 ↔ 정의 JSON<a class="anchor" href="#패널-칸-정의-json" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>패널(시작 이벤트)</th>
+<th>JSON 속성</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>이벤트 키</td>
+<td><code>eventKey</code></td>
+<td>들어오는 메시지의 헤더 <code>type</code>과 같아야 합니다. 매핑 등록의 키</td>
+</tr>
+<tr>
+<td>아규먼트 · 이름/타입</td>
+<td><code>eventSynchronization.attributes[].name</code> · <code>className</code></td>
+<td>payload의 필드. 타입은 <code>String</code>, <code>Long</code> 등</td>
+</tr>
+<tr>
+<td>아규먼트 · 고유 키</td>
+<td><code>attributes[].isKey</code></td>
+<td></td>
+</tr>
+<tr>
+<td>아규먼트 · 관계 키</td>
+<td><code>attributes[].isCorrKey</code></td>
+<td>상관 키. 첫 번째 것만 쓰입니다</td>
+</tr>
+<tr>
+<td>데이터 매핑</td>
+<td><code>eventSynchronization.mappingContext</code></td>
+<td>필드 이름과 변수 이름이 다를 때. 같으면 비워 둡니다(모든 필드가 같은 이름의 변수로 들어갑니다)</td>
+</tr>
+<tr>
+<td>(프로세스 변수 대화상자) 인스턴스명 패턴</td>
+<td>프로세스 JSON <code>instanceNamePattern</code></td>
+<td><code>&lt;%=instance.corrkey%&gt;</code>로 상관 키를 이름에 넣습니다</td>
+</tr>
+</tbody>
+</table>
+<h3 id="배포한-정의발췌">배포한 정의(발췌)<a class="anchor" href="#배포한-정의발췌" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="nt">&lt;bpmn:process</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Process_MsgStart&quot;</span><span class="w"> </span><span class="na">isExecutable=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:extensionElements&gt;&lt;uengine:properties&gt;</span>
+<span class="w">    </span><span class="nt">&lt;uengine:variable</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;requestNo&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;Text&quot;</span><span class="nt">&gt;</span>…<span class="nt">&lt;/uengine:variable&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- item, qty, amount, requester, 결재의견 --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;uengine:json&gt;</span>{&quot;definitionName&quot;:&quot;튜토리얼/메시지시작/구매요청접수&quot;,
+<span class="w">                   </span>&quot;instanceNamePattern&quot;:&quot;구매요청_<span class="ni">&amp;lt;</span>%=instance.corrkey%<span class="ni">&amp;gt;</span>&quot;}<span class="nt">&lt;/uengine:json&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/uengine:properties&gt;&lt;/bpmn:extensionElements&gt;</span>
+<span class="w">  </span>…
+<span class="w">  </span><span class="nt">&lt;bpmn:startEvent</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Start&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;구매 요청 접수됨&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:extensionElements&gt;&lt;uengine:properties&gt;&lt;uengine:json&gt;</span>
+<span class="w">      </span>{&quot;eventKey&quot;:&quot;TutPurchaseSubmitted&quot;,
+<span class="w">       </span>&quot;eventSynchronization&quot;:{&quot;eventType&quot;:&quot;TutPurchaseSubmitted&quot;,
+<span class="w">         </span>&quot;attributes&quot;:[{&quot;name&quot;:&quot;requestNo&quot;,&quot;className&quot;:&quot;String&quot;,&quot;isKey&quot;:true,&quot;isCorrKey&quot;:true},
+<span class="w">                       </span>{&quot;name&quot;:&quot;item&quot;,&quot;className&quot;:&quot;String&quot;},{&quot;name&quot;:&quot;qty&quot;,&quot;className&quot;:&quot;Long&quot;},
+<span class="w">                       </span>{&quot;name&quot;:&quot;amount&quot;,&quot;className&quot;:&quot;Long&quot;},{&quot;name&quot;:&quot;requester&quot;,&quot;className&quot;:&quot;String&quot;}],
+<span class="w">         </span>&quot;mappingContext&quot;:{&quot;mappingElements&quot;:[]}}}
+<span class="w">    </span><span class="nt">&lt;/uengine:json&gt;&lt;/uengine:properties&gt;&lt;/bpmn:extensionElements&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:outgoing&gt;</span>F1<span class="nt">&lt;/bpmn:outgoing&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:messageEventDefinition</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Start_def&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/bpmn:startEvent&gt;</span>
+</code></pre></div>
+
+<p>전체 파일은 예제 폴더 <code>bpm-tut-message-start/defs/구매요청접수.bpmn</code>입니다.</p>
+<h3 id="레인-시작자가-없다">레인: 시작자가 없다<a class="anchor" href="#레인-시작자가-없다" title="Permanent link">#</a></h3>
+<p>화면의 「실행」이나 <code>POST /instance</code>로 시작하면 첫 레인은 시작한 사람이 맡습니다. 이벤트로 시작하면 시작한 사람이 없으므로, 첫 작업이 있는 레인에는 담당 규칙이 있어야 합니다.
+이 예제에서는 담당자를 정해 두었습니다. 그룹·역할로 지정하는 방법은 <a href="lanes-and-roles.html">레인과 담당자</a>를 보세요.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;roleResolutionContext&quot;</span><span class="p">:{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="s2">&quot;org.uengine.kernel.DirectRoleResolutionContext&quot;</span><span class="p">,</span><span class="nt">&quot;endpoint&quot;</span><span class="p">:</span><span class="s2">&quot;yoon&quot;</span><span class="p">,</span><span class="nt">&quot;resourceName&quot;</span><span class="p">:</span><span class="s2">&quot;윤팀장&quot;</span><span class="p">}}</span>
+</code></pre></div>
+
+<h3 id="메시지-계약">메시지 계약<a class="anchor" href="#메시지-계약" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>헤더</th>
+<th>필수</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>예</td>
+<td>이벤트 이름 = 시작 이벤트의 <code>eventKey</code></td>
+</tr>
+<tr>
+<td><code>corrKey</code></td>
+<td>아니오</td>
+<td>payload에 상관 키 필드가 없을 때 쓸 상관 키 값. 이때 인스턴스의 <code>corr_key</code>는 헤더 값이 되지만 변수 <code>requestNo</code>는 생기지 않습니다(payload에 없으므로)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>payload 필드</th>
+<th>타입</th>
+<th>변수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requestNo</code></td>
+<td>문자열</td>
+<td>상관 키. 인스턴스의 <code>corr_key</code>와 변수 <code>requestNo</code></td>
+</tr>
+<tr>
+<td><code>item</code> · <code>requester</code></td>
+<td>문자열</td>
+<td>같은 이름의 변수</td>
+</tr>
+<tr>
+<td><code>qty</code> · <code>amount</code></td>
+<td>정수</td>
+<td>같은 이름의 변수. 게이트웨이에서 숫자로 비교하려면 정수로 보냅니다</td>
+</tr>
+</tbody>
+</table>
+<p>배포 뒤 등록된 매핑은 DB에서 볼 수 있습니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">select</span><span class="w"> </span><span class="n">event_name</span><span class="p">,</span><span class="w"> </span><span class="n">definition_id</span><span class="p">,</span><span class="w"> </span><span class="n">tracing_tag</span><span class="p">,</span><span class="w"> </span><span class="n">correlation_key</span><span class="p">,</span><span class="w"> </span><span class="n">is_start_event</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="n">bpm_event_mapping</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">definition_id</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;튜토리얼/메시지시작/%&#39;</span><span class="p">;</span>
+<span class="c1">-- TutPurchaseSubmitted | 튜토리얼/메시지시작/구매요청접수.bpmn | Start | requestNo | t</span>
+</code></pre></div>
+
+<h3 id="이벤트-콘솔">이벤트 콘솔<a class="anchor" href="#이벤트-콘솔" title="Permanent link">#</a></h3>
+<p>영상과 이 장에서 쓴 작은 도구입니다(Node 20, <code>npm i kafkajs</code>). Kafka <code>bpm-topic</code>으로 이벤트를 보내고, <code>bpm-topic</code>·<code>bpm-brodcast</code>에 오가는 메시지를 한 화면에 보여 줍니다.
+<code>BPM_DB_URL</code>을 주면 이벤트 매핑 표도 보입니다. 소스는 예제 폴더 <code>bpm-tut-message-start/tool/event-console.mjs</code>이고, 핵심은 아래 몇 줄입니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Kafka</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;kafkajs&#39;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">kafka</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Kafka</span><span class="p">({</span><span class="w"> </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;tut-event-console&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">brokers</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">]</span><span class="w"> </span><span class="p">})</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">producer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">kafka</span><span class="p">.</span><span class="nx">producer</span><span class="p">();</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">producer</span><span class="p">.</span><span class="nx">connect</span><span class="p">()</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">producer</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="nx">topic</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bpm-topic&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">  </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="w"> </span><span class="nx">requestNo</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;REQ-2611-0107&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">item</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;노트북&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">qty</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="o">:</span><span class="w"> </span><span class="mf">4350000</span><span class="p">,</span><span class="w"> </span><span class="nx">requester</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;최구매&#39;</span><span class="w"> </span><span class="p">}),</span>
+<span class="w">  </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;TutPurchaseSubmitted&#39;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}]</span><span class="w"> </span><span class="p">})</span>
+</code></pre></div>
+
+<p>Kafka 명령줄 도구로도 같은 일을 할 수 있습니다. 헤더는 <code>--property parse.headers=true</code>로 넣고, 한 줄은 <code>헤더이름:값</code>과 본문을 탭으로 나눕니다(이 스택의 Kafka 컨테이너에서 확인).</p>
+<div class="hl"><pre><span></span><code><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;type:TutPurchaseSubmitted\t{&quot;requestNo&quot;:&quot;REQ-2611-0108&quot;,&quot;item&quot;:&quot;모니터&quot;,&quot;qty&quot;:2,&quot;amount&quot;:560000,&quot;requester&quot;:&quot;최구매&quot;}\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>kafka-console-producer<span class="w"> </span>--bootstrap-server<span class="w"> </span>localhost:9092<span class="w"> </span>--topic<span class="w"> </span>bpm-topic<span class="w"> </span>--property<span class="w"> </span>parse.headers<span class="o">=</span><span class="nb">true</span>
+<span class="c1"># Kafka 가 도커 컨테이너라면: docker exec -i &lt;kafka 컨테이너&gt; kafka-console-producer …</span>
+</code></pre></div>
+
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">손으로 쓴 XML에는 <code>definitionName</code>을 넣으세요</p>
+<p>프로세스 JSON에 <code>definitionName</code>이 없으면, 이벤트로 시작한 인스턴스의 첫 사람 작업에서 <code>NullPointerException</code>(<code>HumanActivity.createParameter</code>)이 나 작업이 생기지 않고, Kafka 소비가 같은 메시지를 다시 시도합니다.
+화면에서 저장한 정의는 프런트가 넣어 주므로 문제가 없습니다. 파일로 배포하는 정의에만 해당합니다.</p>
+</div>
+<ul>
+<li>상관 키 필드가 payload에도 헤더 <code>corrKey</code>에도 없으면, 엔진은 매핑의 상관 키 <strong>이름</strong>(<code>requestNo</code>)을 값으로 씁니다. 실제로 인스턴스 <code>구매요청_requestNo</code>가 생기고, 그 인스턴스가 실행 중인 동안은 상관 필드 없는 다음 이벤트가 새로 시작하지 못합니다. 상관 필드는 꼭 담아 보내세요.</li>
+<li>상관 키를 판단할 때는 <strong>실행 중</strong>(<code>Running</code>) 인스턴스만 봅니다. 앞 인스턴스가 끝난 뒤 같은 요청번호로 다시 보내면 새 인스턴스가 시작됩니다. 중복을 끝까지 막아야 한다면 보내는 쪽에서 막으세요.</li>
+<li>같은 이벤트 이름을 시작 이벤트로 가진 정의가 둘 이상이면 둘 다 시작합니다. 이벤트 이름은 정의마다 다르게 짓는 편이 안전합니다.</li>
+<li>매핑은 배포할 때 추가되기만 합니다. 이벤트 키를 바꿔 다시 배포해도 옛 이름의 행이 남으므로 <code>BPM_EVENT_MAPPING</code>에서 직접 지웁니다.</li>
+<li>이 장의 스택은 Kafka 모드입니다(<code>uengine.messaging.mode: kafka</code>). 기본값인 폴링 모드에서는 Kafka 대신 <code>POST /inbox</code>로 이벤트를 넣습니다(<a href="event-integration-kafka.html">이벤트로 시스템 잇기</a>).</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>헤더 `type`을 빼고 payload만 보내면 어떻게 되나요?</summary>
+<p>아무 인스턴스도 시작되지 않습니다. process-service는 <code>type</code> 헤더가 있는 메시지만 외부 이벤트로 처리하고, 없으면 BPM 내부 메시지로 보고 외부 이벤트 경로를 건너뜁니다.</p>
+</details>
+<details class="answer">
+<summary>같은 `requestNo`로 두 번 보냈는데 인스턴스가 하나뿐입니다. 두 번째 이벤트는 버려졌나요?</summary>
+<p>새 인스턴스는 시작하지 않았지만 버려지지도 않았습니다. 엔진은 같은 상관 키의 실행 중 인스턴스를 찾아 <strong>payload를 그 인스턴스의 변수에 다시 씁니다.</strong> 그 이벤트를 기다리는 활동이 없어도 그렇습니다. 같은 요청번호로 <code>qty: 5, amount: 999</code>를 보내 보면 실행 중인 인스턴스의 <code>qty</code>·<code>amount</code>가 그 값으로 바뀝니다. 같은 이벤트를 다시 보낼 때는 값이 같아야 안전합니다.</p>
+</details>
+<details class="answer">
+<summary>payload의 `qty`를 `"3"`(문자열)로 보내면 무엇이 달라지나요?</summary>
+<p>변수 <code>qty</code>에 문자열 <code>"3"</code>이 들어갑니다. 게이트웨이 조건 <code>qty &gt;= 3</code>처럼 숫자와 비교하면 엔진이 값의 타입으로 비교하므로 예상과 다른 경로로 갈 수 있습니다. 숫자는 숫자로 보내세요.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="multi-instance.html"><span>이전</span>공급사마다 견적 받기 (다중 인스턴스)</a><a class="next" href="event-completion.html"><span>다음</span>작업을 이벤트로 끝내기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#패널-칸-정의-json">패널 칸 ↔ 정의 JSON</a></li><li><a href="#배포한-정의발췌">배포한 정의(발췌)</a></li><li><a href="#레인-시작자가-없다">레인: 시작자가 없다</a></li><li><a href="#메시지-계약">메시지 계약</a></li><li><a href="#이벤트-콘솔">이벤트 콘솔</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

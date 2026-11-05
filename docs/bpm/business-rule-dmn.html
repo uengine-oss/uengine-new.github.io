@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결재선을 규칙표로 (DMN) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="금액과 구분(HW/SW)으로 결재 등급을 정하는 결정표 「구매 결재선」을 둡니다. 규칙 작업이 결과를 변수 `결재등급`에 넣으면 게이트웨이가 대표 결재·팀장 전결·반려 안내로 나눕니다. 이 브랜치의 규칙표 결과는 **`outcome` 한 칸**뿐입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/business-rule-dmn.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="결재선을 규칙표로 (DMN) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="금액과 구분(HW/SW)으로 결재 등급을 정하는 결정표 「구매 결재선」을 둡니다. 규칙 작업이 결과를 변수 `결재등급`에 넣으면 게이트웨이가 대표 결재·팀장 전결·반려 안내로 나눕니다. 이 브랜치의 규칙표 결과는 **`outcome` 한 칸**뿐입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/business-rule-dmn.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html" class="on" aria-current="page"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">흐름 제어<span class="chap">15</span></div>
+    <h1>결재선을 규칙표로 (DMN)</h1>
+    <article>
+<blockquote>
+<p>금액과 구분(HW/SW)으로 결재 등급을 정하는 결정표 「구매 결재선」을 둡니다. 규칙 작업이 결과를 변수 <code>결재등급</code>에 넣으면 게이트웨이가 대표 결재·팀장 전결·반려 안내로 나눕니다. 이 브랜치의 규칙표 결과는 <strong><code>outcome</code> 한 칸</strong>뿐입니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/ktz37QWC3gI" title="결재선을 규칙표로 (DMN) — 영상 1:47" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>조건이 서너 개를 넘으면 게이트웨이 흐름마다 조건을 다는 방식은 읽기도 고치기도 어렵습니다. <strong>결정표</strong>(DMN decision table)는 조건을 행과 열로 모아 둔 표입니다. 업무 담당자가 표만 고치면 프로세스를 다시 배포하지 않아도 결재선이 바뀝니다.</p>
+<p>uEngine6에서는 세 가지 요소가 함께 동작합니다.</p>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>어디</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>규칙(결정표)</td>
+<td>「룰 정의(비즈니스 규칙)」 화면 <code>/business-rule</code> → 파일 <code>definitions/businessRules/&lt;id&gt;.rule</code></td>
+<td>입력 열(판단 항목)·규칙 행·결과</td>
+</tr>
+<tr>
+<td>규칙 작업</td>
+<td>BPMN <code>&lt;bpmn:businessRuleTask&gt;</code>, <code>_type</code> <code>org.uengine.kernel.bpmn.BusinessRuleTask</code></td>
+<td>프로세스 변수를 규칙 입력으로 넣고 결과를 변수로 받음</td>
+</tr>
+<tr>
+<td>게이트웨이</td>
+<td>결과 변수(<code>결재등급</code>)로 분기</td>
+<td><a href="exclusive-gateway.html">배타 게이트웨이</a>와 같음</td>
+</tr>
+</tbody>
+</table>
+<p>Camunda DMN 엔진(<code>camunda-engine-dmn</code>)이 규칙을 평가합니다. 규칙 편집기가 저장하는 표는 DMN 1.3 XML이고, 적중 정책은 <strong>FIRST</strong>(위에서부터 처음 맞는 행 하나)입니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">결과는 outcome 한 칸</p>
+<ul>
+<li>결과 열은 <code>outcome</code>(문자열) 하나입니다. 편집기에서 값은 정해진 목록(<code>approve</code>·<code>conditional</code>·<code>reject</code>·<code>PURCHASE</code>·<code>COLLECTION</code>)에서 고릅니다.</li>
+<li>행마다 적는 「메모」는 DMN의 annotation이므로 <strong>결과로 돌아오지 않습니다</strong>(<code>note</code>는 늘 <code>null</code>). 메모를 변수로 매핑해도 값은 비어 있습니다.</li>
+<li>결과를 여러 칸 돌려받는 기능(main 브랜치의 multiple DMN outputs)은 이 브랜치에 없습니다.</li>
+</ul>
+</div>
+<p>이 장의 규칙 「구매 결재선」은 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>금액</th>
+<th>구분</th>
+<th>outcome</th>
+<th>메모</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&gt;= 5000000</code></td>
+<td>-</td>
+<td><code>reject</code></td>
+<td>한도 초과</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&gt;= 1000000</code></td>
+<td>-</td>
+<td><code>conditional</code></td>
+<td>대표 결재</td>
+</tr>
+<tr>
+<td>3</td>
+<td>-</td>
+<td><code>"SW"</code></td>
+<td><code>conditional</code></td>
+<td>소프트웨어는 대표 결재</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt; 1000000</code></td>
+<td>-</td>
+<td><code>approve</code></td>
+<td>팀장 전결</td>
+</tr>
+</tbody>
+</table>
+<p><code>-</code>는 「아무 값이나」입니다. 30만 원 소프트웨어는 3행의 조건에 먼저 맞으므로 <code>conditional</code>입니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>규칙 열기.</strong> 홍길동으로 왼쪽 메뉴에서 「룰 정의(비즈니스 규칙)」를 엽니다. 목록에서 「구매 결재선」을 고르면 오른쪽에 편집기가 열립니다.
+
+<figure><a href="img/business-rule-dmn-editor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="규칙 목록과 편집기" src="img/business-rule-dmn-editor.webp" loading="lazy" decoding="async"></a><figcaption>규칙 목록과 편집기</figcaption></figure>
+</li>
+<li><strong>판단 항목과 규칙 행.</strong> 「판단 기준 설정」에 항목 <code>금액</code>(입력 방식 「숫자 입력」)과 <code>구분</code>(「선택지」)이 있습니다. 그 아래 「규칙」에 규칙 1~4가 위 표의 순서로 있고, 행마다 「판단 기준 설정」(항목·비교·값)과 「결과 설정」(거절·조건부 승인·승인)이 보입니다. 새 규칙은 오른쪽 위 「새 룰 만들기」에서 판단 항목 → 규칙(조건·결과) 순서로 만들고 「저장」합니다.
+
+<figure><a href="img/business-rule-dmn-rows.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="규칙 행" src="img/business-rule-dmn-rows.webp" loading="lazy" decoding="async"></a><figcaption>규칙 행</figcaption></figure>
+</li>
+<li><strong>시험해 보기.</strong> 「테스트 실행」을 누르면 대화상자에 「입력값」 칸(금액·구분)이 나옵니다. 금액 <code>1500000</code>, 구분 <code>HW</code>를 넣고 「실행」하면 「실행 결과」에 결과 「조건부 승인」과 「매칭된 규칙」(규칙 #2)이 나옵니다. API로도 같은 테스트를 할 수 있습니다(<code>POST /business-rules/{id}/execute</code>, 아래 레퍼런스).
+
+<figure><a href="img/business-rule-dmn-test.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="테스트 실행 결과" src="img/business-rule-dmn-test.webp" loading="lazy" decoding="async"></a><figcaption>테스트 실행 결과</figcaption></figure>
+</li>
+<li><strong>규칙 작업 보기.</strong> <code>튜토리얼/규칙표/결재선결정</code>을 열고 「결재선 결정」을 더블클릭합니다. 「룰 선택」에 「구매 결재선」, 「판단 기준」에 규칙별 표가 미리 보입니다. 아래 「데이터 매핑」에서 <code>금액</code>·<code>구분</code>을 규칙 입력으로, <code>outcome</code>을 변수 <code>결재등급</code>으로 연결합니다.
+
+<figure><a href="img/business-rule-dmn-task.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="규칙 작업 패널" src="img/business-rule-dmn-task.webp" loading="lazy" decoding="async"></a><figcaption>규칙 작업 패널</figcaption></figure>
+</li>
+<li><strong>분기 조건.</strong> 게이트웨이 「결재 등급?」에서 나가는 흐름은 <code>결재등급 == conditional</code> → 대표 결재, <code>결재등급 == reject</code> → 반려 안내, 기본 흐름 → 팀장 전결입니다.
+</li>
+<li><strong>네 건 실행.</strong> 최구매가 네 건을 요청합니다(이 장에서는 API로 「구매 요청」까지 진행). 30만 원 HW · 150만 원 HW · 30만 원 SW · 700만 원 HW.
+</li>
+<li><strong>결과 확인.</strong> 김대표의 업무 목록에 「대표 결재」 두 건(150만 HW, 30만 SW), 윤팀장에게 「팀장 전결」(30만 HW), 최구매에게 「반려 안내」(700만)가 옵니다. 관리자 상세의 변수 <code>결재등급</code>으로도 확인합니다.
+
+<figure><a href="img/business-rule-dmn-kim.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="김대표의 대표 결재 두 건" src="img/business-rule-dmn-kim.webp" loading="lazy" decoding="async"></a><figcaption>김대표의 대표 결재 두 건</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="규칙-파일definitionsbusinessrulesidrule">규칙 파일(<code>definitions/businessRules/&lt;id&gt;.rule</code>)<a class="anchor" href="#규칙-파일definitionsbusinessrulesidrule" title="Permanent link">#</a></h3>
+<p>편집기가 저장하는 형식입니다. <code>ruleJson.dmnXml</code>에 DMN XML이 문자열로 들어갑니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;uuid&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매 결재선&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;…&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;ruleJson&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;dmnXml&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;?xml …?&gt;&lt;definitions xmlns=\&quot;https://www.omg.org/spec/DMN/20191111/MODEL/\&quot; …&gt;…&lt;/definitions&gt;&quot;</span><span class="p">}}</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="nt">&lt;decision</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;decision_purchase_approval_line&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;구매 결재선&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;decisionTable</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;decision_table_purchase_approval_line&quot;</span><span class="w"> </span><span class="na">hitPolicy=</span><span class="s">&quot;FIRST&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;input</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;input_1&quot;</span><span class="w"> </span><span class="na">label=</span><span class="s">&quot;금액&quot;</span><span class="nt">&gt;&lt;inputExpression</span><span class="w"> </span><span class="na">typeRef=</span><span class="s">&quot;number&quot;</span><span class="nt">&gt;&lt;text&gt;</span>금액<span class="nt">&lt;/text&gt;&lt;/inputExpression&gt;&lt;/input&gt;</span>
+<span class="w">    </span><span class="nt">&lt;input</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;input_2&quot;</span><span class="w"> </span><span class="na">label=</span><span class="s">&quot;구분&quot;</span><span class="nt">&gt;&lt;inputExpression</span><span class="w"> </span><span class="na">typeRef=</span><span class="s">&quot;string&quot;</span><span class="nt">&gt;&lt;text&gt;</span>구분<span class="nt">&lt;/text&gt;&lt;/inputExpression&gt;&lt;/input&gt;</span>
+<span class="w">    </span><span class="nt">&lt;output</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;output_1&quot;</span><span class="w"> </span><span class="na">label=</span><span class="s">&quot;Outcome&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;outcome&quot;</span><span class="w"> </span><span class="na">typeRef=</span><span class="s">&quot;string&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;annotation</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;annotation_1&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Note&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;rule</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;rule_1&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;inputEntry&gt;&lt;text&gt;</span><span class="ni">&amp;gt;</span>=<span class="w"> </span>5000000<span class="nt">&lt;/text&gt;&lt;/inputEntry&gt;&lt;inputEntry&gt;&lt;text&gt;</span>-<span class="nt">&lt;/text&gt;&lt;/inputEntry&gt;</span>
+<span class="w">      </span><span class="nt">&lt;outputEntry&gt;&lt;text&gt;</span>&quot;reject&quot;<span class="nt">&lt;/text&gt;&lt;/outputEntry&gt;</span>
+<span class="w">      </span><span class="nt">&lt;annotationEntry&gt;&lt;text&gt;</span>한도<span class="w"> </span>초과<span class="nt">&lt;/text&gt;&lt;/annotationEntry&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/rule&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- rule_2 &gt;= 1000000 → &quot;conditional&quot;, rule_3 - / &quot;SW&quot; → &quot;conditional&quot;, rule_4 &lt; 1000000 → &quot;approve&quot; --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/decisionTable&gt;</span>
+<span class="nt">&lt;/decision&gt;</span>
+</code></pre></div>
+
+<h3 id="규칙-api">규칙 API<a class="anchor" href="#규칙-api" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>호출</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /business-rules</code></td>
+<td>목록</td>
+</tr>
+<tr>
+<td><code>POST /business-rules</code> <code>{name, description, ruleJson:{dmnXml}}</code></td>
+<td>만들기(응답의 <code>id</code>가 규칙 id)</td>
+</tr>
+<tr>
+<td><code>PUT /business-rules/{id}</code></td>
+<td>고치기</td>
+</tr>
+<tr>
+<td><code>POST /business-rules/{id}/execute</code> <code>{"inputs":{"금액":1500000,"구분":"HW"}}</code></td>
+<td>시험 평가 → <code>{"outcome":"conditional","note":null,"matchedRuleIndex":…,"executionTime":…}</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>matchedRuleIndex</code>는 문자열 조건 행에서 잘못된 번호를 반환할 때가 있어 결과 판단에 쓰지 마세요.</p>
+<h3 id="규칙-작업-json">규칙 작업 JSON<a class="anchor" href="#규칙-작업-json" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.BusinessRuleTask&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;businessRuleId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;규칙 id&gt;&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[businessRule].&lt;규칙키&gt;.in_금액&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in&quot;</span><span class="p">,</span><span class="w">  </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">}},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[businessRule].&lt;규칙키&gt;.in_구분&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in&quot;</span><span class="p">,</span><span class="w">  </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구분&quot;</span><span class="p">}},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;결재등급&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[businessRule].&lt;규칙키&gt;.out_outcome&quot;</span><span class="p">}}]}}}</span>
+</code></pre></div>
+
+<ul>
+<li><code>&lt;규칙키&gt;</code> = 규칙 id에서 영숫자·한글이 아닌 글자를 <code>_</code>로 바꾼 것. 숫자로 시작하면 앞에 <code>r_</code>를 붙입니다(예: <code>0686…-…</code> → <code>r_0686…_…</code>).</li>
+<li>입력은 <code>in_&lt;판단 항목 이름&gt;</code>, 결과는 <code>out_outcome</code> 하나입니다.</li>
+<li>패널: 「룰 선택」 → <code>businessRuleId</code>, 「데이터 매핑」 → <code>mappingElements</code>.</li>
+</ul>
+<h3 id="실행-결과이-장을-촬영할-때의-실행">실행 결과(이 장을 촬영할 때의 실행)<a class="anchor" href="#실행-결과이-장을-촬영할-때의-실행" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>금액</th>
+<th>구분</th>
+<th><code>/execute</code> outcome</th>
+<th>변수 <code>결재등급</code></th>
+<th>간 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>300,000</td>
+<td>HW</td>
+<td>approve</td>
+<td>approve</td>
+<td>팀장 전결(윤팀장)</td>
+</tr>
+<tr>
+<td>1,500,000</td>
+<td>HW</td>
+<td>conditional</td>
+<td>conditional</td>
+<td>대표 결재(김대표)</td>
+</tr>
+<tr>
+<td>300,000</td>
+<td>SW</td>
+<td>conditional</td>
+<td>conditional</td>
+<td>대표 결재(김대표)</td>
+</tr>
+<tr>
+<td>7,000,000</td>
+<td>HW</td>
+<td>reject</td>
+<td>reject</td>
+<td>반려 안내(최구매)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="흔한-실수">흔한 실수<a class="anchor" href="#흔한-실수" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>고치는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>결재메모</code> 같은 변수가 늘 비어 있음</td>
+<td>메모는 annotation, 결과가 아님</td>
+<td>결과는 <code>outcome</code> 하나로 설계</td>
+</tr>
+<tr>
+<td>규칙 작업 뒤 변수가 그대로</td>
+<td>결과 매핑 방향이 반대</td>
+<td><code>argument</code> = 변수 이름, <code>variable</code> = <code>[businessRule].&lt;키&gt;.out_outcome</code>, <code>direction: out</code></td>
+</tr>
+<tr>
+<td>규칙을 고쳤는데 그대로</td>
+<td>다른 규칙(id)을 고침</td>
+<td>규칙 작업의 <code>businessRuleId</code> 확인</td>
+</tr>
+</tbody>
+</table>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<ul>
+<li>결과는 <code>outcome</code> 하나, 값은 편집기의 고정 목록에서만 고릅니다. 메모는 결과로 나오지 않습니다.</li>
+<li>규칙 작업 패널의 「판단 기준」 미리보기에서 <code>&lt; 1000000</code>의 연산자 칸이 비어 보이고, 편집기에서는 「아무 값이나」(<code>-</code>)인 칸이 <code>gte</code>로 보입니다(표시 문제이며 평가는 정확함).</li>
+<li>「테스트 실행」의 「매칭된 규칙」과 <code>/execute</code>의 <code>matchedRuleIndex</code>는 문자열 조건 행에서 잘못된 번호를 반환합니다. 30만 원 · <code>SW</code>는 결과(조건부 승인)는 맞지만 매칭된 규칙이 3이 아니라 「규칙 #4」로 나옵니다. 결과만 믿으세요.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>30만 원짜리 소프트웨어는 왜 대표 결재로 가나요?</summary>
+<p>적중 정책이 FIRST이므로 위에서부터 조건에 처음 맞는 행의 결과를 반환합니다. 3행(구분 <code>"SW"</code> → <code>conditional</code>)이 4행(<code>&lt; 1000000</code> → <code>approve</code>)보다 위에 있어 먼저 선택됩니다.</p>
+</details>
+<details class="answer">
+<summary>대표 결재 기준을 200만 원으로 올리려면 무엇을 고치나요?</summary>
+<p>규칙표의 2행 조건을 <code>&gt;= 2000000</code>, 4행을 <code>&lt; 2000000</code>으로 고쳐 저장합니다. 프로세스 정의는 그대로 둡니다.</p>
+</details>
+<details class="answer">
+<summary>메모 「대표 결재」를 작업 제목에 쓰고 싶습니다. 규칙 결과로 받을 수 있나요?</summary>
+<p>이 브랜치에서는 받을 수 없습니다. 메모는 결과가 아닙니다. <code>outcome</code> 값을 받아 게이트웨이나 스크립트에서 문구로 바꾸세요.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="script-task.html"><span>이전</span>스크립트로 값 계산 (스크립트 작업)</a><a class="next" href="call-activity.html"><span>다음</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#규칙-파일definitionsbusinessrulesidrule">규칙 파일(definitions/businessRules/&lt;id&gt;.rule)</a></li><li><a href="#규칙-api">규칙 API</a></li><li><a href="#규칙-작업-json">규칙 작업 JSON</a></li><li><a href="#실행-결과이-장을-촬영할-때의-실행">실행 결과(이 장을 촬영할 때의 실행)</a></li><li><a href="#흔한-실수">흔한 실수</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

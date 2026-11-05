@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>작업을 이벤트로 끝내기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="사람이 「완료」를 누르는 대신, 다른 시스템이 보낸 이벤트가 기다리던 작업을 끝냅니다. 상관 키로 인스턴스를 찾고, payload는 변수가 되어 다음 분기를 정합니다. 결재 도중의 취소 요청(메시지 경계)과 여러 인스턴스를 한꺼번에 깨우는 방송도 다룹니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/event-completion.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="작업을 이벤트로 끝내기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="사람이 「완료」를 누르는 대신, 다른 시스템이 보낸 이벤트가 기다리던 작업을 끝냅니다. 상관 키로 인스턴스를 찾고, payload는 변수가 되어 다음 분기를 정합니다. 결재 도중의 취소 요청(메시지 경계)과 여러 인스턴스를 한꺼번에 깨우는 방송도 다룹니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/event-completion.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html" class="on" aria-current="page"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">이벤트<span class="chap">19</span></div>
+    <h1>작업을 이벤트로 끝내기</h1>
+    <article>
+<blockquote>
+<p>사람이 「완료」를 누르는 대신, 다른 시스템이 보낸 이벤트가 기다리던 작업을 끝냅니다. 상관 키로 인스턴스를 찾고, payload는 변수가 되어 다음 분기를 정합니다. 결재 도중의 취소 요청(메시지 경계)과 여러 인스턴스를 한꺼번에 깨우는 방송도 다룹니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/psagYTRa1HQ" title="작업을 이벤트로 끝내기 — 영상 1:46" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>프로세스에는 「누가 무엇을 끝낼 때까지 기다리는」 지점이 많습니다. 공급사의 발주 확정, ERP의 입고 처리, 예산 확정 등을 기다립니다.
+그 일이 다른 시스템에서 일어난다면 BPM 작업을 사람이 다시 「완료」할 이유가 없습니다. 그 시스템이 낸 <strong>이벤트가 작업을 끝내게</strong> 합니다. BPMN의 <strong>받기 작업</strong>(Receive Task)·<strong>메시지 중간 이벤트</strong>와 같은 개념입니다.</p>
+<p>uEngine6에서는 기다리는 활동에 <strong>이벤트 동기화</strong>(<code>eventSynchronization</code>)를 설정합니다.</p>
+<table>
+<thead>
+<tr>
+<th>무엇을 기다리나</th>
+<th>BPMN 요소</th>
+<th>uEngine6 설정</th>
+<th>배포 때 등록되는 매핑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>특정 인스턴스의 작업 하나</td>
+<td>사용자 작업(받기 역할)</td>
+<td>작업 JSON <code>eventSynchronization(s)</code>: <code>eventType</code> + 상관 키 아규먼트</td>
+<td><code>eventType</code> → 정의·활동, 상관 키</td>
+</tr>
+<tr>
+<td>특정 인스턴스의 흐름 한 지점</td>
+<td>메시지 중간 catch 이벤트</td>
+<td><code>eventKey</code> + <code>correlationKey</code></td>
+<td><code>eventKey</code> → 정의·이벤트, 상관 키</td>
+</tr>
+<tr>
+<td>실행 중인 모든 인스턴스의 그 지점</td>
+<td>메시지(또는 신호) 중간 catch 이벤트</td>
+<td><code>eventKey</code>만, 상관 키 없음</td>
+<td><code>eventKey</code> → 정의·이벤트, 상관 키 없음</td>
+</tr>
+<tr>
+<td>진행 중인 작업에 들어온 요청</td>
+<td>메시지 경계 이벤트</td>
+<td>설정 없음. REST <code>boundary-message</code>로 발화</td>
+<td>없음</td>
+</tr>
+</tbody>
+</table>
+<p>이벤트가 들어오면 엔진은 다음 순서로 처리합니다(<code>AsyncEventListener</code>).</p>
+<ol>
+<li>헤더 <code>type</code>으로 <code>BPM_EVENT_MAPPING</code>을 찾습니다.</li>
+<li>매핑의 상관 키 필드 값을 payload에서 읽습니다(없으면 헤더 <code>corrKey</code>).</li>
+<li>그 값을 <code>corr_key</code>로 가진 <strong>실행 중</strong> 인스턴스를 찾아 payload의 모든 필드를 변수에 쓰고, 지금 실행 중인 활동 가운데 그 이벤트를 기다리는 첫 활동을 완료합니다.</li>
+<li>상관 키가 없는 매핑이면 실행 중인 모든 인스턴스에서 그 <code>eventKey</code>를 기다리는 이벤트를 깨웁니다.</li>
+<li>사람 작업이 끝나면 <code>bpm-brodcast</code>로 <code>TASK_COMPLETED</code>가 나갑니다(<a href="event-integration-kafka.html">이벤트로 시스템 잇기</a>).</li>
+</ol>
+<h3 id="행위자-헤더-emnb와-이-스택의-설정">행위자 헤더 <code>emnb</code>와 이 스택의 설정<a class="anchor" href="#행위자-헤더-emnb와-이-스택의-설정" title="Permanent link">#</a></h3>
+<p>사람 작업을 이벤트로 끝낼 때 엔진은 <strong>누가</strong> 끝냈는지 확인합니다. 헤더 <code>emnb</code>에 사용자 이름을 넣으면, 그 사람이 작업의 현재 담당자일 때만 끝내고 아니면 무시합니다(「Only the current work item owner can complete this task」, 담당자가 없으면 「Work item must be claimed before completion」).
+이 브랜치(<code>bmt/sds-process-test</code>)는 원래 <code>emnb</code>가 <strong>반드시 있어야</strong> 합니다. 없으면 「header.emnb is required to complete a work item」으로 거절합니다.</p>
+<p>이 튜토리얼의 시연 스택은 process-service에 다음 설정을 추가해 실행했습니다.</p>
+<div class="hl"><pre><span></span><code><span class="nt">uengine</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">messaging</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">require-event-actor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">   </span><span class="c1"># 행위자 헤더가 없는 시스템 이벤트도 사람 작업을 끝낸다</span>
+</code></pre></div>
+
+<p>계정계 예제처럼 <strong>시스템이 낸 이벤트</strong>(공급사 확정, 입금 확인)는 사람 행위자가 없기 때문입니다. 이 스위치는 시연 스택의 엔진에 더한 작은 패치(<code>AsyncEventListener</code> +13줄, 기본값 <code>true</code>)이고, 원래 브랜치에는 없습니다.
+<code>false</code>여도 <code>emnb</code>를 붙이면 담당자 검사는 그대로 합니다. 운영에서는 기본값(<code>true</code>)을 두고, ERP 예제처럼 일한 사람을 <code>emnb</code>에 넣어 보내는 방식을 권합니다(<a href="industry-erp-purchase.html">ERP 예제</a>).</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>예제에는 두 정의가 있습니다.</p>
+<ul>
+<li><code>튜토리얼/이벤트완료/발주확정대기</code>: 최구매(구매 담당) → 윤팀장 「팀장 결재」(메시지 경계 「요청 취소」) → 최구매 「발주 확정 대기」(이벤트 <code>TutOrderConfirmed</code>) → 100만 원 이상이면 김대표 「대표 보고」</li>
+<li><code>튜토리얼/이벤트완료/예산확정대기</code>: 「예산 확정」(이벤트 <code>TutBudgetApproved</code>, 상관 키 없음)을 기다렸다가 최구매 「발주」</li>
+</ul>
+<ol class="steps">
+<li><strong>기다리는 작업 보기.</strong> <code>튜토리얼/이벤트완료/발주확정대기</code>를 열고 「발주 확정 대기」를 두 번 누릅니다. 「데이터 처리 방식」이 <strong>외부 어플리케이션</strong>이고, 「URL」과 「이벤트 키」 <code>TutOrderConfirmed</code>가 있습니다. 아규먼트 <code>requestNo</code>에 「관계 키」가 켜져 있습니다.
+
+<figure><a href="img/event-completion-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="「발주 확정 대기」 패널 — 외부 어플리케이션, URL, 이벤트 키" src="img/event-completion-panel.webp" loading="lazy" decoding="async"></a><figcaption>「발주 확정 대기」 패널 — 외부 어플리케이션, URL, 이벤트 키</figcaption></figure>
+</li>
+<li><strong>작업 열기.</strong> 최구매의 업무 목록에 「발주 확정 대기」가 있습니다(결재는 윤팀장이 이미 했습니다). 카드를 열면 작업 화면 오른쪽에 URL 작업의 주소가 열립니다. 이 예제는 그 주소를 이벤트 콘솔로 두었고, <code>&lt;%instance.corrkey%&gt;</code> 자리에 이 인스턴스의 요청번호가 들어가 있습니다.
+</li>
+<li><strong>이벤트 보내기.</strong> 공급사 시스템 대신 콘솔에서 발주 번호를 넣어 보냅니다. 곧 <code>← BPM 이 알림 · bpm-brodcast</code> 줄에 <code>TASK_COMPLETED</code>·「발주 확정 대기」가 찍힙니다. 업무 목록을 새로 고치면 카드가 사라집니다.
+
+
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;requestNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REQ-2611-0201&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;poNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PO-2611-0042&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/event-completion-task.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="작업 화면 안의 이벤트 콘솔 — 보낸 TutOrderConfirmed" src="img/event-completion-task.webp" loading="lazy" decoding="async"></a><figcaption>작업 화면 안의 이벤트 콘솔 — 보낸 TutOrderConfirmed</figcaption></figure>
+</li>
+<li><strong>변수와 분기.</strong> 관리자 화면에서 인스턴스를 열면 변수 <code>poNumber</code>가 들어와 있고, 금액이 4,350,000원이라 게이트웨이가 「대표 보고」로 보냈습니다.
+
+<figure><a href="img/event-completion-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자 화면 — 변수 poNumber, 「대표 보고」로 진행" src="img/event-completion-vars.webp" loading="lazy" decoding="async"></a><figcaption>관리자 화면 — 변수 poNumber, 「대표 보고」로 진행</figcaption></figure>
+</li>
+<li><strong>결재 중 취소(메시지 경계).</strong> 다른 요청(<code>REQ-2611-0202</code>)은 윤팀장의 「팀장 결재」에 있습니다. 요청자가 철회하면, 외부 앱이 이 작업의 메시지 경계를 REST로 발화합니다. 호출자는 작업 담당자(윤팀장)의 토큰을 씁니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/work-item/&lt;팀장<span class="w"> </span>결재<span class="w"> </span>taskId&gt;/boundary-message/Cancel<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$YOON_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;parameterValues&quot;:{&quot;취소사유&quot;:&quot;요청자 철회&quot;}}&#39;</span>
+</code></pre></div>
+
+
+
+윤팀장의 업무 목록에서 「팀장 결재」가 사라지고(<code>CANCELLED</code>), 최구매에게 「취소 안내」가 갑니다. 본문의 <code>parameterValues</code>는 변수(<code>취소사유</code>)가 됩니다.
+
+<figure><a href="img/event-completion-boundary.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="윤팀장의 「팀장 결재」 — 외부 앱이 boundary-message 를 부르기 직전" src="img/event-completion-boundary.webp" loading="lazy" decoding="async"></a><figcaption>윤팀장의 「팀장 결재」 — 외부 앱이 boundary-message 를 부르기 직전</figcaption></figure>
+</li>
+<li><strong>여러 인스턴스를 한꺼번에.</strong> <code>예산확정대기</code> 인스턴스 두 개가 「예산 확정」에서 기다립니다. 콘솔에서 <code>TutBudgetApproved</code>를 <strong>상관 키 없이</strong> 보내면 두 인스턴스가 함께 깨어나 최구매의 업무 목록에 「발주」가 두 건 옵니다.
+
+<figure><a href="img/event-completion-broadcast.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="상관 키 없는 TutBudgetApproved 뒤 최구매의 업무 목록 — 「발주」 2건" src="img/event-completion-broadcast.webp" loading="lazy" decoding="async"></a><figcaption>상관 키 없는 TutBudgetApproved 뒤 최구매의 업무 목록 — 「발주」 2건</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="작업에-이벤트-동기화-달기">작업에 이벤트 동기화 달기<a class="anchor" href="#작업에-이벤트-동기화-달기" title="Permanent link">#</a></h3>
+<p>패널의 「외부 어플리케이션」을 고르면 URL 작업(<code>URLActivity</code>)이 되고, 「이벤트 키」 목록이 <code>eventSynchronizations</code>로 저장됩니다. 「기본」 사용자 작업 패널에는 이벤트 키 칸이 없으므로, 화면 없이 기다리기만 하는 작업이면 XML에 <code>HumanActivity</code> + <code>eventSynchronization</code>을 직접 씁니다(아래 둘째 예).</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.URLActivity&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:9703/?compact=1&amp;type=TutOrderConfirmed&amp;requestNo=&lt;%instance.corrkey%&gt;&amp;poNumber=&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronizations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TutOrderConfirmed&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;requestNo&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;poNumber&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">}],</span>
+<span class="w">   </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]}}]}</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.HumanActivity&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TutQuoteReplied&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;requestNo&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}],</span>
+<span class="w">   </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]}}}</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>패널 칸</th>
+<th>JSON</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td><code>url</code></td>
+<td>작업 화면에 열 주소. <code>&lt;%instance.corrkey%&gt;</code>·<code>&lt;%instance.instanceId%&gt;</code>를 쓸 수 있습니다</td>
+</tr>
+<tr>
+<td>이벤트 키</td>
+<td><code>eventSynchronizations[].eventType</code></td>
+<td>이 작업을 끝낼 이벤트 이름(헤더 <code>type</code>)</td>
+</tr>
+<tr>
+<td>아규먼트 · 관계 키</td>
+<td><code>attributes[].isCorrKey</code></td>
+<td>상관 키 필드. 인스턴스의 <code>corr_key</code>와 비교합니다</td>
+</tr>
+<tr>
+<td>데이터 매핑</td>
+<td><code>mappingContext</code></td>
+<td>필드 이름과 변수 이름이 다를 때. 비워 두면 payload 필드가 같은 이름의 변수로</td>
+</tr>
+</tbody>
+</table>
+<p>인스턴스의 <code>corr_key</code>는 메시지 시작이면 그 이벤트의 상관 키 값, API로 시작하면 <code>POST /instance</code>의 <code>correlationKeyValue</code>입니다.</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/instance<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$YOON_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">  &quot;processDefinitionId&quot;: &quot;튜토리얼/이벤트완료/발주확정대기&quot;, &quot;correlationKeyValue&quot;: &quot;REQ-2611-0201&quot;,</span>
+<span class="s1">  &quot;processVariableValues&quot;: [{&quot;name&quot;:&quot;requestNo&quot;,&quot;values&quot;:[&quot;REQ-2611-0201&quot;]},{&quot;name&quot;:&quot;amount&quot;,&quot;values&quot;:[4350000]}]}&#39;</span>
+</code></pre></div>
+
+<p>이 정의는 첫 레인(「구매 팀장」)에 사람(윤팀장)이 정해져 있습니다. 이런 정의를 API로 시작할 때는 <strong>그 사람의 토큰</strong>으로 부릅니다. 다른 사람(관리자 포함)이 부르면 <code>You (…) are not permitted to initiate this process</code>로 거절됩니다.</p>
+<h3 id="메시지-중간-이벤트-상관-키-있음-없음">메시지 중간 이벤트 (상관 키 있음 / 없음)<a class="anchor" href="#메시지-중간-이벤트-상관-키-있음-없음" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="c1">// 한 인스턴스: &lt;bpmn:intermediateCatchEvent&gt; + &lt;bpmn:messageEventDefinition/&gt;</span>
+<span class="p">{</span><span class="nt">&quot;eventKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TutGoodsArrived&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;correlationKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;requestNo&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TutGoodsArrived&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;requestNo&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}]}}</span>
+<span class="c1">// 모든 실행 중 인스턴스(방송): eventKey 만</span>
+<span class="p">{</span><span class="nt">&quot;eventKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TutBudgetApproved&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+<p>메시지 중간 이벤트 패널에는 「관계 키」·「서비스 경로」·「연산 참조」 칸만 있고 이벤트 키 칸이 없습니다. 이벤트 키는 XML로 넣습니다.</p>
+<h3 id="메시지-경계">메시지 경계<a class="anchor" href="#메시지-경계" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="nt">&lt;bpmn:boundaryEvent</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Cancel&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;요청 취소&quot;</span><span class="w"> </span><span class="na">attachedToRef=</span><span class="s">&quot;Approve&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:messageEventDefinition</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Cancel_def&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bpmn:boundaryEvent&gt;</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>본문</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /work-item/{taskId}/boundary-message/{경계 id}</code></td>
+<td><code>{"parameterValues": {이름: 값}}</code></td>
+<td>붙은 작업 <code>CANCELLED</code>, 경계 뒤 흐름 시작, 값은 변수로. 호출자는 작업 담당자여야 합니다</td>
+</tr>
+</tbody>
+</table>
+<h3 id="메시지-계약-이-장">메시지 계약 (이 장)<a class="anchor" href="#메시지-계약-이-장" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>이벤트(헤더 <code>type</code>)</th>
+<th>상관 키</th>
+<th>payload</th>
+<th>끝내는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TutOrderConfirmed</code></td>
+<td><code>requestNo</code></td>
+<td><code>requestNo</code>, <code>poNumber</code></td>
+<td>「발주 확정 대기」</td>
+</tr>
+<tr>
+<td><code>TutBudgetApproved</code></td>
+<td>없음</td>
+<td><code>budgetYear</code>, <code>note</code></td>
+<td>실행 중인 모든 「예산 확정」</td>
+</tr>
+</tbody>
+</table>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>메시지 경계는 화면에서 발화할 수 없습니다.</strong> 업무 화면·관리자 화면에 버튼이 없고, 경계 이벤트 패널에도 설정 칸이 없습니다. 외부 앱이나 curl로 <code>boundary-message</code>를 부르세요. 이 브랜치에서 확인한 발화 방법은 이 REST 호출뿐입니다.</li>
+<li>「기본」 사용자 작업 패널과 메시지 중간 이벤트 패널에는 이벤트 키 칸이 없습니다. 화면에서만 설정하려면 「외부 어플리케이션」(URL 작업)을 쓰고, 나머지는 XML로 넣습니다.</li>
+<li>인스턴스 화면의 「이벤트 보내기」 버튼은 이 장의 대기 작업에는 나타나지 않습니다(<code>/instance/{id}/eventList</code>가 빈 목록).</li>
+<li>상관 필드가 payload에도 헤더 <code>corrKey</code>에도 없으면, 엔진은 매핑의 상관 키 <strong>이름</strong>을 값으로 씁니다. 상관 키가 있는 이벤트는 반드시 그 필드를 담아 보내세요.</li>
+<li>같은 상관 키의 실행 중 인스턴스에는, 그 이벤트를 기다리는 활동이 없어도 payload가 변수로 쓰입니다.</li>
+<li>Kafka 모드에서는 이벤트 처리에 실패하면(담당자가 아님 등) 세 번 다시 시도한 뒤 로그만 남기고 넘어갑니다. 어디에도 「실패」 상태로 남지 않습니다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>`TutOrderConfirmed`에 `"emnb": "kim"` 헤더를 붙여 보내면 「발주 확정 대기」가 끝나나요?</summary>
+<p>아닙니다. 이 작업의 담당자는 최구매(<code>choi</code>)입니다. 행위자 헤더가 있으면 엔진은 담당자와 같은지 확인하고, 다르면 거절합니다. 헤더를 빼거나(<code>require-event-actor: false</code>인 이 스택에서만) <code>emnb: choi</code>로 보내야 합니다.</p>
+</details>
+<details class="answer">
+<summary>`TutBudgetApproved`에 상관 키를 주지 않았는데 왜 두 인스턴스가 다 깨었나요?</summary>
+<p>「예산 확정」의 매핑에는 상관 키가 없습니다. 상관 키 없는 매핑으로 이벤트가 들어오면 엔진은 실행 중인 인스턴스 전부에서 그 <code>eventKey</code>를 기다리는 이벤트를 깨웁니다. 특정 인스턴스만 깨우려면 <code>correlationKey</code>와 상관 키 아규먼트를 설정하세요.</p>
+</details>
+<details class="answer">
+<summary>메시지 경계를 부르는 외부 앱은 왜 윤팀장의 토큰을 써야 하나요?</summary>
+<p><code>boundary-message</code>는 경계가 붙은 작업을 끝내는(취소하는) 일이므로, 그 작업의 담당자만 부를 수 있습니다. 시스템이 부르게 하려면 그 작업을 시스템 계정 레인에 두거나, 요청자가 담당자가 되도록 설계를 바꾸세요.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="message-start.html"><span>이전</span>외부 이벤트로 프로세스 시작하기</a><a class="next" href="error-and-compensation.html"><span>다음</span>실패 경로와 되돌리기 (오류·보상)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a><ul><li><a href="#행위자-헤더-emnb와-이-스택의-설정">행위자 헤더 emnb와 이 스택의 설정</a></li></ul></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#작업에-이벤트-동기화-달기">작업에 이벤트 동기화 달기</a></li><li><a href="#메시지-중간-이벤트-상관-키-있음-없음">메시지 중간 이벤트 (상관 키 있음 / 없음)</a></li><li><a href="#메시지-경계">메시지 경계</a></li><li><a href="#메시지-계약-이-장">메시지 계약 (이 장)</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>작업 입력값과 데이터 매핑 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="사용자 작업의 입력 칸은 **아규먼트**로 정하고, **데이터 매핑**으로 그 값을 프로세스 변수에 옮깁니다. 「구매 요청」에 품목·금액 칸을 만들고 매퍼로 변수 구매품목·구매금액에 연결해 실행 결과를 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/arguments-and-mapping.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="작업 입력값과 데이터 매핑 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="사용자 작업의 입력 칸은 **아규먼트**로 정하고, **데이터 매핑**으로 그 값을 프로세스 변수에 옮깁니다. 「구매 요청」에 품목·금액 칸을 만들고 매퍼로 변수 구매품목·구매금액에 연결해 실행 결과를 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/arguments-and-mapping.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html" class="on" aria-current="page"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">모델링<span class="chap">7</span></div>
+    <h1>작업 입력값과 데이터 매핑</h1>
+    <article>
+<blockquote>
+<p>사용자 작업의 입력 칸은 <strong>아규먼트</strong>로 정하고, <strong>데이터 매핑</strong>으로 그 값을 프로세스 변수에 옮깁니다. 「구매 요청」에 품목·금액 칸을 만들고 매퍼로 변수 구매품목·구매금액에 연결해 실행 결과를 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/DV46FdQ8_RI" title="작업 입력값과 데이터 매핑 — 영상 1:24" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>작업 하나가 주고받는 값과 프로세스 전체에서 사용하는 값은 다릅니다.</p>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>사용 범위</th>
+<th>수명</th>
+<th>정의에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>아규먼트</strong></td>
+<td>작업 하나</td>
+<td>그 작업이 열려 있는 동안</td>
+<td><code>eventSynchronization.attributes</code> — 이름·타입</td>
+</tr>
+<tr>
+<td><strong>프로세스 변수</strong></td>
+<td>인스턴스</td>
+<td>인스턴스가 끝날 때까지</td>
+<td><code>&lt;uengine:variable name type&gt;</code> — <a href="process-data.html">프로세스 변수와 인스턴스 이름</a></td>
+</tr>
+<tr>
+<td><strong>데이터 매핑</strong></td>
+<td>작업</td>
+<td>작업이 열릴 때(in)·끝날 때(out)</td>
+<td><code>eventSynchronization.mappingContext.mappingElements</code></td>
+</tr>
+</tbody>
+</table>
+<p>Camunda의 입력·출력 매핑(input/output mappings)과 같은 역할을 합니다. 매핑이 있으면 작업의 칸 이름과 변수 이름을 따로 지을 수 있고,
+다음 작업·게이트웨이·서비스 작업은 변수만 참조하면 됩니다.</p>
+<ul>
+<li><strong>out</strong>: 작업이 끝날 때 제출한 값 <code>[Arguments].&lt;아규먼트&gt;</code> → 변수. 이 장에서 씁니다.</li>
+<li><strong>in</strong>: 작업이 열릴 때 변수 → 아규먼트(또는 폼 칸). 값을 미리 채웁니다. <a href="forms.html">폼 붙이기</a>·<a href="tasklist.html">업무 목록에서 일하기</a>에서 씁니다.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">이 장의 예제</p>
+<p>프로세스 <code>튜토리얼/매핑/구매요청</code> — 레인 하나, 프로세스 변수 <code>구매품목</code>(Text)·<code>구매금액</code>(Number)은 미리 있고, 작업 「구매 요청」에는 아규먼트도 매핑도 없는 상태에서 시작합니다.
+변수 이름을 아규먼트(품목·금액)와 다르게 지어 매핑으로 값이 옮겨짐을 보여 줍니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>편집 잠금.</strong> 홍길동으로 <code>튜토리얼/매핑/구매요청</code>을 열고 연필 아이콘을 누릅니다.
+</li>
+<li><strong>아규먼트 만들기.</strong> 「구매 요청」을 더블클릭합니다. 「데이터 처리 방식」은 「기본」입니다. 아래쪽 「아규먼트 이름」 칸에 <code>품목</code>을 적고 Enter를 누릅니다(타입은 기본값 「문자열」). 다시 <code>금액</code>을 적고 타입을 「정수」로 바꾼 뒤 Enter를 누릅니다.
+
+<figure><a href="img/arguments-and-mapping-args.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="아규먼트 두 개" src="img/arguments-and-mapping-args.webp" loading="lazy" decoding="async"></a><figcaption>아규먼트 두 개</figcaption></figure>
+</li>
+<li><strong>매퍼 열기.</strong> 「데이터 매핑」을 누르면 「구매 요청 매퍼」가 열립니다. 왼쪽 트리의 「Arguments」, 오른쪽 트리의 「Variables」를 펼칩니다.
+</li>
+<li><strong>선 잇기.</strong> 왼쪽 <code>품목</code>의 연결점에서 오른쪽 <code>구매품목</code>으로, <code>금액</code>에서 <code>구매금액</code>으로 끌어 선을 잇습니다.
+
+<figure><a href="img/arguments-and-mapping-mapper.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="매퍼에서 선 잇기" src="img/arguments-and-mapping-mapper.webp" loading="lazy" decoding="async"></a><figcaption>매퍼에서 선 잇기</figcaption></figure>
+</li>
+<li><strong>저장.</strong> 매퍼 오른쪽 위 디스켓 → 패널의 디스켓 → 패널 닫기 → 화면 오른쪽 위 디스켓(「버전 업 / 설명 / 저장」 창의 「저장」) 순서로 저장합니다. 매퍼만 저장하고 정의를 저장하지 않으면 실행에 반영되지 않습니다.
+</li>
+<li><strong>실행.</strong> 「실행」을 누르면 「Process 실행」 창에 첫 작업의 「품목」「금액」 칸이 나옵니다. <code>노트북 5대</code>, <code>7500000</code>을 넣고 「완료」를 누릅니다.
+
+<figure><a href="img/arguments-and-mapping-run.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="실행 창의 아규먼트 칸" src="img/arguments-and-mapping-run.webp" loading="lazy" decoding="async"></a><figcaption>실행 창의 아규먼트 칸</figcaption></figure>
+</li>
+<li><strong>변수 확인.</strong> 관리자 화면 <code>/admin/&lt;인스턴스 ID&gt;</code>의 「프로세스 변수」 탭에서 <code>구매품목 = 노트북 5대</code>, <code>구매금액 = 7500000</code>을 확인합니다.
+
+<figure><a href="img/arguments-and-mapping-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 변수 탭" src="img/arguments-and-mapping-vars.webp" loading="lazy" decoding="async"></a><figcaption>프로세스 변수 탭</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="아규먼트">아규먼트<a class="anchor" href="#아규먼트" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>패널 칸</th>
+<th>JSON (<code>eventSynchronization.attributes[]</code>)</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>아규먼트 이름</td>
+<td><code>name</code></td>
+<td>업무 화면의 칸 이름이 됩니다</td>
+</tr>
+<tr>
+<td>타입</td>
+<td><code>className</code></td>
+<td>「문자열」<code>String</code> · 「정수」<code>Integer</code> · 「참/거짓」<code>Boolean</code> · 「실수」<code>Float</code>/<code>Double</code> · 「정수 (Long)」<code>Long</code> · 「날짜」<code>Date</code> · 「소수」<code>BigDecimal</code> · 「배열」<code>Array</code></td>
+</tr>
+<tr>
+<td>「고유 키」·「관계 키」 칩</td>
+<td><code>isKey</code> · <code>isCorrKey</code></td>
+<td>이벤트로 작업을 끝낼 때 쓰는 키. <a href="event-completion.html">작업을 이벤트로 끝내기</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="매핑">매핑<a class="anchor" href="#매핑" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>매퍼</th>
+<th>JSON (<code>mappingContext.mappingElements[]</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>왼쪽 <code>Arguments.품목</code> → 오른쪽 <code>Variables.구매품목</code></td>
+<td><code>{"argument":{"text":"구매품목"}, "direction":"out", "variable":{"name":"[Arguments].품목"}}</code></td>
+</tr>
+<tr>
+<td>왼쪽 <code>Variables.품목</code> → 오른쪽 아규먼트·폼 칸</td>
+<td><code>{"argument":{"text":"&lt;칸&gt;"}, "direction":"in", "variable":{"name":"품목"}}</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>argument.text</code>는 <strong>받는 쪽</strong>, <code>variable.name</code>은 <strong>주는 쪽</strong>입니다. out이면 받는 쪽이 변수, in이면 받는 쪽이 작업의 칸입니다. 이름 앞의 <code>[Arguments].</code>는 「이번에 제출한 값」을 뜻합니다.</p>
+<h3 id="저장된-작업발췌">저장된 작업(발췌)<a class="anchor" href="#저장된-작업발췌" title="Permanent link">#</a></h3>
+<p>녹화에서 화면으로 저장한 「구매 요청」의 속성입니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.HumanActivity&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;요청자&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;품목&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Integer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}],</span>
+<span class="w">   </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매품목&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[Arguments].품목&quot;</span><span class="p">}},</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매금액&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[Arguments].금액&quot;</span><span class="p">}}]}}}</span>
+</code></pre></div>
+
+<h3 id="api">API<a class="anchor" href="#api" title="Permanent link">#</a></h3>
+<p>화면의 「완료」와 같은 일을 API로 처리하려면 아규먼트 이름을 키로 값을 보냅니다. 매핑은 엔진이 적용합니다.</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/work-item/&lt;taskId&gt;/complete<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;parameterValues&quot;: {&quot;품목&quot;: &quot;노트북 5대&quot;, &quot;금액&quot;: 7500000}}&#39;</span>
+curl<span class="w"> </span>http://localhost:9294/instance/&lt;instId&gt;/variables<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w">   </span><span class="c1"># 변수 전부</span>
+</code></pre></div>
+
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">이 브랜치에서 확인한 것</p>
+<ul>
+<li><strong>화면 저장은 버전을 올리지 않습니다.</strong> 「버전 업 / 설명 / 저장」 창이 뜨지만 정의의 <code>version</code>은 그대로이고 <code>archive/&lt;정의&gt;.bpmn/&lt;같은 버전&gt;.bpmn</code>을 덮어씁니다. 실행은 <code>archive</code>의 가장 높은 버전을 쓰므로, 파일로 더 높은 버전을 배포해 둔 정의를 화면에서 고치면 수정 내용이 실행에 반영되지 않습니다.</li>
+<li>저장해도 <strong>편집 잠금이 풀리지 않습니다.</strong> 자물쇠 아이콘(「저장 없이 잠금 해제」)으로 풀거나 <code>DELETE :9293/definition/lock?path=&lt;정의&gt;.bpmn</code>을 호출하세요.</li>
+<li>단건 변수 조회 <code>GET /instance/{id}/variable/{한글 이름}</code>은 응답에 charset이 없어 한글이 깨지거나 값이 비어 있습니다. <code>/variables</code>로 전부 읽으세요.</li>
+<li>매퍼의 변환기(Concat 등)는 이 튜토리얼에서 확인하지 않았습니다.</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>매퍼에서 선을 잇고 매퍼만 저장한 뒤 실행했더니 변수가 비어 있습니다. 무엇을 빠뜨렸나요?</summary>
+<p>패널 저장과 정의 저장(오른쪽 위 디스켓 → 「저장」)입니다. 매퍼의 디스켓은 패널 안의 값만 바꿉니다. 실행은 저장된 정의 파일(archive)을 읽습니다.</p>
+</details>
+<details class="answer">
+<summary>변수 `구매금액`에 작업 「구매 요청」의 아규먼트 `금액`을 넣는 매핑 요소를 JSON으로 쓰면 어떻게 되나요?</summary>
+<p><code>{"argument":{"text":"구매금액"},"direction":"out","variable":{"name":"[Arguments].금액"}}</code>입니다. 받는 쪽(변수)이 <code>argument.text</code>, 주는 쪽(제출 값)이 <code>variable.name</code>입니다.</p>
+</details>
+<details class="answer">
+<summary>작업의 칸 이름과 프로세스 변수 이름이 꼭 같아야 하나요?</summary>
+<p>아닙니다. 이 장처럼 칸 <code>품목</code>을 변수 <code>구매품목</code>에 연결할 수 있습니다. 매핑 요소 하나가 「어느 값을 어느 변수로」를 정합니다. 폼처럼 같은 이름의 변수가 있으면 매핑보다 그 변수가 우선하므로(<a href="forms.html">폼 붙이기</a>), 결과를 받을 변수는 이름을 따로 짓는 편이 안전합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="lanes-and-roles.html"><span>이전</span>레인과 담당자 (그룹·역할·선점)</a><a class="next" href="forms.html"><span>다음</span>폼 붙이기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#아규먼트">아규먼트</a></li><li><a href="#매핑">매핑</a></li><li><a href="#저장된-작업발췌">저장된 작업(발췌)</a></li><li><a href="#api">API</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

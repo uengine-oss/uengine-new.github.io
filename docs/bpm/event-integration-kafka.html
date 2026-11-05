@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이벤트로 시스템 잇기 (Kafka) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="uEngine6 BPM과 다른 시스템을 Kafka 이벤트로 잇는 전체 구조를 설명합니다. 토픽·헤더·payload 계약, 배포 때 등록되는 이벤트 매핑, BPM이 내보내는 진행 알림, 실패와 재시도, 그리고 계정계·ERP·일반 REST 시스템의 세 가지 연동 방식을 비교합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/event-integration-kafka.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="이벤트로 시스템 잇기 (Kafka) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="uEngine6 BPM과 다른 시스템을 Kafka 이벤트로 잇는 전체 구조를 설명합니다. 토픽·헤더·payload 계약, 배포 때 등록되는 이벤트 매핑, BPM이 내보내는 진행 알림, 실패와 재시도, 그리고 계정계·ERP·일반 REST 시스템의 세 가지 연동 방식을 비교합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/event-integration-kafka.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html" class="on" aria-current="page"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시스템 연동<span class="chap">23</span></div>
+    <h1>이벤트로 시스템 잇기 (Kafka)</h1>
+    <article>
+<blockquote>
+<p>uEngine6 BPM과 다른 시스템을 Kafka 이벤트로 잇는 전체 구조를 설명합니다. 토픽·헤더·payload 계약, 배포 때 등록되는 이벤트 매핑, BPM이 내보내는 진행 알림, 실패와 재시도, 그리고 계정계·ERP·일반 REST 시스템의 세 가지 연동 방식을 비교합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/oB6XF-Z0x3E" title="이벤트로 시스템 잇기 (Kafka) — 영상 1:41" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>업무 시스템(계정계, ERP, 구매 포털)은 거래를 기록하고 규칙을 지키는 <strong>기록 시스템</strong>입니다. 누가 결재하고 다음 일을 누가 맡으며, 막히면 어디로 되돌릴지는 BPM이 맡습니다.
+둘을 REST 호출로 연결하면 서로의 주소·인증·장애에 영향을 받습니다. 이벤트로 이으면 각자 자기 일만 하고, 상대는 <strong>정해진 이름의 메시지</strong>만 압니다.</p>
+<p>Camunda의 기능과 비교하면 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th>Camunda</th>
+<th>uEngine6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>메시지 상관(Message Correlation) API</td>
+<td>Kafka <code>bpm-topic</code>에 헤더 <code>type</code>(메시지 이름)·상관 키를 담아 보냅니다. BPM의 REST를 호출하지 않습니다</td>
+</tr>
+<tr>
+<td>메시지 시작 이벤트 / 받기 작업·메시지 catch</td>
+<td>시작 이벤트 <code>eventKey</code> / 작업의 <code>eventSynchronization</code> / catch의 <code>eventKey</code>(<a href="message-start.html">18장</a>, <a href="event-completion.html">19장</a>)</td>
+</tr>
+<tr>
+<td>외부 작업(External Task) 작업자</td>
+<td>시스템 작업을 연동 계정 레인에 두고, 작업자가 그 계정의 업무 목록을 읽어 처리한 뒤 결과 이벤트로 끝냅니다(<a href="industry-erp-purchase.html">ERP 예제</a>)</td>
+</tr>
+<tr>
+<td>실행 리스너·히스토리 이벤트</td>
+<td><code>bpm-brodcast</code>의 <code>TASK_COMPLETED</code></td>
+</tr>
+</tbody>
+</table>
+<div class="hl"><pre><span></span><code>                   ┌──────────── bpm-topic (헤더 type · corrKey · emnb, 본문 JSON) ────────────┐
+업무 시스템 ───────┤                                                                          ▼
+ (계정계·ERP·포털)  │                                                   process-service(Kafka 모드, 그룹 bpm)
+        ▲          │                                                     │ BPM_EVENT_MAPPING 으로 정의·활동 찾기
+        │          │                                                     │ → 인스턴스 시작 / 기다리던 작업 완료 / payload → 변수
+        └──────────┴──── bpm-brodcast (type=TASK_COMPLETED, 본문 instanceId·tracingTag·activityName) ◀┘
+</code></pre></div>
+
+<p>process-service의 메시징은 두 방식 가운데 하나입니다(<code>uengine.messaging.mode</code>).</p>
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>들어오는 길</th>
+<th>나가는 길</th>
+<th>이 튜토리얼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kafka</code></td>
+<td>Kafka <code>bpm-topic</code> (Spring Cloud Stream 바인딩 <code>bpm-in-0</code>, 그룹 <code>bpm</code>)</td>
+<td><code>bpm-topic</code>(내부), <code>bpm-brodcast</code></td>
+<td>이 방식으로 띄웠습니다</td>
+</tr>
+<tr>
+<td><code>polling</code> (기본값)</td>
+<td><code>POST /inbox</code>로 DB 받은함에 쌓고 1초마다 꺼내 처리(최대 3회, 그 뒤 dead-letter)</td>
+<td>SSE <code>/events/stream</code></td>
+<td>실행해 보지 않았습니다(Kafka 모드에서는 둘 다 404)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>예제 <code>튜토리얼/카프카/견적연동</code>은 이벤트로 시작해(<code>TutQuoteRequested</code>), 윤팀장이 「견적 검토」를 하고, 공급사의 회신 이벤트(<code>TutQuoteReplied</code>)가 최구매의 「공급사 회신 대기」를 끝내는 프로세스입니다. 이벤트 콘솔(<a href="message-start.html#이벤트-콘솔">18장</a>) 한 화면에서 주고받는 메시지를 모두 확인합니다.</p>
+<ol class="steps">
+<li><strong>매핑 확인.</strong> 정의를 배포하면 <code>BPM_EVENT_MAPPING</code>에 두 줄이 생깁니다. 콘솔을 <code>BPM_DB_URL</code>·<code>MAPPING_PREFIX=튜토리얼/카프카/</code>로 띄우면 왼쪽 아래에 보입니다.
+
+| event_name | definition_id | tracing_tag | correlation_key | 시작 |
+|---|---|---|---|---|
+| <code>TutQuoteRequested</code> | <code>튜토리얼/카프카/견적연동.bpmn</code> | <code>Start</code> | <code>requestNo</code> | 예 |
+| <code>TutQuoteReplied</code> | <code>튜토리얼/카프카/견적연동.bpmn</code> | <code>WaitReply</code> | <code>requestNo</code> | |
+
+<figure><a href="img/event-integration-kafka-map.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이벤트 콘솔 — 왼쪽 아래가 이벤트 매핑 표" src="img/event-integration-kafka-map.webp" loading="lazy" decoding="async"></a><figcaption>이벤트 콘솔 — 왼쪽 아래가 이벤트 매핑 표</figcaption></figure>
+</li>
+<li><strong>정의 보기.</strong> 시작 이벤트(메시지) → 「견적 검토」(윤팀장, 사람) → 「공급사 회신 대기」(최구매, 이벤트로 끝남) → 끝.
+
+<figure><a href="img/event-integration-kafka-design.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="튜토리얼/카프카/견적연동" src="img/event-integration-kafka-design.webp" loading="lazy" decoding="async"></a><figcaption>튜토리얼/카프카/견적연동</figcaption></figure>
+</li>
+<li><strong>들어가는 이벤트.</strong> 콘솔에서 <code>type = TutQuoteRequested</code>, payload <code>{"requestNo":"Q-2611-0301","item":"노트북","qty":3}</code>를 보냅니다. 인스턴스 <code>견적_Q-2611-0301</code>이 시작되고 윤팀장에게 「견적 검토」가 갑니다.
+</li>
+<li><strong>나오는 알림.</strong> 윤팀장이 업무 목록에서 「견적 검토」를 <strong>완료</strong>하면, 콘솔에 <code>← BPM 이 알림 · bpm-brodcast</code> 줄이 생깁니다.
+
+
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;instanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;343&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;activityName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;견적 검토&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TASK_COMPLETED&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;taskIds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;556&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;tracingTag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Review&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/event-integration-kafka-broadcast.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="들어간 이벤트(파랑)와 BPM 이 보낸 알림(초록)" src="img/event-integration-kafka-broadcast.webp" loading="lazy" decoding="async"></a><figcaption>들어간 이벤트(파랑)와 BPM 이 보낸 알림(초록)</figcaption></figure>
+</li>
+<li><strong>행위자가 다르면.</strong> <code>type = TutQuoteReplied</code>, 헤더 <code>emnb = kim</code>, payload <code>{"requestNo":"Q-2611-0301","unitPrice":1450000}</code>을 보냅니다. 「공급사 회신 대기」의 담당자는 최구매이므로 엔진이 거절하고, 작업은 그대로 남고 알림도 없습니다.
+</li>
+<li><strong>행위자가 맞으면.</strong> 같은 이벤트를 <code>emnb = choi</code>로 보냅니다. 「공급사 회신 대기」가 끝나고 <code>TASK_COMPLETED</code> 알림이 나오며, 인스턴스가 완료됩니다. 관리자 화면의 변수에 <code>unitPrice 1450000</code>이 들어와 있습니다.
+
+<figure><a href="img/event-integration-kafka-actor.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="emnb=kim 은 무시되고 emnb=choi 로 「공급사 회신 대기」가 끝났다" src="img/event-integration-kafka-actor.webp" loading="lazy" decoding="async"></a><figcaption>emnb=kim 은 무시되고 emnb=choi 로 「공급사 회신 대기」가 끝났다</figcaption></figure>
+
+<figure><a href="img/event-integration-kafka-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자 화면 — 인스턴스 완료, 변수 unitPrice" src="img/event-integration-kafka-done.webp" loading="lazy" decoding="async"></a><figcaption>관리자 화면 — 인스턴스 완료, 변수 unitPrice</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="토픽">토픽<a class="anchor" href="#토픽" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>토픽</th>
+<th>방향</th>
+<th>무엇이 오가나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bpm-topic</code></td>
+<td>업무 시스템 → BPM</td>
+<td>헤더 <code>type</code>이 있는 외부 이벤트. BPM도 같은 토픽에 내부 메시지(<code>ActivityQueued</code>·<code>ActivityDone</code>, 큐잉을 켠 활동만)를 쓰므로, 업무 시스템이 이 토픽을 구독한다면 <code>type</code> 헤더가 없는 메시지는 건너뜁니다</td>
+</tr>
+<tr>
+<td><code>bpm-brodcast</code></td>
+<td>BPM → 누구나</td>
+<td>사람 작업이 끝날 때마다 <code>TASK_COMPLETED</code>. 이벤트로 끝난 작업도 같습니다. 토픽 이름의 철자(<code>brodcast</code>)가 이렇습니다</td>
+</tr>
+</tbody>
+</table>
+<p>process-service 쪽 설정(계정계 예제 <code>config/process-service.kafka.yml</code>과 같습니다):</p>
+<div class="hl"><pre><span></span><code><span class="nt">uengine</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">messaging</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka</span>
+<span class="nt">spring</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cloud</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> definition</span><span class="p">:</span><span class="w"> </span><span class="nv">bpm</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">stream</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kafka.binder.brokers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${KAFKA_BROKERS:localhost:9092}</span>
+<span class="w">      </span><span class="nt">bindings</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">bpm-in-0</span><span class="p">:</span><span class="w">     </span><span class="p p-Indicator">{</span><span class="nt"> group</span><span class="p">:</span><span class="w"> </span><span class="nv">bpm</span><span class="p p-Indicator">,</span><span class="nt"> destination</span><span class="p">:</span><span class="w"> </span><span class="nv">bpm-topic</span><span class="p p-Indicator">,</span><span class="nt"> content-type</span><span class="p">:</span><span class="w"> </span><span class="nv">application/json</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">bpm-out</span><span class="p">:</span><span class="w">      </span><span class="p p-Indicator">{</span><span class="nt"> destination</span><span class="p">:</span><span class="w"> </span><span class="nv">bpm-topic</span><span class="p p-Indicator">,</span><span class="nt"> content-type</span><span class="p">:</span><span class="w"> </span><span class="nv">application/json</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="w">        </span><span class="nt">bpm-brodcast</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> destination</span><span class="p">:</span><span class="w"> </span><span class="nv">bpm-brodcast</span><span class="p p-Indicator">,</span><span class="nt"> content-type</span><span class="p">:</span><span class="w"> </span><span class="nv">application/json</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</code></pre></div>
+
+<h3 id="헤더-계약-들어오는-이벤트">헤더 계약 (들어오는 이벤트)<a class="anchor" href="#헤더-계약-들어오는-이벤트" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>헤더</th>
+<th>필수</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>예</td>
+<td>이벤트 이름. <code>BPM_EVENT_MAPPING.event_name</code>으로 찾습니다. 없으면 외부 이벤트로 처리하지 않습니다</td>
+</tr>
+<tr>
+<td><code>corrKey</code></td>
+<td>아니오</td>
+<td>payload에 매핑의 상관 키 필드가 없을 때 쓰는 상관 키 값</td>
+</tr>
+<tr>
+<td><code>emnb</code></td>
+<td>아니오(이 스택)</td>
+<td>그 일을 한 사람의 사용자 이름. 있으면 사람 작업의 현재 담당자와 같아야 끝납니다. 이 브랜치의 원래 엔진은 사람 작업을 끝낼 때 필수입니다(<a href="event-completion.html#행위자-헤더-emnb-와-이-스택의-설정">19장</a>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="payload-계약">payload 계약<a class="anchor" href="#payload-계약" title="Permanent link">#</a></h3>
+<ul>
+<li>JSON 객체 하나. <strong>모든 최상위 필드가 같은 이름의 프로세스 변수가 됩니다</strong>(시작 이벤트는 시작 변수로, 작업 완료는 인스턴스 변수에 덮어씀).</li>
+<li>상관 키 필드는 이름으로 찾습니다(순서는 상관없습니다).</li>
+<li>게이트웨이에서 숫자로 비교할 값은 숫자(정수)로 보냅니다. 엔진은 조건 값의 타입으로 비교합니다.</li>
+<li>필드 이름을 변수 이름과 같게 지으면 설정이 쉽습니다. 다르면 시작 이벤트·작업의 「데이터 매핑」으로 옮깁니다.</li>
+</ul>
+<h3 id="이벤트-매핑bpm_event_mapping">이벤트 매핑(<code>BPM_EVENT_MAPPING</code>)<a class="anchor" href="#이벤트-매핑bpm_event_mapping" title="Permanent link">#</a></h3>
+<p>배포(<code>POST /definition-changes</code>, 화면 저장도 같음) 때 <code>EventMappingDeployFilter</code>가 등록합니다.</p>
+<table>
+<thead>
+<tr>
+<th>무엇이</th>
+<th>조건</th>
+<th>event_name</th>
+<th>is_start_event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시작 이벤트</td>
+<td><code>eventKey</code>가 있음</td>
+<td><code>eventKey</code></td>
+<td>프로세스의 시작이면 예</td>
+</tr>
+<tr>
+<td>catch 이벤트(메시지·신호)</td>
+<td><code>eventKey</code>가 있음(throw는 제외)</td>
+<td><code>eventKey</code></td>
+<td>아니오</td>
+</tr>
+<tr>
+<td>받는 활동(사람 작업·URL 작업·폼 작업 등)</td>
+<td><code>eventSynchronization(s)</code>의 <code>eventType</code>이 있음</td>
+<td><code>eventType</code></td>
+<td>아니오</td>
+</tr>
+</tbody>
+</table>
+<p><code>correlation_key</code>는 아규먼트 가운데 「관계 키」(<code>isCorrKey</code>)의 이름입니다. 행은 (이벤트·정의·활동·시작 여부) 단위로 덮어쓰고, <strong>지우지는 않습니다</strong>. 이벤트 이름을 바꿨다면 옛 행을 직접 지우세요.</p>
+<div class="hl"><pre><span></span><code><span class="k">select</span><span class="w"> </span><span class="n">event_name</span><span class="p">,</span><span class="w"> </span><span class="n">definition_id</span><span class="p">,</span><span class="w"> </span><span class="n">tracing_tag</span><span class="p">,</span><span class="w"> </span><span class="n">correlation_key</span><span class="p">,</span><span class="w"> </span><span class="n">is_start_event</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="n">bpm_event_mapping</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">definition_id</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<h3 id="진행-알림-구독">진행 알림 구독<a class="anchor" href="#진행-알림-구독" title="Permanent link">#</a></h3>
+<p><code>bpm-brodcast</code>를 <strong>자기 그룹 이름</strong>으로 구독합니다. 본문에는 인스턴스 번호만 있고 상관 키는 없으므로, 업무 문서와 짝지으려면 인스턴스 변수를 한 번 읽어 둡니다(<code>GET /instance/{id}/variables</code>).</p>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Kafka</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;kafkajs&#39;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Kafka</span><span class="p">({</span><span class="w"> </span><span class="nx">clientId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;purchase-portal&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">brokers</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">]</span><span class="w"> </span><span class="p">}).</span><span class="nx">consumer</span><span class="p">({</span><span class="w"> </span><span class="nx">groupId</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;purchase-portal&#39;</span><span class="w"> </span><span class="p">})</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">connect</span><span class="p">()</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">({</span><span class="w"> </span><span class="nx">topics</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;bpm-brodcast&#39;</span><span class="p">]</span><span class="w"> </span><span class="p">})</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">consumer</span><span class="p">.</span><span class="nx">run</span><span class="p">({</span><span class="w"> </span><span class="nx">eachMessage</span><span class="o">:</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">type</span><span class="o">?</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s1">&#39;TASK_COMPLETED&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">instanceId</span><span class="p">,</span><span class="w"> </span><span class="nx">tracingTag</span><span class="p">,</span><span class="w"> </span><span class="nx">activityName</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toString</span><span class="p">())</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`인스턴스 </span><span class="si">${</span><span class="nx">instanceId</span><span class="si">}</span><span class="sb">: </span><span class="si">${</span><span class="nx">activityName</span><span class="si">}</span><span class="sb">(</span><span class="si">${</span><span class="nx">tracingTag</span><span class="si">}</span><span class="sb">) 끝`</span><span class="p">)</span>
+<span class="p">}</span><span class="w"> </span><span class="p">})</span>
+</code></pre></div>
+
+<h3 id="실패와-재시도-kafka-모드">실패와 재시도 (Kafka 모드)<a class="anchor" href="#실패와-재시도-kafka-모드" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>엔진 동작</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code> 헤더 없음</td>
+<td>외부 이벤트로 처리하지 않고 경고 로그만</td>
+<td>보내는 쪽에서 헤더를 넣습니다</td>
+</tr>
+<tr>
+<td>매핑에 없는 <code>type</code></td>
+<td>예외 → 같은 메시지를 세 번까지 다시 처리 → 오류 로그 후 다음 메시지로(DLQ 없음)</td>
+<td>정의를 배포했는지, 이름 철자를 확인</td>
+</tr>
+<tr>
+<td>상관 키에 맞는 실행 중 인스턴스 없음</td>
+<td>아무 일도 하지 않음(오류 아님)</td>
+<td>인스턴스가 이미 끝났거나 상관 키 값이 다릅니다</td>
+</tr>
+<tr>
+<td>기다리는 활동이 아직 없음(이벤트가 먼저 옴)</td>
+<td>payload만 변수에 쓰고 끝. 나중에 작업이 생겨도 그 이벤트로 끝나지 않습니다</td>
+<td>보내는 쪽이 작업이 생긴 뒤 보내게 합니다(ERP 예제는 업무 목록에 작업이 보인 뒤 처리)</td>
+</tr>
+<tr>
+<td>행위자(<code>emnb</code>) 불일치·선점 안 됨</td>
+<td>거절 → 세 번 재시도 → 오류 로그</td>
+<td>담당자가 선점한 뒤 다시 보냅니다</td>
+</tr>
+<tr>
+<td>처리 중 예외(정의 오류 등)</td>
+<td>트랜잭션 되돌림 → 세 번 재시도 → 오류 로그</td>
+<td>process-service 로그의 <code>Error wheneverEvent</code>를 확인합니다</td>
+</tr>
+<tr>
+<td>process-service가 내려가 있음</td>
+<td>그룹 <code>bpm</code>의 오프셋이 그대로라, 다시 뜨면 밀린 메시지부터 처리</td>
+<td>Kafka 보관 기간 안에 띄웁니다</td>
+</tr>
+</tbody>
+</table>
+<p>같은 이벤트가 두 번 와도 안전한 경우: 시작은 같은 상관 키의 실행 중 인스턴스가 있으면 건너뛰고, 작업 완료는 이미 끝난 작업에는 다시 일어나지 않습니다. 실패한 메시지를 다시 보내는 일(재처리)은 보내는 쪽에서 맡습니다. ERP 예제는 아웃박스 행에 <code>attempts</code>·<code>last_error</code>를 남기고 그 행부터 다시 보냅니다.</p>
+<h3 id="세-가지-연동-방식">세 가지 연동 방식<a class="anchor" href="#세-가지-연동-방식" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>계정계 예제(<a href="industry-banking-sor.html">32장</a>)</th>
+<th>ERP 예제(<a href="industry-erp-purchase.html">33장</a>)</th>
+<th>일반 REST 시스템</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>누가 이벤트를 내나</td>
+<td>계정계 앱이 업무를 처리할 때마다 직접 <code>bpm-topic</code>으로</td>
+<td>ERP(앱 서버 없음, DB 함수)가 <strong>같은 트랜잭션에서 아웃박스 표</strong>에 쓰고, 브리지가 순서대로 Kafka로</td>
+<td>그 시스템이 할 수 있으면 직접 Kafka로, 못 하면 작은 어댑터가</td>
+</tr>
+<tr>
+<td>BPM이 시스템에 일을 시킬 때</td>
+<td>시키지 않습니다. 사람이 계정계 화면(URL 작업)에서 처리하고 계정계가 이벤트를 보냅니다</td>
+<td><strong>외부 작업 방식</strong>: 시스템 작업을 <code>bpm-bridge</code> 레인에 두고, 브리지가 그 업무 목록을 읽어 ERP 명령(멱등 키)을 실행. ERP의 결과 이벤트가 작업을 끝냅니다</td>
+<td><strong>서비스 작업</strong>으로 REST를 호출합니다(<a href="rest-service-task.html">21장</a>). 오래 걸리면 서비스 작업은 요청만 보내고, 결과는 <strong>콜백 이벤트</strong>로 기다리는 작업을 끝냅니다</td>
+</tr>
+<tr>
+<td>행위자</td>
+<td>시스템 이벤트라 <code>emnb</code> 없음(이 스택은 <code>require-event-actor: false</code>)</td>
+<td>ERP 사용자 → BPM 사용자 이름으로 바꿔 <code>emnb</code></td>
+<td>시스템 결과면 연동 계정, 사람이 한 일이면 그 사람</td>
+</tr>
+<tr>
+<td>BPM 진행을 아는 법</td>
+<td><code>bpm-brodcast</code> 구독 → 화면 표시용 상태만 갱신</td>
+<td>브리지 화면이 연동 메시지를 보여 줌</td>
+<td>필요하면 <code>bpm-brodcast</code> 구독</td>
+</tr>
+<tr>
+<td>이런 시스템에</td>
+<td>메시지를 낼 수 있는 앱이 있는 기록 시스템</td>
+<td>앱 서버가 없거나 DB 트랜잭션과 전송을 묶어야 하는 시스템</td>
+<td>이벤트를 못 내는 기존 시스템, 짧은 조회·갱신</td>
+</tr>
+</tbody>
+</table>
+<p>일반 REST 시스템의 콜백 예: 「신용 평가 요청」 서비스 작업이 외부 평가사에 <code>POST /evaluations</code>(본문에 요청번호)를 보내고, 다음 작업 「평가 결과 대기」가 <code>eventSynchronization</code>(<code>TutEvaluationDone</code>, 상관 키 <code>requestNo</code>)으로 기다립니다. 평가사가 끝나면 어댑터가 <code>TutEvaluationDone</code>을 <code>bpm-topic</code>으로 보냅니다.</p>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<ul>
+<li>Kafka 모드에서는 폴링 받은함(<code>POST /inbox</code>)과 SSE(<code>/events/stream</code>)가 없습니다(404). 화면의 실시간 갱신도 없으므로 업무 목록은 새로 고쳐 봅니다.</li>
+<li><code>TASK_COMPLETED</code> 외의 알림(작업 배정 <code>TASK_ASSIGNED</code> 등)은 Kafka로 나가지 않습니다. 외부 작업자는 업무 목록(<code>/worklist/search/findToDo</code>)을 읽어 할 일을 찾습니다.</li>
+<li>큐잉을 켠 활동(<code>queuingEnabled</code>)은 Kafka 모드에서 멈춥니다(<code>ActivityQueued</code>를 <code>type</code>으로 보내고 <code>_type</code>으로 읽음). 시스템 작업은 외부 작업 방식으로 만드세요.</li>
+<li>알림 본문에 상관 키가 없습니다. 짝짓기는 인스턴스 변수 조회로 합니다.</li>
+<li><code>require-event-actor</code> 스위치는 시연 스택의 엔진 패치입니다. 원래 브랜치에서 사람 작업을 이벤트로 끝내려면 <code>emnb</code>와 선점이 필요합니다.</li>
+<li>이벤트로 시작한 인스턴스의 「시작자」는 process-service가 마지막으로 받은 요청의 사용자(정적 필드)에서 옵니다. 다른 클라이언트가 동시에 API를 부르면 엉뚱한 사람이 시작자가 될 수 있으므로, 이벤트로 시작하는 정의의 레인은 그룹·역할이나 사람으로 정해 두세요.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>구매 포털이 `bpm-topic`을 구독해 BPM의 진행을 알려고 합니다. 무엇을 조심해야 하나요?</summary>
+<p><code>bpm-topic</code>에는 다른 시스템의 이벤트와 BPM 내부 메시지가 섞여 있습니다. 진행 알림은 <code>bpm-brodcast</code>를 자기 그룹 이름으로 구독하세요. <code>bpm-topic</code>을 꼭 읽어야 한다면 <code>type</code> 헤더로 자기 것만 고릅니다.</p>
+</details>
+<details class="answer">
+<summary>`TutQuoteReplied`를 「견적 검토」가 끝나기 전에 보내면 어떻게 되나요?</summary>
+<p>그때는 「공급사 회신 대기」가 아직 실행 중이 아니므로 아무 작업도 끝나지 않고, payload(<code>unitPrice</code>)만 인스턴스 변수에 쓰입니다. 나중에 「공급사 회신 대기」가 생겨도 그 이벤트로 끝나지 않으므로, 보내는 쪽이 다시 보내야 합니다.</p>
+</details>
+<details class="answer">
+<summary>ERP처럼 DB 트랜잭션 안에서 Kafka로 바로 보낼 수 없는 시스템은 왜 아웃박스를 쓰나요?</summary>
+<p>DB 커밋과 Kafka 전송을 한 번에 묶을 수 없기 때문입니다. 업무 데이터와 보낼 메시지를 같은 트랜잭션으로 아웃박스 표에 쓰면 둘 중 하나만 남는 일이 없고, 릴레이(브리지)가 순서대로 보내다 실패하면 그 행부터 다시 보냅니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="sql-task.html"><span>이전</span>데이터베이스 읽고 쓰기 (SQL 작업)</a><a class="next" href="instance-monitoring.html"><span>다음</span>인스턴스 찾고 살피기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#토픽">토픽</a></li><li><a href="#헤더-계약-들어오는-이벤트">헤더 계약 (들어오는 이벤트)</a></li><li><a href="#payload-계약">payload 계약</a></li><li><a href="#이벤트-매핑bpm_event_mapping">이벤트 매핑(BPM_EVENT_MAPPING)</a></li><li><a href="#진행-알림-구독">진행 알림 구독</a></li><li><a href="#실패와-재시도-kafka-모드">실패와 재시도 (Kafka 모드)</a></li><li><a href="#세-가지-연동-방식">세 가지 연동 방식</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
