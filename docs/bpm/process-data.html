@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로세스 변수와 인스턴스 이름 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="「구매 결재」 정의에 프로세스 변수 「품목」(Text)·「금액」(Number)을 만듭니다. 인스턴스 이름 패턴을 `구매_&lt;%=instance.instanceId%&gt;`로 정한 뒤, 실행한 인스턴스의 이름이 `구매_&lt;번호&gt;`로 붙는 것까지 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/process-data.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="프로세스 변수와 인스턴스 이름 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="「구매 결재」 정의에 프로세스 변수 「품목」(Text)·「금액」(Number)을 만듭니다. 인스턴스 이름 패턴을 `구매_&lt;%=instance.instanceId%&gt;`로 정한 뒤, 실행한 인스턴스의 이름이 `구매_&lt;번호&gt;`로 붙는 것까지 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/process-data.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html" class="on" aria-current="page"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">모델링<span class="chap">5</span></div>
+    <h1>프로세스 변수와 인스턴스 이름</h1>
+    <article>
+<blockquote>
+<p>「구매 결재」 정의에 프로세스 변수 「품목」(Text)·「금액」(Number)을 만듭니다. 인스턴스 이름 패턴을 <code>구매_&lt;%=instance.instanceId%&gt;</code>로 정한 뒤, 실행한 인스턴스의 이름이 <code>구매_&lt;번호&gt;</code>로 붙는 것까지 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/Ce0aGVm5Nc0" title="프로세스 변수와 인스턴스 이름 — 영상 1:31" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>프로세스 변수</strong>(process variable)는 인스턴스 하나가 끝날 때까지 유지하는 값입니다. 게이트웨이 조건, 다음 작업의 값 미리 채우기, 외부 시스템 호출의 입력에 모두 프로세스 변수를 씁니다(Camunda의 process variable과 같습니다). uEngine6에서는 정의에 변수를 <strong>선언</strong>합니다.</p>
+<table>
+<thead>
+<tr>
+<th>개념</th>
+<th>정의(XML)</th>
+<th>실행 중(API)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로세스 변수</td>
+<td><code>&lt;uengine:variable name="품목" type="Text" json="{…}"/&gt;</code> (<code>bpmn:process</code>의 <code>uengine:properties</code> 안)</td>
+<td><code>GET /instance/{id}/variables</code>의 키 <code>:품목</code>(값이 있을 때)</td>
+</tr>
+<tr>
+<td>인스턴스명 패턴</td>
+<td><code>uengine:json</code>의 <code>"instanceNamePattern":"구매_&lt;%=instance.instanceId%&gt;"</code></td>
+<td>인스턴스 <code>name</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>변수 타입은 「Text」·「Number」·「Date」·「Attachment」·「Form」입니다.</li>
+<li>작업 화면에 넣은 값(아규먼트)은 <strong>데이터 매핑</strong>을 해야 변수에 들어갑니다. 이 장에서는 변수 선언과 이름 패턴 설정까지 다루고, 매핑은 <a href="arguments-and-mapping.html">작업 입력값과 데이터 매핑</a>에서 합니다.</li>
+<li><strong>인스턴스명 패턴</strong>이 없으면 인스턴스 이름은 <code>&lt;정의 이름&gt;__&lt;날짜&gt;</code>(예: <code>구매 결재__2026-11-05</code>)입니다. 패턴은 JSP 태그처럼 <code>&lt;%= … %&gt;</code> 안의 식을 계산해 이름을 만듭니다. 패턴 탭의 「패턴 작성법」은 <code>instance.instanceId</code>(인스턴스 번호), <code>roles.&lt;역할&gt;.endpoint</code>(그 역할의 담당자), <code>definition.id</code>(정의 아이디) 세 가지 예를 보여 줍니다. 이 장에서 실제로 확인한 것은 <code>instance.instanceId</code>입니다.</li>
+</ul>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p><a href="quickstart.html">첫 프로세스</a>의 「구매 결재」 사본 <code>튜토리얼/데이터/구매결재</code>로 실습합니다.</p>
+<ol class="steps">
+<li><strong>편집 모드로 엽니다.</strong> <code>/definitions/튜토리얼/데이터/구매결재</code>를 열고 연필을 누릅니다.
+</li>
+<li><strong>프로세스 변수 대화상자를 엽니다.</strong> 캔버스 위 도구 막대의 「프로세스 변수」(x)를 누르면 「프로세스 데이터 수정」·「인스턴스명 패턴」 탭이 있는 대화상자가 뜹니다.
+
+<figure><a href="img/process-data-dialog.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 변수 대화상자" src="img/process-data-dialog.webp" loading="lazy" decoding="async"></a><figcaption>프로세스 변수 대화상자</figcaption></figure>
+</li>
+<li><strong>변수 두 개를 추가합니다.</strong> 「+」를 누르고 이름에 <code>품목</code>을 입력합니다. 타입은 「Text」를 고른 뒤 「추가」를 누릅니다. 다시 「+」를 눌러 이름은 <code>금액</code>, 타입은 「Number」로 추가합니다. 「+」는 누를 때마다 입력 칸을 열고 닫으므로, 변수 하나를 추가할 때마다 한 번씩 누릅니다.
+
+<figure><a href="img/process-data-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="변수 추가(품목을 추가한 뒤 금액 입력 중)" src="img/process-data-vars.webp" loading="lazy" decoding="async"></a><figcaption>변수 추가(품목을 추가한 뒤 금액 입력 중)</figcaption></figure>
+</li>
+<li><strong>인스턴스명 패턴을 적습니다.</strong> 「인스턴스명 패턴」 탭의 「Pattern」 칸에 <code>구매_&lt;%=instance.instanceId%&gt;</code>를 적고 대화상자를 닫습니다. 칸 아래에 「패턴 작성법」 예시가 있습니다.
+
+<figure><a href="img/process-data-pattern.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="인스턴스명 패턴" src="img/process-data-pattern.webp" loading="lazy" decoding="async"></a><figcaption>인스턴스명 패턴</figcaption></figure>
+</li>
+<li><strong>정의를 저장합니다.</strong> 디스켓을 누른 뒤 「저장」을 누릅니다. 변수와 패턴이 정의 XML에 함께 저장됩니다(같은 버전 덮어쓰기).
+</li>
+<li><strong>실행해 이름을 확인합니다.</strong> 「실행」을 눌러 「구매 요청」의 「품목」·「금액」에 각각 <code>복합기 1대</code>, <code>890000</code>을 입력하고 「완료」를 누릅니다. 관리자 화면(<code>/admin</code>)의 「인스턴스 목록」에서 새 인스턴스 418의 이름은 <code>구매_418</code>입니다. 인스턴스를 열면 「프로세스 변수」 탭은 비어 있습니다. 변수를 선언만 했고 값은 넣지 않았기 때문입니다.
+
+<figure><a href="img/process-data-admin.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="인스턴스 이름" src="img/process-data-admin.webp" loading="lazy" decoding="async"></a><figcaption>인스턴스 이름</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="대화상자-칸과-정의">대화상자 칸과 정의<a class="anchor" href="#대화상자-칸과-정의" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>화면</th>
+<th>정의</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「프로세스 데이터 수정」의 이름 · 타입</td>
+<td><code>&lt;uengine:variable name="…" type="Text\|Number\|Date\|Attachment\|Form"&gt;</code></td>
+</tr>
+<tr>
+<td>「인스턴스명 패턴」</td>
+<td><code>uengine:json</code>의 <code>instanceNamePattern</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="저장된-정의발췌">저장된 정의(발췌)<a class="anchor" href="#저장된-정의발췌" title="Permanent link">#</a></h3>
+<p>영상에서 저장한 <code>튜토리얼/데이터/구매결재.bpmn</code>의 앞부분입니다. 변수는 <code>bpmn:process</code>의 <code>uengine:properties</code> 안에 <code>uengine:variable</code>로, 패턴은 <code>uengine:json</code>에 들어갑니다.</p>
+<div class="hl"><pre><span></span><code><span class="nt">&lt;bpmn:process</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Process_1&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;구매 결재&quot;</span><span class="w"> </span><span class="na">isExecutable=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:extensionElements&gt;</span>
+<span class="w">    </span><span class="nt">&lt;uengine:properties&gt;</span>
+<span class="w">      </span><span class="nt">&lt;uengine:variable</span><span class="w"> </span><span class="na">json=</span><span class="s">&quot;{&amp;quot;defaultValue&amp;quot;:&amp;quot;&amp;quot;}&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;품목&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;Text&quot;</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;uengine:variable</span><span class="w"> </span><span class="na">json=</span><span class="s">&quot;{&amp;quot;defaultValue&amp;quot;:&amp;quot;&amp;quot;}&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;금액&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;Number&quot;</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;uengine:json&gt;</span>{&quot;definitionName&quot;:&quot;구매<span class="w"> </span>결재&quot;,&quot;version&quot;:&quot;0.1&quot;,&quot;shortDescription&quot;:{&quot;text&quot;:&quot;&quot;},&quot;instanceNamePattern&quot;:&quot;구매_<span class="ni">&amp;lt;</span>%=instance.instanceId%<span class="ni">&amp;gt;</span>&quot;}<span class="nt">&lt;/uengine:json&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/uengine:properties&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/bpmn:extensionElements&gt;</span>
+<span class="w">  </span>…
+</code></pre></div>
+
+<h3 id="api로-변수-읽고-쓰기">API로 변수 읽고 쓰기<a class="anchor" href="#api로-변수-읽고-쓰기" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="c1"># 쓰기 — 값은 JSON (문자열은 따옴표까지)</span>
+curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8288/instance/&lt;번호&gt;/variable/</span><span class="k">$(</span>jq<span class="w"> </span>-rn<span class="w"> </span>--arg<span class="w"> </span>v<span class="w"> </span>품목<span class="w"> </span><span class="s1">&#39;$v|@uri&#39;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json;charset=UTF-8&#39;</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;&quot;모니터 2대&quot;&#39;</span>
+<span class="c1"># 읽기 — 값이 있는 프로세스 변수가 키 &quot;:이름&quot; 으로 나옵니다</span>
+curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8288/instance/&lt;번호&gt;/variables<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.[&quot;:품목&quot;]&#39;</span>
+</code></pre></div>
+
+<p>영상의 인스턴스(<code>구매_418</code>)는 변수를 선언만 하고 값을 넣지 않았으므로, <code>/variables</code>에 <code>품목</code>·<code>금액</code> 키가 없었고 관리자 화면의 「프로세스 변수」 탭도 「No data available」이었습니다. 값을 쓰면 <code>":품목"</code> 키로 나옵니다(<a href="quickstart-api.html">API로 같은 일 하기</a>에서 <code>":메모"</code>로 확인). 이름이 한글인 변수를 단건(<code>GET /instance/&lt;번호&gt;/variable/품목</code>)으로 읽으면 글자가 깨지므로 <code>/variables</code>를 쓰세요(<a href="rest-api.html">REST API 레퍼런스</a>). 실행 중 값을 화면에서 고치는 방법은 <a href="fix-variables.html">실행 중 변수 고치기</a>에 있습니다.</p>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>우회</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「+」를 누를 때마다 입력 칸이 열리거나 닫힘</td>
+<td>변수 하나를 추가할 때마다 「+」를 한 번 누릅니다</td>
+</tr>
+<tr>
+<td>아규먼트로 넣은 값이 변수에 들어가지 않음(관리자 화면 「프로세스 변수」 탭이 비어 있음)</td>
+<td>데이터 매핑이 필요합니다 — <a href="arguments-and-mapping.html">작업 입력값과 데이터 매핑</a></td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/variable/{한글}</code>이 깨짐</td>
+<td><code>GET /instance/{id}/variables</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>패턴을 정하지 않으면 인스턴스 이름은 무엇이 되나요?</summary>
+<p><code>&lt;정의 이름&gt;__&lt;날짜&gt;</code>입니다. 예: <code>구매 결재__2026-11-05</code>.</p>
+</details>
+<details class="answer">
+<summary>실행 창에서 「품목」에 값을 넣었는데 변수 「품목」이 비어 있습니다. 왜인가요?</summary>
+<p>실행 창의 「품목」은 작업의 아규먼트이고, 프로세스 변수 「품목」과는 다른 칸입니다. 작업의 「데이터 매핑」으로 아규먼트를 변수에 연결해야 값이 들어갑니다.</p>
+</details>
+<details class="answer">
+<summary>API로 읽은 변수의 키가 `:품목`처럼 앞에 `:`가 붙는 까닭은 무엇인가요?</summary>
+<p><code>/variables</code>는 엔진이 인스턴스에 담은 값을 모두 반환합니다. 프로세스 변수는 <code>:</code> 뒤에 이름이 오고(값이 있을 때만), <code>UserTask_1:_status:prop</code>처럼 가운데에 <code>:</code>가 있는 키는 엔진 내부 상태입니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="modeler-tour.html"><span>이전</span>모델러 둘러보기</a><a class="next" href="lanes-and-roles.html"><span>다음</span>레인과 담당자 (그룹·역할·선점)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#대화상자-칸과-정의">대화상자 칸과 정의</a></li><li><a href="#저장된-정의발췌">저장된 정의(발췌)</a></li><li><a href="#api로-변수-읽고-쓰기">API로 변수 읽고 쓰기</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

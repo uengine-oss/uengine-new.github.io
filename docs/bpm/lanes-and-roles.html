@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>레인과 담당자 (그룹·역할·선점) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="레인 하나는 역할 하나입니다. 레인에 사용자 이름을 적으면 그 사람에게, Keycloak 그룹과 역할을 설정하면 해당하는 사람 모두에게 작업이 배정되고, 선점 방식이면 먼저 가져간 사람이 맡습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/lanes-and-roles.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="레인과 담당자 (그룹·역할·선점) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="레인 하나는 역할 하나입니다. 레인에 사용자 이름을 적으면 그 사람에게, Keycloak 그룹과 역할을 설정하면 해당하는 사람 모두에게 작업이 배정되고, 선점 방식이면 먼저 가져간 사람이 맡습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/lanes-and-roles.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html" class="on" aria-current="page"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">모델링<span class="chap">6</span></div>
+    <h1>레인과 담당자 (그룹·역할·선점)</h1>
+    <article>
+<blockquote>
+<p>레인 하나는 역할 하나입니다. 레인에 사용자 이름을 적으면 그 사람에게, Keycloak 그룹과 역할을 설정하면 해당하는 사람 모두에게 작업이 배정되고, 선점 방식이면 먼저 가져간 사람이 맡습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/PTm_UkVJnPw" title="레인과 담당자 (그룹·역할·선점) — 영상 1:34" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>BPMN의 <strong>레인(lane)</strong>은 풀(pool)을 가로로 나눈 구역입니다. 표준에서는 「이 구역의 일은 이 부서가 한다」는 도식상의 구분이며,
+Camunda는 담당자를 사용자 작업의 <code>assignee</code>·<code>candidateGroups</code> 속성으로 따로 정합니다.</p>
+<p>uEngine6에서는 <strong>레인이 곧 역할(Role)</strong>입니다. 레인 이름이 역할 이름이 되고, 레인 안의 사람 작업은 그 역할을 맡은 사람에게 갑니다.
+역할에 실제 담당자를 연결하는 규칙은 레인의 확장 속성 JSON(<code>roleResolutionContext</code>)에 적습니다.</p>
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>모델러 「배분 범위」</th>
+<th><code>roleResolutionContext._type</code></th>
+<th>핵심 속성</th>
+<th>작업 생성 방식</th>
+<th>Camunda와 비교</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>사용자 직접 지정</td>
+<td>「사용자 직접 지정」</td>
+<td><code>org.uengine.kernel.DirectRoleResolutionContext</code></td>
+<td><code>endpoint</code> = 사용자 이름</td>
+<td>그 사람 앞으로</td>
+<td><code>assignee</code></td>
+</tr>
+<tr>
+<td>그룹(기관)·역할(권한)</td>
+<td>「기관」「권한」「기관 + 권한」</td>
+<td><code>org.uengine.five.overriding.IAMRoleResolutionContext</code></td>
+<td><code>groupName</code>, <code>scope</code></td>
+<td>담당자 없이 그룹 작업으로</td>
+<td><code>candidateGroups</code></td>
+</tr>
+<tr>
+<td>규칙 배분</td>
+<td>「규칙 배분」</td>
+<td><code>org.uengine.hwlife.overriding.RuleBasedRoleResolutionContext</code></td>
+<td><code>policyId</code></td>
+<td>규칙표가 고른 사람 앞으로</td>
+<td>—</td>
+</tr>
+<tr>
+<td>정하지 않음</td>
+<td>(설정 없음)</td>
+<td>—</td>
+<td>—</td>
+<td>시작할 때 넘긴 <code>roleMappings</code>, 없으면 실행한 사람</td>
+<td><code>initiator</code></td>
+</tr>
+</tbody>
+</table>
+<p>그룹 작업을 누가 맡을지는 <strong>배분 규칙(<code>dispatchingOption</code>)</strong>이 정합니다.</p>
+<ul>
+<li><strong>선점</strong>(<code>1</code>, racing): 후보 모두의 업무 목록에 보이고, 한 사람이 「선점」하면 그 사람의 작업이 됩니다. 다른 사람의 목록에서는 사라집니다. Camunda의 claim과 같습니다.</li>
+<li><strong>라운드로빈</strong>(<code>2</code>): 후보에게 돌아가며 배정합니다. 이 장에서는 다루지 않습니다.</li>
+</ul>
+<p><code>groupName</code>은 Keycloak <strong>그룹 이름</strong>, <code>scope</code>는 Keycloak <strong>realm 역할</strong>입니다. 가온가전에서는 결재 권한자만 속한 그룹 <code>구매결재</code>와 역할 <code>purchase-lead</code>를 씁니다(윤팀장만 해당).
+사용자·그룹·역할을 만드는 법은 <a href="security-keycloak.html">사용자·그룹·역할 (Keycloak)</a>에 있습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">이 장의 예제</p>
+<p>프로세스 <code>튜토리얼/레인/구매결재</code> — 레인 「요청자」(설정 없음)의 「구매 요청」 → 레인 「팀장」(그룹 <code>구매결재</code> · 역할 <code>purchase-lead</code> · 선점)의 「구매 결재」.
+비교용으로 팀장 레인을 사용자 직접 지정(<code>yoon</code>)으로 바꾼 <code>튜토리얼/레인/구매결재-직접지정</code>도 함께 배포했습니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>정의 열기.</strong> 홍길동(<code>hong</code>)으로 <code>튜토리얼/레인/구매결재</code>를 엽니다. 레인 「요청자」와 「팀장」이 있습니다. 오른쪽 위 연필 아이콘으로 편집 잠금을 겁니다.
+</li>
+<li><strong>레인 패널 보기.</strong> 「팀장」 레인의 왼쪽 띠를 더블클릭합니다. 「배분 범위」는 「기관 + 권한」, 「배분 규칙」은 「선점」, 기관은 <code>구매결재</code>, 권한은 <code>purchase-lead</code>로 보입니다.
+
+<figure><a href="img/lanes-and-roles-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팀장 레인 패널" src="img/lanes-and-roles-panel.webp" loading="lazy" decoding="async"></a><figcaption>팀장 레인 패널</figcaption></figure>
+</li>
+<li><strong>목록은 고정값.</strong> 「기관」 칸의 목록을 펼치면 Keycloak의 가온가전 그룹이 아니라 이 브랜치에 고정된 값만 나옵니다. 그래서 그룹·역할은 아래 「설정 레퍼런스」의 JSON을 정의에 직접 적어 배포합니다.
+</li>
+<li><strong>사용자 직접 지정의 함정.</strong> 「사용자 직접 지정」을 누르면 Keycloak 사용자 목록이 나옵니다. 여기서 고르면 <strong>이메일</strong>(<code>yoon@gaon.example</code>)이 저장되는데, 업무 목록은 사용자 이름(<code>yoon</code>)으로 찾기 때문에 그 작업은 누구의 목록에도 뜨지 않습니다. 패널은 저장하지 않고 닫고, 자물쇠 아이콘(「저장 없이 잠금 해제」)으로 잠금을 풉니다.
+
+<figure><a href="img/lanes-and-roles-direct.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사용자 직접 지정 목록" src="img/lanes-and-roles-direct.webp" loading="lazy" decoding="async"></a><figcaption>사용자 직접 지정 목록</figcaption></figure>
+</li>
+<li><strong>요청하기.</strong> 최구매(<code>choi</code>)로 같은 정의를 열고 「실행」을 누릅니다. 「구매 요청」 칸에 품목 <code>노트북 3대</code>, 금액 <code>2400000</code>을 넣고 「완료」를 누릅니다. 첫 레인 「요청자」에는 설정이 없으므로 실행한 최구매가 요청자가 됩니다.
+
+<figure><a href="img/lanes-and-roles-run.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="실행 대화상자" src="img/lanes-and-roles-run.webp" loading="lazy" decoding="async"></a><figcaption>실행 대화상자</figcaption></figure>
+</li>
+<li><strong>최구매에게는 안 보임.</strong> 최구매의 업무 목록에는 「구매 결재」가 없습니다. 최구매는 <code>구매결재</code> 그룹에 속하지 않기 때문입니다.
+</li>
+<li><strong>선점.</strong> 윤팀장(<code>yoon</code>)의 업무 목록에는 「구매 결재」가 담당자 없는 그룹 작업으로 있습니다. 카드의 체크 상자를 고르고 「선택 1건 선점」을 누르면 「다중 선점 결과」에 「총 1건 중 성공 1건」이 뜨고, 작업의 담당자가 <code>yoon</code>이 됩니다.
+
+<figure><a href="img/lanes-and-roles-claim.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="그룹 작업 선점" src="img/lanes-and-roles-claim.webp" loading="lazy" decoding="async"></a><figcaption>그룹 작업 선점</figcaption></figure>
+</li>
+<li><strong>완료.</strong> 카드를 열어 「결재의견」을 적고 「완료」를 누릅니다. 화면이 인스턴스(<code>구매 결재_&lt;번호&gt;</code>, 「Completed」)로 넘어가고, 「인스턴스 업무 히스토리」에 「구매 요청」(choi)과 「구매 결재」(yoon)가 <code>COMPLETED</code>로 남습니다. 업무 목록에서는 카드가 사라집니다.
+
+<figure><a href="img/lanes-and-roles-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="완료 뒤 인스턴스 히스토리" src="img/lanes-and-roles-done.webp" loading="lazy" decoding="async"></a><figcaption>완료 뒤 인스턴스 히스토리</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="레인-패널-json">레인 패널 ↔ JSON<a class="anchor" href="#레인-패널-json" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>패널</th>
+<th>JSON (<code>&lt;bpmn:lane&gt;</code>의 <code>uengine:properties</code>)</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>배분 범위 「기관」</td>
+<td><code>IAMRoleResolutionContext</code> + <code>groupName</code></td>
+<td>그룹 전원</td>
+</tr>
+<tr>
+<td>배분 범위 「권한」</td>
+<td><code>IAMRoleResolutionContext</code> + <code>scope</code></td>
+<td><strong>이 브랜치에서는 아무에게도 안 보임</strong>(알려진 제약)</td>
+</tr>
+<tr>
+<td>배분 범위 「기관 + 권한」</td>
+<td><code>IAMRoleResolutionContext</code> + <code>groupName</code> + <code>scope</code></td>
+<td>이 장의 방식</td>
+</tr>
+<tr>
+<td>배분 범위 「사용자 직접 지정」</td>
+<td><code>DirectRoleResolutionContext</code> + <code>endpoint</code></td>
+<td>사용자 이름을 적을 것</td>
+</tr>
+<tr>
+<td>배분 규칙 「선점」·「라운드로빈」</td>
+<td><code>dispatchingOption</code>: <code>1</code> · <code>2</code></td>
+<td>그룹 방식에서만</td>
+</tr>
+</tbody>
+</table>
+<p>패널에서 저장하면 위 JSON이 <code>org.uengine.hwlife.overriding.BoundRoleResolutionContext</code>의 <code>base</code>로 한 번 더 감싸여 저장됩니다. 직접 적을 때는 감싸지 않아도 됩니다.</p>
+<h3 id="배포한-정의발췌">배포한 정의(발췌)<a class="anchor" href="#배포한-정의발췌" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="nt">&lt;bpmn:laneSet</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;LaneSet_1&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:lane</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Lane_Requester&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;요청자&quot;</span><span class="nt">&gt;</span><span class="w">          </span><span class="cm">&lt;!-- 설정 없음: 실행한 사람 --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:flowNodeRef&gt;</span>StartEvent_1<span class="nt">&lt;/bpmn:flowNodeRef&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:flowNodeRef&gt;</span>Task_Request<span class="nt">&lt;/bpmn:flowNodeRef&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/bpmn:lane&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bpmn:lane</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;Lane_Lead&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;팀장&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:extensionElements&gt;</span>
+<span class="w">      </span><span class="nt">&lt;uengine:properties</span><span class="w"> </span><span class="na">json=</span><span class="s">&quot;{&amp;quot;roleResolutionContext&amp;quot;:{&amp;quot;_type&amp;quot;:&amp;quot;org.uengine.five.overriding.IAMRoleResolutionContext&amp;quot;,&amp;quot;groupName&amp;quot;:&amp;quot;구매결재&amp;quot;,&amp;quot;scope&amp;quot;:&amp;quot;purchase-lead&amp;quot;},&amp;quot;dispatchingOption&amp;quot;:1}&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/bpmn:extensionElements&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:flowNodeRef&gt;</span>Task_Approve<span class="nt">&lt;/bpmn:flowNodeRef&gt;</span>
+<span class="w">    </span><span class="nt">&lt;bpmn:flowNodeRef&gt;</span>EndEvent_1<span class="nt">&lt;/bpmn:flowNodeRef&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/bpmn:lane&gt;</span>
+<span class="nt">&lt;/bpmn:laneSet&gt;</span>
+</code></pre></div>
+
+<p>JSON만 펼쳐 쓰면 다음과 같습니다. 아래쪽은 사용자 직접 지정 설정입니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;roleResolutionContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.five.overriding.IAMRoleResolutionContext&quot;</span><span class="p">,</span>
+<span class="w">                           </span><span class="nt">&quot;groupName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매결재&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;purchase-lead&quot;</span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;dispatchingOption&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nt">&quot;roleResolutionContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.DirectRoleResolutionContext&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;yoon&quot;</span><span class="p">}}</span>
+</code></pre></div>
+
+<p>사람 작업에는 레인 이름을 <code>role</code>로 적어 둡니다(<code>{"_type":"org.uengine.kernel.HumanActivity","role":"팀장", …}</code>). 파일로 배포할 때는 <code>definitions/</code>와 <code>archive/&lt;정의&gt;.bpmn/&lt;버전&gt;.bpmn</code>에 같은 파일을 두고 <code>POST /definition-changes</code>로 알립니다(<a href="versions-and-deploy.html">버전과 배포</a>).</p>
+<h3 id="api">API<a class="anchor" href="#api" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="c1"># 시작할 때 레인의 사람을 정해 줄 수 있습니다(설정 없는 레인). 값은 사용자 이름입니다.</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/instance<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;processDefinitionId&quot;:&quot;튜토리얼/레인/구매결재&quot;,&quot;roleMappings&quot;:[{&quot;name&quot;:&quot;요청자&quot;,&quot;endpoints&quot;:[&quot;choi&quot;]}]}&#39;</span>
+
+<span class="c1"># 내 할 일(그룹 작업 포함)</span>
+curl<span class="w"> </span>http://localhost:9294/worklist/search/findToDo<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<p>업무 목록의 「선택 N건 선점」은 <code>POST /instance/multi-claim</code>을 ESB 봉투 형식으로 호출합니다. (작업 화면의 「선점하기」는 담당자를 이메일로 저장해 작업이 목록에서 사라지므로 쓰지 않습니다 — <a href="tasklist.html">업무 목록에서 일하기</a> 알려진 제약.)</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;emnb&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;yoon&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;belnOrgnCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매결재&quot;</span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;dvsnVal&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;bswrList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;fncgBpmTaskLstId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;taskId&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;fncgBpmPcesIntcId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;instId&gt;&quot;</span><span class="p">}]}}</span>
+</code></pre></div>
+
+<p><code>emnb</code>는 선점하는 사람, <code>belnOrgnCode</code>는 작업의 그룹, <code>dvsnVal</code>은 <code>0</code> 선점 · <code>1</code> 선점 해제입니다.</p>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">이 브랜치(<code>bmt/sds-process-test</code>)에서 확인한 것</p>
+<ul>
+<li><strong>레인 패널의 기관·권한 목록은 Keycloak이 아니라 고정값</strong>(<code>ExternalIAMService</code>)입니다. 가온가전의 그룹은 고를 수 없어 JSON을 직접 적어 배포합니다.</li>
+<li><strong>「사용자 직접 지정」은 이메일을 저장</strong>합니다. 업무 목록은 사용자 이름(<code>preferred_username</code>)으로 찾으므로 작업이 누구에게도 보이지 않습니다. <code>endpoint</code>를 사용자 이름으로 고치세요.</li>
+<li><strong>첫 사람 작업의 레인에 배분 설정이 있으면, 시작하는 사람이 그 설정에 맞아야 합니다</strong>(엔진의 시작 권한 검사, <code>You (…) are not permitted to initiate this process</code>). 이때 화면의 「실행」을 누르면 500 오류가 나고 실행 창에는 회색 뼈대만 보입니다. 요청자 레인은 비워 두세요. 레인 패널을 열고 「저장」만 눌러도 빈 설정이 들어갑니다.</li>
+<li><strong>할 일 목록은 그룹 작업의 역할(<code>scope</code>)을 보지 않습니다.</strong> 그룹만 일치하면 작업이 보이고 선점도 가능합니다. 같은 구매팀의 최구매에게 팀장 결재가 보이지 않도록 결재 레인은 권한자만 속한 그룹(<code>구매결재</code>)으로 설정합니다.</li>
+<li><strong>역할(<code>scope</code>)만 준 레인의 작업은 아무에게도 보이지 않습니다.</strong> 그룹을 함께 주세요.</li>
+<li>「선택 N건 선점」은 원래 이 브랜치에서 모두 실패합니다(<code>LBM050003</code>). 시연 스택에서는 process-service에 <code>esb.inbound-unwrap.enabled: true</code>를 켜고, 프런트가 봉투로 보내도록 수정해 녹화했습니다. 이 엔드포인트는 봉투의 <code>emnb</code>를 그대로 신뢰하므로, 운영에서는 게이트웨이나 서버가 토큰의 사용자로 덮어써야 합니다.</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>모델러에서 「사용자 직접 지정」으로 윤팀장을 골라 저장했는데 윤팀장의 업무 목록에 작업이 없습니다. 왜 그런가요?</summary>
+<p>이 화면은 고른 사용자의 이메일(<code>yoon@gaon.example</code>)을 <code>endpoint</code>에 저장합니다. 업무 목록은 사용자 이름(<code>yoon</code>)으로 찾으므로 맞는 작업이 없습니다. 정의의 <code>endpoint</code>를 <code>yoon</code>으로 고쳐 배포하면 보입니다.</p>
+</details>
+<details class="answer">
+<summary>결재 레인을 그룹 `구매팀` · 역할 `purchase-lead`로 걸면 최구매에게도 결재가 보이나요?</summary>
+<p>보입니다. 이 브랜치의 할 일 목록은 그룹 작업의 역할을 보지 않고 그룹만 확인합니다. 최구매도 구매팀에 속하므로 작업이 보이고 선점도 가능합니다. 그래서 예제는 결재 권한자만 속한 그룹 <code>구매결재</code>를 씁니다.</p>
+</details>
+<details class="answer">
+<summary>선점 방식의 그룹 작업을 윤팀장이 선점하면 같은 그룹의 다른 사람에게는 어떻게 보이나요?</summary>
+<p>그 작업의 담당자(<code>endpoint</code>)가 <code>yoon</code>으로 정해져 윤팀장의 작업이 됩니다. 업무 목록은 담당자가 없는 그룹 작업만 그룹 구성원에게 보여 주므로 다른 사람의 목록에서는 사라집니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="process-data.html"><span>이전</span>프로세스 변수와 인스턴스 이름</a><a class="next" href="arguments-and-mapping.html"><span>다음</span>작업 입력값과 데이터 매핑</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#레인-패널-json">레인 패널 ↔ JSON</a></li><li><a href="#배포한-정의발췌">배포한 정의(발췌)</a></li><li><a href="#api">API</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

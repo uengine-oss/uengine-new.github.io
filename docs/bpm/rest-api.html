@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REST API 레퍼런스 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="인스턴스 시작·업무 목록·작업 완료·위임·반송·변수·되돌리기를 HTTP로 호출하는 방법입니다. 표의 「확인」 칸에 ✅가 있는 호출은 이 튜토리얼의 스택에서 실제로 호출해 결과를 확인했습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/rest-api.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="REST API 레퍼런스 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="인스턴스 시작·업무 목록·작업 완료·위임·반송·변수·되돌리기를 HTTP로 호출하는 방법입니다. 표의 「확인」 칸에 ✅가 있는 호출은 이 튜토리얼의 스택에서 실제로 호출해 결과를 확인했습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/rest-api.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html" class="on" aria-current="page"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">API·보안<span class="chap">30</span></div>
+    <h1>REST API 레퍼런스</h1>
+    <article>
+<blockquote>
+<p>인스턴스 시작·업무 목록·작업 완료·위임·반송·변수·되돌리기를 HTTP로 호출하는 방법입니다. 표의 「확인」 칸에 ✅가 있는 호출은 이 튜토리얼의 스택에서 실제로 호출해 결과를 확인했습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/xjrkRuxw-wU" title="REST API 레퍼런스 — 영상 1:33" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>uEngine6의 화면이 하는 일은 모두 REST API로도 할 수 있습니다. 다른 시스템에서 프로세스를 시작하거나 자체 화면에서 작업을 완료할 때, 운영 도구에서 인스턴스를 수정할 때 씁니다(Camunda의 REST API와 같은 역할을 합니다).</p>
+<table>
+<thead>
+<tr>
+<th>서비스</th>
+<th>직접 주소</th>
+<th>게이트웨이 경유 경로</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>process-service</td>
+<td><code>:9294</code></td>
+<td><code>/instance/**</code>, <code>/work-item/**</code>, <code>/worklist/**</code>, <code>/instances/**</code>, <code>/start-and-complete</code>, <code>/dry-run/**</code>, <code>/search/**</code>, <code>/iam/**</code>, <code>/notifications/**</code> …</td>
+<td>인스턴스·작업·변수</td>
+</tr>
+<tr>
+<td>definition-service</td>
+<td><code>:9293</code></td>
+<td><code>/definition/**</code>, <code>/version/**</code>, <code>/versions/**</code></td>
+<td>정의 파일·잠금</td>
+</tr>
+</tbody>
+</table>
+<h3 id="인증">인증<a class="anchor" href="#인증" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>토큰</strong>: Keycloak realm <code>uengine</code>의 클라이언트 <code>uengine</code>에서 비밀번호 방식(password grant)으로 받습니다. 요청마다 <code>Authorization: Bearer &lt;access_token&gt;</code>을 붙입니다.</li>
+<li><strong>게이트웨이(:8288)</strong>는 로그인 세션 쿠키가 없어도 Bearer만으로 인증할 수 있습니다. 토큰도 쿠키도 없으면 <code>302</code>로 Keycloak 로그인으로 이동합니다.</li>
+<li><strong>사용자 ID = <code>preferred_username</code></strong>(<code>hong</code>, <code>choi</code>). process-service는 토큰의 <code>preferred_username</code> → <code>email</code> → <code>sub</code> 순으로 사용자를 정합니다(<code>SecurityAwareServletFilter</code>). 그래서 <code>roleMappings</code>·위임의 <code>endpoint</code>에는 <strong>이메일이 아니라 사용자 이름</strong>을 씁니다.</li>
+<li><strong>권한</strong>: 작업을 바꾸는 API(완료·위임·반송·SKIP)는 「지금 그 작업의 담당자인가」를 확인합니다. 담당자가 아니면 <code>403</code>입니다. 인스턴스 시작은 역할이 없는 사용자(<code>choi</code>)로도 가능했습니다. 레인에 그룹·역할 규칙이 있으면 작업은 해당 그룹·역할의 사용자에게만 배정됩니다.</li>
+</ul>
+<div class="hl"><pre><span></span><code><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8280/realms/uengine/protocol/openid-connect/token<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="nv">client_id</span><span class="o">=</span>uengine<span class="w"> </span>-d<span class="w"> </span><span class="nv">grant_type</span><span class="o">=</span>password<span class="w"> </span>-d<span class="w"> </span><span class="nv">username</span><span class="o">=</span>hong<span class="w"> </span>-d<span class="w"> </span><span class="nv">password</span><span class="o">=</span><span class="m">1234</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.access_token<span class="k">)</span>
+</code></pre></div>
+
+<h2 id="따라-하기-위임-api">따라 하기 — 위임 API<a class="anchor" href="#따라-하기-위임-api" title="Permanent link">#</a></h2>
+<p>영상에서는 홍길동이 시작한 작업을 API로 최구매에게 넘깁니다. 화면에는 위임 버튼이 보이지 않아(이 브랜치의 결함) 위임은 API로만 합니다. 정의는 <a href="quickstart.html">첫 프로세스</a>의 「구매 요청 → 결재」 사본 <code>튜토리얼/API/구매결재</code>입니다.</p>
+<ol class="steps">
+<li><strong>홍길동이 시작합니다.</strong> <code>POST /instance</code>로 시작하면 첫 작업 「구매 요청」이 홍길동에게 배정됩니다. <code>GET /instance/&lt;번호&gt;/worklists</code>로 해당 인스턴스의 작업을 확인합니다. 영상에서는 인스턴스 423, 작업 722(<code>NEW</code>, <code>hong</code>)였고, 홍길동의 업무 목록에도 「TaskId : 722」 카드가 있습니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8288/instance<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json;charset=UTF-8&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;processDefinitionId&quot;:&quot;튜토리얼/API/구매결재&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{instanceId, name, status}&#39;</span>
+curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8288/instance/&lt;번호&gt;/worklists<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;.[] | {taskId, title, status, endpoint}&#39;</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/rest-api-start.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="터미널과 홍길동의 업무 목록" src="img/rest-api-start.webp" loading="lazy" decoding="async"></a><figcaption>터미널과 홍길동의 업무 목록</figcaption></figure>
+</li>
+<li><strong>담당자가 아니면 위임할 수 없습니다.</strong> 윤팀장(<code>yoon</code>)의 토큰으로 홍길동의 작업을 위임하면 <code>403</code>과 <code>No permission to delegate this task. currentOwner=hong, userId=yoon</code>이 반환됩니다.
+</li>
+<li><strong>홍길동이 최구매에게 위임합니다.</strong> 본문 <code>{"targetType":"USER","endpoint":"choi","resourceName":"choi"}</code>로 호출하면 응답에 최구매에게 새로 배정된 작업(723, <code>NEW</code>)이 포함됩니다. 원래 작업 722는 <code>DELEGATED</code>가 되고 담당자 칸도 <code>choi</code>로 바뀝니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8288/work-item/&lt;작업<span class="w"> </span>번호&gt;/delegate<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json;charset=UTF-8&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;targetType&quot;:&quot;USER&quot;,&quot;endpoint&quot;:&quot;choi&quot;,&quot;resourceName&quot;:&quot;choi&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.worklist | {taskId, title, status, endpoint}&#39;</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/rest-api-delegate.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="위임 응답" src="img/rest-api-delegate.webp" loading="lazy" decoding="async"></a><figcaption>위임 응답</figcaption></figure>
+</li>
+<li><strong>업무 목록이 바뀝니다.</strong> 홍길동의 업무 목록에서 722 카드가 사라지고, 최구매의 업무 목록에 「구매 요청」이 723으로 나타납니다(<code>DELEGATED</code>인 722는 화면에 보이지 않습니다). 업무 목록은 자동으로 갱신되지 않으므로 다시 열거나 새로고침 아이콘을 누릅니다.
+
+<figure><a href="img/rest-api-choi.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="최구매의 업무 목록" src="img/rest-api-choi.webp" loading="lazy" decoding="async"></a><figcaption>최구매의 업무 목록</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<p>표의 경로는 게이트웨이(<code>http://localhost:8288</code>) 기준입니다. 본문은 모두 <code>Content-Type: application/json;charset=UTF-8</code>입니다.</p>
+<h3 id="인스턴스">인스턴스<a class="anchor" href="#인스턴스" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>메서드 · 경로</th>
+<th>본문</th>
+<th>응답</th>
+<th>권한</th>
+<th>확인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /instance</code></td>
+<td><code>ProcessExecutionCommand</code>(아래)</td>
+<td><code>{name, instanceId, status:"Running", defVer, corrkey, _links}</code></td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}</code></td>
+<td>—</td>
+<td>같은 구조, <code>status</code>는 <code>Running</code>·<code>Completed</code>·<code>Stopped</code> …</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/worklists</code></td>
+<td>—</td>
+<td>해당 인스턴스(하위 포함)의 작업 배열 <code>{taskId, title, status, endpoint, roleName, trcTag, defVerId, …}</code></td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/variables</code></td>
+<td>—</td>
+<td>변수 맵. 프로세스 변수는 키가 <code>:이름</code>(예: <code>":메모"</code>), <code>:</code>가 가운데 있는 키는 엔진 내부 값</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /instance/{id}/variable/{이름}</code></td>
+<td>JSON 값(문자열은 <code>"급하게 필요합니다"</code>처럼 따옴표)</td>
+<td><code>200</code>, 빈 본문</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/variable/{이름}</code></td>
+<td>—</td>
+<td>해당 값. <strong>한글 값은 <code>???</code>로 깨짐</strong> → <code>/variables</code>를 쓰세요</td>
+<td>로그인 사용자</td>
+<td>✅(영문 이름·값만 정상)</td>
+</tr>
+<tr>
+<td><code>POST /instance/{id}/activity/{작업 ID}/backToHere</code></td>
+<td>—</td>
+<td>인스턴스. 해당 작업 이후가 <code>COMPENSATED</code> 상태가 되고 해당 작업이 새로 생성됨</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /instance/{id}/stop</code></td>
+<td>—</td>
+<td>인스턴스, <code>status:"Stopped"</code></td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>DELETE /instance/{id}</code></td>
+<td>—</td>
+<td><code>200</code>. 인스턴스 행이 삭제됨</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /instance/{id}/suspend</code> · <code>/resume</code></td>
+<td>—</td>
+<td><code>200</code>이지만 <strong>상태가 바뀌지 않음</strong></td>
+<td>—</td>
+<td>✅(효과 없음)</td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/audit</code></td>
+<td>—</td>
+<td><code>[]</code> (감사 기록이 꺼져 있음: <code>uengine.audit.sink: none</code>)</td>
+<td>—</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /instances/search/findFilterICanSee?instId=&amp;name=&amp;status=&amp;initEp=…</code></td>
+<td>—</td>
+<td>페이지(<code>page.totalElements</code> …). 관리자 화면 목록에서 사용함</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /start-and-complete</code></td>
+<td><code>{"processExecutionCommand": {…}, "workItem": {"parameterValues": {…}}}</code>, 헤더 <code>isSimulate: false</code> 필수</td>
+<td>인스턴스. 시작 + 첫 작업 완료(화면 「실행」 창)</td>
+<td>로그인 사용자</td>
+<td>화면으로 ✅</td>
+</tr>
+<tr>
+<td><code>POST /dry-run</code></td>
+<td><code>ProcessExecutionCommand</code></td>
+<td>첫 작업 미리보기. DB에 남지 않음(롤백)</td>
+<td>로그인 사용자</td>
+<td>화면으로 ✅</td>
+</tr>
+</tbody>
+</table>
+<p><code>ProcessExecutionCommand</code>의 필드:</p>
+<table>
+<thead>
+<tr>
+<th>필드</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>processDefinitionId</code></td>
+<td>정의 아이디(경로, <code>.bpmn</code> 없이). <code>archive/&lt;아이디&gt;.bpmn/</code>에서 <strong>번호가 가장 큰 버전</strong>으로 시작합니다</td>
+</tr>
+<tr>
+<td><code>roleMappings</code></td>
+<td><code>[{"name": "&lt;레인 이름&gt;", "endpoints": ["&lt;사용자 이름&gt;"], "resourceNames": ["&lt;표시 이름&gt;"], "groupName", "scope"}]</code>. 비우면 레인 규칙대로, 규칙이 없으면 시작한 사람</td>
+</tr>
+<tr>
+<td><code>processVariableValues</code></td>
+<td><code>[{"name": "&lt;변수&gt;", "values": [&lt;값&gt;]}]</code> — 변수 초깃값(이 튜토리얼에서는 확인하지 못함)</td>
+</tr>
+<tr>
+<td><code>correlationKeyValue</code></td>
+<td>상관 키. 응답의 <code>corrkey</code>는 <code>null</code>로 오지만 <code>GET /work-item?corrKey=</code>로 찾을 수 있습니다</td>
+</tr>
+<tr>
+<td><code>instanceName</code>, <code>simulation</code>, <code>group</code>, <code>definitionXml</code>, <code>startEventPayload</code></td>
+<td>이름(현재 무시되며 정의 이름·패턴을 사용함), 시뮬레이션, 그룹 역할 매핑, 파일 대신 XML, 시작 이벤트 값</td>
+</tr>
+</tbody>
+</table>
+<h3 id="작업">작업<a class="anchor" href="#작업" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>메서드 · 경로</th>
+<th>본문</th>
+<th>응답</th>
+<th>권한</th>
+<th>확인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /worklist/search/findToDo</code></td>
+<td>—</td>
+<td>HAL <code>_embedded.worklist[]</code>. 작업 번호는 <code>_links.self.href</code>의 끝(본문에 <code>taskId</code> 없음). <code>COMPLETED</code>가 아닌 내 작업 + 내 그룹의 선점 대기 작업</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /work-item/{taskId}</code></td>
+<td>—</td>
+<td><code>{worklist, activity, parameterValues, execScope, desiredState}</code></td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /work-item?corrKey={키}</code></td>
+<td>—</td>
+<td>상관 키가 같은 실행 중 인스턴스의 현재 작업 배열</td>
+<td>로그인 사용자</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/complete</code></td>
+<td><code>{"parameterValues": {"&lt;아규먼트&gt;": 값}}</code></td>
+<td><code>200</code>, 빈 본문</td>
+<td><strong>담당자 본인</strong>. 아니면 <code>403 Only the current work item owner can complete this task</code>, 담당자가 없으면 <code>409 Work item must be claimed before completion</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/delegate[?delegateOnlyForWorkitem=false]</code></td>
+<td><code>{"targetType": "USER", "endpoint": "&lt;사용자&gt;", "resourceName": "&lt;표시 이름&gt;"}</code> (그 밖에 <code>GROUP</code>+<code>groupName</code>, <code>ROLE</code>+<code>scope</code>, <code>GROUP_ROLE</code>)</td>
+<td>새 작업의 <code>WorkItemResource</code>. 원래 작업은 <code>DELEGATED</code></td>
+<td><strong>담당자 본인</strong>. 아니면 <code>403 No permission to delegate this task</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/claim</code></td>
+<td><code>{"endpoint": "&lt;사용자&gt;"}</code> (비우면 선점 해제)</td>
+<td><code>200</code></td>
+<td>해제는 본인 것만</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>POST /instance/multi-claim</code></td>
+<td>ESB 봉투 <code>{"header": {"emnb", "belnOrgnCode"}, "payload": {"dvsnVal": "0", "bswrList": [{"fncgBpmTaskLstId", "fncgBpmPcesIntcId"}]}}</code></td>
+<td>봉투</td>
+<td>그룹 구성원(<code>esb.inbound-unwrap.enabled: true</code> 필요)</td>
+<td>화면으로 ✅ (<a href="tasklist.html">업무 목록</a>)</td>
+</tr>
+<tr>
+<td><code>GET /work-item/{taskId}/return/availability</code></td>
+<td>—</td>
+<td><code>{enabled, reason, candidates[{taskId, tracingTag, activityName, endpoint}]}</code></td>
+<td>—</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/return</code></td>
+<td><code>{"tracingTag": "&lt;되돌아갈 작업 ID&gt;"}</code> 또는 <code>{"taskId": &lt;번호&gt;}</code>, 선택 <code>reason</code>·<code>execScope</code></td>
+<td><code>{instanceId, rootInstId, targetTracingTag, currentTaskIds}</code></td>
+<td>담당자 본인</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /work-item/{taskId}/skip/availability</code></td>
+<td>—</td>
+<td><code>{enabled, reason}</code></td>
+<td>—</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/skip</code></td>
+<td><code>{}</code> 또는 <code>{"reason": "…"}</code></td>
+<td><code>{instanceId, rootInstId, skippedTracingTag, currentTaskIds}</code></td>
+<td>담당자 본인</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/reassignment</code></td>
+<td><code>{"endpoint": "&lt;사용자&gt;"}</code></td>
+<td><code>WorkItemResource</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="정의">정의<a class="anchor" href="#정의" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>메서드 · 경로</th>
+<th>본문</th>
+<th>응답</th>
+<th>확인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /definition/</code> · <code>GET /definition/{폴더}</code></td>
+<td>—</td>
+<td>HAL <code>_embedded.definitions[]</code>(<code>name</code>, <code>directory</code>, <code>path</code>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /definition/raw?defPath=&lt;경로&gt;.bpmn</code></td>
+<td>—</td>
+<td>BPMN XML 그대로</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /definition/raw/&lt;경로&gt;.bpmn</code></td>
+<td>—</td>
+<td>경로에 한글이 있으면 <code>500</code>(인코딩된 경로 그대로 파일을 찾음) → 위의 <code>?defPath=</code>를 쓰세요</td>
+<td>✅(한글 경로 ✗)</td>
+</tr>
+<tr>
+<td><code>PUT /definition/raw?defPath=&lt;경로&gt;.bpmn</code></td>
+<td><code>{"definition": "&lt;XML&gt;", "name": "&lt;이름&gt;", "version": "0.1"}</code></td>
+<td>정의 정보. 모델러의 「저장」에서 사용함</td>
+<td>화면으로 ✅</td>
+</tr>
+<tr>
+<td><code>GET /definition/lock?path=&lt;경로&gt;.bpmn</code> · <code>DELETE …</code></td>
+<td>—</td>
+<td>편집 잠금 조회·해제</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET /versions</code></td>
+<td>—</td>
+<td><code>500 Range [10, 9) out of bounds</code></td>
+<td>✅(✗)</td>
+</tr>
+<tr>
+<td><code>GET /versions/&lt;경로&gt;.bpmn</code></td>
+<td>—</td>
+<td><code>{ }</code> (archive에 버전이 있어도 빈 목록)</td>
+<td>✅(✗)</td>
+</tr>
+<tr>
+<td><code>POST :9294/definition-changes</code> (process-service 직접)</td>
+<td>본문(text/plain) <code>&lt;경로&gt;.bpmn</code></td>
+<td>정의 파일을 변경한 뒤 엔진에 알림(이벤트 매핑 다시 읽기)</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="변수-읽기쓰기-예">변수 읽기·쓰기 예<a class="anchor" href="#변수-읽기쓰기-예" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="c1"># 쓰기: 값은 JSON 으로 해석됩니다. 문자열은 따옴표까지 보냅니다.</span>
+curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8288/instance/317/variable/%EB%A9%94%EB%AA%A8<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json;charset=UTF-8&#39;</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;&quot;급하게 필요합니다&quot;&#39;</span>
+<span class="c1"># 읽기: 한글 이름·값은 /variables 로. 프로세스 변수는 키 앞에 &#39;:&#39; 가 붙습니다.</span>
+curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8288/instance/317/variables<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{memo: .[&quot;:memo&quot;], 메모: .[&quot;:메모&quot;]}&#39;</span>
+</code></pre></div>
+
+<p>확인한 결과(인스턴스 317): <code>{":memo": "urgent", ":메모": "급하게 필요합니다"}</code>. 같은 값을 <code>GET /instance/317/variable/메모</code>로 읽으면 <code>??? ?????</code>가 반환됩니다. 영문 이름 <code>memo</code>는 단건으로도 <code>urgent</code>가 반환됩니다.</p>
+<p>작업을 완료하며 보낸 <code>parameterValues</code>(아규먼트 값)는 매핑하지 않으면 프로세스 변수가 되지 않습니다. 프로세스 변수에 값을 넣으려면 <a href="arguments-and-mapping.html">작업 입력값과 데이터 매핑</a>을 보세요.</p>
+<h3 id="되돌리기backtohere-예">되돌리기(backToHere) 예<a class="anchor" href="#되돌리기backtohere-예" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8288/instance/317/activity/UserTask_1/backToHere<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<p>확인한 결과: 완료된 「구매 요청」(515)과 진행 중이던 「결재」(516)가 <code>COMPENSATED</code>가 되고, 「구매 요청」이 새 작업(517)으로 다시 생성되었습니다. 화면에서 되돌리는 방법은 <a href="back-to-here.html">되돌리기와 실패한 작업 다루기</a>에 있습니다.</p>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>우회</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>작업 화면에 위임 버튼이 보이지 않음</td>
+<td><code>POST /work-item/{taskId}/delegate</code>를 씁니다</td>
+</tr>
+<tr>
+<td>다중 위임 <code>POST /work-items/delegate</code>가 웹 화면 HTML을 반환함(게이트웨이 라우트 없음)</td>
+<td>단건 위임을 여러 번 호출합니다</td>
+</tr>
+<tr>
+<td>위임받은 사람의 <code>findToDo</code> 응답에 새 작업(<code>NEW</code>)과 원래 작업(<code>DELEGATED</code>)이 함께 나옴(업무 목록 화면에는 <code>NEW</code>만 보임)</td>
+<td>API로 작업을 고를 때는 <code>status</code>가 <code>NEW</code>인 것을 씁니다</td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/variable/{한글}</code>이 <code>???</code></td>
+<td><code>GET /instance/{id}/variables</code></td>
+</tr>
+<tr>
+<td><code>suspend</code>·<code>resume</code>이 <code>200</code>인데 상태가 그대로</td>
+<td>이 브랜치에서는 쓰지 않습니다</td>
+</tr>
+<tr>
+<td><code>GET /versions</code> 500, <code>GET /versions/&lt;경로&gt;</code> 빈 목록</td>
+<td>버전은 <code>archive/</code> 폴더에서 확인합니다 — <a href="versions-and-deploy.html">버전과 배포</a></td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/audit</code>이 <code>[]</code></td>
+<td>감사 기록 저장이 꺼져 있습니다(<code>uengine.audit.sink: none</code>)</td>
+</tr>
+<tr>
+<td>반송·SKIP 사유(<code>reason</code>)를 넣으면 그 사람의 <code>findToDo</code>가 <code>500 Unable to access lob stream</code>이 될 수 있음</td>
+<td>사유 없이 호출하거나, <a href="return-and-skip.html">반송과 SKIP</a>의 주의를 따르세요</td>
+</tr>
+<tr>
+<td>실시간 알림 <code>/events/stream</code>이 404(Kafka 모드)</td>
+<td>목록을 다시 조회합니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>`roleMappings`의 `endpoints`에 `hong@uengine.org`를 넣으면 어떻게 되나요?</summary>
+<p>인스턴스는 생성되지만 작업 담당자가 <code>hong@uengine.org</code>가 됩니다. 이 브랜치의 사용자 ID는 <code>preferred_username</code>(<code>hong</code>)이라 해당 작업은 누구의 업무 목록에도 나타나지 않고, 완료하려 하면 <code>403</code>입니다. 사용자 이름을 넣습니다.</p>
+</details>
+<details class="answer">
+<summary>윤팀장이 홍길동의 작업을 위임하려고 하면 무엇이 돌아오나요?</summary>
+<p><code>403 No permission to delegate this task. currentOwner=hong, userId=yoon</code>입니다. 완료·위임·반송·SKIP은 해당 작업의 담당자 본인만 할 수 있습니다.</p>
+</details>
+<details class="answer">
+<summary>한글 이름의 변수 값을 읽으려면 어느 API를 쓰나요?</summary>
+<p><code>GET /instance/{id}/variables</code>입니다. 키가 <code>:메모</code>처럼 앞에 <code>:</code>가 붙어 반환됩니다. 단건 <code>GET /instance/{id}/variable/메모</code>는 글자가 깨집니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="analytics-kpi.html"><span>이전</span>분석과 KPI</a><a class="next" href="security-keycloak.html"><span>다음</span>사용자·그룹·역할 (Keycloak)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a><ul><li><a href="#인증">인증</a></li></ul></li><li><a href="#따라-하기-위임-api">따라 하기 — 위임 API</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#인스턴스">인스턴스</a></li><li><a href="#작업">작업</a></li><li><a href="#정의">정의</a></li><li><a href="#변수-읽기쓰기-예">변수 읽기·쓰기 예</a></li><li><a href="#되돌리기backtohere-예">되돌리기(backToHere) 예</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

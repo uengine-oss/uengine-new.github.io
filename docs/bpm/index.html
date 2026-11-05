@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>uEngine6 BPM 튜토리얼 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="uEngine6 BPM으로 프로세스를 그리고, 사람 작업과 폼을 붙이고, 외부 시스템을 이벤트로 연결하고, 운영 화면에서 되돌리는 법을 처음부터 따라 합니다. 마지막 부에서는 은행 계정계와 ERP를 실제로 연결합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="uEngine6 BPM 튜토리얼 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="uEngine6 BPM으로 프로세스를 그리고, 사람 작업과 폼을 붙이고, 외부 시스템을 이벤트로 연결하고, 운영 화면에서 되돌리는 법을 처음부터 따라 합니다. 마지막 부에서는 은행 계정계와 ERP를 실제로 연결합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap"></span></div>
+    <h1>uEngine6 BPM 튜토리얼</h1>
+    <article>
+<blockquote>
+<p>uEngine6 BPM으로 프로세스를 그리고, 사람 작업과 폼을 붙이고, 외부 시스템을 이벤트로 연결하고, 운영 화면에서 되돌리는 법을 처음부터 따라 합니다. 마지막 부에서는 은행 계정계와 ERP를 실제로 연결합니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>uEngine6 BPM은 BPMN 2.0으로 그린 업무 흐름을 실행하는 오픈소스 엔진과 화면입니다. 흐름은 BPM이 정하고, 실제 업무는 사람(업무 목록·폼)과 다른 시스템(REST·SQL·Kafka 이벤트)이 합니다.</p>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>기본 포트</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>keycloak-gateway</td>
+<td>8288</td>
+<td>브라우저의 단일 진입점. 로그인(Keycloak) 처리와 각 서비스·화면으로 요청 전달</td>
+</tr>
+<tr>
+<td>definition-service</td>
+<td>9293</td>
+<td>프로세스 정의·폼 저장과 버전</td>
+</tr>
+<tr>
+<td>process-service</td>
+<td>9294</td>
+<td>인스턴스 실행, 업무 목록, 이벤트 수신(Kafka/폴링)</td>
+</tr>
+<tr>
+<td>웹 화면</td>
+<td>5373</td>
+<td>모델러, 업무 목록, 인스턴스·관리자 화면</td>
+</tr>
+<tr>
+<td>Keycloak · PostgreSQL</td>
+<td>8280 · 5632</td>
+<td>사용자·그룹·역할, 엔진 저장소</td>
+</tr>
+</tbody>
+</table>
+<p>Camunda를 써 본 분을 위해 차이점부터 설명합니다.</p>
+<ul>
+<li><strong>확장 속성은 JSON 한 덩어리.</strong> 작업마다 <code>&lt;uengine:properties json="…"&gt;</code>에 <code>_type</code>(예: <code>org.uengine.kernel.FormActivity</code>)과 설정을 넣습니다. 모델러 패널이 이 JSON을 고칩니다.</li>
+<li><strong>레인 = 담당자 규칙.</strong> 레인에 Keycloak 그룹·역할을 설정하면 해당하는 사람들의 업무 목록에 레인의 작업이 표시됩니다. 선점(경합) 방식이면 한 사람이 가져갑니다.</li>
+<li><strong>이벤트 동기화.</strong> 작업에 이벤트 이름과 상관 키를 설정하면, 외부 시스템이 Kafka로 보낸 그 이벤트가 작업을 끝내고 payload가 프로세스 변수가 됩니다. 외부 시스템이 BPM API를 호출하지 않아도 됩니다.</li>
+</ul>
+<h2 id="이-튜토리얼의-갈래">이 튜토리얼의 갈래<a class="anchor" href="#이-튜토리얼의-갈래" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>부</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시작하기</td>
+<td>설치, 첫 프로세스 만들고 실행하기, API로 같은 일 하기</td>
+</tr>
+<tr>
+<td>모델링</td>
+<td>모델러, 프로세스 변수와 인스턴스 이름, 레인과 담당자, 작업 입력값과 데이터 매핑</td>
+</tr>
+<tr>
+<td>사람 작업</td>
+<td>폼, 업무 목록(선점), 반송과 SKIP, 다른 앱 화면을 작업으로</td>
+</tr>
+<tr>
+<td>흐름 제어</td>
+<td>배타·병렬·포괄 게이트웨이, 스크립트, 규칙표(DMN), 콜 액티비티, 다중 인스턴스</td>
+</tr>
+<tr>
+<td>이벤트</td>
+<td>이벤트로 시작하기, 이벤트로 작업 끝내기, 오류와 보상</td>
+</tr>
+<tr>
+<td>시스템 연동</td>
+<td>REST 서비스 작업, SQL 작업, Kafka 이벤트 연동</td>
+</tr>
+<tr>
+<td>운영</td>
+<td>인스턴스 찾기, 변수 고치기, 되돌리기와 실패 다루기, 배포 전 시험, 버전, 분석</td>
+</tr>
+<tr>
+<td>API·보안</td>
+<td>REST API 레퍼런스, Keycloak 사용자·그룹·역할</td>
+</tr>
+<tr>
+<td>산업 예제</td>
+<td>금융 계정계, uEngine ERP 구매 발주</td>
+</tr>
+<tr>
+<td>참고</td>
+<td>BPMN 지원 범위, 엔진 확장하기</td>
+</tr>
+</tbody>
+</table>
+<p>각 장은 「무엇을 · 왜 → 따라 하기 → 설정 레퍼런스 → 확인 문제」 순서로 구성합니다. 따라 하기는 영상과 같은 순서로 진행합니다.
+예제 회사는 가상 회사 <strong>가온가전</strong>입니다.</p>
+<table>
+<thead>
+<tr>
+<th>사람</th>
+<th>로그인</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>홍길동</td>
+<td><code>hong</code></td>
+<td>관리자. 프로세스를 그려 배포하고 운영 화면을 확인합니다</td>
+</tr>
+<tr>
+<td>최구매</td>
+<td><code>choi</code></td>
+<td>구매 담당. 구매를 요청합니다</td>
+</tr>
+<tr>
+<td>윤팀장</td>
+<td><code>yoon</code></td>
+<td>구매 팀장. 결재합니다</td>
+</tr>
+<tr>
+<td>김대표</td>
+<td><code>kim</code></td>
+<td>대표. 큰 금액을 결재합니다</td>
+</tr>
+<tr>
+<td>이재고</td>
+<td><code>lee</code></td>
+<td>재고 담당. 입고를 처리합니다</td>
+</tr>
+<tr>
+<td>정회계</td>
+<td><code>jung</code></td>
+<td>회계 담당. 청구서와 지급을 처리합니다</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>화면과 결과는 로컬 스택(uEngine6 <code>bmt/sds-process-test</code> 브랜치, 프런트 <code>process-gpt-vue3-hli</code> 같은 이름의 브랜치)을 실제로 실행해 얻었습니다. 다른 브랜치에서는 화면이 다를 수 있습니다.</li>
+<li>이 브랜치에서 동작하지 않거나 우회가 필요한 기능은 장마다 「알려진 제약」으로 적었고, <a href="bpmn-coverage.html">BPMN 지원 범위</a>에 모았습니다. 안 되는 것을 되는 것처럼 보여 주지 않습니다.</li>
+<li>예전 튜토리얼(bpm-intro.uengine.io)은 uEngine6 초기 화면 기준입니다. 새로 시작한다면 이 튜토리얼을 따라 주세요.</li>
+</ul>
+</div>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="install-local.html"><span>다음</span>내 PC에 설치하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#이-튜토리얼의-갈래">이 튜토리얼의 갈래</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

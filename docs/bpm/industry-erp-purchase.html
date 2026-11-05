@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ERP: 구매 발주 결재와 대금 지급 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="이벤트 소싱 ERP(uEngine ERP)의 이벤트로 BPM 프로세스를 시작하고, 결재는 BPM 폼에서, 입고·청구서·지급은 BPM 작업 안에 뜬 ERP 화면에서 처리합니다. 두 시스템은 Kafka 이벤트로만 만납니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/industry-erp-purchase.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ERP: 구매 발주 결재와 대금 지급 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="이벤트 소싱 ERP(uEngine ERP)의 이벤트로 BPM 프로세스를 시작하고, 결재는 BPM 폼에서, 입고·청구서·지급은 BPM 작업 안에 뜬 ERP 화면에서 처리합니다. 두 시스템은 Kafka 이벤트로만 만납니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/industry-erp-purchase.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html" class="on" aria-current="page"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">산업 예제<span class="chap">33</span></div>
+    <h1>ERP: 구매 발주 결재와 대금 지급</h1>
+    <article>
+<blockquote>
+<p>이벤트 소싱 ERP(uEngine ERP)의 이벤트로 BPM 프로세스를 시작하고, 결재는 BPM 폼에서, 입고·청구서·지급은 BPM 작업 안에 뜬 ERP 화면에서 처리합니다. 두 시스템은 Kafka 이벤트로만 만납니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/9_F1pci-LLY" title="ERP: 구매 발주 결재와 대금 지급 — 영상 2:17" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>ERP는 거래를 기록하는 시스템입니다. 누가 결재하는지, 금액에 따라 결재선이 어떻게 달라지는지, 다음 일을 누가 맡을지는 회사마다 다르고 자주 바뀝니다.
+그 흐름을 BPM에 두면 ERP를 고치지 않고 결재선을 바꿀 수 있습니다. 업무함·감사 기록·되돌리기도 한곳에서 씁니다.</p>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>누가 맡나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>발주서·입고·청구서·지급의 기록과 규칙(수량·금액·상태·권한)</td>
+<td>ERP. BPM은 ERP의 표를 읽지도 쓰지도 않습니다</td>
+</tr>
+<tr>
+<td>결재선(팀장 → 1,000만 원 이상이면 대표), 담당자 업무함, 진행 기록</td>
+<td>BPM</td>
+</tr>
+<tr>
+<td>둘 사이의 메시지</td>
+<td>ERP 플러그인(아웃박스) + 브리지 + Kafka</td>
+</tr>
+</tbody>
+</table>
+<p>가상 회사 「가온가전」(uEngine ERP 튜토리얼과 같은 회사)의 다섯 사람이 등장합니다.</p>
+<table>
+<thead>
+<tr>
+<th>사람</th>
+<th>BPM 그룹 · 역할</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>최구매</td>
+<td>구매팀 · purchase</td>
+<td>ERP에서 발주서를 쓰고 확정</td>
+</tr>
+<tr>
+<td>윤팀장</td>
+<td>구매결재 · purchase-lead</td>
+<td>팀장 결재(BPM 폼)</td>
+</tr>
+<tr>
+<td>김대표</td>
+<td>경영진 · ceo</td>
+<td>1,000만 원 이상 결재(BPM 폼)</td>
+</tr>
+<tr>
+<td>이재고</td>
+<td>물류팀 · warehouse</td>
+<td>입고 처리(BPM 작업 안의 ERP 입고 전표)</td>
+</tr>
+<tr>
+<td>정회계</td>
+<td>회계팀 · accounting</td>
+<td>공급사 청구서·대금 지급(BPM 작업 안의 ERP 화면)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>화면과 수치는 로컬 스택(uEngine6 <code>bmt/sds-process-test</code> 브랜치, uEngine ERP <code>feat/bpm-integration</code>)을 가상 회사 데이터로 실행해 얻었습니다.</li>
+<li>이 브랜치에서 예제를 만들면서 확인한 엔진·프런트 결함 8건과 우회 방법은 예제 저장소의 <code>docs/INTEGRATION.md</code> 9절에 있습니다. 예제 저장소 <code>bpm-sample-app-erp</code>는 공개 준비 중이며, 공개되면 이 자리에 링크를 둡니다. 업무 목록의 「선점」은 시연 스택에서 프런트 패치와 설정 하나(<code>esb.inbound-unwrap.enabled: true</code>)로 고친 뒤 촬영했습니다.</li>
+<li>사용자 비밀번호(<code>gaon-1234</code>)는 로컬 시연용입니다.</li>
+</ul>
+</div>
+<h2 id="구성">구성<a class="anchor" href="#구성" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code>ERP(Supabase) ─ 구독 handler ─▶ erp_bpm.outbox ─▶ 브리지 ─▶ Kafka bpm-topic ─▶ uEngine6 process-service
+     ▲                                              │  (헤더 type · corrKey · emnb)
+     └──────── ERP 명령(승인·취소, 멱등 키) ◀──────── 브리지가 bpm-bridge 의 할 일 목록을 읽음(외부 작업)
+브라우저 ─▶ keycloak-gateway(:8288) ─┬─ /**      → uEngine6 화면
+                                    └─ /erp/**  → ERP 웹(같은 출처라 BPM 작업 안 iframe 으로 열림)
+</code></pre></div>
+
+<ul>
+<li><strong>ERP → BPM</strong>: ERP 플러그인 <code>bpm_link</code>가 이벤트를 구독해 BPM 메시지를 <strong>같은 DB 트랜잭션 안에서</strong> 아웃박스에 쌓습니다. 브리지가 순서대로 Kafka로 보냅니다.</li>
+<li><strong>BPM → ERP</strong>: 「ERP 승인 반영」「ERP 반려 반영」은 연동 계정 <code>bpm-bridge</code> 앞으로 생기는 작업입니다. 브리지가 그 할 일 목록을 읽어 ERP 명령을 실행하고, ERP가 낸 결과 이벤트가 그 작업을 끝냅니다(Camunda의 external task와 같은 개념).</li>
+<li><strong>화면</strong>: ERP 웹을 BPM과 같은 게이트웨이 뒤(<code>/erp/**</code>)에 붙입니다. ERP는 같은 출처의 iframe 안에서 메뉴 없는 임베드 모드가 됩니다.</li>
+</ul>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>프로세스 보기.</strong> BPM에서 <code>구매발주/구매발주결재</code>를 엽니다. 레인 6개(구매 담당·구매 팀장·대표·ERP 연동·재고·회계), 결재 2단계, 시스템 작업 2개, ERP 화면 작업 3개입니다.
+
+<figure><a href="img/erp-process.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구매발주결재 프로세스" src="img/erp-process.webp" loading="lazy" decoding="async"></a><figcaption>구매발주결재 프로세스</figcaption></figure>
+</li>
+<li><strong>발주 확정(ERP).</strong> 최구매로 ERP(<code>/erp/</code>)에 로그인해 견적 요청을 씁니다. 공급사 <code>바람부품</code>, 에어서큘레이터 60대(3,000,000원)입니다. <strong>확정</strong>을 누르면 최구매는 관리자가 아니어서 발주서가 <strong>승인 대기</strong>가 됩니다.
+
+<figure><a href="img/erp-po.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인 대기" src="img/erp-po.webp" loading="lazy" decoding="async"></a><figcaption>승인 대기</figcaption></figure>
+</li>
+<li><strong>이벤트가 BPM으로.</strong> ERP가 <code>PurchaseOrderApprovalRequested</code>를 남기고, 브리지 화면(<code>/erp-bridge/</code>)에 <code>ERP → BPM</code> 줄이 나타납니다. BPM은 이 이벤트로 인스턴스 <code>발주결재 P00001 바람부품</code>을 시작합니다.
+</li>
+<li><strong>팀장 결재(BPM).</strong> 윤팀장의 업무 목록에 <strong>팀장 결재</strong>가 옵니다. 구매결재 그룹에서 팀장 역할을 가진 사람에게만 보입니다. 카드의 체크 상자를 고르고 <strong>선택 1건 선점</strong>을 누른 뒤 카드를 엽니다. 폼에는 발주 번호·공급사·금액·요청자가 미리 채워져 있습니다. <strong>승인</strong>을 고르고 의견을 적어 <strong>제출 완료</strong>를 누릅니다.
+
+<figure><a href="img/erp-lead-form.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팀장 결재 폼" src="img/erp-lead-form.webp" loading="lazy" decoding="async"></a><figcaption>팀장 결재 폼</figcaption></figure>
+</li>
+<li><strong>ERP에 승인 반영(시스템 작업).</strong> 1,000만 원 미만이라 대표 결재 없이 <strong>ERP 승인 반영</strong>으로 갑니다. 브리지가 ERP에 <code>approve</code>를 보내고, ERP의 <code>PurchaseOrderConfirmed</code>가 돌아와 이 작업을 끝냅니다. ERP의 발주서는 확정되고 입고 전표가 생깁니다.
+</li>
+<li><strong>입고(BPM 작업 안의 ERP 화면).</strong> 이재고가 <strong>입고 처리</strong>를 선점해 엽니다. 오른쪽에 ERP 입고 전표 <code>WH/IN/00001</code>이 그대로 뜹니다. <strong>처리 완료</strong>를 누르면 ERP의 <code>PickingValidated</code>가 BPM 작업을 끝냅니다.
+
+<figure><a href="img/erp-receive.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="BPM 작업 안의 ERP 입고 전표" src="img/erp-receive.webp" loading="lazy" decoding="async"></a><figcaption>BPM 작업 안의 ERP 입고 전표</figcaption></figure>
+</li>
+<li><strong>공급사 청구서.</strong> 정회계가 <strong>공급사 청구서 등록</strong>을 엽니다. ERP 발주서에서 <strong>청구서 만들기</strong>를 누르고 청구일을 넣어 <strong>게시</strong>합니다. <code>InvoicePosted</code>가 이 작업을 끝내고 <strong>대금 지급</strong>이 생깁니다.
+</li>
+<li><strong>대금 지급.</strong> <strong>대금 지급</strong>을 열면 그 청구서가 뜹니다. <strong>지급 등록</strong>을 확인하면 <code>InvoicePaymentApplied</code>가 마지막 작업을 끝내고 인스턴스가 <strong>지급 완료</strong>로 끝납니다.
+
+<figure><a href="img/erp-bridge.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="연동 이벤트" src="img/erp-bridge.webp" loading="lazy" decoding="async"></a><figcaption>연동 이벤트</figcaption></figure>
+</li>
+<li><strong>대표 결재와 반려.</strong> 한결전자부품에 제습기 70대(1,260만 원)로 같은 절차를 진행하면, 윤팀장 승인 뒤 <strong>대표 결재</strong>가 김대표에게 갑니다. 김대표가 <strong>반려</strong>하면 <strong>ERP 반려 반영</strong>에서 브리지가 ERP 발주서를 취소하고, 프로세스는 <strong>반려 종료</strong>로 끝납니다. ERP 이력에는 <code>BPM 연동</code>이 취소한 것으로 남습니다.
+</li>
+</ol>
+<h2 id="영상으로-더-보기">영상으로 더 보기<a class="anchor" href="#영상으로-더-보기" title="Permanent link">#</a></h2>
+<p>9단계 「대표 결재와 반려」를 따로 촬영한 영상입니다. 반려가 ERP 발주 취소로 이어지고, ERP 이력에 연동 계정이 남는 것까지 확인합니다.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/mbfF1fI9qdY" title="천만 원 이상은 대표 결재, 반려하면 ERP 발주 취소 — 1:18" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<h2 id="어떻게-설정했나">어떻게 설정했나<a class="anchor" href="#어떻게-설정했나" title="Permanent link">#</a></h2>
+<h3 id="메시지-계약">메시지 계약<a class="anchor" href="#메시지-계약" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>ERP 이벤트 (Kafka 헤더 <code>type</code>)</th>
+<th>BPM에서</th>
+<th>payload(모두 프로세스 변수가 됨)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PurchaseOrderApprovalRequested</code></td>
+<td>메시지 시작 이벤트</td>
+<td>poId, poNumber, vendorName, amountTotal(정수), amountText, requestedBy</td>
+</tr>
+<tr>
+<td><code>PurchaseOrderConfirmed</code> · <code>PurchaseOrderCancelled</code></td>
+<td>시스템 작업 완료</td>
+<td>poNumber, confirmedBy · cancelledBy</td>
+</tr>
+<tr>
+<td><code>PickingValidated</code> · <code>InvoicePosted</code> · <code>InvoicePaymentApplied</code></td>
+<td>ERP 화면 작업 완료</td>
+<td>receiptNumber · billId, billNumber · paymentState, amountPaid</td>
+</tr>
+</tbody>
+</table>
+<p>헤더 <code>corrKey</code>와 payload 첫 필드 <code>poId</code>는 발주서 id이고, 인스턴스의 상관 키입니다. 헤더 <code>emnb</code>는 그 일을 한 사람입니다.
+사람 작업을 이벤트로 끝낼 때 엔진은 <strong>그 작업을 선점한 사람과 <code>emnb</code>가 같은지</strong> 봅니다. 그래서 이재고·정회계는 ERP에서 처리하기 전에 BPM 작업을 선점합니다.</p>
+<h3 id="레인-그룹-역할-경합">레인 — 그룹 + 역할 + 경합<a class="anchor" href="#레인-그룹-역할-경합" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;roleResolutionContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.five.overriding.IAMRoleResolutionContext&quot;</span><span class="p">,</span>
+<span class="w">                           </span><span class="nt">&quot;groupName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매결재&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;purchase-lead&quot;</span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;dispatchingOption&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span>
+</code></pre></div>
+
+<p>작업은 담당자 없이 생기고, 그 그룹·역할을 가진 사람의 업무 목록에 보이며, 한 사람이 선점하면 그 사람의 작업이 됩니다.</p>
+<h3 id="결재-폼-미리-채우기in와-결과-받기out">결재 폼 — 미리 채우기(in)와 결과 받기(out)<a class="anchor" href="#결재-폼-미리-채우기in와-결과-받기out" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.FormActivity&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;formHandler:발주결재_팀장&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;variableForHtmlFormContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;발주결재_팀장&quot;</span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;발주결재_팀장.poNumber&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;poNumber&quot;</span><span class="p">}},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;leadDecision&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[Arguments].decision&quot;</span><span class="p">}}]}}}</span>
+</code></pre></div>
+
+<h3 id="erp-화면-작업과-시스템-작업">ERP 화면 작업과 시스템 작업<a class="anchor" href="#erp-화면-작업과-시스템-작업" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.URLActivity&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8288/erp/#/by-origin/picking/&lt;%instance.corrkey%&gt;&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;eventSynchronizations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PickingValidated&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;poId&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;className&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;isCorrKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}]}]}</span>
+</code></pre></div>
+
+<p>시스템 작업은 같은 <code>eventSynchronizations</code>를 설정한 사람 작업(<code>HumanActivity</code>)이고, 레인이 <code>DirectRoleResolutionContext</code>로 <code>bpm-bridge</code>를 가리킵니다.</p>
+<h3 id="게이트웨이-라우트">게이트웨이 라우트<a class="anchor" href="#게이트웨이-라우트" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">erp-web</span>
+<span class="w">  </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:5302</span><span class="w">        </span><span class="c1"># ERP web 정적 빌드</span>
+<span class="w">  </span><span class="nt">predicates</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Path=/erp, /erp/**</span><span class="w">             </span><span class="c1"># 프런트 catch-all(/**) 보다 앞에</span>
+</code></pre></div>
+
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>이재고가 BPM 작업을 선점하지 않고 ERP에서 바로 입고를 처리하면 어떻게 되나요?</summary>
+<p>ERP는 입고를 처리하고 이벤트를 냅니다. 하지만 BPM은 「입고 처리」 작업을 선점한 사람이 없어 그 이벤트로 작업을 끝내지 않습니다(<code>Work item must be claimed before completion</code>). 작업을 선점한 뒤 ERP에서 다시 확인하면 됩니다.</p>
+</details>
+<details class="answer">
+<summary>브리지가 같은 시스템 작업을 두 번 처리하면 ERP 발주가 두 번 승인되나요?</summary>
+<p>아닙니다. 브리지는 <code>bpm:&lt;인스턴스&gt;:&lt;작업&gt;</code>을 ERP 명령의 멱등 키로 보내므로 두 번째 명령은 반영되지 않고, 결과 이벤트도 처음 한 번만 나갑니다.</p>
+</details>
+<details class="answer">
+<summary>결재선을 「500만 원 이상이면 대표」로 바꾸려면 ERP를 고쳐야 하나요?</summary>
+<p>아닙니다. BPM 게이트웨이의 조건(<code>amountTotal &gt;= 10000000</code>)만 바꿔 배포합니다. ERP는 승인 요청과 승인 명령만 압니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="industry-banking-sor.html"><span>이전</span>금융: 계정계와 이벤트로만 잇기</a><a class="next" href="bpmn-coverage.html"><span>다음</span>BPMN 지원 범위</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#구성">구성</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#영상으로-더-보기">영상으로 더 보기</a></li><li><a href="#어떻게-설정했나">어떻게 설정했나</a><ul><li><a href="#메시지-계약">메시지 계약</a></li><li><a href="#레인-그룹-역할-경합">레인 — 그룹 + 역할 + 경합</a></li><li><a href="#결재-폼-미리-채우기in와-결과-받기out">결재 폼 — 미리 채우기(in)와 결과 받기(out)</a></li><li><a href="#erp-화면-작업과-시스템-작업">ERP 화면 작업과 시스템 작업</a></li><li><a href="#게이트웨이-라우트">게이트웨이 라우트</a></li></ul></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

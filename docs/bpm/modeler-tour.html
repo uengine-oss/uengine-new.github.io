@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모델러 둘러보기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="정의를 열고 편집 잠금을 건 뒤, 팔레트·컨텍스트 패드·렌치(바꾸기)·속성 패널·XML 보기를 차례로 써 보고 저장합니다. 이 브랜치의 저장은 같은 버전을 덮어씁니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/modeler-tour.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="모델러 둘러보기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="정의를 열고 편집 잠금을 건 뒤, 팔레트·컨텍스트 패드·렌치(바꾸기)·속성 패널·XML 보기를 차례로 써 보고 저장합니다. 이 브랜치의 저장은 같은 버전을 덮어씁니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/modeler-tour.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html" class="on" aria-current="page"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">모델링<span class="chap">4</span></div>
+    <h1>모델러 둘러보기</h1>
+    <article>
+<blockquote>
+<p>정의를 열고 편집 잠금을 건 뒤, 팔레트·컨텍스트 패드·렌치(바꾸기)·속성 패널·XML 보기를 차례로 써 보고 저장합니다. 이 브랜치의 저장은 같은 버전을 덮어씁니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/jIRpaEcADBI" title="모델러 둘러보기 — 영상 1:41" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>uEngine6의 모델러는 <a href="https://bpmn.io">bpmn-js</a>에 uEngine 속성 패널을 더한 화면입니다. 그림은 BPMN 2.0 XML로 저장되고, 작업·레인마다 엔진이 읽는 설정이 <code>uengine:properties</code> 안에 JSON으로 들어갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>화면 요소</th>
+<th>하는 일</th>
+<th>정의에 남는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>편집 잠금</strong>(연필 · 자물쇠)</td>
+<td>한 번에 한 사람만 정의를 고칠 수 있게 합니다</td>
+<td>정의 파일이 아니라 definition-service의 잠금(<code>/definition/lock</code>)</td>
+</tr>
+<tr>
+<td><strong>팔레트</strong></td>
+<td>새 요소를 캔버스에 놓습니다</td>
+<td><code>bpmn:*</code> 요소와 그림 좌표(<code>bpmndi</code>)</td>
+</tr>
+<tr>
+<td><strong>컨텍스트 패드</strong></td>
+<td>선택한 요소 옆에 뜨는 메뉴. 덧붙이기·연결·지우기·바꾸기·속성</td>
+<td>같음</td>
+</tr>
+<tr>
+<td><strong>렌치(요소 변경)</strong></td>
+<td>같은 자리의 요소를 다른 종류로 바꿉니다</td>
+<td>요소 종류(<code>bpmn:serviceTask</code> 등)와 <code>_type</code></td>
+</tr>
+<tr>
+<td><strong>속성 패널</strong></td>
+<td>이름·업무 ID·데이터 처리 방식·아규먼트 등</td>
+<td><code>uengine:properties</code>의 JSON</td>
+</tr>
+<tr>
+<td><strong>XML 보기</strong></td>
+<td>현재 그림을 BPMN XML로 봅니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>저장</strong></td>
+<td>정의 파일과 실행용 사본을 씁니다</td>
+<td><code>definitions/&lt;아이디&gt;.bpmn</code>, <code>archive/&lt;아이디&gt;.bpmn/&lt;버전&gt;.bpmn</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">저장은 같은 버전을 덮어씁니다</p>
+<p>저장 대화상자의 제목은 「버전 업」이지만, 이 브랜치의 uEngine 모드에는 마이너·메이저를 고르는 칸이 없고 <strong>버전이 오르지 않습니다</strong>. 영상에서도 저장 전후 모두 <code>"version":"0.1"</code>이고, <code>archive/…/</code>에는 <code>0.1.bpmn</code> 하나뿐입니다. 저장할 때마다 <code>0.1</code>을 덮어씁니다. 버전을 나누는 방법은 <a href="versions-and-deploy.html">버전과 배포</a>에 있습니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p><a href="quickstart.html">첫 프로세스</a>에서 만든 「구매 결재」의 사본 <code>튜토리얼/모델러/구매결재</code>로 실습합니다.</p>
+<ol class="steps">
+<li><strong>정의를 엽니다 — 읽기 모드.</strong> <code>/definitions/튜토리얼/모델러/구매결재</code>를 열면 읽기 모드로 그림이 표시되어 편집할 수 없습니다. 오른쪽 위 아이콘은 「업로드」·「연필」·「XML 보기」·「시뮬레이션」·「실행」입니다.
+
+<figure><a href="img/modeler-tour-readonly.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="읽기 모드" src="img/modeler-tour-readonly.webp" loading="lazy" decoding="async"></a><figcaption>읽기 모드</figcaption></figure>
+</li>
+<li><strong>연필을 눌러 편집 잠금을 겁니다.</strong> 연필 자리에 「자물쇠」(툴팁 「저장하지 않고 잠금만 해제합니다.」)와 「디스켓」(저장)이 나타납니다. 이때 화면에서 <code>PUT /definition/lock</code>으로 잠금을 겁니다.
+</li>
+<li><strong>팔레트.</strong> 왼쪽 위 아이콘 묶음입니다. 마우스를 올리면 이름이 표시됩니다.
+
+| 묶음 | 항목(툴팁) |
+|---|---|
+| 도구 | 되돌리기 · 다시 실행 · 손(이동) 도구 · 선택영역 지정 도구 · 공간 생성/제거 도구 · 연결 도구 |
+| 이벤트·게이트웨이·작업 | 시작 이벤트 생성 · 중간 이벤트 · 종료 이벤트 생성 · 독점 게이트웨이 생성 · 사용자 작업 생성 · 확장된 하위 프로세스 생성 |
+| 데이터·풀 | 데이터 저장소 생성 · 데이터 객체 생성 · 풀/참가자 생성(가로·세로) |
+| 배치 | 자동 레이아웃 · 레이아웃 복구 · 레이아웃 방향 전환 |
+
+<figure><a href="img/modeler-tour-palette.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팔레트" src="img/modeler-tour-palette.webp" loading="lazy" decoding="async"></a><figcaption>팔레트</figcaption></figure>
+</li>
+<li><strong>컨텍스트 패드.</strong> 「구매 요청」을 한 번 누르면 옆에 메뉴가 뜹니다. 종료 이벤트·게이트웨이·작업·중간 이벤트·텍스트 주석 덧붙이기, 「요소 변경」(렌치), 「삭제」, 「속성 패널 열기」, 「코멘트 작성」, 「다른 요소에 연결」입니다. 작업 덧붙이기는 기존 흐름 <strong>사이에</strong> 새 작업을 끼워 넣습니다. 레인을 선택하면 레인 추가·나누기 메뉴가 나타납니다.
+
+<figure><a href="img/modeler-tour-pad.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="컨텍스트 패드" src="img/modeler-tour-pad.webp" loading="lazy" decoding="async"></a><figcaption>컨텍스트 패드</figcaption></figure>
+</li>
+<li><strong>렌치 — 요소 바꾸기.</strong> 「요소 변경」을 누르면 사용자 작업을 다른 종류로 바꾸는 목록이 뜹니다. 서비스·전송·수신·수동·비즈니스 규칙·스크립트 작업, 호출 활동, 접힌·확장 하위 프로세스, 병렬·순차 다중 인스턴스, 반복입니다. Esc로 닫습니다. 각 요소가 이 브랜치에서 실행되는지는 <a href="bpmn-coverage.html">BPMN 지원 범위</a>를 보세요.
+
+<figure><a href="img/modeler-tour-wrench.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="렌치 메뉴" src="img/modeler-tour-wrench.webp" loading="lazy" decoding="async"></a><figcaption>렌치 메뉴</figcaption></figure>
+</li>
+<li><strong>속성 패널.</strong> 「구매 요청」을 두 번 누르면 오른쪽에 패널이 열립니다. 「설정」·「단위 테스트」 탭과 「이름」·「업무 ID」·「데이터 처리 방식」(「기본」·「폼」·「외부 어플리케이션」)·「아규먼트」·「데이터 매핑」·「작업 색상」 칸이 있습니다. 오른쪽 위 디스켓은 패널을 저장하고, X는 패널을 닫습니다.
+
+<figure><a href="img/modeler-tour-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="속성 패널" src="img/modeler-tour-panel.webp" loading="lazy" decoding="async"></a><figcaption>속성 패널</figcaption></figure>
+</li>
+<li><strong>도구 막대.</strong> 캔버스 오른쪽 위에는 「프로세스 변수」(x), 「승인 상태」, 「댓글」, 「채팅창 닫기」, 「Color Ruleset」, 글꼴 크기 축소·확대가 있습니다. 프로세스 변수는 <a href="process-data.html">다음 장</a>에서 씁니다.
+</li>
+<li><strong>XML 보기.</strong> 「XML 보기」(<code>&lt;/&gt;</code>)를 누르면 그림 대신 BPMN XML이 나옵니다. 사용자 작업의 설정이 <code>&lt;uengine:properties json="…"&gt;</code>에 들어 있습니다. 한 번 더 누르면(「프로세스 보기」) 그림으로 돌아옵니다.
+
+<figure><a href="img/modeler-tour-xml.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="XML 보기" src="img/modeler-tour-xml.webp" loading="lazy" decoding="async"></a><figcaption>XML 보기</figcaption></figure>
+</li>
+<li><strong>저장.</strong> 기존 정의의 편집 모드에서 디스켓을 누르면 「버전 업」 대화상자(칸 「설명」, 버튼 「저장」)가 뜹니다. 설명을 적고 「저장」을 누릅니다. 버전은 그대로 <code>0.1</code>이고 같은 파일을 덮어씁니다.
+
+<figure><a href="img/modeler-tour-save.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="저장 대화상자" src="img/modeler-tour-save.webp" loading="lazy" decoding="async"></a><figcaption>저장 대화상자</figcaption></figure>
+</li>
+<li><strong>저장 뒤에는 읽기 모드.</strong> 저장이 끝나면 화면은 읽기 모드(연필)로 돌아갑니다. 하지만 서버의 편집 잠금은 지워지지 않고 사용자 칸이 <code>undefined</code>인 채로 남습니다. 이 상태에서 다시 열면 연필을 누르지 않아도 바로 편집 모드입니다(홍길동으로 확인).
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">저장하지 않고 편집 끝내기 — 자물쇠</p>
+<p>편집 모드에서 「자물쇠」를 누르면 저장하지 않은 변경 사항을 버리고 읽기 모드(연필)로 돌아갑니다. 화면은 변경 사항을 브라우저에 임시 백업한 뒤 서버의 정의를 다시 읽습니다(웹 화면 코드 <code>lockOnly</code>). 다만 이 브랜치에서는 자물쇠를 누른 같은 화면에서 연필을 다시 눌러도 편집 모드로 돌아가지 않았습니다(영상 촬영 중 확인, 원인은 확인하지 못함). 그래서 영상에서는 자물쇠 장면을 뺐습니다.</p>
+</div>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="아이콘과-요청">아이콘과 요청<a class="anchor" href="#아이콘과-요청" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>아이콘(오른쪽 위)</th>
+<th>선택자(녹화 스크립트)</th>
+<th>요청</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>연필 — 편집</td>
+<td><code>button:has([style*="icon/pencil.svg"])</code></td>
+<td><code>GET /definition/lock?path=…</code>, <code>PUT /definition/lock</code></td>
+</tr>
+<tr>
+<td>자물쇠 — 저장 없이 잠금 해제</td>
+<td><code>…icon/lock.svg</code></td>
+<td><code>GET /definition/lock?path=…</code> → (내 잠금이면) <code>DELETE /definition/lock?path=…</code> → <code>GET /definition/raw?defPath=…</code></td>
+</tr>
+<tr>
+<td>디스켓 — 저장</td>
+<td><code>…icon/save.svg</code></td>
+<td><code>PUT /definition/raw?defPath=&lt;아이디&gt;.bpmn</code>, <code>PUT /definition/map</code></td>
+</tr>
+<tr>
+<td><code>&lt;/&gt;</code> — XML 보기 / 프로세스 보기</td>
+<td><code>…icon/code-xml.svg</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>벌레 — 시뮬레이션</td>
+<td><code>…icon/bug-play.svg</code></td>
+<td><code>POST /instance</code>(<code>simulation: true</code>) — <a href="test-before-deploy.html">배포 전에 시험하기</a></td>
+</tr>
+<tr>
+<td>재생 — 실행</td>
+<td><code>[data-testid="process-execute-button"]</code></td>
+<td><code>POST /dry-run</code> → <code>POST /start-and-complete</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="저장-전후영상에서-확인한-값">저장 전후(영상에서 확인한 값)<a class="anchor" href="#저장-전후영상에서-확인한-값" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>uengine:json</code>의 <code>version</code></th>
+<th><code>archive/튜토리얼/모델러/구매결재.bpmn/</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>저장 전</td>
+<td><code>0.1</code></td>
+<td><code>0.1.bpmn</code></td>
+</tr>
+<tr>
+<td>「버전 업」 대화상자로 저장 후</td>
+<td><code>0.1</code></td>
+<td><code>0.1.bpmn</code></td>
+</tr>
+</tbody>
+</table>
+<p>편집 잠금은 정의 파일 밖(definition-service)에 있으므로 화면을 닫아도 남습니다. 저장 직후 <code>GET /definition/lock?path=튜토리얼/모델러/구매결재.bpmn</code>은 <code>{"id":"튜토리얼/모델러/구매결재.bpmn","user_id":"undefined"}</code>였습니다. 남은 잠금은 API로 지웁니다.</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">&quot;http://localhost:8288/definition/lock?path=</span><span class="k">$(</span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;import urllib.parse;print(urllib.parse.quote(&quot;튜토리얼/모델러/구매결재.bpmn&quot;))&#39;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>우회</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「버전 업」 대화상자로 저장해도 버전이 오르지 않음</td>
+<td>같은 버전을 덮어쓰는 동작입니다. 버전을 나누는 방법은 <a href="versions-and-deploy.html">버전과 배포</a>를 참고합니다</td>
+</tr>
+<tr>
+<td>저장 뒤 서버 잠금이 <code>{"user_id": "undefined"}</code>로 남고, 다시 열면 곧바로 편집 모드</td>
+<td><code>DELETE /definition/lock?path=…</code>로 지웁니다. 「자물쇠」는 잠금의 사용자 칸이 내 ID일 때만 잠금을 지웁니다(웹 화면 코드 <code>lockOnly</code>)</td>
+</tr>
+<tr>
+<td>다른 사람(또는 다른 브라우저)의 잠금이 남아 있으면 연필을 눌러도 읽기 모드가 유지됨(「…님이 이미 수정 중입니다」 알림)</td>
+<td>잠금을 건 사람이 풀거나 관리자가 <code>DELETE /definition/lock?path=…</code>로 지웁니다</td>
+</tr>
+<tr>
+<td>히스토리(버전) 아이콘이 비활성화되고 「버전 비교」 화면이 비어 있음</td>
+<td><code>GET /versions</code>가 500입니다</td>
+</tr>
+<tr>
+<td>작업 덧붙이기 직후 콘솔에 <code>appendPreview is not defined</code></td>
+<td>동작에는 지장이 없습니다</td>
+</tr>
+<tr>
+<td>자동 배치가 기존 요소와 겹침</td>
+<td>덧붙이기 전에 뒤 요소(끝 이벤트 등)를 먼저 옮겨 둡니다</td>
+</tr>
+<tr>
+<td>렌치 목록의 일부 요소(확장 하위 프로세스 등)는 실행되지 않음</td>
+<td><a href="bpmn-coverage.html">BPMN 지원 범위</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>「버전 업」 대화상자로 저장하면 `archive/`에 새 버전 파일이 생기나요?</summary>
+<p>생기지 않습니다. 이 브랜치에서는 버전이 <code>0.1</code> 그대로이고 <code>archive/&lt;아이디&gt;.bpmn/0.1.bpmn</code>을 덮어씁니다.</p>
+</details>
+<details class="answer">
+<summary>저장한 뒤 서버의 편집 잠금은 어떻게 되나요?</summary>
+<p>지워지지 않고 사용자 칸이 <code>undefined</code>인 잠금으로 남습니다. 화면은 읽기 모드로 돌아가지만, 다시 열면 바로 편집 모드입니다. 잠금을 완전히 지우려면 <code>DELETE /definition/lock?path=&lt;아이디&gt;.bpmn</code>을 호출합니다.</p>
+</details>
+<details class="answer">
+<summary>사용자 작업을 서비스 작업으로 바꾸려면 어디를 누르나요?</summary>
+<p>작업을 한 번 눌러 컨텍스트 패드를 열고 「요소 변경」(렌치)에서 서비스 작업을 고릅니다. 변경하면 해당 작업의 <code>_type</code>과 패널 칸이 서비스 작업용으로 바뀝니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="quickstart-api.html"><span>이전</span>API로 같은 일 하기</a><a class="next" href="process-data.html"><span>다음</span>프로세스 변수와 인스턴스 이름</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#아이콘과-요청">아이콘과 요청</a></li><li><a href="#저장-전후영상에서-확인한-값">저장 전후(영상에서 확인한 값)</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

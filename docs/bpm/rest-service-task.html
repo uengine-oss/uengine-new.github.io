@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REST API 부르기 (서비스 작업) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="서비스 작업으로 외부 REST API를 부르고, 응답 JSON의 값을 프로세스 변수에 담습니다. 주소·헤더·본문에는 `&lt;%=변수%&gt;`로 값을 넣습니다. 직접 실행할 수 있는 모의 「공급사 신용 조회」 API로 따라 합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/rest-service-task.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="REST API 부르기 (서비스 작업) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="서비스 작업으로 외부 REST API를 부르고, 응답 JSON의 값을 프로세스 변수에 담습니다. 주소·헤더·본문에는 `&lt;%=변수%&gt;`로 값을 넣습니다. 직접 실행할 수 있는 모의 「공급사 신용 조회」 API로 따라 합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/rest-service-task.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html" class="on" aria-current="page"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시스템 연동<span class="chap">21</span></div>
+    <h1>REST API 부르기 (서비스 작업)</h1>
+    <article>
+<blockquote>
+<p>서비스 작업으로 외부 REST API를 부르고, 응답 JSON의 값을 프로세스 변수에 담습니다. 주소·헤더·본문에는 <code>&lt;%=변수%&gt;</code>로 값을 넣습니다. 직접 실행할 수 있는 모의 「공급사 신용 조회」 API로 따라 합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/3xPw0UWG8aA" title="REST API 부르기 (서비스 작업) — 영상 1:35" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>서비스 작업</strong>(Service Task)은 사람이 아니라 엔진이 하는 작업입니다. 신용 조회, 재고 확인, 결과 통지처럼 다른 시스템의 API를 한 번 부르고 결과를 받아 오는 일에 씁니다.
+uEngine6의 서비스 작업(<code>org.uengine.kernel.bpmn.ServiceTask</code>)은 Spring <code>RestTemplate</code>으로 <strong>동기</strong> 호출합니다. 앞선 사람 작업의 「완료」 요청 안에서 바로 호출되며, 응답이 와야 다음 작업이 생깁니다.</p>
+<table>
+<thead>
+<tr>
+<th>하는 일</th>
+<th>설정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>어디로</td>
+<td><code>method</code>(GET·POST·PUT·DELETE) + <code>uriTemplate</code></td>
+</tr>
+<tr>
+<td>무엇을 보내나</td>
+<td><code>headers</code>(이름·값 목록), <code>inputPayloadTemplate</code>(JSON 본문)</td>
+</tr>
+<tr>
+<td>값 넣기</td>
+<td>주소·헤더·본문의 <code>&lt;%=변수%&gt;</code>를 그 인스턴스의 변수 값으로 바꿉니다</td>
+</tr>
+<tr>
+<td>응답 받기</td>
+<td><code>outputMapping</code>: 응답 JSON 경로 <code>[arguments].a.b</code> → 프로세스 변수</td>
+</tr>
+<tr>
+<td>실패하면</td>
+<td>앞 작업의 완료가 통째로 되돌려집니다. 오류 경계를 붙이면 다른 길로 갑니다(<a href="error-and-compensation.html">실패 경로와 되돌리기</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>비동기 호출이나 오래 걸리는 외부 처리라면 서비스 작업 대신 「요청 이벤트 → 결과 이벤트로 작업 끝내기」가 맞습니다(<a href="event-completion.html">작업을 이벤트로 끝내기</a>).</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>예제는 <code>튜토리얼/서비스작업/공급사신용조회</code>입니다. 최구매가 「거래 요청」에 공급사와 금액을 넣으면, 「신용 조회」가 모의 API를 GET으로 부르고, 「결과 통지」가 POST로 결과를 알린 뒤, 윤팀장의 「거래 승인」으로 갑니다.</p>
+<ol class="steps">
+<li><strong>모의 API 띄우기.</strong> 아래 <a href="#모의-api">모의 API</a>를 파일로 저장하고 <code>node supplier-api.mjs</code>로 띄웁니다(의존성 없음, <code>:9702</code>). 브라우저로 <code>http://localhost:9702/</code>를 열면 받은 요청이 실시간으로 쌓입니다.
+</li>
+<li><strong>정의 보기.</strong> <code>튜토리얼/서비스작업/공급사신용조회</code>를 엽니다. 톱니바퀴 모양 두 개가 서비스 작업입니다.
+</li>
+<li><strong>서비스 작업 패널.</strong> 「신용 조회」를 두 번 누릅니다. 「Headers」에 <code>X-Request-Id: bpm-&lt;%=instance.instanceId%&gt;</code>, 「메서드 타입」 <code>GET</code>, 「API URL」 <code>http://localhost:9702/credit?supplier=&lt;%=공급사%&gt;</code>가 있습니다. 응답을 변수로 옮기는 설정은 「데이터 매핑」입니다.
+
+<figure><a href="img/rest-service-task-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="「신용 조회」 패널 — Headers, 메서드 타입 GET, API URL" src="img/rest-service-task-panel.webp" loading="lazy" decoding="async"></a><figcaption>「신용 조회」 패널 — Headers, 메서드 타입 GET, API URL</figcaption></figure>
+</li>
+<li><strong>XML로 확인.</strong> 오른쪽 위 <code>&lt;/&gt;</code>(XML 보기)를 누르면 정의 XML이 나옵니다. 서비스 작업 JSON의 맨 앞에 <code>"_type":"org.uengine.kernel.bpmn.ServiceTask"</code>가 있어야 합니다(아래 <a href="#알려진-제약">알려진 제약</a>).
+
+<figure><a href="img/rest-service-task-xml.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="XML 보기 — 「신용 조회」의 루트 _type" src="img/rest-service-task-xml.webp" loading="lazy" decoding="async"></a><figcaption>XML 보기 — 「신용 조회」의 루트 _type</figcaption></figure>
+</li>
+<li><strong>실행.</strong> 최구매의 업무 목록에서 「거래 요청」을 열어 「공급사」 <code>가람전자</code>, 「금액」 <code>12000000</code>을 넣고 <strong>완료</strong>를 누릅니다.
+
+<figure><a href="img/rest-service-task-task.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="「거래 요청」 — 공급사·금액 입력" src="img/rest-service-task-task.webp" loading="lazy" decoding="async"></a><figcaption>「거래 요청」 — 공급사·금액 입력</figcaption></figure>
+</li>
+<li><strong>API가 받은 것.</strong> 모의 API 화면에 두 줄이 생깁니다. <code>GET /credit?supplier=가람전자</code>(헤더 <code>X-Request-Id: bpm-&lt;인스턴스 번호&gt;</code>)와 <code>POST /notify</code> 본문 <code>{"supplier":"가람전자","amount":12000000,"grade":"A"}</code>입니다. 두 번째 호출의 <code>grade</code>는 첫 번째 응답에서 받은 변수입니다.
+
+<figure><a href="img/rest-service-task-mock.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="모의 API 가 받은 요청 — GET /credit 과 POST /notify 본문" src="img/rest-service-task-mock.webp" loading="lazy" decoding="async"></a><figcaption>모의 API 가 받은 요청 — GET /credit 과 POST /notify 본문</figcaption></figure>
+</li>
+<li><strong>변수 확인.</strong> 관리자 화면에서 인스턴스를 열면 <code>신용등급 A</code>, <code>거래한도 50000000</code>, <code>사업자번호 123-45-67894</code>, <code>통지번호 N-1001</code>이 들어와 있고, 윤팀장에게 「거래 승인」이 가 있습니다.
+
+<figure><a href="img/rest-service-task-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자 화면 — 신용등급·거래한도·사업자번호·통지번호" src="img/rest-service-task-vars.webp" loading="lazy" decoding="async"></a><figcaption>관리자 화면 — 신용등급·거래한도·사업자번호·통지번호</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="패널-칸-json">패널 칸 ↔ JSON<a class="anchor" href="#패널-칸-json" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>패널(서비스 작업)</th>
+<th>JSON</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Headers (Key · value)</td>
+<td><code>headers[]</code> = <code>{"name","value","_type":"org.uengine.kernel.bpmn.HttpHeader"}</code></td>
+<td>값에 <code>&lt;%=변수%&gt;</code> 가능</td>
+</tr>
+<tr>
+<td>메서드 타입</td>
+<td><code>method</code></td>
+<td></td>
+</tr>
+<tr>
+<td>API URL</td>
+<td><code>uriTemplate</code></td>
+<td><code>&lt;%=변수%&gt;</code>, <code>&lt;%=instance.instanceId%&gt;</code>, <code>&lt;%=instance.corrkey%&gt;</code></td>
+</tr>
+<tr>
+<td>JSON 본문 편집기</td>
+<td><code>inputPayloadTemplate</code></td>
+<td>POST·PUT 본문</td>
+</tr>
+<tr>
+<td>데이터 매핑(응답 → 변수)</td>
+<td><code>outputMapping.mappingContext.mappingElements[]</code></td>
+<td><code>argument.text</code> = 변수, <code>variable.name</code> = <code>[arguments].&lt;응답 경로&gt;</code></td>
+</tr>
+<tr>
+<td>(패널에 없음)</td>
+<td><code>noValidationForSSL</code>, <code>skipIfNotFound</code></td>
+<td>XML로만</td>
+</tr>
+</tbody>
+</table>
+<h3 id="배포한-정의발췌">배포한 정의(발췌)<a class="anchor" href="#배포한-정의발췌" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="c1">// 신용 조회</span>
+<span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.ServiceTask&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;uriTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:9702/credit?supplier=&lt;%=공급사%&gt;&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;inputPayloadTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.HttpHeader&quot;</span><span class="p">},</span>
+<span class="w">             </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;X-Request-Id&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bpm-&lt;%=instance.instanceId%&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.HttpHeader&quot;</span><span class="p">}],</span>
+<span class="w"> </span><span class="nt">&quot;noValidationForSSL&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;skipIfNotFound&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;outputMapping&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;신용등급&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[arguments].grade&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;거래한도&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[arguments].limit&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;사업자번호&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[arguments].supplier.bizNo&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">}]}}}</span>
+<span class="c1">// 결과 통지</span>
+<span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.ServiceTask&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;uriTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:9702/notify&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;inputPayloadTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;supplier\&quot;:\&quot;&lt;%=공급사%&gt;\&quot;,\&quot;amount\&quot;:&lt;%=금액%&gt;,\&quot;grade\&quot;:\&quot;&lt;%=신용등급%&gt;\&quot;}&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.HttpHeader&quot;</span><span class="p">}],</span>
+<span class="w"> </span><span class="nt">&quot;noValidationForSSL&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;skipIfNotFound&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;outputMapping&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;eventType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;통지번호&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[arguments].ticket&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">}]}}}</span>
+</code></pre></div>
+
+<p>「거래 요청」의 입력 칸 「공급사」·「금액」은 <a href="arguments-and-mapping.html">작업 입력값과 데이터 매핑</a>의 방식으로 같은 이름의 변수에 넣었습니다. 전체 파일은 <code>bpm-tut-rest-service-task/defs/공급사신용조회.bpmn</code>입니다.</p>
+<h3 id="모의-api">모의 API<a class="anchor" href="#모의-api" title="Permanent link">#</a></h3>
+<p>예제 폴더 <code>bpm-tut-rest-service-task/mock/supplier-api.mjs</code>입니다(Node 20, 의존성 없음).</p>
+<table>
+<thead>
+<tr>
+<th>경로</th>
+<th>응답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /credit?supplier=가람전자</code></td>
+<td><code>{"supplier":{"name":"가람전자","bizNo":"…"},"grade":"A","score":92,"limit":50000000}</code> (나래부품 B·2,000만, 그 밖 C·500만)</td>
+</tr>
+<tr>
+<td><code>POST /notify</code></td>
+<td><code>{"ticket":"N-1001","received":&lt;받은 본문&gt;}</code></td>
+</tr>
+<tr>
+<td><code>POST /admin/fail?on=1</code></td>
+<td>이후 <code>/credit</code>·<code>/notify</code>가 503 (<code>on=0</code>이면 되돌림)</td>
+</tr>
+<tr>
+<td><code>GET /</code> · <code>GET /log</code></td>
+<td>받은 요청 화면 · JSON</td>
+</tr>
+</tbody>
+</table>
+<div class="hl"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">http</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;node:http&#39;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">BOOK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">가람전자</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">92</span><span class="p">,</span><span class="w"> </span><span class="mf">50000000</span><span class="p">],</span><span class="w"> </span><span class="nx">나래부품</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">78</span><span class="p">,</span><span class="w"> </span><span class="mf">20000000</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">fail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span>
+<span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="w">  </span><span class="nx">req</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">body</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">c</span><span class="p">))</span>
+<span class="w">  </span><span class="nx">req</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URL</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;http://x&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">send</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">code</span><span class="p">,</span><span class="w"> </span><span class="nx">o</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json; charset=utf-8&#39;</span><span class="w"> </span><span class="p">});</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">o</span><span class="p">))</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">pathname</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;/admin/fail&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">fail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;on&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">send</span><span class="p">(</span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">fail</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">fail</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">send</span><span class="p">(</span><span class="mf">503</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;credit bureau down (mock)&#39;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">pathname</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;/credit&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;supplier&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">grade</span><span class="p">,</span><span class="w"> </span><span class="nx">score</span><span class="p">,</span><span class="w"> </span><span class="nx">limit</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">BOOK</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">55</span><span class="p">,</span><span class="w"> </span><span class="mf">5000000</span><span class="p">]</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">send</span><span class="p">(</span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">supplier</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">bizNo</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;123-45-&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">String</span><span class="p">(</span><span class="mf">67890</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">grade</span><span class="p">,</span><span class="w"> </span><span class="nx">score</span><span class="p">,</span><span class="w"> </span><span class="nx">limit</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">pathname</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;/notify&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">send</span><span class="p">(</span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ticket</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;N-&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mf">1001</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">n</span><span class="o">++</span><span class="p">),</span><span class="w"> </span><span class="nx">received</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;{}&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="nx">send</span><span class="p">(</span><span class="mf">404</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;no route&#39;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mf">9702</span><span class="p">)</span>
+</code></pre></div>
+
+<p>(예제 폴더의 파일에는 받은 요청을 보여 주는 첫 화면과 <code>/log</code>가 더 있습니다.)</p>
+<h3 id="결과를-알리기만-할-때-보내기-작업-rest">결과를 알리기만 할 때 — 보내기 작업 REST<a class="anchor" href="#결과를-알리기만-할-때-보내기-작업-rest" title="Permanent link">#</a></h3>
+<p>메일 보내기 작업은 이 스택에서 동작하지 않습니다(SMTP 설정 필요, <a href="bpmn-coverage.html">BPMN 지원 범위</a>). 결과를 알리기만 한다면 위처럼 서비스 작업 POST를 쓰거나, 보내기 작업(<code>SendTask</code>)을 REST 방식으로 XML에 씁니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.SendTask&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;sendType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rest_api&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;API&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:9702/notify&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;inputPayloadTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;supplier\&quot;:\&quot;&lt;%=공급사%&gt;\&quot;}&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="nt">&quot;selectedOut&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;통지결과&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+<p><code>selectedOut</code> 변수에는 응답 본문 전체가 문자열로 들어갑니다. 보내기 작업 패널은 다시 열면 늘 「이메일 전송」으로 보이고, 그대로 저장하면 이 REST 칸을 지우므로 패널을 열지 마세요.</p>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">패널에서 저장한 뒤에는 XML의 루트 <code>_type</code>을 확인하세요</p>
+<p>서비스 작업 패널에서 값을 고치고 저장하면, 패널이 JSON의 <strong>루트 <code>_type</code></strong>을 지우고 헤더 안의 <code>_type</code>만 남깁니다. 그러면 정의 저장(배포)이 <code>InvalidTypeIdException</code>으로 실패합니다(저장 대화상자에 <code>process-service:/definition-changes 실패</code>).
+<code>&lt;/&gt;</code> XML 보기에서 그 작업의 JSON 맨 앞에 <code>"_type":"org.uengine.kernel.bpmn.ServiceTask",</code>를 다시 넣고 저장하세요. 파서는 JSON 어딘가에 <code>_type</code>이 있으면 루트에도 있어야 읽을 수 있습니다.</p>
+</div>
+<ul>
+<li><strong>템플릿에는 <code>&lt;%=…%&gt;</code>가 하나 이상 있어야 합니다.</strong> 주소나 본문에 <code>&lt;%</code>가 하나도 없으면 엔진이 SpEL 식(<code>{…}</code>)으로 해석해, 고정 JSON 본문 <code>{"item":"노트북"}</code>이 <code>Error to parse expression</code>으로 실패합니다. 고정 값만 보낼 때도 <code>&lt;%=instance.instanceId%&gt;</code> 같은 자리를 하나 두세요.</li>
+<li><strong>실패는 앞 작업의 완료를 거절합니다.</strong> 4xx·5xx·연결 실패면 「거래 요청」의 완료 요청이 HTTP 500으로 거절되고 인스턴스는 그 작업에 머뭅니다. 「실패」 상태나 기록은 남지 않습니다. 원인을 고친 뒤 같은 작업을 다시 완료하면 서비스 작업이 다시 실행됩니다. 실패를 업무로 돌리려면 오류 경계를 붙입니다(<a href="error-and-compensation.html">실패 경로와 되돌리기</a>).</li>
+<li>서비스 작업 패널의 「사용자 정의 속성」에는 정의에 없는 <code>test</code> = <code>value</code> 줄이 늘 보입니다(패널 기본값). 패널에서 저장한다면 이 줄을 지우세요.</li>
+<li><code>skipIfNotFound: true</code>는 동작하지 않습니다(404도 실패).</li>
+<li>타임아웃·선언적 재시도 설정은 없습니다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>「결과 통지」 본문에서 `grade`는 어디서 온 값인가요?</summary>
+<p>바로 앞 「신용 조회」의 응답 <code>grade</code>를 <code>outputMapping</code>으로 변수 <code>신용등급</code>에 담았고, 「결과 통지」의 본문 템플릿 <code>&lt;%=신용등급%&gt;</code>이 그 변수를 읽었습니다.</p>
+</details>
+<details class="answer">
+<summary>모의 API를 `POST /admin/fail?on=1`로 바꾼 뒤 「거래 요청」을 완료하면 화면에서 무슨 일이 일어나나요?</summary>
+<p>완료 요청이 HTTP 500으로 거절되고 작업은 그대로 남습니다. 서비스 작업이 503을 받아 예외를 냈고, 같은 트랜잭션의 앞 작업 완료까지 되돌려졌기 때문입니다. API를 되돌리고(<code>on=0</code>) 다시 완료하면 진행합니다.</p>
+</details>
+<details class="answer">
+<summary>응답이 `{"data":{"items":[{"price":1450000}]}}`처럼 깊으면 단가를 어떻게 꺼내나요?</summary>
+<p><code>outputMapping</code>의 <code>variable.name</code>에 점으로 경로를 씁니다. 객체는 <code>[arguments].data.items</code>처럼 내려갈 수 있습니다. 배열 원소를 고르는 문법은 이 장에서 확인하지 않았으므로, 배열이 오면 받는 쪽 API를 객체로 바꾸거나 스크립트 작업(<a href="script-task.html">스크립트로 값 계산</a>)으로 꺼내세요.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="error-and-compensation.html"><span>이전</span>실패 경로와 되돌리기 (오류·보상)</a><a class="next" href="sql-task.html"><span>다음</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#패널-칸-json">패널 칸 ↔ JSON</a></li><li><a href="#배포한-정의발췌">배포한 정의(발췌)</a></li><li><a href="#모의-api">모의 API</a></li><li><a href="#결과를-알리기만-할-때-보내기-작업-rest">결과를 알리기만 할 때 — 보내기 작업 REST</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

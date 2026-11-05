@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>되돌리기와 실패한 작업 다루기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="관리자 화면의 「이 위치로 되돌리기」로 진행 중인 인스턴스를 완료된 단계로 되돌립니다. 이어서 서비스 작업이 실패할 때의 동작을 확인합니다. 원인을 고친 뒤 같은 작업을 다시 완료해 이어 가는 방법과 실패를 업무로 처리하는 방법(오류 경계)도 살펴봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/back-to-here.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="되돌리기와 실패한 작업 다루기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="관리자 화면의 「이 위치로 되돌리기」로 진행 중인 인스턴스를 완료된 단계로 되돌립니다. 이어서 서비스 작업이 실패할 때의 동작을 확인합니다. 원인을 고친 뒤 같은 작업을 다시 완료해 이어 가는 방법과 실패를 업무로 처리하는 방법(오류 경계)도 살펴봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/back-to-here.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html" class="on" aria-current="page"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">운영<span class="chap">26</span></div>
+    <h1>되돌리기와 실패한 작업 다루기</h1>
+    <article>
+<blockquote>
+<p>관리자 화면의 「이 위치로 되돌리기」로 진행 중인 인스턴스를 완료된 단계로 되돌립니다. 이어서 서비스 작업이 실패할 때의 동작을 확인합니다. 원인을 고친 뒤 같은 작업을 다시 완료해 이어 가는 방법과 실패를 업무로 처리하는 방법(오류 경계)도 살펴봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/j-1MnZbS7aA" title="되돌리기와 실패한 작업 다루기 — 영상 1:35" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>되돌리기(Back To Here)</strong>는 실행 중인 인스턴스를 이미 지나온 작업으로 돌려보내는 관리 기능입니다. 지정한 작업과 그 이후에 거친 작업은 <strong>보상됨</strong>(<code>COMPENSATED</code>)이 되고, 지정한 작업이 새로 만들어져 원래 담당 레인에 배정됩니다. Camunda의 process instance modification과 비슷한 일을 하지만, BPMN 보상 핸들러(취소 작업)를 실행하지는 않습니다. 외부 시스템에 이미 반영된 일은 따로 되돌려야 합니다.</p>
+<p><strong>실패한 작업.</strong> 이 브랜치에서 서비스 작업(REST)·SQL 작업은 앞선 사람 작업의 「완료」 요청 안에서 동기로 실행됩니다. 서비스 작업이 실패하면 그 완료 요청 전체가 되돌려지고(HTTP 500), 인스턴스는 앞선 사람 작업에 그대로 머뭅니다. 「실패」 상태나 실패 사유는 인스턴스·히스토리 어디에도 남지 않습니다. 따라서 운영 중에는 두 가지 방법으로 대응합니다.</p>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>언제</th>
+<th>어떻게</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>원인을 고치고 다시 완료</td>
+<td>일시 장애(상대 API 점검, 네트워크)</td>
+<td>완료 응답의 오류 메시지·서버 로그로 원인 확인 → 고친 뒤 같은 작업을 다시 「완료」</td>
+</tr>
+<tr>
+<td>오류 경계로 업무화</td>
+<td>실패해도 일을 이어 가야 할 때</td>
+<td>서비스 작업에 오류 경계 이벤트를 붙여 「수기 처리」 작업으로 보냄 → 실패 행이 업무 목록에 <code>Failed</code>로 남음(<a href="error-and-compensation.html">실패 경로와 되돌리기</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>이 장에서는 두 가지 예제를 사용합니다.</p>
+<ul>
+<li><code>튜토리얼/되돌리기/구매요청</code> — <a href="instance-monitoring.html">인스턴스 찾고 살피기</a>와 같은 구매 요청(구매 요청 → 팀장 결재 → 「금액?」 → 발주).</li>
+<li><code>튜토리얼/되돌리기/견적요청</code> — 구매 요청(최구매) → 서비스 작업 「재고·단가 조회」(GET) → 「견적 요청」(POST) → 견적 확인. 서비스 작업은 모의 공급사 API(<code>localhost:9715</code>)를 호출합니다.</li>
+</ul>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<h3 id="완료된-단계로-되돌리기">완료된 단계로 되돌리기<a class="anchor" href="#완료된-단계로-되돌리기" title="Permanent link">#</a></h3>
+<ol class="steps">
+<li><strong>인스턴스 열기.</strong> 모니터 2대(600,000원) 요청 건이 「팀장 결재」를 기다립니다. 요청 내용이 틀려 구매 요청부터 다시 받아야 합니다. 홍길동(<code>hong</code>)으로 관리자 상세(<code>/admin/&lt;ID&gt;</code>)를 열면 「히스토리」에 구매 요청 <code>COMPLETED</code>, 팀장 결재 <code>NEW</code>가 있습니다.
+</li>
+<li><strong>「이 위치로 되돌리기」.</strong> 그림에서 완료된 「구매 요청」을 누르면 옆에 컨텍스트 메뉴가 나옵니다. 여기서 「이 위치로 되돌리기」를 누릅니다(진행 중인 작업을 누르면 대신 「건너뛰기」가 나옵니다). 관리자 상세 화면은 10초마다 정보를 다시 읽고 그림을 현재 작업 쪽으로 옮기므로, 메뉴가 닫히면 다시 누르세요.
+
+<figure><a href="img/back-to-here-pad.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이 위치로 되돌리기" src="img/back-to-here-pad.webp" loading="lazy" decoding="async"></a><figcaption>이 위치로 되돌리기</figcaption></figure>
+</li>
+<li><strong>실행.</strong> 확인 창 「되돌리기」(「"구매 요청"으로 되돌리시겠습니까?」)에서 「실행」을 누릅니다(<code>POST /instance/&lt;ID&gt;/activity/Request/backToHere</code>).
+</li>
+<li><strong>결과.</strong> 상세 화면을 다시 열면 「구매 요청」이 현재 작업으로 바뀌어 있습니다. 「히스토리」에는 처음 구매 요청과 팀장 결재가 <code>COMPENSATED</code>, 새 구매 요청이 <code>NEW</code>(최구매 <code>choi</code>)로 남습니다. 최구매의 업무 목록에 「구매 요청」이 다시 도착합니다.
+
+<figure><a href="img/back-to-here-history.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="되돌린 뒤 히스토리" src="img/back-to-here-history.webp" loading="lazy" decoding="async"></a><figcaption>되돌린 뒤 히스토리</figcaption></figure>
+</li>
+</ol>
+<h3 id="완료가-조용히-실패할-때">완료가 조용히 실패할 때<a class="anchor" href="#완료가-조용히-실패할-때" title="Permanent link">#</a></h3>
+<ol class="steps">
+<li><strong>장애 상태.</strong> 모의 공급사 API 화면에 「장애 — 503 Service Unavailable」이 떠 있습니다. 최구매가 <code>튜토리얼/되돌리기/견적요청</code> 인스턴스의 「구매 요청」을 엽니다. 이 작업 다음은 서비스 작업 「재고·단가 조회」입니다.
+</li>
+<li><strong>완료가 거절됨.</strong> 품목 <code>노트북</code>, 수량 <code>3</code>을 넣고 「완료」를 누릅니다. 응답은 HTTP 500입니다. 화면에는 오류가 표시되지 않으며 작업은 <code>NEW</code> 그대로입니다. 브라우저 개발자 도구나 서버 로그에서 원인(<code>503 Service Unavailable</code>)을 확인합니다.
+
+<figure><a href="img/back-to-here-failed.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="완료가 거절된 뒤 그대로인 작업" src="img/back-to-here-failed.webp" loading="lazy" decoding="async"></a><figcaption>완료가 거절된 뒤 그대로인 작업</figcaption></figure>
+</li>
+<li><strong>원인 고치기.</strong> 모의 API 화면의 받은 요청 목록에 503 응답이 기록되어 있습니다. 「복구」를 눌러 정상 상태(200)로 복구합니다. 실제 운영에서는 상대 시스템이 복구되기를 기다리거나 설정을 고칩니다.
+
+<figure><a href="img/back-to-here-mock.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="모의 공급사 API — 받은 요청에 503" src="img/back-to-here-mock.webp" loading="lazy" decoding="async"></a><figcaption>모의 공급사 API — 받은 요청에 503</figcaption></figure>
+</li>
+<li><strong>같은 작업을 다시 완료.</strong> 최구매가 같은 화면에서 「완료」를 다시 누르면 이번에는 200 응답을 받습니다. 서비스 작업 두 개가 차례로 실행되어 업무 목록에 「견적 확인」이 도착합니다.
+</li>
+<li><strong>결과 확인.</strong> 관리자 상세 화면의 「프로세스 변수」에 응답으로 받은 값이 있습니다(이 실행에서는 <code>단가</code> 1450000, <code>재고</code> 7, <code>공급사</code> 가람전자, <code>견적번호</code> Q-1002). 「히스토리」에는 서비스 작업 「재고·단가 조회」「견적 요청」이 담당자는 <code>system</code>, 상태는 <code>COMPLETED</code>로 기록되지만, 실패했던 첫 시도는 남지 않습니다.
+
+<figure><a href="img/back-to-here-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="응답 값이 든 변수" src="img/back-to-here-vars.webp" loading="lazy" decoding="async"></a><figcaption>응답 값이 든 변수</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="되돌리기-api">되돌리기 API<a class="anchor" href="#되돌리기-api" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/instance/&lt;ID&gt;/activity/&lt;작업<span class="w"> </span>id<span class="o">(</span>tracingTag<span class="o">)</span>&gt;/backToHere<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>완료된 사람 작업으로</td>
+<td>200. 그 작업과 이후 작업이 <code>COMPENSATED</code>, 그 작업이 새로 생김</td>
+</tr>
+<tr>
+<td>현재 진행 중인 작업으로</td>
+<td>거절(<code>Activity [Request] is already running</code>)</td>
+</tr>
+<tr>
+<td>아직 실행되지 않은(실패로 멈춘) 서비스 작업으로</td>
+<td>거절(<code>Activity [Stock] is next for [Request]</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="서비스-작업이-실패했을-때-응답">서비스 작업이 실패했을 때 응답<a class="anchor" href="#서비스-작업이-실패했을-때-응답" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code>POST /work-item/&lt;구매 요청 작업&gt;/complete  →  500
+{&quot;status&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,
+ &quot;message&quot;:&quot;... 503 Service Unavailable ...&quot;,&quot;path&quot;:&quot;/work-item/&lt;ID&gt;/complete&quot;}
+</code></pre></div>
+
+<p>인스턴스 상태는 <code>Running</code>, 작업은 <code>NEW</code> 그대로입니다. 오류 경계를 붙이지 않은 작업의 실패는 업무 목록·히스토리에 기록되지 않습니다.</p>
+<h3 id="이-장의-서비스-작업발췌">이 장의 서비스 작업(발췌)<a class="anchor" href="#이-장의-서비스-작업발췌" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.ServiceTask&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;uriTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:9715/supplier/stock?item=&lt;%=품목%&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.HttpHeader&quot;</span><span class="p">}],</span>
+<span class="w"> </span><span class="nt">&quot;outputMapping&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;단가&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[arguments].price&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;공급사&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[arguments].supplier.name&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;out&quot;</span><span class="p">}]}}}</span>
+</code></pre></div>
+
+<p>설정 방법은 <a href="rest-service-task.html">REST API 부르기</a>에 있습니다.</p>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>관리자 「건너뛰기」는 남의 작업에 쓸 수 없습니다.</strong> 진행 중인 작업의 컨텍스트 메뉴 「건너뛰기」는 관리자라도 작업 주인이 아니면 <code>403 No permission to skip this task</code>입니다. 작업 주인이 업무 화면에서 「SKIP」을 누르게 합니다(<a href="return-and-skip.html">반송과 SKIP</a>).</li>
+<li>되돌리기는 BPMN 보상 핸들러를 실행하지 않습니다. 외부 시스템의 취소 작업은 따로 처리합니다.</li>
+<li>서비스 작업 실패는 화면에 표시되지 않고 상태로 남지 않습니다. 실패를 추적해야 하는 작업에는 오류 경계를 붙이세요.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>서비스 작업이 실패해 「구매 요청」에 멈춘 인스턴스를 「재고·단가 조회」로 되돌리면 다시 실행되나요?</summary>
+<p>아닙니다. 그 서비스 작업은 아직 실행된 적이 없어 되돌릴 대상이 아니며(<code>is next for</code>), 현재 진행 중인 「구매 요청」으로 되돌리는 것도 거절됩니다. 원인을 고친 뒤 「구매 요청」을 다시 완료하면 됩니다.</p>
+</details>
+<details class="answer">
+<summary>되돌린 뒤 히스토리에 남는 `COMPENSATED`는 무엇을 뜻하나요?</summary>
+<p>되돌리기로 무효가 된 작업입니다. 기록은 지워지지 않고 상태만 바뀝니다. 같은 이름의 작업이 <code>NEW</code> 상태로 새로 만들어집니다.</p>
+</details>
+<details class="answer">
+<summary>공급사 API가 자주 멈춘다면 어떻게 설계하나요?</summary>
+<p>「재고·단가 조회」에 오류 경계 이벤트를 붙여 「수기 단가 입력」 같은 사람 작업으로 보냅니다. 그러면 실패가 업무 목록에 <code>Failed</code> 행으로 남고, 담당자가 수기로 이어 갑니다(<a href="error-and-compensation.html">실패 경로와 되돌리기</a>).</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="fix-variables.html"><span>이전</span>실행 중 변수 고치기</a><a class="next" href="test-before-deploy.html"><span>다음</span>배포 전에 시험하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a><ul><li><a href="#완료된-단계로-되돌리기">완료된 단계로 되돌리기</a></li><li><a href="#완료가-조용히-실패할-때">완료가 조용히 실패할 때</a></li></ul></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#되돌리기-api">되돌리기 API</a></li><li><a href="#서비스-작업이-실패했을-때-응답">서비스 작업이 실패했을 때 응답</a></li><li><a href="#이-장의-서비스-작업발췌">이 장의 서비스 작업(발췌)</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

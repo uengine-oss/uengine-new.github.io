@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데이터베이스 읽고 쓰기 (SQL 작업) — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="SQL 작업으로 데이터베이스 표를 읽어 변수에 담고, 변수 값으로 표를 고칩니다. 직접 쓴 SQL은 패널에서, 조회 결과 매핑과 데이터베이스 매핑은 XML로 설정합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/sql-task.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="데이터베이스 읽고 쓰기 (SQL 작업) — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="SQL 작업으로 데이터베이스 표를 읽어 변수에 담고, 변수 값으로 표를 고칩니다. 직접 쓴 SQL은 패널에서, 조회 결과 매핑과 데이터베이스 매핑은 XML로 설정합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/sql-task.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html" class="on" aria-current="page"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시스템 연동<span class="chap">22</span></div>
+    <h1>데이터베이스 읽고 쓰기 (SQL 작업)</h1>
+    <article>
+<blockquote>
+<p>SQL 작업으로 데이터베이스 표를 읽어 변수에 담고, 변수 값으로 표를 고칩니다. 직접 쓴 SQL은 패널에서, 조회 결과 매핑과 데이터베이스 매핑은 XML로 설정합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/TLm1PjXNXlc" title="데이터베이스 읽고 쓰기 (SQL 작업) — 영상 1:39" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><strong>SQL 작업</strong>은 서비스 작업의 한 갈래(<code>org.uengine.kernel.bpmn.SQLTask</code>)입니다. 부서 예산 잔액을 읽어 결재선을 정하거나, 결재가 끝난 뒤 업무 표의 상태를 바꾸는 것처럼, <strong>REST API가 없는 사내 DB</strong>를 프로세스 한 단계에서 다뤄야 할 때 씁니다.
+서비스 작업과 마찬가지로 앞 작업의 완료 요청 안에서 <strong>동기</strong>로 실행되고, 실패하면 그 완료가 되돌려집니다.</p>
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>설정</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>직접 SQL</td>
+<td><code>sqlStmt</code> + <code>parameters</code>(<code>?</code> 순서대로 변수)</td>
+<td>아무 SQL. 조회면 <code>query: true</code></td>
+</tr>
+<tr>
+<td>조회 결과 → 변수</td>
+<td><code>selectMappings</code>(열 → 변수), <code>applySingleValueOnly</code></td>
+<td>첫 행의 열 값을 변수에</td>
+</tr>
+<tr>
+<td>데이터베이스 매핑</td>
+<td><code>strategy</code> = <code>DatabaseMappingStrategy</code>(<code>queryMode</code> SELECT·INSERT·UPDATE·DELETE, 표.열 ↔ 변수, 키)</td>
+<td>SQL 없이 표·열과 변수를 짝지어</td>
+</tr>
+<tr>
+<td>연결</td>
+<td><code>connectionFactory</code></td>
+<td><code>DataSourceConnectionFactory</code>(process-service의 DataSource, 이름을 비우면 기본) 또는 JDBC 직접</td>
+</tr>
+</tbody>
+</table>
+<p>이 장의 표는 엔진과 같은 DB(<code>uengine</code>)에 만든 연습용 <code>tut_budget</code>입니다. 운영에서는 업무 DB를 별도 DataSource로 붙이세요.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>예제는 <code>튜토리얼/SQL작업/예산차감</code>입니다. 최구매가 「구매 요청」에 부서와 금액을 넣으면, 「예산 잔액 조회」가 잔액을 읽어 변수에 담고, 「예산 차감」이 잔액을 줄이고, 「처리자 기록」이 처리한 사람을 표에 남깁니다.</p>
+<ol class="steps">
+<li><strong>표 만들기.</strong> 연습용 표를 만듭니다.
+
+
+<div class="hl"><pre><span></span><code><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">tut_budget</span><span class="w"> </span><span class="p">(</span><span class="n">dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="nb">bigint</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="n">updated_by</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">40</span><span class="p">));</span>
+<span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">tut_budget</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;구매팀&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5000000</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;seed&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;물류팀&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3000000</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;seed&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;회계팀&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2000000</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;seed&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+
+
+영상에서는 이 표를 1초마다 다시 읽는 간단한 화면(<code>bpm-tut-sql-task/tool/budget-view.mjs</code>, <code>:9704</code>)으로 보여 주었습니다.
+
+<figure><a href="img/sql-task-before.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="tut_budget — 구매팀 5,000,000" src="img/sql-task-before.webp" loading="lazy" decoding="async"></a><figcaption>tut_budget — 구매팀 5,000,000</figcaption></figure>
+</li>
+<li><strong>정의 보기.</strong> <code>튜토리얼/SQL작업/예산차감</code>을 엽니다. 「구매 요청」 뒤에 SQL 작업 세 개가 이어집니다.
+
+<figure><a href="img/sql-task-design.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="튜토리얼/SQL작업/예산차감" src="img/sql-task-design.webp" loading="lazy" decoding="async"></a><figcaption>튜토리얼/SQL작업/예산차감</figcaption></figure>
+</li>
+<li><strong>직접 SQL 패널.</strong> 「예산 차감」을 두 번 누릅니다. 「SQL」에 <code>update tut_budget set balance = balance - ? where dept = ?</code>, 「SQL 파라미터 매핑」에 <code>?</code> 순서대로 <code>amount ← 금액</code>, <code>dept ← 부서</code>가 있습니다.
+
+<figure><a href="img/sql-task-panel.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="「예산 차감」 — SQL 파라미터 매핑" src="img/sql-task-panel.webp" loading="lazy" decoding="async"></a><figcaption>「예산 차감」 — SQL 파라미터 매핑</figcaption></figure>
+</li>
+<li><strong>조회 결과 매핑은 XML.</strong> <code>&lt;/&gt;</code>(XML 보기)에서 「예산 잔액 조회」의 JSON을 보면 <code>query: true</code>와 <code>selectMappings</code>(<code>balance → 예산잔액</code>)가 있습니다. 이 두 칸은 패널에 없습니다(아래 <a href="#알려진-제약">알려진 제약</a>).
+
+<figure><a href="img/sql-task-xml.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="XML 보기 — query·selectMappings" src="img/sql-task-xml.webp" loading="lazy" decoding="async"></a><figcaption>XML 보기 — query·selectMappings</figcaption></figure>
+</li>
+<li><strong>실행.</strong> 최구매의 업무 목록에서 「구매 요청」을 열어 「부서」 <code>구매팀</code>, 「금액」 <code>1200000</code>을 넣고 <strong>완료</strong>합니다.
+</li>
+<li><strong>표 확인.</strong> 구매팀 잔액이 <code>5,000,000 → 3,800,000</code>이 되고 <code>updated_by</code>가 <code>최구매</code>로 바뀝니다.
+
+<figure><a href="img/sql-task-after.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="tut_budget — 구매팀 3,800,000, updated_by 최구매" src="img/sql-task-after.webp" loading="lazy" decoding="async"></a><figcaption>tut_budget — 구매팀 3,800,000, updated_by 최구매</figcaption></figure>
+</li>
+<li><strong>변수 확인.</strong> 관리자 화면의 「프로세스 변수」에 <code>예산잔액 5000000</code>이 있습니다. 조회가 차감보다 먼저 실행되었으므로 차감 전 값입니다.
+
+<figure><a href="img/sql-task-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자 화면 — 변수 예산잔액 5000000" src="img/sql-task-vars.webp" loading="lazy" decoding="async"></a><figcaption>관리자 화면 — 변수 예산잔액 5000000</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="세-작업의-json">세 작업의 JSON<a class="anchor" href="#세-작업의-json" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="c1">// 예산 잔액 조회 — 직접 SQL(조회) + 결과 → 변수</span>
+<span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.SQLTask&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;connectionFactory&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.util.dao.DataSourceConnectionFactory&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dataSourceName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;sqlStmt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;select balance from tut_budget where dept = ?&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dept&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;부서&quot;</span><span class="p">}}],</span>
+<span class="w"> </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;selectMappings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;balance&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;예산잔액&quot;</span><span class="p">}}],</span>
+<span class="w"> </span><span class="nt">&quot;applySingleValueOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+<span class="c1">// 예산 차감 — 직접 SQL(갱신), ? 는 parameters 순서</span>
+<span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.SQLTask&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;connectionFactory&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">…</span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;sqlStmt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;update tut_budget set balance = balance - ? where dept = ?&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;amount&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;금액&quot;</span><span class="p">}},</span>
+<span class="w">                </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dept&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;부서&quot;</span><span class="p">}}]}</span>
+<span class="c1">// 처리자 기록 — 데이터베이스 매핑(UPDATE, 키 = dept)</span>
+<span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.SQLTask&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;connectionFactory&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">…</span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;strategy&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;org.uengine.kernel.bpmn.sql.DatabaseMappingStrategy&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;queryMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UPDATE&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;mappingContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mappingElements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tut_budget.dept&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;부서&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;isKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">},</span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;argument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tut_budget.updated_by&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;variable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;처리자&quot;</span><span class="p">}}]}}}</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>패널 칸</th>
+<th>JSON</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「SQL 태스크로 전환」</td>
+<td><code>_type</code> = <code>SQLTask</code></td>
+<td>서비스 작업 패널에서 바꿉니다</td>
+</tr>
+<tr>
+<td>JDBC Driver · Connection URL · DB User · DB Password</td>
+<td><code>connectionFactory</code>(JDBC)</td>
+<td>기본값 <code>jdbc:postgresql://postgres:5432/uengine</code>은 도커 안 주소. 로컬 스택이면 <code>localhost:5632</code></td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><code>sqlStmt</code></td>
+<td></td>
+</tr>
+<tr>
+<td>SQL 파라미터 매핑(방향·SQL 변수·프로세스 변수)</td>
+<td><code>parameters[]</code></td>
+<td><code>?</code> 순서</td>
+</tr>
+<tr>
+<td>(패널에 없음)</td>
+<td><code>query</code>, <code>selectMappings</code>, <code>applySingleValueOnly</code>, <code>strategy</code></td>
+<td>XML로만</td>
+</tr>
+</tbody>
+</table>
+<p>엔진에는 표·열 목록을 돌려주는 API도 있습니다(데이터베이스 매핑을 설정할 때 참고).</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="s1">&#39;http://localhost:9294/sql-metadata/tables?dataSourceName=&#39;</span>
+curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="s1">&#39;http://localhost:9294/sql-metadata/columns?table=tut_budget&amp;dataSourceName=&#39;</span>
+<span class="c1"># {&quot;table&quot;:&quot;tut_budget&quot;,&quot;columns&quot;:[{&quot;name&quot;:&quot;dept&quot;,&quot;type&quot;:&quot;varchar&quot;,&quot;nullable&quot;:false,&quot;primaryKey&quot;:true}, …]}</span>
+</code></pre></div>
+
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">SQL 작업 패널에서 저장하면 조회 결과 매핑이 사라집니다</p>
+<p>이 브랜치의 패널은 연결 칸(JDBC)·SQL·파라미터 매핑만 다룹니다. 패널에서 저장하면 <code>query</code>·<code>selectMappings</code>·<code>applySingleValueOnly</code>·<code>strategy</code>를 지우고 연결을 JDBC(<code>postgres:5432</code>)로 채웁니다. 조회 결과가 변수로 들어가지 않고, 로컬 스택에서는 연결도 실패합니다.
+조회·데이터베이스 매핑을 쓰는 작업은 패널을 열어 저장하지 말고, XML 보기에서 JSON을 고치세요. 엔진 저장소의 <code>docs/sql-task.md</code>가 말하는 「연결 방식」·「설정 방식(데이터베이스 매핑)」·테이블 고르기·SQL 미리보기 화면은 이 프런트에 없습니다.</p>
+</div>
+<ul>
+<li>서비스 작업 패널의 「사용자 정의 속성」에는 정의에 없는 <code>test</code> = <code>value</code> 줄이 늘 보입니다(패널 기본값). 패널에서 저장한다면 이 줄을 지우세요.</li>
+<li>SQL 작업이 실패하면(표가 없음, 제약 위반) 앞 작업의 완료가 HTTP 500으로 거절되고 인스턴스는 그 작업에 머뭅니다. 오류 경계를 붙이면 다른 경로로 보낼 수 있습니다(<a href="error-and-compensation.html">실패 경로와 되돌리기</a>).</li>
+<li>세 SQL 작업은 같은 완료 요청 안에서 차례로 실행됩니다. 이 예제에서는 차감이 실패하면 앞의 조회 결과 변수도 함께 되돌려집니다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>「부서」에 `구매2팀`처럼 표에 없는 부서를 넣으면 어떻게 되나요?</summary>
+<p>조회는 행이 없어 <code>예산잔액</code>이 채워지지 않고, <code>update</code>는 0행을 고치고 끝납니다. 오류가 아니므로 프로세스는 「결과 확인」으로 갑니다. 없는 부서를 막으려면 조회 뒤에 게이트웨이를 두어 <code>예산잔액</code>을 검사하세요.</p>
+</details>
+<details class="answer">
+<summary>「처리자 기록」은 SQL을 쓰지 않았는데 어떻게 `updated_by`를 바꿨나요?</summary>
+<p>데이터베이스 매핑(<code>DatabaseMappingStrategy</code>, <code>queryMode: UPDATE</code>)이 표·열과 변수의 대응 관계로 <code>update tut_budget set updated_by = ? where dept = ?</code>를 만들어 실행했습니다. <code>isKey: true</code>인 열이 <code>where</code> 조건이 됩니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="rest-service-task.html"><span>이전</span>REST API 부르기 (서비스 작업)</a><a class="next" href="event-integration-kafka.html"><span>다음</span>이벤트로 시스템 잇기 (Kafka)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#세-작업의-json">세 작업의 JSON</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

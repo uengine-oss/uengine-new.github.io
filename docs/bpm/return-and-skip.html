@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>반송과 SKIP — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="**반송**은 현재 작업을 되돌리고 앞 단계의 담당자에게 그 단계를 새 작업으로 다시 만듭니다. **SKIP**은 현재 작업을 건너뛰고 다음 단계로 진행합니다. 둘 다 작업 화면의 버튼으로 처리하며 사유를 남깁니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/return-and-skip.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="반송과 SKIP — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="**반송**은 현재 작업을 되돌리고 앞 단계의 담당자에게 그 단계를 새 작업으로 다시 만듭니다. **SKIP**은 현재 작업을 건너뛰고 다음 단계로 진행합니다. 둘 다 작업 화면의 버튼으로 처리하며 사유를 남깁니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/return-and-skip.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html" class="on" aria-current="page"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">사람 작업<span class="chap">10</span></div>
+    <h1>반송과 SKIP</h1>
+    <article>
+<blockquote>
+<p><strong>반송</strong>은 현재 작업을 되돌리고 앞 단계의 담당자에게 그 단계를 새 작업으로 다시 만듭니다. <strong>SKIP</strong>은 현재 작업을 건너뛰고 다음 단계로 진행합니다. 둘 다 작업 화면의 버튼으로 처리하며 사유를 남깁니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/poQQyKqcCBc" title="반송과 SKIP — 영상 1:28" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>결재에는 「보완해서 다시 올려 주세요」와 「이 건은 결재 없이 넘어갑니다」가 늘 있습니다. BPMN으로 그리면 되돌림 흐름과 조건 분기가 작업마다 붙습니다.
+uEngine6는 이 두 기능을 실행 중 조작으로 제공합니다. 정의에 화살표를 더 그리지 않고 처리할 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>반송</th>
+<th>SKIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>지금 작업</td>
+<td>되돌려짐(<code>COMPENSATED</code>)</td>
+<td><code>SKIPPED</code>(건너뜀), 끝난 것으로 봄</td>
+</tr>
+<tr>
+<td>다음 일</td>
+<td>고른 앞 단계를 그 단계의 담당자에게 <strong>새 작업으로</strong> 다시 만듦(되돌리기, backToHere)</td>
+<td>흐름이 다음 단계로 진행</td>
+</tr>
+<tr>
+<td>사유</td>
+<td>선택(「반송 사유(선택)」)</td>
+<td>필수</td>
+</tr>
+<tr>
+<td>API</td>
+<td><code>POST /work-item/{taskId}/return</code></td>
+<td><code>POST /work-item/{taskId}/skip</code></td>
+</tr>
+<tr>
+<td>가능 여부 확인</td>
+<td><code>GET /work-item/{taskId}/return/availability</code> (반송 대상 후보 포함)</td>
+<td><code>GET /work-item/{taskId}/skip/availability</code></td>
+</tr>
+</tbody>
+</table>
+<p>반송은 관리자 화면의 「이 위치로 되돌리기」(<a href="back-to-here.html">되돌리기와 실패한 작업 다루기</a>)와 같은 엔진 동작을, 작업 담당자가 자기 화면에서 하는 것입니다.
+<strong>위임</strong>(다른 사람에게 넘기기)은 이 브랜치의 작업 화면에 버튼이 보이지 않아 <a href="rest-api.html">REST API</a>(<code>POST /work-item/{taskId}/delegate</code>)로 합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">이 장의 예제</p>
+<p>프로세스 <code>튜토리얼/반송/구매결재</code> — 최구매 「구매 요청」 → 윤팀장(사용자 직접 지정 <code>yoon</code>) 「구매 결재」. 녹화 전에 최구매가 노트북 3대(2,400,000원)와 볼펜 10자루(15,000원)를 요청해 두었습니다.</p>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>작업 열기.</strong> 윤팀장(<code>yoon</code>)의 업무 목록에서 노트북 건 「구매 결재」를 엽니다. 품목·금액은 in 매핑으로 채워져 있습니다.
+</li>
+<li><strong>반송.</strong> 「반송」을 누르면 「태스크 반송」 창의 「반송 대상(이전 단계) 선택」에 앞 단계 「구매 요청」(<code>choi · #&lt;작업 번호&gt;</code>)이 선택되어 있습니다. 「반송 사유(선택)」에 <code>견적서를 첨부해 다시 올려 주세요.</code>를 적고 「반송 요청」을 누릅니다.
+
+<figure><a href="img/return-and-skip-return.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="태스크 반송" src="img/return-and-skip-return.webp" loading="lazy" decoding="async"></a><figcaption>태스크 반송</figcaption></figure>
+</li>
+<li><strong>결과.</strong> 결재 작업과 앞의 「구매 요청」은 되돌려진 상태(<code>COMPENSATED</code>)가 되고, 같은 인스턴스에 최구매가 담당하는 「구매 요청」이 새로 생깁니다. 화면은 인스턴스 화면으로 넘어갑니다.
+</li>
+<li><strong>다시 제출.</strong> 최구매(<code>choi</code>)의 업무 목록에 「구매 요청」이 다시 표시됩니다. 열어서 품목을 <code>노트북 3대 (견적서 첨부: Q-2611-07)</code>로 고치고 금액을 넣어 「완료」를 누르면, 윤팀장에게 「구매 결재」가 새로 배정됩니다(인스턴스 히스토리: 새 결재 <code>NEW</code>, 다시 제출한 요청 <code>COMPLETED</code>, 앞의 둘 <code>COMPENSATED</code>).
+
+<figure><a href="img/return-and-skip-resubmit.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="다시 온 구매 요청" src="img/return-and-skip-resubmit.webp" loading="lazy" decoding="async"></a><figcaption>다시 온 구매 요청</figcaption></figure>
+</li>
+<li><strong>SKIP.</strong> 윤팀장이 볼펜 건 「구매 결재」를 열고 「SKIP」을 누릅니다. 「태스크 SKIP」 창에 사유 <code>소액 구매라 결재를 생략합니다.</code>를 적고 「SKIP」을 누르면, 「태스크를 건너뛰었습니다.」가 뜹니다. 작업은 <code>SKIPPED</code>로 끝나며 인스턴스가 다음 단계(여기서는 끝, 「Completed」)로 진행합니다.
+
+<figure><a href="img/return-and-skip-skip.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="태스크 SKIP" src="img/return-and-skip-skip.webp" loading="lazy" decoding="async"></a><figcaption>태스크 SKIP</figcaption></figure>
+</li>
+<li><strong>기록 보기.</strong> 관리자 화면 <code>/admin/&lt;인스턴스 번호&gt;</code>의 「히스토리」 탭에 되돌려진 요청·결재, 다시 생긴 요청, 다시 올라간 결재가 차례로 남습니다.
+
+<figure><a href="img/return-and-skip-history.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="인스턴스 히스토리" src="img/return-and-skip-history.webp" loading="lazy" decoding="async"></a><figcaption>인스턴스 히스토리</figcaption></figure>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">찍은 뒤 꼭: 사유 LOB 정리</p>
+<p>이 브랜치는 반송·SKIP 사유를 PostgreSQL 대용량 객체(<code>bpm_worklist.reason</code>, oid)로 저장합니다. 사유가 저장된 행이 조회되는 사람의 업무 목록(<code>findToDo</code>)은
+<code>500 "Unable to access lob stream"</code>이 되고, 화면에는 오류 없이 <strong>빈 목록</strong>만 보입니다. 반송 사유는 앞 단계 담당자(최구매)의 원래 작업 행(<code>COMPENSATED</code>, 완료 상태가 아니어서 최구매의 할 일 조회에 포함됩니다)에, SKIP 사유는 건너뛴 작업 행에 남습니다. 반송 요청이 끝나기 전에 비우면 그 뒤에 사유가 기록되므로, 새 작업이 생긴 것을 본 뒤에 비우세요.
+이 장을 녹화할 때는 반송·SKIP 직후 시연 데이터의 사유를 바로 비웠습니다. 시험 환경에서는 아래처럼 비울 수 있습니다(운영 데이터에 하지 마세요).</p>
+<p><code>sql
+-- 튜토리얼/반송/ 인스턴스의 사유만
+SELECT lo_unlink(w.reason) FROM bpm_worklist w JOIN bpm_procinst p ON p.inst_id = w.inst_id
+ WHERE p.def_id LIKE '튜토리얼/반송/%' AND w.reason IS NOT NULL;
+UPDATE bpm_worklist w SET reason = NULL FROM bpm_procinst p
+ WHERE p.inst_id = w.inst_id AND p.def_id LIKE '튜토리얼/반송/%' AND w.reason IS NOT NULL;</code></p>
+</div>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<p>정의에는 반송·SKIP을 위한 설정이 따로 없습니다. 사람 작업이면 어느 작업에서든 사용할 수 있습니다.</p>
+<h3 id="api">API<a class="anchor" href="#api" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code><span class="c1"># 반송할 수 있는지와 대상 후보</span>
+curl<span class="w"> </span>http://localhost:9294/work-item/&lt;taskId&gt;/return/availability<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+<span class="c1"># 반송 — 대상은 앞 단계의 작업 번호(targetTaskId) 또는 활동 ID(tracingTag)</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/work-item/&lt;taskId&gt;/return<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;targetTaskId&quot;: &lt;앞 단계 작업 번호&gt;, &quot;reason&quot;: &quot;견적서를 첨부해 다시 올려 주세요.&quot;}&#39;</span>
+<span class="c1"># SKIP — 사유 필수, 작업 주인만</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:9294/work-item/&lt;taskId&gt;/skip<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;reason&quot;: &quot;소액 구매라 결재를 생략합니다.&quot;, &quot;source&quot;: &quot;WORKITEM&quot;}&#39;</span>
+</code></pre></div>
+
+<h3 id="작업-항목에-남는-것">작업 항목에 남는 것<a class="anchor" href="#작업-항목에-남는-것" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>지금 작업 행</th>
+<th>앞 단계(반송 대상)의 원래 행</th>
+<th>새로 생기는 행</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>반송</td>
+<td><code>status = COMPENSATED</code>, <code>description</code>에 <code>[RETURN] to=&lt;활동&gt; reason=…</code></td>
+<td><code>status = COMPENSATED</code>, <code>decision = RETURN</code>, <code>reason</code> = 사유(LOB)</td>
+<td>앞 단계 활동, 그 담당자 앞, <code>NEW</code></td>
+</tr>
+<tr>
+<td>SKIP</td>
+<td><code>status = SKIPPED</code>, <code>reason</code> = 사유(LOB), <code>description</code>에 <code>[SKIP] reason=…</code></td>
+<td>—</td>
+<td>다음 단계의 작업</td>
+</tr>
+</tbody>
+</table>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">이 브랜치에서 확인한 것</p>
+<ul>
+<li><strong>사유 LOB이 남으면 업무 목록이 비어 있습니다</strong>(위 경고). 반송·SKIP을 시험한 뒤에는 사유를 정리하세요.</li>
+<li><strong>관리자라도 남의 작업은 SKIP 할 수 없습니다</strong>(<code>403 No permission to skip … currentOwner=…</code>). 작업 담당자로 로그인해 실행하세요.</li>
+<li><strong>위임 화면이 없습니다.</strong> 작업 화면 오른쪽 위의 위임 아바타가 보이지 않고, 업무 목록의 「선택 N건 위임」은 게이트웨이 라우트가 없어 아무 일도 하지 않습니다. <code>POST /work-item/{taskId}/delegate {"targetType":"USER","endpoint":"&lt;사용자 이름&gt;","resourceName":"&lt;사용자 이름&gt;"}</code>는 동작합니다(<a href="rest-api.html">REST API</a>).</li>
+<li>반송 대상 후보는 같은 인스턴스에서 이미 끝난 앞 단계 사람 작업입니다(<code>GET /work-item/{taskId}/return/availability</code>의 <code>candidates</code>).</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>반송한 뒤 최구매의 업무 목록이 텅 비었고 오류도 없습니다. 무엇을 의심하나요?</summary>
+<p>반송 사유 LOB입니다. 사유는 최구매의 원래 「구매 요청」 행에 저장되고, 그 행이 최구매의 <code>findToDo</code> 결과에 포함되어 500 오류가 납니다. 시험 환경이면 그 사유를 비우세요.</p>
+</details>
+<details class="answer">
+<summary>반송과 SKIP 중 사유 없이 할 수 있는 것은 무엇인가요?</summary>
+<p>반송입니다. 「반송 사유(선택)」는 비워도 됩니다. SKIP은 사유를 적어야 「SKIP」 버튼을 누를 수 있습니다.</p>
+</details>
+<details class="answer">
+<summary>윤팀장이 휴가라 결재를 김대표에게 넘기려면 어떻게 하나요?</summary>
+<p>이 브랜치에는 위임 화면이 없으므로 REST API <code>POST /work-item/{taskId}/delegate</code>에 <code>{"targetType":"USER","endpoint":"kim","resourceName":"kim"}</code>을 보냅니다. 원래 작업은 <code>DELEGATED</code>가 되고 김대표 앞으로 새 작업이 생깁니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="tasklist.html"><span>이전</span>업무 목록에서 일하기</a><a class="next" href="external-task-screen.html"><span>다음</span>다른 앱 화면을 작업으로 (URL 작업)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#api">API</a></li><li><a href="#작업-항목에-남는-것">작업 항목에 남는 것</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API로 같은 일 하기 — uEngine6 BPM 튜토리얼</title>
+<meta name="description" content="[첫 프로세스](quickstart.html)에서 화면으로 한 일을 curl로 합니다. 토큰을 받고, 인스턴스를 시작하고, 내 할 일에서 작업을 찾아 완료하고, 변수를 쓰고 읽은 뒤, 관리자 화면에서 같은 기록을 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/bpm/quickstart-api.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="API로 같은 일 하기 — uEngine6 BPM 튜토리얼">
+<meta property="og:description" content="[첫 프로세스](quickstart.html)에서 화면으로 한 일을 curl로 합니다. 토큰을 받고, 인스턴스를 시작하고, 내 할 일에서 작업을 찾아 완료하고, 변수를 쓰고 읽은 뒤, 관리자 화면에서 같은 기록을 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/bpm/quickstart-api.html">
+<meta property="og:image" content="https://www.uengine.org/docs/bpm/img/erp-process.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine6 BPM <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 선점, 게이트웨이, 이벤트로 끝내기)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/uengine6bpm.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>uEngine6 BPM 튜토리얼</a></li>
+<li><a href="install-local.html"><span class="n">01</span>내 PC에 설치하기</a></li>
+<li><a href="quickstart.html"><span class="n">02</span>첫 프로세스 만들고 실행하기</a></li>
+<li><a href="quickstart-api.html" class="on" aria-current="page"><span class="n">03</span>API로 같은 일 하기</a></li>
+</ul>
+<div class="nav-part">모델링</div><ul>
+<li><a href="modeler-tour.html"><span class="n">04</span>모델러 둘러보기</a></li>
+<li><a href="process-data.html"><span class="n">05</span>프로세스 변수와 인스턴스 이름</a></li>
+<li><a href="lanes-and-roles.html"><span class="n">06</span>레인과 담당자 (그룹·역할·선점)</a></li>
+<li><a href="arguments-and-mapping.html"><span class="n">07</span>작업 입력값과 데이터 매핑</a></li>
+</ul>
+<div class="nav-part">사람 작업</div><ul>
+<li><a href="forms.html"><span class="n">08</span>폼 붙이기</a></li>
+<li><a href="tasklist.html"><span class="n">09</span>업무 목록에서 일하기</a></li>
+<li><a href="return-and-skip.html"><span class="n">10</span>반송과 SKIP</a></li>
+<li><a href="external-task-screen.html"><span class="n">11</span>다른 앱 화면을 작업으로 (URL 작업)</a></li>
+</ul>
+<div class="nav-part">흐름 제어</div><ul>
+<li><a href="exclusive-gateway.html"><span class="n">12</span>조건으로 갈라지기 (배타 게이트웨이)</a></li>
+<li><a href="parallel-inclusive-gateway.html"><span class="n">13</span>동시에 진행하고 기다리기 (병렬·포괄 게이트웨이)</a></li>
+<li><a href="script-task.html"><span class="n">14</span>스크립트로 값 계산 (스크립트 작업)</a></li>
+<li><a href="business-rule-dmn.html"><span class="n">15</span>결재선을 규칙표로 (DMN)</a></li>
+<li><a href="call-activity.html"><span class="n">16</span>공통 프로세스 불러 쓰기 (콜 액티비티)</a></li>
+<li><a href="multi-instance.html"><span class="n">17</span>공급사마다 견적 받기 (다중 인스턴스)</a></li>
+</ul>
+<div class="nav-part">이벤트</div><ul>
+<li><a href="message-start.html"><span class="n">18</span>외부 이벤트로 프로세스 시작하기</a></li>
+<li><a href="event-completion.html"><span class="n">19</span>작업을 이벤트로 끝내기</a></li>
+<li><a href="error-and-compensation.html"><span class="n">20</span>실패 경로와 되돌리기 (오류·보상)</a></li>
+</ul>
+<div class="nav-part">시스템 연동</div><ul>
+<li><a href="rest-service-task.html"><span class="n">21</span>REST API 부르기 (서비스 작업)</a></li>
+<li><a href="sql-task.html"><span class="n">22</span>데이터베이스 읽고 쓰기 (SQL 작업)</a></li>
+<li><a href="event-integration-kafka.html"><span class="n">23</span>이벤트로 시스템 잇기 (Kafka)</a></li>
+</ul>
+<div class="nav-part">운영</div><ul>
+<li><a href="instance-monitoring.html"><span class="n">24</span>인스턴스 찾고 살피기</a></li>
+<li><a href="fix-variables.html"><span class="n">25</span>실행 중 변수 고치기</a></li>
+<li><a href="back-to-here.html"><span class="n">26</span>되돌리기와 실패한 작업 다루기</a></li>
+<li><a href="test-before-deploy.html"><span class="n">27</span>배포 전에 시험하기</a></li>
+<li><a href="versions-and-deploy.html"><span class="n">28</span>버전과 배포</a></li>
+<li><a href="analytics-kpi.html"><span class="n">29</span>분석과 KPI</a></li>
+</ul>
+<div class="nav-part">API·보안</div><ul>
+<li><a href="rest-api.html"><span class="n">30</span>REST API 레퍼런스</a></li>
+<li><a href="security-keycloak.html"><span class="n">31</span>사용자·그룹·역할 (Keycloak)</a></li>
+</ul>
+<div class="nav-part">산업 예제</div><ul>
+<li><a href="industry-banking-sor.html"><span class="n">32</span>금융: 계정계와 이벤트로만 잇기</a></li>
+<li><a href="industry-erp-purchase.html"><span class="n">33</span>ERP: 구매 발주 결재와 대금 지급</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="bpmn-coverage.html"><span class="n">34</span>BPMN 지원 범위</a></li>
+<li><a href="extend-engine.html"><span class="n">35</span>엔진 확장하기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap">3</span></div>
+    <h1>API로 같은 일 하기</h1>
+    <article>
+<blockquote>
+<p><a href="quickstart.html">첫 프로세스</a>에서 화면으로 한 일을 curl로 합니다. 토큰을 받고, 인스턴스를 시작하고, 내 할 일에서 작업을 찾아 완료하고, 변수를 쓰고 읽은 뒤, 관리자 화면에서 같은 기록을 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/bp34lGc53P4" title="API로 같은 일 하기 — 영상 1:27" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>다른 시스템에서 프로세스를 시작하거나 해당 시스템의 화면에서 작업을 완료할 때는 REST API를 씁니다. 이 장에서는 가장 짧은 경로만 따라갑니다. 전체 목록은 <a href="rest-api.html">REST API 레퍼런스</a>에 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>요청</th>
+<th>핵심</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>토큰</td>
+<td><code>POST :8280/realms/uengine/protocol/openid-connect/token</code></td>
+<td>클라이언트 <code>uengine</code>, 비밀번호 방식</td>
+</tr>
+<tr>
+<td>시작</td>
+<td><code>POST /instance</code></td>
+<td>본문 <code>{"processDefinitionId": "&lt;정의 아이디&gt;"}</code></td>
+</tr>
+<tr>
+<td>내 할 일</td>
+<td><code>GET /worklist/search/findToDo</code></td>
+<td>작업 번호는 <code>_links.self.href</code>의 끝</td>
+</tr>
+<tr>
+<td>완료</td>
+<td><code>POST /work-item/&lt;작업 번호&gt;/complete</code></td>
+<td>아규먼트 값은 <code>parameterValues</code></td>
+</tr>
+<tr>
+<td>변수</td>
+<td><code>POST /instance/&lt;번호&gt;/variable/&lt;이름&gt;</code>, <code>GET /instance/&lt;번호&gt;/variables</code></td>
+<td>값은 JSON, 프로세스 변수 키는 <code>:이름</code></td>
+</tr>
+<tr>
+<td>상태</td>
+<td><code>GET /instance/&lt;번호&gt;</code></td>
+<td><code>status</code>가 <code>Completed</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>요청은 모두 게이트웨이 <code>http://localhost:8288</code>로 보내고 <code>Authorization: Bearer &lt;토큰&gt;</code>을 붙입니다. 이 스택에서는 세션 쿠키 없이 Bearer만으로 통과합니다.</li>
+<li>사용자를 가리키는 값(<code>endpoint</code>)은 이메일이 아니라 <strong>사용자 이름</strong>(<code>hong</code>)입니다.</li>
+<li>결과에서 필요한 부분만 보기 위해 <code>jq</code>를 씁니다.</li>
+</ul>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<p>영상은 터미널에서 아래 명령을 실행한 결과를 그대로 촬영했습니다(토큰 값만 앞 24자로 줄였습니다).</p>
+<ol class="steps">
+<li><strong>토큰을 받습니다.</strong>
+
+
+<div class="hl"><pre><span></span><code><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8280/realms/uengine/protocol/openid-connect/token<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="nv">client_id</span><span class="o">=</span>uengine<span class="w"> </span>-d<span class="w"> </span><span class="nv">grant_type</span><span class="o">=</span>password<span class="w"> </span>-d<span class="w"> </span><span class="nv">username</span><span class="o">=</span>hong<span class="w"> </span>-d<span class="w"> </span><span class="nv">password</span><span class="o">=</span><span class="m">1234</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.access_token<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">TOKEN</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">24</span><span class="si">}</span><span class="s2">…&quot;</span>
+</code></pre></div>
+
+
+</li>
+<li><strong>인스턴스를 시작합니다.</strong> 정의 아이디는 화면에서 저장한 경로에서 <code>.bpmn</code>을 뺀 값입니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8288/instance<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json;charset=UTF-8&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;processDefinitionId&quot;:&quot;튜토리얼/빠른시작/구매결재&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{instanceId, name, status}&#39;</span>
+</code></pre></div>
+
+
+
+영상에서 받은 응답:
+
+
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;instanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;386&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매 결재__2026-11-05&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Running&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/quickstart-api-start.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시작과 내 할 일" src="img/quickstart-api-start.webp" loading="lazy" decoding="async"></a><figcaption>시작과 내 할 일</figcaption></figure>
+</li>
+<li><strong>내 할 일에서 작업을 찾습니다.</strong> 응답 본문에는 <code>taskId</code>가 없고, <code>_links.self.href</code> 끝의 숫자가 작업 번호입니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8288/worklist/search/findToDo<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;._embedded.worklist[] | select((.instId|tostring) == &quot;&lt;인스턴스 번호&gt;&quot;)</span>
+<span class="s1">        | {taskId: (._links.self.href | split(&quot;/&quot;) | last), title, status, endpoint}&#39;</span>
+</code></pre></div>
+
+
+
+영상에서 받은 응답:
+
+
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;taskId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;644&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매 요청&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NEW&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hong&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+작업 번호는 <code>644</code>입니다. 다음 단계의 <code>&lt;작업 번호&gt;</code> 자리에 넣습니다.
+</li>
+<li><strong>작업을 완료합니다.</strong> 아규먼트 값을 <code>parameterValues</code>로 보냅니다. 성공하면 본문 없이 <code>200</code>을 반환합니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s1">&#39;%{http_code}\n&#39;</span><span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8288/work-item/&lt;작업<span class="w"> </span>번호&gt;/complete<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json;charset=UTF-8&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;parameterValues&quot;:{&quot;품목&quot;:&quot;모니터 2대&quot;,&quot;금액&quot;:600000}}&#39;</span>
+</code></pre></div>
+
+
+</li>
+<li><strong>변수를 쓰고 읽습니다.</strong> 작업에 보낸 아규먼트 값(품목·금액)은 데이터 매핑을 하지 않아 프로세스 변수에 저장되지 않습니다. 변수는 API로 직접 쓸 수 있습니다. 값은 JSON으로 해석되므로 문자열은 따옴표를 포함해 보냅니다. 한글 이름은 주소에 넣을 때 인코딩합니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s1">&#39;%{http_code}\n&#39;</span><span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:8288/instance/&lt;인스턴스 번호&gt;/variable/</span><span class="k">$(</span>jq<span class="w"> </span>-rn<span class="w"> </span>--arg<span class="w"> </span>v<span class="w"> </span>메모<span class="w"> </span><span class="s1">&#39;$v|@uri&#39;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json;charset=UTF-8&#39;</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;&quot;급하게 필요합니다&quot;&#39;</span>
+curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8288/instance/&lt;인스턴스<span class="w"> </span>번호&gt;/variables<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;with_entries(select(.key | test(&quot;품목|금액|메모&quot;)))&#39;</span>
+</code></pre></div>
+
+
+
+두 요청 모두 <code>200</code>을 반환하고, 변수 목록에는 직접 쓴 값만 있습니다(품목·금액은 없습니다).
+
+
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;:메모&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;급하게 필요합니다&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+<figure><a href="img/quickstart-api-vars.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="변수 쓰고 읽기" src="img/quickstart-api-vars.webp" loading="lazy" decoding="async"></a><figcaption>변수 쓰고 읽기</figcaption></figure>
+</li>
+<li><strong>다음 작업 「결재」를 완료합니다.</strong> 3단계의 요청으로 다시 조회하면 「결재」가 보입니다. 같은 방식으로 <code>{"parameterValues":{"결재의견":"승인합니다"}}</code>를 보내 완료합니다.
+</li>
+<li><strong>상태를 확인합니다.</strong>
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8288/instance/&lt;인스턴스<span class="w"> </span>번호&gt;<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;{instanceId, name, status}&#39;</span>
+</code></pre></div>
+
+
+
+영상에서 받은 응답:
+
+
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;instanceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;386&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;구매 결재__2026-11-05&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Completed&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+</li>
+<li><strong>화면에서도 확인합니다.</strong> 관리자 화면 <code>/admin/&lt;인스턴스 번호&gt;</code>의 「히스토리」 탭에 API로 끝낸 두 작업이 <code>COMPLETED</code>로 남아 있습니다.
+
+<figure><a href="img/quickstart-api-admin.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="관리자 화면" src="img/quickstart-api-admin.webp" loading="lazy" decoding="async"></a><figcaption>관리자 화면</figcaption></figure>
+</li>
+</ol>
+<h2 id="설정-레퍼런스">설정 레퍼런스<a class="anchor" href="#설정-레퍼런스" title="Permanent link">#</a></h2>
+<h3 id="요청-본문">요청 본문<a class="anchor" href="#요청-본문" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>요청</th>
+<th>본문</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /instance</code></td>
+<td><code>{"processDefinitionId": "튜토리얼/빠른시작/구매결재"}</code></td>
+<td>선택: <code>roleMappings</code>(레인 → 사용자 이름), <code>correlationKeyValue</code>, <code>processVariableValues</code></td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/complete</code></td>
+<td><code>{"parameterValues": {"품목": "모니터 2대", "금액": 600000}}</code></td>
+<td>담당자 본인만 완료할 수 있습니다. 다른 사용자는 <code>403 Only the current work item owner can complete this task</code></td>
+</tr>
+<tr>
+<td><code>POST /instance/{id}/variable/{이름}</code></td>
+<td>JSON 값(<code>"급하게 필요합니다"</code>, <code>600000</code>, <code>{"a":1}</code> …)</td>
+<td>이름은 URL 인코딩</td>
+</tr>
+</tbody>
+</table>
+<h3 id="응답-구조">응답 구조<a class="anchor" href="#응답-구조" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>요청</th>
+<th>응답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /instance</code> · <code>GET /instance/{id}</code></td>
+<td><code>{"name", "instanceId", "status", "defVer", "corrkey", "_links": {…}}</code></td>
+</tr>
+<tr>
+<td><code>GET /worklist/search/findToDo</code></td>
+<td>HAL: <code>{"_embedded": {"worklist": [{"title", "status", "endpoint", "instId", "trcTag", "dispatchOption", …, "_links": {"self": {"href": ".../worklist/&lt;작업 번호&gt;"}}}]}}</code> — 완료되지 않은 내 작업 전부</td>
+</tr>
+<tr>
+<td><code>POST /work-item/{taskId}/complete</code></td>
+<td><code>200</code>, 빈 본문</td>
+</tr>
+<tr>
+<td><code>GET /instance/{id}/variables</code></td>
+<td>엔진이 저장한 모든 값입니다. 프로세스 변수는 <code>":메모"</code>처럼 <code>:</code>로 시작. <code>UserTask_1:_status:prop</code> 같은 키는 엔진 내부 상태</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">저장소 매뉴얼과 다른 점</p>
+<p>uEngine6 저장소의 <code>docs/local-install-guide.md</code>(2026-08-19)는 「<code>endpoints</code> 는 이메일」, 「게이트웨이는 쿠키와 Bearer 가 둘 다 필요」라고 적었습니다. 이 튜토리얼의 브랜치 상태에서는 사용자 이름을 쓰고, Bearer만으로 통과합니다.</p>
+</div>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>우회</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /instance/{id}/variable/{한글 이름}</code>의 값이 <code>???</code>로 깨짐</td>
+<td><code>GET /instance/{id}/variables</code>에서 <code>:이름</code> 키의 값을 읽습니다</td>
+</tr>
+<tr>
+<td>시작 응답의 <code>corrkey</code>가 <code>null</code> (상관 키를 넣어도)</td>
+<td><code>GET /work-item?corrKey=&lt;키&gt;</code>로는 찾을 수 있습니다</td>
+</tr>
+<tr>
+<td><code>findToDo</code>에 다른 인스턴스의 작업도 섞여 나옴</td>
+<td><code>instId</code>로 거르거나 <code>GET /instance/{id}/worklists</code>를 씁니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>완료할 때 보낸 「품목」이 `/variables`에 없는 까닭은 무엇인가요?</summary>
+<p>「품목」은 작업의 아규먼트이고, 이 정의에는 아규먼트 → 프로세스 변수 매핑이 없습니다. 매핑을 넣거나(<a href="arguments-and-mapping.html">작업 입력값과 데이터 매핑</a>), <code>POST /instance/{id}/variable/{이름}</code>으로 직접 씁니다.</p>
+</details>
+<details class="answer">
+<summary>`findToDo` 응답에서 작업 번호는 어디에 있나요?</summary>
+<p>본문 필드에는 없고 <code>_links.self.href</code>(<code>…/worklist/&lt;작업 번호&gt;</code>)의 끝에 있습니다. 인스턴스의 작업을 번호와 함께 보려면 <code>GET /instance/{id}/worklists</code>가 편합니다.</p>
+</details>
+<details class="answer">
+<summary>윤팀장의 토큰으로 홍길동의 「구매 요청」을 완료하면 어떻게 되나요?</summary>
+<p><code>403 Only the current work item owner can complete this task</code>를 반환합니다. 작업은 담당자 본인만 완료할 수 있습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="quickstart.html"><span>이전</span>첫 프로세스 만들고 실행하기</a><a class="next" href="modeler-tour.html"><span>다음</span>모델러 둘러보기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 uEngine6 (bmt/sds-process-test 브랜치)을 로컬에서 실제로 실행해 얻었습니다. 회사와 사람은 가상입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#설정-레퍼런스">설정 레퍼런스</a><ul><li><a href="#요청-본문">요청 본문</a></li><li><a href="#응답-구조">응답 구조</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
