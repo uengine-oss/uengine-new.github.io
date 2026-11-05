@@ -535,8 +535,8 @@
                             <h3 class="section-title mb-20 mt-n20" style="line-height: 1.4;"><span class="wow charsAnimIn" data-splitting="chars">왜 ERP를 새로 만들어야 하나요?</span></h3>
                             <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">에이전트가 ERP에서 전표를 올리고, 지급하고, 재고를 움직이기 시작했습니다. 이제 ERP는 지금 숫자뿐 아니라 누가 어떤 요청으로 무엇을 했고 그 일이 무엇과 묶였는지를 원본으로 가져야 합니다. 그래야 잘못된 일만 골라 되돌리고, 감사에 답할 수 있습니다.</p>
                         </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch erp-why-table" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>데이터</th><th>상태 기반 데이터</th><th>에이전트가 일할 때 필요한 것</th><th>이벤트 기반 데이터(이벤트 소싱)</th></tr></thead><tbody><tr><td>매입 청구서</td><td>BILL/2026/11/0001, 상태 "지급 완료"</td><td>누가, 어떤 요청으로, 얼마를 게시했는지</td><td><code>InvoicePosted</code> 1,100,000원. 행위자 정회계, 출처 에이전트(MCP), 사유 "매입 전표 처리(승인번호 20261103-41000000-00001234)"</td></tr><tr><td>지급</td><td>PAY/2026/00001, 상태</td><td>취소할 때 그때 금액으로 반대 거래를 만들 근거</td><td><code>PaymentPosted</code>. 취소하면 지우지 않고 <code>PaymentCancelled</code>를 더합니다</td></tr><tr><td>재고</td><td>에어서큘레이터 모터 20개</td><td>이 20개가 어느 청구서 때문에 들어왔는지</td><td>재고 모듈이 <code>PickingValidated</code> WH/IN/00001을 같은 업무 번호로 남깁니다</td></tr><tr><td>회계 전표와 부가세</td><td>계정 잔액과 신고 칸의 합계</td><td>어느 업무에서 나온 분개와 신고 금액인지</td><td>회계 모듈의 <code>JournalEntryPosted</code>, 세금 모듈의 <code>VatEntryRecorded</code>가 같은 업무 번호로 쌓입니다</td></tr><tr><td>되돌린 뒤</td><td>이전 값으로 덮인 숫자</td><td>실수와 정정이 둘 다 남는 것</td><td>처리 21줄과 취소 21줄. 지운 줄은 없고, 이번 업무의 재고와 계정 순변화는 0입니다</td></tr></tbody></table></div>
-                        <p class="hj-note mt-20 mb-50 text-center">이 업무 번호를 사가 번호라고 합니다. 위 표는 Process GPT Lite가 MCP로 가상 회사 가온가전의 세금계산서 한 장을 처리하고 “방금 그거 취소할게”라는 요청으로 되돌린 실제 실행 기록이며, 줄 이름은 장부에 남는 이름 그대로입니다.</p>
+                        <div style="overflow-x: auto;"><table class="hj-arch erp-why-table" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>데이터</th><th>상태 기반 데이터</th><th>에이전트가 일할 때 필요한 것</th><th>이벤트 기반 데이터(이벤트 소싱)</th></tr></thead><tbody><tr><td>매입 청구서</td><td>BILL/2026/11/0001, 상태 "지급 완료"</td><td>누가, 어떤 요청으로, 얼마를 게시했는지</td><td><code>InvoicePosted</code> 1,100,000원. 행위자 정회계, 출처 에이전트(MCP), 사유 "매입 전표 처리(승인번호 20261103-41000000-00001234)"</td></tr><tr><td>지급</td><td>PAY/2026/00001, 상태</td><td>취소할 때 그때 금액으로 반대 거래를 만들 근거</td><td><code>PaymentPosted</code>. 취소하면 지우지 않고 <code>PaymentCancelled</code>를 더합니다</td></tr><tr><td>재고</td><td>에어서큘레이터 모터 20개</td><td>이 20개가 어느 청구서 때문에 들어왔는지</td><td>재고 모듈이 <code>PickingValidated</code> WH/IN/00001을 같은 업무 번호로 남깁니다</td></tr><tr><td>회계 전표와 부가세</td><td>계정 잔액과 신고 칸의 합계</td><td>어느 업무에서 나온 분개와 신고 금액인지</td><td>회계 모듈의 <code>JournalEntryPosted</code>, 세금 모듈의 <code>VatEntryRecorded</code>가 같은 업무 번호로 쌓입니다</td></tr><tr><td>되돌린 뒤</td><td>이전 값으로 덮인 숫자</td><td>실수와 정정이 둘 다 남는 것</td><td>처리 21줄과 취소 21줄. 지운 줄은 없고, 이번 업무의 재고와 계정 순변화는 0입니다</td></tr><tr><td>현황판과 보고서</td><td>볼 때마다 집계하거나 밤마다 전체를 다시 계산한 숫자</td><td>방금 한 일까지 반영된 숫자를 사람과 에이전트가 빨리 읽는 것</td><td>읽기 모델이 5초마다 새 이벤트를 반영합니다. 가상 회사의 3년 치 장부에서 현황판 조회는 0.97초에서 0.017초로 줄고, 처음부터 다시 만들어도 0.87초입니다</td></tr><tr><td>업무 흐름</td><td>마지막 상태만 남아 변경 이력을 따로 모아 맞춰야 보이는 흐름</td><td>주문 한 건이 실제로 거친 순서와 에이전트에게 맡길 단계</td><td>장부를 주문부터 수금까지의 사례로 묶어 CSV·XES·OCEL 2.0 로그로 내보냅니다. Process GPT가 이 로그로 BPMN을 그립니다(재현율 100%)</td></tr></tbody></table></div>
+                        <p class="hj-note mt-20 mb-50 text-center">이 업무 번호를 사가 번호라고 합니다. 위 표의 앞 다섯 줄은 Process GPT Lite가 MCP로 가상 회사 가온가전의 세금계산서 한 장을 처리하고 “방금 그거 취소할게”라는 요청으로 되돌린 실제 실행 기록이며, 줄 이름은 장부에 남는 이름 그대로입니다. 마지막 두 줄은 같은 가상 회사의 3년 치 장부(이벤트 4만 5천 건)로 잰 값입니다.</p>
                         <div class="row">
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>장부가 원본입니다</b><span>현재 숫자는 장부의 줄에서 계산합니다. 그래서 어느 시점이든 그때 숫자를 다시 만들 수 있습니다.</span></div></div>
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>업무 하나에 번호 하나</b><span>에이전트의 요청 하나에서 이어진 청구서, 지급, 입고, 전표, 신고 집계가 같은 번호로 묶입니다. 되돌릴 범위를 이 번호로 읽습니다.</span></div></div>
@@ -634,6 +634,26 @@
                             </div>
                         </div>
 
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-readmodels">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../docs/erp/img/read-models-follow.webp" alt="주문을 확정한 뒤 몇 초 안에 따라온 현황판" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">현황판과 읽기 모델</p>
+                                <h3 class="plite-theme-title">보고서와 현황판은 바뀐 부분만 반영합니다</h3>
+                                <p class="plite-theme-lead">이벤트가 들어올 때마다 읽기 모델(CQRS)을 갱신합니다. 다른 곳에서 주문을 확정해도 몇 초 안에 현황판에 반영됩니다.</p>
+                                <ul class="plite-theme-list"><li><strong>같은 결과를 더 빠르게</strong><span>가상 회사의 3년 치 데이터로 비교했습니다. 현황판은 0.97초에서 0.017초로, 최근 12개월 매출은 0.39초에서 0.002초로 줄었고, 결과는 같습니다.</span></li><li><strong>결산은 정확하게</strong><span>재고와 분개는 업무 처리와 같은 트랜잭션에서 갱신한 표를 읽어 정확합니다. 시산표는 0.016초에 나옵니다.</span></li><li><strong>지난 이력으로 다시 만듭니다</strong><span>원장을 기준으로 읽기 모델을 비우고 다시 채우는 데 0.87초가 걸립니다. 새 보고서에도 지난 이력을 모두 담습니다.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-9SkuHnbKmxw">▶ 15장 현황판과 읽기 모델</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-mining">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../docs/erp/img/process-log-derived.webp" alt="Process GPT가 ERP 이벤트 로그로 도출한 주문-수금 프로세스" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">프로세스 마이닝</p>
+                                <h3 class="plite-theme-title">장부에서 업무 흐름을 찾습니다</h3>
+                                <p class="plite-theme-lead">원장 기록을 주문-수금, 구매-지급 건별로 묶어 CSV, XES, OCEL 2.0으로 내보냅니다. Process GPT에 올리면 언어 모델 없이 BPMN으로 업무 흐름을 그립니다.</p>
+                                <ul class="plite-theme-list"><li><strong>쌓인 이력을 그대로 씁니다</strong><span>변경 이력을 따로 뽑을 필요가 없습니다. 순서대로 쌓인 기록에서 업무 건과 활동, 시각, 담당자를 확인합니다.</span></li><li><strong>권한 안에서만 봅니다</strong><span>조회 권한이 없는 문서는 분석할 업무 건에 포함하지 않습니다.</span></li><li><strong>업무 흐름을 검토하고 승인합니다</strong><span>주문 3,287건을 0.1초 안에 그림으로 만듭니다. 재현율은 100%이며, 제안으로 저장해 검토와 승인을 거칩니다.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-itLYSyvS-U8">▶ 16장 프로세스 마이닝 로그와 Process GPT</a></div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -781,6 +801,22 @@
                                 <h4 class="plite-v-title">13장 CRM과 프로젝트</h4>
                                 <p class="plite-v-cap">수주하면 견적 초안을 생성하고, 서비스 주문을 확정하면 프로젝트가 생깁니다. 근거가 부족하면 전망을 범위로만 제시합니다.</p>
                             </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-9SkuHnbKmxw">
+                                <button type="button" class="plite-yt" data-yt="9SkuHnbKmxw" aria-label="15장 현황판과 읽기 모델 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/9SkuHnbKmxw/hqdefault.jpg" alt="15장 현황판과 읽기 모델 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">15장 현황판과 읽기 모델</h4>
+                                <p class="plite-v-cap">다른 브라우저에서 주문을 확정하면 새로 고침 없이 현황판에 반영됩니다. 읽기 모델과 원장의 계산 결과를 비교하고, 일별 매출을 처음부터 다시 만듭니다.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-itLYSyvS-U8">
+                                <button type="button" class="plite-yt" data-yt="itLYSyvS-U8" aria-label="16장 프로세스 마이닝 로그와 Process GPT 영상 재생">
+                                    <img src="https://i.ytimg.com/vi/itLYSyvS-U8/hqdefault.jpg" alt="16장 프로세스 마이닝 로그와 Process GPT 영상 미리보기" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">16장 프로세스 마이닝 로그와 Process GPT</h4>
+                                <p class="plite-v-cap">주문-수금 기록을 건별로 묶어 CSV로 내려받고, Process GPT에서 BPMN으로 그립니다. 재현율은 100%이며, 제안으로 저장해 병합 요청함에서 검토합니다.</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -790,9 +826,9 @@
                     <div class="container position-relative mt-n30 mt-sm-0">
                         <div class="row wow fadeInUp get-started-content"><div>
                             <p class="mb-20 mt-n10" style="font-size: 2.2rem; font-weight: 600;">내 Supabase 프로젝트로 바로 시작하세요</p>
-                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">가상 회사 가온가전으로 먼저 체험할 수도 있습니다. 튜토리얼 1장에서 설치부터 안내합니다. 우리 회사에 맞춘 도입이나 AI 에이전트 연결은 문의해 주세요.</p>
+                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">Supabase 무료 프로젝트에 설치할 수 있습니다. Docker가 있으면 명령 하나로 내 컴퓨터에 설치할 수 있습니다. 가상 회사 가온가전으로 먼저 체험할 수도 있습니다. 두 설치 방법은 튜토리얼 1장에서 안내합니다. 우리 회사에 맞춘 도입이나 AI 에이전트 연결은 문의해 주세요.</p>
                             <div class="local-scroll wow fadeInUp" data-wow-offset="0">
-                                <a href="../docs/erp/index.html" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">튜토리얼</span></a><a href="https://github.com/uengine-oss/uengine-erp" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">GitHub</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">문의하기</span></a>
+                                <a href="../docs/erp/index.html" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">튜토리얼</span></a><a href="https://uengine-oss.github.io/uengine-erp/uengine-erp-docker.zip" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1" download><span style="font-size: 16px;">Docker 설치판 내려받기</span></a><a href="https://github.com/uengine-oss/uengine-erp" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">GitHub</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">문의하기</span></a>
                             </div>
                         </div></div>
                     </div>
@@ -808,7 +844,7 @@
                                     더 궁금한 점이 있으신가요?
                                 </p>
                                 <p class="section-title-tiny mb-50 mb-sm-30">
-                                    <b>uEngine WMS</b>에 대해 더 알고 싶으시거나 문의 사항이 있으시면 언제든지 연락해 주세요.
+                                    <b>uEngine ERP</b>에 대해 더 알고 싶으시거나 문의 사항이 있으시면 언제든지 연락해 주세요.
                                 </p>
                                 <div class="local-scroll">
                                     <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
