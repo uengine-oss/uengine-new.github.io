@@ -198,10 +198,13 @@ for f in files:
 }
 ```
 
-그 다음 실행하고 **경고를 0건으로 만든다**:
+그 다음 **공유 미리보기 카드**를 만들고(페이스북·카카오톡에 붙였을 때 한 줄 가치가 크게 보이게) 실행해 **경고를 0건으로 만든다**:
 ```bash
+python3 .claude/skills/seo-optimize/og_card.py contents/<slug>.html   # images/og/<slug>.jpg, seo-meta 의 image 를 카드로
 python3 .claude/skills/seo-optimize/apply_seo.py
 ```
+카드의 큰 글은 title 의 `—` 뒤(한 줄 가치제안)다. 강점이 보이는 화면을 `--shot <그림> --crop x,y,w,h` 로 넣는다.
+영문판을 만든 뒤 `og_card.py` 를 한 번 더 돌리면 영문 카드도 생긴다. 만든 카드는 열어 본다.
 
 이 단계가 `<title>`·description·canonical·OG/Twitter 카드·`SoftwareApplication` JSON-LD·
 `sitemap.xml` 등록·이미지 지연 로딩까지 한 번에 처리한다. 자세한 규칙은 `seo-optimize` 스킬 참고.

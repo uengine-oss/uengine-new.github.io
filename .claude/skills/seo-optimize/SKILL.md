@@ -13,6 +13,7 @@ description: 유엔진 홈페이지(uengine-new.github.io)의 SEO 메타데이�
 ├── SKILL.md          ← 이 문서
 ├── seo-meta.json     ← 사람이 고치는 유일한 파일 (사이트 설정 + 페이지별 큐레이션 메타)
 ├── apply_seo.py      ← 레지스트리를 읽어 모든 페이지의 <head> 를 다시 씀 (멱등)
+├── og_card.py        ← 공유 미리보기 카드(1200×630 JPG, 한국어·영문) 생성 + seo-meta 의 image 지정
 └── convert_webp.py   ← LCP 후보 이미지 → WebP 변환 (Core Web Vitals)
 ```
 
@@ -97,8 +98,38 @@ python3 .claude/skills/seo-optimize/apply_seo.py --only contents/blog/foo.html
    }
    ```
 
-2. `python3 .claude/skills/seo-optimize/apply_seo.py` 실행.
-3. 출력된 **경고를 0건으로 만든다.** 남아 있으면 SEO가 덜 된 것이다.
+2. **공유 미리보기 카드를 만든다** — `python3 .claude/skills/seo-optimize/og_card.py <페이지>` (아래 「공유 미리보기 카드」).
+   블로그·뉴스 글은 글 이름과 같은 표지(`images/blog/<slug>.jpg`, 제목이 크게 들어간 1200×630)가 있으면 그게 카드다.
+3. `python3 .claude/skills/seo-optimize/apply_seo.py` 실행(페이지 하나면 `--only <페이지>`).
+4. 출력된 **경고를 0건으로 만든다.** 남아 있으면 SEO가 덜 된 것이다.
+5. 영문판이 있는 페이지면 그 한 페이지를 다시 빌드한다(`tools/en-edition/README.md`). og 제목·설명 번역이 tm.json 에 들어간 뒤
+   `og_card.py` 를 한 번 더 돌리면 영문 카드(`images/en/og/<slug>.jpg`)도 생긴다.
+
+## 공유 미리보기 카드 (og_card.py)
+
+페이스북·카카오톡·슬랙에 주소를 붙이면 **og:title(굵은 제목) + og:image(그림)** 가 보인다. 본문 캡처를 그대로 쓰면 작게 줄어
+글자가 안 보이고, `.webp` 는 일부 크롤러가 못 그린다. 그래서 제품·서비스·교육 페이지는 **한 줄 가치가 크게 들어간 카드**를 쓴다.
+(ERP 페이지: 제목 「uEngine ERP — 에이전트에 최적화된 ERP」, 카드 `images/erp/erp-og.jpg` 가 본보기.)
+
+```bash
+# 기본: seo-meta 의 title·description·breadcrumb 와 페이지의 첫 본문 스크린샷으로 만든다
+python3 .claude/skills/seo-optimize/og_card.py contents/newproduct.html
+# 그림과 글을 고를 때
+python3 .claude/skills/seo-optimize/og_card.py contents/newproduct.html \
+  --shot docs/newproduct/img/key-screen.png --crop 892,118,770,550 \
+  --headline "에이전트에 최적화된 ERP" --sub "이벤트 소싱 구조라 에이전트가 실수해도 언제든 복구할 수 있습니다"
+```
+
+- **글**: title 이 `제품명 — 한 줄 가치` 면 제품명은 작게, 한 줄 가치는 크게 쓴다. 아래 한 줄은 description 의 첫 문장, 위 알약은 breadcrumb 첫 칸.
+  그래서 **title 의 `—` 뒤를 사람이 붙여 넣고 싶은 문구로** 쓰면 카드와 미리보기 제목이 같은 말을 한다.
+- **그림**: `--shot` → seo-meta 의 기존 image → 본문의 첫 콘텐츠 이미지(`images/`·`docs/` 아래, 로고·배경 제외) 순서. 제품의 강점이 보이는
+  장면(예: 되돌리기 결과표)을 `--crop` 으로 잘라 넣는 게 가장 좋다. 없으면 글만 크게 들어간 카드가 된다(`--no-shot`).
+- **출력**: `images/og/<slug>.jpg`(contents/erp.html → erp, contents/blog/foo.html → blog-foo). tm.json 에 제목·설명 번역이 있으면
+  `images/en/og/<slug>.jpg` 도 만든다 — 영문 빌드가 `images/en/<같은 경로>` 를 자동으로 바꿔 쓴다. `--en-headline` 등으로 직접 줄 수도 있다.
+- **레지스트리**: `seo-meta.json` 의 `pages[페이지].image` 를 카드로 바꾼다(다른 줄은 그대로, `--keep-meta` 면 안 바꿈). 그다음 `apply_seo.py --only`.
+- 글꼴은 Pretendard(로컬 설치본, 없으면 CDN), 렌더는 Python Playwright 의 Chromium. 만든 카드는 **반드시 열어 본다**(줄바꿈·잘림).
+- 이미 공유된 주소는 페이스북이 옛 미리보기를 캐시한다. [공유 디버거](https://developers.facebook.com/tools/debug/)에서 「다시 스크랩」.
+- `apply_seo.py --only <페이지>` 는 카드가 없으면 경고를 낸다. 전체 실행은 카드 없는 페이지 수만 안내한다(옛 페이지가 많아서).
 
 ## 한국어 카피 작성 규칙
 
@@ -117,6 +148,7 @@ python3 .claude/skills/seo-optimize/apply_seo.py --only contents/blog/foo.html
 | `description 이 너무 짧습니다` | 60자 이상으로 늘린다 |
 | `<h1> 이 없습니다` | 히어로 제목을 `<h1>` 으로 만든다 |
 | `<h1> 이 N개입니다` | 대표 제목 하나만 `<h1>`, 나머지는 `<h2>` (모달 제목·캐러셀 슬라이드가 흔한 원인) |
+| `공유 미리보기 카드가 없습니다` | `og_card.py <페이지>` 로 카드를 만들고 다시 실행한다 |
 | `alt 속성이 없는/빈 <img>` | 내용이 있는 이미지면 설명을 넣는다. 순수 장식이면 파일명에 `decoration` 을 쓰면 검사에서 제외된다 |
 
 ## 이미지 — WebP 와 Core Web Vitals
