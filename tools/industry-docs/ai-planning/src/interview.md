@@ -207,3 +207,7 @@ ChatPRD는 터미널 없이 웹에서 쓰는 기획 도구입니다. 무료는 �
 
 - intent-statement.md와 requirements.md가 있습니다
 - 열린 질문 중 내가 답할 수 있는 것을 하나 골랐습니다
+
+**이어서 해 보기**
+
+이 장은 코드 생성 앞에서 멈췄습니다. 같은 AI-DLC로 코드와 동작하는 앱까지 가 보려면 [Claude Code × AI-DLC 핸즈온](../aidlc-handson/)을 따라 하세요. Vue 3와 Spring Boot 서비스 3개로 된 프로토타입을 요구사항 인터뷰부터 브라우저 확인까지 실제로 만듭니다.
