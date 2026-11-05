@@ -137,6 +137,9 @@
                                         <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
                                         <ul>
                                             <li>
+                                                <a href="../../contents/axschool.html" style="font-size: 18px;">AX School</a>
+                                            </li>
+                                            <li>
                                                 <a href="agentstorming.html" style="font-size: 18px;">Agent Storming Workshop</a>
                                             </li>
                                             <li>
@@ -528,8 +531,8 @@
                             <h3 class="section-title mb-20 mt-n20" style="line-height: 1.4;"><span class="wow charsAnimIn" data-splitting="chars">Why build ERP from the ground up?</span></h3>
                             <p class="section-descr mb-50 mb-sm-30 wow fadeInUp">Agents are starting to post vouchers, make payments, and move inventory in ERP. ERP now needs original records of who did what, which request led to it, and which actions belong together, as well as current numbers. These records help it undo only the mistaken work and answer audit questions.</p>
                         </div>
-                        <div style="overflow-x: auto;"><table class="hj-arch erp-why-table" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>Data</th><th>State-based data</th><th>What is needed when agents do the work</th><th>Event-based data (event sourcing)</th></tr></thead><tbody><tr><td>Purchase bill</td><td>BILL/2026/11/0001, status "Paid"</td><td>Who posted it, which request led to it, and the amount</td><td><code>InvoicePosted</code> KRW 1,100,000. Actor: Jeong Hoe-gye (accounting), source: Agent (MCP), reason: "Purchase voucher (approval no. 20261103-41000000-00001234)"</td></tr><tr><td>Payment</td><td>PAY/2026/00001, status</td><td>The original amount needed for a cancelling action that offsets the payment</td><td><code>PaymentPosted</code>. Cancellation adds <code>PaymentCancelled</code> instead of erasing the original row</td></tr><tr><td>Stock</td><td>20 air circulator motors</td><td>Which bill led to these 20 units being received</td><td>The inventory module records <code>PickingValidated</code> for WH/IN/00001 under the same task ID</td></tr><tr><td>Journal entries and VAT</td><td>Account balances and totals in tax return fields</td><td>Which task produced the journal entries and tax return amounts</td><td>The accounting module adds <code>JournalEntryPosted</code> and the tax module adds <code>VatEntryRecorded</code> under the same task ID</td></tr><tr><td>After undo</td><td>Numbers overwritten with earlier values</td><td>Records of both the mistake and its correction</td><td>21 rows for processing and 21 rows for cancellation. No rows were erased, and the net change in inventory and accounts for this task is 0</td></tr></tbody></table></div>
-                        <p class="hj-note mt-20 mb-50 text-center">This task ID is called a saga ID. These are actual execution records from a test with the virtual company Gaon Appliances, where Process GPT Lite processed one tax invoice through MCP and undid it after the request “I'll cancel what we just did”; row names are exactly as recorded in the ledger.</p>
+                        <div style="overflow-x: auto;"><table class="hj-arch erp-why-table" style="min-width: 860px; word-break: keep-all;"><thead><tr><th>Data</th><th>State-based data</th><th>What is needed when agents do the work</th><th>Event-based data (event sourcing)</th></tr></thead><tbody><tr><td>Purchase bill</td><td>BILL/2026/11/0001, status "Paid"</td><td>Who posted it, which request led to it, and the amount</td><td><code>InvoicePosted</code> KRW 1,100,000. Actor: Jeong Hoe-gye (accounting), source: Agent (MCP), reason: "Purchase voucher (approval no. 20261103-41000000-00001234)"</td></tr><tr><td>Payment</td><td>PAY/2026/00001, status</td><td>The original amount needed for a cancelling action that offsets the payment</td><td><code>PaymentPosted</code>. Cancellation adds <code>PaymentCancelled</code> instead of erasing the original row</td></tr><tr><td>Stock</td><td>20 air circulator motors</td><td>Which bill led to these 20 units being received</td><td>The inventory module records <code>PickingValidated</code> for WH/IN/00001 under the same task ID</td></tr><tr><td>Journal entries and VAT</td><td>Account balances and totals in tax return fields</td><td>Which task produced the journal entries and tax return amounts</td><td>The accounting module adds <code>JournalEntryPosted</code> and the tax module adds <code>VatEntryRecorded</code> under the same task ID</td></tr><tr><td>After undo</td><td>Numbers overwritten with earlier values</td><td>Records of both the mistake and its correction</td><td>21 rows for processing and 21 rows for cancellation. No rows were erased, and the net change in inventory and accounts for this task is 0</td></tr><tr><td>Dashboards and reports</td><td>Numbers calculated on each view or recalculated in full each night</td><td>Numbers that people and agents can read quickly, including the latest work</td><td>The read model applies new events every 5 seconds. With three years of the virtual company's ledger, dashboard queries drop from 0.97 seconds to 0.017 seconds. Rebuilding the read model from scratch takes 0.87 seconds</td></tr><tr><td>Workflow</td><td>Only the latest state remains; seeing the flow requires collecting and matching change histories</td><td>The steps an order actually went through and which steps to assign to an agent</td><td>Ledger records are grouped into order-to-cash cases and exported as CSV, XES, and OCEL 2.0 logs. Process GPT uses these logs to draw BPMN diagrams (100% replay fitness)</td></tr></tbody></table></div>
+                        <p class="hj-note mt-20 mb-50 text-center">This task ID is called a saga ID. The first five rows above are actual execution records from a test with the virtual company Gaon Appliances, where Process GPT Lite processed one tax invoice through MCP and undid it after the request “I'll cancel what we just did”; row names are exactly as recorded in the ledger. The last two rows show measurements from three years of the same virtual company's ledger (45,000 events).</p>
                         <div class="row">
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>The ledger is the source</b><span>Current numbers are calculated from ledger rows. This lets us rebuild the numbers for any point in time.</span></div></div>
                             <div class="col-md-6 col-lg-4 mb-30"><div class="hj-principle"><b>One task, one ID</b><span>The bill, payment, goods receipt, journal entries, and tax totals from one agent request share an ID. The system reads this ID to find the scope of work to undo.</span></div></div>
@@ -627,6 +630,26 @@
                             </div>
                         </div>
 
+                        <div class="row align-items-center plite-theme flex-lg-row-reverse" id="theme-readmodels">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/erp/img/read-models-follow.webp" alt="The dashboard updated within seconds of order confirmation" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">Dashboards and read models</p>
+                                <h3 class="plite-theme-title">Reports and dashboards update only what has changed</h3>
+                                <p class="plite-theme-lead">The read model (CQRS) updates with each incoming event. Orders confirmed elsewhere appear on the dashboard within seconds.</p>
+                                <ul class="plite-theme-list"><li><strong>The same results, faster</strong><span>We compared results using 3 years of data from a simulated company. Dashboard load time dropped from 0.97 s to 0.017 s, and sales for the last 12 months from 0.39 s to 0.002 s, with identical results.</span></li><li><strong>Accurate financial close</strong><span>Inventory and journal entries stay accurate by reading tables updated in the same transaction as the business operation. The trial balance is ready in 0.016 s.</span></li><li><strong>Rebuild from past records</strong><span>Clearing and rebuilding the read model from the ledger takes 0.87 s. New reports include the full history, too.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-9SkuHnbKmxw">▶ Ch. 15 Dashboards and read models</a></div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center plite-theme" id="theme-mining">
+                            <div class="col-lg-7"><img class="plite-theme-img" src="../../docs/erp/img/process-log-derived.webp" alt="Order-to-cash process derived by Process GPT from ERP event logs" loading="lazy" decoding="async"></div>
+                            <div class="col-lg-5">
+                                <p class="plite-theme-cat">Process mining</p>
+                                <h3 class="plite-theme-title">Find workflows in your ledger</h3>
+                                <p class="plite-theme-lead">Group ledger records by order-to-cash and procure-to-pay case, then export them as CSV, XES, or OCEL 2.0. Upload them to Process GPT to map workflows in BPMN without a language model.</p>
+                                <ul class="plite-theme-list"><li><strong>Use the history you already have</strong><span>No separate change history export is needed. The chronological records show each case, activity, timestamp, and person responsible.</span></li><li><strong>Access stays within your permissions</strong><span>Documents you cannot view are excluded from the cases analyzed.</span></li><li><strong>Review and approve workflows</strong><span>Turn 3,287 orders into a diagram in under 0.1 s with 100% replay fitness. Save it as a proposal for review and approval.</span></li></ul>
+                                <div class="plite-vlinks"><a class="plite-vlink" href="#v-itLYSyvS-U8">▶ Ch. 16 Process mining logs and Process GPT</a></div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -774,6 +797,22 @@
                                 <h4 class="plite-v-title">Ch. 13 CRM and projects</h4>
                                 <p class="plite-v-cap">A win creates a draft quote, and confirming a service order creates a project. Short of evidence, the forecast is given only as a range.</p>
                             </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-9SkuHnbKmxw">
+                                <button type="button" class="plite-yt" data-yt="9SkuHnbKmxw" aria-label="Play the Ch. 15 Dashboards and read models video">
+                                    <img src="https://i.ytimg.com/vi/9SkuHnbKmxw/hqdefault.jpg" alt="Preview of the Ch. 15 Dashboards and read models video" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Ch. 15 Dashboards and read models</h4>
+                                <p class="plite-v-cap">Confirm an order in another browser and the dashboard updates without a refresh. Compare calculations from the read model and the ledger, then rebuild daily sales from scratch.</p>
+                            </div>
+                            <div class="col-md-6 col-lg-6 mb-40" id="v-itLYSyvS-U8">
+                                <button type="button" class="plite-yt" data-yt="itLYSyvS-U8" aria-label="Play the Ch. 16 Process mining logs and Process GPT video">
+                                    <img src="https://i.ytimg.com/vi/itLYSyvS-U8/hqdefault.jpg" alt="Preview of the Ch. 16 Process mining logs and Process GPT video" loading="lazy" decoding="async">
+                                    <span class="plite-yt-play" aria-hidden="true"></span>
+                                </button>
+                                <h4 class="plite-v-title">Ch. 16 Process mining logs and Process GPT</h4>
+                                <p class="plite-v-cap">Group order-to-cash records by case, download them as CSV, and map them in BPMN with Process GPT. With 100% replay fitness, save the result as a proposal and review it in the merge inbox.</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -783,9 +822,9 @@
                     <div class="container position-relative mt-n30 mt-sm-0">
                         <div class="row wow fadeInUp get-started-content"><div>
                             <p class="mb-20 mt-n10" style="font-size: 2.2rem; font-weight: 600;">Start now with your own Supabase project</p>
-                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">You can try the made-up company Gaon Appliances first. Chapter 1 of the tutorial walks you through installation. For rollout at your company or connecting AI agents, contact us.</p>
+                            <p class="section-title-tiny mb-50 mb-sm-30" style="font-size: 1.2rem;">Install it in a free Supabase project, or, if you have Docker, on your own computer with one command. You can try the made-up company Gaon Appliances first. Chapter 1 of the tutorial covers both ways to install. For rollout at your company or connecting AI agents, contact us.</p>
                             <div class="local-scroll wow fadeInUp" data-wow-offset="0">
-                                <a href="../../docs/erp/index.html" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">Tutorial</span></a><a href="https://github.com/uengine-oss/uengine-erp" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">GitHub</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">Contact us</span></a>
+                                <a href="../../docs/erp/index.html" class="btn btn-mod btn-large btn-round btn-hover-anim mb-sm-10"><span style="font-size: 16px;">Tutorial</span></a><a href="https://uengine-oss.github.io/uengine-erp/uengine-erp-docker.zip" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1" download><span style="font-size: 16px;">Download the Docker bundle</span></a><a href="https://github.com/uengine-oss/uengine-erp" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">GitHub</span></a><a href="#contact" class="btn btn-mod btn-w btn-large btn-round btn-hover-anim mb-sm-10 ms-1"><span style="font-size: 16px;">Contact us</span></a>
                             </div>
                         </div></div>
                     </div>
@@ -801,7 +840,7 @@
                                     Have more questions?
                                 </p>
                                 <p class="section-title-tiny mb-50 mb-sm-30">
-                                    Want to know more about <b>uEngine WMS</b> or have a question? Get in touch anytime.
+                                    Want to know more about <b>uEngine ERP</b> or have a question? Get in touch anytime.
                                 </p>
                                 <div class="local-scroll">
                                     <a id="contact_btn" class="btn btn-mod btn-large btn-round btn-hover-anim">
@@ -1037,6 +1076,7 @@
                                         <li><a href="ontologystudio.html">Ontological Studio</a></li>
                                         <li><a href="ontologicaldb.html">Ontological DB</a></li>
                                         <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../../contents/axschool.html">AX School</a></li>
                                         <li><a href="agentstorming.html">Agent Storming Workshop</a></li>
                                         <li><a href="educationax.html">AX Transformation Consulting Training</a></li>
                                         <li><a href="ax-lite-course.html">AI Work Class for Your Company</a></li>
