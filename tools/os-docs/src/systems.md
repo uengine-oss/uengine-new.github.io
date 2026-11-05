@@ -54,7 +54,7 @@
     회사 시스템이 없다면 공개 API로 연습할 수 있습니다. 예를 들어 Swagger Petstore(`https://petstore3.swagger.io/api/v3/openapi.json`)를 등록하면 스펙에서 API 19개를 읽고 연결 테스트가 통과합니다. 환경의 활성 주소에 `https://petstore3.swagger.io/api/v3`을 적고, Petstore에는 `/health`가 없으니 상태 점검 경로는 비워 두세요. 액션을 만들 대상 시스템으로 쓰기에는 데이터가 공용이라 적당하지 않으니, 등록·조회 연습까지만 하세요.
 
 !!! warning "비밀 값은 어디에?"
-    등록 정보에는 `$ERP_API_KEY` 같은 **이름**만 남습니다. 예제 시스템의 실제 비밀 값은 설치할 때 무작위로 만들어져 데이터 폴더의 `secrets.json`에 있고, 실행기에 환경 변수로만 넘어갑니다. 여러분이 등록하는 시스템의 비밀 값은 `studio.env`에 `ERP_API_KEY=...`처럼 적어 두면 됩니다.
+    등록 정보에는 `$ERP_API_KEY` 같은 **이름**만 남습니다. 예제 시스템의 실제 비밀 값은 설치할 때 무작위로 만들어져 OS 키체인(macOS 키체인 · Windows DPAPI)에 암호화되어 있고(22장), 실행기에 환경 변수로만 넘어갑니다. 여러분이 등록하는 시스템의 비밀 값은 `studio.env`에 `ERP_API_KEY=...`처럼 적어 두면 됩니다.
 
 !!! exercise "확인 문제"
     1. 물류 WMS 시스템을 열어, 우선순위를 바꾸는 API의 메서드와 경로를 찾으세요.

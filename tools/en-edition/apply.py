@@ -199,7 +199,7 @@ VIDEO_OVERRIDES = {
 
 
 # Korean-narrated YouTube video -> an English-narrated YouTube video of the same walkthrough.
-YOUTUBE_OVERRIDES = {
+YOUTUBE_OVERRIDES = {'KD2r0zyk_ss': 'eYQfeSVmX9w', 'P6_EYBbIOLY': '0DN8Pg5IiMo', 'dUzcK1I2HSo': 'SeOiNrY2-q8', 
     'qRZ8bE8Ffsg': 'ckduR9oRtuE',  # Ontological Studio: build from a document (tutorial ch. 12)
     'np3Q9484lYo': 'ajoW9Oxf83g',  # Ontological Studio: run actions (tutorial ch. 16)
     'Lq4ZL_8vMtk': 'gAZZTiakdAA',  # Ontological Studio: code apps (tutorial ch. 18)

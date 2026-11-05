@@ -54,7 +54,7 @@ Click **＋ Register system** in the system list. You go through steps, just as 
     If you don't have a company system, you can practice with a public API. For example, if you register Swagger Petstore (`https://petstore3.swagger.io/api/v3/openapi.json`), 19 APIs are read from the spec and the connection test passes. Enter `https://petstore3.swagger.io/api/v3` as the environment's active URL, and leave the health check path empty because Petstore has no `/health`. Its data is shared by everyone, so it isn't a good target system for building actions — use it only to practice registering and browsing.
 
 !!! warning "Where do the secret values go?"
-    Only a **name** such as `$ERP_API_KEY` is kept in the registration. The real secret values of the sample systems are generated at random during installation, stored in `secrets.json` in the data folder, and passed to the executor only as environment variables. For systems you register yourself, write the secret values in `studio.env`, as in `ERP_API_KEY=...`.
+    Only a **name** such as `$ERP_API_KEY` is kept in the registration. The real secret values of the sample systems are generated at random during installation, kept encrypted in the OS keychain (macOS Keychain, Windows DPAPI; Chapter 22), and passed to the executor only as environment variables. For systems you register yourself, write the secret values in `studio.env`, as in `ERP_API_KEY=...`.
 
 !!! exercise "Check yourself"
     1. Open the Logistics WMS system and find the method and path of the API that changes priority.

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checking Answerability First — Ontological Studio Tutorial</title>
+<meta name="description" content="Before it builds an answer, the query agent checks whether the published ontology can answer the question at all. In the **Ask &amp; Act** tab you ask a question the ontology does not cover and a Golden Question, and compare the check&#x27;s result and the answers.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/answerability.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Checking Answerability First — Ontological Studio Tutorial">
+<meta property="og:description" content="Before it builds an answer, the query agent checks whether the published ontology can answer the question at all. In the **Ask &amp; Act** tab you ask a question the ontology does not cover and a Golden Question, and compare the check&#x27;s result and the answers.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/answerability.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Advanced features</div><ul>
+<li><a href="credentials.html"><span class="n">22</span>Keeping Source Passwords</a></li>
+<li><a href="suggest-relationships.html"><span class="n">23</span>Getting Relationship Suggestions</a></li>
+<li><a href="answerability.html" class="on" aria-current="page"><span class="n">24</span>Checking Answerability First</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">25</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">26</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Advanced features<span class="chap">24</span></div>
+    <h1>Checking Answerability First</h1>
+    <article>
+<blockquote>
+<p>Before it builds an answer, the query agent checks whether the published ontology can answer the question at all. In the <strong>Ask &amp; Act</strong> tab you ask a question the ontology does not cover and a Golden Question, and compare the check's result and the answers.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/SeOiNrY2-q8" title="Checking Answerability First — video 2:52" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-check-first">Why check first?<a class="anchor" href="#why-check-first" title="Permanent link">#</a></h2>
+<p>Ask about a concept the ontology does not have, and an agent can easily write a plausible Cypher query, get 0 rows back and say “there is no data.” But <strong>having no data</strong> and <strong>the ontology not knowing the concept</strong> are different things.</p>
+<p>So after reading the schema, the query skills call the MCP tool <code>ontology_check_answerable</code> once for every question. It takes the question and the concept words in it (mentions) and checks:</p>
+<ul>
+<li><strong>Vocabulary</strong> — whether the words reach the <strong>published</strong> classes, properties, relationships, behaviors and Golden Questions</li>
+<li><strong>Instances</strong> — whether a named constant such as <code>S-KR-01</code> exists as a real instance</li>
+<li><strong>Path</strong> — whether the covered classes are connected by relationships within 3 hops</li>
+</ul>
+<p>The check is made by rules, not by a model's guess. The server calls no LLM; in our tests one check took well under a second (7–383 ms).</p>
+<p>For comparison, NVIDIA Auto Ontology's <code>check_answerable</code> returns a single number, the share of entities covered (0–1). This tool returns a status together with the reasons: the uncovered words, the nearest candidates, the relationship path and the matching Golden Question.</p>
+<h2 id="five-statuses">Five statuses<a class="anchor" href="#five-statuses" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th><code>status</code></th>
+<th>Meaning</th>
+<th>What the agent does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>answerable</code></td>
+<td>Can be answered</td>
+<td>If a Golden Question's behavior matches, follows its definition; otherwise starts with Cypher that joins the path's classes by their relationships</td>
+</tr>
+<tr>
+<td><code>partially_answerable</code></td>
+<td>Can be partly answered</td>
+<td>Answers the covered part and says the uncovered words are “not in the published ontology”</td>
+</tr>
+<tr>
+<td><code>not_yet_answerable</code></td>
+<td>Cannot be answered yet</td>
+<td><strong>Stops without querying.</strong> Tells you the missing words and the nearest terms</td>
+</tr>
+<tr>
+<td><code>needs_clarification</code></td>
+<td>Needs a question back</td>
+<td>If a named constant matches instances of several classes, shows the candidates and asks which one</td>
+</tr>
+<tr>
+<td><code>not_published</code></td>
+<td>Not published</td>
+<td>Tells you to publish it from the build conversation (“publish it”) and ask again</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try-it-a-question-the-ontology-does-not-cover">Try it — a question the ontology does not cover<a class="anchor" href="#try-it-a-question-the-ontology-does-not-cover" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the <b>Ask &amp; Act</b> card on the home screen.</li>
+<li>Send this question.<br><code>What was our advertising spend last quarter?</code></li>
+<li>When the answer arrives (about 30 seconds in our tests), click <b>3 tools used</b> above it to expand the list.</li>
+<li>Click <b>Show result</b> under <code>ontology_check_answerable</code>.</li>
+</ol>
+<figure><a href="img/answerability-notyet-tool.webp" target="_blank" rel="noopener" title="View larger"><img alt="ontology_check_answerable in the tool list — the result's status is not_yet_answerable, coverage 0" src="img/answerability-notyet-tool.webp" / loading="lazy" decoding="async"></a><figcaption>ontology_check_answerable in the tool list — the result's status is not_yet_answerable, coverage 0</figcaption></figure>
+<p>The important part of the result:</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_yet_answerable&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;coverage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;uncovered&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;advertising spend&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;nearest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PurchaseOrder&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.437</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Claim&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;opened_date&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.378</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shipment&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vendor_code&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.262</span><span class="p">}]}]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>“Advertising spend” does not reach any term in the published ontology; the nearest terms are weak and unrelated. Seeing this, the agent writes no Cypher. The tool list shows schema reading (<code>ontology_graph_schema</code>) and the check, but no graph query (<code>ontology_graph_cypher</code>).</p>
+<figure><a href="img/answerability-notyet-answer.webp" target="_blank" rel="noopener" title="View larger"><img alt="The agent's answer — it cannot answer from the current ontology, what it checked, and what would be needed" src="img/answerability-notyet-answer.webp" / loading="lazy" decoding="async"></a><figcaption>The agent's answer — it cannot answer from the current ontology, what it checked, and what would be needed</figcaption></figure>
+<p>The answer begins: “I can't answer that from the current ontology. It has no advertising or marketing spend data.” It goes on to list the published classes, explains that the only money field, <code>PurchaseOrder.amount_usd</code>, is what is paid to suppliers and was not used as a stand-in, and says what would have to be connected and published. The wording may differ a little each time you ask.</p>
+<h2 id="try-it-a-golden-question">Try it — a Golden Question<a class="anchor" href="#try-it-a-golden-question" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>In the same conversation, send this question.<br><code>Which inbound shipments are more than 3 days late, and which supplier are they for?</code></li>
+<li>Expand <b>2 tools used</b> and look at <b>Show result</b> under <code>ontology_check_answerable</code>.</li>
+<li>Check that after the check, the agent queried the graph with <code>ontology_graph_cypher</code>.</li>
+</ol>
+<figure><a href="img/answerability-golden-tool.webp" target="_blank" rel="noopener" title="View larger"><img alt="The Golden Question — after the answerable check, the agent queries with ontology_graph_cypher" src="img/answerability-golden-tool.webp" / loading="lazy" decoding="async"></a><figcaption>The Golden Question — after the answerable check, the agent queries with ontology_graph_cypher</figcaption></figure>
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;answerable&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;route&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;graph&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;golden_match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Which inbound shipments are more than 3 days late, and which supplier and purchase order are they for?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.798</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Shipment&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Supplier&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;path_relationships&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shipment&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SHIPPED_BY&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Supplier&quot;</span><span class="p">}]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The question matches a Golden Question verified at build time (<code>golden_match</code>), “inbound shipments” reaches <code>Shipment</code> and “supplier” reaches <code>Supplier</code>, and the two are joined by the <code>SHIPPED_BY</code> relationship. The agent follows that path to answer.</p>
+<figure><a href="img/answerability-golden-answer.webp" target="_blank" rel="noopener" title="View larger"><img alt="The answer — SHP-03 (9 days) and SHP-02 (7 days), both from Shenzhen Goldline PCB, with how it was found" src="img/answerability-golden-answer.webp" / loading="lazy" decoding="async"></a><figcaption>The answer — SHP-03 (9 days) and SHP-02 (7 days), both from Shenzhen Goldline PCB, with how it was found</figcaption></figure>
+<h2 id="constants-in-a-question">Constants in a question<a class="anchor" href="#constants-in-a-question" title="Permanent link">#</a></h2>
+<p>When a question contains a number or a name such as <code>S-KR-01</code>, the check looks it up among the instances. This is the result for “What are the open purchase orders of supplier S-KR-01?”.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;answerable&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;mentions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S-KR-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;resolved&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Supplier&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hanbit Precision&quot;</span><span class="p">}}],</span>
+<span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Supplier&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;PurchaseOrder&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;path_relationships&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PurchaseOrder&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ORDERED_FROM&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Supplier&quot;</span><span class="p">}]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>S-KR-01</code> is confirmed as the supplier <strong>Hanbit Precision</strong>. The agent starts its query from this key instead of searching for the name again. A number that does not exist would come back with <code>instance.status</code> set to <code>not_found</code>.</p>
+<h2 id="when-it-cannot-answer-grow-the-ontology">When it cannot answer — grow the ontology<a class="anchor" href="#when-it-cannot-answer-grow-the-ontology" title="Permanent link">#</a></h2>
+<p><code>not_yet_answerable</code> is not a failure; it tells you <strong>what to do next</strong>. To ask about advertising spend, connect a data source that holds it (Chapter 5), add the question to the build intent and the Golden Questions, then build and publish again (Chapter 12). The “items with less stock than their safety stock” question in the Chapter 13 exercises is the same case.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>Why did the agent not run any Cypher for “What was our advertising spend last quarter?”</li>
+<li>Does the check call an LLM? What does it base its judgement on?</li>
+<li>Ask “What are the open purchase orders of supplier S-KR-01?” in the Ask &amp; Act tab. What is the status, and what is <code>S-KR-01</code> confirmed as?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>Because the check returned <code>not_yet_answerable</code>. “Advertising spend” reached no term in the published ontology, and the query skills stop without querying on that status and report the missing words and the nearest terms.</li>
+<li>No. By rules, it checks whether the question's words reach the published classes, properties, relationships, behaviors and Golden Questions (vocabulary), whether named constants are real instances (instances), and whether the covered classes are joined by relationships within 3 hops (path).</li>
+<li><code>answerable</code>. <code>S-KR-01</code> is confirmed as the supplier (<code>Supplier</code>) <strong>Hanbit Precision</strong>, and the path is <code>PurchaseOrder -[:ORDERED_FROM]-&gt; Supplier</code>. Its one open purchase order is <code>PO-008</code> ($27,000); <code>PO-003</code> is <code>CLOSED</code>. To verify: <code>MATCH (po:PurchaseOrder)-[:ORDERED_FROM]-&gt;(s:Supplier {supplier_id: 'S-KR-01'}) RETURN po.po_id, po.status, po.amount_usd</code></li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="suggest-relationships.html"><span>Previous</span>Getting Relationship Suggestions</a><a class="next" href="cheatsheet.html"><span>Next</span>Cypher and Fabric Cheat Sheet</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-check-first">Why check first?</a></li><li><a href="#five-statuses">Five statuses</a></li><li><a href="#try-it-a-question-the-ontology-does-not-cover">Try it — a question the ontology does not cover</a></li><li><a href="#try-it-a-golden-question">Try it — a Golden Question</a></li><li><a href="#constants-in-a-question">Constants in a question</a></li><li><a href="#when-it-cannot-answer-grow-the-ontology">When it cannot answer — grow the ontology</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
