@@ -32,7 +32,7 @@ VIDEOS = HERE / ("videos-en.json" if EN else "videos.json")
 SITE = f"https://www.uengine.org/{'en/' if EN else ''}docs/ontological-studio/"
 EN_PARTS = {"시작하기": "Getting started", "온톨로지 개념": "Ontology concepts", "데이터 연결": "Connecting data",
             "Cypher 익히기": "Learning Cypher", "온톨로지 구축": "Building the ontology", "액션": "Actions",
-            "애플리케이션": "Applications", "마무리": "Final project", "부록": "Appendix"}
+            "애플리케이션": "Applications", "마무리": "Final project", "고급 기능": "Advanced features", "부록": "Appendix"}
 
 # (파일, 파트) — 제목은 각 md 의 첫 줄(# …)에서 읽는다.
 CHAPTERS = [
@@ -58,6 +58,9 @@ CHAPTERS = [
     ("sdk", "애플리케이션"),
     ("app-actions", "애플리케이션"),
     ("project", "마무리"),
+    ("credentials", "고급 기능"),
+    ("suggest-relationships", "고급 기능"),
+    ("answerability", "고급 기능"),
     ("cheatsheet", "부록"),
     ("faq", "부록"),
 ]

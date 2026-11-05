@@ -139,6 +139,9 @@
                                         <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
                                         <ul>
                                             <li>
+                                                <a href="../../contents/axschool.html" style="font-size: 18px;">AX School</a>
+                                            </li>
+                                            <li>
                                                 <a href="agentstorming.html" style="font-size: 18px;">Agent Storming Workshop</a>
                                             </li>
                                             <li>
@@ -745,6 +748,38 @@ RETURN e.title, s.name, sh.shipment_no</pre>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/en/ontological-db/odb-credentials.webp" alt="Change password — the ALTER DATASOURCE erp2 SET CREDENTIALS statement carries a keychain reference instead of the password" width="1600" height="900" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-credentials" name="feat-credentials"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">Datasources without passwords</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;">A datasource stores a reference instead of a password (<code>credentials: 'keychain:erp'</code>, <code>'vault:…'</code>). No password is left in the user mapping, the catalog, the audit trail or the server log. The connector that reaches the source reads the password from a file outside the database.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text"><code>ALTER DATASOURCE … SET CREDENTIALS</code> — foreign tables and virtual nodes stay</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text"><code>SHOW CREDENTIALS</code> — what to write to which file (no secrets)</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">The parameters of a create statement run as bind values, never pasted into the SQL</span></div>
+                                        </div>
+                                        <p style="margin: 18px 0 0; text-align: left;"><a href="../docs/ontological-studio/credentials.html" style="text-decoration: underline;">Tutorial chapter 22</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch mb-30">
+                                <div class="feature-card" style="background: #fff; border-radius: 15px; padding: 0 0 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; height: 100%; overflow: hidden;">
+                                    <img src="../../images/en/ontological-db/odb-profile.webp" alt="Candidates left out — why status and date columns were rejected, by value overlap and duplicates" width="1600" height="900" style="width: 100%; height: auto; display: block; border-bottom: 1px solid #eee;" loading="lazy" decoding="async">
+                                    <div style="padding: 30px;">
+                                        <a id="feat-profile" name="feat-profile"></a>
+                                        <h4 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; margin-top: 10px; text-align: left;">Statements that measure the source</h4>
+                                        <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin: 0; text-align: left;"><code>SHOW COLUMN STATS</code> measures each column: NULLs, distinct values, whether values repeat, and the most frequent values. <code>SHOW VALUE OVERLAP</code> checks how many of one column's values appear in another. Neither copies the source. The database only measures; Studio judges the relationships and shows the evidence.</p>
+                                        <div class="testimonials-6-author-feature" style="text-align: left !important;">
+                                                            <div class="feature-item mt-20 mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Measures with the same statements across datasources.</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">With the same type, the comparison runs at the source (push down).</span></div>
+                                                            <div class="feature-item mb-0"><span class="feature-bullet analysis"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#1e88e5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span class="feature-text">Reads the source only — never writes to it.</span></div>
+                                        </div>
+                                        <p style="margin: 18px 0 0; text-align: left;"><a href="../docs/ontological-studio/suggest-relationships.html" style="text-decoration: underline;">Tutorial chapter 23</a></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1237,6 +1272,7 @@ RETURN e.title, s.name, sh.shipment_no</pre>
                                         <li><a href="ontologystudio.html">Ontological Studio</a></li>
                                         <li><a href="ontologicaldb.html">Ontological DB</a></li>
                                         <li><a href="uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../../contents/axschool.html">AX School</a></li>
                                         <li><a href="agentstorming.html">Agent Storming Workshop</a></li>
                                         <li><a href="educationax.html">AX Transformation Consulting Training</a></li>
                                         <li><a href="ax-lite-course.html">AI Work Class for Your Company</a></li>

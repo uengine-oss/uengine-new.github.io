@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting Relationship Suggestions — Ontological Studio Tutorial</title>
+<meta name="description" content="In sources with no declared (foreign) keys, find the columns whose values really join and get them suggested as virtual relationships. You get 7 relationships with their evidence from the three sample business databases, create them in a new graph, and run a query that joins two databases.">
+<link rel="canonical" href="https://www.uengine.org/en/docs/ontological-studio/suggest-relationships.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting Relationship Suggestions — Ontological Studio Tutorial">
+<meta property="og:description" content="In sources with no declared (foreign) keys, find the columns whose values really join and get them suggested as virtual relationships. You get 7 relationships with their evidence from the three sample business databases, create them in a new graph, and run a query that joins two databases.">
+<meta property="og:url" content="https://www.uengine.org/en/docs/ontological-studio/suggest-relationships.html">
+<meta property="og:image" content="https://www.uengine.org/en/docs/ontological-studio/img/home.webp">
+<link rel="icon" href="../../../images/ontological-studio/ol-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('osdocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="Open contents" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><img src="../../../images/ontological-studio/ol-mark.svg" alt="" width="34" height="23"><span>Ontological Studio <em>Tutorial</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the tutorial (e.g. virtual node, OPTIONAL MATCH)" autocomplete="off" aria-label="Search the tutorial">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/ontologystudio.html">Product</a>
+    <a href="https://github.com/uengine-oss/ontological-studio-releases/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="Switch light/dark theme">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">Getting started</div><ul>
+<li><a href="index.html"><span class="n">·</span>Ontological Studio Tutorial</a></li>
+<li><a href="install.html"><span class="n">01</span>Installation and First Run</a></li>
+<li><a href="tour.html"><span class="n">02</span>A Tour of the App</a></li>
+</ul>
+<div class="nav-part">Ontology concepts</div><ul>
+<li><a href="ontology-basics.html"><span class="n">03</span>What Is an Ontology?</a></li>
+<li><a href="architecture.html"><span class="n">04</span>Inside Ontological Studio</a></li>
+</ul>
+<div class="nav-part">Connecting data</div><ul>
+<li><a href="datasource.html"><span class="n">05</span>Connecting Data Sources</a></li>
+<li><a href="virtual-graph.html"><span class="n">06</span>Virtual Nodes and Virtual Relationships</a></li>
+</ul>
+<div class="nav-part">Learning Cypher</div><ul>
+<li><a href="cypher-basics.html"><span class="n">07</span>Cypher Basics — Finding and Filtering Nodes</a></li>
+<li><a href="cypher-relations.html"><span class="n">08</span>Following Relationships and Aggregating</a></li>
+<li><a href="cypher-advanced.html"><span class="n">09</span>Advanced Cypher — Inspecting Execution, Asking in Plain Language, Writing Data</a></li>
+<li><a href="time-travel.html"><span class="n">10</span>Time Travel — Bitemporal Queries</a></li>
+</ul>
+<div class="nav-part">Building the ontology</div><ul>
+<li><a href="golden.html"><span class="n">11</span>Golden Questions and Golden Commands</a></li>
+<li><a href="build.html"><span class="n">12</span>Building an Ontology from a Document</a></li>
+<li><a href="ask.html"><span class="n">13</span>Asking Questions — Answers with Evidence</a></li>
+</ul>
+<div class="nav-part">Actions</div><ul>
+<li><a href="systems.html"><span class="n">14</span>Registering Business Systems</a></li>
+<li><a href="actions-build.html"><span class="n">15</span>Building Actions from Golden Commands</a></li>
+<li><a href="actions-run.html"><span class="n">16</span>Running Actions — Plan, Approve, Execute, Cancel</a></li>
+</ul>
+<div class="nav-part">Applications</div><ul>
+<li><a href="dashboard.html"><span class="n">17</span>Dashboard Apps — Build Screens by Describing Them</a></li>
+<li><a href="code-app.html"><span class="n">18</span>Code Apps — Apps the Agent Writes as Code</a></li>
+<li><a href="sdk.html"><span class="n">19</span>Code App SDK — Read and Edit the Code Yourself</a></li>
+<li><a href="app-actions.html"><span class="n">20</span>Adding Action Buttons to Apps</a></li>
+</ul>
+<div class="nav-part">Final project</div><ul>
+<li><a href="project.html"><span class="n">21</span>Capstone Project — Build a Quality Incident Response App</a></li>
+</ul>
+<div class="nav-part">Advanced features</div><ul>
+<li><a href="credentials.html"><span class="n">22</span>Keeping Source Passwords</a></li>
+<li><a href="suggest-relationships.html" class="on" aria-current="page"><span class="n">23</span>Getting Relationship Suggestions</a></li>
+<li><a href="answerability.html"><span class="n">24</span>Checking Answerability First</a></li>
+</ul>
+<div class="nav-part">Appendix</div><ul>
+<li><a href="cheatsheet.html"><span class="n">25</span>Cypher and Fabric Cheat Sheet</a></li>
+<li><a href="faq.html"><span class="n">26</span>FAQ and Troubleshooting</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">Advanced features<span class="chap">23</span></div>
+    <h1>Getting Relationship Suggestions</h1>
+    <article>
+<blockquote>
+<p>In sources with no declared (foreign) keys, find the columns whose values really join and get them suggested as virtual relationships. You get 7 relationships with their evidence from the three sample business databases, create them in a new graph, and run a query that joins two databases.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/0DN8Pg5IiMo" title="Getting Relationship Suggestions — video 3:40" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="why-suggestions">Why suggestions?<a class="anchor" href="#why-suggestions" title="Permanent link">#</a></h2>
+<p>In Chapter 6 you knew which column pointed to which (<code>PoLine.po_id = PurchaseOrder.po_id</code>) and made the relationships yourself. A real company's sources have hundreds of tables, foreign keys are often not declared, and every system names things its own way. The same purchase order number is <code>po_id</code> in the ERP and <code>ref_po_no</code> in the WMS.</p>
+<p><strong>Relationship suggestions</strong> measures <strong>values</strong>, not just names, to find the columns that join, and shows the evidence for each judgement. It works across datasources too.</p>
+<h2 id="how-it-finds-them">How it finds them<a class="anchor" href="#how-it-finds-them" title="Permanent link">#</a></h2>
+<p>The engine only <strong>measures</strong>; Studio decides which pairs are relationships. Neither statement writes to the source, and no data is copied.</p>
+<div class="hl"><pre><span></span><code><span class="n">SHOW</span><span class="w"> </span><span class="n">COLUMN</span><span class="w"> </span><span class="n">STATS</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">erp</span><span class="p">.</span><span class="n">purchase_order</span>
+<span class="n">SHOW</span><span class="w"> </span><span class="n">VALUE</span><span class="w"> </span><span class="n">OVERLAP</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">wms</span><span class="p">.</span><span class="n">shipment</span><span class="p">(</span><span class="n">ref_po_no</span><span class="p">)</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">erp</span><span class="p">.</span><span class="n">purchase_order</span><span class="p">(</span><span class="n">po_id</span><span class="p">)</span>
+</code></pre></div>
+
+<ul>
+<li><code>SHOW COLUMN STATS</code> — for each column, over the first 1000 rows: nulls, distinct values, whether it is unique, the five most common values and a short sample.</li>
+<li><code>SHOW VALUE OVERLAP</code> — of up to 200 distinct child values, how many (and what share) are in the parent column, and whether the parent values are unique.</li>
+</ul>
+<p>The rules for deciding:</p>
+<ul>
+<li>The <strong>parent column must be unique</strong>, and <strong>at least 80% of the child values</strong> must be in it.</li>
+<li>Status, flag, quantity and date columns never become children. Even when their values overlap, such columns do not point to other rows.</li>
+<li>Names count as evidence too: <code>same_key</code> (same name, <code>po_id</code> → <code>po_id</code>), <code>table_key</code> (table name + key, <code>item_id</code> → <code>item.item_id</code>), rules read through an abbreviation map (<code>abbrev:…</code>, <code>po</code> = purchase_order, <code>vendor</code> = supplier), and so on.</li>
+<li>A column whose values match but whose name gives no evidence is capped at a confidence of 0.6.</li>
+</ul>
+<p>For comparison, NVIDIA Auto Ontology looks for joins only within one connection, skips inference when there is no embedding key, and keeps no evidence. This feature suggests across datasources and shows the evidence for every suggestion.</p>
+<h2 id="try-it-an-empty-graph">Try it — an empty graph<a class="anchor" href="#try-it-an-empty-graph" title="Permanent link">#</a></h2>
+<p>The sample graph <code>sample</code> already has relationships, so get suggestions for a new graph <code>scm</code> that has none. Run this statement in the portal tab (covered in detail in Chapter 7). It runs whatever graph is selected.</p>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">GRAPH</span><span class="w"> </span><span class="n">scm</span>
+</code></pre></div>
+
+<h2 id="try-it-getting-suggestions">Try it — getting suggestions<a class="anchor" href="#try-it-getting-suggestions" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Open the Data Sources tab. If it was already open, close it and open it again so that <code>scm</code> appears in the graph list.</li>
+<li>Click <b>Relationship suggestions</b> at the bottom left.</li>
+<li>Check that the datasources <code>crm</code>, <code>erp</code> and <code>wms</code> are all ticked, and choose <code>scm</code> as the graph.</li>
+<li>Leave <b>Ask AI too for columns with other names</b> off and click <b>Suggest</b>. The rules alone decide.</li>
+</ol>
+<figure><a href="img/suggest-relationships-form.webp" target="_blank" rel="noopener" title="View larger"><img alt="Relationship suggestions — three datasources and the graph scm chosen" src="img/suggest-relationships-form.webp" / loading="lazy" decoding="async"></a><figcaption>Relationship suggestions — three datasources and the graph scm chosen</figcaption></figure>
+<p>In our test it measured 13 tables and checked value overlap 57 times in one to two seconds (1.0–1.8 s), and suggested 7 relationships.</p>
+<figure><a href="img/suggest-relationships-result.webp" target="_blank" rel="noopener" title="View larger"><img alt="Seven suggestions — child column → parent key, evidence, confidence, relationship name. Only those at 70% or more are ticked in advance" src="img/suggest-relationships-result.webp" / loading="lazy" decoding="async"></a><figcaption>Seven suggestions — child column → parent key, evidence, confidence, relationship name. Only those at 70% or more are ticked in advance</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Child → parent</th>
+<th>Matched</th>
+<th>Name rule</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SO</code></td>
+<td><code>crm.claim.so_no</code><br>→ <code>crm.sales_order.so_no</code></td>
+<td>3/3</td>
+<td>same_key · 1:1</td>
+<td>79%</td>
+</tr>
+<tr>
+<td><code>CUST</code></td>
+<td><code>crm.sales_order.cust_no</code><br>→ <code>crm.customer.cust_no</code></td>
+<td>3/3</td>
+<td>same_key</td>
+<td>79%</td>
+</tr>
+<tr>
+<td><code>ITEM</code></td>
+<td><code>erp.po_line.item_id</code><br>→ <code>erp.item.item_id</code></td>
+<td>3/3</td>
+<td>table_key</td>
+<td>83%</td>
+</tr>
+<tr>
+<td><code>PO</code></td>
+<td><code>erp.po_line.po_id</code><br>→ <code>erp.purchase_order.po_id</code></td>
+<td>8/8</td>
+<td>same_key</td>
+<td>84%</td>
+</tr>
+<tr>
+<td><code>SUPPLIER</code></td>
+<td><code>erp.purchase_order.supplier_id</code><br>→ <code>erp.supplier.supplier_id</code></td>
+<td>5/5</td>
+<td>table_key</td>
+<td>85%</td>
+</tr>
+<tr>
+<td><code>REF_PO</code></td>
+<td><code>wms.shipment.ref_po_no</code><br>→ <code>erp.purchase_order.po_id</code></td>
+<td>6/7</td>
+<td>abbrev:table_token</td>
+<td>65%</td>
+</tr>
+<tr>
+<td><code>VENDOR</code></td>
+<td><code>wms.shipment.vendor_code</code><br>→ <code>erp.supplier.supplier_id</code></td>
+<td>5/6</td>
+<td>abbrev:table_suffix</td>
+<td>63%</td>
+</tr>
+</tbody>
+</table>
+<p>All seven have a unique parent key (<strong>unique parent</strong> on screen). The last two are references <strong>across databases and under other names</strong>: WMS shipments point to ERP purchase orders and suppliers. Below the table, it also notes that <code>erp.po_line</code> is a <strong>junction table</strong> linking items and purchase orders.</p>
+<div class="admonition tip">
+<p class="admonition-title">How confidence is computed</p>
+<p>confidence = (0.5 + 0.5 × name score) × match ratio × sample support, where sample support = 0.8 + 0.2 × min(1, sampled / 20). <code>REF_PO</code> has the abbreviation rule's name score 0.75, a match ratio of 6/7 = 0.857 and 7 sampled values, so (0.875) × 0.857 × 0.87 ≈ 0.65. Fewer samples and less similar names lower it.</p>
+</div>
+<h2 id="reading-the-rejected-candidates">Reading the rejected candidates<a class="anchor" href="#reading-the-rejected-candidates" title="Permanent link">#</a></h2>
+<p>Open <strong>Rejected candidates: 56 — why they are not relationships</strong> to see the pairs that were measured but not suggested, with the reason for each.</p>
+<figure><a href="img/suggest-relationships-rejected.webp" target="_blank" rel="noopener" title="View larger"><img alt="Rejected candidates — a quantity column, columns with too few distinct values, columns with no values" src="img/suggest-relationships-rejected.webp" / loading="lazy" decoding="async"></a><figcaption>Rejected candidates — a quantity column, columns with too few distinct values, columns with no values</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>erp.po_line.qty → crm.sales_order.qty</code></td>
+<td>A status, quantity or date column — a quantity is a value, not a reference</td>
+</tr>
+<tr>
+<td><code>erp.supplier.country → crm.customer.country</code></td>
+<td>Values do not overlap enough — 1/3 = 0.33</td>
+</tr>
+<tr>
+<td><code>crm.sales_order.sku_code</code></td>
+<td>Too few distinct values — only 3, and weak name evidence</td>
+</tr>
+<tr>
+<td><code>wms.priority_change.reason → …</code> and others</td>
+<td>The child column has no values — tables where actions leave records, still empty</td>
+</tr>
+</tbody>
+</table>
+<p>In the sample graph <code>crm.sales_order.sku_code</code> is linked to items by <code>FOR_ITEM</code>, but with only 3 distinct values the rules could not be sure. A relationship like that is made by a person, as in Chapter 6. Suggestions do not replace your judgement; they narrow the candidates down and attach the evidence.</p>
+<h2 id="try-it-creating-the-chosen-relationships">Try it — creating the chosen relationships<a class="anchor" href="#try-it-creating-the-chosen-relationships" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>Tick <code>REF_PO</code> and <code>VENDOR</code>, which are not ticked. If you read the evidence and agree, a confidence below 70% is fine.</li>
+<li>To rename a relationship, edit the box on the right. Here, leave them as they are.</li>
+<li>Click <b>Create the 7 selected relationships in graph scm</b>.</li>
+</ol>
+<figure><a href="img/suggest-relationships-chosen.webp" target="_blank" rel="noopener" title="View larger"><img alt="All seven chosen" src="img/suggest-relationships-chosen.webp" / loading="lazy" decoding="async"></a><figcaption>All seven chosen</figcaption></figure>
+<p>If the graph has no virtual node reading a table at either end, that node is made first (a parent keyed on its parent column), then the relationship. The relationship statements that ran are listed below in order.</p>
+<figure><a href="img/suggest-relationships-created.webp" target="_blank" rel="noopener" title="View larger"><img alt="After creating — the 7 CREATE VIRTUAL RELATIONSHIP statements that ran" src="img/suggest-relationships-created.webp" / loading="lazy" decoding="async"></a><figcaption>After creating — the 7 CREATE VIRTUAL RELATIONSHIP statements that ran</figcaption></figure>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">REF_PO</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">scm</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">Shipment</span><span class="p">(</span><span class="n">ref_po_no</span><span class="p">)</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">PurchaseOrder</span><span class="p">(</span><span class="n">po_id</span><span class="p">)</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">VIRTUAL</span><span class="w"> </span><span class="n">RELATIONSHIP</span><span class="w"> </span><span class="n">VENDOR</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">scm</span><span class="w"> </span><span class="n">FROM</span><span class="w"> </span><span class="n">Shipment</span><span class="p">(</span><span class="n">vendor_code</span><span class="p">)</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">Supplier</span><span class="p">(</span><span class="n">supplier_id</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Click <code>scm</code> under the virtual graphs on the left to see 8 virtual nodes and 7 relationships, grouped by datasource.</p>
+<figure><a href="img/suggest-relationships-graph.webp" target="_blank" rel="noopener" title="View larger"><img alt="The virtual graph scm — 8 nodes and 7 relationships in the CRM, ERP and WMS columns" src="img/suggest-relationships-graph.webp" / loading="lazy" decoding="async"></a><figcaption>The virtual graph scm — 8 nodes and 7 relationships in the CRM, ERP and WMS columns</figcaption></figure>
+<h2 id="using-it-right-away">Using it right away<a class="anchor" href="#using-it-right-away" title="Permanent link">#</a></h2>
+<p>In the portal, choose the graph <code>scm</code> and follow the suggested relationships from a WMS shipment to the ERP purchase order and supplier.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">Shipment</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">REF_PO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">po</span><span class="p">:</span><span class="n">PurchaseOrder</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">SUPPLIER</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Supplier</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="m">3</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">shipment_no</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="p">.</span><span class="n">delay_days</span><span class="p">,</span><span class="w"> </span><span class="n">po</span><span class="p">.</span><span class="n">po_id</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>sh.shipment_no</th>
+<th>sh.delay_days</th>
+<th>po.po_id</th>
+<th>s.name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHP-02</td>
+<td>7</td>
+<td>PO-001</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+<tr>
+<td>SHP-03</td>
+<td>9</td>
+<td>PO-002</td>
+<td>Shenzhen Goldline PCB</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/suggest-relationships-query.webp" target="_blank" rel="noopener" title="View larger"><img alt="The portal — a query joining two databases through the suggested relationships, 2 rows" src="img/suggest-relationships-query.webp" / loading="lazy" decoding="async"></a><figcaption>The portal — a query joining two databases through the suggested relationships, 2 rows</figcaption></figure>
+<p>It is the same answer you got in the sample graph <code>sample</code> through the relationships people made (<code>SHIPS</code>, <code>ORDERED_FROM</code>). You got the same graph without writing a single relationship yourself.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Check yourself</p>
+<ol>
+<li>Why was <code>erp.supplier.country → crm.customer.country</code> not suggested?</li>
+<li>Why is the confidence of <code>wms.shipment.ref_po_no → erp.purchase_order.po_id</code> (65%) lower than the other suggestions?</li>
+<li>Is anything written to the source databases while suggestions are made? Is any data copied?</li>
+</ol>
+</div>
+<details class="answer">
+<summary>Show answers</summary>
+<ol>
+<li>Only 1/3 = 0.33 of the child values are in the parent, below the 0.8 threshold (<strong>Values do not overlap enough</strong>). Country names are values that show up in many tables, not references.</li>
+<li>The names are not the same and match only through the abbreviation rule (<code>po</code> = purchase_order), so the name score is 0.75; only 6 of 7 sampled values matched (0.857); and the small sample lowers the support. Below 70%, it is not ticked in advance — a person reads the evidence and decides.</li>
+<li>No. <code>SHOW COLUMN STATS</code> and <code>SHOW VALUE OVERLAP</code> only read, and measure only a sample: the first 1000 rows and up to 200 distinct values. The virtual relationships made are join rules; no data is copied.</li>
+</ol>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="credentials.html"><span>Previous</span>Keeping Source Passwords</a><a class="next" href="answerability.html"><span>Next</span>Checking Answerability First</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from actually running Ontological Studio in English mode.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#why-suggestions">Why suggestions?</a></li><li><a href="#how-it-finds-them">How it finds them</a></li><li><a href="#try-it-an-empty-graph">Try it — an empty graph</a></li><li><a href="#try-it-getting-suggestions">Try it — getting suggestions</a></li><li><a href="#reading-the-rejected-candidates">Reading the rejected candidates</a></li><li><a href="#try-it-creating-the-chosen-relationships">Try it — creating the chosen relationships</a></li><li><a href="#using-it-right-away">Using it right away</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
