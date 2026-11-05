@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>코드 생성과 학습 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="개발 에이전트가 계획을 쓰고 Spring Boot 서비스 3개와 Vue 화면을 만든 뒤 시험을 돌립니다. 검토 에이전트의 지적을 보고 &quot;결제 오류 응답은 HTTP 402로 통일&quot;이라는 수정을 요청하면, 그 규칙이 프로젝트 기억(`project.md`)에 저장됩니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/construction.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="코드 생성과 학습 — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="개발 에이전트가 계획을 쓰고 Spring Boot 서비스 3개와 Vue 화면을 만든 뒤 시험을 돌립니다. 검토 에이전트의 지적을 보고 &quot;결제 오류 응답은 HTTP 402로 통일&quot;이라는 수정을 요청하면, 그 규칙이 프로젝트 기억(`project.md`)에 저장됩니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/construction.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/educationax.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+</ul>
+<div class="nav-part">착수</div><ul>
+<li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
+</ul>
+<div class="nav-part">구축</div><ul>
+<li><a href="construction.html" class="on" aria-current="page"><span class="n">03</span>코드 생성과 학습</a></li>
+</ul>
+<div class="nav-part">확인</div><ul>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">구축<span class="chap">3</span></div>
+    <h1>코드 생성과 학습</h1>
+    <article>
+<blockquote>
+<p>개발 에이전트가 계획을 쓰고 Spring Boot 서비스 3개와 Vue 화면을 만든 뒤 시험을 돌립니다. 검토 에이전트의 지적을 보고 "결제 오류 응답은 HTTP 402로 통일"이라는 수정을 요청하면, 그 규칙이 프로젝트 기억(<code>project.md</code>)에 저장됩니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/naj2D75rWNM" title="코드 생성과 학습 — 영상 3:20" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>코드 생성(3.5)은 <strong>계획 → 구현 → 시험 → 검토 → 승인</strong> 순서로 진행합니다. poc 스코프는 계획 승인(plan approval)이 꺼져 있어, 계획을 작성한 뒤 한 줄로 알리고 바로 구현을 시작합니다. 원하면 언제든 계획을 같이 보자고 할 수 있습니다.</p>
+<p>사람의 수정 요청은 이후 작업에도 반영됩니다. AI-DLC의 <strong>학습 의식(learnings)</strong>은 수정 요청을 규칙 후보로 보고, 사람이 동의하면 <code>aidlc/spaces/default/memory/project.md</code>의 <code>## Corrections</code>에 한 줄로 저장합니다. 다음 단계와 다음 작업은 물론 다른 팀원의 도구에서도 이 파일을 읽습니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>계획.</strong> 요구사항 승인 직후 개발 에이전트가 Java·Maven·Node 버전을 확인하고(명령을 실행하므로 허락을 묻습니다) 계획 <code>code-generation-plan.md</code>를 작성합니다. 이번 실행의 계획에서 정한 내용은 다음과 같습니다.
+
+| 결정 | 내용 |
+|---|---|
+| 서비스 분해 | <code>recommendation-service</code>(8081), <code>payment-service</code>(8082), <code>reservation-service</code>(8083) — 요청대로 모듈이 여럿이라 마이크로서비스 |
+| 화면 | Vue 3 + Vite(5173), 개발 서버 프록시로 각 서비스에 연결 |
+| 저장소 | 서비스마다 메모리(<code>ConcurrentHashMap</code>). 프로토타입이라 DB 없음 |
+| 흐름 | 추천 → 예약 <code>PENDING</code> → 결제 <code>PENDING</code> → 모의 PG가 비동기 웹훅 → 결제 서비스가 예약 확정 요청 → 예약 서비스가 SSE로 화면에 <code>CONFIRMED</code> |
+| 180초 | 예약 서비스 스케줄러가 <code>CANCELLED</code>로 변경. 정확히 180초가 되어도 취소 |
+| 점수 환산 | 가격·거리는 후보 중 최솟값 대비 비율, 이용 시간은 1시간 어긋날 때마다 50점 감점. 동점이면 가격이 낮은 쪽 |
+| "근처" | 반경 1,000m. 후보가 3개 미만이면 있는 만큼 보여 주고 안내 |
+| 시험 방식 | 구현 뒤 시험(test-after). poc의 기본값입니다 |
+
+<figure><a href="img/cons-plan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="계획을 쓰고 개발 에이전트에 넘기는 장면" src="img/cons-plan.webp" loading="lazy" decoding="async"></a><figcaption>계획을 쓰고 개발 에이전트에 넘기는 장면</figcaption></figure>
+</li>
+<li><strong>구현과 시험.</strong> 개발 에이전트가 서비스마다 코드를 작성하고 <code>mvn test</code>를 실행합니다. 프런트에서는 <code>npm install</code>·<code>vitest</code>·<code>vite build</code>를 실행합니다. 마지막으로 서비스 셋을 실행하고 <code>curl</code>로 전체 흐름을 확인하는 스모크 시험을 진행합니다. acceptEdits 모드라 명령마다 허락을 묻습니다. 같은 명령을 계속 쓰면 「Yes, and don't ask again」을 골라도 됩니다.
+
+<figure><a href="img/cons-perm.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시험 명령 실행 허락" src="img/cons-perm.webp" loading="lazy" decoding="async"></a><figcaption>시험 명령 실행 허락</figcaption></figure>
+
+Java·Vue·JS 파일 61개와 시험 클래스 9개가 생성되었습니다. 수정 요청까지 반영한 뒤의 시험 수는 다음과 같습니다.
+
+| 시험 | 수 | 결과 |
+|---|---|---|
+| recommendation-service (JUnit) | 18 | 통과 |
+| reservation-service (JUnit) | 19 | 통과 |
+| payment-service (JUnit) | 19 | 통과 |
+| frontend (vitest) | 16 | 통과 |
+</li>
+<li><strong>검토 에이전트.</strong> 구현이 끝나면 설계 검토 에이전트(<code>aidlc-architecture-reviewer-agent</code>)가 계획·코드·시험을 다시 읽고 시험도 직접 실행합니다. 이번 판정은 READY였고, 6건을 짚었습니다. 가장 큰 지적(R-01, Major)은 결제 후 화면에 예약 완료를 표시하는 <code>App.vue</code>의 SSE·폴링 연결을 검증하지 않았다는 점입니다. 자동 시험도, 실제 브라우저 확인도 없었습니다. 이 확인은 4장에서 직접 합니다.
+
+<figure><a href="img/cons-review.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="검토 결과와 코드 생성 승인 게이트" src="img/cons-review.webp" loading="lazy" decoding="async"></a><figcaption>검토 결과와 코드 생성 승인 게이트</figcaption></figure>
+</li>
+<li><strong>수정 요청(Request Changes).</strong> 게이트에서 Request Changes를 고르면 어떤 지적 사항을 수정할지 묻습니다. 여기서는 Type something을 골라 원본 가이드의 리뷰어 피드백을 그대로 넣었습니다.
+
+
+<div class="hl"><pre><span></span><code>R-01은 제가 브라우저로 직접 확인할게요. 대신 결제 실패·오류 응답은 모두 HTTP 402 Payment Required와
+표준 에러 객체(code, message)로 통일해 주세요. 앞으로 결제 관련 예외는 모두 이 규칙을 따라 주세요.
+</code></pre></div>
+
+
+
+<figure><a href="img/cons-fix.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="수정 요청 입력" src="img/cons-fix.webp" loading="lazy" decoding="async"></a><figcaption>수정 요청 입력</figcaption></figure>
+</li>
+<li><strong>규칙이 기억에 저장됨.</strong> 개발 에이전트가 결제 서비스의 공통 예외 처리기를 고치고(코드 <code>PAYMENT_VALIDATION_FAILED</code>, <code>PAYMENT_NOT_FOUND</code>, <code>PAYMENT_ALREADY_APPROVED</code>, <code>RESERVATION_UNAVAILABLE</code>, <code>PAYMENT_INTERNAL_ERROR</code>), 프런트에서 결제 화면에 <code>code</code>·<code>message</code>를 표시하도록 바꿉니다. 그리고 "말씀하신 결제 오류 규칙은 프로젝트 메모리에 저장해 두었습니다"라고 알립니다. 요청에 "앞으로"라고 분명히 적었기 때문에 따로 "기억할까요?"를 묻지 않고 저장했습니다. 감사 기록에는 <code>RULE_LEARNED</code>(출처 <code>user_addition</code>)가 남습니다.
+
+
+<div class="hl"><pre><span></span><code><span class="gu">## Corrections</span>
+<span class="k">-</span><span class="w"> </span>결제 관련 실패·오류 응답은 모두 HTTP 402 Payment Required와 표준 에러 객체 { code, message }로
+  통일하고, 앞으로 추가하는 결제 관련 예외도 같은 규칙을 따른다. (learned 2026-11-05)
+</code></pre></div>
+
+
+
+개발 에이전트는 규칙을 적용하지 않은 부분도 설명했습니다. 모의 PG의 실패 통지 웹훅은 200을 유지합니다(402로 바꾸면 웹훅 멱등 처리가 깨지기 때문). 재검토에서는 "없는 경로도 402가 된다" 같은 사소한 문제 5건(R-07~R-11)을 짚었고, Approve를 선택했습니다.
+
+<figure><a href="img/cons-rule.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="규칙을 프로젝트 기억에 저장했다는 알림" src="img/cons-rule.webp" loading="lazy" decoding="async"></a><figcaption>규칙을 프로젝트 기억에 저장했다는 알림</figcaption></figure>
+</li>
+<li><strong>빌드와 테스트(3.6).</strong> 품질 에이전트가 백엔드 jar 3개와 프런트 번들을 다시 만들고 시험 72개(추천 18, 결제 19, 예약 19, 프런트 16)를 모두 실행합니다. 요구사항 13개가 시험과 연결되는지 확인하는 추적표(<code>cross-unit-traceability.md</code>)도 작성합니다. 이어서 서비스 셋을 실행하고, 승인 웹훅을 받은 뒤 확정 알림(SSE)이 도착하기까지 걸린 시간을 10번 측정했습니다. 10번 모두 1초 안(5~114ms)이었습니다. 이 단계에서도 브라우저에서 화면을 확인하는 일을 남은 작업으로 기록했습니다. Approve를 고르면 워크플로가 끝나고 상태줄이 <code>COMPLETE</code>로 바뀝니다.
+
+| 확인 | 기대 | 실제 | 판정 |
+|---|---|---|---|
+| NFR1 | 승인 웹훅 수신부터 1초 이내 | 서버 → 클라이언트 5~114ms, 10회 | 충족(화면 표시는 4장에서 확인) |
+| NFR2 | 180초 대기, 넘으면 자동 취소 | 179초 대기, 180초 정확히 취소, 취소 뒤 승인 무시 | 충족 |
+| 시험 묶음 | 기존 시험 모두 통과 | 72개 통과, 실패 0 | 충족 |
+
+<figure><a href="img/cons-build.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="빌드와 테스트 결과" src="img/cons-build.webp" loading="lazy" decoding="async"></a><figcaption>빌드와 테스트 결과</figcaption></figure>
+</li>
+</ol>
+<h2 id="센서는-무엇을-봤나">센서는 무엇을 봤나<a class="anchor" href="#센서는-무엇을-봤나" title="Permanent link">#</a></h2>
+<p>가이드는 코드를 쓰는 즉시 <code>tsc</code>·Jest 같은 센서가 실행되고 실패하면 스스로 고친다고 설명합니다. 실제 AI-DLC 2.11.2의 코드 센서(<code>linter</code>, <code>type-check</code>)는 TypeScript·JavaScript 파일을 대상으로 하고, 이번 실행에서는 문서 센서 4종(<code>claim-sources</code>, <code>required-sections</code>, <code>traceability</code>, <code>upstream-coverage</code>)만 실행되었습니다. 모두 통과했습니다. Java 코드의 빌드와 시험은 개발 에이전트와 검토 에이전트가 <code>mvn test</code>로 직접 실행했습니다. Java 프로젝트에서 센서로 오류를 차단하려면 <code>.claude/sensors/</code>에 센서를 더해야 합니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>수정 요청 뒤 규칙이 저장되지 않게 하려면 어떻게 하나요?</summary>
+<p>"다음에도 기억할까요?"라는 질문이 나오면 아니라고 답합니다. 처음부터 학습 의식을 끄려면 요청에 <code>--learnings off</code>를 붙입니다. 이미 <code>project.md</code>에 있는 규칙은 계속 읽힙니다.</p>
+</details>
+<details class="answer">
+<summary>계획을 구현 전에 보고 싶다면요?</summary>
+<p>poc·express는 계획 승인이 꺼져 있습니다. 계획이 작성될 때 "계획을 보여 줘"라고 하거나, 처음부터 <code>/aidlc --plan-approval on</code>으로 켭니다. classic·workshop은 기본으로 계획 승인을 묻습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="requirements.html"><span>이전</span>의도 정리와 요구사항</a><a class="next" href="run.html"><span>다음</span>동작 확인과 감사 기록</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#센서는-무엇을-봤나">센서는 무엇을 봤나</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

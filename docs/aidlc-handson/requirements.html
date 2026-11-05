@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>의도 정리와 요구사항 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="Claude Code를 켜고 `/aidlc poc` 로 VoiceParking을 요청합니다. AI-DLC가 만든 질문에 답하고, &quot;바로 예약 완료&quot;와 &quot;비동기 웹훅 승인&quot;이 부딪히는 곳을 AI-DLC가 후속 질문으로 짚는 장면, 두 번의 승인 게이트를 따라갑니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/requirements.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="의도 정리와 요구사항 — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="Claude Code를 켜고 `/aidlc poc` 로 VoiceParking을 요청합니다. AI-DLC가 만든 질문에 답하고, &quot;바로 예약 완료&quot;와 &quot;비동기 웹훅 승인&quot;이 부딪히는 곳을 AI-DLC가 후속 질문으로 짚는 장면, 두 번의 승인 게이트를 따라갑니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/requirements.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/educationax.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+</ul>
+<div class="nav-part">착수</div><ul>
+<li><a href="requirements.html" class="on" aria-current="page"><span class="n">02</span>의도 정리와 요구사항</a></li>
+</ul>
+<div class="nav-part">구축</div><ul>
+<li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
+</ul>
+<div class="nav-part">확인</div><ul>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">착수<span class="chap">2</span></div>
+    <h1>의도 정리와 요구사항</h1>
+    <article>
+<blockquote>
+<p>Claude Code를 켜고 <code>/aidlc poc</code> 로 VoiceParking을 요청합니다. AI-DLC가 만든 질문에 답하고, "바로 예약 완료"와 "비동기 웹훅 승인"이 부딪히는 곳을 AI-DLC가 후속 질문으로 짚는 장면, 두 번의 승인 게이트를 따라갑니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/cpCq8aEoh5Q" title="의도 정리와 요구사항 — 영상 4:48" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>요청 한 줄을 받은 AI는 빠진 내용을 추측으로 채우기 쉽습니다. AI-DLC는 코드를 쓰기 전에 <strong>질문지</strong>를 만들고, 사람이 답한 것만 문서에 씁니다. 각 문장에 <code>[Q2]</code>, <code>[desc]</code> 같은 출처가 붙어 있어 추측으로 작성한 문장을 찾기 쉽습니다. 스테이지가 끝날 때마다 검토 에이전트가 문서를 따로 검토하고, 사람이 승인해야 다음 스테이지로 넘어갑니다.</p>
+<p>poc 스코프의 스테이지는 다음과 같습니다. 이 장에서는 의도 정리와 요구사항 분석을 다룹니다.</p>
+<table>
+<thead>
+<tr>
+<th>스테이지</th>
+<th>하는 일</th>
+<th>이 실습</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1~0.3 초기화</td>
+<td>작업 기록 폴더, 새 프로젝트/기존 코드 판별, 상태 파일</td>
+<td>자동(1초 미만)</td>
+</tr>
+<tr>
+<td>1.1 의도 정리</td>
+<td>왜, 누구를 위해, 어디까지</td>
+<td>질문 4개</td>
+</tr>
+<tr>
+<td>2.1 역설계</td>
+<td>기존 코드 분석</td>
+<td>새 프로젝트라 건너뜀</td>
+</tr>
+<tr>
+<td>2.3 요구사항 분석</td>
+<td>시험할 수 있는 요구사항</td>
+<td>질문 4개 + 후속 2개</td>
+</tr>
+<tr>
+<td>3.5 코드 생성</td>
+<td>계획, 코드, 시험</td>
+<td>3장</td>
+</tr>
+<tr>
+<td>3.6 빌드와 테스트</td>
+<td>전체 빌드와 시험</td>
+<td>3장</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>Claude Code 켜기.</strong> 실습 폴더에서 Sonnet 모델, acceptEdits 모드(파일 편집은 묻지 않고 명령 실행은 묻기)로 실행합니다. 처음 여는 폴더이므로 신뢰 여부를 묻고, AI-DLC가 <code>.claude/settings.json</code>에 미리 허용해 둔 도구 권한 45개를 보여 줍니다. 직접 만든 실습 폴더이므로 신뢰합니다. 회사 저장소라면 팀이 이 목록을 검토해야 합니다.
+
+
+<div class="hl"><pre><span></span><code>claude<span class="w"> </span>--model<span class="w"> </span>sonnet<span class="w"> </span>--permission-mode<span class="w"> </span>acceptEdits
+</code></pre></div>
+
+
+
+<figure><a href="img/req-trust.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="신뢰 확인과 미리 허용된 권한 45개" src="img/req-trust.webp" loading="lazy" decoding="async"></a><figcaption>신뢰 확인과 미리 허용된 권한 45개</figcaption></figure>
+</li>
+<li><strong>AI-DLC 안내.</strong> 폴더를 신뢰하면 AI-DLC 안내가 나옵니다. 스코프마다 어떤 스테이지를 거치는지 표로 보여 줍니다(IC 의도 정리, RE 역설계, RA 요구사항 분석, CG 코드 생성, BT 빌드와 테스트). 아래 상태줄의 <code>[AIDLC] ready</code>는 AI-DLC의 진행 상태를 나타냅니다.
+
+<figure><a href="img/req-welcome.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="스코프별 스테이지 표" src="img/req-welcome.webp" loading="lazy" decoding="async"></a><figcaption>스코프별 스테이지 표</figcaption></figure>
+</li>
+<li><strong>요청.</strong> <code>/aidlc</code> 뒤에 스코프와 요청을 씁니다. <code>--summary-confirmation off</code>는 답을 요약해 다시 확인받는 단계만 끕니다. 질문과 승인 게이트는 그대로입니다. 마지막 문장 "결제가 끝나면 바로 예약 완료를 보여 줘야 해"를 기억해 두세요.
+
+
+<div class="hl"><pre><span></span><code>/aidlc poc --summary-confirmation off 사용자가 음성 텍스트(&#39;강남역 근처 2시간 주차권 찾아줘&#39;)를
+보내면 최적 주차권을 추천하고 결제와 예약을 처리하는 VoiceParking 프로토타입을 만들어 줘.
+프런트는 Vue 3, 백엔드는 Java Spring Boot로 하고, 백엔드 모듈이 여럿이면 마이크로서비스로
+나눠 줘. 결제가 끝나면 사용자에게 바로 예약 완료를 보여 줘야 해.
+</code></pre></div>
+
+
+</li>
+<li><strong>답하는 방법 고르기.</strong> 약 75초 뒤 작업 기록(<code>aidlc/spaces/default/intents/261105-voice-parking/</code>)과 질문지 <code>intent-capture-questions.md</code>가 생성되고, 답변 방법을 묻습니다. <strong>Guide me</strong>(한 문항씩 대화형), <strong>I'll edit the file</strong>(파일에 직접 적기), <strong>Chat</strong>(자유 대화) 가운데 Guide me를 고릅니다. 한 번 고르면 다음 스테이지도 같은 방식으로 진행합니다.
+
+<figure><a href="img/req-mode.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답하는 방법 세 가지" src="img/req-mode.webp" loading="lazy" decoding="async"></a><figcaption>답하는 방법 세 가지</figcaption></figure>
+</li>
+<li><strong>의도 정리 질문 4개.</strong> 이번 실행에서 받은 질문과 답입니다.
+
+| 질문 | 고른 답 |
+|---|---|
+| Q1 성공 기준 | B. 추천 이유 설명 (데모 흐름 + 왜 최적인지 화면에서 설명) |
+| Q2 대상 사용자 | A. 음성 선호 운전자 |
+| Q3 범위 밖(여럿 선택) | 실제 PG 연동, 실제 주차장 데이터, 진짜 음성 인식, 계정 관리 |
+| Q4 의사결정자 | B. 요청자가 결정하고 팀에 공유 |
+
+여러 답을 고르는 질문은 Enter로 선택하고 아래의 Next로 넘어갑니다. 마지막에는 답 전체를 보여 주고 Submit answers로 제출할지 묻습니다.
+
+<figure><a href="img/req-q3.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="범위 밖 고르기(여럿 선택)" src="img/req-q3.webp" loading="lazy" decoding="async"></a><figcaption>범위 밖 고르기(여럿 선택)</figcaption></figure>
+</li>
+<li><strong>첫 승인 게이트.</strong> 약 2분 반 뒤 <code>intent-statement.md</code>, <code>stakeholder-map.md</code>가 생성되고 검토 에이전트가 우려 4건을 짚습니다. Approve를 고르면 요구사항 분석으로 넘어갑니다. 의도 문서의 문장 끝에는 <code>[desc]</code>(처음 요청), <code>[Q2]</code>(2번 답) 같은 출처가 붙어 있습니다.
+
+
+<div class="hl"><pre><span></span><code><span class="gu">## Target Customer</span>
+<span class="k">-</span><span class="w"> </span>주 사용자는 운전 중이거나 손이 자유롭지 않아 음성으로 빠르게 주차장을 찾고 싶은 일반 운전자다. [Q2]
+</code></pre></div>
+
+
+</li>
+<li><strong>요구사항 분석 질문.</strong> 이번에는 시험으로 확인할 수 있는 수치를 묻습니다. 최적의 기준은 D(종합 점수), 후보 수는 B(최적 1 + 비교 2), 결제 실패는 A(안내 후 재결제)를 골랐습니다. "바로"가 몇 초인지 묻는 Q2에는 Type something을 골라 직접 씁니다.
+
+
+<div class="hl"><pre><span></span><code>1초 이내. 그리고 모의 PG의 결제 승인은 비동기 웹훅으로 들어오고,
+180초 안에 승인이 오지 않으면 예약을 자동 취소해 줘.
+</code></pre></div>
+
+
+</li>
+<li><strong>서로 충돌하는 답을 짚는 후속 질문.</strong> 답을 받은 AI-DLC가 후속 질문 2개를 제시했습니다. 그중 하나는 다음과 같습니다.
+
+&gt; Q5. "1초 이내"는 어느 시점부터 재나요? (모의 PG 승인이 비동기 웹훅으로 들어오기 때문에 묻습니다)
+
+처음 요청의 "결제가 끝나면 바로 예약 완료"와 방금 답한 "승인은 비동기 웹훅"을 함께 보면, 결제 버튼을 누른 시점에는 아직 승인되지 않은 상태입니다. 가이드에서 말한 "모순 감지"는 실제로 이런 후속 질문으로 나타납니다. A(승인 웹훅을 서버가 받은 시점부터)를 고르고, 종합 점수 비중은 직접 "가격 40%, 거리 40%, 이용 시간 적합도 20%"로 답했습니다.
+
+<figure><a href="img/req-followup.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="후속 질문: 1초를 어디서부터 재나" src="img/req-followup.webp" loading="lazy" decoding="async"></a><figcaption>후속 질문: 1초를 어디서부터 재나</figcaption></figure>
+</li>
+<li><strong>두 번째 승인 게이트.</strong> 약 2분 뒤 <code>requirements.md</code>가 작성됩니다. 결제 대기 → 승인 웹훅 → 확정 상태, 180초 자동 취소, "승인 웹훅 수신부터 화면 표시까지 1초 이내"라는 비기능 요구사항이 반영되었습니다. 검토 에이전트가 7건(R-01~R-07)을 짚었고, 그대로 Approve를 선택했습니다.
+
+| ID | 요구사항 | 합격 기준 |
+|---|---|---|
+| FR2.1 | 종합 점수: 가격 40%, 거리 40%, 이용 시간 적합도 20% | 같은 입력·같은 샘플 데이터에서 항상 같은 점수와 순위 |
+| FR3.2 | 모의 결제 승인은 비동기 웹훅으로 전달 | 승인 웹훅을 받으면 결제가 승인 상태로 |
+| FR3.4 | 180초 안에 승인이 없으면 예약 자동 취소 | 승인 없이 180초가 지나면 취소 상태 |
+| NFR1 | 예약 완료 표시 시간 | 승인 웹훅 수신부터 화면 표시까지 1초 이내 |
+
+<figure><a href="img/req-gate.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="요구사항 검토 결과와 승인 게이트" src="img/req-gate.webp" loading="lazy" decoding="async"></a><figcaption>요구사항 검토 결과와 승인 게이트</figcaption></figure>
+</li>
+</ol>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>질문에 "아직 정하지 않음"을 고르면 어떻게 되나요?</summary>
+<p>문서의 「Assumptions &amp; Open Questions」에 미정 항목으로 남습니다. 이번 요구사항에도 "근처의 범위", "후보가 3개보다 적을 때 표시"가 미정 항목으로 남았고, 코드 생성 계획에서 처리 방법을 정했습니다(반경 1,000m, 있는 만큼 보여 주고 안내).</p>
+</details>
+<details class="answer">
+<summary>후속 질문 Q5가 없었다면 무엇이 문제였을까요?</summary>
+<p>"1초 이내"를 결제 버튼을 누른 시점부터 재면, 승인을 기다리는 시간(최대 180초)이 포함되어 요구사항을 지킬 수 없습니다. 측정 시작점을 웹훅 수신으로 정하면서 결제 대기 상태와 실시간 알림(SSE)을 설계하게 되었습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="setup.html"><span>이전</span>설치와 프로젝트 준비</a><a class="next" href="construction.html"><span>다음</span>코드 생성과 학습</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
