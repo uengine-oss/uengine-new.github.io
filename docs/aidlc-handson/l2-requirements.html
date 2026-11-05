@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2단계 요구사항 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="무엇을 만들지 시험할 수 있는 문장으로 정합니다. 질문지에 답이 쌓이고, 빈칸과 부딪히는 답은 후속 질문으로 되묻고, 답이 요구사항 문장이 되는 과정을 실제 파일로 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/l2-requirements.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2단계 요구사항 — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="무엇을 만들지 시험할 수 있는 문장으로 정합니다. 질문지에 답이 쌓이고, 빈칸과 부딪히는 답은 후속 질문으로 되묻고, 답이 요구사항 문장이 되는 과정을 실제 파일로 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/l2-requirements.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">레벨 1 · poc</div><ul>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+<li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
+<li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul>
+<div class="nav-part">레벨 2 · classic</div><ul>
+<li><a href="l2-overview.html"><span class="n">05</span>레벨 2 개요와 1단계 팀 규칙</a></li>
+<li><a href="l2-requirements.html" class="on" aria-current="page"><span class="n">06</span>2단계 요구사항</a></li>
+<li><a href="l2-stories.html"><span class="n">07</span>3·4단계 유저 스토리와 화면</a></li>
+<li><a href="l2-domain.html"><span class="n">08</span>5단계 도메인 설계</a></li>
+<li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
+<li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
+<li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">레벨 2 · classic<span class="chap">6</span></div>
+    <h1>2단계 요구사항</h1>
+    <article>
+<blockquote>
+<p>무엇을 만들지 시험할 수 있는 문장으로 정합니다. 질문지에 답이 쌓이고, 빈칸과 부딪히는 답은 후속 질문으로 되묻고, 답이 요구사항 문장이 되는 과정을 실제 파일로 봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/zlGMUytGbNQ" title="2단계 요구사항 — 영상 1:29" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>만드는 것</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기능 요구 (FR)</td>
+<td>무엇을 해야 하나</td>
+</tr>
+<tr>
+<td>비기능 요구 (NFR)</td>
+<td>얼마나 빠르고 안전해야 하는지와 측정 방법</td>
+</tr>
+<tr>
+<td>합격 기준</td>
+<td>통과와 실패를 가르는 기준</td>
+</tr>
+<tr>
+<td>출처 표시</td>
+<td>문장마다 근거가 된 답(<code>[Q3]</code>, <code>[desc]</code>)</td>
+</tr>
+<tr>
+<td>후속 질문</td>
+<td>답에서 빠지거나 서로 충돌하는 내용 확인</td>
+</tr>
+</tbody>
+</table>
+<p>답하고 승인하는 사람은 PO·기획입니다. 결과 문서는 <code>inception/requirements-analysis/requirements.md</code>입니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>본 질문 4개.</strong> 최적 기준은 "가격 40%, 거리 40%, 이용 시간 적합도 20%의 종합 점수, 최적 1개와 비교 후보 2개를 이유와 함께"로 직접 답했습니다. 데이터와 결제는 A(목업 데이터 + 모의 결제)를 골랐습니다. 예약 완료 전달은 "모의 PG 승인은 비동기 웹훅, 승인되면 1초 안에 화면 표시, 180초 안에 승인 없으면 자동 취소"로 직접 답했습니다. 로그인은 A(없음)로 답했습니다.
+</li>
+<li><strong>후속 질문 3개.</strong> 답만으로 정할 수 없는 부분을 다시 묻습니다. 시간 적합도 점수 계산(A), 웹훅 승인 뒤 화면 전달 방식(A, SSE 서버 푸시), 180초를 세는 시점(A, 결제 요청 시점부터)이었습니다.
+</li>
+<li><strong>승인.</strong> 검토 판정은 NOT-READY였고, PO가 지적된 위험을 수용하고 승인했습니다.
+</li>
+</ol>
+<h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
+<p><strong>① 질문지</strong> <code>requirements-analysis-questions.md</code>: 본 질문 4개 아래에 후속 질문 3개가 <code>(후속)</code> 표시로 이어집니다. 직접 쓴 답은 <code>[Answer]: X. …</code>로 남습니다.</p>
+<div class="hl"><pre><span></span><code><span class="gu">## Q3. [개발] 결제가 끝난 뒤 &quot;예약 완료&quot;는 어떻게 사용자 화면에 전달할까요?</span>
+[<span class="nl">Answer</span>]: <span class="na">X. 모의 PG의 결제 승인은 비동기 웹훅으로 들어오고, 승인되면 1초 안에 화면에 예약 완료를 보여 줘. …</span>
+<span class="gu">## Q6. [개발] (후속) 웹훅 승인 후 1초 안에 화면에 예약 완료를 띄우는 전달 방식은 무엇인가요?</span>
+[<span class="nl">Answer</span>]: <span class="na">A</span>
+</code></pre></div>
+
+<p><strong>② 요구사항</strong> <code>requirements.md</code>: 맨 위 <code>## Sources</code>에 출처가 있고, 답이 FR·NFR 문장이 됩니다.</p>
+<div class="hl"><pre><span></span><code><span class="gu">### FR5. 비동기 웹훅 승인 처리</span>
+<span class="k">-</span><span class="w"> </span>FR5.3 같은 승인 웹훅이 여러 번 와도 예약은 한 번만 확정된다.
+<span class="gu">## 비기능 요구사항</span>
+<span class="k">-</span><span class="w"> </span>NFR1. 승인 웹훅 수신 시각부터 화면에 예약 완료가 표시되기까지 1초 이내여야 한다 (측정: 로컬 환경, 100건 반복에서 최대 1초).
+</code></pre></div>
+
+<p><strong>③ 검토</strong> <code>reviews/review-01.md</code>: 판정은 NOT-READY입니다. 결제 실패 후 동작이 빠졌다는 지적 등이 있었습니다. 빠진 내용은 다음 유저 스토리 단계에서 다시 질문했습니다.</p>
+<p><strong>④ 다음에 쓰이는 곳.</strong> 유저 스토리와 인수 조건, 도메인 설계, 품질 요구, 테스트 기준에서 이 문서의 FR·NFR 번호를 참조합니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="l2-overview.html"><span>이전</span>레벨 2 개요와 1단계 팀 규칙</a><a class="next" href="l2-stories.html"><span>다음</span>3·4단계 유저 스토리와 화면</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

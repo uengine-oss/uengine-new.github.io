@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구현: 유닛 u1 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 사용량 한도로 이번 실행은 u1까지 진행했습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/l2-build.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="구현: 유닛 u1 — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 사용량 한도로 이번 실행은 u1까지 진행했습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/l2-build.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">레벨 1 · poc</div><ul>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+<li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
+<li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul>
+<div class="nav-part">레벨 2 · classic</div><ul>
+<li><a href="l2-overview.html"><span class="n">05</span>레벨 2 개요와 1단계 팀 규칙</a></li>
+<li><a href="l2-requirements.html"><span class="n">06</span>2단계 요구사항</a></li>
+<li><a href="l2-stories.html"><span class="n">07</span>3·4단계 유저 스토리와 화면</a></li>
+<li><a href="l2-domain.html"><span class="n">08</span>5단계 도메인 설계</a></li>
+<li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
+<li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
+<li><a href="l2-build.html" class="on" aria-current="page"><span class="n">11</span>구현: 유닛 u1</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">레벨 2 · classic<span class="chap">11</span></div>
+    <h1>구현: 유닛 u1</h1>
+    <article>
+<blockquote>
+<p>유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 사용량 한도로 이번 실행은 u1까지 진행했습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/VQqFTlhugDI" title="구현: 유닛 u1 — 영상 2:13" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>순서</th>
+<th>하는 일</th>
+<th>산출물</th>
+<th>사람</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기능 설계</td>
+<td>엔티티·규칙·워크플로</td>
+<td><code>entities.md</code>, <code>rules.md</code>, <code>functional-spec.md</code></td>
+<td>따로 멈추지 않음</td>
+</tr>
+<tr>
+<td>품질 요구(NFR)</td>
+<td>성능·보안·신뢰성과 측정 방법</td>
+<td><code>nfr-requirements/*</code>, <code>nfr-design/*</code></td>
+<td>따로 멈추지 않음</td>
+</tr>
+<tr>
+<td>코드 계획</td>
+<td>팀 규칙대로 Red → Green → Refactor 단계</td>
+<td><code>code-generation-plan.md</code></td>
+<td><strong>승인</strong></td>
+</tr>
+<tr>
+<td>구현</td>
+<td>테스트 먼저, 그다음 코드</td>
+<td>코드, <code>traceability.json</code>, <code>code-summary.md</code></td>
+<td>명령 실행 허가</td>
+</tr>
+<tr>
+<td>검증</td>
+<td>사람이 승인한 명령으로 확인</td>
+<td>상태 파일·감사 기록의 체크포인트</td>
+<td>첫 유닛에서 <strong>명령 승인</strong></td>
+</tr>
+</tbody>
+</table>
+<p>시작할 때 한 번, 누가 만들지(이 세션 혼자 / 여러 팀이 유닛을 나눠 맡기)와 진행 방식(일반 체크포인트 자동 / 단계마다 확인)을 정합니다. 이번에는 혼자, 자동 진행을 골랐습니다. 자동 진행이어도 코드 계획과 검증 명령은 사람이 승인하며, 실패하면 사람에게 확인을 요청합니다.</p>
+<h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
+<p>모든 파일은 <code>construction/u1-search-service/</code> 아래에 있습니다.</p>
+<p><strong>① 기능 명세</strong> <code>functional-design/functional-spec.md</code>: "강남역 근처 2시간" 요청의 점수 계산 예시가 테스트 기준값으로 들어갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>passId</th>
+<th>총액</th>
+<th>거리</th>
+<th>종합</th>
+<th>순위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gangnam-public-1</td>
+<td>6,000</td>
+<td>120</td>
+<td>62</td>
+<td>BEST</td>
+</tr>
+<tr>
+<td>yeoksam-bldg-1</td>
+<td>7,000</td>
+<td>80</td>
+<td>60</td>
+<td>CANDIDATE</td>
+</tr>
+<tr>
+<td>teheran-1</td>
+<td>5,000</td>
+<td>300</td>
+<td>50</td>
+<td>CANDIDATE</td>
+</tr>
+</tbody>
+</table>
+<p><strong>② 품질 요구</strong> <code>nfr-requirements/performance-requirements.md</code>: 측정 방법이 함께 적힙니다. <code>NFR3.1</code>은 추천 요청을 100회 반복했을 때 응답 시간의 최댓값이 2초 이하여야 한다는 요구입니다.</p>
+<p><strong>③ 코드 계획</strong> <code>code-generation/code-generation-plan.md</code>: 팀 규칙(TDD)대로 계층마다 실패하는 테스트를 먼저 작성합니다. 아래 스토리 추적 표는 인수 조건과 코드 계획을 연결합니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">- [ ]</span> Step 9: 비즈니스 로직 - Red. 시험을 먼저 쓴다: QueryParser(…), 점수 계산(AC2.2.1의 92·72·0 입력 예시, 계산 예시 표의 62·60·50·40과 순위, …)
+<span class="k">- [ ]</span> Step 10: 비즈니스 로직 - Green. QueryParser, RecommendationService, ReasonFormatter, PassLookupService를 구현한다.
+</code></pre></div>
+
+<p><strong>④ 결과</strong> <code>code-generation/code-summary.md</code>: 테스트 65개가 통과했고, 라인 커버리지는 95.8%입니다(313줄 중 300줄, 하한 80%). <code>traceability.json</code>에는 u1이 맡은 ID 44개(AC·NFR·BR)마다 구현·테스트 파일이 기록됩니다.</p>
+<p><strong>⑤ 검증 명령</strong> <code>aidlc-state.md</code>: 사람이 승인한 <code>mvn -q verify</code>가 기록되고, 유닛마다 이 명령으로 체크포인트를 기록합니다(감사 기록 <code>CHECKPOINT_VERIFICATION_RECORDED</code>, 종료 코드 0).</p>
+<h2 id="다음-유닛과-마지막-빌드테스트">다음 유닛과 마지막 빌드·테스트<a class="anchor" href="#다음-유닛과-마지막-빌드테스트" title="Permanent link">#</a></h2>
+<p>남은 유닛 u2 → u5도 같은 순서로 이어지고, 모든 유닛이 끝나면 전체 빌드와 테스트로 한 번 확인합니다. 실패하면 정해진 순서로 처리합니다.</p>
+<ol>
+<li>단계 안에서 수정합니다(테스트 설정·스크립트·환경). 최대 2번 시도합니다.</li>
+<li>원인을 분류하고 영향을 추정합니다.</li>
+<li>자동 진행이면 원인 유닛의 코드 생성 단계부터 다시 실행합니다. 최대 3번 시도합니다.</li>
+<li>그래도 해결되지 않으면 멈추고 사람에게 후보와 영향을 제시하며 묻습니다</li>
+</ol>
+<p>품질 목표(커버리지 하한 등)를 낮춰 통과시키는 것은 수정으로 인정하지 않습니다. 이번 실행은 u1에서 주간 사용량의 약 3%를 사용하고 u2 직전에 멈췄습니다. 같은 폴더에서 <code>claude</code> → <code>/aidlc</code>로 이어 갈 수 있습니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="l2-bolts.html"><span>이전</span>8단계 볼트 계획</a><a class="next" href="artifacts.html"><span>다음</span>산출물 찾아보기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li><li><a href="#다음-유닛과-마지막-빌드테스트">다음 유닛과 마지막 빌드·테스트</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
