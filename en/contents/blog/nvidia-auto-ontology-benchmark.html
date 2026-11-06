@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>A semantic layer for AI agents, measured against NVIDIA Auto Ontology | uEngine Blog</title>
+        <meta name="description" content="We gave NVIDIA Auto Ontology and Ontological Studio the same jobs: accurate SQL answers versus queries across systems and execution after approval — and three things we learned from NVIDIA and adopted.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/en/contents/blog/nvidia-auto-ontology-benchmark.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:title" content="A semantic layer for AI agents, measured against NVIDIA Auto Ontology | uEngine Blog">
+        <meta property="og:description" content="We gave NVIDIA Auto Ontology and Ontological Studio the same jobs: accurate SQL answers versus queries across systems and execution after approval — and three things we learned from NVIDIA and adopted.">
+        <meta property="og:url" content="https://www.uengine.org/en/contents/blog/nvidia-auto-ontology-benchmark.html">
+        <meta property="og:image" content="https://www.uengine.org/images/en/blog/nvidia-auto-ontology-benchmark.jpg">
+        <meta property="og:image:alt" content="A semantic layer for AI agents, measured against NVIDIA Auto Ontology | uEngine Blog">
+        <meta property="article:published_time" content="2026-11-06">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="A semantic layer for AI agents, measured against NVIDIA Auto Ontology | uEngine Blog">
+        <meta name="twitter:description" content="We gave NVIDIA Auto Ontology and Ontological Studio the same jobs: accurate SQL answers versus queries across systems and execution after approval — and three things we learned from NVIDIA and adopted.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/en/blog/nvidia-auto-ontology-benchmark.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"A semantic layer for AI agents, measured against NVIDIA Auto Ontology","description":"We gave NVIDIA Auto Ontology and Ontological Studio the same jobs: accurate SQL answers versus queries across systems and execution after approval — and three things we learned from NVIDIA and adopted.","image":["https://www.uengine.org/images/en/blog/nvidia-auto-ontology-benchmark.jpg"],"url":"https://www.uengine.org/en/contents/blog/nvidia-auto-ontology-benchmark.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/nvidia-auto-ontology-benchmark.html"},"inLanguage":"en","author":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"uEngine Solutions","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-11-06","dateModified":"2026-11-06"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/en/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.uengine.org/en/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"A semantic layer for AI agents, measured against NVIDIA Auto Ontology","item":"https://www.uengine.org/en/contents/blog/nvidia-auto-ontology-benchmark.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <link rel="alternate" hreflang="ko" href="https://www.uengine.org/contents/blog/nvidia-auto-ontology-benchmark.html">
+        <link rel="alternate" hreflang="en" href="https://www.uengine.org/en/contents/blog/nvidia-auto-ontology-benchmark.html">
+        <link rel="alternate" hreflang="x-default" href="https://www.uengine.org/contents/blog/nvidia-auto-ontology-benchmark.html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../../css/style.css?after">
+        <link rel="stylesheet" href="../../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../../css/splitting.css">
+        <link rel="stylesheet" href="../../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../../contents/blog/nvidia-auto-ontology-benchmark.html" class="opacity-1 no-hover mobile-chat lang-switch" title="Korean">KO</a><!--/lang-switch-->
+                        <!--lang-switch--><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">What is an AI-Native Enterprise?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Process Solutions · Agent&nbsp;Orchestrator&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Ontology Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../axschool.html" style="font-size: 18px;">AX School</a>
+                                            </li>
+                                            <li>
+                                                <a href="../agentstorming.html" style="font-size: 18px;">Agent Storming Workshop</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX Transformation Consulting Training</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ax-lite-course.html" style="font-size: 18px;">AI Work Class for Your Company</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Industry AI Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../industry.html" style="font-size: 18px;">Why It Matters</a>
+                                            </li>
+                                            <li>
+                                                <a href="../erp.html" style="font-size: 18px;">AI-Native ERP</a>
+                                            </li>
+                                            <li>
+                                                <a href="../mes.html" style="font-size: 18px;">AI-Native MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="../wms.html" style="font-size: 18px;">AI-Native WMS</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">The Present and Future of AI-Driven Development</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">Pilot Implementation Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM Is Not Dead</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">Why Is Cloud Native So Hard?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">Go to MSA School</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../../contents/blog/nvidia-auto-ontology-benchmark.html" class="opacity-1 no-hover" title="Korean" hreflang="ko"><span class="link-hover-anim underline" data-link-animate="y">KO</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Contact Us</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">A semantic layer for AI agents, measured against NVIDIA Auto Ontology</span>
+                                    </h1>
+
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  November 06, 2026</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+
+                               </div>
+                               <!-- End Page Title -->
+
+                            </div>
+                        </div>
+                        <!-- End Section Content -->
+
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+
+                        <div class="row">
+
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+
+                                    <div class="blog-item-body chat-gpt">
+<div class="mb-50"><img src="../../../images/en/blog/nvidia-auto-ontology-benchmark.jpg" alt="A semantic layer for AI agents — NVIDIA Auto Ontology and Ontological Studio compared" style="width:100%;height:auto;border-radius:12px;" decoding="async"></div>
+<blockquote><p>&nbsp; 1. A dictionary and a map</p></blockquote>
+<div class="mb-50 prose"><p>Open a company database to an AI agent as it is, and the answers go astray. It writes SQL from table and column names alone, mixes up revenue definitions that differ by department, and invents table relationships that don't exist. That is why a <b>semantic layer</b> sits between the data and the agent: what each column means and how the tables relate, organised in advance.</p></div>
+<div class="mb-50 prose"><p>In November 2026 NVIDIA released this semantic layer as open source: <b>Auto Ontology</b>. It reads a company database's metadata and builds a glossary, verified formulas and the joins between tables, and agents write SQL from that.</p></div>
+<div class="mb-50 prose"><p>Think of a dictionary. It tells you exactly what a word means, but it won't find the way to your destination or drive you there. Auto Ontology is an accurate dictionary. uEngine's Ontological Studio is closer to a map: it shows how data scattered across systems connects, follows those connections to the answer, and, once a person approves, carries out the work in the business systems.</p></div>
+<div class="mb-50 prose"><p>We compare how the two products handle the same jobs, and present three things we learned from NVIDIA and put into Ontological Studio straight away.</p></div>
+<blockquote><p>&nbsp; 2. Giving both products the same job</p></blockquote>
+<div class="mb-50 prose"><p>We compared five jobs on a sample company's purchasing ERP, logistics WMS and customer CRM data. The Ontological Studio column is what actually ran. The NVIDIA column is the behaviour we confirmed in the published source code and official documentation; we did not install and run it.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd;">What we tried</th><th style="padding: 12px 16px; border: 1px solid #ddd;">NVIDIA Auto Ontology</th><th style="padding: 12px 16px; border: 1px solid #ddd;">Ontological Studio</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">Joining WMS shipments to ERP purchase orders</b><br>The same order number is <code>ref_po_no</code> in the WMS and <code>po_id</code> in the ERP</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Finds joins within one connection and writes SQL. Joins between different databases are not covered.</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Relationship suggestions found <code>ref_po_no → po_id</code> (6 of 7 sampled values matched). A three-hop query over it shows that shipments SHP-02 and SHP-03, more than three days late, belong to Shenzhen Goldline PCB orders.</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">"What was last quarter's advertising spend?"</b><br>There is no advertising data</td><td style="padding: 12px 16px; border: 1px solid #ddd;"><code>check_answerable</code> returns, as a number from 0 to 1, the share of the question's entities found in the data. What to do with it is up to the caller.</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Judged <code>not_yet_answerable</code>, with the note that 「advertising spend」 is missing. The agent builds and runs no query from data that isn't there.</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">"Expedite that shipment"</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">Read-only by design: all nine MCP tools only query.</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Action plan → policy check → human approval → execution changes the WMS priority; cancelling undoes it in reverse order.</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">Keeping source database passwords</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">With Vault on, the password is kept outside the database; without it, it is stored in the database as plain JSON. A connection whose password Vault cannot return drops out of the list without notice.</td><td style="padding: 12px 16px; border: 1px solid #ddd;">By default the password is in the OS keychain (or Vault) and the database keeps only a reference. If it cannot be read, that datasource shows an error.</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">Building from business rule documents</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">Reads database metadata only.</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Reads documents and databases together, and records the source document and page for every concept.</td></tr>
+</tbody></table></div>
+<div class="mb-50 prose"><p>In short, Auto Ontology focuses on <b>accurate SQL answers</b>. Ontological Studio goes on to <b>queries across systems</b> and <b>execution after approval</b>. They solve different problems.</p></div>
+<blockquote><p>&nbsp; 3. Three things we learned from NVIDIA and adopted</p></blockquote>
+<div class="mb-50 prose"><p>The comparison also showed where Auto Ontology is better equipped. We put three of those into Ontological Studio straight away. Tutorial chapters 22–24 walk through them with videos.</p></div>
+<div class="mb-50 prose"><p style="text-decoration: underline;"><b>Finding relationships even without keys</b></p><p>Auto Ontology accepts a join only when the parent column has no duplicate values. We adopted that rule and added one: at least 80% of the child values must be in the parent. Status, quantity and date columns are left out from the start. The database measures the columns without copying the source (<code>SHOW COLUMN STATS</code>, <code>SHOW VALUE OVERLAP</code>), and Studio suggests relationships with that as the evidence.</p><p>Measuring 13 tables in the three sample databases took one second. Seven relationships were suggested and 56 candidates rejected. Auto Ontology skips inference without an embedding key; our judgement works without AI.</p></div>
+<div class="mb-50"><img src="../../docs/ontological-studio/img/suggest-relationships-result.webp" alt="Relationship suggestions — seven suggestions, each with evidence and confidence" style="width:100%;height:auto;border-radius:12px;border:1px solid #e5e5e5;" loading="lazy" decoding="async"><p class="text-center mt-20" style="font-size: 14px; color: #888;">Every suggestion shows how many sampled values matched, whether the parent values are unique, and which naming rule applied.</p></div>
+<div class="mb-50 prose"><p style="text-decoration: underline;"><b>Checking first whether it can answer</b></p><p>Auto Ontology's <code>check_answerable</code> returns, as a number from 0 to 1, the share of the question's entities found in the data. We took that idea and made it five verdicts: answerable, partly answerable, not yet answerable, needs clarification, and not published. The verdict comes from rules, not an AI guess. A question that matches a golden question verified by actually running it at build time is answered along that verified path, and a number in the question is checked against real instances. "S-KR-01", for example, was confirmed as the supplier 「Hanbit Precision」.</p></div>
+<div class="mb-50"><img src="../../docs/ontological-studio/img/answerability-notyet-answer.webp" alt="Query screen — says there is no advertising-spend data and makes no answer up" style="width:100%;height:auto;border-radius:12px;border:1px solid #e5e5e5;" loading="lazy" decoding="async"><p class="text-center mt-20" style="font-size: 14px; color: #888;">"What was last quarter's advertising spend?" — answerability is judged first, and the agent does not build an answer from data that isn't there.</p></div>
+<div class="mb-50 prose"><p style="text-decoration: underline;"><b>Source passwords stay outside the database</b></p><p>Auto Ontology keeps connection details outside the database when Vault is on. We changed our default so that this holds without Vault: on the desktop the password is in the OS keychain, on a server in your Vault or OpenBao, and the database keeps only a reference such as <code>keychain:ds/erp</code>. When the source password changes, one Change password does it, and the virtual nodes on top stay as they are.</p><p>We started and stopped the real app three times and checked 21 things: that no password is left in the user mappings or the server log, and that losing a keychain item breaks only that datasource.</p></div>
+<blockquote><p>&nbsp; 4. Where NVIDIA is ahead</p></blockquote>
+<div class="mb-50 prose"><ul>
+<li><b style="font-weight: bold;">Source connectors:</b> ten, including Snowflake, Databricks, ClickHouse and Trino. Ontological Studio has four: PostgreSQL, MySQL, Oracle and SQL Server.</li>
+<li><b style="font-weight: bold;">Running for many users:</b> SSO, role-based permissions and token revocation. Ontological Studio desktop is an app for one person.</li>
+<li><b style="font-weight: bold;">Public evaluation:</b> a separate repository measures SQL accuracy on public benchmarks. We verify every ontology with golden questions, but have no public numbers yet.</li>
+<li><b style="font-weight: bold;">License:</b> Apache-2.0 makes it easy for a company to adopt as is. Ontological Studio is AGPL-3.0 with a commercial license.</li>
+</ul></div>
+<blockquote><p>&nbsp; 5. Which to choose</p></blockquote>
+<div class="mb-50 prose"><ul>
+<li><b style="font-weight: bold;">If the goal is accurate SQL answers over one cloud data warehouse</b>, Auto Ontology fits well.</li>
+<li><b style="font-weight: bold;">If the data sits in several systems such as ERP, MES and WMS, and you need to query across them without moving it and carry the work through</b>, Ontological Studio fits.</li>
+<li>The two can work together: the terms and formulas one has organised are good material for the other's ontology.</li>
+</ul></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">An agent needs more than an accurate dictionary. It also needs a map that shows how the data connects, and hands that do only the work that was approved.</p></div>
+<blockquote><p>&nbsp; 6. Already a product: Ontological Studio · Ontological DB</p></blockquote>
+<div class="mb-50 prose"><p>Everything in this post's Ontological Studio column is what the app actually did. The three features introduced here ship in the next release (0.1.3). Each is on the product page and in the tutorial.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd;">In this post</th><th style="padding: 12px 16px; border: 1px solid #ddd;">Product feature</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">Querying several databases at once, without copying data</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Ontological DB data fabric — source tables read as virtual nodes.<br><a href="../ontologicaldb.html#feat-fabric" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Finding relationships without keys</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Relationship suggestions and the statements that measure the source<br><a href="../ontologystudio.html#feat-suggest" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a> · <a href="../ontologicaldb.html#feat-profile" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ Ontological DB</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">Checking first whether a question can be answered</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Answerability check<br><a href="../ontologystudio.html#feat-answerable" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">Source passwords outside the database</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Keeping source passwords · datasources without passwords<br><a href="../ontologystudio.html#feat-credentials" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ See it on the product page</a> · <a href="../ontologicaldb.html#feat-credentials" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ Ontological DB</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">From the answer to the work itself</td><td style="padding: 12px 16px; border: 1px solid #ddd;">Golden commands and actions (plan · approve · execute · undo)<br><a href="../ontologystudio.html#demo" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ Watch the demo videos</a></td></tr>
+</tbody></table></div>
+<div class="mb-50 prose"><p>Ontological Studio starts from a single installer on macOS and Windows — no Docker, no Neo4j. <a href="../ontologystudio.html#download">Download</a> and install it, then follow the three features of this post, with videos, in <a href="../../docs/ontological-studio/credentials.html">tutorial chapters 22–24</a>.</p></div>
+<blockquote><p>&nbsp; References</p></blockquote>
+<div class="mb-50 prose"><ul style="font-size: 14px;">
+<li><a href="https://github.com/NVIDIA/auto-ontology" target="_blank" rel="noopener">NVIDIA/auto-ontology — GitHub (README, checked 2026-11-05)</a></li>
+<li><a href="https://github.com/NVIDIA/auto-ontology-eval" target="_blank" rel="noopener">NVIDIA/auto-ontology-eval — SQL accuracy evaluation tool</a></li>
+<li><a href="https://developer.nvidia.com/topic/ai/agent-knowledge-foundation" target="_blank" rel="noopener">NVIDIA Agent Knowledge Foundation</a></li>
+<li><a href="../../docs/ontological-studio/credentials.html">Ontological Studio Tutorial · Chapter 22 · Keeping Source Passwords</a></li>
+<li><a href="../../docs/ontological-studio/suggest-relationships.html">Ontological Studio Tutorial · Chapter 23 · Getting Relationship Suggestions</a></li>
+<li><a href="../../docs/ontological-studio/answerability.html">Ontological Studio Tutorial · Chapter 24 · Checking Answerability First</a></li>
+</ul></div>
+</div>
+                                <!-- End Post -->
+
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                Since 2003, uEngine Solutions has been a technology-driven company developing and releasing as open-source projects Business Process Management (BPM), AI, MSA, enterprise social networking, cloud platforms including PaaS, and development frameworks built around domain-driven development.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                HQ: #301, 3F Gunghyun Bldg., 31 Saimdang-ro, Seocho-gu, Seoul, Korea<br>
+                                Branch: 37 Sangnam-ro, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Korea
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">What is an AI-Native Enterprise?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="../ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="../ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../axschool.html">AX School</a></li>
+                                        <li><a href="../agentstorming.html">Agent Storming Workshop</a></li>
+                                        <li><a href="../educationax.html">AX Transformation Consulting Training</a></li>
+                                        <li><a href="../ax-lite-course.html">AI Work Class for Your Company</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                        <li><a href="../industry.html">Why It Matters</a></li>
+                                        <li><a href="../erp.html">AI-Native ERP</a></li>
+                                        <li><a href="../mes.html">AI-Native MES</a></li>
+                                        <li><a href="../wms.html">AI-Native WMS</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">The Present and Future of AI-Driven Development</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">Pilot Implementation Consulting</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM Is Not Dead</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="whymsahard.html">Why Is Cloud Native So Hard?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">Go to MSA School</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">uEngine Solutions | Business Registration No.: 2118795355 | CEO: Jinyoung Jang</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../../js/plugins.js"></script>
+        <script src="../../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../../js/en/contact-form.js"></script>        
+        <script src="../../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>

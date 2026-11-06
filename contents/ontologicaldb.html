@@ -793,6 +793,30 @@ RETURN e.title, s.name, sh.shipment_no</pre>
                         </div>
                     </div>
                 </section>
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- vs NVIDIA Auto Ontology -->
+                <section class="page-section" id="vs-auto-ontology">
+                    <style>
+                        .os-vs { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                        .os-vs td, .os-vs th { padding:12px 14px; border-top:1px solid #e5e5ea; vertical-align:top; font-size:1rem; text-align:left; }
+                        .os-vs th { background:#f6f7f9; }
+                        .os-vs-note { font-size:.95rem; color:#666; }
+                    </style>
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.4;"><span class="wow charsAnimIn" data-splitting="chars">NVIDIA Auto Ontology와 비교하면</span></h3>
+                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp" style="word-break: keep-all;">Auto Ontology는 PostgreSQL과 pgvector에 저장한 용어집과 카탈로그로 SQL을 만듭니다. Ontological DB는 PostgreSQL 안의 그래프 데이터베이스입니다. 온톨로지 자체를 질의하고, 여러 원천 데이터를 복사 없이 연결합니다.</p>
+                        </div>
+                        <div style="overflow-x: auto;"><table class="os-vs" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>항목</th><th>NVIDIA Auto Ontology</th><th>Ontological DB</th></tr></thead><tbody><tr><td>온톨로지 저장 방식</td><td>SQL을 만들기 위한 카탈로그 테이블입니다.</td><td>직접 질의하는 그래프입니다. Cypher · TypeQL과 Neo4j 드라이버를 연결하는 Bolt를 지원합니다.</td></tr><tr><td>여러 DB 연결</td><td>연결마다 따로 질의합니다.</td><td>원천 테이블을 가상 노드로 읽어 하나의 Cypher로 연결합니다.</td></tr><tr><td>원천 암호</td><td>Vault를 켜지 않으면 암호화하지 않고 DB에 저장합니다.</td><td>참조만 저장합니다. 커넥터는 DB 밖의 파일에서 암호를 읽습니다.</td></tr><tr><td>관계 탐색을 위한 측정</td><td>앱이 각 표에서 1,000행을 읽어 계산합니다.</td><td><code>SHOW COLUMN STATS</code> · <code>SHOW VALUE OVERLAP</code>으로 원천 데이터를 복사하지 않고 측정합니다.</td></tr></tbody></table></div>
+                        <p class="os-vs-note mt-20 mb-30 text-center">NVIDIA의 내용은 공개된 소스 코드와 공식 문서로 확인했습니다.</p>
+                        <div class="text-center"><a href="blog/nvidia-auto-ontology-benchmark.html" class="btn btn-mod btn-large btn-round btn-hover-anim"><span style="font-size: 16px;">벤치마킹 자세히 보기</span></a></div>
+                    </div>
+                </section>
+                <!-- End vs NVIDIA Auto Ontology -->
                 <!-- End Section -->
 
                 <!-- Divider -->

@@ -783,6 +783,30 @@ RETURN e.title, s.name, sh.shipment_no</pre>
                         </div>
                     </div>
                 </section>
+
+                <!-- Divider -->
+                <hr class="mt-0 mb-0"/>
+                <!-- End Divider -->
+
+                <!-- vs NVIDIA Auto Ontology -->
+                <section class="page-section" id="vs-auto-ontology">
+                    <style>
+                        .os-vs { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(26,26,46,.08); }
+                        .os-vs td, .os-vs th { padding:12px 14px; border-top:1px solid #e5e5ea; vertical-align:top; font-size:1rem; text-align:left; }
+                        .os-vs th { background:#f6f7f9; }
+                        .os-vs-note { font-size:.95rem; color:#666; }
+                    </style>
+                    <div class="container position-relative">
+                        <div class="col-md-10 offset-md-1 text-center">
+                            <h3 class="section-title mb-20 mt-n20" style="line-height: 1.4;"><span class="wow charsAnimIn" data-splitting="chars">Compared with NVIDIA Auto Ontology</span></h3>
+                            <p class="section-descr mb-50 mb-sm-30 wow fadeInUp" style="word-break: keep-all;">Auto Ontology keeps a glossary and catalog in PostgreSQL and pgvector and writes SQL from them. Ontological DB is a graph database inside PostgreSQL: the ontology itself is what you query, and it joins several sources without copying them.</p>
+                        </div>
+                        <div style="overflow-x: auto;"><table class="os-vs" style="min-width: 760px; word-break: keep-all;"><thead><tr><th>Item</th><th>NVIDIA Auto Ontology</th><th>Ontological DB</th></tr></thead><tbody><tr><td>Where the ontology lives</td><td>Catalog tables for writing SQL.</td><td>A graph you query directly — Cypher · TypeQL, and Bolt that Neo4j drivers connect to.</td></tr><tr><td>Joining several databases</td><td>Queries each connection separately.</td><td>Reads source tables as virtual nodes and joins them in one Cypher query.</td></tr><tr><td>Source passwords</td><td>Without Vault, stored in the database unencrypted.</td><td>Keeps only a reference; the connector reads the password from a file outside the database.</td></tr><tr><td>Measuring for relationships</td><td>The app reads 1,000 rows of each table and computes.</td><td>Measured with <code>SHOW COLUMN STATS</code> · <code>SHOW VALUE OVERLAP</code>, without copying the source.</td></tr></tbody></table></div>
+                        <p class="os-vs-note mt-20 mb-30 text-center">The NVIDIA column was confirmed in the published source code and official documentation.</p>
+                        <div class="text-center"><a href="blog/nvidia-auto-ontology-benchmark.html" class="btn btn-mod btn-large btn-round btn-hover-anim"><span style="font-size: 16px;">Read the benchmark</span></a></div>
+                    </div>
+                </section>
+                <!-- End vs NVIDIA Auto Ontology -->
                 <!-- End Section -->
 
                 <!-- Divider -->
