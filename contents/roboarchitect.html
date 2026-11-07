@@ -34,6 +34,7 @@
         <!-- CSS -->
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/style.css?after">
+        <link rel="stylesheet" href="../css/roboarchitect-concept.css">
         <link rel="stylesheet" href="../css/style-responsive.css">
         <link rel="stylesheet" href="../css/vertical-rhythm.min.css">
         <link rel="stylesheet" href="../css/magnific-popup.css">
@@ -565,6 +566,40 @@
                     </div>
                 </section>
                 <!-- End About Section -->  
+
+                <!-- Robo Architect concept: redrawn as responsive HTML/CSS diagrams -->
+                <section class="page-section ra-concept" id="concept" aria-labelledby="ra-concept-title">
+                    <div class="container">
+                        <header class="ra-c-intro">
+                            <p class="section-caption-border mb-25">HOW ROBO ARCHITECT WORKS</p>
+                            <h2 class="section-title" id="ra-concept-title">업무의 의도를 설계하고, 코드까지 연결합니다</h2>
+                            <p>기존 시스템의 지식과 새로운 요구사항을 하나의 명세로 정리합니다. Robo Architect는 이 명세를 도메인·화면·구현 작업으로 구체화하고, 변경된 코드와 다시 맞춰 갑니다.</p>
+                            <nav class="ra-c-nav local-scroll" aria-label="개념 설명 바로가기"><a href="#ra-concept-1">전체 흐름</a><a href="#ra-concept-2">설계와 구현</a><a href="#ra-concept-3">이벤트와 화면</a><a href="#ra-concept-4">명세와 코드</a></nav>
+                        </header>
+                        <article class="ra-c-block" id="ra-concept-1">
+                            <div class="ra-c-block-head"><span>01 / WORKFLOW</span><h3>지식에서 시작해, 검증된 구현으로</h3><p>레거시가 있으면 Robo Analyzer가 기존의 업무 규칙을 추출합니다. 신규 개발은 요구사항에서 바로 시작하고, 이후의 설계와 검증은 같은 흐름을 따릅니다.</p></div>
+                            <figure class="ra-c-figure"><ol class="ra-c-flow"><li><span class="ra-c-number">01</span><small>Robo Analyzer</small><h4>업무 지식 추출</h4><p>코드·DB·문서의 로직과 관계를 온톨로지로 정리</p><span class="ra-c-output">비즈니스 로직 인벤터리</span></li><li><span class="ra-c-number">02</span><small>Robo Architect</small><h4>요구사항 명확화</h4><p>Epic → Feature → User Story로 나누고 모호한 조건을 질문</p><span class="ra-c-output">Given · When · Then</span></li><li><span class="ra-c-number">03</span><small>Robo Architect</small><h4>도메인과 작업 설계</h4><p>DDD로 경계를 정하고 컨텍스트별 설계와 작업을 도출</p><span class="ra-c-output">Bounded Context · Plan · Task</span></li><li><span class="ra-c-number">04</span><small>UI/UX 설계 연계</small><h4>이벤트와 화면 연결</h4><p>사용자 행동·업무 이벤트·화면의 결과를 함께 설계</p><span class="ra-c-output">Event Model · Wireframe</span></li><li><span class="ra-c-number">05</span><small>IDE · Coding Agent</small><h4>구현과 검증</h4><p>설계와 작업을 전달하고 인수 조건으로 구현 결과를 확인</p><span class="ra-c-output">MCP · Code · Test</span></li></ol><figcaption class="ra-c-feedback"><span aria-hidden="true">↺</span> 변경 내용은 명세와 코드에 함께 반영하고, 다음 설계의 근거로 남깁니다</figcaption></figure>
+                        </article>
+                        <article class="ra-c-block" id="ra-concept-2">
+                            <div class="ra-c-block-head"><span>02 / DOMAIN DESIGN</span><h3>업무 경계에 맞춰 구현할 단위를 만듭니다</h3><p>바운디드 컨텍스트는 용어와 규칙이 일관되게 적용되는 업무 경계입니다. 핵심 업무의 복잡도와 지원 업무의 성격에 따라 설계 방식을 구분하고, 각 경계 안에서 구현할 작업을 준비합니다.</p></div>
+                            <div class="ra-c-domain-pair"><div><small>CORE DOMAIN</small><h4>핵심 도메인</h4><p>업무 규칙이 경쟁력이 되는 영역. 엔티티와 유스케이스를 중심에 두고, 외부 UI·DB의 변화로부터 도메인 로직을 분리합니다.</p><div class="ra-c-layers"><span>UI · DB · Frameworks</span><span>Use Cases</span><strong>Domain Model</strong></div></div><div><small>SUPPORTING DOMAIN</small><h4>지원 도메인</h4><p>정형화된 관리 업무. 표준 계층 구조와 트랜잭션 스크립트, 템플릿을 활용해 필요한 복잡도로 구현합니다.</p><div class="ra-c-layers"><span>Presentation</span><span>Transaction Script</span><strong>Data Access</strong></div></div></div>
+                            <figure class="ra-c-figure ra-c-tree"><div class="ra-c-tree-root">DDD 모델</div><div class="ra-c-branches"><div class="ra-c-branch"><strong>주문 컨텍스트</strong><span>↓</span><div>Plan · 경계별 설계</div><span>↓</span><div class="ra-c-task">Task · 구현 · 테스트</div></div><div class="ra-c-branch"><strong>재고 컨텍스트</strong><span>↓</span><div>Plan · 경계별 설계</div><span>↓</span><div class="ra-c-task">Task · 구현 · 테스트</div></div><div class="ra-c-branch"><strong>정산 컨텍스트</strong><span>↓</span><div>Plan · 경계별 설계</div><span>↓</span><div class="ra-c-task">Task · 구현 · 테스트</div></div></div><figcaption>모더나이제이션에서는 업무 의도를 보존하면서 트랜잭션 경계도 다시 설계합니다. 하나의 ACID 트랜잭션을 나눌 때는 각 컨텍스트의 로컬 트랜잭션과, 실패 시 되돌릴 SAGA 보상 흐름을 함께 정의합니다.</figcaption></figure>
+                        </article>
+                        <article class="ra-c-block" id="ra-concept-3">
+                            <div class="ra-c-block-head"><span>03 / EVENT MODELING &amp; UI</span><h3>사용자 행동과 업무 결과를 화면까지 추적합니다</h3><p>화면을 따로 그린 뒤 로직을 끼워 맞추지 않습니다. 누가 어떤 지시를 내리고, 어떤 사실이 발생하며, 사용자가 무엇을 보게 되는지를 같은 흐름에 놓습니다.</p></div>
+                            <figure class="ra-c-figure ra-c-event-figure"><div class="ra-c-example-label">주문 관리 예시</div><div class="ra-c-events"><div class="ra-c-event ra-c-event-0"><small>Actor</small><strong>고객</strong><span>누가 시작하는가</span></div><div class="ra-c-event ra-c-event-1"><small>Command</small><strong>주문 요청</strong><span>무엇을 요청하는가</span></div><div class="ra-c-event ra-c-event-2"><small>Event</small><strong>주문 접수됨</strong><span>어떤 사실이 발생했는가</span></div><div class="ra-c-event ra-c-event-3"><small>Read Model</small><strong>주문 현황</strong><span>화면에 무엇을 보여주는가</span></div></div>
+                                <div class="ra-c-screen"><div class="ra-c-screen-bar"><span aria-hidden="true">● ● ●</span> 주문 관리 화면</div><div class="ra-c-screen-body"><div class="ra-c-form"><small>COMMAND</small><h4>주문 입력</h4><div class="ra-c-field">상품 · 수량 · 배송지</div><span class="ra-c-ui-button">주문 요청</span></div><div class="ra-c-screen-result"><div class="ra-c-notice"><small>EVENT</small><span>✓ 주문이 접수되었습니다</span></div><div class="ra-c-read"><small>READ MODEL</small><h4>주문 현황</h4><table><thead><tr><th scope="col">주문번호</th><th scope="col">상태</th><th scope="col">수량</th></tr></thead><tbody><tr><td>ORD-001</td><td>접수</td><td>2</td></tr></tbody></table></div></div></div></div>
+                                <figcaption class="ra-c-mapping"><span>입력 폼·버튼은 Command에 연결</span><span>상태 변화는 Event로 기록</span><span>목록·요약은 Read Model로 표시</span></figcaption>
+                            </figure><p class="ra-c-note">이벤트 모델은 UI/UX 설계의 연결 기준입니다. Figma 등의 와이어프레임에서 바뀐 입력·출력도 같은 모델과 대조해, 화면과 도메인 설계의 불일치를 줄입니다.</p>
+                        </article>
+                        <article class="ra-c-block ra-c-block-last" id="ra-concept-4">
+                            <div class="ra-c-block-head"><span>04 / CONTINUOUS ALIGNMENT</span><h3>명세와 코드가 함께 바뀌는 순환 구조</h3><p>계획대로 코드를 만드는 것과, 개발 중 달라진 코드를 설계에 반영하는 것은 모두 필요합니다. Robo Architect는 두 방향의 변경을 명세와 검증 기준으로 연결합니다.</p></div>
+                            <figure class="ra-c-figure"><div class="ra-c-sync"><div class="ra-c-sync-node"><small>SPEC</small><h4>도메인 명세·설계 모델</h4><p>요구사항 · 인수 조건 · Plan/Task</p></div><div class="ra-c-sync-paths"><div><strong>Spec Align</strong><span>명세 변경을 구현으로 →</span></div><span class="ra-c-gate">변경 검토 · 검증 · 반영</span><div><strong>Spec Backfill</strong><span>← 코드 변경을 명세로</span></div></div><div class="ra-c-sync-node"><small>CODE</small><h4>구현 코드·테스트</h4><p>서비스 · UI · 데이터 접근</p></div></div><figcaption class="ra-c-sync-notes"><p><strong>Spec Align</strong>요구사항과 설계가 바뀌면 영향 범위를 분석하고, 코딩 에이전트가 구현과 테스트를 수정합니다.</p><p><strong>Spec Backfill</strong>개발자가 코드를 바꾸면 변경의 의미를 역분석해 도메인 모델과 명세에 반영합니다.</p></figcaption></figure>
+                            <p class="ra-c-closing">명세 → 설계 → 구현 → 검증 → 명세. 다음 변경도 같은 기준 위에서 이어집니다.</p>
+                        </article>
+                    </div>
+                </section>
+                <!-- End Robo Architect concept -->
 
                 <!-- 주요 기능 Section -->
                 <section class="page-section bg-gray-light-1 bg-light-alpha-90" style="background-image: url(../images/full-width-images/section-bg-1.jpg)">                    
