@@ -51,9 +51,12 @@
 <li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
 <li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
 <li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">6</span></div>
@@ -121,11 +124,20 @@
 
 <p><strong>③ 검토</strong> <code>reviews/review-01.md</code>: 판정은 NOT-READY입니다. 결제 실패 후 동작이 빠졌다는 지적 등이 있었습니다. 빠진 내용은 다음 유저 스토리 단계에서 다시 질문했습니다.</p>
 <p><strong>④ 다음에 쓰이는 곳.</strong> 유저 스토리와 인수 조건, 도메인 설계, 품질 요구, 테스트 기준에서 이 문서의 FR·NFR 번호를 참조합니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>requirements.md의 문장이 어떤 답변을 바탕으로 작성되었는지 어떻게 확인하나요?</summary>
+<p>문서 맨 위 <code>## Sources</code>에 출처 목록이 있습니다. <code>[Q1]</code>~<code>[Q7]</code>은 질문지의 답변, <code>[desc]</code>는 처음 요청한 문장, <code>[scope]</code>는 선택한 스코프입니다. 출처가 없는 문장은 <code>[assumption]</code>으로 표시됩니다. 검토 에이전트와 문서 점검(claim-sources)이 이 표시를 확인합니다.</p>
+</details>
+<details class="answer">
+<summary>후속 질문 Q6은 왜 필요했나요?</summary>
+<p>Q3의 답변에 "승인되면 1초 안에 화면에 예약 완료"는 있었지만, 서버가 화면에 알리는 방법은 정해져 있지 않았습니다. 화면이 계속 물어보는 방식(폴링)으로는 1초 안에 알리기 어렵습니다. 그래서 SSE, WebSocket, 폴링 가운데 어떤 방식을 쓸지 다시 물었고, SSE를 골랐습니다.</p>
+</details>
     </article>
     <nav class="pager"><a class="prev" href="l2-overview.html"><span>이전</span>레벨 2 개요와 1단계 팀 규칙</a><a class="next" href="l2-stories.html"><span>다음</span>3·4단계 유저 스토리와 화면</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

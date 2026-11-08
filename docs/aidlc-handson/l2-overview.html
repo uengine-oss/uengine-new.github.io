@@ -51,9 +51,12 @@
 <li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
 <li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
 <li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">5</span></div>
@@ -209,11 +212,24 @@ B. TDD (테스트 먼저)
 
 <p><strong>③ 승인하면 <code>memory/team.md</code>가 바뀝니다.</strong> 승인 전에는 섹션 제목만 있는 빈 틀이었고, 승인 뒤에는 위 내용이 들어갑니다. 이 내용을 옮기는 작업은 정해진 도구가 수행합니다. LLM이 직접 옮기지는 않습니다.</p>
 <p><strong>④ 이 규칙이 쓰이는 곳.</strong> 구현 단계에서 u1의 코드 계획이 계층마다 Red(실패하는 테스트 먼저) → Green → Refactor 순서로 잡혔습니다(<a href="l2-build.html">7. 구현</a>).</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>팀 규칙에서 시험 방식을 TDD로 정하면 이후 무엇이 달라지나요?</summary>
+<p><code>memory/team.md</code>의 Testing Posture에 <code>Methodology: tdd</code>와 진행 순서(Ordering)가 들어갑니다. 구현 단계에서는 이 항목을 바탕으로 코드 계획을 세웁니다. 각 계층에서 실패하는 시험을 먼저 쓰는 Red, 시험을 통과시키는 Green, 코드를 정리하는 Refactor 순서로 진행합니다. u1의 <code>code-generation-plan.md</code>에서 Step 3·4(데이터 모델), Step 9·10(비즈니스 로직)이 이 순서를 따릅니다.</p>
+</details>
+<details class="answer">
+<summary>팀 규칙의 범주는 몇 가지이고, 마음대로 늘릴 수 있나요?</summary>
+<p>범주는 Way of Working, Walking Skeleton, Testing Posture, Deployment, Code Style 다섯 가지로 정해져 있습니다. 시험 방식은 <code>tdd</code>, <code>bdd</code>, <code>atdd</code>, <code>test-after</code>, <code>custom</code> 가운데 하나를 고릅니다. 각 항목의 내용은 답변에 맞춰 작성됩니다. 범주에 속하지 않는 약속은 <code>ALWAYS</code>·<code>NEVER</code> 규칙으로 따로 남습니다. 이번 실행에서는 "NEVER Docker를 도입하지 않는다", "ALWAYS 로컬 실행 스크립트를 제공한다"가 <code>project.md</code>에 들어갔습니다.</p>
+</details>
+<details class="answer">
+<summary>검토 에이전트가 NOT-READY를 내면 다음 단계로 갈 수 없나요?</summary>
+<p>판정은 의견이며, 최종 결정은 사람이 합니다. 요구사항 단계에서는 PO가 지적된 위험을 받아들이고 승인했습니다. 빠진 내용은 유저 스토리 단계에서 다시 질문했습니다. 도메인 설계와 API 계약 단계에서는 아키텍트가 수정을 요청했습니다. 수정 후 재검토에서 READY를 받았습니다.</p>
+</details>
     </article>
     <nav class="pager"><a class="prev" href="run.html"><span>이전</span>동작 확인과 감사 기록</a><a class="next" href="l2-requirements.html"><span>다음</span>2단계 요구사항</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#전체-흐름">전체 흐름</a></li><li><a href="#모든-단계는-같은-다섯-걸음">모든 단계는 같은 다섯 걸음</a></li><li><a href="#단계마다-답하는-사람">단계마다 답하는 사람</a></li><li><a href="#산출물이-쌓이는-곳">산출물이 쌓이는 곳</a></li><li><a href="#1단계-팀-규칙-practices-discovery">1단계 팀 규칙 (Practices Discovery)</a><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#전체-흐름">전체 흐름</a></li><li><a href="#모든-단계는-같은-다섯-걸음">모든 단계는 같은 다섯 걸음</a></li><li><a href="#단계마다-답하는-사람">단계마다 답하는 사람</a></li><li><a href="#산출물이-쌓이는-곳">산출물이 쌓이는 곳</a></li><li><a href="#1단계-팀-규칙-practices-discovery">1단계 팀 규칙 (Practices Discovery)</a><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

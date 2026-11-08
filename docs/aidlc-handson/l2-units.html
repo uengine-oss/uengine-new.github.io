@@ -51,9 +51,12 @@
 <li><a href="l2-units.html" class="on" aria-current="page"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
 <li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
 <li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">9</span></div>
@@ -158,11 +161,21 @@
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">X-Signature</span><span class="w">   </span><span class="c1"># sha256=&lt;hex&gt;, 본문에 대한 HMAC-SHA256, 키는 환경 변수 PAYMENT_WEBHOOK_SECRET</span>
 </code></pre></div>
+
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>유닛과 서비스는 같은 것인가요?</summary>
+<p>아닙니다. 서비스는 3개(search, reservation, payment)입니다. 여기에 화면(u4 web-ui)과 실행 스크립트(u5 local-run)를 더하면 유닛은 5개입니다. 유닛은 각각 설계하고 구현하고 검증하는 단위입니다. 종류는 service, ui, packaging 등으로 표시합니다.</p>
+</details>
+<details class="answer">
+<summary>계약의 첫 검토에서 지적된 R-01(이용 시간 출처 없음)은 어떻게 고쳐졌나요?</summary>
+<p><code>durationHours</code>가 C1 추천 응답에서 C2 결제 요청, C4 주차권 조회, C5 예약 생성 요청까지 하나의 흐름으로 이어지도록 계약에 명시했습니다. 금액은 C4가 돌려준 가격(요청한 이용 시간 전체의 합계)을 사용합니다. 예약 서비스는 예약을 만들 때 이 금액을 저장합니다. 재검토(<code>review-02.md</code>)에서는 이 문제가 해결된 것으로 기록되었습니다.</p>
+</details>
     </article>
     <nav class="pager"><a class="prev" href="l2-domain.html"><span>이전</span>5단계 도메인 설계</a><a class="next" href="l2-bolts.html"><span>다음</span>8단계 볼트 계획</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#6단계-유닛-나누기-units-generation">6단계 유닛 나누기 (Units Generation)</a><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></li><li><a href="#7단계-api-계약-contract-design">7단계 API 계약 (Contract Design)</a><ul><li><a href="#무엇을-왜_1">무엇을 · 왜</a></li><li><a href="#따라-하기_1">따라 하기</a></li><li><a href="#산출물과-바뀐-점_1">산출물과 바뀐 점</a></li></ul></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#6단계-유닛-나누기-units-generation">6단계 유닛 나누기 (Units Generation)</a><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></li><li><a href="#7단계-api-계약-contract-design">7단계 API 계약 (Contract Design)</a><ul><li><a href="#무엇을-왜_1">무엇을 · 왜</a></li><li><a href="#따라-하기_1">따라 하기</a></li><li><a href="#산출물과-바뀐-점_1">산출물과 바뀐 점</a></li></ul></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

@@ -59,3 +59,17 @@
     parameters:
       - name: X-Signature   # sha256=<hex>, 본문에 대한 HMAC-SHA256, 키는 환경 변수 PAYMENT_WEBHOOK_SECRET
 ```
+
+## 확인 문제
+
+<details class="answer" markdown="1">
+<summary>유닛과 서비스는 같은 것인가요?</summary>
+
+아닙니다. 서비스는 3개(search, reservation, payment)입니다. 여기에 화면(u4 web-ui)과 실행 스크립트(u5 local-run)를 더하면 유닛은 5개입니다. 유닛은 각각 설계하고 구현하고 검증하는 단위입니다. 종류는 service, ui, packaging 등으로 표시합니다.
+</details>
+
+<details class="answer" markdown="1">
+<summary>계약의 첫 검토에서 지적된 R-01(이용 시간 출처 없음)은 어떻게 고쳐졌나요?</summary>
+
+`durationHours`가 C1 추천 응답에서 C2 결제 요청, C4 주차권 조회, C5 예약 생성 요청까지 하나의 흐름으로 이어지도록 계약에 명시했습니다. 금액은 C4가 돌려준 가격(요청한 이용 시간 전체의 합계)을 사용합니다. 예약 서비스는 예약을 만들 때 이 금액을 저장합니다. 재검토(`review-02.md`)에서는 이 문제가 해결된 것으로 기록되었습니다.
+</details>

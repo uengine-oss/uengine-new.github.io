@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구현: 화면·실행 스크립트 (u4·u5) — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="화면 u4(Vue 3)와 실행 스크립트 u5를 만듭니다. 검토 에이전트가 화면 설계를 한 번 반려한 기록, 화면 시험까지 돌도록 사람이 승인해 바꾼 검증 명령, Docker 없이 네 서비스를 띄우는 스크립트의 비밀 값 처리를 차례로 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/l2-build-ui-run.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="구현: 화면·실행 스크립트 (u4·u5) — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="화면 u4(Vue 3)와 실행 스크립트 u5를 만듭니다. 검토 에이전트가 화면 설계를 한 번 반려한 기록, 화면 시험까지 돌도록 사람이 승인해 바꾼 검증 명령, Docker 없이 네 서비스를 띄우는 스크립트의 비밀 값 처리를 차례로 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/l2-build-ui-run.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">레벨 1 · poc</div><ul>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+<li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
+<li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul>
+<div class="nav-part">레벨 2 · classic</div><ul>
+<li><a href="l2-overview.html"><span class="n">05</span>레벨 2 개요와 1단계 팀 규칙</a></li>
+<li><a href="l2-requirements.html"><span class="n">06</span>2단계 요구사항</a></li>
+<li><a href="l2-stories.html"><span class="n">07</span>3·4단계 유저 스토리와 화면</a></li>
+<li><a href="l2-domain.html"><span class="n">08</span>5단계 도메인 설계</a></li>
+<li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
+<li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
+<li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html" class="on" aria-current="page"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">레벨 2 · classic<span class="chap">13</span></div>
+    <h1>구현: 화면·실행 스크립트 (u4·u5)</h1>
+    <article>
+<blockquote>
+<p>화면 u4(Vue 3)와 실행 스크립트 u5를 만듭니다. 검토 에이전트가 화면 설계를 한 번 반려한 기록, 화면 시험까지 돌도록 사람이 승인해 바꾼 검증 명령, Docker 없이 네 서비스를 띄우는 스크립트의 비밀 값 처리를 차례로 봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/VblVDR97HG8" title="구현: 화면·실행 스크립트 (u4·u5) — 영상 2:47" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>유닛</th>
+<th>하는 일</th>
+<th>이 유닛에서 새로 정한 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u4 화면 (5173)</td>
+<td>입력 → 추천 카드 → 결제 → 예약 상태를 한 페이지에 표시하고 SSE로 갱신합니다</td>
+<td>컴포넌트 7개와 상태를 한 곳에 두는 구조, Vite 프록시 규칙, 시연 설정</td>
+</tr>
+<tr>
+<td>u5 실행 스크립트</td>
+<td>Docker 없이 u1 → u2 → u3 → u4 순서로 띄우고 Ctrl-C로 정리합니다</td>
+<td>비밀 값 생성과 전달, 준비 확인, 연동 스모크, 전체 검증</td>
+</tr>
+</tbody>
+</table>
+<p>u5는 패키징 유닛이므로 기능 설계 단계가 없습니다. 보안·실행 설계가 그 역할을 맡습니다.</p>
+<h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
+<p><strong>① u4 컴포넌트</strong> <code>u4-web-ui/functional-design/frontend-components.md</code>: 라우터나 상태 관리 라이브러리는 쓰지 않습니다. composable 하나(<code>useApp</code>)가 상태를 관리하고, 컴포넌트는 props와 이벤트로만 소통합니다.</p>
+<div class="hl"><pre><span></span><code>App.vue
+├─ QueryInput          입력창과 전송
+├─ ErrorNotice         오류 안내
+├─ ReservationStatus   결제 대기·완료·실패·취소
+├─ RecommendationList  추천 카드 (최적 1 + 후보 최대 2)
+├─ EmptyNotice         후보 없음
+└─ ScenarioPanel       접힌 시연 설정 (모의 결제 결과, 지연 초)
+</code></pre></div>
+
+<p><strong>② u4 설계 검토</strong> <code>u4-web-ui/functional-design/reviews/</code>: 첫 검토(<code>review-01.md</code>) 결과는 <code>NOT-READY</code>였으며, Major 지적은 6건이었습니다. 예를 들어 R-02는 다른 주차권으로 다시 결제하면 새 예약의 version이 처음부터 시작하는데, 화면이 하나의 version 기준만 쓰면 새 예약의 갱신을 모두 버린다는 지적입니다. 문서를 고친 뒤 두 번째 검토(<code>review-02.md</code>)에서는 "이전 Major 6건은 모두 고쳐졌고"라는 평가와 함께 <code>READY</code>를 받았습니다. 남은 지적은 Status 열에 <code>New</code>·<code>Unresolved</code>로 표시됩니다.</p>
+<p><strong>③ 검증 명령</strong> <code>aidlc-state.md</code>: u4를 만든 뒤 AI가 검증 명령 변경을 제안했습니다. 기존 <code>mvn -q verify</code>는 Java 서비스만 시험하므로 화면 시험도 실행하자는 제안입니다. 사람이 승인한 뒤 다음 명령이 기록되었습니다. 이후 모든 유닛의 체크포인트는 이 명령으로 기록됩니다.</p>
+<div class="hl"><pre><span></span><code>- **Construction Verification Command**: mvn -q verify &amp;&amp; npm --prefix services/u4-web-ui run verify
+</code></pre></div>
+
+<p><strong>④ u4 결과</strong> <code>u4-web-ui/code-generation/code-summary.md</code>: 시험 374개(단위 351, 시간 4, 프록시 19)가 통과했습니다. 라인 커버리지는 98.29%입니다. 경과 시간 표시(틱) 시험이 부하가 높을 때 가끔 실패한다는 사실도 「미해결」로 적혀 있습니다.</p>
+<p><strong>⑤ u5 보안·실행 설계</strong> <code>u5-local-run/nfr-design/security-design.md</code></p>
+<table>
+<thead>
+<tr>
+<th>설계</th>
+<th>방식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>비밀 값</td>
+<td>웹훅 서명용 값은 실행마다 무작위 64자 이상으로 만들고, u3에만 환경 변수로 넘깁니다. 화면·로그·프로세스 인자에 쓰지 않고 파일에도 저장하지 않습니다</td>
+</tr>
+<tr>
+<td>환경 구성</td>
+<td>서비스마다 환경을 비운 뒤 필요한 변수만 전달합니다</td>
+</tr>
+<tr>
+<td>준비 확인</td>
+<td>u1~u3은 <code>/actuator/health</code>가 UP인지 확인합니다. u4는 프록시를 거쳐 u1에 연결되는지(빈 요청에 400)로 판정합니다</td>
+</tr>
+</tbody>
+</table>
+<p><strong>⑥ u5 결과</strong> <code>u5-local-run/code-generation/code-summary.md</code>: 스크립트 세 개를 만듭니다. <code>run-local.sh</code>(네 서비스 기동과 정리), <code>smoke-local.sh</code>(화면 프록시를 거쳐 추천 → 결제 → 예약 완료 확인), <code>verify-all.sh</code>(전체 검증)입니다. bash 시험 79개(확인 439건)가 통과했습니다. 줄 커버리지는 100%입니다.</p>
+<h2 id="사람이-내린-결정">사람이 내린 결정<a class="anchor" href="#사람이-내린-결정" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>언제</th>
+<th>질문</th>
+<th>고른 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u4 구현 뒤</td>
+<td>화면 시험까지 확인하도록 검증 명령을 바꿀까요?</td>
+<td><strong>Approve</strong></td>
+</tr>
+<tr>
+<td>u4 검증</td>
+<td>부하가 오르내려 시간 시험(u2 2초 대기, u3 20ms, u4 틱 5ms) 결과가 계속 불안정합니다. 어떻게 할까요?</td>
+<td><strong>계속 재시도</strong> (시간 시험을 게이트에서 분리 / 호스트 한계로 기록하고 승인은 고르지 않음)</td>
+</tr>
+</tbody>
+</table>
+<p>"호스트 한계로 기록하고 승인"을 고르면 검증 명령이 실제로 통과하지 않아도 유닛이 승인됩니다. 그래서 기준을 그대로 두고 다시 시도했습니다. 감사 기록을 보면 u4 검증은 세 번 실패한 뒤 네 번째에 통과했고, u5는 첫 검증에서 통과했습니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>검토 결과가 READY이면 지적이 하나도 없다는 뜻인가요?</summary>
+<p>아닙니다. u4의 두 번째 검토 결과는 READY였지만 새 Major 지적 2건과 Minor 지적이 남아 있었습니다. 검토자는 승인 전에 이를 반영하도록 권했습니다. READY는 다음 단계로 갈 수 있다는 판정입니다. 남은 지적은 Status 열에서 추적합니다.</p>
+</details>
+<details class="answer">
+<summary>검증 명령은 AI가 바꿀 수 있나요?</summary>
+<p>AI는 제안만 합니다. 검증 명령은 사람이 승인해야 상태 파일에 기록되며, 감사 기록에도 <code>VERIFICATION_COMMAND_RECORDED</code>로 남습니다.</p>
+</details>
+<details class="answer">
+<summary>u5 스크립트는 웹훅 비밀 값을 어디에 보관하나요?</summary>
+<p>보관하지 않습니다. 실행할 때마다 무작위로 만들고 u3 프로세스에만 환경 변수로 넘깁니다. 화면, 로그, 명령줄 인자, 파일 어디에도 값을 쓰지 않습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="l2-build-services.html"><span>이전</span>구현: 예약·결제 서비스 (u2·u3)</a><a class="next" href="l2-test.html"><span>다음</span>빌드·테스트와 앱 동작</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li><li><a href="#사람이-내린-결정">사람이 내린 결정</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
