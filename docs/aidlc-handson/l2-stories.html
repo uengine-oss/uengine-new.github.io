@@ -55,8 +55,14 @@
 <li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
 <li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="theory-paradigm.html"><span class="n">15</span>AI-DLC는 무엇이 다른가</a></li>
+<li><a href="theory-spec.html"><span class="n">16</span>사양 주도 개발과 검증 게이트</a></li>
+<li><a href="theory-team.html"><span class="n">17</span>형상관리와 볼트 진척 관리</a></li>
+<li><a href="theory-adoption.html"><span class="n">18</span>검증 피로를 막는 정책과 도입 순서</a></li>
+</ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">19</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">7</span></div>
@@ -66,6 +72,14 @@
 <p>요구사항을 사용자 입장의 이야기와 인수 조건(Given/When/Then)으로 옮기고, 그 스토리를 화면 상태로 바꿉니다. 인수 조건 번호가 이후 시험과 완료 기준으로 이어지는 출발점입니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/uKjEw7cZ58A" title="3·4단계 유저 스토리와 화면 — 영상 1:48" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>실습을 실제로 실행한 결과가 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson">uengine-oss/tutorial-aidlc-handson</a>의 <code>level2-classic/</code> 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories"><code>inception/user-stories/</code></a> — 페르소나·스토리</li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups"><code>inception/refined-mockups/</code></a> — 화면·상호작용·접근성</li>
+</ul>
+</div>
 <h2 id="3단계-유저-스토리">3단계 유저 스토리<a class="anchor" href="#3단계-유저-스토리" title="Permanent link">#</a></h2>
 <h3 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h3>
 <table>
@@ -78,7 +92,7 @@
 <tbody>
 <tr>
 <td>페르소나</td>
-<td>누가 쓰나 (<code>personas.md</code>)</td>
+<td>누가 쓰나 (<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories/personas.md"><code>personas.md</code></a>)</td>
 </tr>
 <tr>
 <td>스토리</td>
@@ -98,11 +112,11 @@
 </tr>
 </tbody>
 </table>
-<p>Given/When/Then 형식은 단계 규칙 파일(<code>phases/inception.md</code>)에서 정합니다. 답하고 승인하는 사람은 PO·기획입니다.</p>
+<p>Given/When/Then 형식은 단계 규칙 파일(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/phases/inception.md"><code>phases/inception.md</code></a>)에서 정합니다. 답하고 승인하는 사람은 PO·기획입니다.</p>
 <h3 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h3>
 <p>페르소나(운전자 1명), 스토리를 나누는 기준(사용자 흐름 순서), 결제 실패 때의 동작(같은 목록에서 다른 후보로 다시 결제)을 묻습니다. 마지막 질문은 요구사항 검토에서 누락이 지적된 내용입니다.</p>
 <h3 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h3>
-<p><code>inception/user-stories/stories.md</code>에 스토리 9개가 작성되었습니다. 결제 실패 후 재결제(US3.2)가 새로 들어갔고, 스토리마다 인수 조건이 붙었습니다.</p>
+<p><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories/stories.md"><code>inception/user-stories/stories.md</code></a>에 스토리 9개가 작성되었습니다. 결제 실패 후 재결제(US3.2)가 새로 들어갔고, 스토리마다 인수 조건이 붙었습니다.</p>
 <div class="hl"><pre><span></span><code><span class="gu">## US4.1 결제 승인 직후 예약 완료 보기</span>
 As a 운전자, I want to 결제가 승인되면 곧바로 화면에서 예약 완료를 보고, so that 예약이 확정됐다고 안심할 수 있다.
 <span class="k">-</span><span class="w"> </span>AC4.1.1 Given 예약이 결제 대기이고 화면이 서버 푸시(SSE)로 연결돼 있을 때, When 모의 PG의 승인 웹훅이 오면,
@@ -117,7 +131,7 @@ As a 운전자, I want to 결제가 승인되면 곧바로 화면에서 예약 �
 <h3 id="따라-하기_1">따라 하기<a class="anchor" href="#따라-하기_1" title="Permanent link">#</a></h3>
 <p>입력 방식(텍스트 입력창), 화면 구성 요소 라이브러리(없음, 직접 CSS), 접근성(데스크톱 기본)으로 답했습니다.</p>
 <h3 id="산출물과-바뀐-점_1">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점_1" title="Permanent link">#</a></h3>
-<p><code>inception/refined-mockups/mockups.md</code>에 화면 상태 8가지가 스토리 번호와 함께 정리되고, <code>interaction-spec.md</code>(상호작용 규칙)와 <code>accessibility-checklist.md</code>가 함께 작성됩니다.</p>
+<p><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups/mockups.md"><code>inception/refined-mockups/mockups.md</code></a>에 화면 상태 8가지가 스토리 번호와 함께 정리되고, <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups/interaction-spec.md"><code>interaction-spec.md</code></a>(상호작용 규칙)와 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups/accessibility-checklist.md"><code>accessibility-checklist.md</code></a>가 함께 작성됩니다.</p>
 <table>
 <thead>
 <tr>
@@ -163,7 +177,7 @@ As a 운전자, I want to 결제가 승인되면 곧바로 화면에서 예약 �
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>S7 결제 실패 화면은 어디에서 나왔나요?</summary>
-<p>요구사항 검토(<code>review-01.md</code>)의 R-02가 "결제 실패 웹훅을 받았을 때의 예약 상태와 화면 안내가 없다"고 지적했습니다. PO는 승인하면서 이 내용을 다음 단계로 넘겼습니다. 유저 스토리 단계에서는 결제 실패 시 동작을 묻는 질문이 나왔습니다. 그 답변을 바탕으로 US3.2(다른 후보로 다시 결제)가 만들어졌습니다. 화면 단계에서는 이 내용을 S7 결제 실패 화면으로 구체화했습니다.</p>
+<p>요구사항 검토(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/reviews/review-01.md"><code>review-01.md</code></a>)의 R-02가 "결제 실패 웹훅을 받았을 때의 예약 상태와 화면 안내가 없다"고 지적했습니다. PO는 승인하면서 이 내용을 다음 단계로 넘겼습니다. 유저 스토리 단계에서는 결제 실패 시 동작을 묻는 질문이 나왔습니다. 그 답변을 바탕으로 US3.2(다른 후보로 다시 결제)가 만들어졌습니다. 화면 단계에서는 이 내용을 S7 결제 실패 화면으로 구체화했습니다.</p>
 </details>
 <details class="answer">
 <summary>AC4.1.1 같은 인수 조건 번호는 어디에서 다시 쓰이나요?</summary>

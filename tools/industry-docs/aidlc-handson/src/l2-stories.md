@@ -2,19 +2,25 @@
 
 > 요구사항을 사용자 입장의 이야기와 인수 조건(Given/When/Then)으로 옮기고, 그 스토리를 화면 상태로 바꿉니다. 인수 조건 번호가 이후 시험과 완료 기준으로 이어지는 출발점입니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level2-classic/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`inception/user-stories/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories) — 페르소나·스토리
+    - [`inception/refined-mockups/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups) — 화면·상호작용·접근성
+
 ## 3단계 유저 스토리
 
 ### 무엇을 · 왜
 
 | 만드는 것 | 뜻 |
 |---|---|
-| 페르소나 | 누가 쓰나 (`personas.md`) |
+| 페르소나 | 누가 쓰나 ([`personas.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories/personas.md)) |
 | 스토리 | ~로서, ~하고 싶다, ~하려고 |
 | 인수 조건 | Given(상황) / When(행동) / Then(결과) |
 | 번호 | 조건마다 `AC<그룹>.<순번>.<조건>` |
 | 우선순위 | Must Have부터 |
 
-Given/When/Then 형식은 단계 규칙 파일(`phases/inception.md`)에서 정합니다. 답하고 승인하는 사람은 PO·기획입니다.
+Given/When/Then 형식은 단계 규칙 파일([`phases/inception.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/phases/inception.md))에서 정합니다. 답하고 승인하는 사람은 PO·기획입니다.
 
 ### 따라 하기
 
@@ -22,7 +28,7 @@ Given/When/Then 형식은 단계 규칙 파일(`phases/inception.md`)에서 정�
 
 ### 산출물과 바뀐 점
 
-`inception/user-stories/stories.md`에 스토리 9개가 작성되었습니다. 결제 실패 후 재결제(US3.2)가 새로 들어갔고, 스토리마다 인수 조건이 붙었습니다.
+[`inception/user-stories/stories.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories/stories.md)에 스토리 9개가 작성되었습니다. 결제 실패 후 재결제(US3.2)가 새로 들어갔고, 스토리마다 인수 조건이 붙었습니다.
 
 ```markdown
 ## US4.1 결제 승인 직후 예약 완료 보기
@@ -46,7 +52,7 @@ As a 운전자, I want to 결제가 승인되면 곧바로 화면에서 예약 �
 
 ### 산출물과 바뀐 점
 
-`inception/refined-mockups/mockups.md`에 화면 상태 8가지가 스토리 번호와 함께 정리되고, `interaction-spec.md`(상호작용 규칙)와 `accessibility-checklist.md`가 함께 작성됩니다.
+[`inception/refined-mockups/mockups.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups/mockups.md)에 화면 상태 8가지가 스토리 번호와 함께 정리되고, [`interaction-spec.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups/interaction-spec.md)(상호작용 규칙)와 [`accessibility-checklist.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups/accessibility-checklist.md)가 함께 작성됩니다.
 
 | 화면 | 근거 스토리 | 내용 |
 |---|---|---|
@@ -64,7 +70,7 @@ As a 운전자, I want to 결제가 승인되면 곧바로 화면에서 예약 �
 <details class="answer" markdown="1">
 <summary>S7 결제 실패 화면은 어디에서 나왔나요?</summary>
 
-요구사항 검토(`review-01.md`)의 R-02가 "결제 실패 웹훅을 받았을 때의 예약 상태와 화면 안내가 없다"고 지적했습니다. PO는 승인하면서 이 내용을 다음 단계로 넘겼습니다. 유저 스토리 단계에서는 결제 실패 시 동작을 묻는 질문이 나왔습니다. 그 답변을 바탕으로 US3.2(다른 후보로 다시 결제)가 만들어졌습니다. 화면 단계에서는 이 내용을 S7 결제 실패 화면으로 구체화했습니다.
+요구사항 검토([`review-01.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/reviews/review-01.md))의 R-02가 "결제 실패 웹훅을 받았을 때의 예약 상태와 화면 안내가 없다"고 지적했습니다. PO는 승인하면서 이 내용을 다음 단계로 넘겼습니다. 유저 스토리 단계에서는 결제 실패 시 동작을 묻는 질문이 나왔습니다. 그 답변을 바탕으로 US3.2(다른 후보로 다시 결제)가 만들어졌습니다. 화면 단계에서는 이 내용을 S7 결제 실패 화면으로 구체화했습니다.
 </details>
 
 <details class="answer" markdown="1">

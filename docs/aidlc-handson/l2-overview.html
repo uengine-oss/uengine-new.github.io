@@ -55,8 +55,14 @@
 <li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
 <li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="theory-paradigm.html"><span class="n">15</span>AI-DLC는 무엇이 다른가</a></li>
+<li><a href="theory-spec.html"><span class="n">16</span>사양 주도 개발과 검증 게이트</a></li>
+<li><a href="theory-team.html"><span class="n">17</span>형상관리와 볼트 진척 관리</a></li>
+<li><a href="theory-adoption.html"><span class="n">18</span>검증 피로를 막는 정책과 도입 순서</a></li>
+</ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">19</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">5</span></div>
@@ -66,6 +72,15 @@
 <p>레벨 1과 같은 요청을 <code>classic</code> 스코프로 다시 만들며, 단계마다 무엇을 정하고 어떤 문서가 생기는지 봅니다. 이 장은 전체 흐름과 첫 단계인 팀 규칙을 다룹니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/kM5r6ovTUV4" title="레벨 2 개요와 1단계 팀 규칙 — 영상 2:57" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>실습을 실제로 실행한 결과가 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson">uengine-oss/tutorial-aidlc-handson</a>의 <code>level2-classic/</code> 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/practices-discovery"><code>inception/practices-discovery/</code></a> — 팀 규칙 질문·발견한 규칙·근거</li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/team.md"><code>memory/team.md</code></a> — 승인된 팀 규칙</li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/aidlc-state.md"><code>aidlc-state.md</code></a> — 진행 상태</li>
+</ul>
+</div>
 <h2 id="전체-흐름">전체 흐름<a class="anchor" href="#전체-흐름" title="Permanent link">#</a></h2>
 <p><code>classic</code>은 AI-DLC v2(2.11.2) 안의 스코프 이름입니다. v1처럼 스테이지마다 사람이 승인하는 방식이라는 뜻이며, 버전 1을 가리키지는 않습니다.</p>
 <table>
@@ -143,7 +158,7 @@ services/                           코드
 <h2 id="1단계-팀-규칙-practices-discovery">1단계 팀 규칙 (Practices Discovery)<a class="anchor" href="#1단계-팀-규칙-practices-discovery" title="Permanent link">#</a></h2>
 <h3 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h3>
 <p>팀이 일하는 방식을 먼저 정합니다. 이후 모든 단계에서 이 규칙을 참고합니다(훅이 단계마다 다시 넣어 줍니다). 예를 들어 테스트 방식을 TDD로 정하면 구현 단계의 코드 계획이 테스트를 먼저 쓰는 순서로 바뀝니다. 답하고 승인하는 사람은 팀 리드·아키텍트입니다.</p>
-<p><strong>정할 범주는 5가지입니다.</strong> <code>team.md</code>의 섹션과 하나씩 대응합니다.</p>
+<p><strong>정할 범주는 5가지입니다.</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/team.md"><code>team.md</code></a>의 섹션과 하나씩 대응합니다.</p>
 <table>
 <thead>
 <tr>
@@ -180,7 +195,7 @@ services/                           코드
 </tr>
 </tbody>
 </table>
-<p>AI가 상황에 맞춰 질문의 보기를 만듭니다. 새 프로젝트라면 <code>org.md</code>의 기본값을 제안하고, 기존 코드가 있다면 코드에서 확인한 내용을 바탕으로 초안을 쓰고 확인하지 못한 것만 묻습니다. 사람이 "반드시/절대"라고 분명히 말한 규칙은 <code>discovered-rules.md</code>에 <code>ALWAYS …</code> / <code>NEVER …</code>로 따로 남습니다.</p>
+<p>AI가 상황에 맞춰 질문의 보기를 만듭니다. 새 프로젝트라면 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/org.md"><code>org.md</code></a>의 기본값을 제안하고, 기존 코드가 있다면 코드에서 확인한 내용을 바탕으로 초안을 쓰고 확인하지 못한 것만 묻습니다. 사람이 "반드시/절대"라고 분명히 말한 규칙은 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/practices-discovery/discovered-rules.md"><code>discovered-rules.md</code></a>에 <code>ALWAYS …</code> / <code>NEVER …</code>로 따로 남습니다.</p>
 <h3 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h3>
 <ol class="steps">
 <li><strong>요청.</strong> 새 폴더를 <code>aidlc config --harness claude</code>로 연결하고, 레벨 1과 같은 요청에서 스코프와 깊이만 바꿉니다.
@@ -195,7 +210,7 @@ services/                           코드
 </li>
 </ol>
 <h3 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h3>
-<p><strong>① 질문지</strong> <code>inception/practices-discovery/practices-discovery-questions.md</code>: 질문마다 보기와 답 칸이 있고, 사람이 고른 답이 그대로 남습니다.</p>
+<p><strong>① 질문지</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/practices-discovery/practices-discovery-questions.md"><code>inception/practices-discovery/practices-discovery-questions.md</code></a>: 질문마다 보기와 답 칸이 있고, 사람이 고른 답이 그대로 남습니다.</p>
 <div class="hl"><pre><span></span><code><span class="gu">## Q2. [품질] 테스트는 어떤 방식으로 작성할까요?</span>
 A. 구현 후 테스트 작성, 커버리지 80% 유지 (제안)
 B. TDD (테스트 먼저)
@@ -203,23 +218,23 @@ B. TDD (테스트 먼저)
 [<span class="nl">Answer</span>]: <span class="na">B</span>
 </code></pre></div>
 
-<p><strong>② 팀 방식 초안</strong> <code>inception/practices-discovery/team-practices.md</code>: 답만을 근거로 다섯 범주를 작성합니다. classic 스코프의 최소 기준(커버리지 80%, 병합 전 CI)은 낮출 수 없으므로 함께 포함됩니다.</p>
+<p><strong>② 팀 방식 초안</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/practices-discovery/team-practices.md"><code>inception/practices-discovery/team-practices.md</code></a>: 답만을 근거로 다섯 범주를 작성합니다. classic 스코프의 최소 기준(커버리지 80%, 병합 전 CI)은 낮출 수 없으므로 함께 포함됩니다.</p>
 <div class="hl"><pre><span></span><code><span class="gu">## Testing Posture</span>
 <span class="k">-</span><span class="w"> </span><span class="gs">**Methodology**</span>: tdd
 <span class="k">-</span><span class="w"> </span><span class="gs">**Ordering**</span>: 각 계층마다 실패하는 테스트를 먼저 작성한 뒤 그 테스트를 통과시키는 구현을 작성한다.
 <span class="k">-</span><span class="w"> </span><span class="sb">`classic`</span> 범위의 하한을 유지한다: 80% 라인 커버리지.
 </code></pre></div>
 
-<p><strong>③ 승인하면 <code>memory/team.md</code>가 바뀝니다.</strong> 승인 전에는 섹션 제목만 있는 빈 틀이었고, 승인 뒤에는 위 내용이 들어갑니다. 이 내용을 옮기는 작업은 정해진 도구가 수행합니다. LLM이 직접 옮기지는 않습니다.</p>
+<p><strong>③ 승인하면 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/team.md"><code>memory/team.md</code></a>가 바뀝니다.</strong> 승인 전에는 섹션 제목만 있는 빈 틀이었고, 승인 뒤에는 위 내용이 들어갑니다. 이 내용을 옮기는 작업은 정해진 도구가 수행합니다. LLM이 직접 옮기지는 않습니다.</p>
 <p><strong>④ 이 규칙이 쓰이는 곳.</strong> 구현 단계에서 u1의 코드 계획이 계층마다 Red(실패하는 테스트 먼저) → Green → Refactor 순서로 잡혔습니다(<a href="l2-build.html">7. 구현</a>).</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>팀 규칙에서 시험 방식을 TDD로 정하면 이후 무엇이 달라지나요?</summary>
-<p><code>memory/team.md</code>의 Testing Posture에 <code>Methodology: tdd</code>와 진행 순서(Ordering)가 들어갑니다. 구현 단계에서는 이 항목을 바탕으로 코드 계획을 세웁니다. 각 계층에서 실패하는 시험을 먼저 쓰는 Red, 시험을 통과시키는 Green, 코드를 정리하는 Refactor 순서로 진행합니다. u1의 <code>code-generation-plan.md</code>에서 Step 3·4(데이터 모델), Step 9·10(비즈니스 로직)이 이 순서를 따릅니다.</p>
+<p><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/team.md"><code>memory/team.md</code></a>의 Testing Posture에 <code>Methodology: tdd</code>와 진행 순서(Ordering)가 들어갑니다. 구현 단계에서는 이 항목을 바탕으로 코드 계획을 세웁니다. 각 계층에서 실패하는 시험을 먼저 쓰는 Red, 시험을 통과시키는 Green, 코드를 정리하는 Refactor 순서로 진행합니다. u1의 <code>code-generation-plan.md</code>에서 Step 3·4(데이터 모델), Step 9·10(비즈니스 로직)이 이 순서를 따릅니다.</p>
 </details>
 <details class="answer">
 <summary>팀 규칙의 범주는 몇 가지이고, 마음대로 늘릴 수 있나요?</summary>
-<p>범주는 Way of Working, Walking Skeleton, Testing Posture, Deployment, Code Style 다섯 가지로 정해져 있습니다. 시험 방식은 <code>tdd</code>, <code>bdd</code>, <code>atdd</code>, <code>test-after</code>, <code>custom</code> 가운데 하나를 고릅니다. 각 항목의 내용은 답변에 맞춰 작성됩니다. 범주에 속하지 않는 약속은 <code>ALWAYS</code>·<code>NEVER</code> 규칙으로 따로 남습니다. 이번 실행에서는 "NEVER Docker를 도입하지 않는다", "ALWAYS 로컬 실행 스크립트를 제공한다"가 <code>project.md</code>에 들어갔습니다.</p>
+<p>범주는 Way of Working, Walking Skeleton, Testing Posture, Deployment, Code Style 다섯 가지로 정해져 있습니다. 시험 방식은 <code>tdd</code>, <code>bdd</code>, <code>atdd</code>, <code>test-after</code>, <code>custom</code> 가운데 하나를 고릅니다. 각 항목의 내용은 답변에 맞춰 작성됩니다. 범주에 속하지 않는 약속은 <code>ALWAYS</code>·<code>NEVER</code> 규칙으로 따로 남습니다. 이번 실행에서는 "NEVER Docker를 도입하지 않는다", "ALWAYS 로컬 실행 스크립트를 제공한다"가 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/project.md"><code>project.md</code></a>에 들어갔습니다.</p>
 </details>
 <details class="answer">
 <summary>검토 에이전트가 NOT-READY를 내면 다음 단계로 갈 수 없나요?</summary>

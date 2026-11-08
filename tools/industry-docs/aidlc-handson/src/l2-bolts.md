@@ -2,6 +2,11 @@
 
 > 만들 순서와 "다 됐다"의 기준을 정합니다. 볼트마다 완료 기준이 유저 스토리의 인수 조건 번호와 계약 시험, 커버리지로 적혀, 앞에서 정한 스펙이 그대로 구현의 합격선이 됩니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level2-classic/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`inception/delivery-planning/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning) — 볼트 계획·팀 배정·위험과 순서·외부 의존
+
 ## 무엇을 · 왜
 
 | 정하는 것 | 뜻 |
@@ -12,7 +17,7 @@
 | 확인할 가설 | 가장 우려되는 사항을 먼저 확인 |
 | 검증 명령 | 유닛마다 실행할 명령 (첫 볼트에서 사람이 승인) |
 
-답하고 승인하는 사람은 개발 리드입니다. 결과는 `inception/delivery-planning/bolt-plan.md`(같은 폴더에 `team-allocation.md`, `risk-and-sequencing-rationale.md`, `external-dependency-map.md`)입니다.
+답하고 승인하는 사람은 개발 리드입니다. 결과는 [`inception/delivery-planning/bolt-plan.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/bolt-plan.md)(같은 폴더에 [`team-allocation.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/team-allocation.md), [`risk-and-sequencing-rationale.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/risk-and-sequencing-rationale.md), [`external-dependency-map.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/external-dependency-map.md))입니다.
 
 ## 따라 하기
 
@@ -20,7 +25,7 @@
 
 ## 산출물과 바뀐 점
 
-`bolt-plan.md`에 볼트 5개의 순서와 이유, 볼트별 완료 기준·가설·보여 줄 결과가 적힙니다.
+[`bolt-plan.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/bolt-plan.md)에 볼트 5개의 순서와 이유, 볼트별 완료 기준·가설·보여 줄 결과가 적힙니다.
 
 | 볼트 | 유닛 | 순서의 이유 |
 |---|---|---|
@@ -51,5 +56,5 @@
 <details class="answer" markdown="1">
 <summary>검증 명령은 왜 볼트 계획에서 정하지 않았나요?</summary>
 
-이 시점에는 실행할 코드가 없기 때문입니다. 첫 유닛인 u1의 구현을 마친 뒤 에이전트가 `mvn -q verify`를 제안했고, 사람이 승인했습니다. 이 명령은 `aidlc-state.md`에 기록되어 이후 유닛의 체크포인트에서 사용됩니다.
+이 시점에는 실행할 코드가 없기 때문입니다. 첫 유닛인 u1의 구현을 마친 뒤 에이전트가 `mvn -q verify`를 제안했고, 사람이 승인했습니다. 이 명령은 [`aidlc-state.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/aidlc-state.md)에 기록되어 이후 유닛의 체크포인트에서 사용됩니다.
 </details>

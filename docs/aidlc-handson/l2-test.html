@@ -55,8 +55,14 @@
 <li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
 <li><a href="l2-test.html" class="on" aria-current="page"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="theory-paradigm.html"><span class="n">15</span>AI-DLC는 무엇이 다른가</a></li>
+<li><a href="theory-spec.html"><span class="n">16</span>사양 주도 개발과 검증 게이트</a></li>
+<li><a href="theory-team.html"><span class="n">17</span>형상관리와 볼트 진척 관리</a></li>
+<li><a href="theory-adoption.html"><span class="n">18</span>검증 피로를 막는 정책과 도입 순서</a></li>
+</ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">19</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">14</span></div>
@@ -66,6 +72,14 @@
 <p>모든 유닛이 끝나면 Build and Test 단계에서 전체를 한 번에 시험합니다. 실제 서비스를 띄워 연동도 확인합니다. 화면은 사람이 브라우저에서 직접 확인합니다. 목표마다 Met·Not Met·Unverified로 판정한 문서를 사람이 승인하면 계획이 끝납니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/mdQWadN3fGY" title="빌드·테스트와 앱 동작 — 영상 2:51" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>실습을 실제로 실행한 결과가 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson">uengine-oss/tutorial-aidlc-handson</a>의 <code>level2-classic/</code> 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test"><code>construction/build-and-test/</code></a> — 빌드 안내·시험 결과·판정표·추적</li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/scripts"><code>scripts/</code></a> — 실행·스모크·전체 검증 스크립트</li>
+</ul>
+</div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -80,31 +94,31 @@
 <tr>
 <td>전체 시험</td>
 <td>승인된 검증 명령과 u5 시험을 다시 실행</td>
-<td><code>test-results.md</code></td>
+<td><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md"><code>test-results.md</code></a></td>
 <td>명령 실행 허가</td>
 </tr>
 <tr>
 <td>실제 연동</td>
 <td>서비스를 띄워 추천 → 결제 → 예약 확정을 직접 호출, 화면 프록시를 거친 스모크</td>
-<td><code>test-results.md</code>, <code>.local-run/smoke.txt</code></td>
+<td><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md"><code>test-results.md</code></a>, <code>.local-run/smoke.txt</code></td>
 <td>명령 실행 허가</td>
 </tr>
 <tr>
 <td>브라우저 확인</td>
 <td>실시간 갱신, 1초 목표, 180초 취소 표시를 실제 화면에서 확인</td>
-<td><code>test-results.md</code></td>
+<td><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md"><code>test-results.md</code></a></td>
 <td><strong>사람이 직접</strong></td>
 </tr>
 <tr>
 <td>판정</td>
 <td>목표마다 기대값·실제값·증거·판정</td>
-<td><code>build-and-test-summary.md</code></td>
+<td><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/build-and-test-summary.md"><code>build-and-test-summary.md</code></a></td>
 <td><strong>승인</strong></td>
 </tr>
 <tr>
 <td>추적</td>
 <td>요구사항이 어느 유닛에서 구현됐는지</td>
-<td><code>cross-unit-traceability.md</code></td>
+<td><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/cross-unit-traceability.md"><code>cross-unit-traceability.md</code></a></td>
 <td>따로 멈추지 않음</td>
 </tr>
 </tbody>
@@ -156,12 +170,12 @@
 
 </li>
 </ol>
-<p>다른 프로그램이 5173을 쓰고 있으면 <code>run-local.sh</code>는 시작하지 않습니다. 이번 실행에서는 다른 프로젝트의 서버가 <code>[::1]:5173</code>(IPv6)만 쓰고 있었습니다. 그래서 서비스를 각각 띄우고 화면은 <code>127.0.0.1:5173</code>(IPv4)으로 확인했습니다.</p>
+<p>다른 프로그램이 5173을 쓰고 있으면 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/run-local.sh"><code>run-local.sh</code></a>는 시작하지 않습니다. 이번 실행에서는 다른 프로젝트의 서버가 <code>[::1]:5173</code>(IPv6)만 쓰고 있었습니다. 그래서 서비스를 각각 띄우고 화면은 <code>127.0.0.1:5173</code>(IPv4)으로 확인했습니다.</p>
 <h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
-<p>모든 파일은 <code>construction/build-and-test/</code> 아래에 있습니다.</p>
-<p><strong>① 빌드 안내</strong> <code>build-instructions.md</code>: 필요한 도구와 버전, 첫 준비 명령, 대상별 검증 명령(<code>mvn -q verify</code>, <code>npm --prefix services/u4-web-ui run verify</code>, <code>scripts/test/run-all.sh</code>, <code>scripts/verify-all.sh</code>)을 표로 정리합니다. 문제 해결 표에는 "시간 시험이 간헐 실패하면 목표는 낮추지 않고 부하가 낮을 때 다시 실행한다"는 안내도 있습니다.</p>
-<p><strong>② 시험 결과</strong> <code>test-results.md</code>: 묶음별 결과, 실패의 상세 내용, 실제 서비스 연동 결과(스모크 5/5), 사람이 브라우저에서 확인한 내용을 적습니다. 정리 중에 있었던 실수도 기록합니다. AI가 서비스를 끄려고 만든 명령은 지정한 포트 대신 머신의 IPv4 TCP 프로세스 전부(다른 프로젝트 서버, Docker 포함)를 선택하는 형태였습니다. 사람이 실행 전에 이 명령을 거부했습니다. 안전한 방법(포트마다 PID를 찾고 작업 폴더가 실습 폴더인지 확인한 것만 종료)도 함께 기록했습니다.</p>
-<p><strong>③ 결과 요약</strong> <code>build-and-test-summary.md</code>: 핵심은 Target Verification Matrix입니다. 22개 목표 가운데 Met 17, Not Met 3, Unverified 2입니다.</p>
+<p>모든 파일은 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test"><code>construction/build-and-test/</code></a> 아래에 있습니다.</p>
+<p><strong>① 빌드 안내</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/build-instructions.md"><code>build-instructions.md</code></a>: 필요한 도구와 버전, 첫 준비 명령, 대상별 검증 명령(<code>mvn -q verify</code>, <code>npm --prefix services/u4-web-ui run verify</code>, <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/test/run-all.sh"><code>scripts/test/run-all.sh</code></a>, <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/verify-all.sh"><code>scripts/verify-all.sh</code></a>)을 표로 정리합니다. 문제 해결 표에는 "시간 시험이 간헐 실패하면 목표는 낮추지 않고 부하가 낮을 때 다시 실행한다"는 안내도 있습니다.</p>
+<p><strong>② 시험 결과</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md"><code>test-results.md</code></a>: 묶음별 결과, 실패의 상세 내용, 실제 서비스 연동 결과(스모크 5/5), 사람이 브라우저에서 확인한 내용을 적습니다. 정리 중에 있었던 실수도 기록합니다. AI가 서비스를 끄려고 만든 명령은 지정한 포트 대신 머신의 IPv4 TCP 프로세스 전부(다른 프로젝트 서버, Docker 포함)를 선택하는 형태였습니다. 사람이 실행 전에 이 명령을 거부했습니다. 안전한 방법(포트마다 PID를 찾고 작업 폴더가 실습 폴더인지 확인한 것만 종료)도 함께 기록했습니다.</p>
+<p><strong>③ 결과 요약</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/build-and-test-summary.md"><code>build-and-test-summary.md</code></a>: 핵심은 Target Verification Matrix입니다. 22개 목표 가운데 Met 17, Not Met 3, Unverified 2입니다.</p>
 <table>
 <thead>
 <tr>
@@ -192,13 +206,13 @@
 <td>Not Met (Minor)</td>
 </tr>
 <tr>
-<td><code>run-local.sh</code> 한 번에 기동·정리</td>
+<td><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/run-local.sh"><code>run-local.sh</code></a> 한 번에 기동·정리</td>
 <td>5173 점유로 실제로는 못 해 봄</td>
 <td>Unverified</td>
 </tr>
 </tbody>
 </table>
-<p><strong>④ 유닛 간 추적</strong> <code>cross-unit-traceability.md</code>: 요구사항(FR·NFR)마다 어느 유닛이 맡았는지와 상태를 적습니다. 개발 방식 규칙(NFR7, NFR9)은 유닛 추적표에 없습니다. 실행 증거로 대신 확인했다고 기록했습니다.</p>
+<p><strong>④ 유닛 간 추적</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/cross-unit-traceability.md"><code>cross-unit-traceability.md</code></a>: 요구사항(FR·NFR)마다 어느 유닛이 맡았는지와 상태를 적습니다. 개발 방식 규칙(NFR7, NFR9)은 유닛 추적표에 없습니다. 실행 증거로 대신 확인했다고 기록했습니다.</p>
 <h2 id="사람이-내린-결정">사람이 내린 결정<a class="anchor" href="#사람이-내린-결정" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -245,7 +259,7 @@
 <p>네. 자동 진행에서는 일반 체크포인트 승인만 건너뜁니다. 이번에도 AI가 만든 종료 명령은 머신의 다른 프로그램 90여 개까지 끌 수 있는 형태였습니다. 사람이 실행 전에 이 명령을 거부했습니다.</p>
 </details>
     </article>
-    <nav class="pager"><a class="prev" href="l2-build-ui-run.html"><span>이전</span>구현: 화면·실행 스크립트 (u4·u5)</a><a class="next" href="artifacts.html"><span>다음</span>산출물 찾아보기</a></nav>
+    <nav class="pager"><a class="prev" href="l2-build-ui-run.html"><span>이전</span>구현: 화면·실행 스크립트 (u4·u5)</a><a class="next" href="theory-paradigm.html"><span>다음</span>AI-DLC는 무엇이 다른가</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기-앱-실행">따라 하기: 앱 실행</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li><li><a href="#사람이-내린-결정">사람이 내린 결정</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>

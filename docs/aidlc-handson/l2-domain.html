@@ -55,8 +55,14 @@
 <li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
 <li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="theory-paradigm.html"><span class="n">15</span>AI-DLC는 무엇이 다른가</a></li>
+<li><a href="theory-spec.html"><span class="n">16</span>사양 주도 개발과 검증 게이트</a></li>
+<li><a href="theory-team.html"><span class="n">17</span>형상관리와 볼트 진척 관리</a></li>
+<li><a href="theory-adoption.html"><span class="n">18</span>검증 피로를 막는 정책과 도입 순서</a></li>
+</ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">19</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">8</span></div>
@@ -66,6 +72,13 @@
 <p>책임과 데이터 소유로 컴포넌트를 나누고, 중요한 결정을 ADR로 기록합니다. 첫 검토에서 나온 순환 의존을 아키텍트가 수정 요청으로 고치고, 결정 기록이 어떻게 바뀌었는지 봅니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/m5AXsAMaIE0" title="5단계 도메인 설계 — 영상 1:35" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>실습을 실제로 실행한 결과가 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson">uengine-oss/tutorial-aidlc-handson</a>의 <code>level2-classic/</code> 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design"><code>inception/domain-design/</code></a> — 컴포넌트·결정(ADR)·검토</li>
+</ul>
+</div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -93,7 +106,7 @@
 </tr>
 </tbody>
 </table>
-<p>단계 규칙에서 "결정마다 대안을 2개 이상 적을 것"을 요구합니다. 답하고 승인하는 사람은 아키텍트입니다. 결과 문서는 <code>inception/domain-design/components.md</code>, <code>decisions.md</code>입니다.</p>
+<p>단계 규칙에서 "결정마다 대안을 2개 이상 적을 것"을 요구합니다. 답하고 승인하는 사람은 아키텍트입니다. 결과 문서는 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/components.md"><code>inception/domain-design/components.md</code></a>, <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/decisions.md"><code>decisions.md</code></a>입니다.</p>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <ol class="steps">
 <li><strong>컴포넌트 개수 정하기.</strong> 에이전트가 5개 안(QueryParser, Recommendation, Reservation, Payment, Notification)과 3개 안의 장단점을 제시했고, 5개 안을 골랐습니다.
@@ -104,7 +117,7 @@
 </li>
 </ol>
 <h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
-<p><strong>① 컴포넌트와 데이터 소유</strong> <code>components.md</code>: 컴포넌트 구조도(mermaid)와 데이터 소유 표가 있습니다.</p>
+<p><strong>① 컴포넌트와 데이터 소유</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/components.md"><code>components.md</code></a>: 컴포넌트 구조도(mermaid)와 데이터 소유 표가 있습니다.</p>
 <table>
 <thead>
 <tr>
@@ -131,15 +144,15 @@
 </tr>
 </tbody>
 </table>
-<p><strong>② 첫 검토</strong> <code>reviews/review-01.md</code>: 알림이 예약을 조회하면 예약 → 알림 이벤트와 맞물려 순환 의존이 생깁니다(R-01). 예약 상태를 확정하는 주체도 ADR마다 다릅니다(R-02).</p>
-<p><strong>③ 고친 결정</strong> <code>decisions.md</code>: 상태 확정은 Reservation에서만 원자 연산으로 처리하도록 바뀌었습니다(ADR-002). 호출 방향은 Payment → Reservation → Notification으로 통일되었습니다(ADR-003).</p>
+<p><strong>② 첫 검토</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/reviews/review-01.md"><code>reviews/review-01.md</code></a>: 알림이 예약을 조회하면 예약 → 알림 이벤트와 맞물려 순환 의존이 생깁니다(R-01). 예약 상태를 확정하는 주체도 ADR마다 다릅니다(R-02).</p>
+<p><strong>③ 고친 결정</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/decisions.md"><code>decisions.md</code></a>: 상태 확정은 Reservation에서만 원자 연산으로 처리하도록 바뀌었습니다(ADR-002). 호출 방향은 Payment → Reservation → Notification으로 통일되었습니다(ADR-003).</p>
 <div class="hl"><pre><span></span><code><span class="gu">## ADR-003: 호출 방향을 Payment에서 Reservation으로 둔다</span>
 <span class="k">-</span><span class="w"> </span>Decision: Payment가 Reservation을 호출한다. Reservation은 Payment를 호출하지 않는다. Reservation은 Notification에
   상태 스냅샷을 이벤트로 밀어 넣고 Notification은 Reservation을 호출하지 않는다.
 <span class="k">-</span><span class="w"> </span>Alternatives Rejected: Reservation이 Payment를 호출하는 방식은 결과 반영에서 순환이 생겨 선택하지 않았다.
 </code></pre></div>
 
-<p><strong>④ 재검토</strong> <code>reviews/review-02.md</code>: R-01, R-02 해결로 기록되었습니다.</p>
+<p><strong>④ 재검토</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/reviews/review-02.md"><code>reviews/review-02.md</code></a>: R-01, R-02 해결로 기록되었습니다.</p>
 <p><strong>⑤ 다음에 쓰이는 곳.</strong> 이 컴포넌트와 의존 방향이 다음 단계에서 유닛(서비스)을 묶는 기준이 됩니다.</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
@@ -148,7 +161,7 @@
 </details>
 <details class="answer">
 <summary>ADR에 채택하지 않은 대안까지 적는 이유는 무엇인가요?</summary>
-<p>나중에 같은 논의를 되풀이하지 않기 위해서입니다. 조건이 바뀌었을 때 무엇을 다시 검토해야 하는지도 알 수 있습니다. 이 프로젝트의 단계 규칙(<code>phases/inception.md</code>)도 ADR마다 Context, Decision, Consequences, Alternatives Rejected를 적도록 요구합니다. 대안도 2개 이상 검토해야 합니다.</p>
+<p>나중에 같은 논의를 되풀이하지 않기 위해서입니다. 조건이 바뀌었을 때 무엇을 다시 검토해야 하는지도 알 수 있습니다. 이 프로젝트의 단계 규칙(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/phases/inception.md"><code>phases/inception.md</code></a>)도 ADR마다 Context, Decision, Consequences, Alternatives Rejected를 적도록 요구합니다. 대안도 2개 이상 검토해야 합니다.</p>
 </details>
     </article>
     <nav class="pager"><a class="prev" href="l2-stories.html"><span>이전</span>3·4단계 유저 스토리와 화면</a><a class="next" href="l2-units.html"><span>다음</span>6·7단계 유닛 나누기와 API 계약</a></nav>

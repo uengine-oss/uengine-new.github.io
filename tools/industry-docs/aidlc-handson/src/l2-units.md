@@ -2,6 +2,12 @@
 
 > 컴포넌트를 따로 만들고 검증할 유닛으로 묶고 의존 그래프를 그린 뒤, 서비스 사이의 약속을 계약으로 정합니다. 계약은 첫 검토에서 NOT-READY였다가 고친 뒤 READY가 되었습니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level2-classic/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`inception/units-generation/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation) — 유닛·의존 DAG·스토리 맵·검토
+    - [`inception/contract-design/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/contract-design) — API 계약·검토
+
 ## 6단계 유닛 나누기 (Units Generation)
 
 ### 무엇을 · 왜
@@ -21,13 +27,13 @@
 
 ### 산출물과 바뀐 점
 
-`inception/units-generation/`에 세 문서가 작성됩니다.
+[`inception/units-generation/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation)에 세 문서가 작성됩니다.
 
 | 파일 | 내용 |
 |---|---|
-| `unit-of-work.md` | 유닛 5개(u1 search, u2 reservation, u3 payment, u4 web-ui, u5 local-run)와 담당 컴포넌트·스토리·종류·크기 |
-| `unit-of-work-dependency.md` | 의존 DAG(mermaid: u2→u1, u3→u2, u4→u1·u2·u3, u5→전부, 순환 없음)와 연동 지점 표 |
-| `unit-of-work-story-map.md` | 스토리 → 유닛. 예: US4.1은 u3(웹훅 수신), u2(확정과 푸시), u4(표시)가 1초를 나눠 사용합니다 |
+| [`unit-of-work.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work.md) | 유닛 5개(u1 search, u2 reservation, u3 payment, u4 web-ui, u5 local-run)와 담당 컴포넌트·스토리·종류·크기 |
+| [`unit-of-work-dependency.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work-dependency.md) | 의존 DAG(mermaid: u2→u1, u3→u2, u4→u1·u2·u3, u5→전부, 순환 없음)와 연동 지점 표 |
+| [`unit-of-work-story-map.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work-story-map.md) | 스토리 → 유닛. 예: US4.1은 u3(웹훅 수신), u2(확정과 푸시), u4(표시)가 1초를 나눠 사용합니다 |
 
 ## 7단계 API 계약 (Contract Design)
 
@@ -41,7 +47,7 @@
 
 ### 산출물과 바뀐 점
 
-**① 첫 검토 NOT-READY → 재검토 READY** (`reviews/review-01.md` → `review-02.md`)
+**① 첫 검토 NOT-READY → 재검토 READY** ([`reviews/review-01.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/contract-design/reviews/review-01.md) → [`review-02.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/contract-design/reviews/review-02.md))
 
 | 지적 | 내용 |
 |---|---|
@@ -50,7 +56,7 @@
 | R-03 | 브라우저 `EventSource`는 사용자 지정 헤더를 보낼 수 없음 |
 | R-04 | 웹훅 반영 실패 시 응답 코드와 `eventId` 기록 시점이 없음 |
 
-**② 최종 계약** `contract-summary.md`: 계약 6개(C1~C6)가 제공자·소비자·방식과 함께 표로 정리되고, 계약마다 OpenAPI 조각과 오류·제한 시간·재시도 표가 붙습니다.
+**② 최종 계약** [`contract-summary.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/contract-design/contract-summary.md): 계약 6개(C1~C6)가 제공자·소비자·방식과 함께 표로 정리되고, 계약마다 OpenAPI 조각과 오류·제한 시간·재시도 표가 붙습니다.
 
 ```yaml
 # C6 모의 PG 웹훅 (모의 PG → U3)
@@ -71,5 +77,5 @@
 <details class="answer" markdown="1">
 <summary>계약의 첫 검토에서 지적된 R-01(이용 시간 출처 없음)은 어떻게 고쳐졌나요?</summary>
 
-`durationHours`가 C1 추천 응답에서 C2 결제 요청, C4 주차권 조회, C5 예약 생성 요청까지 하나의 흐름으로 이어지도록 계약에 명시했습니다. 금액은 C4가 돌려준 가격(요청한 이용 시간 전체의 합계)을 사용합니다. 예약 서비스는 예약을 만들 때 이 금액을 저장합니다. 재검토(`review-02.md`)에서는 이 문제가 해결된 것으로 기록되었습니다.
+`durationHours`가 C1 추천 응답에서 C2 결제 요청, C4 주차권 조회, C5 예약 생성 요청까지 하나의 흐름으로 이어지도록 계약에 명시했습니다. 금액은 C4가 돌려준 가격(요청한 이용 시간 전체의 합계)을 사용합니다. 예약 서비스는 예약을 만들 때 이 금액을 저장합니다. 재검토([`review-02.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/contract-design/reviews/review-02.md))에서는 이 문제가 해결된 것으로 기록되었습니다.
 </details>

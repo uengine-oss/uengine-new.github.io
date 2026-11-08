@@ -41,7 +41,7 @@ claude --model sonnet --permission-mode acceptEdits
 나눠 줘. 결제가 끝나면 사용자에게 바로 예약 완료를 보여 줘야 해.
 ```
 </li>
-<li markdown="1">**답하는 방법 고르기.** 약 75초 뒤 작업 기록(`aidlc/spaces/default/intents/261105-voice-parking/`)과 질문지 `intent-capture-questions.md`가 생성되고, 답변 방법을 묻습니다. **Guide me**(한 문항씩 대화형), **I'll edit the file**(파일에 직접 적기), **Chat**(자유 대화) 가운데 Guide me를 고릅니다. 한 번 고르면 다음 스테이지도 같은 방식으로 진행합니다.
+<li markdown="1">**답하는 방법 고르기.** 약 75초 뒤 작업 기록([`aidlc/spaces/default/intents/261105-voice-parking/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking))과 질문지 [`intent-capture-questions.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/ideation/intent-capture/intent-capture-questions.md)가 생성되고, 답변 방법을 묻습니다. **Guide me**(한 문항씩 대화형), **I'll edit the file**(파일에 직접 적기), **Chat**(자유 대화) 가운데 Guide me를 고릅니다. 한 번 고르면 다음 스테이지도 같은 방식으로 진행합니다.
 
 ![답하는 방법 세 가지](img/req-mode.webp)
 </li>
@@ -58,7 +58,7 @@ claude --model sonnet --permission-mode acceptEdits
 
 ![범위 밖 고르기(여럿 선택)](img/req-q3.webp)
 </li>
-<li markdown="1">**첫 승인 게이트.** 약 2분 반 뒤 `intent-statement.md`, `stakeholder-map.md`가 생성되고 검토 에이전트가 우려 4건을 짚습니다. Approve를 고르면 요구사항 분석으로 넘어갑니다. 의도 문서의 문장 끝에는 `[desc]`(처음 요청), `[Q2]`(2번 답) 같은 출처가 붙어 있습니다.
+<li markdown="1">**첫 승인 게이트.** 약 2분 반 뒤 [`intent-statement.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/ideation/intent-capture/intent-statement.md), [`stakeholder-map.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/ideation/intent-capture/stakeholder-map.md)가 생성되고 검토 에이전트가 우려 4건을 짚습니다. Approve를 고르면 요구사항 분석으로 넘어갑니다. 의도 문서의 문장 끝에는 `[desc]`(처음 요청), `[Q2]`(2번 답) 같은 출처가 붙어 있습니다.
 
 ```markdown
 ## Target Customer
@@ -76,11 +76,17 @@ claude --model sonnet --permission-mode acceptEdits
 
 > Q5. "1초 이내"는 어느 시점부터 재나요? (모의 PG 승인이 비동기 웹훅으로 들어오기 때문에 묻습니다)
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level1-poc/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`ideation/intent-capture/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/ideation/intent-capture) — 의도 문서·이해관계자 표·질문 파일
+    - [`inception/requirements-analysis/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis) — 요구사항·질문 파일·검토
+
 처음 요청의 "결제가 끝나면 바로 예약 완료"와 방금 답한 "승인은 비동기 웹훅"을 함께 보면, 결제 버튼을 누른 시점에는 아직 승인되지 않은 상태입니다. 가이드에서 말한 "모순 감지"는 실제로 이런 후속 질문으로 나타납니다. A(승인 웹훅을 서버가 받은 시점부터)를 고르고, 종합 점수 비중은 직접 "가격 40%, 거리 40%, 이용 시간 적합도 20%"로 답했습니다.
 
 ![후속 질문: 1초를 어디서부터 재나](img/req-followup.webp)
 </li>
-<li markdown="1">**두 번째 승인 게이트.** 약 2분 뒤 `requirements.md`가 작성됩니다. 결제 대기 → 승인 웹훅 → 확정 상태, 180초 자동 취소, "승인 웹훅 수신부터 화면 표시까지 1초 이내"라는 비기능 요구사항이 반영되었습니다. 검토 에이전트가 7건(R-01~R-07)을 짚었고, 그대로 Approve를 선택했습니다.
+<li markdown="1">**두 번째 승인 게이트.** 약 2분 뒤 [`requirements.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/requirements.md)가 작성됩니다. 결제 대기 → 승인 웹훅 → 확정 상태, 180초 자동 취소, "승인 웹훅 수신부터 화면 표시까지 1초 이내"라는 비기능 요구사항이 반영되었습니다. 검토 에이전트가 7건(R-01~R-07)을 짚었고, 그대로 Approve를 선택했습니다.
 
 | ID | 요구사항 | 합격 기준 |
 |---|---|---|
