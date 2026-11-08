@@ -55,8 +55,14 @@
 <li><a href="l2-build-ui-run.html" class="on" aria-current="page"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
 <li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="theory-paradigm.html"><span class="n">15</span>AI-DLC는 무엇이 다른가</a></li>
+<li><a href="theory-spec.html"><span class="n">16</span>사양 주도 개발과 검증 게이트</a></li>
+<li><a href="theory-team.html"><span class="n">17</span>형상관리와 볼트 진척 관리</a></li>
+<li><a href="theory-adoption.html"><span class="n">18</span>검증 피로를 막는 정책과 도입 순서</a></li>
+</ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">19</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">13</span></div>
@@ -66,6 +72,16 @@
 <p>화면 u4(Vue 3)와 실행 스크립트 u5를 만듭니다. 검토 에이전트가 화면 설계를 한 번 반려한 기록, 화면 시험까지 돌도록 사람이 승인해 바꾼 검증 명령, Docker 없이 네 서비스를 띄우는 스크립트의 비밀 값 처리를 차례로 봅니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/VblVDR97HG8" title="구현: 화면·실행 스크립트 (u4·u5) — 영상 2:47" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>실습을 실제로 실행한 결과가 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson">uengine-oss/tutorial-aidlc-handson</a>의 <code>level2-classic/</code> 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u4-web-ui"><code>construction/u4-web-ui/</code></a> — u4 화면 문서</li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u5-local-run"><code>construction/u5-local-run/</code></a> — u5 실행 스크립트 문서</li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/services/u4-web-ui"><code>services/u4-web-ui/</code></a> — u4 코드</li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/scripts"><code>scripts/</code></a> — run-local·smoke-local·verify-all</li>
+</ul>
+</div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -90,7 +106,7 @@
 </table>
 <p>u5는 패키징 유닛이므로 기능 설계 단계가 없습니다. 보안·실행 설계가 그 역할을 맡습니다.</p>
 <h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
-<p><strong>① u4 컴포넌트</strong> <code>u4-web-ui/functional-design/frontend-components.md</code>: 라우터나 상태 관리 라이브러리는 쓰지 않습니다. composable 하나(<code>useApp</code>)가 상태를 관리하고, 컴포넌트는 props와 이벤트로만 소통합니다.</p>
+<p><strong>① u4 컴포넌트</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u4-web-ui/functional-design/frontend-components.md"><code>u4-web-ui/functional-design/frontend-components.md</code></a>: 라우터나 상태 관리 라이브러리는 쓰지 않습니다. composable 하나(<code>useApp</code>)가 상태를 관리하고, 컴포넌트는 props와 이벤트로만 소통합니다.</p>
 <div class="hl"><pre><span></span><code>App.vue
 ├─ QueryInput          입력창과 전송
 ├─ ErrorNotice         오류 안내
@@ -100,13 +116,13 @@
 └─ ScenarioPanel       접힌 시연 설정 (모의 결제 결과, 지연 초)
 </code></pre></div>
 
-<p><strong>② u4 설계 검토</strong> <code>u4-web-ui/functional-design/reviews/</code>: 첫 검토(<code>review-01.md</code>) 결과는 <code>NOT-READY</code>였으며, Major 지적은 6건이었습니다. 예를 들어 R-02는 다른 주차권으로 다시 결제하면 새 예약의 version이 처음부터 시작하는데, 화면이 하나의 version 기준만 쓰면 새 예약의 갱신을 모두 버린다는 지적입니다. 문서를 고친 뒤 두 번째 검토(<code>review-02.md</code>)에서는 "이전 Major 6건은 모두 고쳐졌고"라는 평가와 함께 <code>READY</code>를 받았습니다. 남은 지적은 Status 열에 <code>New</code>·<code>Unresolved</code>로 표시됩니다.</p>
-<p><strong>③ 검증 명령</strong> <code>aidlc-state.md</code>: u4를 만든 뒤 AI가 검증 명령 변경을 제안했습니다. 기존 <code>mvn -q verify</code>는 Java 서비스만 시험하므로 화면 시험도 실행하자는 제안입니다. 사람이 승인한 뒤 다음 명령이 기록되었습니다. 이후 모든 유닛의 체크포인트는 이 명령으로 기록됩니다.</p>
+<p><strong>② u4 설계 검토</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u4-web-ui/functional-design/reviews"><code>u4-web-ui/functional-design/reviews/</code></a>: 첫 검토(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u4-web-ui/functional-design/reviews/review-01.md"><code>review-01.md</code></a>) 결과는 <code>NOT-READY</code>였으며, Major 지적은 6건이었습니다. 예를 들어 R-02는 다른 주차권으로 다시 결제하면 새 예약의 version이 처음부터 시작하는데, 화면이 하나의 version 기준만 쓰면 새 예약의 갱신을 모두 버린다는 지적입니다. 문서를 고친 뒤 두 번째 검토(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u4-web-ui/functional-design/reviews/review-02.md"><code>review-02.md</code></a>)에서는 "이전 Major 6건은 모두 고쳐졌고"라는 평가와 함께 <code>READY</code>를 받았습니다. 남은 지적은 Status 열에 <code>New</code>·<code>Unresolved</code>로 표시됩니다.</p>
+<p><strong>③ 검증 명령</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/aidlc-state.md"><code>aidlc-state.md</code></a>: u4를 만든 뒤 AI가 검증 명령 변경을 제안했습니다. 기존 <code>mvn -q verify</code>는 Java 서비스만 시험하므로 화면 시험도 실행하자는 제안입니다. 사람이 승인한 뒤 다음 명령이 기록되었습니다. 이후 모든 유닛의 체크포인트는 이 명령으로 기록됩니다.</p>
 <div class="hl"><pre><span></span><code>- **Construction Verification Command**: mvn -q verify &amp;&amp; npm --prefix services/u4-web-ui run verify
 </code></pre></div>
 
-<p><strong>④ u4 결과</strong> <code>u4-web-ui/code-generation/code-summary.md</code>: 시험 374개(단위 351, 시간 4, 프록시 19)가 통과했습니다. 라인 커버리지는 98.29%입니다. 경과 시간 표시(틱) 시험이 부하가 높을 때 가끔 실패한다는 사실도 「미해결」로 적혀 있습니다.</p>
-<p><strong>⑤ u5 보안·실행 설계</strong> <code>u5-local-run/nfr-design/security-design.md</code></p>
+<p><strong>④ u4 결과</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u4-web-ui/code-generation/code-summary.md"><code>u4-web-ui/code-generation/code-summary.md</code></a>: 시험 374개(단위 351, 시간 4, 프록시 19)가 통과했습니다. 라인 커버리지는 98.29%입니다. 경과 시간 표시(틱) 시험이 부하가 높을 때 가끔 실패한다는 사실도 「미해결」로 적혀 있습니다.</p>
+<p><strong>⑤ u5 보안·실행 설계</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u5-local-run/nfr-design/security-design.md"><code>u5-local-run/nfr-design/security-design.md</code></a></p>
 <table>
 <thead>
 <tr>
@@ -129,7 +145,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>⑥ u5 결과</strong> <code>u5-local-run/code-generation/code-summary.md</code>: 스크립트 세 개를 만듭니다. <code>run-local.sh</code>(네 서비스 기동과 정리), <code>smoke-local.sh</code>(화면 프록시를 거쳐 추천 → 결제 → 예약 완료 확인), <code>verify-all.sh</code>(전체 검증)입니다. bash 시험 79개(확인 439건)가 통과했습니다. 줄 커버리지는 100%입니다.</p>
+<p><strong>⑥ u5 결과</strong> <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u5-local-run/code-generation/code-summary.md"><code>u5-local-run/code-generation/code-summary.md</code></a>: 스크립트 세 개를 만듭니다. <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/run-local.sh"><code>run-local.sh</code></a>(네 서비스 기동과 정리), <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/smoke-local.sh"><code>smoke-local.sh</code></a>(화면 프록시를 거쳐 추천 → 결제 → 예약 완료 확인), <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/verify-all.sh"><code>verify-all.sh</code></a>(전체 검증)입니다. bash 시험 79개(확인 439건)가 통과했습니다. 줄 커버리지는 100%입니다.</p>
 <h2 id="사람이-내린-결정">사람이 내린 결정<a class="anchor" href="#사람이-내린-결정" title="Permanent link">#</a></h2>
 <table>
 <thead>

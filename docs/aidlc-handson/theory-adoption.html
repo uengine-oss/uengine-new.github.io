@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>검증 피로를 막는 정책과 도입 순서 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
+<meta name="description" content="볼트가 시간 단위로 짧아지면 검토자가 산출물을 제대로 읽지 못하고 승인만 누르기 쉽습니다. 이 장에서는 이를 막는 세 가지 정책, 조직에 적용할 4계층 참조 구조, 단계적 도입 순서를 설명합니다. 이 실습의 승인 기록이 그 정책을 얼마나 충족하는지도 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/theory-adoption.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="검증 피로를 막는 정책과 도입 순서 — Claude Code × AI-DLC 핸즈온 튜토리얼">
+<meta property="og:description" content="볼트가 시간 단위로 짧아지면 검토자가 산출물을 제대로 읽지 못하고 승인만 누르기 쉽습니다. 이 장에서는 이를 막는 세 가지 정책, 조직에 적용할 4계층 참조 구조, 단계적 도입 순서를 설명합니다. 이 실습의 승인 기록이 그 정책을 얼마나 충족하는지도 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/theory-adoption.html">
+<meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × AI-DLC 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">레벨 1 · poc</div><ul>
+<li><a href="setup.html"><span class="n">01</span>설치와 프로젝트 준비</a></li>
+<li><a href="requirements.html"><span class="n">02</span>의도 정리와 요구사항</a></li>
+<li><a href="construction.html"><span class="n">03</span>코드 생성과 학습</a></li>
+<li><a href="run.html"><span class="n">04</span>동작 확인과 감사 기록</a></li>
+</ul>
+<div class="nav-part">레벨 2 · classic</div><ul>
+<li><a href="l2-overview.html"><span class="n">05</span>레벨 2 개요와 1단계 팀 규칙</a></li>
+<li><a href="l2-requirements.html"><span class="n">06</span>2단계 요구사항</a></li>
+<li><a href="l2-stories.html"><span class="n">07</span>3·4단계 유저 스토리와 화면</a></li>
+<li><a href="l2-domain.html"><span class="n">08</span>5단계 도메인 설계</a></li>
+<li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
+<li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
+<li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="theory-paradigm.html"><span class="n">15</span>AI-DLC는 무엇이 다른가</a></li>
+<li><a href="theory-spec.html"><span class="n">16</span>사양 주도 개발과 검증 게이트</a></li>
+<li><a href="theory-team.html"><span class="n">17</span>형상관리와 볼트 진척 관리</a></li>
+<li><a href="theory-adoption.html" class="on" aria-current="page"><span class="n">18</span>검증 피로를 막는 정책과 도입 순서</a></li>
+</ul>
+<div class="nav-part">참고</div><ul>
+<li><a href="artifacts.html"><span class="n">19</span>산출물 찾아보기</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">이론<span class="chap">18</span></div>
+    <h1>검증 피로를 막는 정책과 도입 순서</h1>
+    <article>
+<blockquote>
+<p>볼트가 시간 단위로 짧아지면 검토자가 산출물을 제대로 읽지 못하고 승인만 누르기 쉽습니다. 이 장에서는 이를 막는 세 가지 정책, 조직에 적용할 4계층 참조 구조, 단계적 도입 순서를 설명합니다. 이 실습의 승인 기록이 그 정책을 얼마나 충족하는지도 확인합니다.</p>
+</blockquote>
+<h2 id="고무도장-승인">고무도장 승인<a class="anchor" href="#고무도장-승인" title="Permanent link">#</a></h2>
+<p>볼트 주기가 시간 단위로 줄면, 사람이 에이전트가 만든 많은 산출물을 꼼꼼히 살피지 못하고 승인 단추만 누르는 <strong>고무도장(rubber-stamping)</strong>식 승인이 생깁니다. 그러면 운영 결함이 늘어납니다. 이를 막으려면 다음 세 가지 정책을 글로 정해 두어야 합니다.</p>
+<table>
+<thead>
+<tr>
+<th>정책</th>
+<th>내용</th>
+<th>이 실습의 기록</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>지정 승인자(Named Approver)</td>
+<td>프롬프트를 입력해 에이전트를 실행한 사람이 아닌 동료가 승인자가 되고, 승인한 사람의 신원을 감사 기록에 남깁니다</td>
+<td><strong>충족하지 못했습니다.</strong> 같은 사람이 요청하고 승인했습니다. 승인 기록에 승인자 이름 칸이 없습니다</td>
+</tr>
+<tr>
+<td>검토 표준(Review Standard)</td>
+<td>직관 대신 체크리스트를 기준으로 검토합니다. 데이터 스키마의 영향 범위, 되돌리기 경로, 조향 규칙의 보안 규약을 확인합니다</td>
+<td><strong>일부 충족합니다.</strong> 검토 에이전트가 단계마다 같은 형식(<code>READY</code>·<code>NOT-READY</code> 판정과 Major·Minor 지적)으로 검토하고, 체크포인트마다 사람이 정한 검증 명령을 실행합니다</td>
+</tr>
+<tr>
+<td>의사결정 로그(Decision Log)</td>
+<td>승인 당시의 사양 버전, 적용된 규칙의 해시, 승인자, 시각을 묶어 바꿀 수 없는 기록으로 남깁니다</td>
+<td><strong>대부분 충족합니다.</strong> 시각, 단계, 사람의 답이 남고, 일부 사건에는 검증 근거의 해시(sha256)가 붙습니다. 승인자 신원은 없습니다</td>
+</tr>
+</tbody>
+</table>
+<p>이 실습의 실제 승인 기록 하나입니다(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/audit">감사 기록</a>).</p>
+<div class="hl"><pre><span></span><code>## Gate Approved
+**Timestamp**: 2026-11-05T09:01:16Z
+**Event**: GATE_APPROVED
+**Stage**: practices-discovery
+**User Input**: Approve
+**Person Reply**: Approve
+**Message Id**: 415cdb26
+**Brief Digest**: none
+</code></pre></div>
+
+<p>언제, 어느 단계를, 어떤 답으로 승인했는지는 남지만 누가 승인했는지는 남지 않습니다. 감사 기록 파일 이름으로 기록을 남긴 컴퓨터와 클론을 알 수 있을 뿐입니다. 팀으로 쓰려면 승인자 지정과 신원 기록을 풀 리퀘스트 승인 같은 외부 절차로 보완해야 합니다.</p>
+<h2 id="4계층-참조-구조">4계층 참조 구조<a class="anchor" href="#4계층-참조-구조" title="Permanent link">#</a></h2>
+<p>조직에 AI-DLC를 도입할 때는 사양 수립, 작업 편성, 에이전트 실행, 형상관리, 품질 검증이 끊기지 않고 이어져야 합니다. 역할에 따라 네 계층으로 나눌 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>계층</th>
+<th>하는 일</th>
+<th>쓰는 도구의 예</th>
+<th>이 실습에서 다룬 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 사양과 조향</td>
+<td>비즈니스 목표를 검증된 요구사항과 기술 사양으로 바꾸고, 구현 전에 사양 게이트로 모순을 걸러 냅니다. 프롬프트는 레지스트리에서 환경별로 관리합니다</td>
+<td>AI-DLC 조향 규칙, Driftless Spec Gates, Langfuse</td>
+<td>요구사항·스토리·도메인 설계·계약(6~9장), 규칙 파일(5장)</td>
+</tr>
+<tr>
+<td>② 작업 편성과 관제</td>
+<td>승인된 사양을 유닛으로 나누고 의존 DAG를 만든 뒤 볼트 계획으로 구체화합니다. 의존 조건을 충족한 작업을 에이전트에 할당합니다</td>
+<td>AI-DLC 유닛·볼트 계획, Driftless Task Board, Linear</td>
+<td>유닛 5개와 볼트 5개(9~10장)</td>
+</tr>
+<tr>
+<td>③ 실행과 형상관리</td>
+<td>Kiro, Claude Code, Cursor 같은 에이전트가 유닛을 병렬로 구현합니다. 작업 트리와 데이터를 따로 관리합니다</td>
+<td>Git 워크트리, Jujutsu, lakeFS, DVC</td>
+<td>Claude Code 한 세션에서 유닛을 차례로 구현했습니다(11~13장)</td>
+</tr>
+<tr>
+<td>④ 품질과 운영 피드백</td>
+<td>단위 시험 뒤 풀 리퀘스트로 제출합니다. CI에서 프롬프트 회귀 평가를 수행하고, 지정 승인자가 감사 기록을 보고 병합을 승인합니다. 운영 기록을 사양에 다시 반영합니다</td>
+<td>Promptfoo, CI, Langfuse</td>
+<td>체크포인트 검증과 빌드·테스트 판정표(14장). CI와 운영 단계는 이번 실습 범위에 포함하지 않습니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="단계적-도입-순서">단계적 도입 순서<a class="anchor" href="#단계적-도입-순서" title="Permanent link">#</a></h2>
+<p>갑자기 프로세스를 바꾸면 혼란이 생기므로 단계를 나누어 도입합니다.</p>
+<ol>
+<li><strong>영향이 작은 내부 서비스로 시범 운영합니다.</strong> 결제·인증 같은 핵심 시스템이 아니라 내부 배치나 백오피스 API에 볼트 1~2회를 먼저 적용하고, 검증 피로와 도구 사이의 병목을 수치로 측정합니다. 이 실습도 외부 연동 없이 모의 결제를 쓰는 프로토타입으로 시작했습니다.</li>
+<li><strong>첫 볼트 전에 승인 정책을 글로 정합니다.</strong> 유닛별 지정 승인자, 표준 검토 체크리스트, 의사결정 로그 보존 규칙을 먼저 정하지 않으면, 속도가 빨라진 뒤 승인이 형식적인 절차로 바뀝니다. AI-DLC에서는 팀 규칙(<code>team.md</code>)과 프로젝트 규칙(<code>project.md</code>)이 이 정책을 적는 곳입니다.</li>
+<li><strong>착수(Inception) 단계에서 인수 시험을 먼저 씁니다.</strong> 사양을 정할 때 Given/When/Then 인수 조건을 적고, 사람이 승인해야 구현(Construction)으로 넘어가게 합니다. 이 실습의 스토리에는 <code>AC4.1.1</code> 같은 인수 조건 ID가 붙어 있고, 팀 규칙에서 TDD를 정했으므로 구현할 때는 실패하는 시험부터 작성했습니다.</li>
+<li><strong>속도 지표와 함께 결함 유출률을 측정합니다.</strong> 개발 속도가 몇 배로 빨라져도 운영 환경까지 넘어간 결함이 늘었다면, 효율이 오른 것이 아니라 검증 책임을 운영에 떠넘긴 것입니다. 배포 빈도, 변경 리드 타임과 함께 <strong>결함 유출률(Defect Escape Rate)</strong>을 핵심 지표로 봅니다.</li>
+</ol>
+<h2 id="정리">정리<a class="anchor" href="#정리" title="Permanent link">#</a></h2>
+<p>AI-DLC는 코드를 빨리 쓰게 하는 기법이 아니라, 개발의 중심을 코드 구현에서 <strong>사양 설계와 검증 통제</strong>로 옮기는 방식입니다. 실행 비용이 낮아질수록 팀의 경쟁력은 명확한 사양, 결정론적 품질 게이트, 에이전트 산출물을 안전하게 조율하는 거버넌스에서 나옵니다. 레벨 2 실습의 판정표가 목표 22개 가운데 3개를 Not Met으로 남기고 목표를 낮추지 않은 것도 같은 원칙입니다(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/build-and-test-summary.md"><code>build-and-test-summary.md</code></a>).</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>AI-DLC의 승인 기록만으로 「지정 승인자」 정책을 지킬 수 있나요?</summary>
+<p>이 실습의 2.11.2 기록만으로는 어렵습니다. 승인 기록에는 시각, 단계, 답이 남지만 승인자 신원은 남지 않습니다. 같은 사람이 요청하고 승인해도 구분되지 않습니다. 풀 리퀘스트 승인 같은 외부 절차로 승인자를 지정하고 기록해야 합니다.</p>
+</details>
+<details class="answer">
+<summary>개발 속도가 세 배 빨라졌는데 결함 유출률도 올랐습니다. 성공인가요?</summary>
+<p>아닙니다. 검증 책임을 운영 환경으로 떠넘긴 것입니다. 속도 지표와 결함 유출률을 함께 봐야 합니다.</p>
+</details>
+<details class="answer">
+<summary>첫 볼트를 돌리기 전에 정해 두어야 할 것은 무엇인가요?</summary>
+<p>유닛별 승인자, 표준 검토 체크리스트, 의사결정 로그의 보존 기간입니다. 이를 먼저 정하지 않으면 속도가 붙은 뒤 승인이 형식적인 절차로 바뀝니다.</p>
+</details>
+<h2 id="참고-자료">참고 자료<a class="anchor" href="#참고-자료" title="Permanent link">#</a></h2>
+<ul>
+<li>AI-DLC Explained: AWS's AI-Driven Development Lifecycle, <a href="https://www.exploreagentic.ai/insights/ai-dlc/">https://www.exploreagentic.ai/insights/ai-dlc/</a></li>
+<li>AIDLC: AI Development Lifecycle &amp; AI SDLC — driftless, <a href="https://godriftless.ai/aidlc">https://godriftless.ai/aidlc</a></li>
+<li>AI-DLC in Practice: Running AWS's AI-Driven Lifecycle, <a href="https://orchestrator.dev/blog/2026-10-03-ai-dlc-in-practice/">https://orchestrator.dev/blog/2026-10-03-ai-dlc-in-practice/</a></li>
+<li>[AWS Summit Seoul 2026] 생성형 AI 시대의 새로운 개발 방법론, <a href="https://tech.cloud.nongshim.co.kr/blog/aws/ai/3930/">https://tech.cloud.nongshim.co.kr/blog/aws/ai/3930/</a></li>
+<li>AI-DLC를 활용한 업무용 툴 개발기, <a href="https://suzuworld.tistory.com/476">https://suzuworld.tistory.com/476</a></li>
+</ul>
+    </article>
+    <nav class="pager"><a class="prev" href="theory-team.html"><span>이전</span>형상관리와 볼트 진척 관리</a><a class="next" href="artifacts.html"><span>다음</span>산출물 찾아보기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#고무도장-승인">고무도장 승인</a></li><li><a href="#4계층-참조-구조">4계층 참조 구조</a></li><li><a href="#단계적-도입-순서">단계적 도입 순서</a></li><li><a href="#정리">정리</a></li><li><a href="#확인-문제">확인 문제</a></li><li><a href="#참고-자료">참고 자료</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

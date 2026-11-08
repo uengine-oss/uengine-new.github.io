@@ -2,6 +2,14 @@
 
 > u1과 같은 순서로 예약 서비스 u2와 결제 서비스 u3를 만듭니다. 상태 머신과 180초 마감, 서명된 웹훅의 중복 처리, 1초를 여러 구간으로 나눈 성능 목표가 어떤 산출물에 담기는지 살펴봅니다. 호스트 부하로 20ms 시험 결과가 불안정할 때 사람이 내린 결정과 그 결정이 기록되는 곳도 확인합니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level2-classic/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`construction/u2-reservation-service/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u2-reservation-service) — u2 예약 서비스 문서
+    - [`construction/u3-payment-service/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u3-payment-service) — u3 결제 서비스 문서
+    - [`services/u2-reservation-service/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/services/u2-reservation-service) — u2 코드
+    - [`services/u3-payment-service/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/services/u3-payment-service) — u3 코드
+
 ## 무엇을 · 왜
 
 | 유닛 | 하는 일 | 이 유닛에서 새로 정한 것 |
@@ -13,9 +21,9 @@
 
 ## 산출물과 바뀐 점
 
-모든 파일은 `construction/<유닛>/` 아래에 있습니다.
+모든 파일은 [`construction/<유닛>/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction) 아래에 있습니다.
 
-**① u2 기능 명세** `u2-reservation-service/functional-design/functional-spec.md`: 예약의 상태 머신부터 정합니다.
+**① u2 기능 명세** [`u2-reservation-service/functional-design/functional-spec.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u2-reservation-service/functional-design/functional-spec.md): 예약의 상태 머신부터 정합니다.
 
 | 지금 상태 | 사건 | 다음 상태 |
 |---|---|---|
@@ -26,9 +34,9 @@
 
 마감은 결제 요청 시각 + 180초입니다. 승인과 마감이 같은 시각이면 취소가 우선합니다(BR2.3). 상태마다 화면에 보일 안내 문구("예약이 완료되었습니다" 등)도 이 문서에서 정합니다.
 
-**② u2 결과** `u2-reservation-service/code-generation/code-summary.md`: 코드 계획에서는 시험 약 35개를 예상했지만, 실제로는 145개가 통과했습니다. 라인 커버리지는 96.6%(564줄 중 545줄)입니다. 실제로 180초를 기다리는 취소 시험은 `-Pslow` 프로필로 따로 돌렸습니다(189.5초). 마지막 「다른 유닛에 넘기는 사항」에는 구독 연결 상한(32, 넘으면 503), 같은 요청을 다시 보냈을 때의 응답처럼 u3·u4·u5가 알아야 할 내용이 남습니다.
+**② u2 결과** [`u2-reservation-service/code-generation/code-summary.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u2-reservation-service/code-generation/code-summary.md): 코드 계획에서는 시험 약 35개를 예상했지만, 실제로는 145개가 통과했습니다. 라인 커버리지는 96.6%(564줄 중 545줄)입니다. 실제로 180초를 기다리는 취소 시험은 `-Pslow` 프로필로 따로 돌렸습니다(189.5초). 마지막 「다른 유닛에 넘기는 사항」에는 구독 연결 상한(32, 넘으면 503), 같은 요청을 다시 보냈을 때의 응답처럼 u3·u4·u5가 알아야 할 내용이 남습니다.
 
-**③ u3 규칙** `u3-payment-service/functional-design/rules.md`: 규칙은 웹훅에 집중되어 있습니다.
+**③ u3 규칙** [`u3-payment-service/functional-design/rules.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u3-payment-service/functional-design/rules.md): 규칙은 웹훅에 집중되어 있습니다.
 
 ```yaml
 - id: BR3.1
@@ -39,9 +47,9 @@
 
 같은 eventId는 한 번에 하나씩 처리하므로 예약은 정확히 한 번 확정됩니다.
 
-**④ u3 품질 요구** `u3-payment-service/nfr-requirements/performance-requirements.md`: "결제 승인 뒤 1초 안에 화면에 완료를 표시한다"는 요구를 구간으로 나눕니다. 웹훅 처리 150ms, 예약 반영과 푸시 150ms, 프록시와 화면 200ms, 여유 500ms입니다. 중복 웹훅과 서명 거부는 20ms 안에 응답한다는 하위 목표(NFR1.2, NFR1.3)도 이 단계에서 AI가 정했습니다.
+**④ u3 품질 요구** [`u3-payment-service/nfr-requirements/performance-requirements.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u3-payment-service/nfr-requirements/performance-requirements.md): "결제 승인 뒤 1초 안에 화면에 완료를 표시한다"는 요구를 구간으로 나눕니다. 웹훅 처리 150ms, 예약 반영과 푸시 150ms, 프록시와 화면 200ms, 여유 500ms입니다. 중복 웹훅과 서명 거부는 20ms 안에 응답한다는 하위 목표(NFR1.2, NFR1.3)도 이 단계에서 AI가 정했습니다.
 
-**⑤ u3 결과** `u3-payment-service/code-generation/code-summary.md`: 시험 229개 가운데 성능 시험을 뺀 223개가 통과했습니다. 라인 커버리지는 94.3%입니다. 「미해결」 항목에는 부하로 성능 시험 두 개의 결과가 얼마나 달라졌는지(중앙값 0.1~1ms, 최댓값 25~200ms) 적힙니다. 목표를 낮추지 않았다는 사실과 사람이 내린 결정도 함께 기록됩니다.
+**⑤ u3 결과** [`u3-payment-service/code-generation/code-summary.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u3-payment-service/code-generation/code-summary.md): 시험 229개 가운데 성능 시험을 뺀 223개가 통과했습니다. 라인 커버리지는 94.3%입니다. 「미해결」 항목에는 부하로 성능 시험 두 개의 결과가 얼마나 달라졌는지(중앙값 0.1~1ms, 최댓값 25~200ms) 적힙니다. 목표를 낮추지 않았다는 사실과 사람이 내린 결정도 함께 기록됩니다.
 
 ## 사람이 내린 결정
 
@@ -53,7 +61,7 @@
 
 목표를 낮추거나 시험을 빼면 당장은 통과하지만 기준이 약해집니다. 그래서 목표를 그대로 두고 부하가 낮을 때 다시 돌렸습니다. 감사 기록을 보면 u3 검증은 두 번 실패(종료 코드 1)한 뒤 세 번째에 통과(종료 코드 0)했고, 이때 체크포인트가 기록되었습니다(`CHECKPOINT_VERIFICATION_RECORDED`). 질문과 답도 `QUESTION_REPLIED`로 남습니다.
 
-설계 검토도 바로 통과하지는 않습니다. u2의 NFR 설계는 첫 검토에서 `NOT-READY`를 받았고, 고친 뒤 `READY`가 되었습니다(`nfr-design/reviews/review-01.md`, `review-02.md`).
+설계 검토도 바로 통과하지는 않습니다. u2의 NFR 설계는 첫 검토에서 `NOT-READY`를 받았고, 고친 뒤 `READY`가 되었습니다([`nfr-design/reviews/review-01.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u2-reservation-service/nfr-design/reviews/review-01.md), [`review-02.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u2-reservation-service/nfr-design/reviews/review-02.md)).
 
 ## 확인 문제
 

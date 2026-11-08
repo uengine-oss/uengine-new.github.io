@@ -2,21 +2,27 @@
 
 > 레벨 2에서 만들어진 산출물을 한곳에서 찾아보는 참고 장입니다. 각 산출물의 설명은 단계별 장에 있습니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level2-classic/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`aidlc/spaces/default/intents/261105-voice-parking/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking) — 레벨 2 작업 기록 전체
+    - [`memory/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/memory) — 규칙 파일
+
 ## 산출물이 이어지는 실
 
 산출물은 번호(ID)로 서로 연결됩니다. 이번 실행에서 "승인 후 1초 안에 예약 완료 표시"라는 요구 하나가 어떻게 이어졌는지 따라가면 다음과 같습니다.
 
 | 단계 | 산출물 | 이어지는 ID |
 |---|---|---|
-| 요구사항 | `requirements.md` | `FR6` 예약 완료 즉시 표시, `NFR1` 웹훅 수신부터 1초 |
-| 유저 스토리 | `stories.md` | `US4.1` → 인수 조건 `AC4.1.1` (Given/When/Then) |
-| 유닛 | `unit-of-work-story-map.md` | `US4.1` → u3 payment(웹훅 수신), u2 reservation(확정과 푸시), u4 web-ui(표시)가 1초를 나눠 씀 |
-| 계약 | `contract-summary.md` | `C3` 예약 조회와 실시간 알림(SSE) |
-| 볼트 | `bolt-plan.md` | B2 완료 기준에 `AC4.1.1`(서버 쪽), B4 완료 기준에 `AC4.1.1`(화면까지 100건 최대 1초) |
+| 요구사항 | [`requirements.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/requirements.md) | `FR6` 예약 완료 즉시 표시, `NFR1` 웹훅 수신부터 1초 |
+| 유저 스토리 | [`stories.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories/stories.md) | `US4.1` → 인수 조건 `AC4.1.1` (Given/When/Then) |
+| 유닛 | [`unit-of-work-story-map.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work-story-map.md) | `US4.1` → u3 payment(웹훅 수신), u2 reservation(확정과 푸시), u4 web-ui(표시)가 1초를 나눠 씀 |
+| 계약 | [`contract-summary.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/contract-design/contract-summary.md) | `C3` 예약 조회와 실시간 알림(SSE) |
+| 볼트 | [`bolt-plan.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/bolt-plan.md) | B2 완료 기준에 `AC4.1.1`(서버 쪽), B4 완료 기준에 `AC4.1.1`(화면까지 100건 최대 1초) |
 | 코드 계획 | `code-generation-plan.md` | 스토리 추적 표: AC → 계획 단계(Red/Green) |
 | 추적표 | `traceability.json` | AC·NFR·BR → 구현 파일 + 시험 파일, 상태 OK |
 
-모든 산출물은 실습 폴더의 `aidlc/spaces/default/intents/261105-voice-parking/` 아래에 쌓입니다. 팀 규칙만 작업 바깥(`aidlc/spaces/default/memory/`)에 있어 다음 작업에도 이어집니다.
+모든 산출물은 실습 폴더의 [`aidlc/spaces/default/intents/261105-voice-parking/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking) 아래에 쌓입니다. 팀 규칙만 작업 바깥([`aidlc/spaces/default/memory/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/memory))에 있어 다음 작업에도 이어집니다.
 
 ## 1. 팀 규칙 · `memory/team.md`
 
@@ -25,7 +31,7 @@
 | 쓰는 쪽 · 승인 | pipeline-deploy 에이전트가 초안, 품질·개발·보안 에이전트가 따로 점검 → **팀 리드·아키텍트** 승인 시 승격 |
 | 다음에 쓰임 | 모든 스테이지. 훅(`deliver-stage-rules`)이 도구를 부를 때마다 이 파일과 단계 규칙을 다시 넣음 |
 
-이번에 확정된 내용은 TDD(테스트 먼저), 커버리지 80%, trunk 기반, 로컬 실행 스크립트(Docker 없음)입니다. 커버리지 하한은 classic 스코프가 정한 최소 기준이라 낮출 수 없었습니다. 같은 폴더의 `org.md`(프레임워크 기본값), `project.md`(이 프로젝트 규칙, 학습), `phases/*.md`(단계 규칙)와 함께 계층을 이루며 읽힙니다.
+이번에 확정된 내용은 TDD(테스트 먼저), 커버리지 80%, trunk 기반, 로컬 실행 스크립트(Docker 없음)입니다. 커버리지 하한은 classic 스코프가 정한 최소 기준이라 낮출 수 없었습니다. 같은 폴더의 [`org.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/org.md)(프레임워크 기본값), [`project.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/memory/project.md)(이 프로젝트 규칙, 학습), `phases/*.md`(단계 규칙)와 함께 계층을 이루며 읽힙니다.
 
 ## 2. 요구사항 · `inception/requirements-analysis/requirements.md`
 
@@ -58,7 +64,7 @@
 | 쓰는 쪽 · 승인 | design 에이전트 → **디자이너·PO** |
 | 다음에 쓰임 | u4 화면 유닛의 설계와 시험(S1~S8 동작이 완료 기준) |
 
-화면 상태 8가지(S1 입력 대기, S2 해석 오류, S3 추천 결과, S4 후보 없음, S5 결제 승인 대기, S6 예약 완료, S7 결제 실패, S8 자동 취소)가 스토리 번호와 함께 정리되고, 상호작용 규칙(`interaction-spec.md`)과 접근성 체크리스트가 따로 생깁니다.
+화면 상태 8가지(S1 입력 대기, S2 해석 오류, S3 추천 결과, S4 후보 없음, S5 결제 승인 대기, S6 예약 완료, S7 결제 실패, S8 자동 취소)가 스토리 번호와 함께 정리되고, 상호작용 규칙([`interaction-spec.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/refined-mockups/interaction-spec.md))과 접근성 체크리스트가 따로 생깁니다.
 
 ## 5. 도메인 설계 · `inception/domain-design/components.md`, `decisions.md`
 
@@ -67,7 +73,7 @@
 | 쓰는 쪽 · 승인 | architect 에이전트 → **아키텍트** |
 | 다음에 쓰임 | 유닛 분해, 계약 설계 |
 
-`components.md`에는 컴포넌트 다섯 개와 그림, 각 엔티티를 소유하는 컴포넌트가 정리되어 있습니다.
+[`components.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/components.md)에는 컴포넌트 다섯 개와 그림, 각 엔티티를 소유하는 컴포넌트가 정리되어 있습니다.
 
 | Entity | Owning Component | Identifier |
 |---|---|---|
@@ -76,7 +82,7 @@
 | Payment · WebhookEvent | Payment | paymentId · eventId |
 | Subscription | Notification | subscriptionId |
 
-`decisions.md`에는 ADR 5개가 Context / Decision / Consequences / Alternatives Rejected 형식으로 정리되어 있습니다. ADR-002(상태 확정은 Reservation 한 곳)와 ADR-003(호출은 Payment → Reservation → Notification 한 방향)은 검토에서 순환 의존이 지적되어 아키텍트가 수정을 요청한 결정입니다.
+[`decisions.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/decisions.md)에는 ADR 5개가 Context / Decision / Consequences / Alternatives Rejected 형식으로 정리되어 있습니다. ADR-002(상태 확정은 Reservation 한 곳)와 ADR-003(호출은 Payment → Reservation → Notification 한 방향)은 검토에서 순환 의존이 지적되어 아키텍트가 수정을 요청한 결정입니다.
 
 ## 6. 유닛 · `inception/units-generation/unit-of-work*.md`
 
@@ -85,7 +91,7 @@
 | 쓰는 쪽 · 승인 | architect 에이전트 → **아키텍트** (분할 계획도 먼저 승인) |
 | 다음에 쓰임 | 볼트 계획, Construction 순서, 팀 분담 |
 
-`unit-of-work.md`에는 유닛 5개(search, reservation, payment 서비스, web-ui, local-run)가 각각 맡는 컴포넌트·스토리·종류·크기를 적습니다. `unit-of-work-dependency.md`에는 의존 DAG(mermaid)와 연동 지점 표(누가 누구를 어떤 방식으로 부르는지)를 적습니다. `unit-of-work-story-map.md`에는 스토리 → 유닛 연결을 적습니다.
+[`unit-of-work.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work.md)에는 유닛 5개(search, reservation, payment 서비스, web-ui, local-run)가 각각 맡는 컴포넌트·스토리·종류·크기를 적습니다. [`unit-of-work-dependency.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work-dependency.md)에는 의존 DAG(mermaid)와 연동 지점 표(누가 누구를 어떤 방식으로 부르는지)를 적습니다. [`unit-of-work-story-map.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work-story-map.md)에는 스토리 → 유닛 연결을 적습니다.
 
 ## 7. API 계약 · `inception/contract-design/contract-summary.md`
 
@@ -113,7 +119,7 @@
 | 쓰는 쪽 · 승인 | delivery 에이전트 → **개발 리드** |
 | 다음에 쓰임 | Construction 순서, 볼트별 완료 판정, 검증 명령 |
 
-볼트 5개(B1~B5)의 순서와 이유, 볼트마다 완료 기준(Definition of Done)·확인할 가설·보여 줄 결과가 있습니다. 핵심은 완료 기준을 인수 조건 ID와 계약 시험, 커버리지로 명시한다는 점입니다. 같은 폴더의 `team-allocation.md`, `risk-and-sequencing-rationale.md`, `external-dependency-map.md`도 이 스테이지 산출물입니다.
+볼트 5개(B1~B5)의 순서와 이유, 볼트마다 완료 기준(Definition of Done)·확인할 가설·보여 줄 결과가 있습니다. 핵심은 완료 기준을 인수 조건 ID와 계약 시험, 커버리지로 명시한다는 점입니다. 같은 폴더의 [`team-allocation.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/team-allocation.md), [`risk-and-sequencing-rationale.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/risk-and-sequencing-rationale.md), [`external-dependency-map.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/external-dependency-map.md)도 이 스테이지 산출물입니다.
 
 ## 9. 기능 설계 (유닛마다) · `construction/<유닛>/functional-design/`
 

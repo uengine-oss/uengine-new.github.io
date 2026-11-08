@@ -2,6 +2,14 @@
 
 > AI-DLC가 만든 VoiceParking을 `run-all.sh` 로 띄워 브라우저에서 추천 → 결제 대기 → 실패와 재결제 → 웹훅 승인 → 예약 완료까지 직접 확인합니다. 402 오류 응답, `project.md` 에 남은 규칙, 실행 요약과 감사 기록도 봅니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level1-poc/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`RUN.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/RUN.md) — 실행 안내
+    - [`run-all.sh`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/run-all.sh) — 전체 기동 스크립트
+    - [`audit/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/audit) — 감사 기록
+    - [`construction/build-and-test/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test) — 빌드·테스트 결과
+
 ## 무엇을 · 왜
 
 코드 생성과 빌드·테스트는 모두 통과했지만, 두 차례 검토 모두 실제 브라우저에서 화면을 확인하는 일을 남은 작업으로 기록했습니다. 시험을 통과해도 화면 연결(실시간 알림, 결제 상태 확인, 카운트다운)은 사람이 확인해야 합니다. 이 장에서는 화면 연결을 확인하고, AI-DLC가 남긴 기록으로 누가 무엇을 승인했는지 되짚습니다.
@@ -9,7 +17,7 @@
 ## 따라 하기
 
 <ol class="steps" markdown="1">
-<li markdown="1">**실행.** 실습 폴더에서 `run-all.sh`를 실행합니다. 백엔드를 패키징하고 서비스 셋(8081 추천, 8082 결제, 8083 예약)을 실행한 뒤 Vite 개발 서버(5173)를 실행합니다. 이번에는 15초 안에 모두 실행되었습니다. 종료할 때는 Ctrl+C를 누릅니다.
+<li markdown="1">**실행.** 실습 폴더에서 [`run-all.sh`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/run-all.sh)를 실행합니다. 백엔드를 패키징하고 서비스 셋(8081 추천, 8082 결제, 8083 예약)을 실행한 뒤 Vite 개발 서버(5173)를 실행합니다. 이번에는 15초 안에 모두 실행되었습니다. 종료할 때는 Ctrl+C를 누릅니다.
 
 ```bash
 bash run-all.sh
@@ -37,7 +45,7 @@ bash run-all.sh
 
 ![후보 부족 안내](img/run-notice.webp)
 </li>
-<li markdown="1">**402 오류 응답.** 다른 터미널에서 존재하지 않는 결제를 조회합니다. 3장에서 고쳐 달라고 한 규칙대로 HTTP 402와 `{code, message}`가 돌아옵니다. 그 규칙은 `project.md`의 `## Corrections`에 날짜와 함께 남아 있어, 이 프로젝트의 다음 작업에서도 읽습니다.
+<li markdown="1">**402 오류 응답.** 다른 터미널에서 존재하지 않는 결제를 조회합니다. 3장에서 고쳐 달라고 한 규칙대로 HTTP 402와 `{code, message}`가 돌아옵니다. 그 규칙은 [`project.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/memory/project.md)의 `## Corrections`에 날짜와 함께 남아 있어, 이 프로젝트의 다음 작업에서도 읽습니다.
 
 ```bash
 curl -s localhost:8082/api/payments/no-such-payment -w '\nHTTP %{http_code}\n'
@@ -52,7 +60,7 @@ sed -n '/## Corrections/,$p' aidlc/spaces/default/memory/project.md
 
 ![aidlc engine runtime summary](img/run-summary.webp)
 </li>
-<li markdown="1">**감사 기록.** 감사 기록은 `aidlc/spaces/default/intents/261105-voice-parking/audit/` 아래의 마크다운 파일입니다(가이드의 `audit-events.json`이 아닙니다). 각 기록에는 시각, 이벤트 종류, 스테이지, 대상 파일이 포함됩니다. 종류별로 집계하면 센서, 산출물, 사람의 답, 하위 에이전트 실행, 승인 기록이 얼마나 쌓였는지 확인할 수 있습니다.
+<li markdown="1">**감사 기록.** 감사 기록은 [`aidlc/spaces/default/intents/261105-voice-parking/audit/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/audit) 아래의 마크다운 파일입니다(가이드의 `audit-events.json`이 아닙니다). 각 기록에는 시각, 이벤트 종류, 스테이지, 대상 파일이 포함됩니다. 종류별로 집계하면 센서, 산출물, 사람의 답, 하위 에이전트 실행, 승인 기록이 얼마나 쌓였는지 확인할 수 있습니다.
 
 ```bash
 grep -ho 'Event\*\*: [A-Z_]*' aidlc/spaces/default/intents/*/audit/*.md | sort | uniq -c | sort -rn | head -20
@@ -77,7 +85,7 @@ grep -ho 'Event\*\*: [A-Z_]*' aidlc/spaces/default/intents/*/audit/*.md | sort |
 ## 다음에 해 볼 것
 
 - **workshop 스코프로 다시.** `/aidlc workshop …`로 시작하면 사용자 스토리, 화면, 도메인 설계, 유닛 생성, 계약 설계, 배포 계획이 더해지고, 유닛(이 실습의 서비스 셋)마다 설계와 코드 생성을 진행합니다. 가이드의 "유닛 분해" 장면이 여기서 나옵니다. 스테이지와 승인이 크게 늘어 사용량도 늘어납니다.
-- **팀 규칙으로 TDD.** `aidlc/spaces/default/memory/team.md`의 Testing Posture에 TDD를 적으면 코드 생성 단계에서 시험을 먼저 작성하게 됩니다.
+- **팀 규칙으로 TDD.** [`aidlc/spaces/default/memory/team.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/memory/team.md)의 Testing Posture에 TDD를 적으면 코드 생성 단계에서 시험을 먼저 작성하게 됩니다.
 - **남은 검토 지적.** 예약 서비스 장애 시 모의 PG 재시도 부재, 화면 폴링의 오류 처리, 내부 API 인증 부재(시연용)가 미해결 사항으로 남아 있습니다. 같은 폴더에서 `/aidlc`로 새 작업을 시작해 고칠 수 있고, 402 규칙은 그때도 자동으로 적용됩니다.
 
 ## 확인 문제
@@ -85,7 +93,7 @@ grep -ho 'Event\*\*: [A-Z_]*' aidlc/spaces/default/intents/*/audit/*.md | sort |
 <details class="answer" markdown="1">
 <summary>시험 72개가 모두 통과했는데 왜 브라우저 확인이 따로 필요했나요?</summary>
 
-시험은 서비스와 화면 컴포넌트를 따로 확인했고, 화면 전체를 잇는 `App.vue`의 실시간 알림·폴링 연결에는 자동 시험이 없었습니다. 검토 에이전트가 이 공백을 R-01(Major)로 짚었고, 이 장에서 브라우저로 확인해 해결했습니다.
+시험은 서비스와 화면 컴포넌트를 따로 확인했고, 화면 전체를 잇는 [`App.vue`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/frontend/src/App.vue)의 실시간 알림·폴링 연결에는 자동 시험이 없었습니다. 검토 에이전트가 이 공백을 R-01(Major)로 짚었고, 이 장에서 브라우저로 확인해 해결했습니다.
 </details>
 
 <details class="answer" markdown="1">

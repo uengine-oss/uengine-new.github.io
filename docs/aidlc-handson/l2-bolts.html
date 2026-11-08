@@ -55,8 +55,14 @@
 <li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
 <li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="theory-paradigm.html"><span class="n">15</span>AI-DLC는 무엇이 다른가</a></li>
+<li><a href="theory-spec.html"><span class="n">16</span>사양 주도 개발과 검증 게이트</a></li>
+<li><a href="theory-team.html"><span class="n">17</span>형상관리와 볼트 진척 관리</a></li>
+<li><a href="theory-adoption.html"><span class="n">18</span>검증 피로를 막는 정책과 도입 순서</a></li>
+</ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">19</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">10</span></div>
@@ -66,6 +72,13 @@
 <p>만들 순서와 "다 됐다"의 기준을 정합니다. 볼트마다 완료 기준이 유저 스토리의 인수 조건 번호와 계약 시험, 커버리지로 적혀, 앞에서 정한 스펙이 그대로 구현의 합격선이 됩니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/AdHfD20bwto" title="8단계 볼트 계획 — 영상 1:08" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>실습을 실제로 실행한 결과가 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson">uengine-oss/tutorial-aidlc-handson</a>의 <code>level2-classic/</code> 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning"><code>inception/delivery-planning/</code></a> — 볼트 계획·팀 배정·위험과 순서·외부 의존</li>
+</ul>
+</div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -97,11 +110,11 @@
 </tr>
 </tbody>
 </table>
-<p>답하고 승인하는 사람은 개발 리드입니다. 결과는 <code>inception/delivery-planning/bolt-plan.md</code>(같은 폴더에 <code>team-allocation.md</code>, <code>risk-and-sequencing-rationale.md</code>, <code>external-dependency-map.md</code>)입니다.</p>
+<p>답하고 승인하는 사람은 개발 리드입니다. 결과는 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/bolt-plan.md"><code>inception/delivery-planning/bolt-plan.md</code></a>(같은 폴더에 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/team-allocation.md"><code>team-allocation.md</code></a>, <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/risk-and-sequencing-rationale.md"><code>risk-and-sequencing-rationale.md</code></a>, <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/external-dependency-map.md"><code>external-dependency-map.md</code></a>)입니다.</p>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <p>볼트 크기는 유닛마다 하나(5개), 가장 우려되는 점은 "승인 후 1초 안 화면 표시"로 답하고 승인했습니다.</p>
 <h2 id="산출물과-바뀐-점">산출물과 바뀐 점<a class="anchor" href="#산출물과-바뀐-점" title="Permanent link">#</a></h2>
-<p><code>bolt-plan.md</code>에 볼트 5개의 순서와 이유, 볼트별 완료 기준·가설·보여 줄 결과가 적힙니다.</p>
+<p><a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/bolt-plan.md"><code>bolt-plan.md</code></a>에 볼트 5개의 순서와 이유, 볼트별 완료 기준·가설·보여 줄 결과가 적힙니다.</p>
 <table>
 <thead>
 <tr>
@@ -153,7 +166,7 @@
 </details>
 <details class="answer">
 <summary>검증 명령은 왜 볼트 계획에서 정하지 않았나요?</summary>
-<p>이 시점에는 실행할 코드가 없기 때문입니다. 첫 유닛인 u1의 구현을 마친 뒤 에이전트가 <code>mvn -q verify</code>를 제안했고, 사람이 승인했습니다. 이 명령은 <code>aidlc-state.md</code>에 기록되어 이후 유닛의 체크포인트에서 사용됩니다.</p>
+<p>이 시점에는 실행할 코드가 없기 때문입니다. 첫 유닛인 u1의 구현을 마친 뒤 에이전트가 <code>mvn -q verify</code>를 제안했고, 사람이 승인했습니다. 이 명령은 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/aidlc-state.md"><code>aidlc-state.md</code></a>에 기록되어 이후 유닛의 체크포인트에서 사용됩니다.</p>
 </details>
     </article>
     <nav class="pager"><a class="prev" href="l2-units.html"><span>이전</span>6·7단계 유닛 나누기와 API 계약</a><a class="next" href="l2-build.html"><span>다음</span>구현: 유닛 u1</a></nav>

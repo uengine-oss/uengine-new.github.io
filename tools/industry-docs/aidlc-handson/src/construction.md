@@ -2,20 +2,28 @@
 
 > 개발 에이전트가 계획을 쓰고 Spring Boot 서비스 3개와 Vue 화면을 만든 뒤 시험을 돌립니다. 검토 에이전트의 지적을 보고 "결제 오류 응답은 HTTP 402로 통일"이라는 수정을 요청하면, 그 규칙이 프로젝트 기억(`project.md`)에 저장됩니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level1-poc/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`construction/code-generation/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/construction/code-generation) — 코드 생성 계획·시험 지침·추적표·검토
+    - [`backend/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/backend) — 서비스 3개(추천·결제·예약)
+    - [`frontend/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/frontend) — Vue 3 화면
+    - [`memory/project.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/memory/project.md) — 학습으로 쌓인 프로젝트 규칙
+
 ## 무엇을 · 왜
 
 코드 생성(3.5)은 **계획 → 구현 → 시험 → 검토 → 승인** 순서로 진행합니다. poc 스코프는 계획 승인(plan approval)이 꺼져 있어, 계획을 작성한 뒤 한 줄로 알리고 바로 구현을 시작합니다. 원하면 언제든 계획을 같이 보자고 할 수 있습니다.
 
-사람의 수정 요청은 이후 작업에도 반영됩니다. AI-DLC의 **학습 의식(learnings)**은 수정 요청을 규칙 후보로 보고, 사람이 동의하면 `aidlc/spaces/default/memory/project.md`의 `## Corrections`에 한 줄로 저장합니다. 다음 단계와 다음 작업은 물론 다른 팀원의 도구에서도 이 파일을 읽습니다.
+사람의 수정 요청은 이후 작업에도 반영됩니다. AI-DLC의 **학습 의식(learnings)**은 수정 요청을 규칙 후보로 보고, 사람이 동의하면 [`aidlc/spaces/default/memory/project.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/memory/project.md)의 `## Corrections`에 한 줄로 저장합니다. 다음 단계와 다음 작업은 물론 다른 팀원의 도구에서도 이 파일을 읽습니다.
 
 ## 따라 하기
 
 <ol class="steps" markdown="1">
-<li markdown="1">**계획.** 요구사항 승인 직후 개발 에이전트가 Java·Maven·Node 버전을 확인하고(명령을 실행하므로 허락을 묻습니다) 계획 `code-generation-plan.md`를 작성합니다. 이번 실행의 계획에서 정한 내용은 다음과 같습니다.
+<li markdown="1">**계획.** 요구사항 승인 직후 개발 에이전트가 Java·Maven·Node 버전을 확인하고(명령을 실행하므로 허락을 묻습니다) 계획 [`code-generation-plan.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/construction/code-generation/code-generation-plan.md)를 작성합니다. 이번 실행의 계획에서 정한 내용은 다음과 같습니다.
 
 | 결정 | 내용 |
 |---|---|
-| 서비스 분해 | `recommendation-service`(8081), `payment-service`(8082), `reservation-service`(8083) — 요청대로 모듈이 여럿이라 마이크로서비스 |
+| 서비스 분해 | [`recommendation-service`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/backend/recommendation-service)(8081), [`payment-service`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/backend/payment-service)(8082), [`reservation-service`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level1-poc/backend/reservation-service)(8083) — 요청대로 모듈이 여럿이라 마이크로서비스 |
 | 화면 | Vue 3 + Vite(5173), 개발 서버 프록시로 각 서비스에 연결 |
 | 저장소 | 서비스마다 메모리(`ConcurrentHashMap`). 프로토타입이라 DB 없음 |
 | 흐름 | 추천 → 예약 `PENDING` → 결제 `PENDING` → 모의 PG가 비동기 웹훅 → 결제 서비스가 예약 확정 요청 → 예약 서비스가 SSE로 화면에 `CONFIRMED` |
@@ -39,7 +47,7 @@ Java·Vue·JS 파일 61개와 시험 클래스 9개가 생성되었습니다. �
 | payment-service (JUnit) | 19 | 통과 |
 | frontend (vitest) | 16 | 통과 |
 </li>
-<li markdown="1">**검토 에이전트.** 구현이 끝나면 설계 검토 에이전트(`aidlc-architecture-reviewer-agent`)가 계획·코드·시험을 다시 읽고 시험도 직접 실행합니다. 이번 판정은 READY였고, 6건을 짚었습니다. 가장 큰 지적(R-01, Major)은 결제 후 화면에 예약 완료를 표시하는 `App.vue`의 SSE·폴링 연결을 검증하지 않았다는 점입니다. 자동 시험도, 실제 브라우저 확인도 없었습니다. 이 확인은 4장에서 직접 합니다.
+<li markdown="1">**검토 에이전트.** 구현이 끝나면 설계 검토 에이전트(`aidlc-architecture-reviewer-agent`)가 계획·코드·시험을 다시 읽고 시험도 직접 실행합니다. 이번 판정은 READY였고, 6건을 짚었습니다. 가장 큰 지적(R-01, Major)은 결제 후 화면에 예약 완료를 표시하는 [`App.vue`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/frontend/src/App.vue)의 SSE·폴링 연결을 검증하지 않았다는 점입니다. 자동 시험도, 실제 브라우저 확인도 없었습니다. 이 확인은 4장에서 직접 합니다.
 
 ![검토 결과와 코드 생성 승인 게이트](img/cons-review.webp)
 </li>
@@ -64,7 +72,7 @@ R-01은 제가 브라우저로 직접 확인할게요. 대신 결제 실패·오
 
 ![규칙을 프로젝트 기억에 저장했다는 알림](img/cons-rule.webp)
 </li>
-<li markdown="1">**빌드와 테스트(3.6).** 품질 에이전트가 백엔드 jar 3개와 프런트 번들을 다시 만들고 시험 72개(추천 18, 결제 19, 예약 19, 프런트 16)를 모두 실행합니다. 요구사항 13개가 시험과 연결되는지 확인하는 추적표(`cross-unit-traceability.md`)도 작성합니다. 이어서 서비스 셋을 실행하고, 승인 웹훅을 받은 뒤 확정 알림(SSE)이 도착하기까지 걸린 시간을 10번 측정했습니다. 10번 모두 1초 안(5~114ms)이었습니다. 이 단계에서도 브라우저에서 화면을 확인하는 일을 남은 작업으로 기록했습니다. Approve를 고르면 워크플로가 끝나고 상태줄이 `COMPLETE`로 바뀝니다.
+<li markdown="1">**빌드와 테스트(3.6).** 품질 에이전트가 백엔드 jar 3개와 프런트 번들을 다시 만들고 시험 72개(추천 18, 결제 19, 예약 19, 프런트 16)를 모두 실행합니다. 요구사항 13개가 시험과 연결되는지 확인하는 추적표([`cross-unit-traceability.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/cross-unit-traceability.md))도 작성합니다. 이어서 서비스 셋을 실행하고, 승인 웹훅을 받은 뒤 확정 알림(SSE)이 도착하기까지 걸린 시간을 10번 측정했습니다. 10번 모두 1초 안(5~114ms)이었습니다. 이 단계에서도 브라우저에서 화면을 확인하는 일을 남은 작업으로 기록했습니다. Approve를 고르면 워크플로가 끝나고 상태줄이 `COMPLETE`로 바뀝니다.
 
 | 확인 | 기대 | 실제 | 판정 |
 |---|---|---|---|
@@ -85,7 +93,7 @@ R-01은 제가 브라우저로 직접 확인할게요. 대신 결제 실패·오
 <details class="answer" markdown="1">
 <summary>수정 요청 뒤 규칙이 저장되지 않게 하려면 어떻게 하나요?</summary>
 
-"다음에도 기억할까요?"라는 질문이 나오면 아니라고 답합니다. 처음부터 학습 의식을 끄려면 요청에 `--learnings off`를 붙입니다. 이미 `project.md`에 있는 규칙은 계속 읽힙니다.
+"다음에도 기억할까요?"라는 질문이 나오면 아니라고 답합니다. 처음부터 학습 의식을 끄려면 요청에 `--learnings off`를 붙입니다. 이미 [`project.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/memory/project.md)에 있는 규칙은 계속 읽힙니다.
 </details>
 
 <details class="answer" markdown="1">

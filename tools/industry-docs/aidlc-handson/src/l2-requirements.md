@@ -2,6 +2,11 @@
 
 > 무엇을 만들지 시험할 수 있는 문장으로 정합니다. 질문지에 답이 쌓이고, 빈칸과 부딪히는 답은 후속 질문으로 되묻고, 답이 요구사항 문장이 되는 과정을 실제 파일로 봅니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level2-classic/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`inception/requirements-analysis/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis) — 질문·요구사항·추적·검토
+
 ## 무엇을 · 왜
 
 | 만드는 것 | 뜻 |
@@ -9,10 +14,10 @@
 | 기능 요구 (FR) | 무엇을 해야 하나 |
 | 비기능 요구 (NFR) | 얼마나 빠르고 안전해야 하는지와 측정 방법 |
 | 합격 기준 | 통과와 실패를 가르는 기준 |
-| 출처 표시 | 문장마다 근거가 된 답(`[Q3]`, `[desc]`) |
+| 출처 표시 | 문서 맨 위 출처 목록(`[Q3]`, `[desc]`)과, 확인받지 않은 가정에 붙는 `[assumption]` |
 | 후속 질문 | 답에서 빠지거나 서로 충돌하는 내용 확인 |
 
-답하고 승인하는 사람은 PO·기획입니다. 결과 문서는 `inception/requirements-analysis/requirements.md`입니다.
+답하고 승인하는 사람은 PO·기획입니다. 결과 문서는 [`inception/requirements-analysis/requirements.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/requirements.md)입니다.
 
 ## 따라 하기
 
@@ -27,7 +32,7 @@
 
 ## 산출물과 바뀐 점
 
-**① 질문지** `requirements-analysis-questions.md`: 본 질문 4개 아래에 후속 질문 3개가 `(후속)` 표시로 이어집니다. 직접 쓴 답은 `[Answer]: X. …`로 남습니다.
+**① 질문지** [`requirements-analysis-questions.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/requirements-analysis-questions.md): 본 질문 4개 아래에 후속 질문 3개가 `(후속)` 표시로 이어집니다. 직접 쓴 답은 `[Answer]: X. …`로 남습니다.
 
 ```markdown
 ## Q3. [개발] 결제가 끝난 뒤 "예약 완료"는 어떻게 사용자 화면에 전달할까요?
@@ -36,7 +41,7 @@
 [Answer]: A
 ```
 
-**② 요구사항** `requirements.md`: 맨 위 `## Sources`에 출처가 있고, 답이 FR·NFR 문장이 됩니다.
+**② 요구사항** [`requirements.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/requirements.md): 맨 위 `## Sources`에 출처가 있고, 답이 FR·NFR 문장이 됩니다.
 
 ```markdown
 ### FR5. 비동기 웹훅 승인 처리
@@ -45,7 +50,7 @@
 - NFR1. 승인 웹훅 수신 시각부터 화면에 예약 완료가 표시되기까지 1초 이내여야 한다 (측정: 로컬 환경, 100건 반복에서 최대 1초).
 ```
 
-**③ 검토** `reviews/review-01.md`: 판정은 NOT-READY입니다. 결제 실패 후 동작이 빠졌다는 지적 등이 있었습니다. 빠진 내용은 다음 유저 스토리 단계에서 다시 질문했습니다.
+**③ 검토** [`reviews/review-01.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/reviews/review-01.md): 판정은 NOT-READY입니다. 결제 실패 후 동작이 빠졌다는 지적 등이 있었습니다. 빠진 내용은 다음 유저 스토리 단계에서 다시 질문했습니다.
 
 **④ 다음에 쓰이는 곳.** 유저 스토리와 인수 조건, 도메인 설계, 품질 요구, 테스트 기준에서 이 문서의 FR·NFR 번호를 참조합니다.
 

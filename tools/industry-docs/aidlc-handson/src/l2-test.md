@@ -2,15 +2,21 @@
 
 > 모든 유닛이 끝나면 Build and Test 단계에서 전체를 한 번에 시험합니다. 실제 서비스를 띄워 연동도 확인합니다. 화면은 사람이 브라우저에서 직접 확인합니다. 목표마다 Met·Not Met·Unverified로 판정한 문서를 사람이 승인하면 계획이 끝납니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    실습을 실제로 실행한 결과가 공개 저장소 [uengine-oss/tutorial-aidlc-handson](https://github.com/uengine-oss/tutorial-aidlc-handson)의 `level2-classic/` 폴더에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`construction/build-and-test/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test) — 빌드 안내·시험 결과·판정표·추적
+    - [`scripts/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/scripts) — 실행·스모크·전체 검증 스크립트
+
 ## 무엇을 · 왜
 
 | 순서 | 하는 일 | 산출물 | 사람 |
 |---|---|---|---|
-| 전체 시험 | 승인된 검증 명령과 u5 시험을 다시 실행 | `test-results.md` | 명령 실행 허가 |
-| 실제 연동 | 서비스를 띄워 추천 → 결제 → 예약 확정을 직접 호출, 화면 프록시를 거친 스모크 | `test-results.md`, `.local-run/smoke.txt` | 명령 실행 허가 |
-| 브라우저 확인 | 실시간 갱신, 1초 목표, 180초 취소 표시를 실제 화면에서 확인 | `test-results.md` | **사람이 직접** |
-| 판정 | 목표마다 기대값·실제값·증거·판정 | `build-and-test-summary.md` | **승인** |
-| 추적 | 요구사항이 어느 유닛에서 구현됐는지 | `cross-unit-traceability.md` | 따로 멈추지 않음 |
+| 전체 시험 | 승인된 검증 명령과 u5 시험을 다시 실행 | [`test-results.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md) | 명령 실행 허가 |
+| 실제 연동 | 서비스를 띄워 추천 → 결제 → 예약 확정을 직접 호출, 화면 프록시를 거친 스모크 | [`test-results.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md), `.local-run/smoke.txt` | 명령 실행 허가 |
+| 브라우저 확인 | 실시간 갱신, 1초 목표, 180초 취소 표시를 실제 화면에서 확인 | [`test-results.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md) | **사람이 직접** |
+| 판정 | 목표마다 기대값·실제값·증거·판정 | [`build-and-test-summary.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/build-and-test-summary.md) | **승인** |
+| 추적 | 요구사항이 어느 유닛에서 구현됐는지 | [`cross-unit-traceability.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/cross-unit-traceability.md) | 따로 멈추지 않음 |
 
 각 유닛은 이미 유닛 시험을 통과했습니다. 마지막에는 시험을 다시 묶어서 실행하고 실제 프로세스끼리 연결해 봅니다. 시험에서는 보이지 않던 문제(포트 충돌, 어색한 문구)가 이 단계에서 드러납니다.
 
@@ -58,17 +64,17 @@ scripts/run-local.sh
 </li>
 </ol>
 
-다른 프로그램이 5173을 쓰고 있으면 `run-local.sh`는 시작하지 않습니다. 이번 실행에서는 다른 프로젝트의 서버가 `[::1]:5173`(IPv6)만 쓰고 있었습니다. 그래서 서비스를 각각 띄우고 화면은 `127.0.0.1:5173`(IPv4)으로 확인했습니다.
+다른 프로그램이 5173을 쓰고 있으면 [`run-local.sh`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/run-local.sh)는 시작하지 않습니다. 이번 실행에서는 다른 프로젝트의 서버가 `[::1]:5173`(IPv6)만 쓰고 있었습니다. 그래서 서비스를 각각 띄우고 화면은 `127.0.0.1:5173`(IPv4)으로 확인했습니다.
 
 ## 산출물과 바뀐 점
 
-모든 파일은 `construction/build-and-test/` 아래에 있습니다.
+모든 파일은 [`construction/build-and-test/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test) 아래에 있습니다.
 
-**① 빌드 안내** `build-instructions.md`: 필요한 도구와 버전, 첫 준비 명령, 대상별 검증 명령(`mvn -q verify`, `npm --prefix services/u4-web-ui run verify`, `scripts/test/run-all.sh`, `scripts/verify-all.sh`)을 표로 정리합니다. 문제 해결 표에는 "시간 시험이 간헐 실패하면 목표는 낮추지 않고 부하가 낮을 때 다시 실행한다"는 안내도 있습니다.
+**① 빌드 안내** [`build-instructions.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/build-instructions.md): 필요한 도구와 버전, 첫 준비 명령, 대상별 검증 명령(`mvn -q verify`, `npm --prefix services/u4-web-ui run verify`, [`scripts/test/run-all.sh`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/test/run-all.sh), [`scripts/verify-all.sh`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/verify-all.sh))을 표로 정리합니다. 문제 해결 표에는 "시간 시험이 간헐 실패하면 목표는 낮추지 않고 부하가 낮을 때 다시 실행한다"는 안내도 있습니다.
 
-**② 시험 결과** `test-results.md`: 묶음별 결과, 실패의 상세 내용, 실제 서비스 연동 결과(스모크 5/5), 사람이 브라우저에서 확인한 내용을 적습니다. 정리 중에 있었던 실수도 기록합니다. AI가 서비스를 끄려고 만든 명령은 지정한 포트 대신 머신의 IPv4 TCP 프로세스 전부(다른 프로젝트 서버, Docker 포함)를 선택하는 형태였습니다. 사람이 실행 전에 이 명령을 거부했습니다. 안전한 방법(포트마다 PID를 찾고 작업 폴더가 실습 폴더인지 확인한 것만 종료)도 함께 기록했습니다.
+**② 시험 결과** [`test-results.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/test-results.md): 묶음별 결과, 실패의 상세 내용, 실제 서비스 연동 결과(스모크 5/5), 사람이 브라우저에서 확인한 내용을 적습니다. 정리 중에 있었던 실수도 기록합니다. AI가 서비스를 끄려고 만든 명령은 지정한 포트 대신 머신의 IPv4 TCP 프로세스 전부(다른 프로젝트 서버, Docker 포함)를 선택하는 형태였습니다. 사람이 실행 전에 이 명령을 거부했습니다. 안전한 방법(포트마다 PID를 찾고 작업 폴더가 실습 폴더인지 확인한 것만 종료)도 함께 기록했습니다.
 
-**③ 결과 요약** `build-and-test-summary.md`: 핵심은 Target Verification Matrix입니다. 22개 목표 가운데 Met 17, Not Met 3, Unverified 2입니다.
+**③ 결과 요약** [`build-and-test-summary.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/build-and-test-summary.md): 핵심은 Target Verification Matrix입니다. 22개 목표 가운데 Met 17, Not Met 3, Unverified 2입니다.
 
 | 목표 | 실제 | 판정 |
 |---|---|---|
@@ -76,9 +82,9 @@ scripts/run-local.sh
 | u2 180초 자동 취소(178~182초) | 따로 돌린 실제 시험에서 약 179.9초 | Met |
 | u3 중복 웹훅·서명 거부 20ms | 중앙값 0.2~0.7ms, 최댓값이 가끔 13~53ms(부하 39~54) | Not Met (목표 유지) |
 | 추천 이유 문구의 조사 | "거리이(가) 가장 큰 강점입니다" | Not Met (Minor) |
-| `run-local.sh` 한 번에 기동·정리 | 5173 점유로 실제로는 못 해 봄 | Unverified |
+| [`run-local.sh`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/scripts/run-local.sh) 한 번에 기동·정리 | 5173 점유로 실제로는 못 해 봄 | Unverified |
 
-**④ 유닛 간 추적** `cross-unit-traceability.md`: 요구사항(FR·NFR)마다 어느 유닛이 맡았는지와 상태를 적습니다. 개발 방식 규칙(NFR7, NFR9)은 유닛 추적표에 없습니다. 실행 증거로 대신 확인했다고 기록했습니다.
+**④ 유닛 간 추적** [`cross-unit-traceability.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/build-and-test/cross-unit-traceability.md): 요구사항(FR·NFR)마다 어느 유닛이 맡았는지와 상태를 적습니다. 개발 방식 규칙(NFR7, NFR9)은 유닛 추적표에 없습니다. 실행 증거로 대신 확인했다고 기록했습니다.
 
 ## 사람이 내린 결정
 
