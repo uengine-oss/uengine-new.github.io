@@ -51,9 +51,12 @@
 <li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
 <li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
 <li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">시작하기<span class="chap"></span></div>
@@ -248,8 +251,23 @@
 </tr>
 <tr>
 <td>11. 구현: 유닛 u1</td>
-<td>기능 설계 → NFR → TDD 코드 → 검증 명령 (사용량 한도로 u1까지)</td>
+<td>기능 설계 → NFR → TDD 코드 → 검증 명령</td>
 <td>약 52분</td>
+</tr>
+<tr>
+<td>12. 구현: 예약·결제 서비스(u2·u3)</td>
+<td>상태 머신과 180초 취소, 서명 웹훅과 중복 처리, 20ms 시험을 두고 사람이 내린 결정</td>
+<td>약 3시간 20분(부하로 다시 돌린 시간 포함)</td>
+</tr>
+<tr>
+<td>13. 구현: 화면·실행 스크립트(u4·u5)</td>
+<td>컴포넌트, 설계 검토 반려와 통과, 검증 명령 변경, 비밀 값 처리</td>
+<td>약 3시간(부하로 다시 돌린 시간 포함)</td>
+</tr>
+<tr>
+<td>14. 빌드·테스트와 앱 동작</td>
+<td>연동 스모크, 브라우저 확인, 목표별 판정, 승인</td>
+<td>약 7시간 50분(대부분 호스트 부하 대기)</td>
 </tr>
 <tr>
 <td>산출물 찾아보기</td>
@@ -261,7 +279,7 @@
 <p>모델은 Claude Sonnet 5.5(노력 수준 medium)를 사용했습니다. AI-DLC가 권하는 모델은 Opus입니다. 모델이 작성하는 문장은 실행할 때마다 조금씩 달라지므로, 질문 수와 문구가 이 튜토리얼과 다를 수 있습니다.</p>
     </article>
     <nav class="pager"><span></span><a class="next" href="setup.html"><span>다음</span>설치와 프로젝트 준비</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-만드나">무엇을 만드나</a></li><li><a href="#원본-가이드와-실제가-다른-곳">원본 가이드와 실제가 다른 곳</a></li><li><a href="#준비물">준비물</a></li><li><a href="#실습-순서와-실제-걸린-시간">실습 순서와 실제 걸린 시간</a></li></ul></aside>
 </div>

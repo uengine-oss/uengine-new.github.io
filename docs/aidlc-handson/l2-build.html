@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>구현: 유닛 u1 — Claude Code × AI-DLC 핸즈온 튜토리얼</title>
-<meta name="description" content="유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 사용량 한도로 이번 실행은 u1까지 진행했습니다.">
+<meta name="description" content="유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 나머지 유닛은 다음 장에서 이어집니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/aidlc-handson/l2-build.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="구현: 유닛 u1 — Claude Code × AI-DLC 핸즈온 튜토리얼">
-<meta property="og:description" content="유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 사용량 한도로 이번 실행은 u1까지 진행했습니다.">
+<meta property="og:description" content="유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 나머지 유닛은 다음 장에서 이어집니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/aidlc-handson/l2-build.html">
 <meta property="og:image" content="https://www.uengine.org/docs/aidlc-handson/img/run-done.webp">
 <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
@@ -51,16 +51,19 @@
 <li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
 <li><a href="l2-bolts.html"><span class="n">10</span>8단계 볼트 계획</a></li>
 <li><a href="l2-build.html" class="on" aria-current="page"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">11</span></div>
     <h1>구현: 유닛 u1</h1>
     <article>
 <blockquote>
-<p>유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 사용량 한도로 이번 실행은 u1까지 진행했습니다.</p>
+<p>유닛마다 기능 설계 → 품질 요구 → 코드 계획 승인 → 테스트 먼저 → 검증 명령 → 체크포인트를 반복합니다. 첫 유닛 u1(검색 서비스)의 산출물이 어떻게 이어지는지 봅니다. 나머지 유닛은 다음 장에서 이어집니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/VQqFTlhugDI" title="구현: 유닛 u1 — 영상 2:13" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
@@ -160,12 +163,21 @@
 <li>자동 진행이면 원인 유닛의 코드 생성 단계부터 다시 실행합니다. 최대 3번 시도합니다.</li>
 <li>그래도 해결되지 않으면 멈추고 사람에게 후보와 영향을 제시하며 묻습니다</li>
 </ol>
-<p>품질 목표(커버리지 하한 등)를 낮춰 통과시키는 것은 수정으로 인정하지 않습니다. 이번 실행은 u1에서 주간 사용량의 약 3%를 사용하고 u2 직전에 멈췄습니다. 같은 폴더에서 <code>claude</code> → <code>/aidlc</code>로 이어 갈 수 있습니다.</p>
+<p>품질 목표(커버리지 하한 등)를 낮춰 통과시키는 것은 수정으로 인정하지 않습니다. u1 한 바퀴에 주간 사용량의 약 3%를 썼습니다. 이번 실행은 사용량 한도로 u2 직전에 한 번 멈췄고, 같은 폴더에서 <code>claude</code> → <code>/aidlc</code>로 다시 시작해 이어 갔습니다(<a href="l2-build-services.html">u2·u3</a>, <a href="l2-build-ui-run.html">u4·u5</a>).</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>"Continue automatically"를 고르면 사람은 아무것도 확인하지 않나요?</summary>
+<p>자동으로 진행되는 것은 일반 체크포인트 승인뿐입니다. 코드 계획 승인, 요약 확인, 검증 명령 선택, 실패 처리 때는 여전히 진행을 멈추고 사람에게 묻습니다. 이번 실행에서도 u1의 코드 계획과 <code>mvn -q verify</code>는 사람이 승인했습니다.</p>
+</details>
+<details class="answer">
+<summary>시험을 통과하지 못했을 때 커버리지 하한을 낮춰서 통과시켜도 되나요?</summary>
+<p>안 됩니다. classic 스코프의 80% 라인 커버리지 하한과 팀이 정한 품질 목표는 낮출 수 없습니다. 이를 낮춰서 통과시켜도 수정으로 인정하지 않습니다. 실패하면 먼저 현재 단계에서 고칩니다. 해결되지 않으면 원인이 된 유닛으로 돌아갑니다. 그래도 해결되지 않으면 사람에게 묻습니다.</p>
+</details>
     </article>
-    <nav class="pager"><a class="prev" href="l2-bolts.html"><span>이전</span>8단계 볼트 계획</a><a class="next" href="artifacts.html"><span>다음</span>산출물 찾아보기</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+    <nav class="pager"><a class="prev" href="l2-bolts.html"><span>이전</span>8단계 볼트 계획</a><a class="next" href="l2-build-services.html"><span>다음</span>구현: 예약·결제 서비스 (u2·u3)</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li><li><a href="#다음-유닛과-마지막-빌드테스트">다음 유닛과 마지막 빌드·테스트</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li><li><a href="#다음-유닛과-마지막-빌드테스트">다음 유닛과 마지막 빌드·테스트</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

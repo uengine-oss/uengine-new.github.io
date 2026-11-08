@@ -51,9 +51,12 @@
 <li><a href="l2-units.html"><span class="n">09</span>6·7단계 유닛 나누기와 API 계약</a></li>
 <li><a href="l2-bolts.html" class="on" aria-current="page"><span class="n">10</span>8단계 볼트 계획</a></li>
 <li><a href="l2-build.html"><span class="n">11</span>구현: 유닛 u1</a></li>
+<li><a href="l2-build-services.html"><span class="n">12</span>구현: 예약·결제 서비스 (u2·u3)</a></li>
+<li><a href="l2-build-ui-run.html"><span class="n">13</span>구현: 화면·실행 스크립트 (u4·u5)</a></li>
+<li><a href="l2-test.html"><span class="n">14</span>빌드·테스트와 앱 동작</a></li>
 </ul>
 <div class="nav-part">참고</div><ul>
-<li><a href="artifacts.html"><span class="n">12</span>산출물 찾아보기</a></li>
+<li><a href="artifacts.html"><span class="n">15</span>산출물 찾아보기</a></li>
 </ul></aside>
   <main class="doc">
     <div class="crumb">레벨 2 · classic<span class="chap">10</span></div>
@@ -143,11 +146,20 @@
 </code></pre></div>
 
 <p>완료 기준의 <code>AC4.1.1</code>은 <a href="l2-stories.html">3단계 유저 스토리</a>에서 PO와 정한 인수 조건과 같습니다. 아직 실행할 코드가 없으므로 검증 명령은 첫 볼트를 마칠 때 묻도록 했습니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>볼트 순서는 어떻게 정해졌나요?</summary>
+<p>유닛 의존 그래프를 따릅니다. 다른 유닛에 의존하지 않는 u1 검색 서비스부터 시작합니다. 그다음은 u2 → u3 → u4 → u5 순서입니다. 팀 규칙에서 워킹 스켈레톤을 쓰지 않기로 했습니다. 따라서 작은 end-to-end 조각을 먼저 만들지 않고 서비스를 하나씩 완성합니다.</p>
+</details>
+<details class="answer">
+<summary>검증 명령은 왜 볼트 계획에서 정하지 않았나요?</summary>
+<p>이 시점에는 실행할 코드가 없기 때문입니다. 첫 유닛인 u1의 구현을 마친 뒤 에이전트가 <code>mvn -q verify</code>를 제안했고, 사람이 승인했습니다. 이 명령은 <code>aidlc-state.md</code>에 기록되어 이후 유닛의 체크포인트에서 사용됩니다.</p>
+</details>
     </article>
     <nav class="pager"><a class="prev" href="l2-units.html"><span>이전</span>6·7단계 유닛 나누기와 API 계약</a><a class="next" href="l2-build.html"><span>다음</span>구현: 유닛 u1</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-바뀐-점">산출물과 바뀐 점</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>
