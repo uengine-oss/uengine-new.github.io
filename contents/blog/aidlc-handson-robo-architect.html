@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>AI가 만들고 사람이 승인한다 — AI-DLC 실습 기록과 Robo Architect | uEngine 블로그</title>
+        <meta name="description" content="Claude Code와 AI-DLC로 주차권 추천·예약 앱을 요구사항부터 끝까지 만들어 봤습니다. 요청 한 줄이 시험 코드까지 이어지는 모습, 승인자가 정해야 했던 순간, 공개 교재와 산출물 저장소, Robo Architect와 이어지는 지점을 정리했습니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/aidlc-handson-robo-architect.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="AI가 만들고 사람이 승인한다 — AI-DLC 실습 기록과 Robo Architect | uEngine 블로그">
+        <meta property="og:description" content="Claude Code와 AI-DLC로 주차권 추천·예약 앱을 요구사항부터 끝까지 만들어 봤습니다. 요청 한 줄이 시험 코드까지 이어지는 모습, 승인자가 정해야 했던 순간, 공개 교재와 산출물 저장소, Robo Architect와 이어지는 지점을 정리했습니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/aidlc-handson-robo-architect.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/aidlc-handson-robo-architect.jpg">
+        <meta property="og:image:alt" content="AI가 만들고 사람이 승인한다 — AI-DLC 실습 기록과 Robo Architect | uEngine 블로그">
+        <meta property="article:published_time" content="2026-11-09">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="AI가 만들고 사람이 승인한다 — AI-DLC 실습 기록과 Robo Architect | uEngine 블로그">
+        <meta name="twitter:description" content="Claude Code와 AI-DLC로 주차권 추천·예약 앱을 요구사항부터 끝까지 만들어 봤습니다. 요청 한 줄이 시험 코드까지 이어지는 모습, 승인자가 정해야 했던 순간, 공개 교재와 산출물 저장소, Robo Architect와 이어지는 지점을 정리했습니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/aidlc-handson-robo-architect.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI가 만들고 사람이 승인한다 — AI-DLC 실습 기록과 Robo Architect","description":"Claude Code와 AI-DLC로 주차권 추천·예약 앱을 요구사항부터 끝까지 만들어 봤습니다. 요청 한 줄이 시험 코드까지 이어지는 모습, 승인자가 정해야 했던 순간, 공개 교재와 산출물 저장소, Robo Architect와 이어지는 지점을 정리했습니다.","image":["https://www.uengine.org/images/blog/aidlc-handson-robo-architect.jpg"],"url":"https://www.uengine.org/contents/blog/aidlc-handson-robo-architect.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/aidlc-handson-robo-architect.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-11-09","dateModified":"2026-11-09"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"AI가 만들고 사람이 승인한다","item":"https://www.uengine.org/contents/blog/aidlc-handson-robo-architect.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <!-- SEO:END -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../en/contents/blog/aidlc-handson-robo-architect.html" class="opacity-1 no-hover mobile-chat lang-switch" title="English">EN</a><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">AI-Native Enterprise란?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Process Solutions · Agent&nbsp;Orchestrator&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Ontology Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;AI Tools&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../aitools.html" style="font-size: 18px;">AI 도구 모음</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../axschool.html" style="font-size: 18px;">AX School</a>
+                                            </li>
+                                            <li>
+                                                <a href="../agentstorming.html" style="font-size: 18px;">Agent Storming 워크숍</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX 전환 컨설팅 교육</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ax-lite-course.html" style="font-size: 18px;">우리 회사 AI 업무교실</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Industry AI Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../industry.html" style="font-size: 18px;">왜 필요한가요?</a>
+                                            </li>
+                                            <li>
+                                                <a href="../erp.html" style="font-size: 18px;">AI-Native ERP</a>
+                                            </li>
+                                            <li>
+                                                <a href="../mes.html" style="font-size: 18px;">AI-Native MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="../wms.html" style="font-size: 18px;">AI-Native WMS</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">AI 기반 개발의 현재와 향후 전망</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">선도개발 구현 컨설팅</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM 은 죽지 않았다</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                        <li><a href="../uengine-pal.html" style="font-size: 18px;">uEngine PAL</a></li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">왜 클라우드 네이티브는 어려운가?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">MSA School 바로가기</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../en/contents/blog/aidlc-handson-robo-architect.html" class="opacity-1 no-hover" title="English" hreflang="en"><span class="link-hover-anim underline" data-link-animate="y">EN</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">AI가 만들고 사람이 승인한다 — AI-DLC 실습 기록과 Robo Architect</span>
+                                    </h1>
+
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  November 09, 2026</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+
+                               </div>
+                               <!-- End Page Title -->
+
+                            </div>
+                        </div>
+                        <!-- End Section Content -->
+
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+
+                        <div class="row">
+
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+
+                                    <div class="blog-item-body chat-gpt">
+<div class="mb-50"><img src="../../images/blog/aidlc-handson-robo-architect.jpg" alt="AI가 만들고 사람이 승인한다 — AI-DLC 실습 기록과 Robo Architect" style="width:100%;height:auto;border-radius:12px;" decoding="async"></div>
+<blockquote><p>&nbsp; 1. 시공이 빨라지면 감리가 바빠집니다</p></blockquote>
+<div class="mb-50 prose"><p>건물을 짓는 속도가 아무리 빨라져도 설계도가 틀리면 소용이 없습니다. 기계가 하루 만에 한 층을 올리면 도면을 확인하고 감리하는 사람이 공정 전체의 속도를 좌우하게 됩니다.</p></div>
+<div class="mb-50 prose"><p>AI가 코드를 쓰기 시작하면서 소프트웨어 개발에서도 같은 일이 생겼습니다. 코드를 만드는 비용은 거의 사라졌습니다. 하지만 무엇을 만들지 정하고 결과가 의도에 맞는지 확인하는 일은 여전히 사람의 몫입니다. AWS Labs가 공개한 <b>AI-DLC</b>(AI 주도 개발 생애주기)는 이 흐름을 절차로 정리한 것입니다. AI 에이전트가 요구사항 분석부터 설계, 코드 작성, 시험까지 수행합니다. 사람은 단계마다 결과를 검토하고 승인합니다.</p></div>
+<div class="mb-50 prose"><p>말로만 들으면 그럴듯합니다. 그래서 직접 끝까지 해 보고 그 과정과 결과 파일을 모두 교재로 공개했습니다.</p></div>
+<blockquote><p>&nbsp; 2. 실제로 해 봤습니다</p></blockquote>
+<div class="mb-50 prose"><p>Claude Code에 AI-DLC 2.11.2를 연결하고 다음과 같이 한 문장으로 요청했습니다. "사용자가 '강남역 근처 2시간 주차권 찾아줘'라고 보내면 최적 주차권을 추천하고 결제와 예약을 처리하는 프로토타입을 만들어 줘. 프런트는 Vue 3, 백엔드는 Spring Boot로." 같은 요청을 두 번 실행했습니다. 처음에는 가장 짧은 절차로 동작하는 앱까지 만들었습니다. 두 번째는 단계마다 문서를 만들고 사람이 승인하는 방식으로 진행했습니다. 두 번째 실행의 기록은 다음과 같습니다.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd;">항목</th><th style="padding: 12px 16px; border: 1px solid #ddd;">이번 실행</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">실행한 단계</td><td style="padding: 12px 16px; border: 1px solid #ddd;">17개(팀 규칙 → 요구사항 → 유저 스토리 → 화면 → 도메인 설계 → 유닛 → API 계약 → 볼트 계획 → 유닛별 구현 → 빌드·테스트)</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">만든 것</td><td style="padding: 12px 16px; border: 1px solid #ddd;">서비스 3개 + 화면 + 실행 스크립트(유닛 5개), 서비스 간 API 계약 6개</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">자동 시험</td><td style="padding: 12px 16px; border: 1px solid #ddd;">886개 통과, 유닛별 라인 커버리지 94~100%</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">승인자의 결정</td><td style="padding: 12px 16px; border: 1px solid #ddd;">승인 18번, 수정 요청 3번</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">AI 검토자의 검토</td><td style="padding: 12px 16px; border: 1px solid #ddd;">32번(그중 몇 번은 「아직 준비 안 됨」으로 반려)</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">최종 판정</td><td style="padding: 12px 16px; border: 1px solid #ddd;">목표 22개 중 달성 17, 미달 3, 확인하지 못함 2. 미달한 목표도 낮추지 않고 그대로 기록</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">감사 기록</td><td style="padding: 12px 16px; border: 1px solid #ddd;">1,577건(질문, 답변, 승인, 검증 결과와 각각의 시각을 함께 기록)</td></tr>
+</tbody></table></div>
+<div class="mb-50 prose"><p>요구사항부터 볼트 계획까지 설계 단계 8개를 마치는 데 약 55분이 걸렸습니다. 첫 번째 서비스는 시험 코드를 먼저 작성한 뒤 완성하기까지 약 52분이 걸렸습니다. 시간이 오래 걸린 작업은 코드 작성이 아니라 검토와 재시험이었습니다.</p></div>
+<blockquote><p>&nbsp; 3. 요청 한 줄이 시험까지 이어지는 모습</p></blockquote>
+<div class="mb-50 prose"><p>AI-DLC의 산출물은 모두 파일로 남습니다. 처음 요청한 문장이 시험 코드까지 어떻게 이어지는지 실제 파일 내용을 그대로 옮겨 보여 드리겠습니다.</p></div>
+<div class="mb-50">
+<div style="max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px;">
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="font-size: 12px; font-weight: 700; color: #7c4dbc; letter-spacing: .04em;">처음 요청 · [desc]</div><div style="font-size: 15px; margin-top: 4px;">사용자가 '강남역 근처 2시간 주차권 찾아줘'를 보내면 최적 주차권을 추천하고 결제와 예약을 처리</div></div>
+<div style="text-align: center; color: #999; font-size: 14px;">↓ 질문과 답을 거쳐</div>
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="font-size: 12px; font-weight: 700; color: #7c4dbc; letter-spacing: .04em;">요구사항 · FR1.1 · <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/requirements.md" target="_blank" rel="noopener" style="color: #7c4dbc;">requirements.md</a></div><div style="font-size: 15px; margin-top: 4px;">시스템은 사용자가 보낸 한국어 음성 텍스트에서 장소(예: 강남역)와 이용 시간(예: 2시간)을 추출한다.</div></div>
+<div style="text-align: center; color: #999; font-size: 14px;">↓ 확인할 수 있는 조건으로</div>
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="font-size: 12px; font-weight: 700; color: #7c4dbc; letter-spacing: .04em;">인수 조건 · AC1.1.1 · <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories/stories.md" target="_blank" rel="noopener" style="color: #7c4dbc;">stories.md</a></div><div style="font-size: 15px; margin-top: 4px;"><b>Given</b> 사용자가 세션을 시작했을 때, <b>When</b> "강남역 근처 2시간 주차권 찾아줘"를 보내면, <b>Then</b> 시스템은 장소를 "강남역", 이용 시간을 2시간으로 해석해 추천 단계로 넘긴다.</div></div>
+<div style="text-align: center; color: #999; font-size: 14px;">↓ 시험부터 쓰도록 계획하고</div>
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="font-size: 12px; font-weight: 700; color: #7c4dbc; letter-spacing: .04em;">시험 코드 · <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/services/u1-search-service/src/test/java/kr/voiceparking/search/service/QueryParserTest.java" target="_blank" rel="noopener" style="color: #7c4dbc;">QueryParserTest.java</a></div><div style="font-size: 14px; margin-top: 6px; font-family: ui-monospace, Menlo, monospace; background: #f7f7fa; border-radius: 8px; padding: 8px 10px; overflow-x: auto; white-space: nowrap;">assertThat(parser.parse("강남역 근처 2시간 주차권 찾아줘"))<br>&nbsp;&nbsp;&nbsp;&nbsp;.isEqualTo(new ParsedQuery("강남역", 2));</div></div>
+<div style="text-align: center; color: #999; font-size: 14px;">↓ 구현한 뒤 연결을 기록</div>
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="font-size: 12px; font-weight: 700; color: #7c4dbc; letter-spacing: .04em;">추적표 · <a href="https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/construction/u1-search-service/code-generation/traceability.json" target="_blank" rel="noopener" style="color: #7c4dbc;">traceability.json</a></div><div style="font-size: 14px; margin-top: 6px; font-family: ui-monospace, Menlo, monospace; background: #f7f7fa; border-radius: 8px; padding: 8px 10px; overflow-x: auto; white-space: nowrap;">{ "id": "AC1.1.1", "status": "OK", "target": "…/search/service/QueryParser.java" }</div></div>
+</div>
+<p class="text-center mt-20" style="font-size: 14px; color: #888;">실습 산출물 저장소의 실제 파일입니다. 각 이름을 누르면 해당 파일이 열립니다.</p>
+</div>
+<div class="mb-50 prose"><p>이렇게 ID로 연결해 두면 "이 코드는 왜 있는가"를 거꾸로 따라갈 수 있습니다. 요구사항이 바뀌면 어떤 시험과 코드가 영향을 받는지도 바로 찾을 수 있습니다.</p></div>
+<blockquote><p>&nbsp; 4. 승인자가 한 일</p></blockquote>
+<div class="mb-50 prose"><p>AI가 대부분의 일을 했지만 승인자가 결정해야 할 순간은 분명히 있었습니다.</p>
+<ul>
+<li><b style="font-weight: bold;">목표를 낮추지 않기:</b> 결제 서비스의 성능 시험(20ms 안에 응답)이 서버 부하 때문에 가끔 실패했습니다. AI-DLC는 목표를 50ms로 낮출지 물었고, 승인자는 목표를 그대로 두고 부하가 줄었을 때 다시 시험하기로 했습니다.</li>
+<li><b style="font-weight: bold;">반려 받아들이기:</b> AI 검토자가 화면 설계에서 중요한 문제 6건을 찾아 반려했습니다. 승인자는 이 문제들을 수정하도록 한 뒤 승인했습니다.</li>
+<li><b style="font-weight: bold;">눈으로 확인하기:</b> 모든 시험을 통과한 뒤에도 승인자는 브라우저에서 앱을 직접 써 본 다음 최종 판정을 승인했습니다. 이때 추천 문구의 조사 오류("거리이(가)")를 찾아 미해결로 기록했습니다.</li>
+</ul></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">AI가 더 많은 일을 할수록 승인이 형식적인 절차에 그치지 않도록 하는 장치가 중요해집니다. 실습의 승인 기록에는 승인 시점과 승인할 때 남긴 답변은 있지만 누가 승인했는지는 없습니다. 팀에서 사용할 때 보완해야 할 부분입니다.</p></div>
+<blockquote><p>&nbsp; 5. 교재로 따라 하기</p></blockquote>
+<div class="mb-50 prose"><p>이 과정을 uEngine AX School의 공개 교재로 정리했습니다. 실행 장면은 모두 실제 실행 화면이며, 각 장에는 영상이 있습니다.</p>
+<ul>
+<li><b style="font-weight: bold;">레벨 1(4장):</b> 요구사항 인터뷰부터 시작해 가장 짧은 절차로 동작하는 앱까지 만듭니다.</li>
+<li><b style="font-weight: bold;">레벨 2(10장):</b> 같은 요청을 바탕으로 단계마다 문서를 만듭니다. 각 산출물에서 정한 내용과 달라진 점을 실제 파일로 확인합니다.</li>
+<li><b style="font-weight: bold;">이론(4장):</b> 볼트와 유닛, 사양 게이트, 형상관리, 검증 정책과 도입 순서를 실습 기록과 함께 설명합니다.</li>
+<li><b style="font-weight: bold;">실습 산출물 저장소:</b> 실습에서 나온 문서와 코드를 모두 <a href="https://github.com/uengine-oss/tutorial-aidlc-handson" target="_blank" rel="noopener">GitHub에 공개</a>했습니다. 교재의 파일 이름을 누르면 해당 파일이 바로 열립니다.</li>
+</ul>
+<p><a href="../../docs/aidlc-handson/">교재 열기</a> · <a href="../../docs/aidlc-handson/theory-paradigm.html">이론부터 읽기</a> · <a href="../axschool.html">AX School 전체 커리큘럼</a></p></div>
+<blockquote><p>&nbsp; 6. Robo Architect와의 연결</p></blockquote>
+<div class="mb-50 prose"><p>AI-DLC를 실습하다 보면 결국 같은 질문을 하게 됩니다. 요구사항, 도메인 경계, 화면, 작업 단위를 어떻게 정할지, 코드가 바뀐 뒤에도 설계와 어떻게 일치시킬지에 대한 질문입니다. 유엔진의 <a href="../roboarchitect.html">Robo Architect</a>는 같은 흐름을 다룹니다. 차이는 산출물을 관리하는 방식입니다. AI-DLC는 산출물을 마크다운 문서로 쌓아 갑니다. Robo Architect는 설계를 모델로 관리하면서 모델과 코드의 변경 사항을 서로 반영합니다.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd;">AI-DLC 실습에서 만든 것</th><th style="padding: 12px 16px; border: 1px solid #ddd;">Robo Architect에서 같은 역할을 하는 기능</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">질문과 후속 질문으로 다듬은 요구사항, Given/When/Then 인수 조건</td><td style="padding: 12px 16px; border: 1px solid #ddd;">요구사항 명확화 — Epic → Feature → User Story로 나누고 모호한 조건을 질문<br><a href="../roboarchitect.html#ra-concept-1" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">도메인 설계(컴포넌트·결정 기록), 유닛과 볼트 계획</td><td style="padding: 12px 16px; border: 1px solid #ddd;">도메인과 작업 설계 — 바운디드 컨텍스트별 Plan·Task, 애그리거트·이벤트스토밍 설계<br><a href="../roboarchitect.html#ra-concept-2" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../roboarchitect.html#ra-eventstorming" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 이벤트스토밍 설계</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">화면 상태와 상호작용 명세</td><td style="padding: 12px 16px; border: 1px solid #ddd;">이벤트 모델과 화면 — 명령·이벤트·리드 모델을 화면까지 연결<br><a href="../roboarchitect.html#ra-concept-3" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">시험부터 쓰는 유닛별 구현과 추적표</td><td style="padding: 12px 16px; border: 1px solid #ddd;">DDD 기반 코드·테스트 자동 생성, 작업 단위 커밋<br><a href="../roboarchitect.html#ra-codegen" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">수정 요청에서 배운 규칙(project.md), 감사 기록</td><td style="padding: 12px 16px; border: 1px solid #ddd;">명세와 코드 간 변경 사항 반영 — 명세 변경은 구현으로(Spec Align), 코드 변경은 명세로(Spec Backfill)<br><a href="../roboarchitect.html#ra-concept-4" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a></td></tr>
+</tbody></table></div>
+<div class="mb-50 prose"><p>현재 Robo Architect의 설계·구현 스킬은 spec-kit 방식과 DDD 스타터 모델링을 바탕으로 합니다. 제안을 만들 때 분해 방식(간소화, 상세 DDD, ODA 표준)을 고를 수 있습니다. AI-DLC도 기반 방법론으로 선택할 수 있도록 하는 방안을 설계하고 있습니다. AI-DLC의 단계별 승인과 감사 기록은 그대로 유지하고, 그 결과를 설계 모델로 가져와 코드 생성과 모델·코드 간 변경 사항 반영에 활용하는 방식입니다.</p></div>
+<div class="mb-50 prose"><p>AI-DLC로 설계와 구현의 흐름을 먼저 익히고 싶다면 <a href="../../docs/aidlc-handson/">공개 교재</a>부터 시작하세요. 같은 흐름을 설계 모델로 실습해 보고 싶다면 <a href="../../docs/robo-architect/">Robo Architect 튜토리얼</a>을 따라 해 보세요. 우리 팀의 실제 업무를 바탕으로 진행하는 교육과 컨설팅은 <a href="../axschool.html">AX School</a>과 <a href="../contactus.html">문의하기</a>에서 안내합니다.</p></div>
+<blockquote><p>&nbsp; 참고 자료</p></blockquote>
+<div class="mb-50 prose"><ul style="font-size: 14px;">
+<li><a href="https://github.com/awslabs/aidlc-workflows" target="_blank" rel="noopener">awslabs/aidlc-workflows — AI-DLC 공식 저장소</a></li>
+<li><a href="../../docs/aidlc-handson/">Claude Code × AI-DLC 핸즈온 — uEngine AX School 공개 교재</a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-aidlc-handson" target="_blank" rel="noopener">uengine-oss/tutorial-aidlc-handson — 실습 산출물 저장소</a></li>
+<li><a href="https://aws.amazon.com/ko/blogs/tech/cj-oliveyoung-aidlc-tech-blog/" target="_blank" rel="noopener">CJ올리브영의 AI 협업 개발 프로세스 구축, AI-DLC 실전 도입 사례 — AWS 기술 블로그</a></li>
+<li><a href="https://wavect.io/blog/git-worktrees-vs-jujutsu-ai-coding-agents/" target="_blank" rel="noopener">Git Worktrees vs Jujutsu for AI Coding Agents: 2026 Decision Guide</a></li>
+<li><a href="../../docs/robo-architect/">Robo Architect 튜토리얼</a></li>
+</ul></div>
+</div>
+                                <!-- End Post -->
+
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                유엔진솔루션즈는 2003년 이래 업무 프로세스 관리 (Business Process Management), AI, MSA, 기업용 SNS, PaaS 를 포함한 클라우드 플랫폼, 도메인 기반 개발 방법을 지향하는 개발 프레임워크 등을 개발하고 오픈소스 프로젝트로 제공하는 기술 집약적 기업입니다.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                본사: 서울 서초구 사임당로 31 궁현빌딩 3층 301호<br>
+                                지사: 경상남도 창원시 성산구 상남로37
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">AI-Native Enterprise란?</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="../ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="../ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../aitools.html">AI 도구 모음</a></li>
+                                        <li><a href="../axschool.html">AX School</a></li>
+                                        <li><a href="../agentstorming.html">Agent Storming 워크숍</a></li>
+                                        <li><a href="../educationax.html">AX 전환 컨설팅 교육</a></li>
+                                        <li><a href="../ax-lite-course.html">우리 회사 AI 업무교실</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                        <li><a href="../industry.html">왜 필요한가요?</a></li>
+                                        <li><a href="../erp.html">AI-Native ERP</a></li>
+                                        <li><a href="../mes.html">AI-Native MES</a></li>
+                                        <li><a href="../wms.html">AI-Native WMS</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">AI 기반 개발의 현재와 향후 전망</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">선도개발 구현 컨설팅</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM 은 죽지 않았다</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uengine-pal.html">uEngine PAL</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">왜 클라우드 네이티브는 어려운가?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">MSA School 바로가기</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">유엔진솔루션즈 | 사업자등록번호: 2118795355 | 대표: 장진영</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>

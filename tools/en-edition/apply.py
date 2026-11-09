@@ -334,7 +334,7 @@ def link_untranslated(s, page, root):
             return m.group(1) + up + target + m.group(3)
         return m.group(0)
 
-    return re.sub(r'(href=")((?!https?:|/|#|\.\./|mailto:)[A-Za-z0-9_./-]+\.html)((?:#[^"]*)?")', repl, s)
+    return re.sub(r'(href=")((?!https?:|/|#|mailto:)[A-Za-z0-9_./-]+\.html)((?:#[^"]*)?")', repl, s)
 
 
 STRIP_SWITCH = (re.compile(r'<li class="pc-chat lang-switch">.*?</li>\s*'), re.compile(r'<a [^>]*class="[^"]*lang-switch"[^>]*>[^<]*</a>\s*'))
