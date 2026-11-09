@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI-DLC 대시보드 — 개발 팀의 진행과 사람 대기를 홈에서 봅니다 — Process GPT Lite 튜토리얼</title>
-<meta name="description" content="AWS Labs의 AI-DLC로 일하는 저장소를 공유 폴더로 연결하면 폴더 구성원이 작업 현황·사람 대기·볼트·품질·감사 기록·질문을 홈 패널에서 확인합니다. 숫자는 저장소의 `aidlc/` 기록에서 바로 계산하고, AI-DLC가 움직이는 동안 패널을 20초마다 갱신합니다.">
+<title>AI-DLC 팀 세션 — 개발 팀이 함께 일하는 AI-DLC — Process GPT Lite 튜토리얼</title>
+<meta name="description" content="AWS Labs의 AI-DLC로 일하는 저장소를 공유 폴더로 연결하고 Claude Code를 팀 세션으로 띄우면, 팀원 모두 같은 화면을 봅니다. AI-DLC가 사람의 답을 기다리면 그 단계를 맡은 사람에게 카드가 갑니다. 요구사항은 몹 정교화 회의에서, 볼트 계획은 몹 구축 회의에서 정합니다. 코드가 만들어지는 동안에도 언제든 쉘을 열어 진행 상황을 보고 직접 끼어들 수 있습니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/process-gpt-lite/robo-dlc.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AI-DLC 대시보드 — 개발 팀의 진행과 사람 대기를 홈에서 봅니다 — Process GPT Lite 튜토리얼">
-<meta property="og:description" content="AWS Labs의 AI-DLC로 일하는 저장소를 공유 폴더로 연결하면 폴더 구성원이 작업 현황·사람 대기·볼트·품질·감사 기록·질문을 홈 패널에서 확인합니다. 숫자는 저장소의 `aidlc/` 기록에서 바로 계산하고, AI-DLC가 움직이는 동안 패널을 20초마다 갱신합니다.">
+<meta property="og:title" content="AI-DLC 팀 세션 — 개발 팀이 함께 일하는 AI-DLC — Process GPT Lite 튜토리얼">
+<meta property="og:description" content="AWS Labs의 AI-DLC로 일하는 저장소를 공유 폴더로 연결하고 Claude Code를 팀 세션으로 띄우면, 팀원 모두 같은 화면을 봅니다. AI-DLC가 사람의 답을 기다리면 그 단계를 맡은 사람에게 카드가 갑니다. 요구사항은 몹 정교화 회의에서, 볼트 계획은 몹 구축 회의에서 정합니다. 코드가 만들어지는 동안에도 언제든 쉘을 열어 진행 상황을 보고 직접 끼어들 수 있습니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/process-gpt-lite/robo-dlc.html">
 <meta property="og:image" content="https://www.uengine.org/docs/process-gpt-lite/img/home.webp">
 <link rel="icon" href="../../images/processgptlite/pgl-mark.svg" type="image/svg+xml">
@@ -82,7 +82,7 @@
 <div class="nav-part">산업별 예시</div><ul>
 <li><a href="prototype-request.html"><span class="n">28</span>시작품 요청 메일 — 회로 검토·3D·2D·제안서·견적서</a></li>
 <li><a href="erp-voucher.html"><span class="n">29</span>이벤트 소싱 ERP — 전표 처리, 말로 취소, 전망 묻기</a></li>
-<li><a href="robo-dlc.html" class="on" aria-current="page"><span class="n">30</span>AI-DLC 대시보드 — 개발 팀의 진행과 사람 대기를 홈에서 봅니다</a></li>
+<li><a href="robo-dlc.html" class="on" aria-current="page"><span class="n">30</span>AI-DLC 팀 세션 — 개발 팀이 함께 일하는 AI-DLC</a></li>
 </ul>
 <div class="nav-part">마무리</div><ul>
 <li><a href="project.html"><span class="n">31</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></li>
@@ -93,53 +93,46 @@
 </ul></aside>
   <main class="doc">
     <div class="crumb">산업별 예시<span class="chap">30</span></div>
-    <h1>AI-DLC 대시보드 — 개발 팀의 진행과 사람 대기를 홈에서 봅니다</h1>
+    <h1>AI-DLC 팀 세션 — 개발 팀이 함께 일하는 AI-DLC</h1>
     <article>
 <blockquote>
-<p>AWS Labs의 AI-DLC로 일하는 저장소를 공유 폴더로 연결하면 폴더 구성원이 작업 현황·사람 대기·볼트·품질·감사 기록·질문을 홈 패널에서 확인합니다. 숫자는 저장소의 <code>aidlc/</code> 기록에서 바로 계산하고, AI-DLC가 움직이는 동안 패널을 20초마다 갱신합니다.</p>
+<p>AWS Labs의 AI-DLC로 일하는 저장소를 공유 폴더로 연결하고 Claude Code를 팀 세션으로 띄우면, 팀원 모두 같은 화면을 봅니다. AI-DLC가 사람의 답을 기다리면 그 단계를 맡은 사람에게 카드가 갑니다. 요구사항은 몹 정교화 회의에서, 볼트 계획은 몹 구축 회의에서 정합니다. 코드가 만들어지는 동안에도 언제든 쉘을 열어 진행 상황을 보고 직접 끼어들 수 있습니다.</p>
 </blockquote>
-<div class="video"><iframe src="https://www.youtube.com/embed/FvKAU5LZTUU" title="AI-DLC 대시보드 — 개발 팀의 진행과 사람 대기를 홈에서 봅니다 — 영상 3:25" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="video"><iframe src="https://www.youtube.com/embed/X76vebAtr_E" title="AI-DLC 팀 세션 — 개발 팀이 함께 일하는 AI-DLC — 영상 2:51" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <h2 id="왜-필요한가">왜 필요한가<a class="anchor" href="#왜-필요한가" title="Permanent link">#</a></h2>
-<p>이번 장에서는 달빛커피 대신 <strong>AI와 함께 개발하는 소프트웨어 팀</strong>을 살펴봅니다. AI-DLC(AI-Driven Development Life Cycle)는 AI가 단계마다 질문을 남기고 결과물을 만들면, 사람이 답하고 승인해야 다음 단계로 넘어가는 개발 방식입니다. 진행 기록은 모두 저장소의 <code>aidlc/</code> 폴더에 남습니다. 현재 단계를 담은 상태 파일, 시간순으로 쌓인 감사 기록, 질문 파일, 검토 보고서입니다. AI-DLC 사용법은 AX School <a href="https://www.uengine.org/docs/aidlc-handson/">AI-DLC 핸즈온</a>에서 처음부터 따라 해 볼 수 있습니다.</p>
-<p>문제는 이 기록을 Claude Code 터미널과 마크다운 파일에서 찾아야 한다는 점입니다. 팀 리드, PO, 아키텍트, QA가 "지금 누가 무엇을 기다리나", "어느 단계에서 사람을 오래 기다렸나"를 알려면 파일을 열어 읽어야 합니다. Lite는 이 기록을 그대로 읽어 각자의 역할에 맞게 홈 패널로 보여 줍니다. 따로 입력할 필요가 없습니다.</p>
+<p>이번 장에서는 달빛커피 대신 <strong>AI와 함께 개발하는 소프트웨어 팀</strong>을 살펴봅니다. AI-DLC(AI-Driven Development Life Cycle)는 AI가 단계마다 질문을 남기고 결과물을 만들면, 사람이 답하고 승인해야 다음 단계로 넘어가는 개발 방식입니다. AI-DLC는 이 과정을 팀이 함께 진행하도록 권합니다. 요구사항과 설계를 함께 정하는 <strong>몹 정교화(Mob Elaboration)</strong>와, 구현을 함께 지켜보며 결정하는 <strong>몹 구축(Mob Construction)</strong>입니다. AX School <a href="https://www.uengine.org/docs/aidlc-handson/">AI-DLC 핸즈온</a>에서는 한 사람이 모든 질문에 답했습니다. 이 장에서는 같은 순서를 다섯 사람이 나눠 맡습니다.</p>
+<p>그런데 AI-DLC는 Claude Code 터미널 하나에서 돌아갑니다. 질문과 승인 창은 그 터미널 앞에 앉은 사람에게만 보이고, 진행 기록은 저장소의 <code>aidlc/</code> 폴더에 마크다운으로 쌓입니다. Lite는 질문·승인 창과 진행 기록을 팀이 함께 보는 곳으로 가져옵니다.</p>
 <table>
 <thead>
 <tr>
-<th>패널</th>
-<th>보여 주는 것</th>
-<th>어디서 계산하나</th>
+<th>팀이 하는 일</th>
+<th>Lite에서</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>작업 현황</td>
-<td>지금 단계와 담당 역할, 단계 레일, 기다리는 승인, 승인·반려·열린 질문 수</td>
-<td>상태 파일, 감사 기록</td>
+<td>같은 화면 보기</td>
+<td>폴더의 <strong>팀 세션</strong>: 서버에서 Claude Code 하나를 띄우면 구성원 모두가 작업실에서 같은 화면을 봅니다. 보기 권한만 있는 사람은 화면만 봅니다</td>
 </tr>
 <tr>
-<td>사람 대기</td>
-<td>단계마다 AI가 일한 시간과 사람을 기다린 시간, 반려 횟수</td>
-<td>감사 기록의 단계 시작 → 승인 대기 → 승인</td>
+<td>맡은 사람에게 넘기기</td>
+<td>AI-DLC가 사람의 답을 기다리면(답하는 방식, 질문 파일, 요약 확인, 단계 승인, 코딩 중 도구 권한) 그 단계 <strong>역할을 맡은 사람의 홈에 카드</strong>가 갑니다</td>
 </tr>
 <tr>
-<td>볼트 보드</td>
-<td>구현 단위(유닛)마다 의존 관계, 상태, 작업 시간, 체크포인트 검증 성공·실패</td>
-<td>유닛 계획, 감사 기록</td>
+<td>정하기</td>
+<td><strong>결정 화면</strong>: 세션의 선택 창과 같은 선택지가 나옵니다. 고른 번호는 그 선택 창에 그대로 들어가고, AI-DLC 감사 기록에 사람의 답으로 남습니다</td>
 </tr>
 <tr>
-<td>품질</td>
-<td>센서가 울린 횟수와 실패, 체크포인트 검증, 단계별 마지막 검토 판정과 남은 Major 지적</td>
-<td>검토 보고서, 감사 기록</td>
+<td>함께 정하기</td>
+<td><strong>몹 회의</strong>: 역할을 맡은 사람들의 대화방에서 화상 회의 → 회의록 → 합의한 답이 결정 화면에 채워집니다</td>
 </tr>
 <tr>
-<td>감사 타임라인</td>
-<td>승인, 수정 요청, 답변, 센서 실패, 검증을 최근 기록부터</td>
-<td>감사 기록</td>
+<td>끼어들기</td>
+<td><strong>세션 보기</strong>: 코드가 만들어지는 중에도 쉘을 열어 진행 상황을 보고, 권한 창에 답하거나 바꿀 점을 적습니다</td>
 </tr>
 <tr>
-<td>질문함</td>
-<td>답을 기다리는 질문과 선택지, 질문 파일 위치</td>
-<td>질문 파일</td>
+<td>보기</td>
+<td><strong>홈 대시보드</strong>: 작업 현황, 사람 대기, 볼트, 품질, 감사 타임라인, 질문함</td>
 </tr>
 </tbody>
 </table>
@@ -154,153 +147,192 @@
 <tbody>
 <tr>
 <td>AI-DLC 저장소</td>
-<td>AI-DLC 2.11.2가 설치된 git 저장소. 실습은 AX School 핸즈온 레벨 2에서 만든 음성 주차 앱 기록(<a href="https://github.com/uengine-oss/tutorial-aidlc-handson">공개 저장소</a>)과, 막 시작한 할 일 웹앱(poc)을 사용합니다</td>
+<td>AI-DLC 2.11.2가 설치된 git 저장소를 연결형 폴더로 연결합니다(<a href="folders.html">13장</a>). 실습 저장소는 다음 요청 하나만 정한 빈 프로젝트입니다: 「팀이 함께 쓰는 할 일 보드 — 할 일을 추가하고, 담당자를 정하고, 완료 표시한다. 화면은 Vue, 서버는 Node(Express)로」</td>
 </tr>
 <tr>
-<td>서버가 읽을 수 있는 경로</td>
-<td>연결형 폴더는 서버 컴퓨터의 경로를 연결합니다(<a href="folders.html">13장</a>). 설치 번들(Docker)에서는 저장소를 서버 컨테이너에 마운트합니다</td>
-</tr>
-<tr>
-<td>권한</td>
-<td>폴더에 보기 이상의 권한이 있는 구성원만 대시보드를 봅니다</td>
+<td>Claude Code</td>
+<td>팀 세션은 서버 컴퓨터에 로그인된 Claude Code로 돌아갑니다. 여러 팀원이 한 세션을 함께 쓸 때는 그 계정의 이용 조건을 지켜야 합니다</td>
 </tr>
 <tr>
 <td>등장인물</td>
-<td>팀 리드 한지수(두 폴더의 소유자), PO 오세린(할 일 웹앱 폴더의 편집 권한)</td>
+<td>팀 리드 한지수(폴더 소유자), PO 오세린, 아키텍트 최민준, 개발자 강다은, QA 윤서준(모두 편집 권한)</td>
+</tr>
+<tr>
+<td>몹 회의</td>
+<td>화상 회의 받아쓰기를 쓰려면 서버에 받아쓰기 키가 있어야 합니다(<a href="meetings.html">16장</a>)</td>
 </tr>
 </tbody>
 </table>
-<h2 id="따라-하기-1-끝난-작업을-홈에서-보기">따라 하기 1 — 끝난 작업을 홈에서 보기<a class="anchor" href="#따라-하기-1-끝난-작업을-홈에서-보기" title="Permanent link">#</a></h2>
+<h2 id="따라-하기-1-역할을-정하고-팀-세션-띄우기">따라 하기 1 — 역할을 정하고 팀 세션 띄우기<a class="anchor" href="#따라-하기-1-역할을-정하고-팀-세션-띄우기" title="Permanent link">#</a></h2>
 <ol class="steps">
-<li>한지수로 로그인해 <b>폴더</b>에서 음성 주차 앱 저장소를 연결형 폴더로 연결합니다. 이름은 <code>음성 주차 앱</code>입니다.</li>
-<li>폴더를 엽니다. 파일 목록 위에 <b>「AI-DLC 기록이 있어요.」</b> 안내 띠가 나타나고, 작업 목록에 <code>voice-parking · classic · 완료</code>가 있습니다.</li>
-<li>작업을 고르고 <b>홈에 대시보드 추가</b>를 누릅니다. 「홈에 AI-DLC 대시보드 6개를 추가했어요.」가 뜹니다.</li>
-<li>홈으로 갑니다. 왼쪽 패널 열에 작업 현황부터 질문함까지 패널 여섯 개가 생깁니다. 아래로 스크롤하며 하나씩 확인합니다.</li>
+<li>한지수로 로그인해 <b>폴더</b>에서 <code>팀 할 일 보드</code> 폴더를 엽니다. 파일 목록 위에 <b>AI-DLC 팀 세션</b> 띠가 보입니다.</li>
+<li>띠의 <b>역할</b>을 눌러 역할표를 엽니다. PO·기획은 오세린, 아키텍트는 최민준, 개발자는 강다은, QA는 윤서준, 팀 리드는 한지수로 정합니다. 역할은 폴더 구성원에게만 맡길 수 있습니다.</li>
+<li><b>세션 시작</b>을 누릅니다. 이 저장소에서 Claude Code가 뜨고 작업실이 열립니다. 처음 여는 저장소라 Claude Code가 폴더를 신뢰할지 묻습니다. 한지수가 쉘에서 <code>Yes, I trust this folder</code>를 고릅니다.</li>
+<li>쉘에 <code>/aidlc classic "팀이 함께 쓰는 할 일 보드 — …"</code>를 입력합니다. AI-DLC가 작업 공간을 살피고 첫 단계인 팀 규칙을 시작합니다.</li>
+<li>AI-DLC가 질문에 답하는 방식을 물으면 한지수의 홈에 카드가 옵니다. 팀 규칙은 팀 리드의 몫이기 때문입니다. 카드의 <b>결정하기</b>를 누르면 결정 화면이 열리고, 세션의 선택 창과 같은 선택지가 보입니다.</li>
+<li>질문 8개의 답을 고르고 <b>파일에 적고 세션에 알리기</b>를 누릅니다. 답이 질문 파일의 <code>[Answer]:</code> 줄에 적히고, 세션에 「답을 적었어요」가 들어갑니다. AI-DLC가 팀 규칙을 쓰고 승인을 기다리면 다시 카드가 옵니다. <b>Approve</b>를 누릅니다.</li>
 </ol>
-<figure><a href="img/robo-dlc-banner.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="폴더 화면 — 파일 목록 위에 「AI-DLC 기록이 있어요.」 띠, 오른쪽에 작업 고르기와 「홈에 대시보드 추가」" src="img/robo-dlc-banner.webp" / loading="lazy" decoding="async"></a><figcaption>폴더 화면 — 파일 목록 위에 「AI-DLC 기록이 있어요.」 띠, 오른쪽에 작업 고르기와 「홈에 대시보드 추가」</figcaption></figure>
-<figure><a href="img/robo-dlc-status.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="작업 현황 — 지금 단계 빌드·테스트(QA), 단계 레일이 모두 초록, 승인 18 · 반려 3" src="img/robo-dlc-status.webp" / loading="lazy" decoding="async"></a><figcaption>작업 현황 — 지금 단계 빌드·테스트(QA), 단계 레일이 모두 초록, 승인 18 · 반려 3</figcaption></figure>
-<figure><a href="img/robo-dlc-wait.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사람 대기 — 합계 AI 작업 8.2시간 · 사람 대기 32분, 단계마다 AI 작업(파랑)과 사람 대기(주황)" src="img/robo-dlc-wait.webp" / loading="lazy" decoding="async"></a><figcaption>사람 대기 — 합계 AI 작업 8.2시간 · 사람 대기 32분, 단계마다 AI 작업(파랑)과 사람 대기(주황)</figcaption></figure>
-<figure><a href="img/robo-dlc-bolts.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="볼트 보드 — 유닛 다섯 개의 의존·작업 시간·검증(✓ 통과, ✗ 실패)" src="img/robo-dlc-bolts.webp" / loading="lazy" decoding="async"></a><figcaption>볼트 보드 — 유닛 다섯 개의 의존·작업 시간·검증(✓ 통과, ✗ 실패)</figcaption></figure>
-<p><strong>확인할 것</strong>: 작업 현황의 승인은 18, 반려는 3입니다. 사람 대기 패널의 합계는 AI 작업 8.2시간, 사람 대기 32분입니다. 볼트 보드에는 유닛 다섯 개가 모두 완료로 표시되고, 결제 서비스와 웹 화면 유닛에는 검증 실패(✗) 뒤 통과한 기록이 있습니다.</p>
-<h2 id="따라-하기-2-진행-중인-작업이-움직이는-것을-보기">따라 하기 2 — 진행 중인 작업이 움직이는 것을 보기<a class="anchor" href="#따라-하기-2-진행-중인-작업이-움직이는-것을-보기" title="Permanent link">#</a></h2>
+<figure><a href="img/robo-dlc-roles.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="폴더 화면 — AI-DLC 팀 세션 띠와 역할표(PO 오세린, 아키텍트 최민준, 개발자 강다은, QA 윤서준, 팀 리드 한지수)" src="img/robo-dlc-roles.webp" / loading="lazy" decoding="async"></a><figcaption>폴더 화면 — AI-DLC 팀 세션 띠와 역할표(PO 오세린, 아키텍트 최민준, 개발자 강다은, QA 윤서준, 팀 리드 한지수)</figcaption></figure>
+<figure><a href="img/robo-dlc-shell.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팀 세션 — 작업실에서 Claude Code에 /aidlc classic을 입력한 화면" src="img/robo-dlc-shell.webp" / loading="lazy" decoding="async"></a><figcaption>팀 세션 — 작업실에서 Claude Code에 /aidlc classic을 입력한 화면</figcaption></figure>
+<figure><a href="img/robo-dlc-decide.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 화면 — 팀 규칙 질문 8개와 선택지, 아래에 이 폴더의 결정 기록" src="img/robo-dlc-decide.webp" / loading="lazy" decoding="async"></a><figcaption>결정 화면 — 팀 규칙 질문 8개와 선택지, 아래에 이 폴더의 결정 기록</figcaption></figure>
+<p><strong>확인할 것</strong>: 결정 화면 아래 <b>이 폴더의 결정 기록</b>에 한지수가 고른 답이 시간순으로 남습니다. 같은 선택은 AI-DLC 감사 기록에도 사람의 답(Person Reply)으로 남습니다.</p>
+<h2 id="따라-하기-2-몹-정교화-요구사항을-회의로-정하기">따라 하기 2 — 몹 정교화: 요구사항을 회의로 정하기<a class="anchor" href="#따라-하기-2-몹-정교화-요구사항을-회의로-정하기" title="Permanent link">#</a></h2>
 <ol class="steps">
-<li>오세린으로 로그인해 <b>할 일 웹앱</b> 폴더를 엽니다. 띠에서 <code>todo-web-app · poc</code>를 고르고 <b>홈에 대시보드 추가</b>를 누릅니다.</li>
-<li>홈의 작업 현황에는 지금 단계가 <b>의도 정리</b>로, 열린 질문이 <b>4</b>로 표시됩니다. 질문함에는 AI-DLC가 남긴 질문 네 개가 선택지와 함께 보입니다.</li>
-<li>Claude Code에서 질문 파일(<code>intent-capture-questions.md</code>)의 <code>[Answer]:</code>에 답을 적습니다. 커밋하지 않아도 20초 안에 질문함이 「답을 기다리는 질문이 없어요」로 바뀝니다.</li>
-<li>Claude Code에서 AI-DLC에 "답을 모두 적었어요. 이어서 진행해 주세요."라고 말합니다. AI-DLC는 결과물을 쓰기 전에 답을 요약하고 맞는지 묻습니다. 이 질문이 질문 파일 끝에 추가되므로, 질문함에 <b>요약 확인</b>이 다시 하나 생깁니다.</li>
-<li>Claude Code에서 <code>1</code>(Looks correct)로 답합니다. AI-DLC가 의도 문서를 쓰는 동안 감사 타임라인에 질문에 답한 기록과 확인 요청 등이 쌓입니다.</li>
-<li>AI-DLC가 승인을 기다리면, 작업 현황의 대기 칸에 <b>의도 정리 · PO·기획 · 기다린 시간</b>이 나타납니다.</li>
+<li>요구사항 단계의 질문은 PO의 몫이라 오세린의 홈에 「요구사항 · 답을 기다리는 질문 8개」 카드가 옵니다.</li>
+<li>오세린이 결정 화면에서 <b>몹 회의 열기</b>를 누릅니다. 역할을 맡은 사람들의 그룹 대화방이 열리고, 현재 단계의 질문이 그 방에 올라갑니다.</li>
+<li>대화방에서 <b>회의 시작</b>을 누르고 다섯 사람이 화상 회의로 모입니다. 도우미가 받아쓰는 동안 질문마다 답을 말로 정합니다. 「1번은 A로 가죠. 로그인 없음, 같은 팀 하나.」처럼 말하면 됩니다.</li>
+<li>회의를 마치면 회의록이 방에 남습니다. 도우미는 받아쓰기와 회의록에서 팀이 <b>분명히 합의한 답만</b> 골라 결정 화면에 미리 채웁니다. 정하지 못한 질문은 비워 둡니다.</li>
+<li>오세린의 홈에 「몹 회의에서 답 N개를 정했어요」 카드가 옵니다. 결정 화면에서 채워진 답과 「회의: 누가 어떻게 말했는지」를 확인하고 <b>파일에 적고 세션에 알리기</b>를 누릅니다.</li>
+<li>다음 단계인 유저 스토리도 같은 방식으로 정합니다. 오세린이 승인하면 세션이 이어집니다.</li>
 </ol>
-<figure><a href="img/robo-dlc-questions.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="질문함 — 의도 정리 단계에서 AI-DLC가 남긴 질문과 선택지, 질문 파일 위치" src="img/robo-dlc-questions.webp" / loading="lazy" decoding="async"></a><figcaption>질문함 — 의도 정리 단계에서 AI-DLC가 남긴 질문과 선택지, 질문 파일 위치</figcaption></figure>
-<figure><a href="img/robo-dlc-confirm.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="답을 다 적은 뒤 질문함에 다시 생긴 「요약 확인」" src="img/robo-dlc-confirm.webp" / loading="lazy" decoding="async"></a><figcaption>답을 다 적은 뒤 질문함에 다시 생긴 「요약 확인」</figcaption></figure>
-<figure><a href="img/robo-dlc-awaiting.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="승인 대기 — 대기 칸의 「의도 정리 · PO·기획 · 1분 미만」, 사람 대기 패널은 AI 작업 1분 · 사람 대기 1.1시간" src="img/robo-dlc-awaiting.webp" / loading="lazy" decoding="async"></a><figcaption>승인 대기 — 대기 칸의 「의도 정리 · PO·기획 · 1분 미만」, 사람 대기 패널은 AI 작업 1분 · 사람 대기 1.1시간</figcaption></figure>
-<p><strong>확인할 것</strong>: 한지수의 홈에는 할 일 웹앱 패널이 생기지 않습니다. 대시보드는 각자 자기 홈에 추가합니다. 할 일 웹앱 폴더의 구성원이 아닌 사람은 띠와 프로젝트 목록을 모두 볼 수 없습니다.</p>
+<figure><a href="img/robo-dlc-mob-meeting.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="몹 회의 — 다섯 사람과 받아쓰는 도우미, 오른쪽에 질문마다 정한 답의 자막" src="img/robo-dlc-mob-meeting.webp" / loading="lazy" decoding="async"></a><figcaption>몹 회의 — 다섯 사람과 받아쓰는 도우미, 오른쪽에 질문마다 정한 답의 자막</figcaption></figure>
+<figure><a href="img/robo-dlc-proposal.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 화면 — 몹 회의에서 합의한 답이 채워진 유저 스토리 질문, 질문마다 회의에서 누가 어떻게 말했는지" src="img/robo-dlc-proposal.webp" / loading="lazy" decoding="async"></a><figcaption>결정 화면 — 몹 회의에서 합의한 답이 채워진 유저 스토리 질문, 질문마다 회의에서 누가 어떻게 말했는지</figcaption></figure>
+<p><strong>확인할 것</strong>: 회의에서 「다음에 정해요」라고 한 질문은 결정 화면에 비어 있습니다. 회의에서 정한 답은 미리 채워질 뿐이며, 파일에 적는 일은 그 단계를 맡은 사람이 합니다.</p>
+<h2 id="따라-하기-3-수정-요청과-다시-승인">따라 하기 3 — 수정 요청과 다시 승인<a class="anchor" href="#따라-하기-3-수정-요청과-다시-승인" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>화면 단계는 디자인 역할의 몫입니다. 맡은 사람이 없어 폴더 소유자인 한지수에게 갑니다. 한지수가 질문에 답하고 승인합니다.</li>
+<li>도메인 설계는 아키텍트의 몫입니다. 최민준이 질문 4개에 답하면 AI-DLC가 설계를 쓰고 승인을 기다립니다.</li>
+<li>최민준은 승인하지 않고 아래 글 칸에 바꿀 점을 적어 <b>보내기</b>를 누릅니다: <code>Request Changes: 할 일과 담당자를 따로 두지 말고, 담당자는 할 일의 속성 하나로 단순하게 해 주세요.</code></li>
+<li>AI-DLC가 설계를 고쳐 다시 승인을 기다리면 최민준의 홈에 카드가 다시 옵니다. 바뀐 질문(「담당자를 할 일의 속성 하나로 단순화한 Domain Design을…」)을 확인하고 <b>Approve</b>를 누릅니다.</li>
+<li>유닛 나누기와 API 계약도 최민준이 같은 방식으로 정합니다. 결정 화면 아래 <b>검토</b> 칸에는 AI-DLC 검토 에이전트의 판정과 남은 지적 수가 보입니다.</li>
+</ol>
+<figure><a href="img/robo-dlc-change.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 화면 — 도메인 설계 승인 창에서 Request Changes 글을 적는 최민준" src="img/robo-dlc-change.webp" / loading="lazy" decoding="async"></a><figcaption>결정 화면 — 도메인 설계 승인 창에서 Request Changes 글을 적는 최민준</figcaption></figure>
+<p><strong>확인할 것</strong>: 결정 기록에 <code>domain-design · Request Changes: …</code>와 그 뒤의 <code>Approve</code>가 차례로 남습니다. 대시보드의 사람 대기 패널에는 도메인 설계에 반려 1이 표시됩니다.</p>
+<h2 id="따라-하기-4-몹-구축-볼트-계획-회의와-코딩-중-개입">따라 하기 4 — 몹 구축: 볼트 계획 회의와 코딩 중 개입<a class="anchor" href="#따라-하기-4-몹-구축-볼트-계획-회의와-코딩-중-개입" title="Permanent link">#</a></h2>
+<div class="video"><iframe src="https://www.youtube.com/embed/Q4soHt6enZI" title="AI-DLC 팀 세션 ② 몹 구축과 코딩 중 개입 — 영상 3:11" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
+<ol class="steps">
+<li>볼트 계획은 딜리버리 리드의 몫입니다. 이 팀에는 맡은 사람이 없어 폴더 소유자인 한지수에게 갑니다. 한지수가 질문 3개에 답하면 AI-DLC가 유닛 두 개(u1-todo-api, u2-board-web)의 순서를 정한 계획을 내놓습니다.</li>
+<li>승인하기 전에 한지수가 <b>몹 회의 열기</b>로 몹 구축 회의를 엽니다. 대화방에는 지난 회의의 회의록이 남아 있습니다. 아키텍트는 순서를, 개발자는 구현을, QA는 빌드·테스트 승인을 맡겠다고 말합니다.</li>
+<li>회의를 마치고 한지수가 결정 화면에서 볼트 계획을 승인합니다.</li>
+<li>구현이 시작되면 Claude Code가 명령을 실행해도 되는지 묻습니다. 구현 단계의 도구 사용 권한을 묻는 카드는 개발자 강다은에게 갑니다. 결정 화면에는 어떤 도구로 어떤 명령을 실행하려는지 보입니다.</li>
+<li>강다은이 <b>세션 보기</b>를 누르면 작업실에서 팀 세션이 열립니다. 코드가 만들어지는 화면을 그대로 봅니다. 권한 창이 뜨면 쉘에서 바로 <code>2</code>(이 명령은 다시 묻지 않기)를 누릅니다.</li>
+<li>코딩 중에 바꿀 점이 생기면 쉘에 적습니다: <code>할 일 제목은 100자까지만 받고, 넘으면 화면에 이유를 보여 주세요.</code> Claude Code는 하던 일을 마치고 이 요청을 다음 메시지로 받습니다.</li>
+<li>AI-DLC는 이 요청을 화면 유닛의 기능 설계 규칙에 「사람 요청」으로 넣고, 코드 계획 승인 창에 「제목 100자 제한」을 적어 올립니다. 아키텍트 최민준이 그 계획을 승인합니다.</li>
+</ol>
+<figure><a href="img/robo-dlc-mob-build.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="몹 구축 회의 — 볼트 계획을 두고 팀 리드·아키텍트·개발자·QA가 이야기하는 화면" src="img/robo-dlc-mob-build.webp" / loading="lazy" decoding="async"></a><figcaption>몹 구축 회의 — 볼트 계획을 두고 팀 리드·아키텍트·개발자·QA가 이야기하는 화면</figcaption></figure>
+<figure><a href="img/robo-dlc-perm.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 화면 — 강다은에게 온 도구 권한: 실행할 명령과 선택지" src="img/robo-dlc-perm.webp" / loading="lazy" decoding="async"></a><figcaption>결정 화면 — 강다은에게 온 도구 권한: 실행할 명령과 선택지</figcaption></figure>
+<figure><a href="img/robo-dlc-steer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팀 세션 — 강다은이 코드가 만들어지는 중에 쉘에 바꿀 점을 적은 화면" src="img/robo-dlc-steer.webp" / loading="lazy" decoding="async"></a><figcaption>팀 세션 — 강다은이 코드가 만들어지는 중에 쉘에 바꿀 점을 적은 화면</figcaption></figure>
+<figure><a href="img/robo-dlc-plan-rule.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 화면 — 코드 계획 승인 창의 「제목 100자 제한: 서버와 같은 문장을 칸 아래에 보여 줍니다」" src="img/robo-dlc-plan-rule.webp" / loading="lazy" decoding="async"></a><figcaption>결정 화면 — 코드 계획 승인 창의 「제목 100자 제한: 서버와 같은 문장을 칸 아래에 보여 줍니다」</figcaption></figure>
+<p><strong>확인할 것</strong>: 세션을 열어도 보기 권한만 있는 구성원의 입력은 세션에 들어가지 않습니다. 작업실 위에 「보기만 해요」가 표시됩니다.</p>
+<h2 id="따라-하기-5-빌드테스트-승인과-결과-확인">따라 하기 5 — 빌드·테스트 승인과 결과 확인<a class="anchor" href="#따라-하기-5-빌드테스트-승인과-결과-확인" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>구현이 끝나면 AI-DLC가 빌드·테스트를 시작합니다. 전체 검증 명령, 다른 브라우저의 E2E, 다른 Node 버전 검사처럼 명령 실행 권한을 물을 때마다 개발자 강다은에게 카드가 갑니다.</li>
+<li>빌드·테스트 승인은 QA의 몫이라 윤서준의 홈에 카드가 옵니다. 결정 화면에는 「테스트 실패는 0건이고 <code>npm run verify</code>가 통과했습니다」와 함께, 자동으로 확인하지 못한 두 가지(한글을 조합해 입력하는 중의 Enter, Safari)가 보입니다. 윤서준이 <b>Approve</b>를 누릅니다.</li>
+<li>AI-DLC가 공유 세션에 결과를 정리합니다. 서버 테스트 140개(라인 커버리지 94%), 화면 테스트 120개(91%), Chromium E2E 12개가 통과했고, 「제목 100자 제한: 요청하신 대로 동작합니다」라고 적혀 있습니다.</li>
+<li>저장소 루트에서 <code>npm install</code>, <code>npm run build</code>, <code>npm start</code>로 보드를 띄웁니다. 100자가 넘는 제목을 넣으면 칸 아래에 「(!) 9자 초과」가 보이고, <b>추가</b>를 누르면 「제목은 100자까지 입력할 수 있습니다(지금 109자).」가 나오며 저장되지 않습니다.</li>
+<li>짧은 제목으로 바꾸고 담당자를 강다은으로 정해 추가합니다. 체크 칸을 눌러 완료로 표시합니다.</li>
+</ol>
+<figure><a href="img/robo-dlc-qa.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 화면 — 윤서준에게 온 빌드·테스트 승인: 테스트 결과와 자동으로 확인하지 못한 두 가지" src="img/robo-dlc-qa.webp" / loading="lazy" decoding="async"></a><figcaption>결정 화면 — 윤서준에게 온 빌드·테스트 승인: 테스트 결과와 자동으로 확인하지 못한 두 가지</figcaption></figure>
+<figure><a href="img/robo-dlc-summary.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팀 세션 — AI-DLC가 끝에 정리한 결과, 「제목 100자 제한: 요청하신 대로 동작합니다」" src="img/robo-dlc-summary.webp" / loading="lazy" decoding="async"></a><figcaption>팀 세션 — AI-DLC가 끝에 정리한 결과, 「제목 100자 제한: 요청하신 대로 동작합니다」</figcaption></figure>
+<figure><a href="img/robo-dlc-app.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="만들어진 할 일 보드 — 109자 제목에 「제목은 100자까지 입력할 수 있습니다(지금 109자).」" src="img/robo-dlc-app.webp" / loading="lazy" decoding="async"></a><figcaption>만들어진 할 일 보드 — 109자 제목에 「제목은 100자까지 입력할 수 있습니다(지금 109자).」</figcaption></figure>
+<p><strong>확인할 것</strong>: AI-DLC는 자동으로 확인하지 못한 두 가지를 <code>client/README.md</code>의 「수동 확인 기록」 표에 적도록 안내합니다. QA가 승인해도 사람이 직접 확인할 일은 남아 있습니다.</p>
+<h2 id="따라-하기-6-홈-대시보드와-결정-기록">따라 하기 6 — 홈 대시보드와 결정 기록<a class="anchor" href="#따라-하기-6-홈-대시보드와-결정-기록" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>한지수가 폴더 화면의 <b>AI-DLC 기록이 있어요</b> 띠에서 <b>홈에 대시보드 추가</b>를 누릅니다. 「홈에 AI-DLC 대시보드 6개를 추가했어요.」가 뜹니다.</li>
+<li>홈의 <b>작업 현황</b>에서 지금 단계가 <b>빌드·테스트 · QA · Completed</b>이고, 단계 레일이 모두 초록인지 확인합니다. 승인 16, 반려 1, 열린 질문 0이고 「기다리는 승인이 없어요」가 보입니다.</li>
+<li><b>사람 대기</b> 패널에서 합계(AI 작업 58분 · 사람 대기 9분)와 단계별 시간을 확인합니다. 도메인 설계에는 반려 1이 붙어 있습니다.</li>
+<li>결정 화면을 열어 아래의 <b>이 폴더의 결정 기록</b>을 봅니다. 윤서준의 <code>build-and-test · Approve</code>와 강다은이 답한 도구 권한이 시간순으로 남아 있습니다.</li>
+</ol>
+<figure><a href="img/robo-dlc-status.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="작업 현황 — 빌드·테스트 · QA · Completed, 승인 16 · 반려 1 · 열린 질문 0" src="img/robo-dlc-status.webp" / loading="lazy" decoding="async"></a><figcaption>작업 현황 — 빌드·테스트 · QA · Completed, 승인 16 · 반려 1 · 열린 질문 0</figcaption></figure>
+<figure><a href="img/robo-dlc-wait.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사람 대기 — 합계 AI 작업 58분 · 사람 대기 9분, 단계마다 AI 작업(파랑)과 사람 대기(주황)" src="img/robo-dlc-wait.webp" / loading="lazy" decoding="async"></a><figcaption>사람 대기 — 합계 AI 작업 58분 · 사람 대기 9분, 단계마다 AI 작업(파랑)과 사람 대기(주황)</figcaption></figure>
+<figure><a href="img/robo-dlc-ledger.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="결정 화면 아래 「이 폴더의 결정 기록」 — 누가 어느 단계에서 무엇을 정했는지" src="img/robo-dlc-ledger.webp" / loading="lazy" decoding="async"></a><figcaption>결정 화면 아래 「이 폴더의 결정 기록」 — 누가 어느 단계에서 무엇을 정했는지</figcaption></figure>
+<p>이미 끝난 실습의 기록도 같은 방식으로 볼 수 있습니다. 아래 영상은 AX School 핸즈온 레벨 2를 끝까지 마친 음성 주차 앱 저장소를 연결해 작업 현황, 사람 대기, 볼트 보드, 품질 패널을 차례로 보여 줍니다.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/FvKAU5LZTUU" title="AI-DLC 대시보드 — 끝난 실습 기록 — 영상 3:25" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
 <h2 id="ai-dlc-핸즈온과-어떻게-이어지나">AI-DLC 핸즈온과 어떻게 이어지나<a class="anchor" href="#ai-dlc-핸즈온과-어떻게-이어지나" title="Permanent link">#</a></h2>
-<p>이 장의 두 저장소는 AX School <a href="https://www.uengine.org/docs/aidlc-handson/">AI-DLC 핸즈온</a>의 실습 기록입니다. 음성 주차 앱은 레벨 2(9~18장)를 끝까지 마친 기록이고, 할 일 웹앱은 레벨 1의 6장을 막 시작한 기록입니다. 따라 하기 1은 끝난 기록을 패널별로 되짚고, 따라 하기 2는 첫 단계가 실제로 움직이는 모습을 봅니다. 핸즈온의 장마다 대시보드의 어디에 나타나는지는 다음과 같습니다.</p>
+<p>이 장은 AX School <a href="https://www.uengine.org/docs/aidlc-handson/">AI-DLC 핸즈온</a> 레벨 2의 순서를 그대로 밟습니다. 단계마다 답하는 사람이 다르다는 점만 달라집니다. 실습 화면은 모두 classic을 실제로 한 번 실행하며 찍었습니다.</p>
 <table>
 <thead>
 <tr>
 <th>핸즈온 장</th>
 <th>AI-DLC 단계</th>
-<th>대시보드에서 보는 곳</th>
+<th>이 장에서 정하는 사람과 방법</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="https://www.uengine.org/docs/aidlc-handson/requirements.html">6장 의도 정리와 요구사항</a></td>
-<td>의도 정리 → 요구사항</td>
-<td>질문함(질문 네 개, 요약 확인), 작업 현황의 승인 대기 — 따라 하기 2는 의도 정리의 승인 대기까지입니다</td>
-</tr>
-<tr>
-<td><a href="https://www.uengine.org/docs/aidlc-handson/construction.html">7장 코드 생성과 학습</a></td>
-<td>코드 생성</td>
-<td>이 장의 영상에는 없습니다</td>
-</tr>
-<tr>
-<td><a href="https://www.uengine.org/docs/aidlc-handson/run.html">8장 동작 확인과 감사 기록</a></td>
-<td>감사 기록</td>
-<td>감사 타임라인</td>
-</tr>
-<tr>
 <td><a href="https://www.uengine.org/docs/aidlc-handson/l2-overview.html">9장 팀 규칙</a></td>
 <td>팀 규칙</td>
-<td>사람 대기</td>
+<td>팀 리드 한지수 — 결정 화면에서 답과 승인(따라 하기 1)</td>
 </tr>
 <tr>
 <td><a href="https://www.uengine.org/docs/aidlc-handson/l2-requirements.html">10장 요구사항</a></td>
 <td>요구사항</td>
-<td>사람 대기</td>
+<td>PO 오세린 — <strong>몹 정교화 회의</strong>로 답을 정하고 승인(따라 하기 2)</td>
 </tr>
 <tr>
 <td><a href="https://www.uengine.org/docs/aidlc-handson/l2-stories.html">11장 유저 스토리와 화면</a></td>
 <td>유저 스토리, 화면</td>
-<td>사람 대기</td>
+<td>오세린 — 몹 회의에서 채운 답을 확인 / 화면은 소유자 한지수</td>
 </tr>
 <tr>
 <td><a href="https://www.uengine.org/docs/aidlc-handson/l2-domain.html">12장 도메인 설계</a></td>
 <td>도메인 설계</td>
-<td>사람 대기(반려 1), 품질의 검토 회차</td>
+<td>아키텍트 최민준 — 수정 요청 뒤 다시 승인(따라 하기 3)</td>
 </tr>
 <tr>
 <td><a href="https://www.uengine.org/docs/aidlc-handson/l2-units.html">13장 유닛 나누기와 API 계약</a></td>
 <td>유닛, API 계약</td>
-<td>사람 대기(API 계약 반려 1), 볼트 보드의 의존</td>
+<td>최민준</td>
 </tr>
 <tr>
 <td><a href="https://www.uengine.org/docs/aidlc-handson/l2-bolts.html">14장 볼트 계획</a></td>
 <td>볼트 계획</td>
-<td>사람 대기</td>
+<td>한지수 — <strong>몹 구축 회의</strong> 뒤 승인(따라 하기 4)</td>
 </tr>
 <tr>
-<td><a href="https://www.uengine.org/docs/aidlc-handson/l2-build.html">15~17장 구현 u1~u5</a></td>
+<td><a href="https://www.uengine.org/docs/aidlc-handson/l2-build.html">15~17장 구현</a></td>
 <td>유닛별 기능 설계·코드 생성</td>
-<td>볼트 보드(u3·u4는 검증 실패 뒤 통과), 품질의 유닛별 검토</td>
+<td>개발자 강다은 — 도구 권한 카드, 세션 보기, 쉘에서 지시 / 설계·계획 승인은 최민준</td>
 </tr>
 <tr>
 <td><a href="https://www.uengine.org/docs/aidlc-handson/l2-test.html">18장 빌드·테스트와 앱 동작</a></td>
 <td>빌드·테스트</td>
-<td>작업 현황의 지금 단계, 사람 대기(AI 7.7시간 · 사람 7분, 반려 1)</td>
+<td>QA 윤서준 — 결과를 보고 승인(따라 하기 5)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="숫자를-읽는-법">숫자를 읽는 법<a class="anchor" href="#숫자를-읽는-법" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>AI 작업</strong>은 단계를 시작한 때(또는 수정 요청 뒤 다시 시작한 때)부터 승인 대기에 들어간 때까지입니다. 다만 AI-DLC가 질문이나 요약 확인을 남기고 사람의 답을 기다린 동안은 뺍니다.</li>
-<li><strong>사람 대기</strong>는 질문이나 요약 확인의 답을 기다린 시간에 승인 대기부터 승인 또는 반려까지 걸린 시간을 더한 값입니다. 빌드처럼 오래 걸리는 작업 뒤에 기록이 없는 시간도 AI 작업으로 계산합니다.</li>
-<li>구현 단계는 유닛마다 따로 진행하므로 단계별 시간에서 제외하고 볼트 보드에서 확인합니다. 유닛의 사람 대기는 마지막으로 통과한 검증부터 승인까지입니다.</li>
-<li>반려는 승인 대기에서 수정을 요청한 횟수입니다. 같은 단계의 검토 보고서가 여러 개이면 품질 패널에 회차(×2)로 표시됩니다.</li>
+<li><strong>AI 작업</strong>은 단계를 시작한 때(또는 수정 요청 뒤 다시 시작한 때)부터 승인 대기에 들어간 때까지입니다. 다만 AI-DLC가 질문이나 요약 확인을 남기고 사람의 답을 기다린 시간은 뺍니다.</li>
+<li><strong>사람 대기</strong>는 질문이나 요약 확인의 답을 기다린 시간에 승인 대기부터 승인 또는 반려까지 걸린 시간을 더한 값입니다. 몹 회의 시간도 사람 대기에 들어갑니다.</li>
+<li>구현 단계는 유닛마다 따로 진행하므로 단계별 시간에서 제외하고 볼트 보드에서 확인합니다.</li>
+<li>반려는 승인 대기에서 수정을 요청한 횟수입니다.</li>
 </ul>
 <h2 id="알아-둘-점">알아 둘 점<a class="anchor" href="#알아-둘-점" title="Permanent link">#</a></h2>
 <ul>
-<li>대시보드는 읽기만 합니다. 승인과 반려는 지금처럼 AI-DLC(Claude Code)에서 합니다. 패널 안 스크립트는 <code>/api/aidlc/</code> 아래의 읽기 요청만 보낼 수 있습니다.</li>
-<li>작업 사본을 바로 읽으므로 커밋하지 않은 변경 사항도 보입니다. 새 단계의 질문 파일은 최대 15초 늦게 집계될 수 있습니다.</li>
-<li>기록 파일은 크기나 수정 시각이 바뀔 때만 다시 읽습니다. 실습 기록 전체(사건 1,577건)에서 첫 요약은 약 0.4초, 이후 요약은 5~30ms였습니다.</li>
-<li>기록 형식은 AI-DLC 2.11.2를 따릅니다.</li>
+<li>카드가 가는 사람은 역할표로 정합니다. 맡은 사람이 없는 역할(이 실습에서는 디자인과 딜리버리 리드)의 단계는 폴더 소유자에게 갑니다. 결정은 그 역할을 맡은 사람이나 폴더 편집 권한 이상을 가진 사람이 할 수 있습니다.</li>
+<li>결정 화면을 연 뒤 세션의 선택 창이 바뀌었으면 결정을 거절하고 화면을 다시 읽습니다. 예전 선택지가 세션에 들어가는 일을 막기 위해서입니다.</li>
+<li>공유 세션을 자동 모드로 바꾸는 선택지는 결정 화면에 나오지 않습니다. 자동 모드로 바꿔야 한다면 쉘에서 직접 합니다.</li>
+<li>유닛마다 진행하는 구현 단계에서는 AI-DLC 상태 파일의 현재 단계가 기능 설계에 머물러 있습니다. 그래서 코드 계획 승인 카드도 기능 설계를 맡은 아키텍트에게 갑니다.</li>
+<li>세션 상태는 8초 간격으로 확인합니다. 카드가 그만큼 늦게 갈 수 있습니다. Claude Code 선택 창의 문구가 바뀌어 읽지 못하면 카드가 가지 않습니다. 그때는 작업실에서 직접 답합니다.</li>
+<li>세션은 보는 사람이 없거나 Lite 서버가 다시 시작해도 계속 돌아갑니다. 세션은 폴더 소유자만 끌 수 있습니다.</li>
 </ul>
 <p>8부 「산업별 예시」를 마칩니다. 다음 장에서는 지금까지 배운 것을 활용해 새 고객 요청 한 건을 처음부터 끝까지 처리하는 종합 과제를 합니다(<a href="project.html">31장</a>).</p>
 <div class="admonition exercise">
 <p class="admonition-title">확인 문제</p>
 <ol>
-<li>사람 대기 패널에서 빌드·테스트 단계는 AI 작업 7.7시간, 사람 대기 7분입니다. 이 단계를 늦춘 쪽은 어디입니까?</li>
-<li>오세린이 질문 파일에 답을 적고 아직 커밋하지 않았습니다. 대시보드의 질문함은 언제 바뀝니까?</li>
-<li>음성 주차 앱 폴더의 구성원이 아닌 사람이 그 폴더의 요약 주소를 직접 열면 어떻게 됩니까?</li>
-<li>작업 현황 패널에서 승인 대기 중인 단계를 승인할 수 있습니까?</li>
+<li>요구사항 단계의 승인 창이 세션에 떴습니다. 홈에 카드를 받는 사람은 누구입니까?</li>
+<li>몹 회의에서 질문 6개 중 5개만 정하고 하나는 「다음에 정해요」라고 했습니다. 결정 화면은 어떻게 됩니까?</li>
+<li>강다은이 코드가 만들어지는 중에 쉘에 바꿀 점을 적었습니다. Claude Code는 언제 그 글을 받습니까?</li>
+<li>보기 권한만 있는 구성원이 작업실에서 팀 세션을 열고 키를 누르면 어떻게 됩니까?</li>
 </ol>
 </div>
 <details class="answer">
 <summary>답</summary>
 <ol>
-<li>AI 쪽입니다. 사람이 판단하는 데는 7분이 걸렸고, 나머지는 AI가 빌드와 테스트를 수정하고 다시 실행한 시간입니다.</li>
-<li>다음 갱신(20초 안)에 바뀝니다. 패널은 저장소의 작업 사본을 읽기 때문에 커밋을 기다리지 않습니다.</li>
-<li>요청이 403으로 거부됩니다. 그 사람의 AI-DLC 프로젝트 목록에도 그 폴더가 표시되지 않으며, 패널을 추가할 수도 없습니다.</li>
-<li>없습니다. 대시보드는 읽기 전용이고 패널 스크립트는 읽기 경로로만 요청을 보낼 수 있습니다. 승인은 AI-DLC 쪽에서 합니다.</li>
+<li>PO 역할을 맡은 오세린입니다. 팀 리드에게는 가지 않습니다. 역할을 맡은 사람이 없을 때만 폴더 소유자에게 갑니다.</li>
+<li>합의한 답 5개만 채워지고, 나머지 하나는 비어 있습니다. 담당자는 채워진 답을 확인하고 빈 질문에 직접 답한 뒤 파일에 적습니다.</li>
+<li>하던 일을 마친 뒤 다음 메시지로 받습니다. AI-DLC는 그 요청을 기능 설계 규칙에 「사람 요청」으로 남깁니다.</li>
+<li>화면은 보이지만 입력은 세션에 들어가지 않습니다. 작업실에 「보기만 해요」가 표시되고, 결정을 보내도 403으로 거절됩니다.</li>
 </ol>
 </details>
     </article>
     <nav class="pager"><a class="prev" href="erp-voucher.html"><span>이전</span>이벤트 소싱 ERP — 전표 처리, 말로 취소, 전망 묻기</a><a class="next" href="project.html"><span>다음</span>종합 과제 — 새 고객 요청을 처음부터 끝까지</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-필요한가">왜 필요한가</a></li><li><a href="#준비">준비</a></li><li><a href="#따라-하기-1-끝난-작업을-홈에서-보기">따라 하기 1 — 끝난 작업을 홈에서 보기</a></li><li><a href="#따라-하기-2-진행-중인-작업이-움직이는-것을-보기">따라 하기 2 — 진행 중인 작업이 움직이는 것을 보기</a></li><li><a href="#ai-dlc-핸즈온과-어떻게-이어지나">AI-DLC 핸즈온과 어떻게 이어지나</a></li><li><a href="#숫자를-읽는-법">숫자를 읽는 법</a></li><li><a href="#알아-둘-점">알아 둘 점</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#왜-필요한가">왜 필요한가</a></li><li><a href="#준비">준비</a></li><li><a href="#따라-하기-1-역할을-정하고-팀-세션-띄우기">따라 하기 1 — 역할을 정하고 팀 세션 띄우기</a></li><li><a href="#따라-하기-2-몹-정교화-요구사항을-회의로-정하기">따라 하기 2 — 몹 정교화: 요구사항을 회의로 정하기</a></li><li><a href="#따라-하기-3-수정-요청과-다시-승인">따라 하기 3 — 수정 요청과 다시 승인</a></li><li><a href="#따라-하기-4-몹-구축-볼트-계획-회의와-코딩-중-개입">따라 하기 4 — 몹 구축: 볼트 계획 회의와 코딩 중 개입</a></li><li><a href="#따라-하기-5-빌드테스트-승인과-결과-확인">따라 하기 5 — 빌드·테스트 승인과 결과 확인</a></li><li><a href="#따라-하기-6-홈-대시보드와-결정-기록">따라 하기 6 — 홈 대시보드와 결정 기록</a></li><li><a href="#ai-dlc-핸즈온과-어떻게-이어지나">AI-DLC 핸즈온과 어떻게 이어지나</a></li><li><a href="#숫자를-읽는-법">숫자를 읽는 법</a></li><li><a href="#알아-둘-점">알아 둘 점</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>
