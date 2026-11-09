@@ -16,7 +16,7 @@
 | 단계 | `phases/inception.md` 등 | 인수 조건은 Given/When/Then, ADR에는 대안 두 개 이상 |
 | 스테이지 | 스테이지 파일(프레임워크 안) | 스테이지마다 만들 문서와 질문 |
 
-레벨 2의 규칙 파일은 [`memory/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/memory) 폴더에 있습니다. 팀 규칙은 사람이 직접 작성하는 대신 1단계(팀 규칙 찾기)의 질문에 답한 뒤 결과를 승인해 만들었습니다(5장).
+레벨 2의 규칙 파일은 [`memory/`](https://github.com/uengine-oss/tutorial-aidlc-handson/tree/main/level2-classic/aidlc/spaces/default/memory) 폴더에 있습니다. 팀 규칙은 사람이 직접 작성하는 대신 1단계(팀 규칙 찾기)의 질문에 답한 뒤 결과를 승인해 만들었습니다(9장).
 
 !!! warning "문서마다 다르게 적힌 산출물 위치"
     여러 소개 글은 요구사항과 설계 결정이 `aidlc-docs/` 폴더에 쌓인다고 설명합니다. AI-DLC 1판의 구조입니다. 이 실습에서 쓴 2.11.2는 작업마다 `aidlc/spaces/default/intents/<날짜>-<이름>/` 폴더를 만들고 그 아래에 산출물을 단계별로 저장합니다. 프레임워크와 함께 설치되는 원칙 문서(`ai-dlc-principles.md`)에는 아직 `aidlc-docs/`라는 옛 표현이 남아 있습니다. 어느 쪽이든 세션을 다시 시작해도 맥락이 사라지지 않게 문서로 남긴다는 원칙은 같습니다.
@@ -28,7 +28,7 @@
 | 게이트 | 검사하는 것 | 불합격이면 | AI-DLC 2.11.2에서 비슷한 일을 하는 것 | 이 실습의 예 |
 |---|---|---|---|---|
 | 무결성(Integrity) | PRD 절과 기술 사양의 1:1 대응, 사양마다 구현 작업이 있는지, Given/When/Then 인수 조건 | 구현 단계 진입 차단 | 센서 `required-sections`·`claim-sources`·`upstream-coverage`·`traceability`, 단계 규칙의 Given/When/Then | 요구사항 문서 맨 위의 출처 목록(`[desc]`, `[Q3]`)과 가정 표시(`[assumption]`), [`traceability.json`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/traceability.json) |
-| 충돌(Collisions) | 사양 절끼리의 모순, 인접한 기능과의 계약 충돌, 비즈니스 사양에 섞인 기술적 세부 사항 | 사양 자동 재작성 | 요구사항 분석의 **후속 질문**, 검토 에이전트의 `NOT-READY` | 답만으로 정할 수 없거나 서로 모순되는 부분을 후속 질문 3개로 다시 물었습니다(6장). 도메인 설계 첫 검토에서는 순환 의존을 찾았습니다(8장) |
+| 충돌(Collisions) | 사양 절끼리의 모순, 인접한 기능과의 계약 충돌, 비즈니스 사양에 섞인 기술적 세부 사항 | 사양 자동 재작성 | 요구사항 분석의 **후속 질문**, 검토 에이전트의 `NOT-READY` | 답만으로 정할 수 없거나 서로 모순되는 부분을 후속 질문 3개로 다시 물었습니다(10장). 도메인 설계 첫 검토에서는 순환 의존을 찾았습니다(12장) |
 | 결과(Consequences) | 의존 그래프의 끊긴 곳, 빠진 작업, 공유 자원의 영향 범위 | 의존과 작업을 보완할 때까지 대기 | 유닛 의존 그래프, 계약 설계, 볼트 계획의 위험·외부 의존 문서 | [`unit-of-work-dependency.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work-dependency.md), [`risk-and-sequencing-rationale.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/risk-and-sequencing-rationale.md) |
 
 AI-DLC의 센서에는 경고만 하는 것(advisory)과 승인을 막는 것(blocking)이 있습니다. 승인을 막는 센서가 실패하면 검사 결과를 무시한다는 명시적 결정(override)을 감사 기록에 남겨야 게이트가 열립니다. 이 실습에서는 센서가 218번 실행되었고 7번 실패했습니다. 3건은 문서를 고친 뒤 다시 통과했습니다. 나머지 4건은 u4·u5 문서의 상위 문서 반영 검사(`upstream-coverage`)였습니다. 이 검사는 기본적으로 경고용이므로, 다시 통과한 기록 없이 다음 단계로 넘어갔습니다. 경고용 센서가 실패해도 다음 단계로 넘어갈지는 사람이 판단해야 합니다.
@@ -38,7 +38,7 @@ AI-DLC의 센서에는 경고만 하는 것(advisory)과 승인을 막는 것(bl
 게이트가 검사하기 쉬운 사양에는 공통점이 있습니다. 이 실습의 문서에서도 확인할 수 있습니다.
 
 1. **근거가 적혀 있습니다.** 요구사항 문서 맨 위 `## Sources`에 `[desc]`(처음 요청), `[Q3]`(세 번째 질문의 답) 같은 근거 목록이 있고, 사람에게 확인받지 않은 가정에는 `[assumption]`이 붙습니다. 센서가 이 표시를 검사하므로 근거 없는 요구사항이 슬며시 끼어들기 어렵습니다([`requirements.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/requirements-analysis/requirements.md)).
-2. **합격 기준을 측정할 수 있습니다.** "빠르게" 대신 "결제 승인 뒤 1초 안에 완료 표시"처럼 씁니다. 이 1초는 구현 단계에서 웹훅 150ms, 예약 반영 150ms처럼 구간별로 나뉘었습니다(12장).
+2. **합격 기준을 측정할 수 있습니다.** "빠르게" 대신 "결제 승인 뒤 1초 안에 완료 표시"처럼 씁니다. 이 1초는 구현 단계에서 웹훅 150ms, 예약 반영 150ms처럼 구간별로 나뉘었습니다(16장).
 3. **ID로 연결됩니다.** 스토리의 인수 조건 ID(`AC4.1.1`)가 볼트 계획의 완료 기준과 코드 계획의 시험 순서(Red 단계)까지 이어지고, 추적표가 그 ID를 구현 파일과 시험 파일에 연결합니다([`stories.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/user-stories/stories.md)).
 4. **결정에는 대안이 있습니다.** 도메인 설계의 결정 기록(ADR)은 맥락, 결정, 결과, 채택하지 않은 대안을 함께 적습니다([`decisions.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/domain-design/decisions.md)).
 
@@ -65,7 +65,7 @@ AI-DLC의 센서에는 경고만 하는 것(advisory)과 승인을 막는 것(bl
 <details class="answer" markdown="1">
 <summary>답변끼리 모순되면 AI-DLC는 어떻게 하나요?</summary>
 
-"모순 감지" 경고 문구를 띄우는 대신, 요구사항 분석 단계에서 서로 충돌하는 답을 찾아 후속 질문으로 다시 묻습니다. 이 실습에서는 질문 4개에 답한 뒤 후속 질문 3개가 나왔습니다. 시간 적합도 점수 계산, 웹훅 승인 뒤 화면에 결과를 전달하는 방식, 180초를 세는 시점처럼 답만으로는 정할 수 없던 부분이었습니다(6장).
+"모순 감지" 경고 문구를 띄우는 대신, 요구사항 분석 단계에서 서로 충돌하는 답을 찾아 후속 질문으로 다시 묻습니다. 이 실습에서는 질문 4개에 답한 뒤 후속 질문 3개가 나왔습니다. 시간 적합도 점수 계산, 웹훅 승인 뒤 화면에 결과를 전달하는 방식, 180초를 세는 시점처럼 답만으로는 정할 수 없던 부분이었습니다(10장).
 </details>
 
 <details class="answer" markdown="1">
