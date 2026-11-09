@@ -4,7 +4,7 @@
 
 ## 왜 필요한가
 
-AI-DLC(AI-Driven Development Life Cycle)는 AI가 단계마다 질문을 남기고 결과물을 만들면, 사람이 답하고 승인해야 다음 단계로 넘어가는 개발 방식입니다. 진행 기록은 모두 저장소의 `aidlc/` 폴더에 남습니다. 현재 단계를 담은 상태 파일, 시간순으로 쌓인 감사 기록, 질문 파일, 검토 보고서입니다. AI-DLC 사용법은 AX School [AI-DLC 핸즈온](https://www.uengine.org/docs/aidlc-handson/)에서 처음부터 따라 해 볼 수 있습니다.
+이번 장에서는 달빛커피 대신 **AI와 함께 개발하는 소프트웨어 팀**을 살펴봅니다. AI-DLC(AI-Driven Development Life Cycle)는 AI가 단계마다 질문을 남기고 결과물을 만들면, 사람이 답하고 승인해야 다음 단계로 넘어가는 개발 방식입니다. 진행 기록은 모두 저장소의 `aidlc/` 폴더에 남습니다. 현재 단계를 담은 상태 파일, 시간순으로 쌓인 감사 기록, 질문 파일, 검토 보고서입니다. AI-DLC 사용법은 AX School [AI-DLC 핸즈온](https://www.uengine.org/docs/aidlc-handson/)에서 처음부터 따라 해 볼 수 있습니다.
 
 문제는 이 기록을 Claude Code 터미널과 마크다운 파일에서 찾아야 한다는 점입니다. 팀 리드, PO, 아키텍트, QA가 "지금 누가 무엇을 기다리나", "어느 단계에서 사람을 오래 기다렸나"를 알려면 파일을 열어 읽어야 합니다. Lite는 이 기록을 그대로 읽어 각자의 역할에 맞게 홈 패널로 보여 줍니다. 따로 입력할 필요가 없습니다.
 
@@ -64,6 +64,24 @@ AI-DLC(AI-Driven Development Life Cycle)는 AI가 단계마다 질문을 남기�
 
 **확인할 것**: 한지수의 홈에는 할 일 웹앱 패널이 생기지 않습니다. 대시보드는 각자 자기 홈에 추가합니다. 할 일 웹앱 폴더의 구성원이 아닌 사람은 띠와 프로젝트 목록을 모두 볼 수 없습니다.
 
+## AI-DLC 핸즈온과 어떻게 이어지나
+
+이 장의 두 저장소는 AX School [AI-DLC 핸즈온](https://www.uengine.org/docs/aidlc-handson/)의 실습 기록입니다. 음성 주차 앱은 레벨 2(9~18장)를 끝까지 마친 기록이고, 할 일 웹앱은 레벨 1의 6장을 막 시작한 기록입니다. 따라 하기 1은 끝난 기록을 패널별로 되짚고, 따라 하기 2는 첫 단계가 실제로 움직이는 모습을 봅니다. 핸즈온의 장마다 대시보드의 어디에 나타나는지는 다음과 같습니다.
+
+| 핸즈온 장 | AI-DLC 단계 | 대시보드에서 보는 곳 |
+|---|---|---|
+| [6장 의도 정리와 요구사항](https://www.uengine.org/docs/aidlc-handson/requirements.html) | 의도 정리 → 요구사항 | 질문함(질문 네 개, 요약 확인), 작업 현황의 승인 대기 — 따라 하기 2는 의도 정리의 승인 대기까지입니다 |
+| [7장 코드 생성과 학습](https://www.uengine.org/docs/aidlc-handson/construction.html) | 코드 생성 | 이 장의 영상에는 없습니다 |
+| [8장 동작 확인과 감사 기록](https://www.uengine.org/docs/aidlc-handson/run.html) | 감사 기록 | 감사 타임라인 |
+| [9장 팀 규칙](https://www.uengine.org/docs/aidlc-handson/l2-overview.html) | 팀 규칙 | 사람 대기 |
+| [10장 요구사항](https://www.uengine.org/docs/aidlc-handson/l2-requirements.html) | 요구사항 | 사람 대기 |
+| [11장 유저 스토리와 화면](https://www.uengine.org/docs/aidlc-handson/l2-stories.html) | 유저 스토리, 화면 | 사람 대기 |
+| [12장 도메인 설계](https://www.uengine.org/docs/aidlc-handson/l2-domain.html) | 도메인 설계 | 사람 대기(반려 1), 품질의 검토 회차 |
+| [13장 유닛 나누기와 API 계약](https://www.uengine.org/docs/aidlc-handson/l2-units.html) | 유닛, API 계약 | 사람 대기(API 계약 반려 1), 볼트 보드의 의존 |
+| [14장 볼트 계획](https://www.uengine.org/docs/aidlc-handson/l2-bolts.html) | 볼트 계획 | 사람 대기 |
+| [15~17장 구현 u1~u5](https://www.uengine.org/docs/aidlc-handson/l2-build.html) | 유닛별 기능 설계·코드 생성 | 볼트 보드(u3·u4는 검증 실패 뒤 통과), 품질의 유닛별 검토 |
+| [18장 빌드·테스트와 앱 동작](https://www.uengine.org/docs/aidlc-handson/l2-test.html) | 빌드·테스트 | 작업 현황의 지금 단계, 사람 대기(AI 7.7시간 · 사람 7분, 반려 1) |
+
 ## 숫자를 읽는 법
 
 - **AI 작업**은 단계를 시작한 때(또는 수정 요청 뒤 다시 시작한 때)부터 승인 대기에 들어간 때까지입니다. 다만 AI-DLC가 질문이나 요약 확인을 남기고 사람의 답을 기다린 동안은 뺍니다.
@@ -78,7 +96,7 @@ AI-DLC(AI-Driven Development Life Cycle)는 AI가 단계마다 질문을 남기�
 - 기록 파일은 크기나 수정 시각이 바뀔 때만 다시 읽습니다. 실습 기록 전체(사건 1,577건)에서 첫 요약은 약 0.4초, 이후 요약은 5~30ms였습니다.
 - 기록 형식은 AI-DLC 2.11.2를 따릅니다.
 
-7부를 마칩니다. 다음 8부 「산업별 예시」에서는 전자 제품 시작품 요청 메일 한 통으로 회로 검토, 3D, 2D 도면, 제안서, 견적서를 준비합니다([29장](prototype-request.html)).
+8부 「산업별 예시」를 마칩니다. 다음 장에서는 지금까지 배운 것을 활용해 새 고객 요청 한 건을 처음부터 끝까지 처리하는 종합 과제를 합니다([31장](project.html)).
 
 !!! exercise "확인 문제"
     1. 사람 대기 패널에서 빌드·테스트 단계는 AI 작업 7.7시간, 사람 대기 7분입니다. 이 단계를 늦춘 쪽은 어디입니까?
