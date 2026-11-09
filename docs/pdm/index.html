@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시작하기 — 설비 예지보전 PBL 튜토리얼</title>
+<meta name="description" content="공개 데이터(NASA IMS·SKAB·CWRU)를 활용해 진동 센서 하나로 설비 고장을 미리 알아채는 법을 배웁니다. 이어서 페인트 교반기의 16주 합성 데이터로 Agentic AutoML을 운영해 봅니다. 에이전트가 모델을 고르고 섀도 모드로 검증해 승격하는 과정입니다. 모든 그림과 수치는 실제로 실행한 결과입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="시작하기 — 설비 예지보전 PBL 튜토리얼">
+<meta property="og:description" content="공개 데이터(NASA IMS·SKAB·CWRU)를 활용해 진동 센서 하나로 설비 고장을 미리 알아채는 법을 배웁니다. 이어서 페인트 교반기의 16주 합성 데이터로 Agentic AutoML을 운영해 봅니다. 에이전트가 모델을 고르고 섀도 모드로 검증해 승격하는 과정입니다. 모든 그림과 수치는 실제로 실행한 결과입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm/">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm/img/agentic-w12.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>설비 예지보전 PBL <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 데이터와 모델</div><ul>
+<li><a href="landscape.html"><span class="n">01</span>공개 데이터와 기존 모델 지도</a></li>
+</ul>
+<div class="nav-part">2부 진동으로 이상 찾기</div><ul>
+<li><a href="vibration.html"><span class="n">02</span>진동 센서 하나로 이상 찾기</a></li>
+<li><a href="pattern.html"><span class="n">03</span>고장 패턴 검색과 제로샷</a></li>
+</ul>
+<div class="nav-part">3부 교반기 PBL 과 에이전트 운영</div><ul>
+<li><a href="mixer.html"><span class="n">04</span>교반기 PBL 문제와 합성 데이터</a></li>
+<li><a href="agentic.html"><span class="n">05</span>에이전트 운영: 섀도와 승격</a></li>
+</ul>
+<div class="nav-part">4부 과제</div><ul>
+<li><a href="assignments.html"><span class="n">06</span>PBL 과제와 평가</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap"></span></div>
+    <h1>시작하기</h1>
+    <article>
+<blockquote>
+<p>공개 데이터(NASA IMS·SKAB·CWRU)를 활용해 진동 센서 하나로 설비 고장을 미리 알아채는 법을 배웁니다. 이어서 페인트 교반기의 16주 합성 데이터로 Agentic AutoML을 운영해 봅니다. 에이전트가 모델을 고르고 섀도 모드로 검증해 승격하는 과정입니다. 모든 그림과 수치는 실제로 실행한 결과입니다.</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">실습 코드</p>
+<p>이 교재의 실습 코드(교재 스크립트 5개, 운영 하네스 <code>pdm_agent/</code>, 대시보드, 시험)는 공개 준비 중입니다. 그전까지는 각 장 본문에 실은 코드와 명령으로 따라 할 수 있습니다.</p>
+</div>
+<h2 id="무엇을-배우나">무엇을 배우나<a class="anchor" href="#무엇을-배우나" title="Permanent link">#</a></h2>
+<p>페인트 교반기를 쓰는 회사가 "언제 고장 날지 모르겠다, 데이터를 줄 테니 뭐라도 해 봐라"라는 문제를 내놓았다고 합시다. 이 교재는 그 문제를 푸는 순서를 그대로 따라갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>장</th>
+<th>하는 일</th>
+<th>쓰는 데이터</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 공개 데이터와 기존 모델 지도</td>
+<td>캐글·NASA·SKAB·CWRU에서 쓸 만한 데이터와 모델을 고르고, 기존 모델의 점수를 같은 규약으로 다시 계산합니다</td>
+<td>SKAB</td>
+</tr>
+<tr>
+<td>2. 진동 센서 하나로 이상 찾기</td>
+<td>진동 스냅숏을 특징으로 바꾸고, 물리 공식·한 페이지 오토인코더·제로샷의 알람이 고장 몇 시간 전에 울리는지 비교합니다</td>
+<td>NASA IMS</td>
+</tr>
+<tr>
+<td>3. 고장 패턴 검색과 제로샷</td>
+<td>진동 창을 벡터로 바꿔 과거 고장과 비교하고, Chronos-2를 학습 없이 사용합니다</td>
+<td>CWRU, NASA IMS</td>
+</tr>
+<tr>
+<td>4. 교반기 PBL 문제와 합성 데이터</td>
+<td>센서·레시피·고장·정비 기록이 있는 16주 합성 데이터를 만듭니다</td>
+<td>교반기 M-201(가상)</td>
+</tr>
+<tr>
+<td>5. 에이전트 운영: 섀도와 승격</td>
+<td>데이터가 매주 들어올 때 에이전트가 후보를 학습하고, 섀도 성적과 규칙에 따라 승격을 정합니다. 성능이 정체되면 코딩 에이전트가 새 후보 코드를 작성합니다</td>
+<td>교반기 M-201</td>
+</tr>
+<tr>
+<td>6. PBL 과제와 평가</td>
+<td>학생 팀 과제, 평가 기준, 회사 데이터로 바꿔 끼우는 법</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="왜-이렇게-짰나-현장-전문가의-조언">왜 이렇게 짰나: 현장 전문가의 조언<a class="anchor" href="#왜-이렇게-짰나-현장-전문가의-조언" title="Permanent link">#</a></h2>
+<p>교재를 설계하며 예지보전 현장을 오래 겪은 전문가에게 들은 내용을 그대로 반영했습니다.</p>
+<ul>
+<li>실제 공장의 예지보전은 대부분 <strong>전문가가 준 물리 계산식과 알람 구간</strong>으로 운영됩니다. 머신러닝이 잘 맞는 곳은 <strong>펌프·모터처럼 진동만 보면 되는 단일 부품</strong>입니다.</li>
+<li>고장 라벨이 적으므로, 결국 사람이 무엇이 이상인지 판단해 라벨을 붙입니다. 학생 과제에서는 <strong>다변량을 피하고 진동 센서 하나</strong>를 쓰는 것이 좋습니다. <strong>정상만 배우는 간단한 모델</strong>과 <strong>합성 데이터</strong>로 시작합니다.</li>
+<li>시계열을 512~1,024차원 벡터로 바꿔 벡터 DB에 넣고 과거 고장 구간과 비교하는 방법, Amazon Chronos 같은 파운데이션 모델로 학습 없이 점수를 내는 방법도 있습니다(3장).</li>
+<li>앞으로는 모델을 사람이 직접 고치기보다, <strong>코딩 에이전트에 데이터를 주기적으로 주고, 에이전트가 스스로 모델을 선택·재학습한 뒤 섀도 모드로 검증해 승격하는</strong> 운영으로 옮겨 갑니다(5장).</li>
+</ul>
+<h2 id="준비물">준비물<a class="anchor" href="#준비물" title="Permanent link">#</a></h2>
+<ul>
+<li>macOS 또는 Linux, Python 3.12, <a href="https://docs.astral.sh/uv/">uv</a></li>
+<li>디스크 약 2 GB(NASA IMS 원본 1.07 GB)</li>
+<li>5장의 코딩 에이전트까지 실습하려면 Claude Code가 필요합니다(<code>claude</code> 명령, 로그인 상태). 없으면 시험용 고정 후보로 같은 흐름을 볼 수 있습니다.</li>
+</ul>
+<div class="hl"><pre><span></span><code>uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12<span class="w"> </span>.venv
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--python<span class="w"> </span>.venv/bin/python<span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>pyarrow<span class="w"> </span>scipy<span class="w"> </span>scikit-learn<span class="w"> </span>matplotlib<span class="w"> </span>lightgbm<span class="w"> </span><span class="s2">&quot;flaml[automl]&quot;</span><span class="w"> </span>torch<span class="w"> </span><span class="s2">&quot;chronos-forecasting&gt;=2.0&quot;</span><span class="w"> </span>pytest
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">macOS 에서 torch 와 lightgbm 을 함께 쓸 때</p>
+<p>한 프로세스에서 Chronos(torch)와 lightgbm(FLAML)을 같이 쓰면 프로세스가 비정상 종료됩니다(exit 139, torch 2.15에서 확인). 스크립트 맨 위에서 <code>os.environ["OMP_NUM_THREADS"] = "1"</code>을 설정하고 lightgbm을 torch보다 먼저 불러오세요.</p>
+</div>
+<h2 id="이번-실행-환경">이번 실행 환경<a class="anchor" href="#이번-실행-환경" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기계</td>
+<td>Apple M4 Max(Chronos는 mps)</td>
+</tr>
+<tr>
+<td>주요 버전</td>
+<td>Python 3.12, torch 2.15, chronos-forecasting 2.3.2(amazon/chronos-2, chronos-bolt-small), scikit-learn 1.9, FLAML 2.8</td>
+</tr>
+<tr>
+<td>실행 날짜</td>
+<td>2026년 11월 9일</td>
+</tr>
+<tr>
+<td>코딩 에이전트</td>
+<td>Claude Code 헤드리스(<code>claude -p</code>, Sonnet)</td>
+</tr>
+</tbody>
+</table>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="landscape.html"><span>다음</span>공개 데이터와 기존 모델 지도</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-배우나">무엇을 배우나</a></li><li><a href="#왜-이렇게-짰나-현장-전문가의-조언">왜 이렇게 짰나: 현장 전문가의 조언</a></li><li><a href="#준비물">준비물</a></li><li><a href="#이번-실행-환경">이번 실행 환경</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

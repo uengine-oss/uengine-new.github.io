@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>에이전트 운영: 섀도와 승격 — 설비 예지보전 PBL 튜토리얼</title>
+<meta name="description" content="교반기 데이터가 매주 들어오면 하네스가 상황을 진단해 후보를 학습합니다. 섀도 모드에서 얻은 성적과 정해진 승격 규칙에 따라 챔피언을 바꿉니다. 기본 후보로 더 나아지지 않으면 코딩 에이전트(Claude Code)가 새 후보 코드를 작성합니다. 채점과 승격에는 같은 규칙을 적용합니다. 16주를 실제로 실행해 ISO 규칙 → BPFO 공식 → 통계 기준 → 레시피별 오토인코더로 바뀌는 과정을 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm/agentic.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="에이전트 운영: 섀도와 승격 — 설비 예지보전 PBL 튜토리얼">
+<meta property="og:description" content="교반기 데이터가 매주 들어오면 하네스가 상황을 진단해 후보를 학습합니다. 섀도 모드에서 얻은 성적과 정해진 승격 규칙에 따라 챔피언을 바꿉니다. 기본 후보로 더 나아지지 않으면 코딩 에이전트(Claude Code)가 새 후보 코드를 작성합니다. 채점과 승격에는 같은 규칙을 적용합니다. 16주를 실제로 실행해 ISO 규칙 → BPFO 공식 → 통계 기준 → 레시피별 오토인코더로 바뀌는 과정을 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm/agentic.html">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm/img/agentic-w12.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>설비 예지보전 PBL <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 데이터와 모델</div><ul>
+<li><a href="landscape.html"><span class="n">01</span>공개 데이터와 기존 모델 지도</a></li>
+</ul>
+<div class="nav-part">2부 진동으로 이상 찾기</div><ul>
+<li><a href="vibration.html"><span class="n">02</span>진동 센서 하나로 이상 찾기</a></li>
+<li><a href="pattern.html"><span class="n">03</span>고장 패턴 검색과 제로샷</a></li>
+</ul>
+<div class="nav-part">3부 교반기 PBL 과 에이전트 운영</div><ul>
+<li><a href="mixer.html"><span class="n">04</span>교반기 PBL 문제와 합성 데이터</a></li>
+<li><a href="agentic.html" class="on" aria-current="page"><span class="n">05</span>에이전트 운영: 섀도와 승격</a></li>
+</ul>
+<div class="nav-part">4부 과제</div><ul>
+<li><a href="assignments.html"><span class="n">06</span>PBL 과제와 평가</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">3부 교반기 PBL 과 에이전트 운영<span class="chap">5</span></div>
+    <h1>에이전트 운영: 섀도와 승격</h1>
+    <article>
+<blockquote>
+<p>교반기 데이터가 매주 들어오면 하네스가 상황을 진단해 후보를 학습합니다. 섀도 모드에서 얻은 성적과 정해진 승격 규칙에 따라 챔피언을 바꿉니다. 기본 후보로 더 나아지지 않으면 코딩 에이전트(Claude Code)가 새 후보 코드를 작성합니다. 채점과 승격에는 같은 규칙을 적용합니다. 16주를 실제로 실행해 ISO 규칙 → BPFO 공식 → 통계 기준 → 레시피별 오토인코더로 바뀌는 과정을 봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/FcnRo_vYGX8" title="에이전트 운영: 섀도와 승격 — 영상 4:23" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>현장 전문가는 "모델을 직접 파인튜닝하기보다, 코딩 에이전트에 데이터를 주기적으로 넣으면 스스로 모델을 고르고 다시 학습하고, 좋아지면 승격하고 아니면 섀도 모드로 둔다"는 쪽으로 운영이 옮겨 간다고 했습니다. 이 장은 그 생각을 <strong>에이전트가 판단하고, 규칙이 승격하는</strong> 구조로 만든 것입니다.</p>
+<table>
+<thead>
+<tr>
+<th>누가</th>
+<th>무엇을</th>
+<th>바꿀 수 있나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>하네스의 정책(에이전트)</td>
+<td>데이터 상황을 보고 무엇을 학습할지 정합니다</td>
+<td>규칙 코드(<code>policy</code>)로</td>
+</tr>
+<tr>
+<td>코딩 에이전트(Claude Code)</td>
+<td>성능이 정체되면 새 후보 코드 <code>candidate.py</code>를 작성합니다</td>
+<td>작업 폴더 안에서만</td>
+</tr>
+<tr>
+<td>채점기·승격 규칙</td>
+<td>섀도 성적으로 챔피언을 정합니다</td>
+<td>에이전트는 변경 불가</td>
+</tr>
+</tbody>
+</table>
+<h2 id="구조">구조<a class="anchor" href="#구조" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pdm_agent/mixer_sim.py</code>, <code>features.py</code></td>
+<td>4장의 데이터와 특징</td>
+</tr>
+<tr>
+<td><code>pdm_agent/models.py</code></td>
+<td>후보 가족 9개. 모두 <code>fit(train, failures)</code>와 <code>score(df)</code>(1.0 이상이면 임계값 초과) 규약을 따릅니다</td>
+</tr>
+<tr>
+<td><code>pdm_agent/evaluate.py</code></td>
+<td>알람을 사건으로 묶어 정비 기록과 맞추고 비용으로 채점</td>
+</tr>
+<tr>
+<td><code>pdm_agent/gate.py</code></td>
+<td>섀도 → 챔피언 승격 규칙</td>
+</tr>
+<tr>
+<td><code>pdm_agent/orchestrator.py</code></td>
+<td>매주 한 바퀴: 점수 → 채점 → 승격 → 상황 진단 → 후보 학습 → (정체) 코딩 에이전트</td>
+</tr>
+<tr>
+<td><code>pdm_agent/coding_agent.py</code></td>
+<td>코딩 에이전트 작업 폴더·호출·검증</td>
+</tr>
+<tr>
+<td><code>pdm_agent/server.py</code>, <code>dashboard/</code></td>
+<td>대시보드</td>
+</tr>
+</tbody>
+</table>
+<h3 id="후보-가족">후보 가족<a class="anchor" href="#후보-가족" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>가족</th>
+<th>기본 원리</th>
+<th>생성 시점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ISO 진동 등급 규칙</td>
+<td>속도 RMS 2.8 mm/s 이상이면 알람</td>
+<td>1주차 챔피언(학습 없음)</td>
+</tr>
+<tr>
+<td>베어링 결함 주파수 규칙</td>
+<td>포락선 BPFO 성분이 배경보다 4 dB 이상</td>
+<td>1주차</td>
+</tr>
+<tr>
+<td>통계 기준(z)</td>
+<td>핵심 지표 6개가 평소에서 몇 σ 벗어났나</td>
+<td>1주차, 드리프트 때</td>
+</tr>
+<tr>
+<td>Isolation Forest</td>
+<td>정상 데이터에서 쉽게 분리되는 점</td>
+<td>1주차, 드리프트 때</td>
+</tr>
+<tr>
+<td>오토인코더</td>
+<td>정상 스펙트럼을 복원하지 못하는 정도</td>
+<td>1주차, 드리프트 때</td>
+</tr>
+<tr>
+<td>Chronos 제로샷</td>
+<td>8시간 앞선 문맥으로 지금 값을 예측, 예측 구간을 벗어난 정도</td>
+<td>1주차</td>
+</tr>
+<tr>
+<td>고장 패턴 검색</td>
+<td>고장 직전 3일 벡터와 정상 벡터 중 어디에 가까운가</td>
+<td>고장 기록 1건 이상</td>
+</tr>
+<tr>
+<td>지도학습 AutoML</td>
+<td>FLAML이 lgbm·rf·extra_tree 중 고른 분류기</td>
+<td>고장 2건·2종 이상</td>
+</tr>
+<tr>
+<td>앙상블</td>
+<td>고장을 잡아 본 서로 다른 가족 2~3개의 점수 평균</td>
+<td>고장 2건 이상, 앙상블 섀도가 없을 때</td>
+</tr>
+</tbody>
+</table>
+<p>통계 기준·Isolation Forest·오토인코더는 <strong>레시피별 정상 기준</strong>(레시피마다 평균·표준편차로 정규화) 변형도 함께 만듭니다.</p>
+<h3 id="채점-규칙">채점 규칙<a class="anchor" href="#채점-규칙" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>알람</td>
+<td>정규화 점수 1.0 이상이 3번 연속. 6시간 안에 다시 울리면 같은 알람</td>
+</tr>
+<tr>
+<td>감지</td>
+<td>고장 전 7일 안에 시작한 첫 알람</td>
+</tr>
+<tr>
+<td>비용(만원, 가정)</td>
+<td>놓침 800 · 12시간 전보다 늦게 잡음 400 · 12~48시간 전 100 · 48시간 넘게 앞섬 0 · 헛알람 30</td>
+</tr>
+<tr>
+<td>알람 피로</td>
+<td>직전 7일 헛알람이 3번 이상이면, 그 뒤 알람은 사람이 보지 않아 감지로 인정하지 않습니다</td>
+</tr>
+</tbody>
+</table>
+<h3 id="승격-규칙">승격 규칙<a class="anchor" href="#승격-규칙" title="Permanent link">#</a></h3>
+<ol>
+<li>섀도 모드로 <strong>2주 이상</strong> 실행했습니다.</li>
+<li>비교 구간에 <strong>고장 기록이 1건 이상</strong> 있습니다. 헛알람이 적다는 것만으로는 고장을 전혀 잡지 못하는 모델과 구별할 수 없습니다.</li>
+<li>챔피언이 잡은 고장을 <strong>하나도 놓치지 않았습니다.</strong></li>
+<li>비용이 챔피언보다 <strong>10% 이상, 그리고 30만원 이상</strong> 적습니다.</li>
+</ol>
+<p>여러 후보가 통과하면 함께 실행한 구간에서 비용이 가장 적은 후보를 고릅니다. 비용이 같으면 더 단순한 후보를 고릅니다. 경계 사례 10건은 <code>tests/gate-cases.json</code>에 있습니다(예: 400 → 360은 승격, 400 → 361은 보류, 100 → 70은 승격, 100 → 71은 보류).</p>
+<h3 id="정책-상황-무엇을-학습할까">정책: 상황 → 무엇을 학습할까<a class="anchor" href="#정책-상황-무엇을-학습할까" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>첫 주</td>
+<td>정상 데이터(최근 2일 제외)로 후보 5개를 학습해 다음 주부터 섀도</td>
+</tr>
+<tr>
+<td>처음 보는 레시피, 또는 레시피별 진동 중앙값이 평소 사분위 폭의 0.5배 넘게 이동(알려진 고장 전 7일은 빼고 계산, 3주에 한 번까지)</td>
+<td>비지도 후보를 새 데이터로 + 레시피별 기준으로 재학습</td>
+</tr>
+<tr>
+<td>새 정비 기록</td>
+<td>라벨을 쓰는 후보(고장 패턴 검색, 지도학습)만 다시</td>
+</tr>
+<tr>
+<td>고장 2건 이상, 앙상블 섀도 없음</td>
+<td>앙상블 후보</td>
+</tr>
+<tr>
+<td>섀도 기한(6주)이 지나 제외된 가족</td>
+<td>최신 정상 데이터로 다시</td>
+</tr>
+<tr>
+<td>라벨을 쓰는 후보와 앙상블이 실제 고장으로 채점받고도 못 이기고, 2주 동안 승격 없음</td>
+<td><strong>코딩 에이전트</strong> 호출(4주에 한 번)</td>
+</tr>
+</tbody>
+</table>
+<p>섀도는 8개까지 두고, 넘으면 비용이 큰 것부터 정리합니다. 코딩 에이전트 후보는 고장으로 한 번 채점받기 전에는 정리하지 않습니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>데이터를 만들고(4장) 대시보드를 띄웁니다. 코딩 에이전트까지 보려면 <code>--agent claude</code>(Claude Code 로그인 필요), 없으면 <code>--agent stub</code>(시험용 고정 후보)입니다.</li>
+<div class="hl"><pre><span></span><code>```bash
+.venv/bin/python textbook/06_mixer_data.py
+PYTHONPATH=. .venv/bin/python -m pdm_agent.server --run runs/demo --port 8781 --agent claude
+# http://127.0.0.1:8781/
+```
+</code></pre></div>
+
+<li><strong>다음 주 데이터 넣기</strong>를 누릅니다. 1주차 챔피언은 학습이 필요 없는 <strong>ISO 진동 등급 규칙</strong>이고, 정상 일주일로 학습한 후보 5개가 「다음 주부터」로 순위표에 올라옵니다.</li>
+<div class="hl"><pre><span></span><code>![1주차: 챔피언은 ISO 규칙, 후보 5개는 다음 주부터 섀도](img/agentic-w01.webp)
+</code></pre></div>
+
+<li>2주차를 넣습니다. 고장 기록이 없으므로 순위표에 성적이 쌓여도 승격은 없습니다.</li>
+<li>3주차를 넣습니다. 정비 기록 <strong>F1 베어링 외륜 손상</strong>이 들어옵니다. ISO 규칙은 이 고장을 놓쳤고(800만원), 섀도 후보 가운데 BPFO 규칙(139시간 전)·오토인코더(150.8시간 전)·통계 기준(105.2시간 전)이 나흘 넘게 앞서 잡았습니다. 비용이 같은 후보 가운데 가장 단순한 <strong>베어링 결함 주파수 규칙</strong>이 승격되어 챔피언 계보에 추가됩니다.</li>
+<div class="hl"><pre><span></span><code>![3주차: 첫 정비 기록 F1 뒤 BPFO 규칙으로 승격](img/agentic-w03.webp)
+</code></pre></div>
+
+<li>5주차를 넣습니다. <strong>처음 보는 레시피 C</strong>가 판단 기록에 드리프트로 남고, 비지도 후보 3가족을 일반 모델과 레시피별 모델로 다시 학습합니다.</li>
+<div class="hl"><pre><span></span><code>![5주차: 처음 보는 레시피 C → 드리프트 재학습](img/agentic-w05.webp)
+</code></pre></div>
+
+<li>7주차를 넣습니다. <strong>F2 임펠러 불균형</strong>이 발생합니다. 챔피언인 BPFO 규칙은 불균형을 감지하지 못했습니다. 레시피 C까지 학습한 <strong>통계 기준(z) v2</strong>가 48.8시간 전에 잡아 승격됩니다(800 → 0만원). 고장이 두 종류가 되자 지도학습 AutoML과 앙상블 후보도 생깁니다.</li>
+<div class="hl"><pre><span></span><code>![7주차: BPFO 규칙이 놓친 불균형을 잡은 통계 기준 v2로 승격](img/agentic-w07.webp)
+</code></pre></div>
+
+<li>8~11주차를 넣습니다. 8주차에는 정비 뒤 기준 변화(중앙값 이동 사분위 폭의 1.0배)를 드리프트로 잡아 다시 학습합니다. 섀도가 8개를 넘으면 비용이 큰 것부터 정리됩니다.</li>
+<li>12주차를 넣습니다. <strong>오토인코더 · 레시피별 v2</strong>가 불균형을 더 일찍 잡아 승격됩니다(100 → 0만원).</li>
+<div class="hl"><pre><span></span><code>![12주차: 레시피별 오토인코더로 승격, 계보는 ISO → BPFO → z → 오토인코더](img/agentic-w12.webp)
+</code></pre></div>
+
+<li>13·14주차를 넣습니다. 14주차에 두 주째 승격이 없고 기본 후보들이 실제 고장으로 채점받았으므로 정체 상태로 판단합니다. 위쪽 표시줄에 <strong>코딩 에이전트 작업 중</strong>이 보이고, 이번 실행에서는 약 2분이 걸렸습니다.</li>
+<div class="hl"><pre><span></span><code>![14주차: 코딩 에이전트 작업 중](img/agentic-w14-busy.webp)
+</code></pre></div>
+
+<li>판단 기록의 <strong>코드 보기</strong>를 누르면 에이전트가 쓴 코드와 메모가 열립니다.</li>
+<div class="hl"><pre><span></span><code>![에이전트가 쓴 후보: 레시피별 단방향 강건 z(베어링·불균형 분리)와 메모](img/agentic-code.webp)
+</code></pre></div>
+
+<li>15·16주차를 넣습니다. 에이전트 후보도 마지막 고장 F6을 33.8시간 전에 잡았지만 챔피언과 비용(100만원)이 같아 승격되지 않았고, 채점을 받은 뒤 섀도 정리 과정에서 제외되었습니다.</li>
+<div class="hl"><pre><span></span><code>![16주차: 마지막 상태와 판단 기록](img/agentic-w16.webp)
+</code></pre></div>
+
+</ol>
+<h2 id="코딩-에이전트는-무엇을-받고-무엇을-내나">코딩 에이전트는 무엇을 받고 무엇을 내나<a class="anchor" href="#코딩-에이전트는-무엇을-받고-무엇을-내나" title="Permanent link">#</a></h2>
+<p>하네스는 <code>runs/&lt;run&gt;/agent/wNN/</code> 작업 폴더를 만들고 그 안에서만 에이전트를 실행합니다.</p>
+<table>
+<thead>
+<tr>
+<th>작업 폴더</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BRIEF.md</code></td>
+<td>설비·센서·고장 종류, 지금 상황(챔피언·후보 성적), 채점·승격 규칙, 지켜야 할 규약(<code>AgentCandidate(Candidate)</code>의 <code>fit</code>·<code>score</code>), 쓸 수 있는 라이브러리</td>
+</tr>
+<tr>
+<td><code>data.parquet</code>, <code>failures.json</code></td>
+<td>지금까지의 데이터 사본(최근 2일 제외)과 정비 기록</td>
+</tr>
+<tr>
+<td><code>reference/</code></td>
+<td>기존 후보 코드와 채점기(읽기만)</td>
+</tr>
+<tr>
+<td><code>backtest.py</code></td>
+<td>지난 고장마다 그 전 데이터로 학습하고 그 고장 구간을 채점(챔피언 가족의 성적도 함께)</td>
+</tr>
+</tbody>
+</table>
+<p>호출은 이렇게 합니다. 웹은 막고, 파일 쓰기와 이 폴더의 파이썬 실행만 허용합니다.</p>
+<div class="hl"><pre><span></span><code>claude<span class="w"> </span>-p<span class="w"> </span>--model<span class="w"> </span>sonnet<span class="w"> </span>--output-format<span class="w"> </span>json<span class="w"> </span>--permission-mode<span class="w"> </span>acceptEdits<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allowedTools<span class="w"> </span>Read<span class="w"> </span>Write<span class="w"> </span>Edit<span class="w"> </span>Glob<span class="w"> </span>Grep<span class="w"> </span><span class="s1">&#39;Bash(&lt;venv&gt;/bin/python:*)&#39;</span><span class="w"> </span>--disallowedTools<span class="w"> </span>WebFetch<span class="w"> </span>WebSearch
+</code></pre></div>
+
+<p>에이전트가 남긴 <code>candidate.py</code>는 <strong>다른 프로세스에서 먼저</strong> 불러와 학습과 점수 계산을 수행합니다. 같은 입력에 같은 점수가 나오고 NaN이 없어야 섀도로 등록됩니다. 폐쇄망이면 <code>PDM_AGENT_CMD</code> 환경변수로 OpenCode 같은 다른 코딩 에이전트의 명령을 지정합니다(작업 폴더에서 실행되고, 표준 입력으로 지시를 받고, <code>candidate.py</code>를 남기면 됩니다).</p>
+<p>이번에 실제로 두 번 실행한 결과입니다.</p>
+<table>
+<thead>
+<tr>
+<th>실행</th>
+<th>에이전트가 낸 후보</th>
+<th>걸린 시간 · 턴 · 비용</th>
+<th>섀도 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1차</td>
+<td>레시피별 강건 단방향 z + 이동 중앙값</td>
+<td>112초 · 28턴 · 0.48달러</td>
+<td>F6을 32시간 전에 잡음, 챔피언과 같은 비용이라 보류</td>
+</tr>
+<tr>
+<td>2차(영상)</td>
+<td>레시피별 단방향 강건 z(베어링·불균형 분리)</td>
+<td>120초 · 27턴 · 0.49달러</td>
+<td>F6을 33.8시간 전에 잡음, 같은 비용이라 보류</td>
+</tr>
+</tbody>
+</table>
+<p>두 번 모두 에이전트는 "첨도는 원료 투입 때 정상에서도 튀어서 뺐다", "베어링은 BPFO, 불균형은 1배 진동을 따로 본다"는 결론에 스스로 이르렀습니다. 메모에 백테스트 숫자와 한계(48시간 경계 근처의 선행시간, 고장 몇 건에 맞춘 지표 선택)도 적었습니다. 2차 에이전트는 <strong>고장 시각이 데이터 끝보다 뒤면 <code>backtest.py</code>가 멈추는 결함</strong>도 찾아 메모에 남겼고, 이 결함은 하네스에서 수정했습니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">백테스트와 섀도가 다를 수 있습니다</p>
+<p>2차 후보는 고친 백테스트에서 비용 30만원으로 챔피언 가족(930만원)보다 크게 앞섰지만, 실제 섀도 2주에서는 챔피언과 같은 100만원이었습니다. 지난 고장에 맞춘 성적은 승격 근거가 되지 않고, <strong>앞으로 들어온 데이터에서의 성적(섀도)</strong>만 근거가 됩니다.</p>
+</div>
+<h2 id="시험">시험<a class="anchor" href="#시험" title="Permanent link">#</a></h2>
+<div class="hl"><pre><span></span><code><span class="nv">PYTHONPATH</span><span class="o">=</span>.<span class="w"> </span>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests<span class="w">          </span><span class="c1"># 32개: 채점·승격 경계·16주 시나리오·대시보드 API</span>
+node<span class="w"> </span>--test<span class="w"> </span>--test-concurrency<span class="o">=</span><span class="m">1</span><span class="w"> </span>e2e/dashboard.test.mjs<span class="w">    </span><span class="c1"># 6개: 화면에서 1~14주를 눌러 보는 회귀</span>
+</code></pre></div>
+
+<h2 id="알아-둘-점">알아 둘 점<a class="anchor" href="#알아-둘-점" title="Permanent link">#</a></h2>
+<ul>
+<li>합성 데이터와 가정한 비용으로 얻은 흐름입니다. 회사 데이터에서는 승격 순서와 시점이 달라집니다.</li>
+<li>코딩 에이전트가 쓴 코드는 이 컴퓨터에서 실행됩니다. 실제 운영에서는 작업 폴더를 컨테이너 같은 격리 환경에서 돌리세요.</li>
+<li>지도학습 AutoML은 한 번도 승격하지 못했습니다. 고장 6건으로는 정상과 전조를 구분하기에 데이터가 부족했습니다. 라벨이 더 쌓이면 달라질 수 있습니다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>2주차에 섀도 후보 몇 개가 챔피언보다 헛알람이 적었는데도 승격하지 않은 이유는 무엇인가요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>비교 구간에 고장 기록이 없었기 때문입니다(승격 규칙 2). 고장을 전혀 잡지 못하는 모델도 헛알람은 적을 수 있습니다. 따라서 실제 고장을 잡는지 확인하기 전에는 승격하지 않습니다.</p>
+</details>
+<ol>
+<li>7주차에 BPFO 규칙이 챔피언 자리를 내준 까닭을 물리로 설명해 보세요.</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>BPFO 규칙은 베어링 외륜 결함 주파수의 충격만 봅니다. F2는 임펠러에 안료가 붙어 생긴 불균형 고장입니다. 회전 1배 성분이 커지지만 BPFO 성분에는 나타나지 않습니다. 그래서 놓쳤고(800만원), 1배 진동까지 보는 통계 기준 모델이 승격됐습니다.</p>
+</details>
+<ol>
+<li>코딩 에이전트가 낸 후보가 백테스트에서 크게 앞섰는데 왜 바로 챔피언이 되지 않나요? 이렇게 한 이유도 함께 말해 보세요.</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>승격은 섀도(앞으로 들어온 데이터)에서 2주 이상, 실제 고장으로 채점한 성적으로만 정하기 때문입니다. 백테스트는 에이전트가 이미 본 지난 고장에 맞춰질 수 있습니다. 실제로 이번 후보는 섀도에서 챔피언과 같은 비용이었습니다. 이렇게 하면 에이전트가 무엇을 만들든 현장에 적용되는 모델은 모두 같은 기준을 통과하게 됩니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="mixer.html"><span>이전</span>교반기 PBL 문제와 합성 데이터</a><a class="next" href="assignments.html"><span>다음</span>PBL 과제와 평가</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#구조">구조</a><ul><li><a href="#후보-가족">후보 가족</a></li><li><a href="#채점-규칙">채점 규칙</a></li><li><a href="#승격-규칙">승격 규칙</a></li><li><a href="#정책-상황-무엇을-학습할까">정책: 상황 → 무엇을 학습할까</a></li></ul></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#코딩-에이전트는-무엇을-받고-무엇을-내나">코딩 에이전트는 무엇을 받고 무엇을 내나</a></li><li><a href="#시험">시험</a></li><li><a href="#알아-둘-점">알아 둘 점</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

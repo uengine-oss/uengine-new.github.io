@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공개 데이터와 기존 모델 지도 — 설비 예지보전 PBL 튜토리얼</title>
+<meta name="description" content="캐글·NASA·SKAB·CWRU에서 예지보전 데이터와 기존 모델을 찾아 직접 실행해 보고, SKAB 순위표의 점수를 같은 규약으로 다시 계산합니다. 진동 채널만 쓰면 무엇을 잃는지도 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm/landscape.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="공개 데이터와 기존 모델 지도 — 설비 예지보전 PBL 튜토리얼">
+<meta property="og:description" content="캐글·NASA·SKAB·CWRU에서 예지보전 데이터와 기존 모델을 찾아 직접 실행해 보고, SKAB 순위표의 점수를 같은 규약으로 다시 계산합니다. 진동 채널만 쓰면 무엇을 잃는지도 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm/landscape.html">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm/img/agentic-w12.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>설비 예지보전 PBL <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 데이터와 모델</div><ul>
+<li><a href="landscape.html" class="on" aria-current="page"><span class="n">01</span>공개 데이터와 기존 모델 지도</a></li>
+</ul>
+<div class="nav-part">2부 진동으로 이상 찾기</div><ul>
+<li><a href="vibration.html"><span class="n">02</span>진동 센서 하나로 이상 찾기</a></li>
+<li><a href="pattern.html"><span class="n">03</span>고장 패턴 검색과 제로샷</a></li>
+</ul>
+<div class="nav-part">3부 교반기 PBL 과 에이전트 운영</div><ul>
+<li><a href="mixer.html"><span class="n">04</span>교반기 PBL 문제와 합성 데이터</a></li>
+<li><a href="agentic.html"><span class="n">05</span>에이전트 운영: 섀도와 승격</a></li>
+</ul>
+<div class="nav-part">4부 과제</div><ul>
+<li><a href="assignments.html"><span class="n">06</span>PBL 과제와 평가</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">1부 데이터와 모델<span class="chap">1</span></div>
+    <h1>공개 데이터와 기존 모델 지도</h1>
+    <article>
+<blockquote>
+<p>캐글·NASA·SKAB·CWRU에서 예지보전 데이터와 기존 모델을 찾아 직접 실행해 보고, SKAB 순위표의 점수를 같은 규약으로 다시 계산합니다. 진동 채널만 쓰면 무엇을 잃는지도 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/MzziBcSsVX4" title="공개 데이터와 기존 모델 지도 — 영상 2:26" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>이 장에서 하는 일</th>
+<th>왜</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>공개 데이터 여섯 가지를 비교하고 셋을 고릅니다</td>
+<td>회사 데이터가 오기 전에 실제 고장 데이터로 개념을 익히기 위해</td>
+</tr>
+<tr>
+<td>모델을 일곱 갈래로 정리합니다</td>
+<td>5장의 후보를 고르기 위해 규칙부터 에이전트까지 각 방식의 쓰임새 파악</td>
+</tr>
+<tr>
+<td>SKAB 순위표를 같은 규약으로 재현합니다</td>
+<td>남이 낸 점수를 믿기 전에 같은 조건에서 다시 내 보는 습관</td>
+</tr>
+</tbody>
+</table>
+<h2 id="데이터-여섯-가지">데이터 여섯 가지<a class="anchor" href="#데이터-여섯-가지" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>데이터</th>
+<th>무엇</th>
+<th>센서·라벨</th>
+<th>이 교재에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NASA IMS 베어링</strong></td>
+<td>축 하나에 베어링 4개, 고장까지 시험 3회. 2차 시험은 10분마다 1초(20 kHz) 스냅숏 984개</td>
+<td>가속도계. 라벨은 "끝에 베어링 1 외륜 손상"뿐</td>
+<td>2장, 3장</td>
+</tr>
+<tr>
+<td><strong>SKAB</strong></td>
+<td>펌프가 도는 물 순환 시험대, 실험 34개(밸브 조작·회전자 불균형 등)</td>
+<td>가속도 RMS 2·전류·압력·온도·유량 등 8개, 점마다 이상 라벨</td>
+<td>이 장</td>
+</tr>
+<tr>
+<td><strong>CWRU 베어링</strong></td>
+<td>정상·내륜·볼·외륜 결함, 부하 0~3 hp</td>
+<td>구동단 가속도, 결함 종류가 곧 라벨</td>
+<td>3장</td>
+</tr>
+<tr>
+<td>NASA C-MAPSS</td>
+<td>터보팬 엔진 시뮬레이션, 센서 21개</td>
+<td>남은 수명(RUL)</td>
+<td>다변량이라 이번에는 쓰지 않음</td>
+</tr>
+<tr>
+<td>캐글 pump_sensor_data</td>
+<td>실제 급수 펌프 1대, 약 5개월, 1분 간격</td>
+<td>센서 52개(뜻이 일부만 밝혀짐), 고장 7번</td>
+<td>다변량·센서 뜻 불명으로 미룸</td>
+</tr>
+<tr>
+<td>MIMII</td>
+<td>펌프·팬·밸브·슬라이드 레일 소리</td>
+<td>마이크 8채널</td>
+<td>소리 기반 과제로 확장할 때</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">CWRU 정상 파일은 48 kHz</p>
+<p>CWRU의 결함 파일(12 kHz 구동단)과 달리 정상 파일(97~100번)은 48 kHz로 녹음되어 있습니다. 12 kHz로 읽으면 주파수가 4배 어긋납니다. 3장의 스크립트는 정상 파일을 4:1로 줄여 맞춥니다.</p>
+</div>
+<h2 id="모델-일곱-갈래">모델 일곱 갈래<a class="anchor" href="#모델-일곱-갈래" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>방식</th>
+<th>대표</th>
+<th>학습에 필요한 것</th>
+<th>무엇이 이상인지 말하나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>물리 공식·알람 구간</td>
+<td>ISO 10816 진동 등급, 베어링 결함 주파수(BPFO)</td>
+<td>없음</td>
+<td>예 — 공식이 곧 고장 모드</td>
+</tr>
+<tr>
+<td>통계 기준</td>
+<td>z 점수, 관리도(EWMA·CUSUM)</td>
+<td>정상 데이터</td>
+<td>어느 지표인지까지</td>
+</tr>
+<tr>
+<td>정상만 배우는 ML</td>
+<td>오토인코더, Isolation Forest</td>
+<td>정상 데이터</td>
+<td>아니오</td>
+</tr>
+<tr>
+<td>제로샷 파운데이션 모델</td>
+<td>Amazon Chronos-2, Chronos-Bolt</td>
+<td>없음(임계값만)</td>
+<td>아니오</td>
+</tr>
+<tr>
+<td>임베딩 + 벡터 검색</td>
+<td>Chronos-2 임베딩, 손으로 만든 스펙트럼 벡터</td>
+<td>라벨 몇 건</td>
+<td>"예전 어떤 고장과 닮음"</td>
+</tr>
+<tr>
+<td>지도학습 AutoML</td>
+<td>FLAML, AutoGluon</td>
+<td>라벨 여러 건</td>
+<td>예</td>
+</tr>
+<tr>
+<td>에이전트형 ML</td>
+<td>AIDE, 코딩 에이전트(Claude Code·OpenCode·OpenHands)</td>
+<td>데이터가 오는 대로</td>
+<td>코드로 설명</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기-skab-순위표-재현">따라 하기: SKAB 순위표 재현<a class="anchor" href="#따라-하기-skab-순위표-재현" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>SKAB를 받습니다(GPL-3.0, 데이터 4.3 MB).</li>
+<div class="hl"><pre><span></span><code>```bash
+git clone --depth 1 https://github.com/waico/SKAB.git data/raw/skab/repo
+```
+</code></pre></div>
+
+<li>순위표의 규약을 확인합니다. 저장소의 <code>notebooks/</code>와 <code>core/</code>에 나온 규약은 다음과 같습니다. 이상이 있는 34개 파일마다 <strong>앞 400점으로 그 파일의 모델을 학습</strong>하고 나머지 23,801점을 채점합니다. 각 점의 예측과 정답을 비교한 뒤 모든 파일의 결과를 합쳐 F1·FAR(헛알람 비율)·MAR(놓침 비율)을 계산합니다.</li>
+<li>세 모델을 같은 규약으로 실행합니다. Isolation Forest(오염 0.0005, 3점 이동 중앙값), Vanilla AE(5-4-2-4-5, 문턱값 = 학습 오차 99% × 5/2), Conv-AE(60점 창, 문턱값 = 99.9% × 4/3).</li>
+<div class="hl"><pre><span></span><code>```bash
+.venv/bin/python textbook/03_skab_benchmark.py      # 약 2분, CPU
+```
+</code></pre></div>
+
+<li>결과를 순위표와 비교합니다.</li>
+<div class="hl"><pre><span></span><code>![SKAB 순위표와 재현 결과(F1). 주황이 우리 재현, 초록은 진동 채널 2개만 쓴 경우](img/landscape-skab.webp)
+
+| 모델(센서 8개) | 우리 F1 / FAR% / MAR% | 순위표 |
+|---|---|---|
+| Isolation Forest | 0.287 / 2.56 / 82.89 | 0.29 / 2.56 / 82.89 |
+| Vanilla AE | 0.380 / 2.11 / 76.12 | 0.39 / 2.59 / 75.15 |
+| Conv-AE | 0.783 / 13.64 / 28.11 | 0.78 / 13.55 / 28.02 |
+| 늘 알람(기준) | 0.698 / 100 / 0 | — |
+</code></pre></div>
+
+<li>진동 채널(<code>Accelerometer1RMS</code>, <code>Accelerometer2RMS</code>)만 남기고 다시 실행합니다. Conv-AE의 점수는 0.783 → 0.430으로 떨어집니다. 실험 종류별로 보면 밸브 실험은 0.753 → 0.148, 0.767 → 0.000으로 떨어져 거의 잡지 못합니다. 회전자 불균형은 0.884 → 0.924로 오히려 오릅니다.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">점수 하나로 고르지 마세요</p>
+<p>시험 데이터의 54%가 이상이라 <strong>늘 알람만 울려도 F1이 0.698</strong>입니다. Isolation Forest는 시드(0~4)에 따라 F1이 0.181~0.287로 달라집니다. 순위표의 숫자는 규약·시드·데이터 구성과 함께 읽어야 합니다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">재현에서 맞추지 못한 것</p>
+<p>원본은 Keras(TF 2.16)이고 재현은 torch입니다. 난수 흐름, 보폭 2의 "same" 패딩(Keras는 왼쪽 2·오른쪽 3), BatchNorm 이동 분산의 계산 방식은 맞추지 못했습니다. 그래도 F1은 소수 둘째 자리까지 같습니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>SKAB에서 "늘 알람" 모델의 F1이 0.698이나 나오는 이유는 무엇인가요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>시험 데이터의 54%가 이상으로 표시되어 있으므로, 모든 점을 이상이라고 하면 재현율이 1 이고 정밀도가 0.54쯤 되기 때문입니다. 그래서 FAR(헛알람 비율)과 MAR(놓침 비율)을 함께 봐야 합니다.</p>
+</details>
+<ol>
+<li>진동 채널만 쓰는 것이 맞는 설비 고장과 맞지 않는 고장을 하나씩 들어 보세요.</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>적합한 예는 회전자 불균형이나 베어링 손상처럼 회전체에서 생기는 고장입니다(불균형은 진동만 써도 F1이 오릅니다). 적합하지 않은 예는 밸브 조작처럼 유량·압력에서 먼저 드러나는 이상입니다(진동만 쓰면 F1 0.15·0.00).</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기</a><a class="next" href="vibration.html"><span>다음</span>진동 센서 하나로 이상 찾기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#데이터-여섯-가지">데이터 여섯 가지</a></li><li><a href="#모델-일곱-갈래">모델 일곱 갈래</a></li><li><a href="#따라-하기-skab-순위표-재현">따라 하기: SKAB 순위표 재현</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

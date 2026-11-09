@@ -6,6 +6,7 @@
     python3 tools/industry-docs/build.py ai-planning
     python3 tools/industry-docs/build.py erp
     python3 tools/industry-docs/build.py aidlc-handson
+    python3 tools/industry-docs/build.py pdm
 
 <제품>/src/*.md (장마다 하나) → docs/<제품>/*.html. 목차·순서는 아래 PRODUCTS 가 정한다.
 이미지는 docs/<제품>/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
@@ -39,6 +40,10 @@ PRODUCTS = {
     "aidlc-handson": dict(name="Claude Code × AI-DLC 핸즈온", page="axschool.html", pagelabel="AX School", og="run-done.webp", search="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)",
                 foot="이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.",
                 chapters=[("index", "시작하기"), ("theory-paradigm", "이론"), ("theory-spec", "이론"), ("theory-team", "이론"), ("theory-adoption", "이론"), ("setup", "실습 레벨 1 · poc"), ("requirements", "실습 레벨 1 · poc"), ("construction", "실습 레벨 1 · poc"), ("run", "실습 레벨 1 · poc"), ("l2-overview", "실습 레벨 2 · classic"), ("l2-requirements", "실습 레벨 2 · classic"), ("l2-stories", "실습 레벨 2 · classic"), ("l2-domain", "실습 레벨 2 · classic"), ("l2-units", "실습 레벨 2 · classic"), ("l2-bolts", "실습 레벨 2 · classic"), ("l2-build", "실습 레벨 2 · classic"), ("l2-build-services", "실습 레벨 2 · classic"), ("l2-build-ui-run", "실습 레벨 2 · classic"), ("l2-test", "실습 레벨 2 · classic"), ("artifacts", "참고")]),
+    "pdm": dict(name="설비 예지보전 PBL", page="axschool.html", pagelabel="AX School", og="agentic-w12.webp", search="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)",
+                foot="이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.",
+                chapters=[("index", "시작하기"), ("landscape", "1부 데이터와 모델"), ("vibration", "2부 진동으로 이상 찾기"), ("pattern", "2부 진동으로 이상 찾기"),
+                          ("mixer", "3부 교반기 PBL 과 에이전트 운영"), ("agentic", "3부 교반기 PBL 과 에이전트 운영"), ("assignments", "4부 과제")]),
     "ai-planning": dict(name="AI 기획·설계 도구 실습", page="axschool.html", pagelabel="AX School", og="board1b.webp", search="교재 검색 (예: 역질문, 겹침 금지, OpenUI)",
                 foot="이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.",
                 chapters=[("index", "시작하기"), ("interview", "1부"), ("model", "2부"), ("screen", "3부"), ("wrap", "4부")]),

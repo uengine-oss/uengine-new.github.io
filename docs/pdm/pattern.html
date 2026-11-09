@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>고장 패턴 검색과 제로샷 — 설비 예지보전 PBL 튜토리얼</title>
+<meta name="description" content="진동 창을 벡터로 바꿔 sqlite 표에 넣고, 현재 창과 가장 닮은 과거 고장을 찾습니다(CWRU). 이어서 Chronos-2를 학습 없이 사용합니다. 예측 구간을 벗어난 정도로 이상을 감지하고, 무엇을 잡고 무엇을 놓치는지 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm/pattern.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="고장 패턴 검색과 제로샷 — 설비 예지보전 PBL 튜토리얼">
+<meta property="og:description" content="진동 창을 벡터로 바꿔 sqlite 표에 넣고, 현재 창과 가장 닮은 과거 고장을 찾습니다(CWRU). 이어서 Chronos-2를 학습 없이 사용합니다. 예측 구간을 벗어난 정도로 이상을 감지하고, 무엇을 잡고 무엇을 놓치는지 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm/pattern.html">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm/img/agentic-w12.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>설비 예지보전 PBL <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 데이터와 모델</div><ul>
+<li><a href="landscape.html"><span class="n">01</span>공개 데이터와 기존 모델 지도</a></li>
+</ul>
+<div class="nav-part">2부 진동으로 이상 찾기</div><ul>
+<li><a href="vibration.html"><span class="n">02</span>진동 센서 하나로 이상 찾기</a></li>
+<li><a href="pattern.html" class="on" aria-current="page"><span class="n">03</span>고장 패턴 검색과 제로샷</a></li>
+</ul>
+<div class="nav-part">3부 교반기 PBL 과 에이전트 운영</div><ul>
+<li><a href="mixer.html"><span class="n">04</span>교반기 PBL 문제와 합성 데이터</a></li>
+<li><a href="agentic.html"><span class="n">05</span>에이전트 운영: 섀도와 승격</a></li>
+</ul>
+<div class="nav-part">4부 과제</div><ul>
+<li><a href="assignments.html"><span class="n">06</span>PBL 과제와 평가</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">2부 진동으로 이상 찾기<span class="chap">3</span></div>
+    <h1>고장 패턴 검색과 제로샷</h1>
+    <article>
+<blockquote>
+<p>진동 창을 벡터로 바꿔 sqlite 표에 넣고, 현재 창과 가장 닮은 과거 고장을 찾습니다(CWRU). 이어서 Chronos-2를 학습 없이 사용합니다. 예측 구간을 벗어난 정도로 이상을 감지하고, 무엇을 잡고 무엇을 놓치는지 확인합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/rDs1KnPrPRw" title="고장 패턴 검색과 제로샷 — 영상 1:46" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>질문</th>
+<th>필요한 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>고장 패턴 검색</td>
+<td>"지금 진동은 예전 어떤 고장과 닮았나?"</td>
+<td>고장 라벨이 붙은 과거 창 몇 개</td>
+</tr>
+<tr>
+<td>제로샷(Chronos-2)</td>
+<td>"지금 값이 예측 구간을 벗어났나?"</td>
+<td>라벨 없음. 임계값만 설정</td>
+</tr>
+</tbody>
+</table>
+<p>현장 전문가가 제안한 방식은 "다변량 시계열 구간을 512~1,024차원 벡터로 바꿔 벡터 DB에 넣고, 실시간 구간과 유사도를 비교해 과거 고장 패턴을 찾는 것"입니다. 이 장에서는 진동 센서 하나로 같은 구조를 만들어 봅니다. 벡터 DB 대신 sqlite 표 하나와 numpy 코사인 유사도면 충분합니다.</p>
+<h2 id="따라-하기-1-고장-패턴-검색">따라 하기 1: 고장 패턴 검색<a class="anchor" href="#따라-하기-1-고장-패턴-검색" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>스크립트를 실행합니다. CWRU 파일 16개(정상·내륜·볼·외륜 × 부하 0~3 hp)가 없으면 먼저 내려받습니다(약 40초, CPU).</li>
+<div class="hl"><pre><span></span><code>```bash
+.venv/bin/python textbook/05_similarity_search.py
+```
+</code></pre></div>
+
+<li>스크립트가 하는 일을 살펴봅니다.<ul>
+<li>구동단 진동을 2,048점 창으로 자릅니다. <strong>부하 0~1 hp 창 442개로 색인</strong>하고, <strong>부하 2~3 hp 창 473개로 질의</strong>합니다(부하가 바뀐 상황).</li>
+<li>창마다 벡터 두 가지를 만듭니다. (가) 손으로 만든 128차원 벡터는 FFT 대역 64개 + 포락선 스펙트럼 대역 64개의 로그 에너지입니다. (나) Chronos-2 임베딩 768차원 벡터는 <code>Chronos2Pipeline.embed</code>의 패치 토큰 평균입니다.</li>
+<li>벡터를 sqlite 표에 넣고, 질의 벡터와 코사인 유사도가 가장 큰 과거 창을 찾습니다.</li>
+</ul>
+</li>
+<li>결과를 봅니다.</li>
+<div class="hl"><pre><span></span><code>![볼 결함 3 hp 질의(검정)와 가장 닮은 과거 창 셋(파랑). 위는 손으로 만든 벡터, 아래는 Chronos-2 임베딩](img/pattern-neighbors.webp)
+
+| 벡터 | 차원 | 1등 정확도 | 5등 안 정확도 | &quot;가장 가까운 정상까지의 거리&quot;로 본 이상 점수 ROC-AUC |
+|---|---|---|---|---|
+| 손으로 만든 벡터 | 128 | 1.000 | 1.000 | 1.000 |
+| Chronos-2 임베딩 | 768 | 1.000 | 1.000 | 1.000 |
+</code></pre></div>
+
+<li>둘 다 만점이라 차이가 보이지 않습니다. 질의에만 잡음을 섞어 다시 봅니다.</li>
+<div class="hl"><pre><span></span><code>| 신호 대 잡음비 | 손으로 만든 벡터 1등 / AUC | Chronos-2 1등 / AUC |
+|---|---|---|
+| 10 dB | 0.751 / 1.000 | 1.000 / 1.000 |
+| 0 dB | 0.660 / 1.000 | 0.499 / 0.997 |
+| −5 dB | 0.510 / 1.000 | 0.250 / 0.687 |
+</code></pre></div>
+
+</ol>
+<div class="admonition note">
+<p class="admonition-title">쉬운 벤치마크는 차이를 못 보여 줍니다</p>
+<p>잡음이 없는 CWRU에서는 두 벡터 모두 결함 종류를 구분합니다. 잡음이 커지면 Chronos-2 임베딩은 모든 질의를 한 종류("볼 결함")로 분류했습니다. 창마다 평균·표준편차로 정규화하는 과정에서 진동의 절대 크기가 사라지는 탓으로 추정하지만, 확인하지는 않았습니다.</p>
+</div>
+<h2 id="따라-하기-2-제로샷chronos-2">따라 하기 2: 제로샷(Chronos-2)<a class="anchor" href="#따라-하기-2-제로샷chronos-2" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>2장의 NASA IMS 특징으로 실행합니다(불러오기 포함 약 3초, Apple mps).</li>
+<div class="hl"><pre><span></span><code>```bash
+.venv/bin/python textbook/04_zero_shot_chronos.py
+```
+</code></pre></div>
+
+<li>스냅숏마다 직전 128개의 RMS로 다음 값을 예측하고, 실제 값이 10~90% 예측 구간을 벗어난 정도(구간 폭 단위)를 점수로 씁니다. 문턱값은 앞 40% 구간 점수의 99%이고, 3번 연속 넘으면 알람입니다. <strong>학습은 없고, 임계값만 정합니다.</strong></li>
+<div class="hl"><pre><span></span><code>![Chronos-2 예측 구간(음영)과 실제 RMS·첨도, 그리고 점수와 알람](img/pattern-chronos.webp)
+</code></pre></div>
+
+<li>결과를 2장과 비교합니다.</li>
+<div class="hl"><pre><span></span><code>| 입력 | 첫 알람 | 끝나기 전 | 알람 전 단발 초과 | 첫 알람 뒤 문턱값을 넘은 비율 |
+|---|---|---|---|---|
+| RMS | 02-17 07:32 | 46.8시간 | 18 | 8.5% |
+| 첨도 | 알람 없음 | — | 40 | — |
+</code></pre></div>
+
+</ol>
+<h2 id="알아-둘-점">알아 둘 점<a class="anchor" href="#알아-둘-점" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>제로샷은 계단식 변화는 잡고 점진적인 열화는 놓칩니다.</strong> RMS가 17일 아침 계단처럼 오를 때 알람이 울렸습니다. 하지만 직전 값으로 예측하므로 바뀐 수준을 금방 따라갑니다. 첫 알람 뒤 문턱값을 넘은 비율은 8.5%에 그칩니다(오토인코더는 100%). 5장의 운영 하네스에서는 이 약점 때문에 <strong>8시간 앞선 문맥으로 지금 값을 예측</strong>하게 바꿨습니다.</li>
+<li><strong>무엇이 이상인지는 말해 주지 않습니다.</strong> 고장 종류를 알고 싶으면 패턴 검색이나 물리 공식을 함께 둡니다.</li>
+<li><strong>패턴 검색은 라벨이 몇 건만 있어도 됩니다.</strong> 5장의 하네스는 고장 기록이 1건 쌓이면 고장 직전 3일의 벡터를 색인하는 「고장 패턴 검색」 후보를 만듭니다. 이 후보는 판단 근거도 제시합니다. 11주차 불균형 고장(F4) 직전 창을 넣으면 "가장 닮은 과거 패턴: F2 임펠러 안료 부착(불균형) 고장 2시간 전"이라고 답했습니다(대시보드에는 아직 표시하지 않습니다).</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>깨끗한 CWRU에서 두 벡터가 모두 만점일 때, 어느 벡터를 쓸지 정하려면 무엇을 더 해 봐야 하나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>현장과 비슷하게 어렵게 만든 조건에서 비교해야 합니다. 이 장에서는 질의에 잡음을 섞었고(0 dB에서 0.660 대 0.499), 부하를 바꾸거나 다른 설비의 데이터로 질의해 보는 것도 방법입니다. 계산 비용(손으로 만든 벡터 0.03초, Chronos-2 15~18초)도 함께 봅니다.</p>
+</details>
+<ol>
+<li>Chronos-2 제로샷이 "학습이 필요 없다"는 말은 어디까지 맞나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>모델의 가중치를 학습하지 않는다는 뜻까지만 맞습니다. 알람 문턱값은 정상 구간 점수로 정해야 하고, 문맥 길이나 예측 방식(직전 값 vs 몇 시간 앞선 문맥) 같은 설계는 여전히 사람이 데이터를 보고 정합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="vibration.html"><span>이전</span>진동 센서 하나로 이상 찾기</a><a class="next" href="mixer.html"><span>다음</span>교반기 PBL 문제와 합성 데이터</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기-1-고장-패턴-검색">따라 하기 1: 고장 패턴 검색</a></li><li><a href="#따라-하기-2-제로샷chronos-2">따라 하기 2: 제로샷(Chronos-2)</a></li><li><a href="#알아-둘-점">알아 둘 점</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
