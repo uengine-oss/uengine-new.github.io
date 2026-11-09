@@ -47,7 +47,7 @@ Java·Vue·JS 파일 61개와 시험 클래스 9개가 생성되었습니다. �
 | payment-service (JUnit) | 19 | 통과 |
 | frontend (vitest) | 16 | 통과 |
 </li>
-<li markdown="1">**검토 에이전트.** 구현이 끝나면 설계 검토 에이전트(`aidlc-architecture-reviewer-agent`)가 계획·코드·시험을 다시 읽고 시험도 직접 실행합니다. 이번 판정은 READY였고, 6건을 짚었습니다. 가장 큰 지적(R-01, Major)은 결제 후 화면에 예약 완료를 표시하는 [`App.vue`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/frontend/src/App.vue)의 SSE·폴링 연결을 검증하지 않았다는 점입니다. 자동 시험도, 실제 브라우저 확인도 없었습니다. 이 확인은 4장에서 직접 합니다.
+<li markdown="1">**검토 에이전트.** 구현이 끝나면 설계 검토 에이전트(`aidlc-architecture-reviewer-agent`)가 계획·코드·시험을 다시 읽고 시험도 직접 실행합니다. 이번 판정은 READY였고, 6건을 짚었습니다. 가장 큰 지적(R-01, Major)은 결제 후 화면에 예약 완료를 표시하는 [`App.vue`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/frontend/src/App.vue)의 SSE·폴링 연결을 검증하지 않았다는 점입니다. 자동 시험도, 실제 브라우저 확인도 없었습니다. 이 확인은 8장에서 직접 합니다.
 
 ![검토 결과와 코드 생성 승인 게이트](img/cons-review.webp)
 </li>
@@ -76,7 +76,7 @@ R-01은 제가 브라우저로 직접 확인할게요. 대신 결제 실패·오
 
 | 확인 | 기대 | 실제 | 판정 |
 |---|---|---|---|
-| NFR1 | 승인 웹훅 수신부터 1초 이내 | 서버 → 클라이언트 5~114ms, 10회 | 충족(화면 표시는 4장에서 확인) |
+| NFR1 | 승인 웹훅 수신부터 1초 이내 | 서버 → 클라이언트 5~114ms, 10회 | 충족(화면 표시는 8장에서 확인) |
 | NFR2 | 180초 대기, 넘으면 자동 취소 | 179초 대기, 180초 정확히 취소, 취소 뒤 승인 무시 | 충족 |
 | 시험 묶음 | 기존 시험 모두 통과 | 72개 통과, 실패 0 | 충족 |
 

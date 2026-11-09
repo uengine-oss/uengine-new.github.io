@@ -45,7 +45,7 @@ bash run-all.sh
 
 ![후보 부족 안내](img/run-notice.webp)
 </li>
-<li markdown="1">**402 오류 응답.** 다른 터미널에서 존재하지 않는 결제를 조회합니다. 3장에서 고쳐 달라고 한 규칙대로 HTTP 402와 `{code, message}`가 돌아옵니다. 그 규칙은 [`project.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/memory/project.md)의 `## Corrections`에 날짜와 함께 남아 있어, 이 프로젝트의 다음 작업에서도 읽습니다.
+<li markdown="1">**402 오류 응답.** 다른 터미널에서 존재하지 않는 결제를 조회합니다. 7장에서 고쳐 달라고 한 규칙대로 HTTP 402와 `{code, message}`가 돌아옵니다. 그 규칙은 [`project.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level1-poc/aidlc/spaces/default/memory/project.md)의 `## Corrections`에 날짜와 함께 남아 있어, 이 프로젝트의 다음 작업에서도 읽습니다.
 
 ```bash
 curl -s localhost:8082/api/payments/no-such-payment -w '\nHTTP %{http_code}\n'
