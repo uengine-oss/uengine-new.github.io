@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>교반기 PBL 문제와 합성 데이터 — 설비 예지보전 PBL 튜토리얼</title>
+<meta name="description" content="페인트 교반기 M-201(가상)의 16주 데이터를 만듭니다. 진동 센서 하나로 측정하며, 레시피 세 가지(5주차부터 신제품)와 고장 두 종류 6건을 포함합니다. 원료 투입 충격과 정비 뒤 기준 변화라는 함정도 넣습니다. 고장 시각과 종류만 적힌 정비 기록까지 갖춰, 회사 데이터가 오기 전에 같은 형태의 문제를 연습합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm/mixer.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="교반기 PBL 문제와 합성 데이터 — 설비 예지보전 PBL 튜토리얼">
+<meta property="og:description" content="페인트 교반기 M-201(가상)의 16주 데이터를 만듭니다. 진동 센서 하나로 측정하며, 레시피 세 가지(5주차부터 신제품)와 고장 두 종류 6건을 포함합니다. 원료 투입 충격과 정비 뒤 기준 변화라는 함정도 넣습니다. 고장 시각과 종류만 적힌 정비 기록까지 갖춰, 회사 데이터가 오기 전에 같은 형태의 문제를 연습합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm/mixer.html">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm/img/agentic-w12.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>설비 예지보전 PBL <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 데이터와 모델</div><ul>
+<li><a href="landscape.html"><span class="n">01</span>공개 데이터와 기존 모델 지도</a></li>
+</ul>
+<div class="nav-part">2부 진동으로 이상 찾기</div><ul>
+<li><a href="vibration.html"><span class="n">02</span>진동 센서 하나로 이상 찾기</a></li>
+<li><a href="pattern.html"><span class="n">03</span>고장 패턴 검색과 제로샷</a></li>
+</ul>
+<div class="nav-part">3부 교반기 PBL 과 에이전트 운영</div><ul>
+<li><a href="mixer.html" class="on" aria-current="page"><span class="n">04</span>교반기 PBL 문제와 합성 데이터</a></li>
+<li><a href="agentic.html"><span class="n">05</span>에이전트 운영: 섀도와 승격</a></li>
+</ul>
+<div class="nav-part">4부 과제</div><ul>
+<li><a href="assignments.html"><span class="n">06</span>PBL 과제와 평가</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">3부 교반기 PBL 과 에이전트 운영<span class="chap">4</span></div>
+    <h1>교반기 PBL 문제와 합성 데이터</h1>
+    <article>
+<blockquote>
+<p>페인트 교반기 M-201(가상)의 16주 데이터를 만듭니다. 진동 센서 하나로 측정하며, 레시피 세 가지(5주차부터 신제품)와 고장 두 종류 6건을 포함합니다. 원료 투입 충격과 정비 뒤 기준 변화라는 함정도 넣습니다. 고장 시각과 종류만 적힌 정비 기록까지 갖춰, 회사 데이터가 오기 전에 같은 형태의 문제를 연습합니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>현장 전문가의 조언은 "실제 설비 데이터는 그만큼 없고 라벨링도 안 되어 있으니, 합성 데이터로 문제를 명확하게 만들어 연습하라"였습니다. 합성 데이터의 좋은 점은 <strong>정답(전조가 언제 시작했는지)을 우리가 안다는 것</strong>입니다. 정답은 모델에 공개하지 않고 채점과 해설에만 씁니다.</p>
+<table>
+<thead>
+<tr>
+<th>PBL 문제(회사가 준다고 가정)</th>
+<th>이 장의 합성 데이터</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>설비와 센서</td>
+<td>교반기 M-201, 모터 구동단 베어링 하우징의 가속도계 하나(5,120 Hz, 운전 중 10분마다 1초)</td>
+</tr>
+<tr>
+<td>운전 조건</td>
+<td>레시피 A 수성 저점도(1,200 rpm) · B 유성 중점도(1,500 rpm) · C 고점도 신제품 프라이머(1,750 rpm, 5주차부터)</td>
+</tr>
+<tr>
+<td>일정</td>
+<td>하루 06~22시 2교대, 일요일 휴무, 고장 뒤 24시간 정지</td>
+</tr>
+<tr>
+<td>고장</td>
+<td>베어링 외륜 손상 3건, 임펠러 안료 부착(불균형) 3건</td>
+</tr>
+<tr>
+<td>라벨</td>
+<td>정비 기록: 고장 시각·종류·작업 내용만</td>
+</tr>
+</tbody>
+</table>
+<h2 id="고장과-함정의-물리">고장과 함정의 물리<a class="anchor" href="#고장과-함정의-물리" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>진동에서 보이는 것</th>
+<th>전조 길이</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>베어링 외륜 손상</td>
+<td>외륜 결함 주파수(BPFO = 볼 수/2 × 회전 주파수 × (1 − d/D)) 간격의 충격이 약 1.8 kHz 공진을 일으킵니다. 포락선 BPFO 성분과 첨도가 먼저 오르고, 속도 RMS는 마지막에만 오릅니다</td>
+<td>6~8일</td>
+</tr>
+<tr>
+<td>임펠러 안료 부착(불균형)</td>
+<td>회전 1배 성분이 며칠에 걸쳐 커집니다. 속도 RMS도 함께 오릅니다</td>
+<td>2~3일</td>
+</tr>
+<tr>
+<td>원료 투입 충격(고장 아님)</td>
+<td>교대의 약 35%에서 시작 무렵 30분~1시간(스냅숏 3~6개), 불규칙한 시각의 충격이 900 Hz 구조 공진을 울려 첨도가 8~25까지 튑니다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>정비 뒤 기준 변화(고장 아님)</td>
+<td>부품을 바꾸면 평소 1배 진동이 0.85~1.25배, 배경 잡음이 0.9~1.15배로 달라집니다</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>16주 데이터를 만들고 그림을 그립니다(약 6초).</li>
+<div class="hl"><pre><span></span><code>```bash
+.venv/bin/python textbook/06_mixer_data.py
+# 8739 스냅숏 · {1: 576, 2: 576, 3: 480, …, 16: 480}
+```
+</code></pre></div>
+
+<li>그림을 봅니다. 빨간 실선은 정비 기록의 고장 시각이고, 점선은 전조 시작 시각(정답)입니다.</li>
+<div class="hl"><pre><span></span><code>![교반기 M-201 16주: 속도 RMS · 첨도 · BPFO 성분 · 회전 1배 진폭, 레시피별 색](img/mixer-overview.webp)
+
+- 베어링 고장(F1·F3·F5)은 BPFO 성분이 며칠 앞서 오르고 첨도가 뒤따릅니다. 속도 RMS가 ISO 구역 C(2.8 mm/s)를 넘는 것은 고장 몇 시간 전뿐입니다.
+- 불균형 고장(F2·F4·F6)은 회전 1배 진폭이 2~3일 동안 커집니다.
+- 첨도가 일시적으로 튀는 것은 원료 투입 충격입니다. 첨도만 보는 모델은 이 때문에 헛알람을 냅니다.
+- 5주차부터 보라색(레시피 C)이 섞이면서 평소 진동 수준이 올라갑니다.
+</code></pre></div>
+
+<li>한 주 데이터와 정비 기록을 열어 봅니다.</li>
+<div class="hl"><pre><span></span><code>```python
+import pandas as pd, json
+w = pd.read_parquet(&quot;data/sim/inbox/week-03.parquet&quot;)
+print(w[[&quot;time&quot;, &quot;recipe&quot;, &quot;rpm&quot;, &quot;vel_rms&quot;, &quot;kurtosis&quot;, &quot;bpfo_db&quot;, &quot;v1x&quot;]].tail(3))
+print(json.load(open(&quot;data/sim/inbox/week-03-maintenance.json&quot;)))
+```
+
+정비 기록의 형식은 다음과 같습니다. 전조가 언제 시작했는지는 적혀 있지 않습니다.
+
+```json
+[{&quot;id&quot;: &quot;F1&quot;, &quot;time&quot;: &quot;2026-03-20T15:30:00&quot;, &quot;week&quot;: 3, &quot;kind&quot;: &quot;bearing&quot;,
+  &quot;kind_ko&quot;: &quot;베어링 외륜 손상&quot;, &quot;work&quot;: &quot;소음·온도 상승으로 정지, 구동단 베어링 교체&quot;}]
+```
+</code></pre></div>
+
+<li>특징 열을 확인합니다. 모든 모델이 같은 특징을 봅니다.</li>
+<div class="hl"><pre><span></span><code>| 열 | 뜻 |
+|---|---|
+| `vel_rms` | 10~1,000 Hz 속도 RMS(mm/s) — ISO 10816 기준 |
+| `acc_rms`, `peak`, `kurtosis`, `crest` | 가속도 세기와 충격성 |
+| `v1x`, `v2x` | 회전 1·2배 속도 진폭(mm/s) |
+| `bpfo_db` | 포락선 스펙트럼의 BPFO 성분(배경 대비 dB) |
+| `b00`~`b31` | 로그 간격 32개 대역의 로그 에너지(오토인코더·패턴 검색 입력) |
+| `recipe`, `rpm` | 운전 조건(모델 입력이 아니라 맥락) |
+</code></pre></div>
+
+</ol>
+<div class="admonition note">
+<p class="admonition-title">회사 데이터로 바꿔 끼우기</p>
+<p>회사가 진동 원파형을 주면 <code>pdm_agent/features.py</code>의 <code>snapshot_features(x, rpm)</code>로 같은 특징을 만듭니다. 한 주씩 <code>week-NN.parquet</code>와 정비 기록 <code>week-NN-maintenance.json</code>으로 저장하면 5장의 운영 하네스를 그대로 실행할 수 있습니다. 베어링 치수가 다르면 <code>bpfo()</code>의 볼 수·지름을 바꿉니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>이 데이터에서 ISO 진동 등급 규칙(속도 RMS 2.8 mm/s)만으로 베어링 고장을 일찍 잡기 어려운 이유는 무엇인가요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>베어링 외륜 결함의 충격은 약 1.8 kHz 공진 대역에서 보이는데, ISO 속도 RMS는 10~1,000 Hz만 봅니다. 그래서 속도 RMS는 손상이 아주 커진 마지막 몇 시간에야 오릅니다. 포락선 BPFO 성분은 며칠 앞서 오릅니다.</p>
+</details>
+<ol>
+<li>원료 투입 충격을 고장으로 착각하지 않게 하려면 어떤 방법이 있을까요? 두 가지 이상 들어 보세요.</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>예: (1) 문턱값을 넘는 상태가 더 오래 지속되어야 알람이 울리도록 합니다. 충격은 스냅숏 3~6개(30분~1시간) 동안 이어지므로 기본 규칙 "3번 연속"으로는 모두 걸러지지 않습니다. (2) 충격성(첨도) 대신 주기성이 있는 지표(BPFO 성분)를 봅니다. (3) 교대 시작 직후 구간을 따로 다룹니다. (4) 짧은 이동 중앙값으로 일시적으로 튀는 값을 줄입니다. 5장에서 코딩 에이전트도 "첨도는 원료 투입 때 정상에서도 튀어 뺐다"고 적었습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="pattern.html"><span>이전</span>고장 패턴 검색과 제로샷</a><a class="next" href="agentic.html"><span>다음</span>에이전트 운영: 섀도와 승격</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#고장과-함정의-물리">고장과 함정의 물리</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

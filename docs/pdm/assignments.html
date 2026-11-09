@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PBL 과제와 평가 — 설비 예지보전 PBL 튜토리얼</title>
+<meta name="description" content="학생 팀이 교반기 문제를 받아 진동 센서 하나로 고장 전조를 잡는 모델을 만들고, 같은 채점 규칙으로 섀도 성적을 겨루는 과제 묶음입니다. 비전공 학생도 할 수 있는 기본 과제부터 코딩 에이전트를 쓰는 심화 과제까지, 평가 기준과 회사 데이터로 바꾸는 방법을 함께 안내합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm/assignments.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PBL 과제와 평가 — 설비 예지보전 PBL 튜토리얼">
+<meta property="og:description" content="학생 팀이 교반기 문제를 받아 진동 센서 하나로 고장 전조를 잡는 모델을 만들고, 같은 채점 규칙으로 섀도 성적을 겨루는 과제 묶음입니다. 비전공 학생도 할 수 있는 기본 과제부터 코딩 에이전트를 쓰는 심화 과제까지, 평가 기준과 회사 데이터로 바꾸는 방법을 함께 안내합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm/assignments.html">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm/img/agentic-w12.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>설비 예지보전 PBL <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 데이터와 모델</div><ul>
+<li><a href="landscape.html"><span class="n">01</span>공개 데이터와 기존 모델 지도</a></li>
+</ul>
+<div class="nav-part">2부 진동으로 이상 찾기</div><ul>
+<li><a href="vibration.html"><span class="n">02</span>진동 센서 하나로 이상 찾기</a></li>
+<li><a href="pattern.html"><span class="n">03</span>고장 패턴 검색과 제로샷</a></li>
+</ul>
+<div class="nav-part">3부 교반기 PBL 과 에이전트 운영</div><ul>
+<li><a href="mixer.html"><span class="n">04</span>교반기 PBL 문제와 합성 데이터</a></li>
+<li><a href="agentic.html"><span class="n">05</span>에이전트 운영: 섀도와 승격</a></li>
+</ul>
+<div class="nav-part">4부 과제</div><ul>
+<li><a href="assignments.html" class="on" aria-current="page"><span class="n">06</span>PBL 과제와 평가</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">4부 과제<span class="chap">6</span></div>
+    <h1>PBL 과제와 평가</h1>
+    <article>
+<blockquote>
+<p>학생 팀이 교반기 문제를 받아 진동 센서 하나로 고장 전조를 잡는 모델을 만들고, 같은 채점 규칙으로 섀도 성적을 겨루는 과제 묶음입니다. 비전공 학생도 할 수 있는 기본 과제부터 코딩 에이전트를 쓰는 심화 과제까지, 평가 기준과 회사 데이터로 바꾸는 방법을 함께 안내합니다.</p>
+</blockquote>
+<h2 id="과제-구성">과제 구성<a class="anchor" href="#과제-구성" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>과제</th>
+<th>결과물</th>
+<th>쓰는 장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기본 1</td>
+<td>NASA IMS에서 문턱값 배수(k)를 1.5~10으로 바꿔 RMS 규칙과 BPFO 규칙의 선행시간 표를 만듭니다</td>
+<td>표 하나와 세 줄 해석</td>
+<td>2장</td>
+</tr>
+<tr>
+<td>기본 2</td>
+<td>한 페이지 오토인코더의 학습 구간(앞 20·40·60%)과 문턱값(95·99·99.9%)을 바꿔 첫 알람이 어떻게 바뀌는지 살펴봅니다</td>
+<td>그래프 한 장</td>
+<td>2장</td>
+</tr>
+<tr>
+<td>응용 1</td>
+<td>교반기 데이터의 원료 투입 충격 때문에 헛알람을 내는 모델을 찾아 수정합니다</td>
+<td>고친 후보 한 개, 전후 헛알람 수</td>
+<td>4·5장</td>
+</tr>
+<tr>
+<td>응용 2</td>
+<td><code>Candidate</code> 규약을 따르는 후보 하나를 직접 만들어 하네스에 넣고 16주를 실행합니다</td>
+<td><code>candidate.py</code>, 순위표 화면</td>
+<td>5장</td>
+</tr>
+<tr>
+<td>심화</td>
+<td>코딩 에이전트에게 같은 문제를 맡기고, 에이전트가 낸 후보와 팀이 낸 후보를 같은 규칙으로 비교합니다</td>
+<td>비교 표, 에이전트 메모에 대한 검토</td>
+<td>5장</td>
+</tr>
+</tbody>
+</table>
+<h2 id="응용-2-후보-하나-만들어-넣기">응용 2: 후보 하나 만들어 넣기<a class="anchor" href="#응용-2-후보-하나-만들어-넣기" title="Permanent link">#</a></h2>
+<p>후보는 두 함수의 규약만 지키면 됩니다. 5장의 코딩 에이전트도 같은 규약에 따라 후보를 작성합니다.</p>
+<div class="hl"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pdm_agent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Candidate</span><span class="p">,</span> <span class="n">precursor_mask</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AgentCandidate</span><span class="p">(</span><span class="n">Candidate</span><span class="p">):</span>
+    <span class="n">family</span> <span class="o">=</span> <span class="s2">&quot;agent&quot;</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;우리 팀 후보&quot;</span>
+    <span class="n">complexity</span> <span class="o">=</span> <span class="mi">8</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">failures</span><span class="p">):</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="o">~</span><span class="n">precursor_mask</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">failures</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)]</span>       <span class="c1"># 고장 전 7일을 뺀 정상 구간</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sd</span> <span class="o">=</span> <span class="n">ok</span><span class="p">[</span><span class="s2">&quot;v1x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">ok</span><span class="p">[</span><span class="s2">&quot;v1x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">ok</span><span class="p">[</span><span class="s2">&quot;v1x&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">))</span> <span class="o">*</span> <span class="mf">1.1</span>               <span class="c1"># 문턱값을 정상 점수로 정한다</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>                                             <span class="c1"># 1.0 이상이면 문턱값을 넘은 것</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;v1x&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sd</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">thr</span>
+</code></pre></div>
+
+<p>위 예시는 일부러 성능이 부족하도록 만들었습니다. 회전 1배 진동 하나만 보고 레시피를 고려하지 않습니다. 1주차로 학습해 2~16주를 채점하면 고장 6건은 모두 잡습니다. 하지만 레시피 C와 정비 뒤 기준 변화 때문에 헛알람이 17건 쌓여 비용이 810만원입니다(알람 피로로 무시된 알람 6번). 이 문제를 고치는 것이 과제입니다.</p>
+<h2 id="평가-기준">평가 기준<a class="anchor" href="#평가-기준" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>비중</th>
+<th>무엇을 보나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>섀도 성적</td>
+<td>40%</td>
+<td>하네스의 비용(놓침·늦은 감지·헛알람)과 평균 선행시간. 같은 데이터, 같은 규칙으로</td>
+</tr>
+<tr>
+<td>설명</td>
+<td>25%</td>
+<td>무엇을 왜 봤는지 물리(BPFO, 회전 1배)와 데이터 그림으로 설명했나</td>
+</tr>
+<tr>
+<td>정직함</td>
+<td>20%</td>
+<td>학습에 쓴 구간과 채점 구간을 섞지 않았나, 지난 고장에 맞춘 조정을 밝혔나, 한계를 적었나</td>
+</tr>
+<tr>
+<td>재현성</td>
+<td>15%</td>
+<td>시드를 고정했나, 같은 명령으로 같은 숫자가 나오나</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">하지 말 것</p>
+<ul>
+<li>시험 구간 데이터로 정규화기나 문턱값을 다시 맞추기(누수)</li>
+<li>정답 파일 <code>data/sim/truth.json</code>(전조 시작 시각)을 모델에 쓰기 — 해설용입니다</li>
+<li>F1 같은 점수 하나만 보고 고르기(1장의 "늘 알람" F1 0.698)</li>
+</ul>
+</div>
+<h2 id="회사-데이터로-바꿔-끼우기">회사 데이터로 바꿔 끼우기<a class="anchor" href="#회사-데이터로-바꿔-끼우기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>회사에서 받을 자료는 다음과 같습니다: 진동 원파형(또는 스냅숏), 표본화 주파수, 회전수·레시피 기록, 정비 기록(고장 시각·종류·작업), 베어링 형번(볼 수·지름).</li>
+<li><code>pdm_agent/features.py</code>의 <code>FS</code>·<code>N</code>과 <code>bpfo()</code> 치수를 회사 설비에 맞춥니다.</li>
+<li>원파형을 <code>snapshot_features(x, rpm)</code>로 특징 표로 변환하고, 한 주씩 <code>week-NN.parquet</code>와 <code>week-NN-maintenance.json</code>으로 저장합니다(4장의 형식).</li>
+<li><code>Run(path, inbox=&lt;회사 데이터 폴더&gt;)</code>로 하네스를 실행합니다. 첫 주는 학습 없는 규칙이 챔피언이고, 정비 기록이 쌓이는 대로 후보들이 섀도에서 겨룹니다.</li>
+<li>비용(<code>evaluate.py</code>의 <code>COST_*</code>)은 회사와 함께 정합니다. 고장 한 번으로 폐기하는 배치의 비용과 수리비, 점검 출동 한 번의 비용을 기준으로 삼습니다.</li>
+</ol>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>학생 팀의 후보가 백테스트에서 챔피언보다 훨씬 좋았는데 섀도에서는 같았습니다. 보고서에 무엇을 써야 하나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>섀도 결과를 결론으로 쓰고, 백테스트가 더 좋았던 까닭(지난 고장을 보고 지표나 문턱값을 고르지 않았는지)을 밝힙니다. 그리고 섀도 구간에 고장이 몇 건이었는지, 더 오래 돌리면 차이가 날 수 있는지 한계를 적습니다.</p>
+</details>
+<ol>
+<li>회사가 "고장 기록은 없고 센서 데이터만 1년치 있다"고 하면 이 하네스는 무엇을 할 수 있고 무엇을 못 하나요?</li>
+</ol>
+<details class="answer">
+<summary>정답</summary>
+<p>학습 없는 규칙을 챔피언으로 두고, 정상만 배우는 후보와 제로샷을 섀도 모드로 실행해 헛알람 수를 비교할 수 있습니다. 드리프트(레시피·정비 뒤 변화)도 감지합니다. 다만 고장 기록이 없으므로 승격 규칙 2(비교 구간에 고장 1건 이상)를 충족하지 못해 승격은 할 수 없습니다. 고장 패턴 검색과 지도학습 후보도 만들 수 없습니다. 그래서 정비 기록을 남기는 일부터 함께 시작해야 합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="agentic.html"><span>이전</span>에이전트 운영: 섀도와 승격</a><span></span></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#과제-구성">과제 구성</a></li><li><a href="#응용-2-후보-하나-만들어-넣기">응용 2: 후보 하나 만들어 넣기</a></li><li><a href="#평가-기준">평가 기준</a></li><li><a href="#회사-데이터로-바꿔-끼우기">회사 데이터로 바꿔 끼우기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
