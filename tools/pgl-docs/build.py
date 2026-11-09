@@ -64,6 +64,7 @@ CHAPTERS = [
     ("admin", "확장과 운영"),
     ("agentic", "확장과 운영"),
     ("team-context", "확장과 운영"),
+    ("robo-dlc", "확장과 운영"),
     ("prototype-request", "산업별 예시"),
     ("erp-voucher", "산업별 예시"),
     ("project", "마무리"),
