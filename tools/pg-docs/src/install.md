@@ -85,17 +85,17 @@ volumes:
 
 <ol class="steps" markdown="1">
 <li markdown="1">브라우저로 **http://localhost:8088** 을 엽니다. Process GPT 소개 화면이 뜹니다.</li>
-<li markdown="1">가운데 파란 **「사용해 보기」**를 누르면 로그인 화면이 열립니다.</li>
+<li markdown="1">가운데 파란 **「시작하기」**를 누르면 로그인 화면이 열립니다.</li>
 <li markdown="1">아래쪽 **「계정 생성」**을 누르고 이름·이메일·비밀번호를 적어 **「회원가입」**을 누릅니다. 이 튜토리얼에서는 영업팀장 장진영(`jinyoung@hanbit.example`)으로 가입합니다.</li>
-<li markdown="1">“회원가입에 성공했습니다”가 뜨며 바로 로그인되어 **프로세스 체계도**가 열립니다. 사이드바 아래에 내 이름과 **Admin**이 보이면 설치와 가입이 끝난 것입니다.</li>
+<li markdown="1">“회원가입에 성공했습니다”가 뜨며 바로 로그인되어 **홈**(채팅 상자와 프로세스 정의 체계도)이 열립니다. 사이드바 아래에 내 이름과 **Admin**이 보이면 설치와 가입이 끝난 것입니다.</li>
 <li markdown="1">다음부터는 로그인 화면에서 같은 이메일과 비밀번호로 들어옵니다.</li>
 </ol>
 
-![첫 화면 — http://localhost:8088 의 Process GPT 소개와 파란 「사용해 보기」 단추](img/in-landing.webp)
+![첫 화면 — http://localhost:8088 의 Process GPT 소개와 파란 「시작하기」 단추](img/in-landing.webp)
 
 ![계정 생성 — 이름, 이메일, 비밀번호, 비밀번호 확인, 「회원가입」](img/in-register.webp)
 
-![가입 직후 — 「회원가입에 성공했습니다」와 프로세스 체계도, 사이드바 아래 「장진영 · Admin」](img/in-registered.webp)
+![가입 직후의 홈 — 채팅 상자와 빈 프로세스 정의 체계도, 사이드바 아래 「장진영 · Admin」](img/in-registered.webp)
 
 ![다음부터는 로그인 화면에서 — 가입한 이메일과 비밀번호](img/in-login.webp)
 
