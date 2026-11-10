@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>교반기 고장 재생과 재학습 설정 — 예지보전 실습 · KANG 판 튜토리얼</title>
+<meta name="description" content="RTU 대신 「시나리오 RTU」를 연결합니다. 예측 시스템 코드는 그대로 두고 교반기의 고장 특성을 재생합니다. 이송 펌프 막힘, 베어링 열화, 레시피 변경, 원료 투입 충격을 넣고 「실시간 자동 학습」을 켠 경우와 끈 경우를 비교합니다. 30시점마다 다시 배우는 기본 설정은 레시피 변경에 빨리 적응합니다. 대신 서서히 진행되는 열화도 정상으로 학습합니다. 이 때문에 베어링 열화는 신호가 보이고 401분 뒤에야 알렸습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm-kang/replay.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="교반기 고장 재생과 재학습 설정 — 예지보전 실습 · KANG 판 튜토리얼">
+<meta property="og:description" content="RTU 대신 「시나리오 RTU」를 연결합니다. 예측 시스템 코드는 그대로 두고 교반기의 고장 특성을 재생합니다. 이송 펌프 막힘, 베어링 열화, 레시피 변경, 원료 투입 충격을 넣고 「실시간 자동 학습」을 켠 경우와 끈 경우를 비교합니다. 30시점마다 다시 배우는 기본 설정은 레시피 변경에 빨리 적응합니다. 대신 서서히 진행되는 열화도 정상으로 학습합니다. 이 때문에 베어링 열화는 신호가 보이고 401분 뒤에야 알렸습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm-kang/replay.html">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm-kang/img/labels-rows.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>예지보전 실습 · KANG 판 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: 수동 이상, 팝업, failure_label, 재학습)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 배경</div><ul>
+<li><a href="background.html"><span class="n">01</span>배경: 예지보전과 페인트 교반기의 고장</a></li>
+</ul>
+<div class="nav-part">2부 KANG 돌려 보기</div><ul>
+<li><a href="setup.html"><span class="n">02</span>설치와 실시간 연결</a></li>
+<li><a href="anomaly.html"><span class="n">03</span>이상 신호를 내며 학습시키기</a></li>
+</ul>
+<div class="nav-part">3부 고장 기록과 고장 재생</div><ul>
+<li><a href="labels.html"><span class="n">04</span>고장 분류를 정하고 고장 기록 넣기</a></li>
+<li><a href="replay.html" class="on" aria-current="page"><span class="n">05</span>교반기 고장 재생과 재학습 설정</a></li>
+</ul>
+<div class="nav-part">4부 과제</div><ul>
+<li><a href="assignments.html"><span class="n">06</span>과제와 현장으로 가는 길</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">3부 고장 기록과 고장 재생<span class="chap">5</span></div>
+    <h1>교반기 고장 재생과 재학습 설정</h1>
+    <article>
+<blockquote>
+<p>RTU 대신 「시나리오 RTU」를 연결합니다. 예측 시스템 코드는 그대로 두고 교반기의 고장 특성을 재생합니다. 이송 펌프 막힘, 베어링 열화, 레시피 변경, 원료 투입 충격을 넣고 「실시간 자동 학습」을 켠 경우와 끈 경우를 비교합니다. 30시점마다 다시 배우는 기본 설정은 레시피 변경에 빨리 적응합니다. 대신 서서히 진행되는 열화도 정상으로 학습합니다. 이 때문에 베어링 열화는 신호가 보이고 401분 뒤에야 알렸습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/CPBBe5Y9jfI" title="교반기 고장 재생과 재학습 설정 — 영상 2:54" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>3장의 수동 이상은 네 채널이 한순간에 크게 바뀌는 시험이었습니다. 실제 교반 설비의 고장은 대개 이런 방식으로 발생하지 않습니다(1장).</p>
+<table>
+<thead>
+<tr>
+<th>시나리오</th>
+<th>무엇이 바뀌나</th>
+<th>길이</th>
+<th>고장인가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pump_clog</code> 이송 펌프 이물 걸림</td>
+<td>4시간 동안 압력 600 → 545 kPa, 전류 8.4 → 7.7 A, 진동 +0.5. 끝에 걸림 10분(압력 470, 전류 12.5)</td>
+<td>5시간 10분</td>
+<td>예</td>
+</tr>
+<tr>
+<td><code>bearing</code> 베어링 열화</td>
+<td>24시간 동안 진동 RMS 2.1 → 4.8 mm/s(규칙 5.0 아래), 온도 +4 °C. 끝에 6 mm/s 이상으로 고장</td>
+<td>24시간 30분</td>
+<td>예</td>
+</tr>
+<tr>
+<td><code>recipe</code> 고점도 레시피로 변경</td>
+<td>전류 +1.2 A, 온도 +3 °C, 진동 +0.35가 계속</td>
+<td>10시간</td>
+<td>아니오</td>
+</tr>
+<tr>
+<td><code>loading</code> 원료 투입 충격</td>
+<td>5시간마다 4분 동안 진동 +2.0, 전류 +0.8</td>
+<td>40시간</td>
+<td>아니오</td>
+</tr>
+<tr>
+<td><code>normal</code> 대조</td>
+<td>변화 없음</td>
+<td>24시간 30분</td>
+<td>아니오</td>
+</tr>
+</tbody>
+</table>
+<p>모든 시나리오는 가상 RTU와 같은 정상 신호(2장)로 시작하고, 처음 600시점(10시간)은 정상입니다. 연결할 때 이 600시점을 이력으로 한꺼번에 전달합니다. 따라서 <strong>첫 모델은 확인된 정상 10시간으로 학습</strong>되고 바로 그 뒤부터 변화가 시작됩니다.</p>
+<h2 id="시나리오-rtu">시나리오 RTU<a class="anchor" href="#시나리오-rtu" title="Permanent link">#</a></h2>
+<p>예측 시스템은 RTU에 두 가지 정보만 요청합니다. <code>/api/status</code>(지금 몇 시점까지 왔고 최신 값이 무엇인지)와 <code>/data.csv</code>(누적 데이터 전체)입니다. 같은 두 주소를 가진 작은 서버를 만들면 RTU 대신 연결할 수 있습니다(표준 라이브러리만 씁니다).</p>
+<div class="hl"><pre><span></span><code><span class="c1"># kang/scenario_rtu.py 의 핵심</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;/api/status&quot;</span><span class="p">,</span> <span class="s2">&quot;/api/peek&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">feed</span><span class="o">.</span><span class="n">status</span><span class="p">())</span>          <span class="c1"># running, sample_count, latest_values …</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s2">&quot;/data.csv&quot;</span><span class="p">:</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">feed</span><span class="o">.</span><span class="n">csv</span><span class="p">()</span>                               <span class="c1"># 가상 RTU 와 같은 열 순서, asset_id=VIRTUAL_RTU_01</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="s2">&quot;text/csv; charset=utf-8&quot;</span><span class="p">)</span>
+        <span class="n">feed</span><span class="o">.</span><span class="n">advance</span><span class="p">()</span>                                  <span class="c1"># 받아 간 다음 한 시점(1분) 진행</span>
+</code></pre></div>
+
+<p>가상 RTU는 시계에 맞춰 1초마다 진행하지만, 시나리오 RTU는 <strong>예측 시스템이 데이터를 받아 갈 때마다</strong> 한 시점씩 진행합니다. 그래서 모든 시점이 빠짐없이 한 번씩 분석되고, 같은 시나리오는 몇 번을 실행해도 같은 결과가 나옵니다. 장비 ID는 예측 시스템이 실시간 학습에 쓰는 <code>VIRTUAL_RTU_01</code>이어야 합니다(다르면 「학습 모델에 필요한 장비 식별자가 입력에 없습니다」가 뜹니다).</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>
+<p>가상 RTU(8766)는 끄고, 시나리오 RTU를 실행합니다. 예측 시스템은 열리자마자 8766에 연결하려 하므로, 가상 RTU가 켜져 있으면 그쪽에 먼저 연결됩니다.</p>
+<div class="hl"><pre><span></span><code>python3<span class="w"> </span>scenario_rtu.py<span class="w"> </span>--scenario<span class="w"> </span>pump_clog<span class="w"> </span>--port<span class="w"> </span><span class="m">18866</span>
+<span class="c1"># 시나리오 RTU pump_clog: http://127.0.0.1:18866  (이력 600시점, 전체 910시점)</span>
+</code></pre></div>
+
+<p>브라우저에서 <code>http://127.0.0.1:18866</code>을 열면 지금 구간(정상 / 이물 걸림 진행 / 펌프 걸림)과 네 값이 보입니다.</p>
+<figure><a href="img/replay-rtu.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="시나리오 RTU 화면. 시나리오 이름, 지금 구간, 진행 막대, 네 채널 값" src="img/replay-rtu.webp" loading="lazy" decoding="async"></a><figcaption>시나리오 RTU 화면. 시나리오 이름, 지금 구간, 진행 막대, 네 채널 값</figcaption></figure>
+</li>
+<li>
+<p>예측 시스템의 RTU 주소에 <code>http://127.0.0.1:18866</code>을 넣고 <strong>RTU 연결</strong>을 누릅니다. 600시점으로 첫 모델을 학습하고, 1초마다 한 시점씩 받아 분석합니다. 펌프 막힘은 약 5분이면 끝납니다.</p>
+</li>
+<li>
+<p>화면에서 다음을 지켜봅니다(시점 번호는 0부터 센 값입니다).</p>
+<ul>
+<li>633번째 시점쯤부터 압력이 정상 흔들림 폭(±7.4 kPa)을 벗어나기 시작합니다.</li>
+<li><strong>691번째 시점에 첫 팝업</strong>이 뜹니다. 압력은 약 580 kPa로, 규칙 한계(500)보다 한참 높습니다.</li>
+<li>그 뒤로 몇 번 더 울리다가, <strong>걸리기 전 마지막 40분 동안은 AI가 한 번도 울리지 않습니다.</strong> 30시점마다 다시 배우면서 그사이 낮아진 압력을 정상으로 받아들였기 때문입니다. 임계값은 0.546에서 0.578로 올라갔습니다.</li>
+<li>840번째 시점에 걸리면 압력 470 kPa(규칙: 압력 낮음)와 전류 12.5 A(규칙: 전류 높음)로 규칙 알람이 울립니다.</li>
+</ul>
+<figure><a href="img/replay-pump-popup.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="펌프 막힘 재생 화면. 691번째 시점의 첫 팝업 — 네 채널 값은 모두 규칙 한계 안입니다" src="img/replay-pump-popup.webp" loading="lazy" decoding="async"></a><figcaption>펌프 막힘 재생 화면. 691번째 시점의 첫 팝업 — 네 채널 값은 모두 규칙 한계 안입니다</figcaption></figure>
+<figure><a href="img/replay-pump.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="펌프 막힘 재생. 위는 토출 압력, 가운데·아래는 자동 학습을 켰을 때와 껐을 때의 AI 이상 점수와 임계값. 세로선은 팝업" src="img/replay-pump.webp" loading="lazy" decoding="async"></a><figcaption>펌프 막힘 재생. 위는 토출 압력, 가운데·아래는 자동 학습을 켰을 때와 껐을 때의 AI 이상 점수와 임계값. 세로선은 팝업</figcaption></figure>
+</li>
+<li>
+<p>이번에는 <code>--scenario bearing</code>으로 같은 과정을 반복합니다(약 25분). 한 번은 그대로 두고, 한 번은 연결하자마자 <strong>실시간 자동 학습</strong> 체크를 끕니다. 끄면 처음 10시간으로 배운 모델을 끝까지 씁니다.</p>
+<figure><a href="img/replay-bearing.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="베어링 열화 24시간. 자동 학습을 켜면(가운데) 임계값이 계단처럼 올라가고 팝업이 늦습니다. 끄면(아래) 일찍 울리지만 자주 울립니다" src="img/replay-bearing.webp" loading="lazy" decoding="async"></a><figcaption>베어링 열화 24시간. 자동 학습을 켜면(가운데) 임계값이 계단처럼 올라가고 팝업이 늦습니다. 끄면(아래) 일찍 울리지만 자주 울립니다</figcaption></figure>
+</li>
+<li>
+<p>화면 없이 끝까지 빠르게 실행하고 싶으면 <code>replay.py</code>를 씁니다. 화면이 1초마다 하는 일(상태 요청 → 데이터 받기 → 분석)을 쉬지 않고 되풀이하고, 화면의 팝업 규칙(AI 3시점 연속, 정상 10시점 뒤 다시 허용)대로 팝업을 셉니다. 예측 시스템 코드는 고치지 않습니다.</p>
+<div class="hl"><pre><span></span><code><span class="nv">PDM</span><span class="o">=</span>~/KANG_PdM_RTU_배포본_20261109/PDM_Program<span class="w">     </span><span class="c1"># 배포본을 푼 곳</span>
+python3<span class="w"> </span>scenario_rtu.py<span class="w"> </span>--scenario<span class="w"> </span>bearing<span class="w"> </span>--port<span class="w"> </span><span class="m">18867</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">$PDM</span>/.venv/bin/python<span class="w"> </span>-I<span class="w"> </span>replay.py<span class="w"> </span><span class="nv">$PDM</span><span class="w"> </span>http://127.0.0.1:18867<span class="w"> </span>replay-bearing-auto.json<span class="w">            </span><span class="c1"># 자동 학습 켬</span>
+<span class="c1"># 시나리오 RTU 를 다시 띄우고 --manual 을 주면 자동 학습 끔</span>
+</code></pre></div>
+
+<p>베어링 2,070시점이 약 5분, 원료 투입 3,000시점이 약 9분 걸렸습니다.</p>
+</li>
+</ol>
+<h2 id="결과-고장을-얼마나-일찍-알렸나">결과: 고장을 얼마나 일찍 알렸나<a class="anchor" href="#결과-고장을-얼마나-일찍-알렸나" title="Permanent link">#</a></h2>
+<p>「신호가 보인 때」는 바뀐 채널이 정상 흔들림 폭(사인 진폭 + 잡음 3σ)을 처음 넘은 시점입니다. 정상 데이터만 사용한 대조 실행에서도 ±5분 안에 뜬 팝업은 시나리오와 상관없는 헛팝업으로 보고 제외했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>시나리오</th>
+<th>신호가 보인 때</th>
+<th>자동 학습 켬(기본)</th>
+<th>자동 학습 끔</th>
+<th>규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>펌프 막힘(840에 걸림)</td>
+<td>633</td>
+<td>691 (신호 뒤 58분, 걸림 149분 전) · 걸리기 전 40분 동안 AI 0분</td>
+<td>691 (같음) · 걸리기 전 40분 동안 AI 3분</td>
+<td>840, 걸리는 순간</td>
+</tr>
+<tr>
+<td>베어링 열화(2040에 고장)</td>
+<td>1182</td>
+<td><strong>1583 (신호 뒤 401분, 고장 457분 전)</strong></td>
+<td><strong>1275 (신호 뒤 93분, 고장 765분 전)</strong></td>
+<td>2040, 고장 순간</td>
+</tr>
+</tbody>
+</table>
+<h2 id="결과-고장이-아닐-때-얼마나-울렸나">결과: 고장이 아닐 때 얼마나 울렸나<a class="anchor" href="#결과-고장이-아닐-때-얼마나-울렸나" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>자동 학습 켬</th>
+<th>자동 학습 끔</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>정상만 24시간 30분</td>
+<td>팝업 5번(하루 4.9번), AI 알람 44분</td>
+<td>팝업 18번(하루 17.6번), AI 알람 164분</td>
+</tr>
+<tr>
+<td>레시피 변경 뒤 10시간</td>
+<td>AI 알람 38분, 평소보다 늘어난 팝업 없음</td>
+<td>AI 알람 155분, 팝업 4번 더</td>
+</tr>
+<tr>
+<td>원료 투입 충격 40시간(8번)</td>
+<td>AI 알람 66분(평소와 비슷)</td>
+<td>AI 알람 389분</td>
+</tr>
+</tbody>
+</table>
+<p>자동 학습을 켜면 임계값이 계속 움직였습니다. 원료 투입 40시간 동안 80번 다시 배우며 0.546 → 0.655로, 베어링 열화 동안 48번 다시 배우며 0.546 → 0.597로 올랐습니다.</p>
+<h2 id="무엇을-배웠나">무엇을 배웠나<a class="anchor" href="#무엇을-배웠나" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>30시점마다 다시 배워 곧바로 쓰는 방식은 「새 정상」을 빨리 받아들입니다.</strong> 레시피 변경처럼 진짜 운전 조건이 바뀐 경우에는 장점입니다. 하지만 베어링 열화나 펌프 막힘처럼 규칙 한계 아래에서 서서히 오는 고장도 같은 방식으로 받아들입니다. 재학습은 규칙 한계를 넘은 시점만 빼므로, 한계 아래의 열화는 다음 모델의 「정상」이 됩니다.</li>
+<li><strong>끄면 일찍 보지만 너무 자주 울립니다.</strong> 처음 10시간의 정상 데이터에는 정상 상태의 모든 패턴이 담기지 않았습니다. 온도의 사인 주기만 약 157분이고, 네 채널 주기가 겹친 모양은 10시간 안에 다 나오지 않습니다. 하루 17.6번 울리는 팝업은 곧 아무도 보지 않게 됩니다.</li>
+<li>그러니 문제는 재학습 간격이 아니라 <strong>「무엇을 정상으로 배울지」를 누가 정하느냐</strong>입니다.</li>
+</ul>
+<p>현장에 적용할 때 고려할 방법은 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>무엇을 막나</th>
+<th>무엇이 필요하나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>레시피·배치 단계별로 기준선 나누기</td>
+<td>레시피 변경·원료 투입 헛알람</td>
+<td>PLC의 레시피·단계 태그</td>
+</tr>
+<tr>
+<td>다시 배운 모델을 바로 쓰지 않고 섀도로 돌려 비교한 뒤 바꾸기</td>
+<td>열화를 정상으로 배우는 일</td>
+<td>비교 기준(고장 기록이나 사람 확인) — <a href="../pdm/agentic.html">설비 예지보전 PBL 5장</a>의 섀도·승격</td>
+</tr>
+<tr>
+<td>사람이 정상이라고 확인한 구간만 학습에 넣기</td>
+<td>같은 문제</td>
+<td>운전자 확인 기록</td>
+</tr>
+<tr>
+<td>고장 기록으로 확률 모델 만들기(4장)</td>
+<td>정상만 배워서 생기는 한계</td>
+<td>고장 분류 정의와 라벨</td>
+</tr>
+</tbody>
+</table>
+<p>비교를 위해 KANG에는 없는 단순한 방법도 같은 데이터에 적용했습니다. 처음 600시점(확인된 정상)의 중앙값과 값이 흩어진 정도를 기준으로 20시점 평균을 비교해 크게 벗어나면 알리는 「고정 기준선」입니다. 이 방법은 베어링 열화를 신호 뒤 198분(고장 660분 전)에, 펌프 막힘을 78분 뒤(걸림 129분 전)에 알렸습니다. 정상·원료 투입에서는 한 번도 울리지 않았습니다. 대신 레시피가 바뀌자 494분 동안 알람이 이어졌습니다. <strong>레시피 태그 없이 기준선을 고정하면 이렇게 됩니다.</strong></p>
+<div class="admonition note">
+<p class="admonition-title">이 결과의 범위</p>
+<p>모두 합성 데이터로 한 번(seed 42) 실행한 결과입니다. 현장 성능이 아니라 각 설정이 어디서 어긋나는지를 보여 줍니다. 실제 설비에서는 고장 모양도, 정상의 흔들림도 다릅니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>
+<p>펌프 막힘에서 자동 학습을 켠 경우, 걸리기 직전 40분 동안 AI가 조용했던 까닭은 무엇일까요?</p>
+<p><details class="answer" markdown="1">
+<summary>정답</summary></p>
+<p>압력이 4시간에 걸쳐 조금씩 떨어지는 동안 30분마다 모델을 다시 학습했고, 그때마다 낮아진 압력(규칙 한계 500 kPa 위)을 정상 학습 데이터에 넣었습니다. 임계값도 0.546에서 0.578로 올라갔습니다. 걸리기 직전에는 이미 「낮은 압력」이 새 정상이 되어 있었습니다.
+</details></p>
+</li>
+<li>
+<p>자동 학습을 끄면 베어링 열화를 300분 넘게 일찍 알립니다. 그런데도 끄기를 권하지 않는 까닭은 무엇일까요?</p>
+<p><details class="answer" markdown="1">
+<summary>정답</summary></p>
+<p>정상 데이터만 들어올 때도 하루 17.6번 팝업이 뜹니다. 팝업이 이렇게 잦으면 사람이 보지 않게 되어, 진짜 열화 알람도 묻힙니다. 처음 학습한 10시간의 데이터에 정상 상태의 모든 패턴이 담기지 않았기 때문입니다. 정상 구간을 충분히 길게 잡고, 레시피별로 나누고, 바꿀 모델은 섀도로 비교한 뒤 바꾸는 쪽이 낫습니다.
+</details></p>
+</li>
+<li>
+<p>회사에서 PLC 태그 사전을 받았습니다. 이 장의 결과로 보아 가장 먼저 찾아야 할 태그는 무엇일까요?</p>
+<p><details class="answer" markdown="1">
+<summary>정답</summary></p>
+<p>레시피·배치 단계·설정 회전수·운전 상태 태그입니다. 이 태그가 있어야 「레시피가 바뀌어서 달라진 것」과 「설비가 나빠져서 달라진 것」을 나눌 수 있습니다. 그다음이 펌프 토출 압력과 모터 전류, 그리고 트립·인터록 이력(4장의 라벨)입니다.
+</details></p>
+</li>
+</ol>
+    </article>
+    <nav class="pager"><a class="prev" href="labels.html"><span>이전</span>고장 분류를 정하고 고장 기록 넣기</a><a class="next" href="assignments.html"><span>다음</span>과제와 현장으로 가는 길</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 10일 KANG 설비 고장 예측 시스템 v0.5.1 배포본을 고치지 않고 실제로 실행해 얻었습니다. 가상 RTU와 고장 시나리오는 합성 데이터이며 현장 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#시나리오-rtu">시나리오 RTU</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#결과-고장을-얼마나-일찍-알렸나">결과: 고장을 얼마나 일찍 알렸나</a></li><li><a href="#결과-고장이-아닐-때-얼마나-울렸나">결과: 고장이 아닐 때 얼마나 울렸나</a></li><li><a href="#무엇을-배웠나">무엇을 배웠나</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

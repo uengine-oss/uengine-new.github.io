@@ -94,66 +94,95 @@
 <p>IMS 데이터의 정답은 "시험이 끝날 때 베어링 1 외륜이 망가졌다"뿐입니다. 그래서 정밀도·재현율이 아니라 <strong>선행시간</strong>으로 비교합니다. 점수가 문턱값을 <strong>3번 연속</strong> 넘으면 알람을 울리도록 정합니다.</p>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <ol class="steps">
-<li>데이터를 받습니다. 1.07 GB를 받아 2차 시험 984개 파일만 압축을 풉니다.</li>
-<div class="hl"><pre><span></span><code>```bash
-bash textbook/00_get_data.sh
-# IMS 2차 시험: 984개 (984개여야 함)
-```
-
-파일은 `4.+Bearings.zip` → `IMS.7z` → `2nd_test.rar` 순서로 세 겹 압축되어 있습니다. macOS의 `bsdtar`가 7z와 rar를 모두 읽습니다. 3차 시험은 `4th_test/`라는 이름으로 풀리니 주의하세요.
+<li>
+<p>데이터를 받습니다. 1.07 GB를 받아 2차 시험 984개 파일만 압축을 풉니다.</p>
+<div class="hl"><pre><span></span><code>bash<span class="w"> </span>textbook/00_get_data.sh
+<span class="c1"># IMS 2차 시험: 984개 (984개여야 함)</span>
 </code></pre></div>
 
-<li>특징을 추출하고 물리 규칙을 실행합니다(약 5초).</li>
-<div class="hl"><pre><span></span><code>```bash
-.venv/bin/python textbook/01_ims_features.py
-```
-
-![RMS·첨도·BPFO 대역 에너지. BPFO가 16일 새벽에 먼저 오르고, RMS는 17일 아침에 계단처럼 오릅니다](img/vibration-features.webp)
-
-BPFO는 베어링 치수와 회전수로 계산하는 외륜 결함 주파수입니다. 이 시험대(Rexnord ZA-2115, 2,000 rpm)의 이론값은 236.4 Hz입니다. 시험이 끝나기 100분 전에는 포락선 스펙트럼의 봉우리가 **230.5 Hz**와 그 2·3배에 나타났습니다. 이론값 한 점만 보면 놓칠 수 있으므로 ±3% 범위를 살펴봅니다.
-
-![포락선 스펙트럼: 처음(파랑)과 끝나기 100분 전(주황). 점선이 이론 BPFO와 2·3배](img/vibration-envelope.webp)
+<p>파일은 <code>4.+Bearings.zip</code> → <code>IMS.7z</code> → <code>2nd_test.rar</code> 순서로 세 겹 압축되어 있습니다. macOS의 <code>bsdtar</code>가 7z와 rar를 모두 읽습니다. 3차 시험은 <code>4th_test/</code>라는 이름으로 풀리니 주의하세요.</p>
+</li>
+<li>
+<p>특징을 추출하고 물리 규칙을 실행합니다(약 5초).</p>
+<div class="hl"><pre><span></span><code>.venv/bin/python<span class="w"> </span>textbook/01_ims_features.py
 </code></pre></div>
 
-<li>한 페이지 오토인코더를 실행합니다(약 2초). 핵심은 아래 열몇 줄입니다.</li>
-<div class="hl"><pre><span></span><code>```python
-X = np.load(IN / &quot;logspec64.npy&quot;)                 # 스냅숏마다 64칸 로그 스펙트럼
-n_train = int(len(X) * 0.4)                        # 앞 40%는 건강하다고 가정
-scaler = StandardScaler().fit(X[:n_train])
-Z = scaler.transform(X)
+<figure><a href="img/vibration-features.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="RMS·첨도·BPFO 대역 에너지. BPFO가 16일 새벽에 먼저 오르고, RMS는 17일 아침에 계단처럼 오릅니다" src="img/vibration-features.webp" loading="lazy" decoding="async"></a><figcaption>RMS·첨도·BPFO 대역 에너지. BPFO가 16일 새벽에 먼저 오르고, RMS는 17일 아침에 계단처럼 오릅니다</figcaption></figure>
+<p>BPFO는 베어링 치수와 회전수로 계산하는 외륜 결함 주파수입니다. 이 시험대(Rexnord ZA-2115, 2,000 rpm)의 이론값은 236.4 Hz입니다. 시험이 끝나기 100분 전에는 포락선 스펙트럼의 봉우리가 <strong>230.5 Hz</strong>와 그 2·3배에 나타났습니다. 이론값 한 점만 보면 놓칠 수 있으므로 ±3% 범위를 살펴봅니다.</p>
+<figure><a href="img/vibration-envelope.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="포락선 스펙트럼: 처음(파랑)과 끝나기 100분 전(주황). 점선이 이론 BPFO와 2·3배" src="img/vibration-envelope.webp" loading="lazy" decoding="async"></a><figcaption>포락선 스펙트럼: 처음(파랑)과 끝나기 100분 전(주황). 점선이 이론 BPFO와 2·3배</figcaption></figure>
+</li>
+<li>
+<p>한 페이지 오토인코더를 실행합니다(약 2초). 핵심은 아래 열몇 줄입니다.</p>
+<div class="hl"><pre><span></span><code><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">IN</span> <span class="o">/</span> <span class="s2">&quot;logspec64.npy&quot;</span><span class="p">)</span>                 <span class="c1"># 스냅숏마다 64칸 로그 스펙트럼</span>
+<span class="n">n_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.4</span><span class="p">)</span>                        <span class="c1"># 앞 40%는 건강하다고 가정</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="n">n_train</span><span class="p">])</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-# 오토인코더: 64 → 16 → 4 → 16 → 64, 입력을 그대로 출력하도록 학습
-ae = MLPRegressor(hidden_layer_sizes=(16, 4, 16), max_iter=3000, random_state=0)
-ae.fit(Z[:n_train], Z[:n_train])
-ae_score = ((ae.predict(Z) - Z) ** 2).mean(axis=1)  # 복원 오차
+<span class="c1"># 오토인코더: 64 → 16 → 4 → 16 → 64, 입력을 그대로 출력하도록 학습</span>
+<span class="n">ae</span> <span class="o">=</span> <span class="n">MLPRegressor</span><span class="p">(</span><span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ae</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Z</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="n">Z</span><span class="p">[:</span><span class="n">n_train</span><span class="p">])</span>
+<span class="n">ae_score</span> <span class="o">=</span> <span class="p">((</span><span class="n">ae</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">-</span> <span class="n">Z</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 복원 오차</span>
 
-thr = np.percentile(ae_score[:n_train], 99)        # 문턱값: 학습 구간 오차의 99%
-over = ae_score &gt; thr                              # 3번 연속 넘으면 알람
-```
-
-```bash
-.venv/bin/python textbook/02_ae_one_page.py
-```
-
-![위: 오토인코더 복원 오차(로그 눈금), 아래: Isolation Forest. 녹색이 학습 구간, 주황 선이 첫 알람](img/vibration-ae.webp)
+<span class="n">thr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">ae_score</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="mi">99</span><span class="p">)</span>        <span class="c1"># 문턱값: 학습 구간 오차의 99%</span>
+<span class="n">over</span> <span class="o">=</span> <span class="n">ae_score</span> <span class="o">&gt;</span> <span class="n">thr</span>                              <span class="c1"># 3번 연속 넘으면 알람</span>
 </code></pre></div>
 
-<li>같은 RMS를 Chronos-2 제로샷으로도 봅니다(3장에서 자세히).</li>
-<div class="hl"><pre><span></span><code>```bash
-.venv/bin/python textbook/04_zero_shot_chronos.py
-```
+<div class="hl"><pre><span></span><code>.venv/bin/python<span class="w"> </span>textbook/02_ae_one_page.py
 </code></pre></div>
 
-<li>다섯 방법의 결과를 비교합니다.</li>
-<div class="hl"><pre><span></span><code>| 방법 | 문턱값(한 번 정하고 고정) | 첫 알람 | 끝나기 전 |
-|---|---|---|---|
-| 오토인코더 | 학습 구간 오차의 99% | 02-16 03:32 | **74.8시간** |
-| Isolation Forest | 학습 구간 점수의 99% | 02-16 04:22 | 74.0시간 |
-| BPFO 물리 규칙 | 건강 구간 중앙값 × 4 | 02-16 04:32 | 73.8시간 |
-| Chronos-2 제로샷(RMS) | 앞 40% 점수의 99% | 02-17 07:32 | 46.8시간 |
-| RMS 규칙 | 건강 구간 중앙값 × 2 | 02-17 07:52 | 46.5시간 |
+<figure><a href="img/vibration-ae.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="위: 오토인코더 복원 오차(로그 눈금), 아래: Isolation Forest. 녹색이 학습 구간, 주황 선이 첫 알람" src="img/vibration-ae.webp" loading="lazy" decoding="async"></a><figcaption>위: 오토인코더 복원 오차(로그 눈금), 아래: Isolation Forest. 녹색이 학습 구간, 주황 선이 첫 알람</figcaption></figure>
+</li>
+<li>
+<p>같은 RMS를 Chronos-2 제로샷으로도 봅니다(3장에서 자세히).</p>
+<div class="hl"><pre><span></span><code>.venv/bin/python<span class="w"> </span>textbook/04_zero_shot_chronos.py
 </code></pre></div>
 
+</li>
+<li>
+<p>다섯 방법의 결과를 비교합니다.</p>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>문턱값(한 번 정하고 고정)</th>
+<th>첫 알람</th>
+<th>끝나기 전</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>오토인코더</td>
+<td>학습 구간 오차의 99%</td>
+<td>02-16 03:32</td>
+<td><strong>74.8시간</strong></td>
+</tr>
+<tr>
+<td>Isolation Forest</td>
+<td>학습 구간 점수의 99%</td>
+<td>02-16 04:22</td>
+<td>74.0시간</td>
+</tr>
+<tr>
+<td>BPFO 물리 규칙</td>
+<td>건강 구간 중앙값 × 4</td>
+<td>02-16 04:32</td>
+<td>73.8시간</td>
+</tr>
+<tr>
+<td>Chronos-2 제로샷(RMS)</td>
+<td>앞 40% 점수의 99%</td>
+<td>02-17 07:32</td>
+<td>46.8시간</td>
+</tr>
+<tr>
+<td>RMS 규칙</td>
+<td>건강 구간 중앙값 × 2</td>
+<td>02-17 07:52</td>
+<td>46.5시간</td>
+</tr>
+</tbody>
+</table>
+</li>
 </ol>
 <h2 id="알아-둘-점">알아 둘 점<a class="anchor" href="#알아-둘-점" title="Permanent link">#</a></h2>
 <ul>

@@ -124,49 +124,74 @@
 </table>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <ol class="steps">
-<li>16주 데이터를 만들고 그림을 그립니다(약 6초).</li>
-<div class="hl"><pre><span></span><code>```bash
-.venv/bin/python textbook/06_mixer_data.py
-# 8739 스냅숏 · {1: 576, 2: 576, 3: 480, …, 16: 480}
-```
+<li>
+<p>16주 데이터를 만들고 그림을 그립니다(약 6초).</p>
+<div class="hl"><pre><span></span><code>.venv/bin/python<span class="w"> </span>textbook/06_mixer_data.py
+<span class="c1"># 8739 스냅숏 · {1: 576, 2: 576, 3: 480, …, 16: 480}</span>
 </code></pre></div>
 
-<li>그림을 봅니다. 빨간 실선은 정비 기록의 고장 시각이고, 점선은 전조 시작 시각(정답)입니다.</li>
-<div class="hl"><pre><span></span><code>![교반기 M-201 16주: 속도 RMS · 첨도 · BPFO 성분 · 회전 1배 진폭, 레시피별 색](img/mixer-overview.webp)
-
-- 베어링 고장(F1·F3·F5)은 BPFO 성분이 며칠 앞서 오르고 첨도가 뒤따릅니다. 속도 RMS가 ISO 구역 C(2.8 mm/s)를 넘는 것은 고장 몇 시간 전뿐입니다.
-- 불균형 고장(F2·F4·F6)은 회전 1배 진폭이 2~3일 동안 커집니다.
-- 첨도가 일시적으로 튀는 것은 원료 투입 충격입니다. 첨도만 보는 모델은 이 때문에 헛알람을 냅니다.
-- 5주차부터 보라색(레시피 C)이 섞이면서 평소 진동 수준이 올라갑니다.
+</li>
+<li>
+<p>그림을 봅니다. 빨간 실선은 정비 기록의 고장 시각이고, 점선은 전조 시작 시각(정답)입니다.</p>
+<figure><a href="img/mixer-overview.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="교반기 M-201 16주: 속도 RMS · 첨도 · BPFO 성분 · 회전 1배 진폭, 레시피별 색" src="img/mixer-overview.webp" loading="lazy" decoding="async"></a><figcaption>교반기 M-201 16주: 속도 RMS · 첨도 · BPFO 성분 · 회전 1배 진폭, 레시피별 색</figcaption></figure>
+<ul>
+<li>베어링 고장(F1·F3·F5)은 BPFO 성분이 며칠 앞서 오르고 첨도가 뒤따릅니다. 속도 RMS가 ISO 구역 C(2.8 mm/s)를 넘는 것은 고장 몇 시간 전뿐입니다.</li>
+<li>불균형 고장(F2·F4·F6)은 회전 1배 진폭이 2~3일 동안 커집니다.</li>
+<li>첨도가 일시적으로 튀는 것은 원료 투입 충격입니다. 첨도만 보는 모델은 이 때문에 헛알람을 냅니다.</li>
+<li>5주차부터 보라색(레시피 C)이 섞이면서 평소 진동 수준이 올라갑니다.</li>
+</ul>
+</li>
+<li>
+<p>한 주 데이터와 정비 기록을 열어 봅니다.</p>
+<div class="hl"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;data/sim/inbox/week-03.parquet&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">[[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;recipe&quot;</span><span class="p">,</span> <span class="s2">&quot;rpm&quot;</span><span class="p">,</span> <span class="s2">&quot;vel_rms&quot;</span><span class="p">,</span> <span class="s2">&quot;kurtosis&quot;</span><span class="p">,</span> <span class="s2">&quot;bpfo_db&quot;</span><span class="p">,</span> <span class="s2">&quot;v1x&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/sim/inbox/week-03-maintenance.json&quot;</span><span class="p">)))</span>
 </code></pre></div>
 
-<li>한 주 데이터와 정비 기록을 열어 봅니다.</li>
-<div class="hl"><pre><span></span><code>```python
-import pandas as pd, json
-w = pd.read_parquet(&quot;data/sim/inbox/week-03.parquet&quot;)
-print(w[[&quot;time&quot;, &quot;recipe&quot;, &quot;rpm&quot;, &quot;vel_rms&quot;, &quot;kurtosis&quot;, &quot;bpfo_db&quot;, &quot;v1x&quot;]].tail(3))
-print(json.load(open(&quot;data/sim/inbox/week-03-maintenance.json&quot;)))
-```
-
-정비 기록의 형식은 다음과 같습니다. 전조가 언제 시작했는지는 적혀 있지 않습니다.
-
-```json
-[{&quot;id&quot;: &quot;F1&quot;, &quot;time&quot;: &quot;2026-03-20T15:30:00&quot;, &quot;week&quot;: 3, &quot;kind&quot;: &quot;bearing&quot;,
-  &quot;kind_ko&quot;: &quot;베어링 외륜 손상&quot;, &quot;work&quot;: &quot;소음·온도 상승으로 정지, 구동단 베어링 교체&quot;}]
-```
+<p>정비 기록의 형식은 다음과 같습니다. 전조가 언제 시작했는지는 적혀 있지 않습니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;F1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-20T15:30:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;week&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bearing&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;kind_ko&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;베어링 외륜 손상&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;work&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;소음·온도 상승으로 정지, 구동단 베어링 교체&quot;</span><span class="p">}]</span>
 </code></pre></div>
 
-<li>특징 열을 확인합니다. 모든 모델이 같은 특징을 봅니다.</li>
-<div class="hl"><pre><span></span><code>| 열 | 뜻 |
-|---|---|
-| `vel_rms` | 10~1,000 Hz 속도 RMS(mm/s) — ISO 10816 기준 |
-| `acc_rms`, `peak`, `kurtosis`, `crest` | 가속도 세기와 충격성 |
-| `v1x`, `v2x` | 회전 1·2배 속도 진폭(mm/s) |
-| `bpfo_db` | 포락선 스펙트럼의 BPFO 성분(배경 대비 dB) |
-| `b00`~`b31` | 로그 간격 32개 대역의 로그 에너지(오토인코더·패턴 검색 입력) |
-| `recipe`, `rpm` | 운전 조건(모델 입력이 아니라 맥락) |
-</code></pre></div>
-
+</li>
+<li>
+<p>특징 열을 확인합니다. 모든 모델이 같은 특징을 봅니다.</p>
+<table>
+<thead>
+<tr>
+<th>열</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vel_rms</code></td>
+<td>10~1,000 Hz 속도 RMS(mm/s) — ISO 10816 기준</td>
+</tr>
+<tr>
+<td><code>acc_rms</code>, <code>peak</code>, <code>kurtosis</code>, <code>crest</code></td>
+<td>가속도 세기와 충격성</td>
+</tr>
+<tr>
+<td><code>v1x</code>, <code>v2x</code></td>
+<td>회전 1·2배 속도 진폭(mm/s)</td>
+</tr>
+<tr>
+<td><code>bpfo_db</code></td>
+<td>포락선 스펙트럼의 BPFO 성분(배경 대비 dB)</td>
+</tr>
+<tr>
+<td><code>b00</code>~<code>b31</code></td>
+<td>로그 간격 32개 대역의 로그 에너지(오토인코더·패턴 검색 입력)</td>
+</tr>
+<tr>
+<td><code>recipe</code>, <code>rpm</code></td>
+<td>운전 조건(모델 입력이 아니라 맥락)</td>
+</tr>
+</tbody>
+</table>
+</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">회사 데이터로 바꿔 끼우기</p>
