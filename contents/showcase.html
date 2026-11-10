@@ -270,6 +270,16 @@ html.inline-showcase .m-hero{transform:translate(320px,270px) scale(.95)}
 html.inline-showcase .build .legend{left:1050px;right:auto;top:340px;width:680px}
 html.inline-showcase .build .lg b{font-size:27px}
 html.inline-showcase .build .lg span{font-size:22px}
+/* The homepage frame is wider than 16:9, so fit() widens the stage by 2 × --dx. Scenes stay centred,
+   while product shots keep their text by the rail and give the frame all the extra width (16:9 pane). */
+html.inline-showcase:not(.inline-portrait) .scene-host{left:var(--dx);right:auto;width:1920px}
+html.inline-showcase:not(.inline-portrait) .stackwrap.m-hero{transform:translate(calc(320px + var(--dx)),270px) scale(.95)}
+html.inline-showcase:not(.inline-portrait) .stackwrap.m-left{transform:translate(calc(150px + var(--dx)),150px) scale(.86)}
+html.inline-showcase:not(.inline-portrait) .shot .txt{left:calc(280px - var(--dx));top:230px;width:380px}
+html.inline-showcase:not(.inline-portrait) .shot h3{font-size:36px}
+html.inline-showcase:not(.inline-portrait) .shot .live{left:calc(280px - var(--dx))}
+html.inline-showcase:not(.inline-portrait) .frame{--fw:calc(1180px + 2 * var(--dx));--fh:min(1000px,calc(var(--fw) * .5625 + 34px));
+  left:calc(700px - var(--dx));top:calc((1080px - var(--fh)) / 2);width:var(--fw);height:var(--fh)}
 html.inline-portrait #stage{width:900px;height:1575px}
 html.inline-portrait #rail{display:none}
 html.inline-portrait .m-hero{transform:translate(215px,270px) scale(.9)}
@@ -1367,6 +1377,9 @@ var SCENES = [
     var portrait = INLINE && innerHeight > innerWidth;
     document.documentElement.classList.toggle('inline-portrait', portrait);
     var w = portrait ? 900 : 1920, h = portrait ? 1575 : 1080;
+    if (INLINE && !portrait) w = Math.min(2400, Math.max(w, Math.round(h * innerWidth / innerHeight)));
+    stage.style.width = INLINE && !portrait ? w + 'px' : '';
+    stage.style.setProperty('--dx', (INLINE && !portrait ? (w - 1920) / 2 : 0) + 'px');
     var s = Math.min(innerWidth / w, innerHeight / h);
     stage.style.transform = 'scale(' + s + ')';
     stage.style.margin = ((innerHeight - h * s) / 2) + 'px ' + ((innerWidth - w * s) / 2) + 'px';
