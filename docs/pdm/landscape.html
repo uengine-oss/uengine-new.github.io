@@ -192,31 +192,59 @@
 </table>
 <h2 id="따라-하기-skab-순위표-재현">따라 하기: SKAB 순위표 재현<a class="anchor" href="#따라-하기-skab-순위표-재현" title="Permanent link">#</a></h2>
 <ol class="steps">
-<li>SKAB를 받습니다(GPL-3.0, 데이터 4.3 MB).</li>
-<div class="hl"><pre><span></span><code>```bash
-git clone --depth 1 https://github.com/waico/SKAB.git data/raw/skab/repo
-```
+<li>
+<p>SKAB를 받습니다(GPL-3.0, 데이터 4.3 MB).</p>
+<div class="hl"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>https://github.com/waico/SKAB.git<span class="w"> </span>data/raw/skab/repo
 </code></pre></div>
 
-<li>순위표의 규약을 확인합니다. 저장소의 <code>notebooks/</code>와 <code>core/</code>에 나온 규약은 다음과 같습니다. 이상이 있는 34개 파일마다 <strong>앞 400점으로 그 파일의 모델을 학습</strong>하고 나머지 23,801점을 채점합니다. 각 점의 예측과 정답을 비교한 뒤 모든 파일의 결과를 합쳐 F1·FAR(헛알람 비율)·MAR(놓침 비율)을 계산합니다.</li>
-<li>세 모델을 같은 규약으로 실행합니다. Isolation Forest(오염 0.0005, 3점 이동 중앙값), Vanilla AE(5-4-2-4-5, 문턱값 = 학습 오차 99% × 5/2), Conv-AE(60점 창, 문턱값 = 99.9% × 4/3).</li>
-<div class="hl"><pre><span></span><code>```bash
-.venv/bin/python textbook/03_skab_benchmark.py      # 약 2분, CPU
-```
+</li>
+<li>
+<p>순위표의 규약을 확인합니다. 저장소의 <code>notebooks/</code>와 <code>core/</code>에 나온 규약은 다음과 같습니다. 이상이 있는 34개 파일마다 <strong>앞 400점으로 그 파일의 모델을 학습</strong>하고 나머지 23,801점을 채점합니다. 각 점의 예측과 정답을 비교한 뒤 모든 파일의 결과를 합쳐 F1·FAR(헛알람 비율)·MAR(놓침 비율)을 계산합니다.</p>
+</li>
+<li>
+<p>세 모델을 같은 규약으로 실행합니다. Isolation Forest(오염 0.0005, 3점 이동 중앙값), Vanilla AE(5-4-2-4-5, 문턱값 = 학습 오차 99% × 5/2), Conv-AE(60점 창, 문턱값 = 99.9% × 4/3).</p>
+<div class="hl"><pre><span></span><code>.venv/bin/python<span class="w"> </span>textbook/03_skab_benchmark.py<span class="w">      </span><span class="c1"># 약 2분, CPU</span>
 </code></pre></div>
 
-<li>결과를 순위표와 비교합니다.</li>
-<div class="hl"><pre><span></span><code>![SKAB 순위표와 재현 결과(F1). 주황이 우리 재현, 초록은 진동 채널 2개만 쓴 경우](img/landscape-skab.webp)
-
-| 모델(센서 8개) | 우리 F1 / FAR% / MAR% | 순위표 |
-|---|---|---|
-| Isolation Forest | 0.287 / 2.56 / 82.89 | 0.29 / 2.56 / 82.89 |
-| Vanilla AE | 0.380 / 2.11 / 76.12 | 0.39 / 2.59 / 75.15 |
-| Conv-AE | 0.783 / 13.64 / 28.11 | 0.78 / 13.55 / 28.02 |
-| 늘 알람(기준) | 0.698 / 100 / 0 | — |
-</code></pre></div>
-
-<li>진동 채널(<code>Accelerometer1RMS</code>, <code>Accelerometer2RMS</code>)만 남기고 다시 실행합니다. Conv-AE의 점수는 0.783 → 0.430으로 떨어집니다. 실험 종류별로 보면 밸브 실험은 0.753 → 0.148, 0.767 → 0.000으로 떨어져 거의 잡지 못합니다. 회전자 불균형은 0.884 → 0.924로 오히려 오릅니다.</li>
+</li>
+<li>
+<p>결과를 순위표와 비교합니다.</p>
+<figure><a href="img/landscape-skab.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="SKAB 순위표와 재현 결과(F1). 주황이 우리 재현, 초록은 진동 채널 2개만 쓴 경우" src="img/landscape-skab.webp" loading="lazy" decoding="async"></a><figcaption>SKAB 순위표와 재현 결과(F1). 주황이 우리 재현, 초록은 진동 채널 2개만 쓴 경우</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>모델(센서 8개)</th>
+<th>우리 F1 / FAR% / MAR%</th>
+<th>순위표</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Isolation Forest</td>
+<td>0.287 / 2.56 / 82.89</td>
+<td>0.29 / 2.56 / 82.89</td>
+</tr>
+<tr>
+<td>Vanilla AE</td>
+<td>0.380 / 2.11 / 76.12</td>
+<td>0.39 / 2.59 / 75.15</td>
+</tr>
+<tr>
+<td>Conv-AE</td>
+<td>0.783 / 13.64 / 28.11</td>
+<td>0.78 / 13.55 / 28.02</td>
+</tr>
+<tr>
+<td>늘 알람(기준)</td>
+<td>0.698 / 100 / 0</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>진동 채널(<code>Accelerometer1RMS</code>, <code>Accelerometer2RMS</code>)만 남기고 다시 실행합니다. Conv-AE의 점수는 0.783 → 0.430으로 떨어집니다. 실험 종류별로 보면 밸브 실험은 0.753 → 0.148, 0.767 → 0.000으로 떨어져 거의 잡지 못합니다. 회전자 불균형은 0.884 → 0.924로 오히려 오릅니다.</p>
+</li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">점수 하나로 고르지 마세요</p>

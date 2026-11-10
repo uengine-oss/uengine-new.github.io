@@ -257,48 +257,52 @@
 <p>섀도는 8개까지 두고, 넘으면 비용이 큰 것부터 정리합니다. 코딩 에이전트 후보는 고장으로 한 번 채점받기 전에는 정리하지 않습니다.</p>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <ol class="steps">
-<li>데이터를 만들고(4장) 대시보드를 띄웁니다. 코딩 에이전트까지 보려면 <code>--agent claude</code>(Claude Code 로그인 필요), 없으면 <code>--agent stub</code>(시험용 고정 후보)입니다.</li>
-<div class="hl"><pre><span></span><code>```bash
-.venv/bin/python textbook/06_mixer_data.py
-PYTHONPATH=. .venv/bin/python -m pdm_agent.server --run runs/demo --port 8781 --agent claude
-# http://127.0.0.1:8781/
-```
+<li>
+<p>데이터를 만들고(4장) 대시보드를 띄웁니다. 코딩 에이전트까지 보려면 <code>--agent claude</code>(Claude Code 로그인 필요), 없으면 <code>--agent stub</code>(시험용 고정 후보)입니다.</p>
+<div class="hl"><pre><span></span><code>.venv/bin/python<span class="w"> </span>textbook/06_mixer_data.py
+<span class="nv">PYTHONPATH</span><span class="o">=</span>.<span class="w"> </span>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pdm_agent.server<span class="w"> </span>--run<span class="w"> </span>runs/demo<span class="w"> </span>--port<span class="w"> </span><span class="m">8781</span><span class="w"> </span>--agent<span class="w"> </span>claude
+<span class="c1"># http://127.0.0.1:8781/</span>
 </code></pre></div>
 
-<li><strong>다음 주 데이터 넣기</strong>를 누릅니다. 1주차 챔피언은 학습이 필요 없는 <strong>ISO 진동 등급 규칙</strong>이고, 정상 일주일로 학습한 후보 5개가 「다음 주부터」로 순위표에 올라옵니다.</li>
-<div class="hl"><pre><span></span><code>![1주차: 챔피언은 ISO 규칙, 후보 5개는 다음 주부터 섀도](img/agentic-w01.webp)
-</code></pre></div>
-
-<li>2주차를 넣습니다. 고장 기록이 없으므로 순위표에 성적이 쌓여도 승격은 없습니다.</li>
-<li>3주차를 넣습니다. 정비 기록 <strong>F1 베어링 외륜 손상</strong>이 들어옵니다. ISO 규칙은 이 고장을 놓쳤고(800만원), 섀도 후보 가운데 BPFO 규칙(139시간 전)·오토인코더(150.8시간 전)·통계 기준(105.2시간 전)이 나흘 넘게 앞서 잡았습니다. 비용이 같은 후보 가운데 가장 단순한 <strong>베어링 결함 주파수 규칙</strong>이 승격되어 챔피언 계보에 추가됩니다.</li>
-<div class="hl"><pre><span></span><code>![3주차: 첫 정비 기록 F1 뒤 BPFO 규칙으로 승격](img/agentic-w03.webp)
-</code></pre></div>
-
-<li>5주차를 넣습니다. <strong>처음 보는 레시피 C</strong>가 판단 기록에 드리프트로 남고, 비지도 후보 3가족을 일반 모델과 레시피별 모델로 다시 학습합니다.</li>
-<div class="hl"><pre><span></span><code>![5주차: 처음 보는 레시피 C → 드리프트 재학습](img/agentic-w05.webp)
-</code></pre></div>
-
-<li>7주차를 넣습니다. <strong>F2 임펠러 불균형</strong>이 발생합니다. 챔피언인 BPFO 규칙은 불균형을 감지하지 못했습니다. 레시피 C까지 학습한 <strong>통계 기준(z) v2</strong>가 48.8시간 전에 잡아 승격됩니다(800 → 0만원). 고장이 두 종류가 되자 지도학습 AutoML과 앙상블 후보도 생깁니다.</li>
-<div class="hl"><pre><span></span><code>![7주차: BPFO 규칙이 놓친 불균형을 잡은 통계 기준 v2로 승격](img/agentic-w07.webp)
-</code></pre></div>
-
-<li>8~11주차를 넣습니다. 8주차에는 정비 뒤 기준 변화(중앙값 이동 사분위 폭의 1.0배)를 드리프트로 잡아 다시 학습합니다. 섀도가 8개를 넘으면 비용이 큰 것부터 정리됩니다.</li>
-<li>12주차를 넣습니다. <strong>오토인코더 · 레시피별 v2</strong>가 불균형을 더 일찍 잡아 승격됩니다(100 → 0만원).</li>
-<div class="hl"><pre><span></span><code>![12주차: 레시피별 오토인코더로 승격, 계보는 ISO → BPFO → z → 오토인코더](img/agentic-w12.webp)
-</code></pre></div>
-
-<li>13·14주차를 넣습니다. 14주차에 두 주째 승격이 없고 기본 후보들이 실제 고장으로 채점받았으므로 정체 상태로 판단합니다. 위쪽 표시줄에 <strong>코딩 에이전트 작업 중</strong>이 보이고, 이번 실행에서는 약 2분이 걸렸습니다.</li>
-<div class="hl"><pre><span></span><code>![14주차: 코딩 에이전트 작업 중](img/agentic-w14-busy.webp)
-</code></pre></div>
-
-<li>판단 기록의 <strong>코드 보기</strong>를 누르면 에이전트가 쓴 코드와 메모가 열립니다.</li>
-<div class="hl"><pre><span></span><code>![에이전트가 쓴 후보: 레시피별 단방향 강건 z(베어링·불균형 분리)와 메모](img/agentic-code.webp)
-</code></pre></div>
-
-<li>15·16주차를 넣습니다. 에이전트 후보도 마지막 고장 F6을 33.8시간 전에 잡았지만 챔피언과 비용(100만원)이 같아 승격되지 않았고, 채점을 받은 뒤 섀도 정리 과정에서 제외되었습니다.</li>
-<div class="hl"><pre><span></span><code>![16주차: 마지막 상태와 판단 기록](img/agentic-w16.webp)
-</code></pre></div>
-
+</li>
+<li>
+<p><strong>다음 주 데이터 넣기</strong>를 누릅니다. 1주차 챔피언은 학습이 필요 없는 <strong>ISO 진동 등급 규칙</strong>이고, 정상 일주일로 학습한 후보 5개가 「다음 주부터」로 순위표에 올라옵니다.</p>
+<figure><a href="img/agentic-w01.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="1주차: 챔피언은 ISO 규칙, 후보 5개는 다음 주부터 섀도" src="img/agentic-w01.webp" loading="lazy" decoding="async"></a><figcaption>1주차: 챔피언은 ISO 규칙, 후보 5개는 다음 주부터 섀도</figcaption></figure>
+</li>
+<li>
+<p>2주차를 넣습니다. 고장 기록이 없으므로 순위표에 성적이 쌓여도 승격은 없습니다.</p>
+</li>
+<li>
+<p>3주차를 넣습니다. 정비 기록 <strong>F1 베어링 외륜 손상</strong>이 들어옵니다. ISO 규칙은 이 고장을 놓쳤고(800만원), 섀도 후보 가운데 BPFO 규칙(139시간 전)·오토인코더(150.8시간 전)·통계 기준(105.2시간 전)이 나흘 넘게 앞서 잡았습니다. 비용이 같은 후보 가운데 가장 단순한 <strong>베어링 결함 주파수 규칙</strong>이 승격되어 챔피언 계보에 추가됩니다.</p>
+<figure><a href="img/agentic-w03.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="3주차: 첫 정비 기록 F1 뒤 BPFO 규칙으로 승격" src="img/agentic-w03.webp" loading="lazy" decoding="async"></a><figcaption>3주차: 첫 정비 기록 F1 뒤 BPFO 규칙으로 승격</figcaption></figure>
+</li>
+<li>
+<p>5주차를 넣습니다. <strong>처음 보는 레시피 C</strong>가 판단 기록에 드리프트로 남고, 비지도 후보 3가족을 일반 모델과 레시피별 모델로 다시 학습합니다.</p>
+<figure><a href="img/agentic-w05.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="5주차: 처음 보는 레시피 C → 드리프트 재학습" src="img/agentic-w05.webp" loading="lazy" decoding="async"></a><figcaption>5주차: 처음 보는 레시피 C → 드리프트 재학습</figcaption></figure>
+</li>
+<li>
+<p>7주차를 넣습니다. <strong>F2 임펠러 불균형</strong>이 발생합니다. 챔피언인 BPFO 규칙은 불균형을 감지하지 못했습니다. 레시피 C까지 학습한 <strong>통계 기준(z) v2</strong>가 48.8시간 전에 잡아 승격됩니다(800 → 0만원). 고장이 두 종류가 되자 지도학습 AutoML과 앙상블 후보도 생깁니다.</p>
+<figure><a href="img/agentic-w07.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="7주차: BPFO 규칙이 놓친 불균형을 잡은 통계 기준 v2로 승격" src="img/agentic-w07.webp" loading="lazy" decoding="async"></a><figcaption>7주차: BPFO 규칙이 놓친 불균형을 잡은 통계 기준 v2로 승격</figcaption></figure>
+</li>
+<li>
+<p>8~11주차를 넣습니다. 8주차에는 정비 뒤 기준 변화(중앙값 이동 사분위 폭의 1.0배)를 드리프트로 잡아 다시 학습합니다. 섀도가 8개를 넘으면 비용이 큰 것부터 정리됩니다.</p>
+</li>
+<li>
+<p>12주차를 넣습니다. <strong>오토인코더 · 레시피별 v2</strong>가 불균형을 더 일찍 잡아 승격됩니다(100 → 0만원).</p>
+<figure><a href="img/agentic-w12.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="12주차: 레시피별 오토인코더로 승격, 계보는 ISO → BPFO → z → 오토인코더" src="img/agentic-w12.webp" loading="lazy" decoding="async"></a><figcaption>12주차: 레시피별 오토인코더로 승격, 계보는 ISO → BPFO → z → 오토인코더</figcaption></figure>
+</li>
+<li>
+<p>13·14주차를 넣습니다. 14주차에 두 주째 승격이 없고 기본 후보들이 실제 고장으로 채점받았으므로 정체 상태로 판단합니다. 위쪽 표시줄에 <strong>코딩 에이전트 작업 중</strong>이 보이고, 이번 실행에서는 약 2분이 걸렸습니다.</p>
+<figure><a href="img/agentic-w14-busy.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="14주차: 코딩 에이전트 작업 중" src="img/agentic-w14-busy.webp" loading="lazy" decoding="async"></a><figcaption>14주차: 코딩 에이전트 작업 중</figcaption></figure>
+</li>
+<li>
+<p>판단 기록의 <strong>코드 보기</strong>를 누르면 에이전트가 쓴 코드와 메모가 열립니다.</p>
+<figure><a href="img/agentic-code.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트가 쓴 후보: 레시피별 단방향 강건 z(베어링·불균형 분리)와 메모" src="img/agentic-code.webp" loading="lazy" decoding="async"></a><figcaption>에이전트가 쓴 후보: 레시피별 단방향 강건 z(베어링·불균형 분리)와 메모</figcaption></figure>
+</li>
+<li>
+<p>15·16주차를 넣습니다. 에이전트 후보도 마지막 고장 F6을 33.8시간 전에 잡았지만 챔피언과 비용(100만원)이 같아 승격되지 않았고, 채점을 받은 뒤 섀도 정리 과정에서 제외되었습니다.</p>
+<figure><a href="img/agentic-w16.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="16주차: 마지막 상태와 판단 기록" src="img/agentic-w16.webp" loading="lazy" decoding="async"></a><figcaption>16주차: 마지막 상태와 판단 기록</figcaption></figure>
+</li>
 </ol>
 <h2 id="코딩-에이전트는-무엇을-받고-무엇을-내나">코딩 에이전트는 무엇을 받고 무엇을 내나<a class="anchor" href="#코딩-에이전트는-무엇을-받고-무엇을-내나" title="Permanent link">#</a></h2>
 <p>하네스는 <code>runs/&lt;run&gt;/agent/wNN/</code> 작업 폴더를 만들고 그 안에서만 에이전트를 실행합니다.</p>

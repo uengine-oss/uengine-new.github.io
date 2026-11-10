@@ -7,6 +7,7 @@
     python3 tools/industry-docs/build.py erp
     python3 tools/industry-docs/build.py aidlc-handson
     python3 tools/industry-docs/build.py pdm
+    python3 tools/industry-docs/build.py pdm-kang
 
 <제품>/src/*.md (장마다 하나) → docs/<제품>/*.html. 목차·순서는 아래 PRODUCTS 가 정한다.
 이미지는 docs/<제품>/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
@@ -44,6 +45,10 @@ PRODUCTS = {
                 foot="이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.",
                 chapters=[("index", "시작하기"), ("landscape", "1부 데이터와 모델"), ("vibration", "2부 진동으로 이상 찾기"), ("pattern", "2부 진동으로 이상 찾기"),
                           ("mixer", "3부 교반기 PBL 과 에이전트 운영"), ("agentic", "3부 교반기 PBL 과 에이전트 운영"), ("assignments", "4부 과제")]),
+    "pdm-kang": dict(name="예지보전 실습 · KANG 판", page="axschool.html", pagelabel="AX School", og="labels-rows.webp", search="교재 검색 (예: 수동 이상, 팝업, failure_label, 재학습)",
+                foot="이 교재의 화면과 수치는 2026년 11월 10일 KANG 설비 고장 예측 시스템 v0.5.1 배포본을 고치지 않고 실제로 실행해 얻었습니다. 가상 RTU와 고장 시나리오는 합성 데이터이며 현장 성능이 아닙니다.",
+                chapters=[("index", "시작하기"), ("background", "1부 배경"), ("setup", "2부 KANG 돌려 보기"), ("anomaly", "2부 KANG 돌려 보기"),
+                          ("labels", "3부 고장 기록과 고장 재생"), ("replay", "3부 고장 기록과 고장 재생"), ("assignments", "4부 과제")]),
     "ai-planning": dict(name="AI 기획·설계 도구 실습", page="axschool.html", pagelabel="AX School", og="board1b.webp", search="교재 검색 (예: 역질문, 겹침 금지, OpenUI)",
                 foot="이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.",
                 chapters=[("index", "시작하기"), ("interview", "1부"), ("model", "2부"), ("screen", "3부"), ("wrap", "4부")]),
@@ -66,7 +71,27 @@ def slug_ko(value, separator):
     return re.sub(r"[\s]+", separator, value)
 
 
+def steps_items(md_text):
+    # <ol class="steps" markdown="1"> 안에서 「1. 첫 줄 + 네 칸 들여 쓴 이어지는 내용」으로 쓴 단계는 md_in_html 이
+    # 첫 줄만 <li> 로 만들고 나머지를 들여 쓴 코드 블록으로 바꾼다. <li markdown="block"> 으로 옮긴다(aidlc-handson 의 <li> 방식).
+    def items(m):
+        inner = m.group(2)
+        if "<li" in inner:
+            return m.group(0)
+        out = []
+        for it in re.split(r"(?m)^(?=\d+\. )", inner):
+            if not re.match(r"\d+\. ", it):
+                continue
+            first, _, rest = it.partition("\n")
+            first = re.sub(r"^\d+\. ", "", first)
+            rest = "\n".join(l[4:] if l.startswith("    ") else l for l in rest.split("\n"))
+            out.append(f'<li markdown="block">{first}\n{rest.rstrip()}\n</li>')
+        return m.group(1) + "\n" + "\n".join(out) + "\n" + m.group(3)
+    return re.sub(r'(<ol class="steps" markdown="1">)(.*?)(</ol>)', items, md_text, flags=re.S)
+
+
 def render(md_text):
+    md_text = steps_items(md_text)
     md = markdown.Markdown(extensions=[
         "fenced_code", "tables", "attr_list", "admonition", "def_list", "md_in_html",
         TocExtension(permalink="#", permalink_class="anchor", toc_depth="2-3", slugify=slug_ko),

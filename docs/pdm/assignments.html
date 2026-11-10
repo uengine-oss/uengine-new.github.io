@@ -165,11 +165,21 @@
 </div>
 <h2 id="회사-데이터로-바꿔-끼우기">회사 데이터로 바꿔 끼우기<a class="anchor" href="#회사-데이터로-바꿔-끼우기" title="Permanent link">#</a></h2>
 <ol class="steps">
-<li>회사에서 받을 자료는 다음과 같습니다: 진동 원파형(또는 스냅숏), 표본화 주파수, 회전수·레시피 기록, 정비 기록(고장 시각·종류·작업), 베어링 형번(볼 수·지름).</li>
-<li><code>pdm_agent/features.py</code>의 <code>FS</code>·<code>N</code>과 <code>bpfo()</code> 치수를 회사 설비에 맞춥니다.</li>
-<li>원파형을 <code>snapshot_features(x, rpm)</code>로 특징 표로 변환하고, 한 주씩 <code>week-NN.parquet</code>와 <code>week-NN-maintenance.json</code>으로 저장합니다(4장의 형식).</li>
-<li><code>Run(path, inbox=&lt;회사 데이터 폴더&gt;)</code>로 하네스를 실행합니다. 첫 주는 학습 없는 규칙이 챔피언이고, 정비 기록이 쌓이는 대로 후보들이 섀도에서 겨룹니다.</li>
-<li>비용(<code>evaluate.py</code>의 <code>COST_*</code>)은 회사와 함께 정합니다. 고장 한 번으로 폐기하는 배치의 비용과 수리비, 점검 출동 한 번의 비용을 기준으로 삼습니다.</li>
+<li>
+<p>회사에서 받을 자료는 다음과 같습니다: 진동 원파형(또는 스냅숏), 표본화 주파수, 회전수·레시피 기록, 정비 기록(고장 시각·종류·작업), 베어링 형번(볼 수·지름).</p>
+</li>
+<li>
+<p><code>pdm_agent/features.py</code>의 <code>FS</code>·<code>N</code>과 <code>bpfo()</code> 치수를 회사 설비에 맞춥니다.</p>
+</li>
+<li>
+<p>원파형을 <code>snapshot_features(x, rpm)</code>로 특징 표로 변환하고, 한 주씩 <code>week-NN.parquet</code>와 <code>week-NN-maintenance.json</code>으로 저장합니다(4장의 형식).</p>
+</li>
+<li>
+<p><code>Run(path, inbox=&lt;회사 데이터 폴더&gt;)</code>로 하네스를 실행합니다. 첫 주는 학습 없는 규칙이 챔피언이고, 정비 기록이 쌓이는 대로 후보들이 섀도에서 겨룹니다.</p>
+</li>
+<li>
+<p>비용(<code>evaluate.py</code>의 <code>COST_*</code>)은 회사와 함께 정합니다. 고장 한 번으로 폐기하는 배치의 비용과 수리비, 점검 출동 한 번의 비용을 기준으로 삼습니다.</p>
+</li>
 </ol>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <ol>
