@@ -5,7 +5,8 @@
 
 src/*.md (장마다 하나) → docs/process-gpt-lite/*.html. 목차·순서는 아래 CHAPTERS 가 정한다.
 이미지는 docs/process-gpt-lite/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
-videos.json 에 장의 유튜브 영상({"<slug>": {"id": …, "len": "2:51"}})이 있으면 장 요약 아래에 넣는다.
+videos.json 에 장의 유튜브 영상({"<slug>": {"id": …, "len": "2:51", "t": "제목"}})이 있으면 장 요약 아래에 넣는다.
+여러 편이면 목록([{…}, {…}])으로 — 첫 편을 띄우고, 나머지는 그 아래 썸네일 줄에서 골라 본다.
 
     python3 tools/pgl-docs/build.py en
 
@@ -105,12 +106,24 @@ def figures(body):
     return re.sub(r"<p><img([^>]*)></p>", fig, body)
 
 
+ON = ' class="on"'
+
+
 def video(body, v, title):
-    # 장 요약(첫 인용문) 바로 아래, 없으면 맨 위
-    frame = (f'<div class="video"><iframe src="https://www.youtube.com/embed/{v["id"]}" '
-             f'title="{html.escape(title)} — {"video" if EN else "영상"} {v.get("len", "")}" loading="lazy" allow="accelerometer; clipboard-write; '
+    # 장 요약(첫 인용문) 바로 아래, 없으면 맨 위. 여러 편이면 첫 편을 띄우고 나머지는 썸네일 줄에서 바꿔 본다.
+    vs = v if isinstance(v, list) else [v]
+    first = vs[0]
+    frame = (f'<div class="video"><iframe src="https://www.youtube.com/embed/{first["id"]}" '
+             f'title="{html.escape(first.get("t") or title)} — {"video" if EN else "영상"} {first.get("len", "")}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; '
              f'encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" '
              f'allowfullscreen></iframe></div>')
+    if len(vs) > 1:
+        frame += '\n<div class="vids">' + "".join(
+            f'<a href="https://youtu.be/{x["id"]}" data-yt="{x["id"]}" target="_blank" rel="noopener"{ON if i == 0 else ""}>'
+            f'<img src="https://i.ytimg.com/vi/{x["id"]}/mqdefault.jpg" alt="" loading="lazy" decoding="async">'
+            f'<span>{html.escape(x.get("t", ""))}</span><small>{x.get("len", "")}</small></a>' for i, x in enumerate(vs)) + "</div>"
+    elif first.get("t"):
+        frame += f'\n<p class="video-cap">▶ {html.escape(first["t"])} · {first.get("len", "")}</p>'
     i = body.find("</blockquote>")
     return body[:i + 13] + "\n" + frame + body[i + 13:] if i >= 0 else frame + body
 

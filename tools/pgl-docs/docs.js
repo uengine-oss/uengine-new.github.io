@@ -28,6 +28,21 @@
   }
   if (links.length) { addEventListener('scroll', spy, { passive: true }); spy(); }
 
+  // 장 영상이 여러 편이면 — 썸네일을 누르면 위 재생기에서 그 영상을 튼다.
+  [].forEach.call(document.querySelectorAll('.vids'), function (strip) {
+    var frame = strip.previousElementSibling && strip.previousElementSibling.querySelector('iframe');
+    if (!frame) return;
+    strip.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-yt]');
+      if (!a) return;
+      e.preventDefault();
+      frame.src = 'https://www.youtube.com/embed/' + a.dataset.yt + '?autoplay=1';
+      frame.title = a.querySelector('span').textContent;
+      [].forEach.call(strip.children, function (x) { x.classList.toggle('on', x === a); });
+      frame.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
   // 검색 — assets/search.json (장 제목·절 제목·본문)
   var q = document.getElementById('q'), box = document.getElementById('results'), data = null, sel = -1;
   function load() {
