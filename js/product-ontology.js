@@ -82,7 +82,6 @@
       if(showcaseState==='showcase')beginShowcase();
     }else if(data.type==='uengine-showcase-return')closeShowcase();
     else if(data.type==='uengine-showcase-state'){
-      $('#ontology-showcase-scene').textContent=data.label;
       $('#ontology-showcase-play').textContent=data.paused?'▶':'Ⅱ';
       $('#ontology-showcase-play').setAttribute('aria-label',data.paused?'Showcase 재생':'Showcase 일시정지');
     }

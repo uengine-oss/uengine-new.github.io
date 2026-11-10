@@ -139,29 +139,26 @@
 .ontology-showcase{position:relative;width:100%;color:#111;opacity:0;transition:opacity .7s;}
 .is-folding .ontology-showcase{position:absolute;inset:0 0 auto;visibility:hidden;pointer-events:none}
 .is-showcase .ontology-showcase{opacity:1}
-.ontology-showcase-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0 10px}
-.ontology-showcase-bar>div>span{display:block;font-size:9px;letter-spacing:.18em;color:var(--color-primary-2);margin-bottom:8px}
-.ontology-showcase-bar h2{font-size:24px;font-weight:550;color:#111;line-height:1.4;margin:0}
-.ontology-showcase-bar button,.ontology-showcase-controls button{min-height:40px;padding:6px 12px;border:1px solid #111;border-radius:6px;background:#fff;color:#111;font-size:11px}
-.ontology-showcase-bar button:hover,.ontology-showcase-controls button:hover{background:#111;color:#fff}
+.ontology-showcase-controls button{min-height:34px;padding:4px 12px;border:1px solid #111;border-radius:6px;background:#fff;color:#111;font-size:11px}
+.ontology-showcase-controls button:hover{background:#111;color:#fff}
 .ontology-showcase iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;background:transparent;opacity:0;transition:opacity .5s}
 .ontology-showcase.is-ready iframe{opacity:1}
 #ontology-showcase-loading{position:absolute;top:42%;width:100%;text-align:center;color:#757575;font-size:13px}
-.ontology-showcase-hint{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0;padding:12px 0;color:#757575;font-size:10px;line-height:1.5;border-top:1px solid #0000001a}
+.ontology-showcase-hint{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0;padding:8px 0;color:#757575;font-size:10px;line-height:1.5;border-top:1px solid #0000001a}
 .ontology-showcase-hint a{color:#111;text-decoration:none}
 .ontology-showcase-controls{display:flex;align-items:center;gap:8px}
-.ontology-showcase-controls button{min-width:40px;font-size:15px}
-#ontology-showcase-scene{margin-left:6px}
-@media(max-width:900px){.ontology-footer{flex-wrap:wrap}.ontology-showcase-bar{align-items:flex-start}.ontology-showcase-bar h2{font-size:20px}.ontology-showcase-hint{flex-wrap:wrap}}
-@media(max-width:600px){.ontology-showcase iframe{aspect-ratio:4/7}.ontology-showcase-bar{flex-wrap:wrap;padding-top:14px}.ontology-showcase-bar h2{font-size:20px}.ontology-skip-row>span{font-size:9px}.ontology-skip-row .ontology-showcase-launch{font-size:11px!important}.ontology-showcase-hint{font-size:9px}}
+.ontology-showcase-controls #ontology-showcase-play{min-width:34px;font-size:13px}
+.ontology-showcase-links{display:flex;flex-wrap:wrap;gap:8px 24px}
+@media(max-width:900px){.ontology-footer{flex-wrap:wrap}.ontology-showcase-hint{flex-wrap:wrap}}
+@media(max-width:600px){.ontology-showcase iframe{aspect-ratio:4/7}.ontology-skip-row>span{font-size:9px}.ontology-skip-row .ontology-showcase-launch{font-size:11px!important}.ontology-showcase-hint{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.ontology-stage,.ontology-showcase,.ontology-showcase iframe{transition:none}}
 
-.ontology-showcase-transport{display:flex;padding:8px 0 4px;color:#757575;font-size:10px}
 /* Give the built stack the first viewport once the universe has folded away. */
 .ontology-heading{max-height:300px;overflow:hidden;transition:max-height .8s cubic-bezier(.22,1,.36,1),margin .8s,opacity .45s}
 .is-folding .ontology-heading,.is-showcase .ontology-heading{opacity:0}
 .is-showcase .ontology-heading{max-height:0;margin-bottom:0;pointer-events:none}
-@media(min-width:601px){.ontology-showcase iframe{aspect-ratio:auto;height:min(66svh,51.75vw)}}
+/* No title bar above the stage: the frame takes the viewport below the nav, leaving room for the hint row. */
+@media(min-width:601px){.ontology-showcase iframe{max-height:calc(100svh - 172px)}}
 @media(prefers-reduced-motion:reduce){.ontology-heading{transition:none}}
 
 /* Main page only (this file loads on index.html alone): the nav now sits on a light hero
