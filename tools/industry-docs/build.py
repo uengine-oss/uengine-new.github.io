@@ -8,6 +8,7 @@
     python3 tools/industry-docs/build.py aidlc-handson
     python3 tools/industry-docs/build.py pdm
     python3 tools/industry-docs/build.py pdm-kang
+    python3 tools/industry-docs/build.py pdm-kang-process
 
 <제품>/src/*.md (장마다 하나) → docs/<제품>/*.html. 목차·순서는 아래 PRODUCTS 가 정한다.
 이미지는 docs/<제품>/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
@@ -49,6 +50,10 @@ PRODUCTS = {
                 foot="이 교재의 화면과 수치는 2026년 11월 10일 KANG 설비 고장 예측 시스템 v0.5.1 배포본을 고치지 않고 실제로 실행해 얻었습니다. 가상 RTU와 고장 시나리오는 합성 데이터이며 현장 성능이 아닙니다.",
                 chapters=[("index", "시작하기"), ("background", "1부 배경"), ("setup", "2부 KANG 돌려 보기"), ("anomaly", "2부 KANG 돌려 보기"),
                           ("labels", "3부 고장 기록과 고장 재생"), ("replay", "3부 고장 기록과 고장 재생"), ("assignments", "4부 과제")]),
+    "pdm-kang-process": dict(name="예지보전 실습 · KANG 공정판", page="axschool.html", pagelabel="AX School", og="anomaly-danger.webp", search="교재 검색 (예: PCA, T², 수동 이상, 재학습, PLC_DATA)",
+                foot="이 교재의 화면과 수치는 2026년 11월 11일 KANG 공정 PDM v0.1.0 배포본을 고치지 않고 실제로 실행해 얻었습니다. RTU 데이터는 잡음 없는 합성 데이터이며 현장 성능이 아닙니다. 화면 제목의 고객사 이름은 가렸습니다.",
+                chapters=[("index", "시작하기"), ("background", "1부 배경"), ("setup", "2부 돌려 보기"), ("anomaly", "2부 돌려 보기"),
+                          ("models", "3부 모델과 학습"), ("operation", "3부 모델과 학습"), ("plcdata", "4부 현장 데이터와 과제"), ("assignments", "4부 현장 데이터와 과제")]),
     "ai-planning": dict(name="AI 기획·설계 도구 실습", page="axschool.html", pagelabel="AX School", og="board1b.webp", search="교재 검색 (예: 역질문, 겹침 금지, OpenUI)",
                 foot="이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.",
                 chapters=[("index", "시작하기"), ("interview", "1부"), ("model", "2부"), ("screen", "3부"), ("wrap", "4부")]),

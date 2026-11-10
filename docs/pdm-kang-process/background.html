@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배경: 화학 공정에서 이상을 찾는다는 것 — 예지보전 실습 · KANG 공정판 튜토리얼</title>
+<meta name="description" content="교반기 한 대를 보던 앞 교재와 달리, 이번에는 반응기 한 기의 온도·압력·유량·레벨·밸브·회전수·pH 일곱 값을 함께 봅니다. PLC 태그 목록과 시간별 측정값이 어떻게 다른지, 그리고 「값 하나가 튀었는가」를 묻는 모델과 「값들 사이의 관계가 깨졌는가」를 묻는 모델이 어떻게 다른지 알아봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/pdm-kang-process/background.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="배경: 화학 공정에서 이상을 찾는다는 것 — 예지보전 실습 · KANG 공정판 튜토리얼">
+<meta property="og:description" content="교반기 한 대를 보던 앞 교재와 달리, 이번에는 반응기 한 기의 온도·압력·유량·레벨·밸브·회전수·pH 일곱 값을 함께 봅니다. PLC 태그 목록과 시간별 측정값이 어떻게 다른지, 그리고 「값 하나가 튀었는가」를 묻는 모델과 「값들 사이의 관계가 깨졌는가」를 묻는 모델이 어떻게 다른지 알아봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/pdm-kang-process/background.html">
+<meta property="og:image" content="https://www.uengine.org/docs/pdm-kang-process/img/anomaly-danger.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>예지보전 실습 · KANG 공정판 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="교재 검색 (예: PCA, T², 수동 이상, 재학습, PLC_DATA)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">1부 배경</div><ul>
+<li><a href="background.html" class="on" aria-current="page"><span class="n">01</span>배경: 화학 공정에서 이상을 찾는다는 것</a></li>
+</ul>
+<div class="nav-part">2부 돌려 보기</div><ul>
+<li><a href="setup.html"><span class="n">02</span>설치와 첫 연결</a></li>
+<li><a href="anomaly.html"><span class="n">03</span>수동 이상을 넣고 두 모델 비교하기</a></li>
+</ul>
+<div class="nav-part">3부 모델과 학습</div><ul>
+<li><a href="models.html"><span class="n">04</span>AutoML과 Zero-shot</a></li>
+<li><a href="operation.html"><span class="n">05</span>언제 학습하느냐가 결과를 바꾼다</a></li>
+</ul>
+<div class="nav-part">4부 현장 데이터와 과제</div><ul>
+<li><a href="plcdata.html"><span class="n">06</span>PLC 파일로 학습하기</a></li>
+<li><a href="assignments.html"><span class="n">07</span>과제와 현장으로 가는 길</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">1부 배경<span class="chap">1</span></div>
+    <h1>배경: 화학 공정에서 이상을 찾는다는 것</h1>
+    <article>
+<blockquote>
+<p>교반기 한 대를 보던 앞 교재와 달리, 이번에는 반응기 한 기의 온도·압력·유량·레벨·밸브·회전수·pH 일곱 값을 함께 봅니다. PLC 태그 목록과 시간별 측정값이 어떻게 다른지, 그리고 「값 하나가 튀었는가」를 묻는 모델과 「값들 사이의 관계가 깨졌는가」를 묻는 모델이 어떻게 다른지 알아봅니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><a href="../pdm-kang/">KANG 판</a>에서는 교반 설비의 전류·진동 RMS·온도·압력 네 채널을 보았습니다. 모터와 펌프 같은 <strong>기계</strong>의 고장을 미리 알아채는 데 목적이 있었습니다. 이번 프로그램은 <strong>공정</strong>을 봅니다. 화학 공장의 반응기에서는 기계가 파손되기 전에 공정 조건이 먼저 어긋나는 일이 많습니다.</p>
+<ul>
+<li>열매(가열 매체) 밸브가 한 위치에 고정되면 온도가 오르고 투입 유량이 줄어듭니다.</li>
+<li>진공이 새면 압력이 올라갑니다(이 교재의 압력은 진공이라 음수 mmHg입니다. 값이 0 쪽으로 가면 진공이 약해진 것입니다).</li>
+<li>온도계가 고장 나면 값이 튀거나 한 값으로 고정됩니다.</li>
+<li>중화가 잘못되면 pH가 서서히 벗어납니다.</li>
+</ul>
+<p>이런 일은 센서 하나만 보아서는 놓치기 쉽습니다. 밸브는 열렸는데 유량이 그대로라면, 두 값이 각각은 정상 범위 안에 있어도 <strong>둘의 관계</strong>가 어긋난 것입니다. 이번 프로그램에서는 이 관계를 보는 모델(PCA T²/Q)과 기존 방식(Isolation Forest)을 같은 데이터로 나란히 비교할 수 있습니다.</p>
+<h2 id="반응기-dt-100의-일곱-채널">반응기 DT-100의 일곱 채널<a class="anchor" href="#반응기-dt-100의-일곱-채널" title="Permanent link">#</a></h2>
+<p>배포본의 RTU 시뮬레이터는 반응기 DT-100 한 기의 일곱 값을 1초마다 만듭니다. 태그 이름과 PLC 주소는 현장 태그 목록의 형식을 따랐습니다.</p>
+<table>
+<thead>
+<tr>
+<th>채널</th>
+<th>태그</th>
+<th>단위</th>
+<th>정상 범위(이번 측정)</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>온도 <code>temperature</code></td>
+<td>TI-100</td>
+<td>°C</td>
+<td>114.5 ~ 121.5</td>
+<td>반응기 내부 온도</td>
+</tr>
+<tr>
+<td>압력 <code>pressure</code></td>
+<td>PT-105</td>
+<td>mmHg</td>
+<td>−555.5 ~ −514.5</td>
+<td>진공 압력(음수)</td>
+</tr>
+<tr>
+<td>투입 유량 <code>flow</code></td>
+<td>FT-120</td>
+<td>L/h</td>
+<td>1,992 ~ 2,248</td>
+<td>원료가 들어오는 양</td>
+</tr>
+<tr>
+<td>레벨 <code>level</code></td>
+<td>LT-105(D-105)</td>
+<td>%</td>
+<td>58.0 ~ 62.1</td>
+<td>투입 용기의 높이</td>
+</tr>
+<tr>
+<td>밸브 개도 <code>valve</code></td>
+<td>TCV-101</td>
+<td>%</td>
+<td>41 ~ 51</td>
+<td>열매 공급 밸브가 열린 정도</td>
+</tr>
+<tr>
+<td>회전수 <code>rpm</code></td>
+<td>AG-100</td>
+<td>RPM</td>
+<td>60.5 ~ 63.5</td>
+<td>교반기 회전수</td>
+</tr>
+<tr>
+<td>pH <code>ph</code></td>
+<td>NT-1000</td>
+<td>pH</td>
+<td>7.07 ~ 7.23</td>
+<td>중화조 pH</td>
+</tr>
+</tbody>
+</table>
+<p>정상 신호는 <strong>잡음이 없는 사인파</strong>입니다. 느린 파형(주기 약 151초)이 온도·압력·유량·레벨·밸브·pH를 함께 움직이고, 빠른 파형(주기 약 44초)이 온도·압력·유량·회전수를 흔듭니다. 레벨은 120초마다 1.8%p 내려갔다가 한 번에 되돌아오는 톱니 모양입니다. 실제 설비를 대표하는 값이 아니라, 일곱 값이 함께 움직이는 공정을 흉내 낸 합성 데이터입니다.</p>
+<div class="admonition note">
+<p class="admonition-title">왜 「함께 움직인다」가 중요한가</p>
+<p>느린 파형 하나가 여러 채널을 같이 밀고 당기므로, 정상일 때 온도가 오르면 압력·유량·밸브도 정해진 비율로 같이 오릅니다. PCA T²/Q는 이 비율이 깨지는 순간을 포착합니다.</p>
+</div>
+<h2 id="plc_list와-plc_data">PLC_LIST와 PLC_DATA<a class="anchor" href="#plc_list와-plc_data" title="Permanent link">#</a></h2>
+<p>현장 데이터는 두 표로 들어옵니다. 배포본에 들어 있는 테이블 정의서의 열 이름은 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th>표</th>
+<th>한 행의 뜻</th>
+<th>주요 열</th>
+<th>모델에서의 역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PLC_LIST</strong></td>
+<td>태그 하나</td>
+<td><code>PTYPE</code>(계측 종류: TI·PT·FT·LT…), <code>IDX</code>(태그 번호), <code>PNAME</code>(현장 태그명), <code>ADDR</code>(PLC 메모리 주소), <code>PLCScale</code>·<code>MESScale</code>(원시 범위·공학값 범위), <code>UNIT</code>, <code>DETAIL</code>(공정 설명)</td>
+<td>태그 사전. 어떤 태그가 어느 설비에 속하는지 알려 줍니다</td>
+</tr>
+<tr>
+<td><strong>PLC_DATA</strong></td>
+<td>한 시각의 태그 하나</td>
+<td><code>INTIME</code>(입력 시간), <code>PTYPE</code>, <code>IDX</code>, <code>SEQ</code>, <code>PNAME</code>, <code>ADDR</code>, <code>PLCVALUE</code>, <code>VALUE</code>(공학값), <code>UNIT</code></td>
+<td>학습과 예측에 쓰는 실제 값</td>
+</tr>
+</tbody>
+</table>
+<p>PLC_DATA는 「긴 형식」입니다. 일곱 채널을 1초마다 기록하면 1초에 7행이 쌓입니다. 프로그램은 <code>PTYPE</code>+<code>IDX</code>로 두 표를 이어 붙이고, 같은 <code>INTIME</code>의 행을 모아 한 시점으로 만듭니다.</p>
+<p><strong>PLC_LIST만으로는 모델을 학습할 수 없습니다.</strong> 태그 목록에는 「무엇을 재는가」만 있고 「언제 얼마였는가」가 없기 때문입니다. 배포본에 들어 있는 현장 태그 목록도 태그 정의(전체 171개, 사용 중 151개)뿐이어서, 이 교재의 모든 실습에서는 RTU 시뮬레이터의 합성 데이터를 사용합니다.</p>
+<h2 id="설비-단위로-묶는-이유">설비 단위로 묶는 이유<a class="anchor" href="#설비-단위로-묶는-이유" title="Permanent link">#</a></h2>
+<p>태그 171개를 한 모델에 넣지 않습니다. 서로 직접 영향을 주는 태그끼리 설비 단위로 묶습니다. 반응기 DT-100의 경우, 해당 반응기의 온도·압력·투입 유량·레벨·열매 밸브·교반 회전수를 한 모델에 넣습니다. 멀리 떨어진 저장 탱크의 레벨은 반응기와 함께 움직일 이유가 없습니다. 따라서 같이 넣으면 관계를 학습하는 데 방해만 됩니다. 프로그램도 한 모델에 <strong>최대 32채널</strong>까지만 받습니다.</p>
+<h2 id="두-모델은-서로-다른-질문을-한다">두 모델은 서로 다른 질문을 한다<a class="anchor" href="#두-모델은-서로-다른-질문을-한다" title="Permanent link">#</a></h2>
+<p>두 모델 모두 같은 특징에서 출발합니다. 채널마다 최근 <strong>20시점</strong>을 창으로 묶고 다섯 가지 특징을 계산합니다.</p>
+<table>
+<thead>
+<tr>
+<th>특징</th>
+<th>이름</th>
+<th>무엇을 보나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>평균</td>
+<td><code>mean</code></td>
+<td>값이 어느 수준에 있는가</td>
+</tr>
+<tr>
+<td>표준편차</td>
+<td><code>std</code></td>
+<td>얼마나 흔들리는가(멈춘 센서는 0)</td>
+</tr>
+<tr>
+<td>기울기</td>
+<td><code>slope_per_second</code></td>
+<td>초당 얼마나 오르내리는가</td>
+</tr>
+<tr>
+<td>최대 변화량</td>
+<td><code>max_abs_delta</code></td>
+<td>이웃한 두 시점 사이에서 가장 크게 바뀐 폭</td>
+</tr>
+<tr>
+<td>중앙값 최대 이탈</td>
+<td><code>peak_from_median</code></td>
+<td>창 안에서 중앙값과 가장 멀리 떨어진 값</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>기존 방식 재현</th>
+<th>새 공정형 모델</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>알고리즘</td>
+<td>표준화 + Isolation Forest(나무 100그루)</td>
+<td>표준화 + PCA(설명 분산 95%) T²와 Q</td>
+</tr>
+<tr>
+<td>입력 채널</td>
+<td><strong>온도·압력만</strong>(채널 이름에 「온도」「압력」이 있거나 TI·PT로 시작하는 채널, 최대 4개)</td>
+<td>선택한 설비의 <strong>모든 채널</strong></td>
+</tr>
+<tr>
+<td>특징 수(DT-100)</td>
+<td>2채널 × 5 = 10개</td>
+<td>7채널 × 5 = 35개</td>
+</tr>
+<tr>
+<td>묻는 것</td>
+<td>이 창이 정상 창들 사이에서 얼마나 빨리 따로 떨어지는가</td>
+<td>정상 공정의 주된 움직임 안에서 너무 멀리 갔는가(T²), 주된 움직임으로 설명되지 않는 나머지가 큰가(Q)</td>
+</tr>
+<tr>
+<td>이상 판정</td>
+<td>점수 ÷ 임계값 &gt; 1</td>
+<td>T² 비율과 Q 비율 중 큰 쪽 &gt; 1</td>
+</tr>
+</tbody>
+</table>
+<p>임계값은 두 모델 모두 <strong>검증 구간 점수의 99% 지점</strong>입니다. 화면의 점수는 이 임계값으로 나눈 비율이라 1.0이 경계입니다. 고장 확률이 아닙니다.</p>
+<p>T²와 Q를 쉽게 말하면 이렇습니다. 정상 운전에서 일곱 값이 움직이는 방식을 몇 개의 「주된 방향」으로 요약합니다. <strong>T²</strong>는 지금 상태가 그 방향들 위에서 평소보다 지나치게 멀리 갔는지 봅니다. 여러 센서가 같은 방향으로 크게 움직일 때 커집니다. <strong>Q</strong>는 주된 방향들로 다시 그려 보았을 때 남는 오차입니다. 밸브는 열렸는데 유량이 따라오지 않는 것처럼, 평소의 관계로는 설명되지 않는 움직임에서 커집니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">기존 방식은 온도·압력만 봅니다</p>
+<p>KANG 판(v0.5.1)의 Isolation Forest를 재현하려고 전류·진동 대신 온도·압력을 넣었습니다. 그래서 pH나 밸브만 이상해지면 기존 방식은 원리상 탐지할 수 없습니다. 3장에서 실제로 확인합니다.</p>
+</div>
+<h2 id="그-밖의-두-기능">그 밖의 두 기능<a class="anchor" href="#그-밖의-두-기능" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>AutoML 후보 선택.</strong> Isolation Forest 100·200·300그루와 PCA 설명 분산 90·95·99%, 여섯 후보를 자동으로 비교해 하나를 고릅니다. 고장 기록이 없으므로 정상 검증 데이터에 일부러 흠집(특징값 교란)을 내고, 정상과 흠집을 얼마나 잘 구분하는지 F1 점수로 비교합니다. 4장에서 다룹니다.</li>
+<li><strong>Zero-shot 예측.</strong> 학습 없이 미리 학습된 시계열 모델(Amazon Chronos-Bolt)로 다음 값의 범위를 예측하는 선택 기능입니다. Chronos가 설치되어 있지 않으면 내장된 간단한 추세 예측을 대신 사용합니다. 이상 판정을 대신하지 않는 보조 근거입니다.</li>
+</ul>
+<h2 id="참고한-공개-자료">참고한 공개 자료<a class="anchor" href="#참고한-공개-자료" title="Permanent link">#</a></h2>
+<p>배포본 문서는 데이터 자체가 아니라 문제 구조와 검증 방식을 참고했다고 밝힙니다.</p>
+<table>
+<thead>
+<tr>
+<th>자료</th>
+<th>내용</th>
+<th>이 프로그램에서 가져온 관점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.kaggle.com/datasets/faebs94/noboom-anomaly-detection-in-chemical-processes">NoBOOM</a></td>
+<td>화학 공정 이상 탐지 데이터 모음</td>
+<td>센서 사이의 관계와 공정 변화</td>
+</tr>
+<tr>
+<td><a href="https://www.kaggle.com/datasets/averkij/tennessee-eastman-process-simulation-dataset">Tennessee Eastman Process</a></td>
+<td>정상과 고장 20종을 담은 대표적인 화학 공정 시뮬레이션</td>
+<td>운전 변수와 고장 시나리오</td>
+</tr>
+<tr>
+<td><a href="https://www.kaggle.com/datasets/yuriykatser/skoltech-anomaly-benchmark-skab">SKAB</a></td>
+<td>온도·압력·유량·전류·진동의 다변량 이상 탐지 벤치마크</td>
+<td>시간 순서 분할과 구간 평가</td>
+</tr>
+<tr>
+<td><a href="https://github.com/amazon-science/chronos-forecasting">Chronos-Bolt</a></td>
+<td>사전 학습된 시계열 예측 모델</td>
+<td>Zero-shot 보조 예측</td>
+</tr>
+</tbody>
+</table>
+<p>공개 데이터에서 얻은 점수가 현장 성능을 대신하지는 않습니다. 배포본은 현장 데이터를 Kaggle·Hugging Face 같은 외부 서비스에 올리지 않는 것을 원칙으로 합니다.</p>
+<h2 id="이-프로그램이-보지-못하는-것">이 프로그램이 보지 못하는 것<a class="anchor" href="#이-프로그램이-보지-못하는-것" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>기계 고장.</strong> 현장 태그 목록에 전류·진동 태그가 없어서 모터·베어링 손상 같은 기계 고장은 범위 밖입니다. 그런 고장은 <a href="../pdm-kang/">KANG 판</a>과 <a href="../pdm/">설비 예지보전 PBL</a>이 다룹니다.</li>
+<li><strong>고장 확률.</strong> 고장 기록(정비 이력, 고장 시각)이 없으므로 「몇 분 뒤 고장 날 확률」은 내지 않습니다. 이상 후보만 표시합니다.</li>
+<li><strong>설비 제어.</strong> 알람은 운전을 돕는 정보입니다. PLC 인터록, 안전계장(SIS), 비상정지(ESD)를 대신하지 않습니다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<ol>
+<li>
+<p>PLC_LIST 파일만 받았습니다. 바로 모델을 학습할 수 있나요? 무엇이 더 필요한가요?</p>
+<p><details class="answer" markdown="1">
+<summary>정답</summary></p>
+<p>학습할 수 없습니다. PLC_LIST는 태그 정의(무엇을 재는가)뿐입니다. 시간별 측정값이 들어 있는 PLC_DATA(<code>INTIME</code>, <code>PTYPE</code>, <code>IDX</code>, <code>VALUE</code> …)가 있어야 합니다. 정상 운전 구간이 어디인지도 알아야 합니다.
+</details></p>
+</li>
+<li>
+<p>열매 밸브 개도가 95%로 붙어 버렸는데 온도·압력은 아직 크게 변하지 않았습니다. 기존 방식과 새 공정형 모델 중 어느 쪽이 먼저 알아챌 가능성이 큰가요? 이유는 무엇인가요?</p>
+<p><details class="answer" markdown="1">
+<summary>정답</summary></p>
+<p>새 공정형 모델(PCA T²/Q)입니다. 기존 방식은 온도·압력 채널만 입력으로 받으므로 밸브 채널을 보지 않습니다. PCA는 밸브를 포함한 일곱 채널의 관계를 보므로, 밸브만 혼자 움직이는 것을 Q(설명되지 않는 나머지)나 T²로 잡을 수 있습니다.
+</details></p>
+</li>
+<li>
+<p>화면의 IF 점수가 1.12, PCA 점수가 0.8입니다. 「고장 확률 112%」라고 읽어도 되나요?</p>
+<p><details class="answer" markdown="1">
+<summary>정답</summary></p>
+<p>아닙니다. 두 점수는 검증 구간 점수의 99% 지점(임계값)으로 나눈 비율입니다. 1.12는 「임계값보다 12% 높다」, 즉 기존 방식이 이상 후보로 판정했다는 뜻입니다. 0.8은 PCA 점수가 임계값 아래라는 뜻입니다. 고장 확률이 아닙니다.
+</details></p>
+</li>
+</ol>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기</a><a class="next" href="setup.html"><span>다음</span>설치와 첫 연결</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 11일 KANG 공정 PDM v0.1.0 배포본을 고치지 않고 실제로 실행해 얻었습니다. RTU 데이터는 잡음 없는 합성 데이터이며 현장 성능이 아닙니다. 화면 제목의 고객사 이름은 가렸습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#반응기-dt-100의-일곱-채널">반응기 DT-100의 일곱 채널</a></li><li><a href="#plc_list와-plc_data">PLC_LIST와 PLC_DATA</a></li><li><a href="#설비-단위로-묶는-이유">설비 단위로 묶는 이유</a></li><li><a href="#두-모델은-서로-다른-질문을-한다">두 모델은 서로 다른 질문을 한다</a></li><li><a href="#그-밖의-두-기능">그 밖의 두 기능</a></li><li><a href="#참고한-공개-자료">참고한 공개 자료</a></li><li><a href="#이-프로그램이-보지-못하는-것">이 프로그램이 보지 못하는 것</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
