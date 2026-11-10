@@ -37,8 +37,8 @@
 ![사용자 관리 — 「사용자 초대」 단추와 장진영(나, superAdmin)](img/set-users.webp)
 
 <ol class="steps" markdown="1">
-<li markdown="1">다른 브라우저(또는 시크릿 창)로 http://localhost:8088 을 열고 「사용해 보기」 › 「계정 생성」으로 영업 담당 **김민지**(`minji@hanbit.example`)를 가입시킵니다([1장](install.html)과 같습니다).</li>
-<li markdown="1">“회원가입에 성공했습니다”와 함께 김민지로 바로 로그인되어 프로세스 체계도가 열립니다.</li>
+<li markdown="1">다른 브라우저(또는 시크릿 창)로 http://localhost:8088 을 열고 「시작하기」 › 「계정 생성」으로 영업 담당 **김민지**(`minji@hanbit.example`)를 가입시킵니다([1장](install.html)과 같습니다).</li>
+<li markdown="1">“회원가입에 성공했습니다”와 함께 김민지로 바로 로그인되어 홈이 열립니다.</li>
 <li markdown="1">장진영 쪽 「사용자 관리」를 새로고침하면 김민지(`user`)가 목록에 들어와 있습니다.</li>
 </ol>
 
