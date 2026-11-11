@@ -29,7 +29,7 @@
 | 단위 | 정의 | 이 실습의 파일 |
 |---|---|---|
 | 유닛 | 독립적으로 만들고 검증할 작업 단위 | [`unit-of-work.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work.md), [`unit-of-work-dependency.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/units-generation/unit-of-work-dependency.md) |
-| 볼트 | 유닛 하나에 3.1~3.5를 한 번 실행 | [`bolt-plan.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/bolt-plan.md) (B1~B5) |
+| 볼트 | 유닛 하나에 3.1~3.5를 한 번 실행. 시험에서 되돌아오면 같은 유닛에 볼트가 하나 더 추가됩니다([21장](tools-bolts.html)) | [`bolt-plan.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/inception/delivery-planning/bolt-plan.md) (B1~B5) |
 | 체크포인트 | 볼트가 끝날 때 검증 명령을 실행하고 결과를 기록 | 감사 기록의 `CHECKPOINT_VERIFICATION_RECORDED` 10건 |
 
 ## 생산성의 역설
@@ -44,7 +44,7 @@
 
 AI-DLC 2.11.2는 이 방식을 에이전트 구성에도 적용했습니다. 좁은 분야만 맡는 전문가 수십 개 대신 여러 업무를 맡는 에이전트 11종을 두고, 각 에이전트가 여러 단계에 참여합니다. 작업을 순서대로 넘기는 과정이 다시 폭포수 방식처럼 길어지는 일을 막으려는 것입니다. 단계마다 실행 방식도 정해져 있습니다. 2.4 유저 스토리는 `mob` 방식으로, 제품 에이전트가 이끌고 디자인·개발·품질 에이전트가 함께 참여합니다. 2.2 팀 규칙 찾기와 3.5 코드 생성은 별도 에이전트에게 맡기는 `subagent` 방식입니다.
 
-이 실습에서는 한 사람이 모든 질문에 답했습니다. 팀으로 진행한다면 질문 파일(`*-questions.md`)과 승인 게이트를 함께 보는 자리가 몹 정교화가 됩니다.
+이 실습에서는 한 사람이 모든 질문에 답했습니다. 팀으로 진행한다면 질문 파일(`*-questions.md`)과 승인 게이트를 함께 보는 자리가 몹 정교화가 됩니다. 이 자리를 도구로 구현하는 방법은 [19장 팀 세션](tools-team.html)과 [20장 검토 보드](tools-review.html)에서 다룹니다.
 
 ## 결정론적 검증 게이트
 

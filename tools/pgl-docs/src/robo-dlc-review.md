@@ -38,6 +38,9 @@ AI-DLC는 질문마다 **어떤 역할에 묻는지**(`[제품 관리자]`, `[�
 
 ## 따라 하기 2 — 질문을 역할별로 나눠 동시에 검토하기
 
+!!! note "지금은 「함께 고르기」가 기본입니다"
+    이 따라 하기는 질문을 역할별로 나눠 맡는 「역할별로」 방식으로 녹화했습니다. 현재 검토 보드의 기본 방식은 「함께 고르기」입니다. 모든 구성원이 각 카드에서 답을 선택하며, 다른 사람의 선택은 내가 선택한 뒤에 보입니다. 두 사람이 같은 답을 선택하면 합의가 이루어집니다. 답이 갈리면 결정권자가 근거를 보고 결정하거나 몹 회의로 넘깁니다. 「역할별로」 방식은 단계 결정권자가 보드 위쪽에서 선택할 수 있습니다. 함께 고르기의 흐름과 이유는 AX School 핸즈온 [20장 검토 보드](https://www.uengine.org/docs/aidlc-handson/tools-review.html)에 있습니다.
+
 <ol class="steps" markdown="1">
 <li>AI-DLC가 요구사항 질문 여덟 개를 남기면 오세린의 홈에 <b>「요구사항 질문 8개가 답을 기다려요」</b> 카드가 옵니다. 동시에 강다은의 홈에는 자기 몫만 적힌 <b>「검토할 질문 1개 (개발자)」</b> 카드가 옵니다. 어느 카드에서든 <b>검토하기</b>를 누르면 검토 보드가 열립니다.</li>
 <li>검토 보드는 질문의 역할 태그에 따라 열을 나눕니다. 이 실행에서는 PO·기획(Q1~Q6), 개발자(Q7), 운영(Q8)입니다. 운영 역할은 비어 있으므로 결정권자인 오세린이 그 열을 맡습니다. 카드마다 <b>AI 추천</b>과 그 이유가 있고, 머리줄 오른쪽에 <b>지금 함께 보는 중</b>인 사람이 보입니다.</li>
@@ -89,6 +92,9 @@ AI-DLC는 질문마다 **어떤 역할에 묻는지**(`[제품 관리자]`, `[�
 ![도메인 설계의 지적 R-01 — 구성 요소 문서와 ADR-003을 가리킨다](img/robo-dlc-review-arch-finding.webp)
 
 ## 따라 하기 4 — 코드 계획은 개발자에게, 볼트 보드에서 지금 도는 유닛 보기
+
+!!! note "볼트 보드는 의도 → 유닛 → 볼트로 바뀌었습니다"
+    아래 영상과 그림은 딜리버리 계획의 볼트 아래에 유닛을 배치했던 이전 화면입니다. AI-DLC 원문은 「유닛 하나는 볼트 하나 이상으로 만들어진다」고 정의합니다. 이에 따라 현재 볼트 보드는 의도 아래에 유닛을, 유닛 아래에 볼트(코드 생성 한 번 = 볼트 하나, 시험에서 되돌아오면 볼트 하나 더)를 표시합니다. 딜리버리 계획의 묶음은 유닛에 「묶음 B1」 같은 이름표로 표시됩니다. 자세한 내용은 AX School 핸즈온 [21장 볼트 보드와 진척](https://www.uengine.org/docs/aidlc-handson/tools-bolts.html)에서 확인할 수 있습니다.
 
 <div class="video"><iframe src="https://www.youtube.com/embed/eVvGYKYNjng" title="AI-DLC 볼트 보드 — 코드 계획은 개발자에게, 지금 도는 유닛과 세션 화면 — 영상 1:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 

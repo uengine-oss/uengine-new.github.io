@@ -69,6 +69,7 @@ AI-DLC 안에서는 볼트 계획이 두 가지로 나뉩니다.
 | Driftless Cascades Task Board | 백그라운드 데몬이 보드를 주기적으로 확인해 선행 조건을 충족한 작업을 코딩 에이전트에 보내고, 터미널 분할 화면에 로그·모델·토큰·비용을 보여 줍니다. 웹에서 에이전트를 원격으로 중지합니다 |
 | nTra | 인터뷰로 비즈니스 의도를 파악해 작업과 사양으로 정리하고, Claude Code나 GitHub Copilot에 넘긴 뒤 결과를 풀 리퀘스트로 받습니다 |
 | Linear | 키보드 중심의 빠른 이슈 관리와 주기(cycle) 관리를 지원합니다. 에이전트 게이트와 실행 기록은 외부 웹훅으로 연결해야 합니다 |
+| Process GPT Lite (AI-DLC 팀 세션) | 저장소를 공유 폴더로 연결해 팀이 하나의 Claude Code 세션을 함께 사용합니다. 대기 중인 작업은 해당 역할 담당자의 홈 카드에서, 질문은 검토 보드에서 확인합니다. 진척은 의도 → 유닛 → 볼트 구조의 볼트 보드와 대시보드에서 확인합니다([19~21장](tools-team.html)) |
 | AI-DLC 2.11.2 자체 | `/aidlc --status`(현재 단계와 가드), 상태 줄 표시, 팀 구현 현황 조회(`team-board`), 세션 비용(`/aidlc-session-cost`), 기록 재생(`/aidlc-replay`), 결과 묶음(`/aidlc-outcomes-pack`) |
 
 이 실습에서는 따로 관제 도구를 쓰지 않고, 상태 파일 [`aidlc-state.md`](https://github.com/uengine-oss/tutorial-aidlc-handson/blob/main/level2-classic/aidlc/spaces/default/intents/261105-voice-parking/aidlc-state.md)와 감사 기록으로 진행 상황을 확인했습니다.
