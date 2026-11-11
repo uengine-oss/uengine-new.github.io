@@ -118,6 +118,11 @@
 <td><a href="mcp-hub.html">Chapter 14</a></td>
 </tr>
 <tr>
+<td>CLI Agent API Keys</td>
+<td>The company API keys the Claude Code · Codex CLIs use (admins only)</td>
+<td>This chapter</td>
+</tr>
+<tr>
 <td>Google Drive Settings · Git Settings · DataSource · Code Editor · Glossary Management · Catalog · Org Groups · Tenant Management</td>
 <td>External storage, data connections and admin features</td>
 <td>Not used</td>
@@ -158,6 +163,19 @@
 </ol>
 <figure><a href="img/set-lang.webp" target="_blank" rel="noopener" title="View larger"><img alt="The language menu at the end of the tab row — Korean and English" src="img/set-lang.webp" / loading="lazy" decoding="async"></a><figcaption>The language menu at the end of the tab row — Korean and English</figcaption></figure>
 <figure><a href="img/set-english-home.webp" target="_blank" rel="noopener" title="View larger"><img alt="Home after switching to Korean — the sidebar, the example sentences, Deep Agent and the Process Definition Map in Korean, while “Sales Proposal Creation” and the agents you made keep their names" src="img/set-english-home.webp" / loading="lazy" decoding="async"></a><figcaption>Home after switching to Korean — the sidebar, the example sentences, Deep Agent and the Process Definition Map in Korean, while “Sales Proposal Creation” and the agents you made keep their names</figcaption></figure>
+<h2 id="try-it-4-cli-agent-api-keys-admin">Try it 4 — CLI agent API keys (admin)<a class="anchor" href="#try-it-4-cli-agent-api-keys-admin" title="Permanent link">#</a></h2>
+<p>This is where you put the <strong>company API keys</strong> that CLI agents such as Claude Code and Codex use for work items and chat. Only admins see it.
+Sharing one person's subscription token among many people breaks the terms of use, so paste keys your company created in the Claude Console (Anthropic) or on the OpenAI platform.</p>
+<ol class="steps">
+<li>In the settings tab row, open <strong>CLI Agent API Keys</strong>. Claude Code (Anthropic API key) and Codex (OpenAI API key) show as 「Not configured」.</li>
+<li>Paste the company key into 「Paste a new key」 and press <strong>Save</strong>. The field clears and the status changes to 「Configured · ••••last four · name · time」. The key is never shown again.</li>
+<li>A CLI with a key can be picked as <strong>CLI coding agent</strong> in a new chat. A CLI without a key can't be picked in chat, and work items keep running on the credentials configured on the server.</li>
+</ol>
+<figure><a href="img/set-cli-keys.webp" target="_blank" rel="noopener" title="View larger"><img alt="Settings — the CLI Agent API Keys tab (Claude Code · Codex, company key note)" src="img/set-cli-keys.webp" / loading="lazy" decoding="async"></a><figcaption>Settings — the CLI Agent API Keys tab (Claude Code · Codex, company key note)</figcaption></figure>
+<div class="admonition note">
+<p class="admonition-title">If you see 「The key store isn't set up on this server yet」</p>
+<p>Keys live in the database's encrypted store (Supabase Vault). Until an operator applies that database setup on the server, this note appears and keys can't be added.</p>
+</div>
 <h2 id="next-chapter">Next chapter<a class="anchor" href="#next-chapter" title="Permanent link">#</a></h2>
 <p>The next chapter is the final project, where you build Hanbit Office A/S intake yourself using everything so far (<a href="project.html">Chapter 19</a>). A one-page summary is in the <a href="cheatsheet.html">appendix</a>.</p>
 <div class="admonition exercise">
@@ -180,7 +198,7 @@
     <nav class="pager"><a class="prev" href="strategy.html"><span>Previous</span>Strategy board and KPIs</a><a class="next" href="project.html"><span>Next</span>Final project — Hanbit Office A/S intake</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">Contact</a> · Every screen and result in this tutorial comes from a local Process GPT install, actually run.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#the-settings-screen">The settings screen</a></li><li><a href="#try-it-1-account-and-theme">Try it 1 — Account and theme</a></li><li><a href="#try-it-2-bring-in-a-colleague">Try it 2 — Bring in a colleague</a></li><li><a href="#try-it-3-change-the-screen-language">Try it 3 — Change the screen language</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">In this chapter</div><ul><li><a href="#the-settings-screen">The settings screen</a></li><li><a href="#try-it-1-account-and-theme">Try it 1 — Account and theme</a></li><li><a href="#try-it-2-bring-in-a-colleague">Try it 2 — Bring in a colleague</a></li><li><a href="#try-it-3-change-the-screen-language">Try it 3 — Change the screen language</a></li><li><a href="#try-it-4-cli-agent-api-keys-admin">Try it 4 — CLI agent API keys (admin)</a></li><li><a href="#next-chapter">Next chapter</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>
