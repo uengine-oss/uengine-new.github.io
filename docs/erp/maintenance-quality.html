@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설비 보전과 품질 — uEngine ERP 튜토리얼</title>
+<meta name="description" content="설비를 작업장에 등록하고 수리와 예방 점검을 기록하면 원장에서 고장 간격, 수리 시간, 다음 고장 예상일을 봅니다. 품질은 입고·출고·제조 때 자동 검사와 불합격 시 불량 경보를 만듭니다. 검사는 입고를 막지 않습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/erp/maintenance-quality.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="설비 보전과 품질 — uEngine ERP 튜토리얼">
+<meta property="og:description" content="설비를 작업장에 등록하고 수리와 예방 점검을 기록하면 원장에서 고장 간격, 수리 시간, 다음 고장 예상일을 봅니다. 품질은 입고·출고·제조 때 자동 검사와 불합격 시 불량 경보를 만듭니다. 검사는 입고를 막지 않습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/erp/maintenance-quality.html">
+<meta property="og:image" content="https://www.uengine.org/docs/erp/img/whatif-policy.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine ERP <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/erp.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">01</span>설치하고 판매로 시작하기</a></li>
+</ul>
+<div class="nav-part">모듈 더하기</div><ul>
+<li><a href="modules.html"><span class="n">02</span>재고를 켜고, 고장 나도 판매는 계속</a></li>
+<li><a href="buy-books.html"><span class="n">03</span>구매·청구·회계 켜기</a></li>
+</ul>
+<div class="nav-part">이력과 되돌리기</div><ul>
+<li><a href="history.html"><span class="n">04</span>과거 시점 보기와 되돌리기</a></li>
+</ul>
+<div class="nav-part">예측과 what-if</div><ul>
+<li><a href="whatif.html"><span class="n">05</span>예측과 what-if</a></li>
+</ul>
+<div class="nav-part">연동</div><ul>
+<li><a href="connect.html"><span class="n">06</span>플러그인과 REST·MCP 연동</a></li>
+</ul>
+<div class="nav-part">세금과 장부</div><ul>
+<li><a href="voucher-tax.html"><span class="n">07</span>증빙 한 장이 신고까지</a></li>
+<li><a href="books-assets.html"><span class="n">08</span>장부·결산·고정자산</a></li>
+</ul>
+<div class="nav-part">인사와 급여</div><ul>
+<li><a href="people.html"><span class="n">09</span>인사·휴가·근태</a></li>
+<li><a href="payroll.html"><span class="n">10</span>급여 · 전표 · 이체 · 원천세</a></li>
+</ul>
+<div class="nav-part">제조</div><ul>
+<li><a href="mrp.html"><span class="n">11</span>자재 명세와 제조 지시</a></li>
+</ul>
+<div class="nav-part">경비</div><ul>
+<li><a href="expense.html"><span class="n">12</span>경비</a></li>
+</ul>
+<div class="nav-part">영업과 프로젝트</div><ul>
+<li><a href="crm-project.html"><span class="n">13</span>CRM과 프로젝트</a></li>
+</ul>
+<div class="nav-part">Process GPT Lite</div><ul>
+<li><a href="lite.html"><span class="n">14</span>Process GPT Lite 연결</a></li>
+</ul>
+<div class="nav-part">이벤트 활용</div><ul>
+<li><a href="read-models.html"><span class="n">15</span>현황판과 읽기 모델</a></li>
+<li><a href="process-log.html"><span class="n">16</span>프로세스 마이닝 로그와 Process GPT</a></li>
+</ul>
+<div class="nav-part">관리회계와 구독</div><ul>
+<li><a href="analytic.html"><span class="n">17</span>관리회계와 예산</a></li>
+<li><a href="subscription.html"><span class="n">18</span>구독과 정기 청구</a></li>
+</ul>
+<div class="nav-part">설비와 품질</div><ul>
+<li><a href="maintenance-quality.html" class="on" aria-current="page"><span class="n">19</span>설비 보전과 품질</a></li>
+</ul>
+<div class="nav-part">고객 지원</div><ul>
+<li><a href="helpdesk.html"><span class="n">20</span>헬프데스크와 SLA</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">설비와 품질<span class="chap">19</span></div>
+    <h1>설비 보전과 품질</h1>
+    <article>
+<blockquote>
+<p>설비를 작업장에 등록하고 수리와 예방 점검을 기록하면 원장에서 고장 간격, 수리 시간, 다음 고장 예상일을 봅니다. 품질은 입고·출고·제조 때 자동 검사와 불합격 시 불량 경보를 만듭니다. 검사는 입고를 막지 않습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/j9V4m06tXrM" title="설비 보전과 품질 — 영상 2:54" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>작은 제조사는 설비 고장이나 공급사 불량 부품으로 생산 차질을 겪습니다. 원장은 언제 무슨 일이 있었는지 기록합니다.</p>
+<table>
+<thead>
+<tr>
+<th>모듈</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>설비 보전</td>
+<td>설비와 수리·점검 요청, 날짜별 예방 보전 계획을 관리합니다. 고장 간격(MTBF), 수리 시간(MTTR), 다음 고장 예상, 월별 정지 시간을 봅니다.</td>
+</tr>
+<tr>
+<td>품질</td>
+<td>검사 기준(언제, 무엇을, 얼마나 자주)에 따라 입고·출고·제조 때 검사를 만듭니다. 불량 경보, 공급사별 불량률과 제조 직행률을 봅니다.</td>
+</tr>
+</tbody>
+</table>
+<p>두 모듈은 다른 모듈을 직접 호출하지 않습니다. 고장 수리를 시작하면 설비 보전은 이벤트만 보내고, 제조가 이를 받아 작업장을 「보전 중」으로 표시합니다. 품질은 재고의 입고 이벤트로 검사를 만듭니다.</p>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>가온가전은 가상 회사이고, 사람·거래처·수치는 모두 가상입니다. 화면은 로컬 Supabase에서 찍었습니다.</li>
+<li>녹화 전에 재고·구매·제조를 켜고, 구성원 <strong>김보전</strong>(설비 보전), <strong>오제조</strong>(제조), <strong>최품질</strong>(품질), <strong>이재고</strong>(재고)를 넣었습니다. 오제조가 작업장 <code>프레스 라인</code>을, 관리자가 설비 분류 <code>프레스</code>(기본 담당 김보전)를 만들었습니다.</li>
+<li>고장 간격을 보이려고 지난 두 달의 고장 수리 두 건(4시간, 6시간)을 당시 시각으로 기록했습니다. 볼트는 대성금속 300개(50.0 mm)와 한빛볼트 200개(50.1 mm)를 먼저 받아 합격시켰습니다.</li>
+<li>품질은 재고가 켜져 있어야 켤 수 있습니다. 설비 보전은 다른 모듈 없이도 사용합니다.</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>두 모듈 켜기.</strong> 관리자로 <strong>설정 → 모듈</strong>에서 설비 보전과 품질을 켭니다. 설비 보전은 켜기 전의 고장과 수리가 원장에 없다고, 품질은 검사가 다른 처리를 막지 않는다고 알려 줍니다.
+
+<figure><a href="img/maintenance-quality-on.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="모듈 켜기" src="img/maintenance-quality-on.webp" loading="lazy" decoding="async"></a><figcaption>모듈 켜기</figcaption></figure>
+</li>
+<li><strong>설비 등록.</strong> 김보전으로 <strong>설비 보전 → 설비 → 새로 만들기</strong>에서 이름 <code>프레스 1호기</code>, 일련번호 <code>HP-2024-001</code>, 분류 <code>프레스</code>, 작업장 <code>프레스 라인</code>을 넣고 저장합니다. 번호 <code>EQ00001</code>이 붙고, 담당 기술자는 분류의 기본 담당인 김보전입니다.
+
+<figure><a href="img/maintenance-quality-equipment.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="설비" src="img/maintenance-quality-equipment.webp" loading="lazy" decoding="async"></a><figcaption>설비</figcaption></figure>
+</li>
+<li><strong>예방 보전 계획.</strong> <strong>설비 보전 → 예방 보전 계획</strong>에서 <code>프레스 월간 점검</code>을 <code>30</code>일마다, <code>7</code>일 전에 만들도록 저장합니다. 첫 예정일이 일주일 이내라 요청 <code>MR00001</code>이 생깁니다. <strong>지금 확인</strong>을 두 번 눌러도 요청은 하나이고, 다음 예정일은 2026-12-16이 됩니다.
+
+<figure><a href="img/maintenance-quality-plan.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="예방 보전 계획" src="img/maintenance-quality-plan.webp" loading="lazy" decoding="async"></a><figcaption>예방 보전 계획</figcaption></figure>
+</li>
+<li><strong>달력.</strong> <strong>설비 보전 → 보전 요청</strong>을 달력으로 보면 16일에 <code>프레스 월간 점검</code>이 있습니다.
+
+<figure><a href="img/maintenance-quality-calendar.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보전 달력" src="img/maintenance-quality-calendar.webp" loading="lazy" decoding="async"></a><figcaption>보전 달력</figcaption></figure>
+</li>
+<li><strong>고장 신고.</strong> 프레스가 다시 멈춥니다. 설비 화면의 <strong>이 설비의 보전 기록</strong>에서 <strong>고장 신고</strong>를 누르면 고장 수리 요청 <code>MR00004</code>가 생깁니다. <strong>작업 시작</strong>을 누릅니다.
+
+<figure><a href="img/maintenance-quality-report.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="고장 신고" src="img/maintenance-quality-report.webp" loading="lazy" decoding="async"></a><figcaption>고장 신고</figcaption></figure>
+</li>
+<li><strong>작업장이 보전 중.</strong> 오제조로 <strong>제조 → 작업장</strong>을 열면 프레스 라인이 「보전 중」이고, 보전 중인 설비 <code>프레스 1호기 MR00004</code>가 보입니다. 제조가 작업 시작 이벤트를 받아 표시합니다.
+
+<figure><a href="img/maintenance-quality-line.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보전 중" src="img/maintenance-quality-line.webp" loading="lazy" decoding="async"></a><figcaption>보전 중</figcaption></figure>
+</li>
+<li><strong>완료.</strong> 김보전으로 요청을 열어 <strong>완료</strong>를 누르고 작업 시간 <code>2</code>, 정지 시간 <code>2.5</code>를 적습니다.
+
+<figure><a href="img/maintenance-quality-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="완료" src="img/maintenance-quality-done.webp" loading="lazy" decoding="async"></a><figcaption>완료</figcaption></figure>
+</li>
+<li><strong>다시 가동.</strong> 작업장 목록의 프레스 라인이 「가동」으로 돌아옵니다.
+
+<figure><a href="img/maintenance-quality-back.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="가동" src="img/maintenance-quality-back.webp" loading="lazy" decoding="async"></a><figcaption>가동</figcaption></figure>
+</li>
+<li><strong>고장 간격과 수리 시간.</strong> 설비 화면에 고장 3번, 고장 간격 483.4시간, 수리 시간 4.17시간((4 + 6 + 2.5) ÷ 3), 다음 고장 예상 2026-12-02가 나옵니다. 고장이 세 번 이상이면 다음 고장 예상일이 나옵니다.
+
+<figure><a href="img/maintenance-quality-mttr.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="MTTR" src="img/maintenance-quality-mttr.webp" loading="lazy" decoding="async"></a><figcaption>MTTR</figcaption></figure>
+</li>
+<li><strong>설비 신뢰도.</strong> <strong>설비 보전 → 설비 신뢰도</strong>에서 설비별 고장 간격, 수리 시간, 가동률과 월별 정지 시간(2026-10 10시간, 2026-11 2.5시간)을 봅니다.
+
+<figure><a href="img/maintenance-quality-reliability.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="설비 신뢰도" src="img/maintenance-quality-reliability.webp" loading="lazy" decoding="async"></a><figcaption>설비 신뢰도</figcaption></figure>
+</li>
+<li><strong>검사 기준.</strong> 최품질로 <strong>품질 → 검사 기준</strong>에서 <code>볼트 길이</code>를 만듭니다. 언제는 <code>입고</code>, 제품은 <code>볼트 M10</code>, 검사 방식은 <code>측정</code>, 하한은 <code>49.8</code>, 상한은 <code>50.2</code>, 단위는 <code>mm</code>, 얼마나 자주는 <code>매번</code>으로 정합니다.
+
+<figure><a href="img/maintenance-quality-point.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="검사 기준" src="img/maintenance-quality-point.webp" loading="lazy" decoding="async"></a><figcaption>검사 기준</figcaption></figure>
+</li>
+<li><strong>검사가 저절로 생김.</strong> 녹화 전에 한빛볼트에서 볼트 500개 구매를 확정했습니다. 입고가 준비되자 이재고의 <strong>품질 → 품질 검사</strong>에 <code>QC00003</code>(입고 <code>WH/IN/00003</code>, 검사 대기)이 생겼습니다.
+
+<figure><a href="img/maintenance-quality-check.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="검사 대기" src="img/maintenance-quality-check.webp" loading="lazy" decoding="async"></a><figcaption>검사 대기</figcaption></figure>
+</li>
+<li><strong>측정.</strong> 이재고가 <strong>측정값 기록</strong>에 <code>50.6</code>을 적습니다. 합격 단추는 없습니다. 값이 기준을 벗어나 불합격하고 불량 경보 <code>QA00001</code>이 열립니다.
+
+<figure><a href="img/maintenance-quality-measure.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="불합격" src="img/maintenance-quality-measure.webp" loading="lazy" decoding="async"></a><figcaption>불합격</figcaption></figure>
+</li>
+<li><strong>입고는 그대로.</strong> 입고 <code>WH/IN/00003</code>을 처리하면 완료됩니다. 재고는 품질 모듈과 따로 작동하며, 검사는 입고를 막지 않습니다. 불합격품은 담당자가 반품·폐기합니다.
+
+<figure><a href="img/maintenance-quality-notheld.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="입고 완료" src="img/maintenance-quality-notheld.webp" loading="lazy" decoding="async"></a><figcaption>입고 완료</figcaption></figure>
+</li>
+<li><strong>불량 경보.</strong> 최품질로 <code>QA00001</code>에서 <strong>조치 시작</strong>을 누릅니다. <strong>해결</strong>을 누르고 원인 분류와 시정 조치를 적어야 경보가 닫힙니다.
+
+<figure><a href="img/maintenance-quality-alert.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="불량 경보" src="img/maintenance-quality-alert.webp" loading="lazy" decoding="async"></a><figcaption>불량 경보</figcaption></figure>
+</li>
+<li><strong>불량률.</strong> <strong>품질 → 불량률</strong>에서 공급사별 불량률을 봅니다. 한빛볼트 50.0%(2건 중 1건), 대성금속 0.0%입니다. 판정한 검사가 30건 미만이면 「근거 부족」으로 표시합니다.
+
+<figure><a href="img/maintenance-quality-rates.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="불량률" src="img/maintenance-quality-rates.webp" loading="lazy" decoding="async"></a><figcaption>불량률</figcaption></figure>
+</li>
+</ol>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>설비 보전이 제조의 작업장을 직접 바꾸나요?</summary>
+<p>바꾸지 않습니다. 설비 보전은 작업 시작·완료 이벤트만 보내고, 제조가 이를 받아 작업장을 「보전 중」이나 「가동」으로 표시합니다.</p>
+</details>
+<details class="answer">
+<summary>예방 보전 계획이 같은 날짜의 요청을 두 번 만들 수 있나요?</summary>
+<p>만들지 않습니다. 요청 번호는 계획과 예정일로 정해집니다. 지금 확인을 여러 번 누르거나 요청을 지워도 같은 날짜의 요청은 다시 생기지 않습니다.</p>
+</details>
+<details class="answer">
+<summary>불합격하면 입고가 막히나요?</summary>
+<p>막히지 않습니다. 검사와 경보를 기록할 뿐입니다. 반품이나 폐기는 담당자가 합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="subscription.html"><span>이전</span>구독과 정기 청구</a><a class="next" href="helpdesk.html"><span>다음</span>헬프데스크와 SLA</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 실행해 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
