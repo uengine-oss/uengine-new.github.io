@@ -29,7 +29,7 @@ HERE = Path(__file__).resolve().parent
 PRODUCTS = {
     "erp": dict(name="uEngine ERP", page="erp.html", og="whatif-policy.webp", search="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)",
                 foot="이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 실행해 얻었습니다. 실제 회사의 성능이 아닙니다.",
-                chapters=[("index", "시작하기"), ("modules", "모듈 더하기"), ("buy-books", "모듈 더하기"), ("history", "이력과 되돌리기"), ("whatif", "예측과 what-if"), ("connect", "연동"), ("voucher-tax", "세금과 장부"), ("books-assets", "세금과 장부"), ("people", "인사와 급여"), ("payroll", "인사와 급여"), ("mrp", "제조"), ("expense", "경비"), ("crm-project", "영업과 프로젝트"), ("lite", "Process GPT Lite"), ("read-models", "이벤트 활용"), ("process-log", "이벤트 활용"), ("analytic", "관리회계와 구독")]),
+                chapters=[("index", "시작하기"), ("modules", "모듈 더하기"), ("buy-books", "모듈 더하기"), ("history", "이력과 되돌리기"), ("whatif", "예측과 what-if"), ("connect", "연동"), ("voucher-tax", "세금과 장부"), ("books-assets", "세금과 장부"), ("people", "인사와 급여"), ("payroll", "인사와 급여"), ("mrp", "제조"), ("expense", "경비"), ("crm-project", "영업과 프로젝트"), ("lite", "Process GPT Lite"), ("read-models", "이벤트 활용"), ("process-log", "이벤트 활용"), ("analytic", "관리회계와 구독"), ("subscription", "관리회계와 구독"), ("maintenance-quality", "설비와 품질"), ("helpdesk", "고객 지원")]),
     "mes": dict(name="uEngine MES", page="mes.html", og="anomaly-monitor.webp", search="튜토리얼 검색 (예: 설비 정지, 시점 조회, 시맨틱 레이어)",
                 foot="이 튜토리얼의 화면과 결과는 시연용 참조 구현을 합성 데이터로 실제 실행해 얻었습니다.",
                 chapters=[("index", "시작하기"), ("anomaly", "현장 대응"), ("events", "이력과 추적"), ("semantic", "AI 연결"), ("agent", "AI 연결")]),

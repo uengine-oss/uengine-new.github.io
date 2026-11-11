@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헬프데스크와 SLA — uEngine ERP 튜토리얼</title>
+<meta name="description" content="판매 후 고객 문의를 티켓으로 받아 팀에 배정하고, SLA 정책으로 첫 응답과 해결 기한을 정합니다. 기한을 넘기면 위반이 원장에 한 번 남고, 준수율과 처리 흐름도 원장에서 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/erp/helpdesk.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="헬프데스크와 SLA — uEngine ERP 튜토리얼">
+<meta property="og:description" content="판매 후 고객 문의를 티켓으로 받아 팀에 배정하고, SLA 정책으로 첫 응답과 해결 기한을 정합니다. 기한을 넘기면 위반이 원장에 한 번 남고, 준수율과 처리 흐름도 원장에서 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/erp/helpdesk.html">
+<meta property="og:image" content="https://www.uengine.org/docs/erp/img/whatif-policy.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>uEngine ERP <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="튜토리얼 검색 (예: 재고 켜기, 되돌리기, what-if)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/erp.html">제품 소개</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">01</span>설치하고 판매로 시작하기</a></li>
+</ul>
+<div class="nav-part">모듈 더하기</div><ul>
+<li><a href="modules.html"><span class="n">02</span>재고를 켜고, 고장 나도 판매는 계속</a></li>
+<li><a href="buy-books.html"><span class="n">03</span>구매·청구·회계 켜기</a></li>
+</ul>
+<div class="nav-part">이력과 되돌리기</div><ul>
+<li><a href="history.html"><span class="n">04</span>과거 시점 보기와 되돌리기</a></li>
+</ul>
+<div class="nav-part">예측과 what-if</div><ul>
+<li><a href="whatif.html"><span class="n">05</span>예측과 what-if</a></li>
+</ul>
+<div class="nav-part">연동</div><ul>
+<li><a href="connect.html"><span class="n">06</span>플러그인과 REST·MCP 연동</a></li>
+</ul>
+<div class="nav-part">세금과 장부</div><ul>
+<li><a href="voucher-tax.html"><span class="n">07</span>증빙 한 장이 신고까지</a></li>
+<li><a href="books-assets.html"><span class="n">08</span>장부·결산·고정자산</a></li>
+</ul>
+<div class="nav-part">인사와 급여</div><ul>
+<li><a href="people.html"><span class="n">09</span>인사·휴가·근태</a></li>
+<li><a href="payroll.html"><span class="n">10</span>급여 · 전표 · 이체 · 원천세</a></li>
+</ul>
+<div class="nav-part">제조</div><ul>
+<li><a href="mrp.html"><span class="n">11</span>자재 명세와 제조 지시</a></li>
+</ul>
+<div class="nav-part">경비</div><ul>
+<li><a href="expense.html"><span class="n">12</span>경비</a></li>
+</ul>
+<div class="nav-part">영업과 프로젝트</div><ul>
+<li><a href="crm-project.html"><span class="n">13</span>CRM과 프로젝트</a></li>
+</ul>
+<div class="nav-part">Process GPT Lite</div><ul>
+<li><a href="lite.html"><span class="n">14</span>Process GPT Lite 연결</a></li>
+</ul>
+<div class="nav-part">이벤트 활용</div><ul>
+<li><a href="read-models.html"><span class="n">15</span>현황판과 읽기 모델</a></li>
+<li><a href="process-log.html"><span class="n">16</span>프로세스 마이닝 로그와 Process GPT</a></li>
+</ul>
+<div class="nav-part">관리회계와 구독</div><ul>
+<li><a href="analytic.html"><span class="n">17</span>관리회계와 예산</a></li>
+<li><a href="subscription.html"><span class="n">18</span>구독과 정기 청구</a></li>
+</ul>
+<div class="nav-part">설비와 품질</div><ul>
+<li><a href="maintenance-quality.html"><span class="n">19</span>설비 보전과 품질</a></li>
+</ul>
+<div class="nav-part">고객 지원</div><ul>
+<li><a href="helpdesk.html" class="on" aria-current="page"><span class="n">20</span>헬프데스크와 SLA</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">고객 지원<span class="chap">20</span></div>
+    <h1>헬프데스크와 SLA</h1>
+    <article>
+<blockquote>
+<p>판매 후 고객 문의를 티켓으로 받아 팀에 배정하고, SLA 정책으로 첫 응답과 해결 기한을 정합니다. 기한을 넘기면 위반이 원장에 한 번 남고, 준수율과 처리 흐름도 원장에서 봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/9bFc-6VYvxI" title="헬프데스크와 SLA — 영상 2:08" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>어떻게</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>배정</td>
+<td>팀별로 직접 배정하거나, 돌아가며 또는 열린 티켓이 적은 사람에게 배정합니다</td>
+</tr>
+<tr>
+<td>SLA 정책</td>
+<td>최소 우선순위·유형별 첫 응답·해결 시간을 정합니다. 달력 시간이나 회사 달력의 근무 시간으로 셉니다</td>
+</tr>
+<tr>
+<td>고객 대기</td>
+<td>해결 시계만 멈춥니다. 고객이 답하면 남은 시간을 다시 셉니다</td>
+</tr>
+<tr>
+<td>위반</td>
+<td>기한이 지나면 <code>SLA 위반</code>이 기한 시각으로 한 번 남습니다. 매분 실행하는 작업, 앱, <strong>기한 지금 확인</strong> 단추 중 먼저 확인한 쪽이 기록합니다</td>
+</tr>
+<tr>
+<td>고객 링크</td>
+<td>고객은 링크로 로그인 없이 진행을 보고 답합니다. 내부 메모는 보이지 않습니다</td>
+</tr>
+<tr>
+<td>분석</td>
+<td>SLA 준수율(판단한 티켓 20건 전에는 근거 부족), 첫 응답·해결 시간, 단계·우선순위·유형별 수를 봅니다</td>
+</tr>
+</tbody>
+</table>
+<p>헬프데스크는 다른 모듈 없이도 사용합니다. 판매나 청구가 켜져 있으면 티켓에 주문과 청구서를 연결할 수 있습니다. 고객 담당자 연락처는 원장 밖에 있어 지울 수 있습니다.</p>
+<div class="admonition note">
+<p class="admonition-title">먼저 알아 둘 것</p>
+<ul>
+<li>가온가전은 가상 회사이고, 사람·고객·문의는 모두 가상입니다. 화면은 로컬 Supabase에서 찍었습니다.</li>
+<li>녹화 전에 구성원 <strong>상담하나</strong>, <strong>상담둘</strong>, 에이전트 계정 <strong>지원봇</strong>(모두 헬프데스크 역할)과 고객 <strong>가온마트</strong>를 명령으로 넣었습니다.</li>
+<li>둘째 문의는 지원봇이 MCP로 열었고, 셋째 문의는 다섯 시간 전 시각으로 넣었습니다(로컬 시험 환경에서만 가능합니다).</li>
+</ul>
+</div>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>헬프데스크 켜기.</strong> 관리자로 <strong>설정 → 모듈</strong>에서 헬프데스크를 켭니다. 켜기 전 고객 문의는 원장에 없고, SLA는 켠 뒤 접수한 티켓부터 적용된다고 안내합니다.
+
+<figure><a href="img/helpdesk-hdon.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="헬프데스크 켜기" src="img/helpdesk-hdon.webp" loading="lazy" decoding="async"></a><figcaption>헬프데스크 켜기</figcaption></figure>
+</li>
+<li><strong>팀.</strong> <strong>헬프데스크 → 헬프데스크 팀</strong>에서 <code>고객지원팀</code>을 만들고 구성원은 상담하나·상담둘, 배정 방식은 <code>돌아가며</code>로 저장합니다.
+
+<figure><a href="img/helpdesk-team.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="팀" src="img/helpdesk-team.webp" loading="lazy" decoding="async"></a><figcaption>팀</figcaption></figure>
+</li>
+<li><strong>SLA 정책.</strong> <strong>헬프데스크 → SLA 정책</strong>에서 <code>높음 이상</code>을 만듭니다. 팀은 <code>고객지원팀</code>, 최소 우선순위는 <code>높음</code>, 첫 응답은 <code>4</code>시간, 해결은 <code>24</code>시간, 세는 방식은 <code>달력 시간</code>으로 정합니다. 첫 응답 시간이 해결 시간보다 길면 저장할 수 없습니다.
+
+<figure><a href="img/helpdesk-sla.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="SLA 정책" src="img/helpdesk-sla.webp" loading="lazy" decoding="async"></a><figcaption>SLA 정책</figcaption></figure>
+</li>
+<li><strong>티켓 접수.</strong> 상담하나로 <strong>헬프데스크 → 티켓 → 새로 만들기</strong>에서 고객 <code>가온마트</code>, 제목 <code>제습기 전원이 켜지지 않습니다</code>, 우선순위 <code>높음</code>으로 저장합니다. <code>HD00001</code>이 차례로 상담하나에게 배정되고, SLA에 <code>첫 응답 4시간 안에</code>, <code>해결 24시간 안에</code>가 붙습니다.
+
+<figure><a href="img/helpdesk-ticket.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="티켓" src="img/helpdesk-ticket.webp" loading="lazy" decoding="async"></a><figcaption>티켓</figcaption></figure>
+</li>
+<li><strong>에이전트가 연 티켓.</strong> 둘째 문의 <code>HD00002 설치 기사 방문 일정</code>은 지원봇이 MCP로 열었습니다. 다음 상담둘에게 배정되고, 이력에 <code>티켓 접수 · 지원봇 · 에이전트</code>가 남습니다. 에이전트는 <code>erp_read</code>로 SLA 상태(<code>정상 · 첫 응답 4시간 안</code>)를 읽었습니다.
+
+<figure><a href="img/helpdesk-agent.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="에이전트" src="img/helpdesk-agent.webp" loading="lazy" decoding="async"></a><figcaption>에이전트</figcaption></figure>
+</li>
+<li><strong>답하고 해결.</strong> 상담하나가 <code>HD00001</code>에 답장을 보내고 <strong>해결</strong>을 누릅니다. 첫 응답과 해결 모두 「지킴」입니다.
+
+<figure><a href="img/helpdesk-answer.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="지킴" src="img/helpdesk-answer.webp" loading="lazy" decoding="async"></a><figcaption>지킴</figcaption></figure>
+</li>
+<li><strong>고객 대기.</strong> 상담둘이 <code>HD00002</code>에 내부 메모 <code>기사 일정표 확인 필요</code>를 남기고, <strong>답한 뒤 고객 대기로 둡니다</strong>를 선택해 방문 가능한 날짜를 묻는 답장을 보냅니다. 티켓은 「고객 대기」가 되고 해결 시계가 멈춥니다.
+
+<figure><a href="img/helpdesk-wait.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="고객 대기" src="img/helpdesk-wait.webp" loading="lazy" decoding="async"></a><figcaption>고객 대기</figcaption></figure>
+</li>
+<li><strong>고객 링크.</strong> 고객은 링크로 로그인 없이 문의를 봅니다. 담당자의 답장만 보이고 내부 메모는 보이지 않습니다. 고객이 <code>다음 주 화요일 오전 10시가 좋습니다</code>라고 답하면 「처리 중」이 됩니다.
+
+<figure><a href="img/helpdesk-portal.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="고객 링크" src="img/helpdesk-portal.webp" loading="lazy" decoding="async"></a><figcaption>고객 링크</figcaption></figure>
+</li>
+<li><strong>진행으로 돌아옴.</strong> 직원 화면에서 <code>HD00002</code>가 「진행」으로 돌아오고, 남은 해결 시간을 다시 셉니다.
+
+<figure><a href="img/helpdesk-back.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="진행 재개" src="img/helpdesk-back.webp" loading="lazy" decoding="async"></a><figcaption>진행 재개</figcaption></figure>
+</li>
+<li><strong>위반.</strong> 다섯 시간 전 접수한 셋째 문의 <code>HD00003 환불 요청</code>에는 아무도 답하지 않았습니다. <strong>헬프데스크 → 헬프데스크 분석</strong>의 열린 티켓 SLA에서 <code>HD00003</code>이 「위반」입니다. 매분 실행되는 작업이 위반을 기록하며, <strong>기한 지금 확인</strong>으로 바로 확인할 수도 있습니다.
+
+<figure><a href="img/helpdesk-late.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="위반" src="img/helpdesk-late.webp" loading="lazy" decoding="async"></a><figcaption>위반</figcaption></figure>
+</li>
+<li><strong>이력.</strong> <code>HD00003</code>의 이력에 <code>SLA 위반 · 시스템 · SLA 기한</code>이 남습니다. 위반 시각은 첫 응답 기한이며, 다시 확인해도 한 번만 남습니다.
+
+<figure><a href="img/helpdesk-history.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="위반 이력" src="img/helpdesk-history.webp" loading="lazy" decoding="async"></a><figcaption>위반 이력</figcaption></figure>
+</li>
+<li><strong>준수율.</strong> 헬프데스크 분석의 SLA 준수율은 50%입니다. 판단한 2건 중 지킴 1건, 위반 1건입니다. 20건이 되기 전에는 근거가 부족하다고 표시합니다.
+
+<figure><a href="img/helpdesk-compliance.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="준수율" src="img/helpdesk-compliance.webp" loading="lazy" decoding="async"></a><figcaption>준수율</figcaption></figure>
+</li>
+<li><strong>프로세스 마이닝 로그.</strong> <strong>분석 → 프로세스 마이닝 로그</strong>의 <strong>티켓</strong> 탭에 사례 3건, 이벤트 13건, 흐름 3가지가 나옵니다. <code>티켓 접수 → SLA 위반</code> 같은 흐름을 내려받아 Process GPT에 올릴 수 있습니다.
+
+<figure><a href="img/helpdesk-mining.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="프로세스 마이닝 로그" src="img/helpdesk-mining.webp" loading="lazy" decoding="async"></a><figcaption>프로세스 마이닝 로그</figcaption></figure>
+</li>
+</ol>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>고객 대기 중에도 첫 응답 시간을 셉니까?</summary>
+<p>셉니다. 고객 대기는 해결 시계만 멈춥니다. 첫 응답은 고객에게 처음 답해야 지켜집니다.</p>
+</details>
+<details class="answer">
+<summary>위반 확인 작업이 반복되면 기록도 여러 번 남습니까?</summary>
+<p>남지 않습니다. 시계마다 한 번만 남고, 위반 시각은 확인한 때가 아니라 기한입니다.</p>
+</details>
+<details class="answer">
+<summary>고객 링크를 받은 사람은 무엇을 볼 수 있습니까?</summary>
+<p>해당 티켓의 진행 상황, 담당자 답장, 본인의 글만 봅니다. 내부 메모와 다른 티켓은 볼 수 없습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="maintenance-quality.html"><span>이전</span>설비 보전과 품질</a><span></span></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 수치는 실제 앱을 가상 회사 데이터로 실행해 얻었습니다. 실제 회사의 성능이 아닙니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
