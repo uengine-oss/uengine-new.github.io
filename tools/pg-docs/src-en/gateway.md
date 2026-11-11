@@ -118,30 +118,30 @@ Our instance name appears as 「Sales Proposal Approval · Hanbit Daejeon Office
 
 ## Try it 5 — Write the proposal as Minji
 
-In Minji's 「Task List」, open 「Write Proposal」 for this instance. 「Previous Activity Input」 includes 「Submit Sales Request · Jinyoung Jang」.
+In Minji's 「Task List」, open 「Write Proposal」 for this instance. 「Received Outputs」 includes 「Submit Sales Request · Jinyoung Jang」.
 
 The current form is 「Write Proposal Layout」. Its 「Proposal Details」 field is a **plain text box**.
 
 <ol class="steps" markdown="1">
-<li markdown="1">Read Jinyoung's request in 「Previous Activity Input」.</li>
+<li markdown="1">Read Jinyoung's request in 「Received Outputs」.</li>
 <li markdown="1">Enter the proposal below directly in 「Proposal Details」.</li>
 <li markdown="1">Check the text, then click 「Submit Complete」.</li>
 </ol>
 
 > Daejeon branch move proposal: 30 work desks and 30 mesh chairs. Estimated about KRW 18,000,000 (VAT excluded).
 
-![Filled proposal task — Previous Activity Input and the proposal in the plain Proposal Details text box](img/gwr-write-filled.webp)
+![Filled proposal task — Received Outputs and the proposal in the plain Proposal Details text box](img/gwr-write-filled.webp)
 
 There is no Report editor for this field. Type into the text box itself. In our run, 「Review Proposal」 reached Jinyoung about three seconds after submission.
 
 ## Try it 6 — Reject the proposal as Jinyoung
 
-In Jinyoung's 「Task List」, open 「Review Proposal」. 「Previous Activity Input」 contains two entries: 「Submit Sales Request · Jinyoung Jang」 and 「Write Proposal · Minji Kim」.
+In Jinyoung's 「Task List」, open 「Review Proposal」. 「Received Outputs」 contains two entries: 「Submit Sales Request · Jinyoung Jang」 and 「Write Proposal · Minji Kim」.
 
 The current form is 「Review Proposal Layout」.
 
 <ol class="steps" markdown="1">
-<li markdown="1">Read the request and proposal in 「Previous Activity Input」.</li>
+<li markdown="1">Read the request and proposal in 「Received Outputs」.</li>
 <li markdown="1">Change 「Review Result」 from 「Approve」 to 「Reject」.</li>
 <li markdown="1">Enter the comment below in 「Review Comments」.</li>
 <li markdown="1">Check that 「Review Result」 is 「Reject」, then click 「Submit Complete」.</li>
@@ -149,7 +149,7 @@ The current form is 「Review Proposal Layout」.
 
 > The installation fee and schedule are missing. Please add the installation fee for the Daejeon area and an installation schedule before move-in, then rewrite it.
 
-![Review ready for rejection — two previous inputs, Reject selected, and the installation-fee and schedule comment](img/gwr-review-reject-filled.webp)
+![Review ready for rejection — two received outputs, Reject selected, and the installation-fee and schedule comment](img/gwr-review-reject-filled.webp)
 
 !!! note "The first review defaults to Approve"
     Writing a rejection comment does not change the selected result. Change 「Review Result」 to 「Reject」 before submitting.
@@ -158,14 +158,14 @@ About eight seconds later, Minji received 「Read Comments & Rewrite Proposal」
 
 ## Try it 7 — Revise the proposal as Minji
 
-Open 「Read Comments & Rewrite Proposal」 as Minji. 「Previous Activity Input」 now includes the request, the first proposal, and Jinyoung's review.
+Open 「Read Comments & Rewrite Proposal」 as Minji. 「Received Outputs」 now includes the request, the first proposal, and Jinyoung's review.
 
 The current form is 「Read Comments & Rewrite Proposal Layout」. It has two Report cards: 「Review Comments」 and 「Revised Proposal」.
 
-![Rewrite task — three previous inputs and the Review Comments and Revised Proposal Report cards](img/gwr-rewrite.webp)
+![Rewrite task — three received outputs and the Review Comments and Revised Proposal Report cards](img/gwr-rewrite.webp)
 
 <ol class="steps" markdown="1">
-<li markdown="1">Read the rejection comment in Jinyoung's 「Review Proposal」 entry under 「Previous Activity Input」.</li>
+<li markdown="1">Read the rejection comment in Jinyoung's 「Review Proposal」 entry under 「Received Outputs」.</li>
 <li markdown="1">Open the 「Revised Proposal」 Report card for editing.</li>
 <li markdown="1">Enter the revised proposal below in 「Content Editor」, then click 「Save」.</li>
 <li markdown="1">Check the saved preview and click 「Submit Complete」.</li>
@@ -175,8 +175,8 @@ The current form is 「Read Comments & Rewrite Proposal Layout」. It has two Re
 
 ![Revised proposal editor — the proposal now includes the Daejeon installation fee and a two-day installation schedule](img/gwr-rewrite-report.webp)
 
-!!! note "Read the comment in the previous input"
-    The rewrite form's 「Review Comments」 Report card is empty. Jinyoung's comment is not copied into it automatically. Read Jinyoung's review under 「Previous Activity Input」.
+!!! note "Read the comment in the received output"
+    The rewrite form's 「Review Comments」 Report card is empty. Jinyoung's comment is not copied into it automatically. Read Jinyoung's review under 「Received Outputs」.
 
 About three seconds after submission, 「Review Proposal」 returned to Jinyoung. The flow followed the return arrow to the same review step.
 
@@ -187,7 +187,7 @@ Open 「Review Proposal」 again as Jinyoung. This time, the form **keeps the pr
 ![Reopened review before editing — Reject and the previous installation-fee and schedule comment remain filled in](img/gwr-review-approve.webp)
 
 <ol class="steps" markdown="1">
-<li markdown="1">Read Minji's revised proposal in the previous inputs.</li>
+<li markdown="1">Read Minji's revised proposal in the received outputs.</li>
 <li markdown="1">Change 「Review Result」 from 「Reject」 to 「Approve」.</li>
 <li markdown="1">Replace 「Review Comments」 with `Good — the installation schedule is included. Please send it to the customer.`</li>
 <li markdown="1">Check both values, then click 「Submit Complete」.</li>
@@ -242,7 +242,7 @@ In [Chapter 8](knowledge.html), you will upload company documents to the Knowled
 <details class="answer" markdown="1"><summary>Answers</summary>
 
 1. No. An exclusive gateway takes one branch whose condition matches. Here, rejection leads to rewriting and approval leads to customer sending.
-2. Jinyoung changes 「Review Result」 from 「Approve」 to 「Reject」 and enters 「Review Comments」. Minji reads Jinyoung's review under 「Previous Activity Input」.
+2. Jinyoung changes 「Review Result」 from 「Approve」 to 「Reject」 and enters 「Review Comments」. Minji reads Jinyoung's review under 「Received Outputs」.
 3. The reopened form keeps 「Reject」 and the old comment. Jinyoung must select 「Approve」 and replace the comment before submitting approval.
 4. The same 「Review Proposal」 step reopened after revision. The process did not create a separate second review step.
 </details>

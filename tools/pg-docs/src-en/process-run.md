@@ -39,7 +39,7 @@ Start in Jinyoung's browser. You will use another browser or private window for 
 
 The first step is 「Enter Customer Request」, shown with 「NEW」. The dialog has 「Progress」, 「Agent Delegation」, and 「Similar cases」 tabs.
 
-On the right, 「Current Task」 contains 「Submit Request Layout」. Jinyoung will fill in its 「Sales Request」 field. Leave 「Add File」 under 「Source」 unused for this exercise.
+On the right, 「Task to Do」 contains 「Submit Request Layout」. Jinyoung will fill in its 「Sales Request」 field. Leave 「Add File」 under 「Source」 unused for this exercise.
 
 !!! note "Text still shown in Korean"
     The current version shows the definition breadcrumb (「Uncategorized › Uncategorized」) and the 「Similar cases」 tab in Korean, even in English mode. Use 「Progress」 to view the process flow.
@@ -66,7 +66,7 @@ Our instance title appears as 「Sales Proposal Creation · Hanbit Trading meeti
 The instance is still 「RUNNING」 after the first submission. Jinyoung's step is done, but Minji's step remains.
 
 !!! note "People fill in the forms in this chapter"
-    Leave 「Agent Delegation」 and 「Voice Agent」 unused. You will work with agent-owned steps in Chapter 13 (English edition coming soon).
+    Leave 「Agent Delegation」 unused here. The mic next to it fills the form by voice: a recording bar appears under the header, and when you stop, a single-field form gets your words appended while a form with several fields gets only the fields you mentioned. Nothing is saved or submitted until you review it and press 「Submit Complete」. You will work with agent-owned steps in Chapter 13 (English edition coming soon).
 
 ## Try it 3 — Check the running instance
 
@@ -108,15 +108,15 @@ Its tabs are 「Progress」, 「Work History」, 「Agent Delegation」, and 「
 
 ## Try it 5 — Read the request and write the proposal
 
-Under 「Previous Activity Input」, the 「Enter Customer Request · Jinyoung Jang」 card contains the request submitted in the first step.
+Under 「Received Outputs」, the 「Enter Customer Request · Jinyoung Jang」 card contains the request submitted in the first step.
 
-Below it, 「Current Task」 shows 「Write Proposal and Send to Customer Layout」. Its title differs from the renamed step title. The form has **one field**, 「Sales Proposal」, displayed as a 「Report」 card.
+Below it, 「Task to Do」 shows 「Write Proposal and Send to Customer Layout」. Its title differs from the renamed step title. The form has **one field**, 「Sales Proposal」, displayed as a 「Report」 card.
 
-![Minji's task — Previous Activity Input, the current Sales Proposal Report card, Intermediate Save, and Submit Complete](img/run-minji-task.webp)
+![Minji's task — Received Outputs, the current Sales Proposal Report card, Intermediate Save, and Submit Complete](img/run-minji-task.webp)
 
 <ol class="steps" markdown="1">
-<li markdown="1">Read Jinyoung's request in 「Previous Activity Input」.</li>
-<li markdown="1">In 「Current Task」, click the blue edit button on the 「Sales Proposal」 card.</li>
+<li markdown="1">Read Jinyoung's request in 「Received Outputs」.</li>
+<li markdown="1">In 「Task to Do」, click the blue edit button on the 「Sales Proposal」 card.</li>
 <li markdown="1">In 「Content Editor」, enter the proposal below.</li>
 <li markdown="1">Click 「Save」. Check that the proposal appears in the card's preview.</li>
 <li markdown="1">Click 「Submit Complete」.</li>
@@ -131,7 +131,7 @@ Use this proposal:
 ![Filled task — the Sales Proposal card previews the saved proposal](img/run-minji-task-filled.webp)
 
 !!! note "One Report field holds the proposal"
-    This form has no separate request, quote, or schedule fields. Put the proposal, price, installation fee, and timing together in 「Sales Proposal」. Use 「Previous Activity Input」 as your source, then save the editor before submitting the task.
+    This form has no separate request, quote, or schedule fields. Put the proposal, price, installation fee, and timing together in 「Sales Proposal」. Use 「Received Outputs」 as your source, then save the editor before submitting the task.
 
 ## Try it 6 — Check that the whole instance is complete
 
@@ -162,6 +162,6 @@ You submitted a customer request and completed the assigned task. In [Chapter 7]
 <details class="answer" markdown="1"><summary>Answers</summary>
 
 1. A definition is the plan for the work. An instance is one run of that plan for a particular request.
-2. Minji reads 「Enter Customer Request · Jinyoung Jang」 under 「Previous Activity Input」. Minji edits the 「Sales Proposal」 Report card through 「Content Editor」, then saves it.
+2. Minji reads 「Enter Customer Request · Jinyoung Jang」 under 「Received Outputs」. Minji edits the 「Sales Proposal」 Report card through 「Content Editor」, then saves it.
 3. Minji's step remains after Jinyoung submits. Minji submits the last step, so the whole instance is complete.
 </details>

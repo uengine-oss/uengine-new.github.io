@@ -195,7 +195,7 @@ Use this table as your checklist. Record whether each requirement is met and whe
 |---|---|
 | Every run owner appears as Jinyoung. | Unassigned lanes may default to the person starting the run. Check 「Role Resolution By Direct user」 and the owners in the run dialog. [Chapter 5](organization.html) |
 | Saving shows 「A gateway requires at least 2 branches」. | Read the validation message and use 「Save Anyway」 to save. Then check that the required conditions and paths exist; saving does not repair the gateway. Chapter 13 (coming soon) |
-| The next form is empty. | Previous values do not automatically fill the next form. Read 「Previous Activity Input」 and enter the needed values. [Chapter 6](process-run.html) |
+| The next form is empty. | Previous values do not automatically fill the next form. Read 「Received Outputs」 and enter the needed values. [Chapter 6](process-run.html) |
 | The process approves even though a rejection comment was entered. | The review choice may initially be 「Approve」. Change it to 「Reject」 before submitting. [Chapter 7](gateway.html) |
 | The agent's calculation or dates look wrong. | Compare the output with the policy and inputs. Do not submit unchecked calculations or dates. Chapter 13 (coming soon) |
 | Deep Agent holds generation or produces a different draft. | Generation can vary. State the required conditions precisely and request a correction. [Chapter 12](document-process.html) |
