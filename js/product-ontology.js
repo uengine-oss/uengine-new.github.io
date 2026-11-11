@@ -29,7 +29,7 @@
   const introduced=new Set();
   let tourComplete=false;
   const showcase=$('#ontology-showcase'),showcaseFrame=$('#ontology-showcase-frame');
-  const showcaseLaunch=$('#ontology-showcase-launch'),showcaseClose=$('#ontology-showcase-close');
+  const showcaseClose=$('#ontology-showcase-close');
   const universe=$('#ontology-universe'),stage=$('#ontology-stage');
   let showcaseReturnFocus=null,showcaseState='universe',foldElapsed=0,showcaseReady=false;
   const foldDuration=1500;
@@ -67,10 +67,9 @@
     universe.hidden=false;universe.inert=false;stage.style.height='';
     root.classList.remove('is-folding','is-showcase');
     render();startFrame();
-    const target=showcaseReturnFocus&&showcaseReturnFocus.isConnected?showcaseReturnFocus:showcaseLaunch;
+    const target=showcaseReturnFocus&&showcaseReturnFocus.isConnected?showcaseReturnFocus:$('#ontology-play');
     target.focus({preventScroll:true});
   }
-  root.querySelectorAll('[data-showcase-launch]').forEach(button=>button.addEventListener('click',openShowcase));
   showcaseClose.addEventListener('click',closeShowcase);
   root.querySelectorAll('[data-showcase-command]').forEach(button=>button.addEventListener('click',()=>sendShowcase(button.dataset.showcaseCommand)));
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&showcaseState!=='universe'){event.preventDefault();closeShowcase();}});
