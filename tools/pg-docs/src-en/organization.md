@@ -115,7 +115,7 @@ Saving the lane panel applies the change to the diagram. Saving the definition k
 
 ![Run dialog — Customer mapped to Jinyoung Jang, Sales Representative to Minji Kim, and the Enter Customer Request form](img/org-run-roles.webp)
 
-Jinyoung takes the 「Customer」 role for this exercise. The first step is 「Enter Customer Request」. On the right, 「Current Task」 contains 「Submit Request Layout」 and its 「Sales Request」 field.
+Jinyoung takes the 「Customer」 role for this exercise. The first step is 「Enter Customer Request」. On the right, 「Task to Do」 contains 「Submit Request Layout」 and its 「Sales Request」 field.
 
 The dialog also shows 「Progress」, 「Agent Delegation」, and 「Similar cases」 tabs. You will enter the request in the next chapter.
 
