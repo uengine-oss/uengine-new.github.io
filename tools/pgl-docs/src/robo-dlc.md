@@ -139,7 +139,7 @@
 
 ## AI-DLC 핸즈온과 어떻게 이어지나
 
-이 장은 AX School [AI-DLC 핸즈온](https://www.uengine.org/docs/aidlc-handson/) 레벨 2의 순서를 그대로 밟습니다. 단계마다 답하는 사람이 다르다는 점만 달라집니다. 실습 화면은 모두 classic을 실제로 한 번 실행하며 찍었습니다.
+이 장은 AX School [AI-DLC 핸즈온](https://www.uengine.org/docs/aidlc-handson/) 레벨 2의 순서를 그대로 밟습니다. 단계마다 답하는 사람이 다르다는 점만 달라집니다. 실습 화면은 모두 classic을 실제로 한 번 실행하며 찍었습니다. 핸즈온의 「프로젝트 관리와 툴 지원」 부([19~21장](https://www.uengine.org/docs/aidlc-handson/tools-team.html))에도 이 장과 31장의 내용을 개념 중심으로 정리했습니다.
 
 | 핸즈온 장 | AI-DLC 단계 | 이 장에서 정하는 사람과 방법 |
 |---|---|---|
