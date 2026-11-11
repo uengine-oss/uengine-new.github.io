@@ -13,6 +13,7 @@ Click ⚙ at the right end of the top bar to open settings. The tabs run in one 
 | Manage Users | People in the same company and their roles | This chapter |
 | Knowledge Base | The same screen as Knowledge Base on the top bar | [Chapter 8](knowledge.html) |
 | MCP Servers · Environments | Tool servers to attach to agents, and their secrets | [Chapter 14](mcp-hub.html) |
+| CLI Agent API Keys | The company API keys the Claude Code · Codex CLIs use (admins only) | This chapter |
 | Google Drive Settings · Git Settings · DataSource · Code Editor · Glossary Management · Catalog · Org Groups · Tenant Management | External storage, data connections and admin features | Not used |
 
 ![Settings — the Account Settings tab (profile image, name and email, two-step verification) and “🇺🇸 English” at the end of the tab row](img/set-account.webp)
@@ -60,6 +61,22 @@ For now, **Manage Users** lists only you (Jinyoung Jang, **me**, **superAdmin**)
 ![The language menu at the end of the tab row — Korean and English](img/set-lang.webp)
 
 ![Home after switching to Korean — the sidebar, the example sentences, Deep Agent and the Process Definition Map in Korean, while “Sales Proposal Creation” and the agents you made keep their names](img/set-english-home.webp)
+
+## Try it 4 — CLI agent API keys (admin)
+
+This is where you put the **company API keys** that CLI agents such as Claude Code and Codex use for work items and chat. Only admins see it.
+Sharing one person's subscription token among many people breaks the terms of use, so paste keys your company created in the Claude Console (Anthropic) or on the OpenAI platform.
+
+<ol class="steps" markdown="1">
+<li markdown="1">In the settings tab row, open **CLI Agent API Keys**. Claude Code (Anthropic API key) and Codex (OpenAI API key) show as 「Not configured」.</li>
+<li markdown="1">Paste the company key into 「Paste a new key」 and press **Save**. The field clears and the status changes to 「Configured · ••••last four · name · time」. The key is never shown again.</li>
+<li markdown="1">A CLI with a key can be picked as **CLI coding agent** in a new chat. A CLI without a key can't be picked in chat, and work items keep running on the credentials configured on the server.</li>
+</ol>
+
+![Settings — the CLI Agent API Keys tab (Claude Code · Codex, company key note)](img/set-cli-keys.webp)
+
+!!! note "If you see 「The key store isn't set up on this server yet」"
+    Keys live in the database's encrypted store (Supabase Vault). Until an operator applies that database setup on the server, this note appears and keys can't be added.
 
 ## Next chapter
 
