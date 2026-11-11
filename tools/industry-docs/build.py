@@ -42,15 +42,15 @@ PRODUCTS = {
     "aidlc-handson": dict(name="Claude Code × AI-DLC 핸즈온", page="axschool.html", pagelabel="AX School", og="run-done.webp", search="검색 (예: aidlc config, 후속 질문, 402, 감사 기록)",
                 foot="이 튜토리얼의 화면과 결과는 2026년 11월 5~8일 Claude Code 2.1.318(Sonnet 5.5)과 AI-DLC 2.11.2로 실제로 실행해 얻었습니다. 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.",
                 chapters=[("index", "시작하기"), ("theory-paradigm", "이론"), ("theory-spec", "이론"), ("theory-team", "이론"), ("theory-adoption", "이론"), ("setup", "실습 레벨 1 · poc"), ("requirements", "실습 레벨 1 · poc"), ("construction", "실습 레벨 1 · poc"), ("run", "실습 레벨 1 · poc"), ("l2-overview", "실습 레벨 2 · classic"), ("l2-requirements", "실습 레벨 2 · classic"), ("l2-stories", "실습 레벨 2 · classic"), ("l2-domain", "실습 레벨 2 · classic"), ("l2-units", "실습 레벨 2 · classic"), ("l2-bolts", "실습 레벨 2 · classic"), ("l2-build", "실습 레벨 2 · classic"), ("l2-build-services", "실습 레벨 2 · classic"), ("l2-build-ui-run", "실습 레벨 2 · classic"), ("l2-test", "실습 레벨 2 · classic"), ("artifacts", "참고")]),
-    "pdm": dict(name="설비 예지보전 PBL", page="axschool.html", pagelabel="AX School", og="agentic-w12.webp", search="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)",
+    "pdm": dict(name="설비 예지보전 PBL", page=None, og="agentic-w12.webp", search="교재 검색 (예: 오토인코더, BPFO, 섀도, 승격 규칙)",
                 foot="이 교재의 그림과 수치는 2026년 11월 9일 공개 데이터(NASA IMS·SKAB·CWRU)와 합성 데이터로 실제 실행해 얻었습니다. 교반기 M-201 은 가상 설비이고 비용은 가정입니다.",
                 chapters=[("index", "시작하기"), ("landscape", "1부 데이터와 모델"), ("vibration", "2부 진동으로 이상 찾기"), ("pattern", "2부 진동으로 이상 찾기"),
                           ("mixer", "3부 교반기 PBL 과 에이전트 운영"), ("agentic", "3부 교반기 PBL 과 에이전트 운영"), ("assignments", "4부 과제")]),
-    "pdm-kang": dict(name="예지보전 실습 · KANG 판", page="axschool.html", pagelabel="AX School", og="labels-rows.webp", search="교재 검색 (예: 수동 이상, 팝업, failure_label, 재학습)",
+    "pdm-kang": dict(name="예지보전 실습 · KANG 판", page=None, og="labels-rows.webp", search="교재 검색 (예: 수동 이상, 팝업, failure_label, 재학습)",
                 foot="이 교재의 화면과 수치는 2026년 11월 10일 KANG 설비 고장 예측 시스템 v0.5.1 배포본을 고치지 않고 실제로 실행해 얻었습니다. 가상 RTU와 고장 시나리오는 합성 데이터이며 현장 성능이 아닙니다.",
                 chapters=[("index", "시작하기"), ("background", "1부 배경"), ("setup", "2부 KANG 돌려 보기"), ("anomaly", "2부 KANG 돌려 보기"),
                           ("labels", "3부 고장 기록과 고장 재생"), ("replay", "3부 고장 기록과 고장 재생"), ("assignments", "4부 과제")]),
-    "pdm-kang-process": dict(name="예지보전 실습 · KANG 공정판", page="axschool.html", pagelabel="AX School", og="anomaly-danger.webp", search="교재 검색 (예: PCA, T², 수동 이상, 재학습, PLC_DATA)",
+    "pdm-kang-process": dict(name="예지보전 실습 · KANG 공정판", page=None, og="anomaly-danger.webp", search="교재 검색 (예: PCA, T², 수동 이상, 재학습, PLC_DATA)",
                 foot="이 교재의 화면과 수치는 2026년 11월 11일 KANG 공정 PDM v0.1.0 배포본을 고치지 않고 실제로 실행해 얻었습니다. RTU 데이터는 잡음 없는 합성 데이터이며 현장 성능이 아닙니다. 화면 제목의 고객사 이름은 가렸습니다.",
                 chapters=[("index", "시작하기"), ("background", "1부 배경"), ("setup", "2부 돌려 보기"), ("anomaly", "2부 돌려 보기"),
                           ("models", "3부 모델과 학습"), ("operation", "3부 모델과 학습"), ("plcdata", "4부 현장 데이터와 과제"), ("assignments", "4부 현장 데이터와 과제")]),
@@ -191,10 +191,12 @@ def main():
         pager += (f'<a class="next" href="{page_name(nxt["slug"])}"><span>다음</span>{html.escape(nxt["title"])}</a>' if nxt else "<span></span>")
         pager += "</nav>"
         chap = str(i + FIRST) if i + FIRST else ""
-        out = (tpl.replace("{{title}}", html.escape(p["title"]))
+        # page=None 이면 머리 메뉴에 소개 페이지 링크를 두지 않는다(예지보전 교재: AX School 과 무관, 미완성)
+        base = tpl if P["page"] else re.sub(r'\n\s*<a href="\.\./\.\./contents/\{\{page\}\}">\{\{pagelabel\}\}</a>', "", tpl)
+        out = (base.replace("{{title}}", html.escape(p["title"]))
                .replace("{{product}}", P["name"])
                .replace("{{key}}", KEY)
-               .replace("{{page}}", P["page"])
+               .replace("{{page}}", P["page"] or "")
                .replace("{{pagelabel}}", P.get("pagelabel", "제품 소개"))
                .replace("{{og}}", P["og"])
                .replace("{{search}}", P["search"])
