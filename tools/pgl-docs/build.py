@@ -57,6 +57,7 @@ CHAPTERS = [
     ("process-create", "프로세스로 일하기"),
     ("process-run", "프로세스로 일하기"),
     ("mining", "프로세스로 일하기"),
+    ("process-ontology", "프로세스로 일하기"),
     ("bottleneck", "프로세스 개선"),
     ("value-stream", "프로세스 개선"),
     ("critical-path", "프로세스 개선"),
@@ -105,7 +106,9 @@ def figures(body):
         return (f'<figure><a href="{src}" target="_blank" rel="noopener" title="{"View larger" if EN else "크게 보기"}">'
                 f'<img{attrs} loading="lazy" decoding="async"></a>'
                 + (f"<figcaption>{cap}</figcaption>" if cap else "") + "</figure>")
-    return re.sub(r"<p><img([^>]*)></p>", fig, body)
+    body = re.sub(r"<p><img([^>]*)></p>", fig, body)
+    # 따라 하기 단계(<li markdown="1">) 안의 그림은 문단 없이 한 줄로 나온다 — 그것도 figure 로
+    return re.sub(r"(?m)^<img([^>]*)>$", fig, body)
 
 
 ON = ' class="on"'

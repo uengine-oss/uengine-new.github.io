@@ -49,9 +49,9 @@ Lite 중계 서버 (:8787)
 | **office-mcp** | Process GPT | 한글·워드·엑셀 문서를 **만듭니다** |
 | **office-host** | Process GPT (이음오피스) | 문서를 원본 형식 그대로 **열고 고칩니다**. 열린 문서를 고치는 `office_live_*` 도구를 냅니다([7장](office.html)) |
 | **mcp-hub** | Process GPT | MCP 서버 목록과 사용자별 연결을 관리합니다([11장](missions.html)) |
-| **cli-agent** | Process GPT | Claude Code·Codex를 작업 폴더에서 실행합니다([23장](workroom.html)) |
+| **cli-agent** | Process GPT | Claude Code·Codex를 작업 폴더에서 실행합니다([24장](workroom.html)) |
 | **process-miner** | Process GPT | 인계 기록에서 반복 흐름을 찾습니다([19장](mining.html)) |
-| **개선 분석** | Lite 중계 서버 (Process GPT analytic 서비스의 리드타임 분해 규칙을 옮김) | 프로세스 실행 기록을 원천 표에서 바로 읽어 단계별 리드타임·대기·병목·제약·크리티컬 패스를 계산하고, 에이전트에게는 `/mcp/improve` 도구로 줍니다. 숫자는 모두 계산 결과이고 모델은 설명만 합니다([20장](bottleneck.html)~[22장](critical-path.html)) |
+| **개선 분석** | Lite 중계 서버 (Process GPT analytic 서비스의 리드타임 분해 규칙을 옮김) | 프로세스 실행 기록을 원천 표에서 바로 읽어 단계별 리드타임·대기·병목·제약·크리티컬 패스를 계산하고, 에이전트에게는 `/mcp/improve` 도구로 줍니다. 숫자는 모두 계산 결과이고 모델은 설명만 합니다([21장](bottleneck.html)~[23장](critical-path.html)) |
 | **Supabase** | Process GPT가 쓰는 그대로 | Postgres(대화·카드·프로세스·팀 데이터), 로그인, 파일 저장소, 예약(pg_cron) |
 | **ArtCraft CLI** | storytold 오픈소스 | CAD·벡터·사진·소리·영상 앱의 MCP. Lite가 사용자마다 프로세스를 하나씩 띄워 둡니다([8장](craft.html)) |
 
@@ -101,9 +101,9 @@ ArtCraft 앱도 같은 모양입니다. 다만 앱의 CLI가 중계 서버가 �
 모델 주소와 키는 OpenAI 호환이면 무엇이든 됩니다(`PRO_LLM_BASE_URL`, `PRO_LLM_API_KEY`). 사내 모델로 바꿔도 화면과 흐름은 같습니다.
 
 !!! note "설치 번들에는 일부만 들어 있습니다"
-    Docker 설치 번들의 기본 `lite` 프로필에는 context-router·판단 서버, cli-agent, ArtCraft 앱, 프로세스 엔진이 들어 있지 않습니다. 없으면 그 기능만 빠지고 나머지는 돕니다. 프로필로 켜는 것은 [1장](install.html)의 “프로필”을, 따로 붙이는 것은 [35장](faq.html)의 “설치했는데 어떤 장의 기능이 안 보입니다”를 보세요.
+    Docker 설치 번들의 기본 `lite` 프로필에는 context-router·판단 서버, cli-agent, ArtCraft 앱, 프로세스 엔진이 들어 있지 않습니다. 없으면 그 기능만 빠지고 나머지는 돕니다. 프로필로 켜는 것은 [1장](install.html)의 “프로필”을, 따로 붙이는 것은 [36장](faq.html)의 “설치했는데 어떤 장의 기능이 안 보입니다”를 보세요.
 
-다음 장에서는 이 구성을 사내에서 운영할 때 챙길 것 — 팀원과 역할, 키가 있는 곳, 보관함 암호화, 백업과 업그레이드 — 을 차례로 봅니다([25장](admin.html)).
+다음 장에서는 이 구성을 사내에서 운영할 때 챙길 것 — 팀원과 역할, 키가 있는 곳, 보관함 암호화, 백업과 업그레이드 — 을 차례로 봅니다([26장](admin.html)).
 
 !!! exercise "확인 문제"
     1. 김민지가 메신저에서 “내일까지 견적서 정리해 주실 수 있어요?”라고 보냈을 때, 이것이 업무 요청인지 판단하는 데 큰 모델이 몇 번 불릴까요? 판단 서버가 꺼져 있으면 어떻게 될까요?

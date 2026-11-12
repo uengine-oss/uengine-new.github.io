@@ -83,7 +83,7 @@ cd process-gpt-lite/install
 | `craft` (선택) | ArtCraft 앱 다섯 개(도면·벡터·이미지·소리·영상)의 웹 편집기와 명령줄 도구 | [8장](craft.html)을 따라 할 때 `./install.sh --with-craft`. 미리 빌드된 이미지(약 660MB)를 받아 넣습니다. 소스에서 직접 빌드하려면 `.env`에 `LITE_CRAFT_IMAGE=`(빈 값)를 넣습니다(처음 약 50분, Docker 메모리 12GB 이상) |
 
 !!! note "설치 번들에 빠진 것"
-    현재 설치 번들에는 대화를 주제별로 나누는 **대화 맥락 라우터**와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 `.env`에 주소(`CONTEXT_ROUTER_URL`, `JUDGE_URL`)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 [4장](contexts.html)의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, [8장](craft.html))는 `--with-craft`로 함께 설치하고, Claude Code 작업실([23장](workroom.html))은 따로 설치합니다.
+    현재 설치 번들에는 대화를 주제별로 나누는 **대화 맥락 라우터**와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 `.env`에 주소(`CONTEXT_ROUTER_URL`, `JUDGE_URL`)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 [4장](contexts.html)의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, [8장](craft.html))는 `--with-craft`로 함께 설치하고, Claude Code 작업실([24장](workroom.html))은 따로 설치합니다.
 
 ## 설정 파일 `.env`
 
