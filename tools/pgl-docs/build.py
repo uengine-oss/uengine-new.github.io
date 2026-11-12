@@ -69,6 +69,7 @@ CHAPTERS = [
     ("erp-voucher", "산업별 예시"),
     ("robo-dlc", "산업별 예시"),
     ("robo-dlc-review", "산업별 예시"),
+    ("robo-dlc-intake", "산업별 예시"),
     ("project", "마무리"),
     ("cheatsheet", "부록"),
     ("faq", "부록"),
