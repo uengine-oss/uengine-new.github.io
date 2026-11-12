@@ -151,4 +151,4 @@ Lite 채팅에 세금계산서 올리기 → 읽은 값 확인 → ERP로 처리
 - [제품 소개](../../contents/erp.html)
 - [블로그: 왜 이벤트 소싱과 사가 롤백인가](../../contents/blog/agentic-erp-event-sourcing-saga.html)
 
-다음 장은 8부의 세 번째 예시입니다. AWS Labs의 AI-DLC로 일하는 소프트웨어 개발 팀의 진행 상황과 사람 대기를 Lite 홈 패널로 확인합니다([30장](robo-dlc.html)).
+다음 장은 8부의 세 번째 예시입니다. AWS Labs의 AI-DLC로 일하는 소프트웨어 개발 팀의 진행 상황과 사람 대기를 Lite 홈 패널로 확인합니다([31장](robo-dlc.html)).
