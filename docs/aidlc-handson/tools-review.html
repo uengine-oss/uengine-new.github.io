@@ -77,6 +77,7 @@
 <blockquote>
 <p>AI-DLC가 남긴 질문과 검토 에이전트의 지적을 카드로 펼쳐 놓고, 팀원 모두가 각자 답을 고릅니다. 다른 사람의 선택은 내가 고른 뒤에 보입니다. 같은 답이 모이면 합의가 이루어지고, 답이 갈리면 결정권자가 이유와 근거를 보고 정하거나 몹 회의로 넘깁니다. 이 장에서는 이런 방식을 택한 이유와 검토 보드의 사용 흐름을 살펴봅니다.</p>
 </blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/YsKY5Na9BtI" title="검토 보드: 질문과 지적을 팀이 함께 고르기 — 영상 1:39" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <h2 id="몹-정교화는-함께-답하는-의식이다">몹 정교화는 「함께 답하는」 의식이다<a class="anchor" href="#몹-정교화는-함께-답하는-의식이다" title="Permanent link">#</a></h2>
 <p><a href="theory-paradigm.html">1장</a>에서 본 몹 정교화(Mob Elaboration)를 AI-DLC 원문은 이렇게 설명합니다. AI가 의도를 질문으로 풀어내면 <strong>팀이 답하고</strong>, AI가 만든 요구사항·스토리·유닛을 <strong>팀이 검증</strong>합니다. 원문은 질문을 역할별로 나눠 맡으라고 하지 않습니다. 팀이 의견을 모으는 방법(투표, 합의 기준)도 정하지 않았습니다.</p>
 <p>질문을 역할별로 나누면 빨리 끝나지만, 아키텍트는 요구사항 질문을 보지 않고 PO는 설계 질문을 보지 않게 됩니다. 반대로 모두가 한 화면에서 같은 카드를 차례로 보면, 먼저 말한 사람의 의견에 다른 사람들이 끌려가기 쉽습니다(앵커링). <a href="theory-adoption.html">4장</a>에서 다룬 고무도장 승인과 같은 문제입니다.</p>
@@ -138,6 +139,7 @@
 <figure><a href="img/tools-together-original.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="개발자가 근거로 첨부한 요구사항 문서의 절 — 옆 시트에 문서 전체가 열리고 해당 절에 띠가 표시됩니다" src="img/tools-together-original.webp" loading="lazy" decoding="async"></a><figcaption>개발자가 근거로 첨부한 요구사항 문서의 절 — 옆 시트에 문서 전체가 열리고 해당 절에 띠가 표시됩니다</figcaption></figure>
 <figure><a href="img/tools-together-settled.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="PO가 개발자의 답(B)으로 정했습니다 — 묶음마다 누가 무엇을 왜 골랐는지와 「결정권자가 정함」" src="img/tools-together-settled.webp" loading="lazy" decoding="async"></a><figcaption>PO가 개발자의 답(B)으로 정했습니다 — 묶음마다 누가 무엇을 왜 골랐는지와 「결정권자가 정함」</figcaption></figure>
 <p>위 그림은 비품 대여 앱을 classic으로 실제 실행하면서 PO 오세린, 개발자 강다은, 아키텍트 최민준이 유저 스토리 단계의 질문 4개에 대한 답을 함께 선택한 장면입니다. 이 실행에서 AI-DLC는 답을 추천하지 않았습니다. 따라서 각자 처음부터 판단해야 했습니다. 세 카드에서는 같은 답으로 합의했지만, 「스토리를 묶는 방식」에서는 의견이 갈렸습니다.</p>
+<p>장 머리의 영상은 같은 실행의 도메인 설계 단계를 보여 줍니다. 아키텍트 최민준과 개발자 강다은이 질문 4개를 함께 고르고, 의견이 갈린 카드 하나는 아키텍트가 근거를 보고 정합니다.</p>
 <h2 id="지적-고칠-것만-모아-수정-요청-하나로">지적: 고칠 것만 모아 수정 요청 하나로<a class="anchor" href="#지적-고칠-것만-모아-수정-요청-하나로" title="Permanent link">#</a></h2>
 <p>classic 스코프에서는 단계가 끝날 때 검토 에이전트가 산출물을 읽고 <a href="l2-domain.html">12장</a>의 순환 의존과 같은 지적(Findings)을 남깁니다. 승인 창이 뜨면 지적도 카드로 보드에 올라옵니다.</p>
 <table>
@@ -163,6 +165,9 @@
 </tbody>
 </table>
 <p>지적 카드의 <strong>원본 보기</strong>를 누르면 지적이 가리키는 문서(ADR, 컴포넌트 설계 등)의 전체 내용이 옆 시트에 열리고, 해당 절에 띠가 표시됩니다. 결정이 모이면 보드 아래에 세션에 입력할 하나의 결정이 미리 표시됩니다. 「고쳐 주세요」가 하나라도 있으면 <code>Request Changes: …</code>, 해당 없음으로만 정했으면 이유를 붙인 <code>Approve</code>, 모두 위험 감수로 정했으면 <code>Approve</code>가 됩니다. <strong>결정을 묶어 세션에 넣기</strong>를 누르면 그 결정이 승인 창에 입력됩니다.</p>
+<p>같은 실행의 유저 스토리 승인 장면을 영상으로 볼 수 있습니다. PO와 개발자가 지적 8개를 함께 판단하고, 고칠 지적 하나를 수정 요청 하나로 묶어 세션에 넣습니다.</p>
+<div class="video"><iframe src="https://www.youtube.com/embed/WvXUyZIRhGU" title="AI-DLC 검토 보드 ② 검토 지적도 함께 · 원본 보기 — 영상 1:16" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+
 <figure><a href="img/tools-findings-focus.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="지적 카드의 「원본 보기」 — ADR 문서 전체가 열리고 지적이 가리키는 절에 띠가 표시됩니다" src="img/tools-findings-focus.webp" loading="lazy" decoding="async"></a><figcaption>지적 카드의 「원본 보기」 — ADR 문서 전체가 열리고 지적이 가리키는 절에 띠가 표시됩니다</figcaption></figure>
 <figure><a href="img/tools-findings-preview.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="보드 아래 보내기 줄 — 정한 지적이 세션에 넣을 결정 하나(Request Changes)로 미리 보입니다" src="img/tools-findings-preview.webp" loading="lazy" decoding="async"></a><figcaption>보드 아래 보내기 줄 — 정한 지적이 세션에 넣을 결정 하나(Request Changes)로 미리 보입니다</figcaption></figure>
 <h2 id="직접-따라-하기">직접 따라 하기<a class="anchor" href="#직접-따라-하기" title="Permanent link">#</a></h2>
