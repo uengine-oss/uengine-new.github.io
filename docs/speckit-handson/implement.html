@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구현과 병렬 에이전트 — Claude Code × Spec Kit 핸즈온 튜토리얼</title>
+<meta name="description" content="`/speckit-implement`는 체크리스트 관문을 먼저 확인한 뒤 `tasks.md`를 단계 순서대로 실행합니다. 이 실습에서는 `[P]` 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 35번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/speckit-handson/implement.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="구현과 병렬 에이전트 — Claude Code × Spec Kit 핸즈온 튜토리얼">
+<meta property="og:description" content="`/speckit-implement`는 체크리스트 관문을 먼저 확인한 뒤 `tasks.md`를 단계 순서대로 실행합니다. 이 실습에서는 `[P]` 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 35번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/speckit-handson/implement.html">
+<meta property="og:image" content="https://www.uengine.org/docs/speckit-handson/img/sk-app.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × Spec Kit 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: clarify, [P], converge, 랄프 루프)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="concepts.html"><span class="n">01</span>스펙 주도 개발과 BDD</a></li>
+</ul>
+<div class="nav-part">실습 · 사양까지</div><ul>
+<li><a href="setup.html"><span class="n">02</span>설치와 프로젝트 준비</a></li>
+<li><a href="constitution.html"><span class="n">03</span>헌법: 프로젝트 원칙</a></li>
+<li><a href="specify.html"><span class="n">04</span>명세: spec.md</a></li>
+<li><a href="clarify.html"><span class="n">05</span>명확화: 모호함을 재는 기준</a></li>
+</ul>
+<div class="nav-part">실습 · 계획과 작업</div><ul>
+<li><a href="plan.html"><span class="n">06</span>계획: plan.md와 설계 문서</a></li>
+<li><a href="checklist.html"><span class="n">07</span>요구사항 품질 점검</a></li>
+<li><a href="tasks.html"><span class="n">08</span>작업 목록과 일관성 분석</a></li>
+</ul>
+<div class="nav-part">실습 · 구현과 수렴</div><ul>
+<li><a href="implement.html" class="on" aria-current="page"><span class="n">09</span>구현과 병렬 에이전트</a></li>
+<li><a href="converge.html"><span class="n">10</span>수렴과 동작 확인</a></li>
+<li><a href="tdd-loop.html"><span class="n">11</span>TDD와 랄프 루프</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">실습 · 구현과 수렴<span class="chap">9</span></div>
+    <h1>구현과 병렬 에이전트</h1>
+    <article>
+<blockquote>
+<p><code>/speckit-implement</code>는 체크리스트 관문을 먼저 확인한 뒤 <code>tasks.md</code>를 단계 순서대로 실행합니다. 이 실습에서는 <code>[P]</code> 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 35번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>구현 스킬에 적힌 실행 규칙은 다섯 가지입니다.</p>
+<table>
+<thead>
+<tr>
+<th>규칙</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>단계별 실행</td>
+<td>한 단계(Phase)를 끝내고 다음 단계로 넘어갑니다</td>
+</tr>
+<tr>
+<td>의존 존중</td>
+<td>순서가 있는 작업은 차례로, <code>[P]</code> 작업은 함께 해도 됩니다</td>
+</tr>
+<tr>
+<td>시험 먼저</td>
+<td>시험 작업을 해당 기능의 구현보다 먼저 진행합니다</td>
+</tr>
+<tr>
+<td>파일 기준 조정</td>
+<td>같은 파일을 수정하는 작업은 반드시 차례로 진행합니다</td>
+</tr>
+<tr>
+<td>단계마다 확인</td>
+<td>단계가 끝날 때마다 검증하고 넘어갑니다</td>
+</tr>
+</tbody>
+</table>
+<p><code>[P]</code>는 "함께 해도 된다"는 허락일 뿐, 실제로 여러 에이전트에 나눌지는 구현하는 에이전트가 정합니다. 그래서 이 실습에서는 명령 뒤에 나눠 맡기라고 직접 적었습니다. 메인 에이전트는 작업 목록을 읽고 일을 나눠 주고, 결과를 모아 시험을 실행하고, 같은 파일을 고치는 작업을 맡는 <strong>조정자</strong>가 됩니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>병렬 지시와 함께 실행합니다.</strong>
+
+
+<div class="hl"><pre><span></span><code>/speckit-implement tasks.md 에서 [P] 가 붙은 작업은 서브에이전트에 나눠 맡겨 동시에 진행하고, 같은 파일을 고치는 작업은 순서대로 해 줘.
+</code></pre></div>
+
+
+</li>
+<li><strong>체크리스트 관문에 답합니다.</strong> 구현 전에 <code>checklists/</code> 아래 모든 점검표의 체크 상태를 표로 보여 줍니다. 하나라도 미체크가 있으면 멈추고 묻습니다.
+
+| Checklist | Total | Checked | Unchecked | Status |
+|---|---|---|---|---|
+| requirements.md | 16 | 16 | 0 | ✓ PASS |
+| reservation-payment.md | 34 | 0 | 34 | ✗ FAIL |
+
+"Some checklists have unchecked items. Do you want to proceed with implementation anyway? (yes/no)". 이 점검표는 검토자가 체크하는 파일이라 Claude가 대신 체크하지 않습니다. 실습에서는 <code>yes</code>로 넘어갔습니다. 실제 팀이라면 검토자가 34개 항목을 확인하고 체크하거나 범위 밖으로 정리한 뒤 다시 실행합니다.
+
+
+<figure><a href="img/sk-gate.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구현 직전의 체크리스트 관문 표와 yes/no 질문" src="img/sk-gate.webp" loading="lazy" decoding="async"></a><figcaption>구현 직전의 체크리스트 관문 표와 yes/no 질문</figcaption></figure>
+</li>
+<li><strong>나뉘어 일하는 모습을 봅니다.</strong> 시험 작성처럼 <code>[P]</code>가 몰린 구간에서는 입력창 아래 에이전트 목록에 서브에이전트 여러 개가 동시에 표시됩니다. 가장 많을 때는 Phase 4의 시험 8개(T033·T033a·T034~T039)를 서브에이전트 8개에 한꺼번에 맡겼고, 화면에 「8 background agents launched」가 떴습니다. 하나가 끝날 때마다 <code>Agent "T025 문장 해석기 구현" finished · 30s</code> 같은 줄이 나오고, 메인 에이전트가 결과를 모아 시험을 실행합니다.
+
+
+<figure><a href="img/sk-agents.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="US2 시험 8개를 서브에이전트 8개에 동시에 맡긴 순간" src="img/sk-agents.webp" loading="lazy" decoding="async"></a><figcaption>US2 시험 8개를 서브에이전트 8개에 동시에 맡긴 순간</figcaption></figure>
+</li>
+<li><strong>완료 보고를 끝까지 읽습니다.</strong> 성공한 일보다 "사양과 어긋나거나 보류한 점"이 더 중요합니다.
+
+
+<figure><a href="img/sk-implement-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="구현 완료 보고: 시험 결과와 사양과 어긋나거나 보류한 점" src="img/sk-implement-done.webp" loading="lazy" decoding="async"></a><figcaption>구현 완료 보고: 시험 결과와 사양과 어긋나거나 보류한 점</figcaption></figure>
+</li>
+</ol>
+<h2 id="산출물과-결과">산출물과 결과<a class="anchor" href="#산출물과-결과" title="Permanent link">#</a></h2>
+<p><strong>① tasks.md의 체크.</strong> 끝난 작업은 <code>- [ ]</code>가 <code>- [X]</code>로 바뀝니다. 63개가 모두 체크됐습니다.</p>
+<p><strong>② 나뉜 일.</strong> 서브에이전트는 35번 일했고, 한 번에 6~43초가 걸렸습니다. 메인 에이전트가 직접 한 일은 실패·통과 확인, 같은 파일을 여러 번 고치는 작업(<code>ReservationService.java</code>, <code>App.vue</code>, <code>api.ts</code>), 전체 시험이었습니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>서브에이전트가 맡은 작업</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phase 2 기반</td>
+<td>T005·T006·T007(시험), T009·T010·T011·T012·T014·T015(구현)</td>
+</tr>
+<tr>
+<td>Phase 3 US1</td>
+<td>T017~T023(시험 7개), T025·T026·T030(구현)</td>
+</tr>
+<tr>
+<td>Phase 4 US2</td>
+<td>T033·T033a·T035·T036·T038·T039(시험), T041·T042·T045(구현)</td>
+</tr>
+<tr>
+<td>Phase 5 US3</td>
+<td>T048~T052(시험 5개)</td>
+</tr>
+<tr>
+<td>Phase 6 마무리</td>
+<td>T059(추적표 점검), T060(한국어 문구 점검)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>③ 시험과 실행 확인.</strong> 백엔드 JUnit 83개와 화면 Vitest 24개가 모두 통과했고 <code>npm run build</code>(타입 검사 포함)도 통과했습니다. 서버를 직접 실행해 API로 확인한 결과도 보고했습니다. "강남역 근처 2시간 주차"는 0.22초에 추천 1곳과 후보 2곳, 승인은 201과 예약 번호 <code>PK-20261113-0001</code>, 같은 키로 다시 보내면 200과 같은 번호, 실패는 402, 새 키로 재시도하면 승인. 화면은 Vitest로만 확인했고 브라우저로 보지는 않았다고 적었습니다.</p>
+<p><strong>④ 스스로 보고한 어긋난 점.</strong> 이 목록이 다음 장 수렴의 출발점이 됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>보고</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-019 일부 미구현</td>
+<td>결제 요청에 목적지가 없어서 결제 시점에 1km를 다시 확인할 수 없습니다. 사양에서 1km를 빼거나 요청에 목적지를 더해야 합니다</td>
+</tr>
+<tr>
+<td>실패 확인을 못 함</td>
+<td>US3 시험이 처음부터 통과했습니다. 실패·만차 응답을 US2 단계에서 이미 구현했기 때문입니다. 대신 구현을 일부러 세 군데 깨뜨려 시험이 감지하는지 확인했습니다</td>
+</tr>
+<tr>
+<td>예약 번호 순번</td>
+<td>날짜별로 초기화되지 않습니다(분석 보고서 A1)</td>
+</tr>
+<tr>
+<td>시험 기대값 수정</td>
+<td>거리 시험의 기대값(8.9km)이 틀려 독립 계산값 8,778m로 고쳤습니다. 이 숫자는 메인 에이전트가 서브에이전트에게 준 값이었습니다</td>
+</tr>
+<tr>
+<td>중복 파일 정리</td>
+<td>서브에이전트가 저장소 맨 위에 만든 <code>QueryParser.java</code> 등 복사본 두 개를 지웠습니다</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">병렬로 맡기면 생기는 일</p>
+<p>이 실습에서 실제로 일어난 두 문제가 병렬 실행의 전형적인 위험입니다. 하나는 <strong>지시를 받은 에이전트가 지시 안의 틀린 숫자를 그대로 믿는 것</strong>(거리 기대값 8.9km)이고, 다른 하나는 <strong>엉뚱한 위치에 파일을 만드는 것</strong>(저장소 맨 위의 복사본)입니다. 두 가지 모두 메인 에이전트가 전체 시험과 파일 점검으로 잡아냈습니다. 일을 나눌수록 마지막에 모아서 확인하는 단계가 중요합니다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">자동 모드가 막은 명령</p>
+<p>서버를 끄는 과정에서 <code>pkill -f</code>가 들어간 명령을 자동 모드의 분류기가 거부했습니다. Claude는 우회하지 않고 8080 포트를 쓰는 프로세스 하나만 골라 종료했다고 보고했습니다. 이름으로 프로세스를 한꺼번에 종료하는 명령은 다른 작업의 프로세스까지 종료할 수 있어 막힌 것입니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>`[P]` 작업이 있으면 Spec Kit이 알아서 서브에이전트를 띄우나요?</summary>
+<p>아닙니다. 구현 스킬의 규칙은 "<code>[P]</code> 작업은 함께 해도 된다"까지입니다. 이 실습에서는 명령 뒤에 "서브에이전트에 나눠 맡겨 동시에 진행하라"고 적어서 Claude Code가 서브에이전트를 띄웠습니다. 같은 파일을 고치는 작업은 <code>[P]</code>가 있어도 차례로 하라는 규칙은 그대로 지켜졌습니다.</p>
+</details>
+<details class="answer">
+<summary>체크리스트에 미체크 항목이 있으면 구현은 어떻게 되나요?</summary>
+<p>점검표마다 전체·체크·미체크 개수를 표로 보여 주고, 미체크가 하나라도 있으면 "그래도 진행할까요?(yes/no)"라고 묻습니다. <code>no</code>면 멈추고, 검토자가 점검표를 정리한 뒤 다시 실행합니다. 모두 체크돼 있으면 묻지 않고 바로 진행합니다.</p>
+</details>
+<details class="answer">
+<summary>US3 시험이 처음부터 통과했다는 것은 왜 문제인가요?</summary>
+<p>헌법 I은 "구현 전에 시험을 실행해 실패하는 것을 확인한다"고 정했습니다. 처음부터 통과하는 시험은 그 시험이 정말 그 동작을 확인하는지 보장하지 못합니다. 이 실습에서는 앞 단계에서 미리 구현된 탓이었고, Claude는 구현을 일부러 깨뜨려 시험이 실패하는지 확인하는 방법(변이 시험)으로 보완했습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="tasks.html"><span>이전</span>작업 목록과 일관성 분석</a><a class="next" href="converge.html"><span>다음</span>수렴과 동작 확인</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물과-결과">산출물과 결과</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

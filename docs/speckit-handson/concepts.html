@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스펙 주도 개발과 BDD — Claude Code × Spec Kit 핸즈온 튜토리얼</title>
+<meta name="description" content="사양이 원본이고 코드는 사양에서 나오는 결과물이라는 생각(SDD), 그리고 요구사항을 Given/When/Then 장면으로 적어 그대로 시험으로 옮기는 습관(BDD)을 짧게 정리합니다. 마지막에 Spec Kit과 AI-DLC가 같은 생각을 어느 수준까지 적용하는지 비교합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/speckit-handson/concepts.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스펙 주도 개발과 BDD — Claude Code × Spec Kit 핸즈온 튜토리얼">
+<meta property="og:description" content="사양이 원본이고 코드는 사양에서 나오는 결과물이라는 생각(SDD), 그리고 요구사항을 Given/When/Then 장면으로 적어 그대로 시험으로 옮기는 습관(BDD)을 짧게 정리합니다. 마지막에 Spec Kit과 AI-DLC가 같은 생각을 어느 수준까지 적용하는지 비교합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/speckit-handson/concepts.html">
+<meta property="og:image" content="https://www.uengine.org/docs/speckit-handson/img/sk-app.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × Spec Kit 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: clarify, [P], converge, 랄프 루프)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="concepts.html" class="on" aria-current="page"><span class="n">01</span>스펙 주도 개발과 BDD</a></li>
+</ul>
+<div class="nav-part">실습 · 사양까지</div><ul>
+<li><a href="setup.html"><span class="n">02</span>설치와 프로젝트 준비</a></li>
+<li><a href="constitution.html"><span class="n">03</span>헌법: 프로젝트 원칙</a></li>
+<li><a href="specify.html"><span class="n">04</span>명세: spec.md</a></li>
+<li><a href="clarify.html"><span class="n">05</span>명확화: 모호함을 재는 기준</a></li>
+</ul>
+<div class="nav-part">실습 · 계획과 작업</div><ul>
+<li><a href="plan.html"><span class="n">06</span>계획: plan.md와 설계 문서</a></li>
+<li><a href="checklist.html"><span class="n">07</span>요구사항 품질 점검</a></li>
+<li><a href="tasks.html"><span class="n">08</span>작업 목록과 일관성 분석</a></li>
+</ul>
+<div class="nav-part">실습 · 구현과 수렴</div><ul>
+<li><a href="implement.html"><span class="n">09</span>구현과 병렬 에이전트</a></li>
+<li><a href="converge.html"><span class="n">10</span>수렴과 동작 확인</a></li>
+<li><a href="tdd-loop.html"><span class="n">11</span>TDD와 랄프 루프</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">이론<span class="chap">1</span></div>
+    <h1>스펙 주도 개발과 BDD</h1>
+    <article>
+<blockquote>
+<p>사양이 원본이고 코드는 사양에서 나오는 결과물이라는 생각(SDD), 그리고 요구사항을 Given/When/Then 장면으로 적어 그대로 시험으로 옮기는 습관(BDD)을 짧게 정리합니다. 마지막에 Spec Kit과 AI-DLC가 같은 생각을 어느 수준까지 적용하는지 비교합니다.</p>
+</blockquote>
+<h2 id="사양이-원본이-된다">사양이 원본이 된다<a class="anchor" href="#사양이-원본이-된다" title="Permanent link">#</a></h2>
+<p>AI에게 "주차장 예약 앱 만들어 줘"라고 하면 코드가 나옵니다. 문제는 그다음입니다. 무엇을 만들기로 했는지는 대화 속에만 남고, 코드를 고칠 때마다 그 약속이 조금씩 흐려집니다.</p>
+<p><strong>스펙 주도 개발(Spec-Driven Development, SDD)</strong>은 순서를 뒤집습니다. 무엇을 왜 만드는지를 먼저 사양 문서로 쓰고, 그 사양에서 계획과 작업, 코드를 차례로 도출합니다. 코드가 사양과 어긋나면 고칠 대상은 코드입니다. 요구가 바뀌면 사양을 먼저 고치고 다음 단계를 다시 진행합니다.</p>
+<p>이 방식이 지금 주목받는 이유는 코드를 쓰는 비용이 크게 줄었기 때문입니다. 어셈블리에서 C로 넘어갈 때 사람의 일이 레지스터 관리에서 알고리즘 설계로 옮겨 갔듯이, 지금은 코드 작성에서 사양 정의와 검증 설계로 옮겨 가고 있습니다. 이 비유는 <a href="../aidlc-handson/theory-spec.html">AI-DLC 핸즈온 2장</a>에서 자세히 다룹니다.</p>
+<table>
+<thead>
+<tr>
+<th>바이브 코딩</th>
+<th>스펙 주도 개발</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대화가 곧 요구사항</td>
+<td>요구사항은 <code>spec.md</code>에 남습니다</td>
+</tr>
+<tr>
+<td>빠진 결정은 AI가 알아서 정합니다</td>
+<td>빠진 결정은 표시하고 묻습니다(<code>[NEEDS CLARIFICATION]</code>, <code>/speckit-clarify</code>)</td>
+</tr>
+<tr>
+<td>다 만든 뒤에 확인합니다</td>
+<td>인수 시나리오를 먼저 정하고, 그 시나리오가 곧 시험이 됩니다</td>
+</tr>
+<tr>
+<td>다음 대화에서는 맥락이 사라집니다</td>
+<td>사양·계획·작업 문서가 다음 작업의 입력이 됩니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bdd-요구사항을-장면으로-쓴다">BDD: 요구사항을 장면으로 쓴다<a class="anchor" href="#bdd-요구사항을-장면으로-쓴다" title="Permanent link">#</a></h2>
+<p><strong>행동 주도 개발(Behavior-Driven Development, BDD)</strong>은 요구사항을 사용자가 겪는 장면으로 씁니다. 장면은 세 부분입니다.</p>
+<table>
+<thead>
+<tr>
+<th>부분</th>
+<th>뜻</th>
+<th>이 교재의 예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Given</strong> (전제)</td>
+<td>어떤 상황에서</td>
+<td>샘플 데이터에 강남역 인근 주차장이 3곳 이상 있다</td>
+</tr>
+<tr>
+<td><strong>When</strong> (행동)</td>
+<td>누가 무엇을 하면</td>
+<td>운전자가 "강남역 근처 2시간 주차"를 입력한다</td>
+</tr>
+<tr>
+<td><strong>Then</strong> (결과)</td>
+<td>무엇이 보여야 하나</td>
+<td>추천 1곳과 비교 후보 2곳이 가격·거리·요금·선정 이유와 함께 표시된다</td>
+</tr>
+</tbody>
+</table>
+<p>이렇게 쓰면 기획자와 개발자, 시험 담당자가 같은 문장을 읽습니다. 그리고 문장이 그대로 자동 시험의 이름과 구조가 됩니다. 이 실습의 헌법은 "인수 시나리오마다 자동 시험을 먼저 쓰고 실패를 확인한 뒤 구현한다"를 첫 원칙으로 두었습니다. 그래서 <code>tasks.md</code>의 모든 사용자 이야기는 시험 작성 → 실패 확인 → 구현 → 통과 확인 순서로 짜였습니다.</p>
+<p>Spec Kit의 사양 틀은 두 가지 방식으로 BDD를 반영합니다.</p>
+<ul>
+<li><strong>사용자 이야기에 우선순위(P1, P2, P3)를 붙이고, 이야기마다 독립 시험(Independent Test)을 적습니다.</strong> P1만 만들어도 쓸 만한 결과물(MVP)이 되도록 나눕니다.</li>
+<li><strong>이야기마다 Given/When/Then 인수 시나리오에 번호를 붙입니다.</strong> 나중에 작업과 시험이 이 번호(<code>US2-3</code> 등)를 가리킵니다.</li>
+</ul>
+<h2 id="성공-기준은-기술과-무관하게-잰다">성공 기준은 기술과 무관하게 잰다<a class="anchor" href="#성공-기준은-기술과-무관하게-잰다" title="Permanent link">#</a></h2>
+<p>사양에는 기능 요구사항(<code>FR-001</code>…)과 별도로 성공 기준(<code>SC-001</code>…)이 있습니다. 성공 기준은 측정할 수 있어야 하고, 특정 기술을 명시하지 않아야 합니다. "API 응답 200ms 이내"가 아니라 "운전자는 문장 입력부터 추천 결과 확인까지 10초 안에 도달한다"처럼 씁니다. 기술은 계획 단계에서 정하기 때문입니다.</p>
+<h2 id="spec-kit의-흐름">Spec Kit의 흐름<a class="anchor" href="#spec-kit의-흐름" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>명령</th>
+<th>남는 문서</th>
+<th>한 번만 / 기능마다</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>헌법</td>
+<td><code>/speckit-constitution</code></td>
+<td><code>.specify/memory/constitution.md</code></td>
+<td>프로젝트에 한 번</td>
+</tr>
+<tr>
+<td>명세</td>
+<td><code>/speckit-specify</code></td>
+<td><code>specs/&lt;번호-이름&gt;/spec.md</code>, <code>checklists/requirements.md</code></td>
+<td>기능마다</td>
+</tr>
+<tr>
+<td>명확화 (선택)</td>
+<td><code>/speckit-clarify</code></td>
+<td><code>spec.md</code>의 <code>## Clarifications</code></td>
+<td>계획 전에</td>
+</tr>
+<tr>
+<td>계획</td>
+<td><code>/speckit-plan</code></td>
+<td><code>plan.md</code>, <code>research.md</code>, <code>data-model.md</code>, <code>contracts/</code>, <code>quickstart.md</code></td>
+<td>기능마다</td>
+</tr>
+<tr>
+<td>품질 점검 (선택)</td>
+<td><code>/speckit-checklist</code></td>
+<td><code>checklists/&lt;주제&gt;.md</code></td>
+<td>계획 뒤에</td>
+</tr>
+<tr>
+<td>작업 목록</td>
+<td><code>/speckit-tasks</code></td>
+<td><code>tasks.md</code></td>
+<td>기능마다</td>
+</tr>
+<tr>
+<td>일관성 분석 (선택)</td>
+<td><code>/speckit-analyze</code></td>
+<td>없음(보고만)</td>
+<td>구현 전에</td>
+</tr>
+<tr>
+<td>구현</td>
+<td><code>/speckit-implement</code></td>
+<td>코드, <code>tasks.md</code>의 <code>[X]</code></td>
+<td>기능마다</td>
+</tr>
+<tr>
+<td>수렴</td>
+<td><code>/speckit-converge</code></td>
+<td><code>tasks.md</code> 끝에 <code>Phase N: Convergence</code></td>
+<td>구현 뒤에, 다 될 때까지</td>
+</tr>
+</tbody>
+</table>
+<p>명령은 터미널이 아니라 에이전트(이 교재에서는 Claude Code)의 입력창에서 하나씩 실행하고, 결과를 읽은 뒤 다음으로 넘어갑니다.</p>
+<h2 id="spec-kit과-ai-dlc">Spec Kit과 AI-DLC<a class="anchor" href="#spec-kit과-ai-dlc" title="Permanent link">#</a></h2>
+<p>두 도구는 같은 생각에서 출발하지만, 사람이 개입하는 지점과 문서의 양이 다릅니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>Spec Kit 1.4</th>
+<th>AI-DLC 2.11</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>규칙</td>
+<td>헌법 한 장</td>
+<td>조직·팀·프로젝트·단계·스테이지 다섯 층의 조향 규칙</td>
+</tr>
+<tr>
+<td>요구사항 묻기</td>
+<td><code>/speckit-clarify</code>가 최대 5개를 하나씩</td>
+<td>스테이지마다 질문지와 후속 질문</td>
+</tr>
+<tr>
+<td>승인</td>
+<td>구현 직전 체크리스트 관문 하나</td>
+<td>스테이지마다 승인 게이트, 감사 기록</td>
+</tr>
+<tr>
+<td>검토</td>
+<td>사람이 체크리스트와 분석 보고서를 읽음</td>
+<td>검토 에이전트가 판정(READY·NOT-READY)</td>
+</tr>
+<tr>
+<td>작업 나누기</td>
+<td>사용자 이야기별 단계와 <code>[P]</code> 표시</td>
+<td>유닛과 볼트, 의존 그래프</td>
+</tr>
+<tr>
+<td>끝났는지 확인</td>
+<td><code>/speckit-converge</code>가 남은 일을 작업으로 덧붙임</td>
+<td>볼트 완료 기준과 빌드·테스트 판정표</td>
+</tr>
+</tbody>
+</table>
+<p>Spec Kit으로 사양 → 계획 → 작업 → 구현의 뼈대를 익히고, 팀 규칙과 승인, 작업 단위 관리가 필요해지면 AI-DLC로 넘어가는 순서를 권합니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>스펙 주도 개발에서 구현 중에 사양에 없는 기능이 필요해지면 어떻게 하나요?</summary>
+<p>코드에 먼저 넣지 않고 사양을 먼저 고칩니다. 이 실습의 헌법 III 「사양이 기준」은 "spec.md 에 없는 기능은 만들지 않는다. 구현 중 필요한 기능이 발견되면 먼저 spec.md 를 갱신한다"고 정했습니다. 실제로 계획 단계에서 「결제 중 만차」 처리가 사양 없이 들어갔다가, 체크리스트가 이를 찾아내 사양에 FR-017로 추가했습니다(7장).</p>
+</details>
+<details class="answer">
+<summary>성공 기준에 "API 응답 200ms 이내"라고 쓰면 무엇이 문제인가요?</summary>
+<p>API라는 구현 방식을 미리 정해 버립니다. 성공 기준은 기술과 무관하게 사용자 관점에서 측정할 수 있어야 하므로 "문장 입력부터 추천 결과 확인까지 10초 안"처럼 씁니다. 어떤 기술로 목표를 달성할지는 계획(plan.md)에서 정합니다.</p>
+</details>
+<details class="answer">
+<summary>Given/When/Then으로 쓴 인수 시나리오는 나중에 어디에 쓰이나요?</summary>
+<p>자동 시험이 됩니다. 이 실습의 <code>tasks.md</code>는 이야기마다 시나리오별 시험 작업을 먼저 두고, 시험 이름도 시나리오 문장(한국어 <code>@DisplayName</code>)으로 붙이게 했습니다. <code>/speckit-converge</code>도 <code>US1/AC2</code> 같은 시나리오 번호를 기준으로 구현이 사양을 충족했는지 확인합니다.</p>
+</details>
+<h2 id="참고-자료">참고 자료<a class="anchor" href="#참고-자료" title="Permanent link">#</a></h2>
+<ul>
+<li>GitHub Spec Kit — <a href="https://github.com/github/spec-kit">https://github.com/github/spec-kit</a></li>
+<li>Spec Kit 문서 — <a href="https://github.github.io/spec-kit/">https://github.github.io/spec-kit/</a></li>
+<li>Dan North, "Introducing BDD" (2006) — <a href="https://dannorth.net/introducing-bdd/">https://dannorth.net/introducing-bdd/</a></li>
+</ul>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기</a><a class="next" href="setup.html"><span>다음</span>설치와 프로젝트 준비</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#사양이-원본이-된다">사양이 원본이 된다</a></li><li><a href="#bdd-요구사항을-장면으로-쓴다">BDD: 요구사항을 장면으로 쓴다</a></li><li><a href="#성공-기준은-기술과-무관하게-잰다">성공 기준은 기술과 무관하게 잰다</a></li><li><a href="#spec-kit의-흐름">Spec Kit의 흐름</a></li><li><a href="#spec-kit과-ai-dlc">Spec Kit과 AI-DLC</a></li><li><a href="#확인-문제">확인 문제</a></li><li><a href="#참고-자료">참고 자료</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

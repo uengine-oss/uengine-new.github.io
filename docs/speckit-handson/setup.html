@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설치와 프로젝트 준비 — Claude Code × Spec Kit 핸즈온 튜토리얼</title>
+<meta name="description" content="uv로 Specify CLI를 설치하고 `specify init`으로 실습 폴더를 만듭니다. Claude Code용 스킬 아홉 개와 템플릿·스크립트가 어디에 생기는지 확인하고, Claude Code를 열어 `/speckit` 명령 목록까지 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/speckit-handson/setup.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="설치와 프로젝트 준비 — Claude Code × Spec Kit 핸즈온 튜토리얼">
+<meta property="og:description" content="uv로 Specify CLI를 설치하고 `specify init`으로 실습 폴더를 만듭니다. Claude Code용 스킬 아홉 개와 템플릿·스크립트가 어디에 생기는지 확인하고, Claude Code를 열어 `/speckit` 명령 목록까지 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/speckit-handson/setup.html">
+<meta property="og:image" content="https://www.uengine.org/docs/speckit-handson/img/sk-app.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × Spec Kit 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: clarify, [P], converge, 랄프 루프)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="concepts.html"><span class="n">01</span>스펙 주도 개발과 BDD</a></li>
+</ul>
+<div class="nav-part">실습 · 사양까지</div><ul>
+<li><a href="setup.html" class="on" aria-current="page"><span class="n">02</span>설치와 프로젝트 준비</a></li>
+<li><a href="constitution.html"><span class="n">03</span>헌법: 프로젝트 원칙</a></li>
+<li><a href="specify.html"><span class="n">04</span>명세: spec.md</a></li>
+<li><a href="clarify.html"><span class="n">05</span>명확화: 모호함을 재는 기준</a></li>
+</ul>
+<div class="nav-part">실습 · 계획과 작업</div><ul>
+<li><a href="plan.html"><span class="n">06</span>계획: plan.md와 설계 문서</a></li>
+<li><a href="checklist.html"><span class="n">07</span>요구사항 품질 점검</a></li>
+<li><a href="tasks.html"><span class="n">08</span>작업 목록과 일관성 분석</a></li>
+</ul>
+<div class="nav-part">실습 · 구현과 수렴</div><ul>
+<li><a href="implement.html"><span class="n">09</span>구현과 병렬 에이전트</a></li>
+<li><a href="converge.html"><span class="n">10</span>수렴과 동작 확인</a></li>
+<li><a href="tdd-loop.html"><span class="n">11</span>TDD와 랄프 루프</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">실습 · 사양까지<span class="chap">2</span></div>
+    <h1>설치와 프로젝트 준비</h1>
+    <article>
+<blockquote>
+<p>uv로 Specify CLI를 설치하고 <code>specify init</code>으로 실습 폴더를 만듭니다. Claude Code용 스킬 아홉 개와 템플릿·스크립트가 어디에 생기는지 확인하고, Claude Code를 열어 <code>/speckit</code> 명령 목록까지 봅니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>Spec Kit은 두 부분으로 되어 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>부분</th>
+<th>하는 일</th>
+<th>어디서 쓰나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Specify CLI</strong> (<code>specify</code>)</td>
+<td>프로젝트에 템플릿·스크립트·에이전트용 명령을 설치합니다</td>
+<td>터미널</td>
+</tr>
+<tr>
+<td><strong>스킬</strong> (<code>/speckit-specify</code> 등)</td>
+<td>사양·계획·작업·구현을 실제로 진행합니다</td>
+<td>에이전트 입력창(Claude Code)</td>
+</tr>
+</tbody>
+</table>
+<p>CLI는 처음 한 번 프로젝트를 준비할 때만 쓰고, 그 뒤의 일은 모두 Claude Code 안에서 합니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>Specify CLI 설치.</strong> Spec Kit 1.x는 PyPI에 올라가 있어 <code>uv tool install specify-cli</code> 한 줄이면 됩니다. 설치가 끝나면 <code>Installed 1 executable: specify</code>가 나옵니다. <code>specify version</code>으로 버전(이 실습에서는 1.4.0)을 확인합니다.
+
+
+<div class="hl"><pre><span></span><code>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>specify-cli
+specify<span class="w"> </span>version
+</code></pre></div>
+
+
+</li>
+<li><strong>프로젝트 만들기.</strong> <code>--integration claude</code>를 지정하면 Claude Code용으로 준비합니다. 스크립트 종류를 묻는 창이 나오면 macOS·Linux는 <code>sh</code>(기본값)를 고릅니다. 템플릿은 CLI 안에 들어 있어 네트워크 없이도 만들어집니다.
+
+
+<div class="hl"><pre><span></span><code>specify<span class="w"> </span>init<span class="w"> </span>speckit-parking<span class="w"> </span>--integration<span class="w"> </span>claude
+<span class="nb">cd</span><span class="w"> </span>speckit-parking<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>init<span class="w"> </span>-q
+</code></pre></div>
+
+
+</li>
+<li><strong>만들어진 것 둘러보기.</strong> 끝나면 「Next Steps」 상자에 다음에 쓸 스킬이 순서대로 나옵니다. <code>.claude/skills/</code> 아래에 스킬 아홉 개가, <code>.specify/</code> 아래에 템플릿·스크립트·헌법 틀이 생깁니다.
+
+<figure><a href="img/sk-init.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="specify init 이 끝난 뒤의 Next Steps 와 선택 스킬 안내" src="img/sk-init.webp" loading="lazy" decoding="async"></a><figcaption>specify init 이 끝난 뒤의 Next Steps 와 선택 스킬 안내</figcaption></figure>
+
+
+
+<div class="hl"><pre><span></span><code>ls<span class="w"> </span>.claude/skills
+find<span class="w"> </span>.specify<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort
+</code></pre></div>
+
+
+</li>
+<li><strong>Claude Code 열기.</strong> 실습 폴더에서 <code>claude</code>를 실행합니다. 처음 여는 폴더에서는 신뢰 확인 창이 나오며, 「Yes, I trust this folder」를 고릅니다. 입력창에 <code>/speckit</code>까지 입력하면 프로젝트 스킬 목록이 나옵니다.
+
+<figure><a href="img/sk-slash.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Claude Code 입력창에 /speckit 을 치면 뜨는 프로젝트 스킬 목록" src="img/sk-slash.webp" loading="lazy" decoding="async"></a><figcaption>Claude Code 입력창에 /speckit 을 치면 뜨는 프로젝트 스킬 목록</figcaption></figure>
+
+
+
+<div class="hl"><pre><span></span><code>claude<span class="w"> </span>--model<span class="w"> </span>sonnet
+</code></pre></div>
+
+
+</li>
+</ol>
+<h2 id="만들어지는-파일">만들어지는 파일<a class="anchor" href="#만들어지는-파일" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>위치</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.claude/skills/speckit-*/SKILL.md</code></td>
+<td>스킬 아홉 개: constitution · specify · clarify · plan · checklist · tasks · analyze · implement · converge</td>
+</tr>
+<tr>
+<td><code>.specify/templates/</code></td>
+<td><code>spec-template.md</code>, <code>plan-template.md</code>, <code>tasks-template.md</code>, <code>checklist-template.md</code>, <code>constitution-template.md</code></td>
+</tr>
+<tr>
+<td><code>.specify/scripts/bash/</code></td>
+<td>기능 폴더를 만들고(<code>create-new-feature.sh</code>) 필요한 문서가 있는지 확인하는(<code>check-prerequisites.sh</code>) 스크립트</td>
+</tr>
+<tr>
+<td><code>.specify/memory/constitution.md</code></td>
+<td>헌법. 처음에는 <code>[PRINCIPLE_1_NAME]</code> 같은 빈칸만 있는 틀입니다</td>
+</tr>
+<tr>
+<td><code>.specify/init-options.json</code></td>
+<td>선택한 에이전트, 스크립트 종류(<code>sh</code>), 기능 번호 방식(<code>sequential</code>), 버전</td>
+</tr>
+<tr>
+<td><code>.specify/workflows/speckit/workflow.yml</code></td>
+<td>specify → plan → tasks → implement를 한 번에 실행하는 워크플로 정의(이 교재에서는 단계별로 직접 실행)</td>
+</tr>
+</tbody>
+</table>
+<p>스킬 파일은 마크다운으로 된 작업 지침입니다. 예를 들어 <code>speckit-clarify/SKILL.md</code>에는 모호함을 찾는 열 가지 범주와 "질문은 최대 5개, 한 번에 하나씩" 같은 규칙이 그대로 적혀 있습니다. 5장에서 이 내용을 자세히 봅니다.</p>
+<div class="admonition note">
+<p class="admonition-title">다른 글과 명령 모양이 다를 때</p>
+<p>인터넷의 많은 글은 <code>uvx --from git+https://github.com/github/spec-kit.git specify init</code>과 <code>/speckit.specify</code>처럼 점(<code>.</code>)이 들어간 명령을 씁니다. 이 실습의 1.4.0은 <code>uv tool install specify-cli</code>로 설치하고, Claude Code에는 <code>/speckit-specify</code>처럼 하이픈으로 된 스킬로 설치됩니다. 에이전트마다 명령 형식이 다르므로 공식 문서의 「Command invocation」 표를 확인하세요.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">이 실습의 권한 설정</p>
+<p>원활한 녹화를 위해 <code>.claude/settings.local.json</code>에 Spec Kit 스크립트(<code>.specify/scripts/bash/*.sh</code>)와 빌드·시험 명령(<code>mvn test</code>, <code>npm test</code> 등)을 허용 목록으로 넣고, Claude Code는 자동 모드(auto mode)로 실행했습니다. 그래서 신뢰 확인 창에 "pre-approves 22 tool permissions"가 보입니다. 처음 따라 할 때는 허용 목록 없이 기본 모드로 시작해 어떤 명령을 실행하는지 하나씩 보는 것도 좋습니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>`specify` 명령과 `/speckit-specify` 명령은 어떻게 다른가요?</summary>
+<p><code>specify</code>는 터미널에서 쓰는 설치 도구(Specify CLI)입니다. 프로젝트에 템플릿과 스크립트, 에이전트용 스킬을 설치합니다. <code>/speckit-specify</code>는 그 결과로 Claude Code에 생긴 스킬로, 기능 설명을 받아 <code>spec.md</code>를 씁니다. 사양·계획·구현은 모두 에이전트 입력창에서 합니다.</p>
+</details>
+<details class="answer">
+<summary>git 브랜치를 기능마다 자동으로 만들려면 어떻게 하나요?</summary>
+<p>1.x에서는 브랜치 생성 기능이 확장(extension)으로 분리됐습니다. <code>specify init &lt;이름&gt; --integration claude --extension git</code>처럼 git 확장을 함께 설치하면 명세 전에 브랜치를 만드는 훅이 붙습니다. 이 실습은 확장 없이 진행해 <code>main</code> 브랜치를 그대로 사용했고, 기능 폴더 이름(<code>specs/001-…</code>)은 브랜치와 상관없이 순번으로 붙었습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="concepts.html"><span>이전</span>스펙 주도 개발과 BDD</a><a class="next" href="constitution.html"><span>다음</span>헌법: 프로젝트 원칙</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#만들어지는-파일">만들어지는 파일</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
