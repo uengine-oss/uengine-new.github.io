@@ -59,7 +59,7 @@ PRODUCTS = {
                 chapters=[("index", "시작하기"), ("flow", "실습"), ("design", "실습"), ("mvp", "실습"), ("code", "실습"), ("try", "실습"), ("deploy", "배포")]),
     "speckit-handson": dict(name="Claude Code × Spec Kit 핸즈온", page="axschool.html", pagelabel="AX School", og="sk-app.webp", search="검색 (예: clarify, [P], converge, 랄프 루프)",
                 foot="이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.",
-                chapters=[("index", "시작하기"), ("concepts", "이론"), ("setup", "실습 · 사양까지"), ("constitution", "실습 · 사양까지"), ("specify", "실습 · 사양까지"), ("clarify", "실습 · 사양까지"), ("plan", "실습 · 계획과 작업"), ("checklist", "실습 · 계획과 작업"), ("tasks", "실습 · 계획과 작업"), ("implement", "실습 · 구현과 수렴"), ("converge", "실습 · 구현과 수렴"), ("tdd-loop", "실습 · 구현과 수렴")]),
+                chapters=[("index", "시작하기"), ("concepts", "이론"), ("setup", "실습 · 사양까지"), ("constitution", "실습 · 사양까지"), ("specify", "실습 · 사양까지"), ("clarify", "실습 · 사양까지"), ("plan", "실습 · 계획과 작업"), ("checklist", "실습 · 계획과 작업"), ("tasks", "실습 · 계획과 작업"), ("implement", "실습 · 구현과 수렴"), ("converge", "실습 · 구현과 수렴"), ("tdd-loop", "실습 · 구현과 수렴"), ("extension", "확장")]),
 }
 KEY = sys.argv[1] if sys.argv[1:] and sys.argv[1] in PRODUCTS else sys.exit(__doc__)
 P = PRODUCTS[KEY]

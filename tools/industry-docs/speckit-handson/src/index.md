@@ -53,6 +53,7 @@ AI-DLC 핸즈온은 같은 문제를 Spring Boot 마이크로서비스 3개로 �
 | [구현과 병렬 에이전트](implement.html) | 체크리스트 관문, `[P]` 작업을 서브에이전트에 나눠 맡기기 | `/speckit-implement` |
 | [수렴과 동작 확인](converge.html) | 사양 대비 남은 일 찾기, 실제 앱 실행 | `/speckit-converge` |
 | [TDD와 랄프 루프](tdd-loop.html) | 시나리오가 JUnit·Vitest 시험이 되는 과정, 같은 지시를 수렴까지 되풀이하는 루프 | `./ralph.sh` |
+| [확장: 업무 매뉴얼과 시연 영상](extension.html) | 구현 뒤 사양대로 화면을 녹화하고 업무 매뉴얼을 쓰는 확장을 만들어 `after_implement` 훅에 연결 | `specify extension add` · `/speckit-manual-create` |
 
 ## 준비물
 
