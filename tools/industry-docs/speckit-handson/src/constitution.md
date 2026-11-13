@@ -2,6 +2,12 @@
 
 > 모든 기능이 지켜야 할 원칙을 `constitution.md` 한 장에 적습니다. 원칙은 계획 단계의 헌법 점검, 일관성 분석, 수렴 단계에서 가장 중요한 기준으로 다시 쓰입니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-03-constitution`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-03-constitution)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`constitution.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-03-constitution/.specify/memory/constitution.md)
+    - [바뀐 점](https://github.com/uengine-oss/tutorial-speckit-handson/commit/step-03-constitution)
+
 ## 무엇을 · 왜
 
 헌법(constitution)은 기능 하나가 아니라 프로젝트 전체에 적용되는 규칙입니다. 사양마다 "시험은 먼저 쓴다", "외부 연동은 모의로 둔다"를 되풀이하는 대신 한 곳에 두고, 이후 단계에서 이 문서를 읽고 따릅니다.
@@ -22,7 +28,7 @@
 /speckit-constitution 전국 주차장 검색·예약 서비스의 원칙을 정해 줘. 1) 시험 먼저: 인수 시나리오(Given/When/Then)마다 자동 시험을 먼저 쓰고 실패를 확인한 뒤 구현한다. 2) 단순함: 백엔드 서비스 하나와 웹 화면 하나로 시작하고, 결제 같은 외부 연동은 모의로 둔다. 3) 사양이 기준: spec.md 에 없는 기능은 만들지 않는다. 4) 문서와 화면 문구는 한국어로 쓴다.
 ```
 </li>
-<li markdown="1">**결과를 읽고 풀어 쓴 규칙을 확인합니다.** 22초 만에 `.specify/memory/constitution.md`가 채워졌습니다. Claude는 "말씀하신 원칙에서 제가 풀어 쓴 규칙"으로 세 가지를 따로 알려 주었습니다. 모의 구현은 교체 가능한 인터페이스 뒤에 둔다, 구조를 늘리려면 plan.md에 근거를 적는다, 코드 식별자는 영어를 허용한다. 원치 않으면 이때 고치라고 합니다.
+<li markdown="1">**결과를 읽고 풀어 쓴 규칙을 확인합니다.** 22초 만에 [`.specify/memory/constitution.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-03-constitution/.specify/memory/constitution.md)가 채워졌습니다. Claude는 "말씀하신 원칙에서 제가 풀어 쓴 규칙"으로 세 가지를 따로 알려 주었습니다. 모의 구현은 교체 가능한 인터페이스 뒤에 둔다, 구조를 늘리려면 plan.md에 근거를 적는다, 코드 식별자는 영어를 허용한다. 원치 않으면 이때 고치라고 합니다.
 
 
 ![헌법을 쓴 뒤의 요약: 버전 1.0.0, 원칙 네 개, 풀어 쓴 규칙](img/sk-constitution.webp)

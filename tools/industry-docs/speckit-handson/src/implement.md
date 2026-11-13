@@ -2,6 +2,14 @@
 
 > `/speckit-implement`는 체크리스트 관문을 먼저 확인한 뒤 `tasks.md`를 단계 순서대로 실행합니다. 이 실습에서는 `[P]` 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 37번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-09-implement`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-09-implement)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`backend/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-09-implement/backend)
+    - [`frontend/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-09-implement/frontend)
+    - [모두 `[X]`인 `tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-09-implement/specs/001-parking-search-reserve/tasks.md)
+    - [구현 커밋](https://github.com/uengine-oss/tutorial-speckit-handson/commit/step-09-implement)
+
 ## 무엇을 · 왜
 
 구현 스킬에 적힌 실행 규칙은 다섯 가지입니다.

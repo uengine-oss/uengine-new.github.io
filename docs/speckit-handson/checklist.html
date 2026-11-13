@@ -64,6 +64,15 @@
 <p><code>/speckit-checklist</code>는 코드가 아니라 <strong>요구사항 문장</strong>을 시험합니다. Spec Kit은 이것을 「영어로 쓴 글을 위한 단위 시험」이라고 부릅니다. 예약·결제 흐름에 대해 34개 항목을 만들게 했더니, 사양과 계획이 어긋난 곳 네 군데가 실제로 드러났습니다. 그 네 곳을 명확화로 사양에 반영하는 과정까지 봅니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/ToPM4Y9Eofk" title="요구사항 품질 점검 — 영상 3:11" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>이 장이 끝났을 때의 파일이 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-speckit-handson">uengine-oss/tutorial-speckit-handson</a>의 태그 <a href="https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-07-checklist"><code>step-07-checklist</code></a>에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/checklists/reservation-payment.md"><code>checklists/reservation-payment.md</code></a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/spec.md"><code>spec.md</code>(FR-017·018)</a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/commit/step-07-checklist">바뀐 점</a></li>
+</ul>
+</div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <p>명세 단계의 품질 점검표(<code>requirements.md</code>)는 글의 <strong>모양</strong>을 봅니다. 구현 세부가 섞이지 않았는지, 성공 기준을 측정할 수 있는지 같은 것입니다. <code>/speckit-checklist</code>는 한 주제를 정해 그 주제의 요구사항이 <strong>충분하고 분명하고 서로 맞는지</strong>를 묻습니다.</p>
 <p>스킬은 "체크리스트는 요구사항 작성을 위한 단위 시험이지, 구현을 확인하는 시험이 아니다"라고 명시합니다. 이 실습에 적용하면 이렇습니다.</p>
@@ -120,7 +129,7 @@
 </tr>
 </tbody>
 </table>
-<p>이 점검은 계획(<code>plan.md</code>)이 있어야 실행됩니다. 사양과 계획, 계약을 함께 읽어야 서로 어긋난 곳을 찾을 수 있기 때문입니다.</p>
+<p>이 점검은 계획(<a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/plan.md"><code>plan.md</code></a>)이 있어야 실행됩니다. 사양과 계획, 계약을 함께 읽어야 서로 어긋난 곳을 찾을 수 있기 때문입니다.</p>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <ol class="steps">
 <li><strong>주제를 정해 실행합니다.</strong>
@@ -131,7 +140,7 @@
 
 
 
-36초 뒤 <code>checklists/reservation-payment.md</code>에 34개 항목(CHK001~CHK034)이 생겼습니다. 묶음은 완전성, 명확성, 일관성, 인수 기준, 시나리오·예외, 비기능, 의존성·가정 일곱 개입니다. 모두 <code>[ ]</code>로 비어 있습니다. 체크는 검토자가 하는 일이기 때문입니다.
+36초 뒤 <a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/checklists/reservation-payment.md"><code>checklists/reservation-payment.md</code></a>에 34개 항목(CHK001~CHK034)이 생겼습니다. 묶음은 완전성, 명확성, 일관성, 인수 기준, 시나리오·예외, 비기능, 의존성·가정 일곱 개입니다. 모두 <code>[ ]</code>로 비어 있습니다. 체크는 검토자가 하는 일이기 때문입니다.
 </li>
 <li><strong>「먼저 보라」는 네 항목을 읽습니다.</strong> 항목을 만들다가 실제로 발견한 문제를 따로 짚어 주었습니다.
 
@@ -153,7 +162,7 @@
 
 
 
-질문 네 개가 하나씩 나왔고 모두 추천 답을 받아들였습니다. 사양에는 <code>### Session 2026-11-13 (체크리스트 후속)</code> 세션이 새로 생겼고, FR-009·FR-013이 고쳐지고 FR-017(결제 중 만차)·FR-018(결제 시도는 저장하지 않음)이 새로 생겼습니다. 계획 쪽 문서(<code>research.md</code>, <code>data-model.md</code>, <code>contracts/api.md</code>)도 사양에 맞춰 문구가 정리됐고, 이제 409 응답에 사양의 근거가 생겨 헌법 III와의 충돌이 해결됐습니다.
+질문 네 개가 하나씩 나왔고 모두 추천 답을 받아들였습니다. 사양에는 <code>### Session 2026-11-13 (체크리스트 후속)</code> 세션이 새로 생겼고, FR-009·FR-013이 고쳐지고 FR-017(결제 중 만차)·FR-018(결제 시도는 저장하지 않음)이 새로 생겼습니다. 계획 쪽 문서(<a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/research.md"><code>research.md</code></a>, <a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/data-model.md"><code>data-model.md</code></a>, <a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/contracts/api.md"><code>contracts/api.md</code></a>)도 사양에 맞춰 문구가 정리됐고, 이제 409 응답에 사양의 근거가 생겨 헌법 III와의 충돌이 해결됐습니다.
 </li>
 </ol>
 <h2 id="산출물-항목-읽는-법">산출물: 항목 읽는 법<a class="anchor" href="#산출물-항목-읽는-법" title="Permanent link">#</a></h2>

@@ -2,6 +2,13 @@
 
 > uv로 Specify CLI를 설치하고 `specify init`으로 실습 폴더를 만듭니다. Claude Code용 스킬 아홉 개와 템플릿·스크립트가 어디에 생기는지 확인하고, Claude Code를 열어 `/speckit` 명령 목록까지 봅니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-02-setup`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-02-setup)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`.specify/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-02-setup/.specify)
+    - [`.claude/skills/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-02-setup/.claude/skills)
+    - [빈 헌법 틀 `constitution.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-02-setup/.specify/memory/constitution.md)
+
 ## 무엇을 · 왜
 
 Spec Kit은 두 부분으로 되어 있습니다.
@@ -30,7 +37,7 @@ specify init speckit-parking --integration claude
 cd speckit-parking && git init -q
 ```
 </li>
-<li markdown="1">**만들어진 것 둘러보기.** 끝나면 「Next Steps」 상자에 다음에 쓸 스킬이 순서대로 나옵니다. `.claude/skills/` 아래에 스킬 아홉 개가, `.specify/` 아래에 템플릿·스크립트·헌법 틀이 생깁니다.
+<li markdown="1">**만들어진 것 둘러보기.** 끝나면 「Next Steps」 상자에 다음에 쓸 스킬이 순서대로 나옵니다. [`.claude/skills/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-02-setup/.claude/skills) 아래에 스킬 아홉 개가, [`.specify/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-02-setup/.specify) 아래에 템플릿·스크립트·헌법 틀이 생깁니다.
 
 ![specify init 이 끝난 뒤의 Next Steps 와 선택 스킬 안내](img/sk-init.webp)
 
@@ -56,11 +63,11 @@ claude --model sonnet
 | 위치 | 내용 |
 |---|---|
 | `.claude/skills/speckit-*/SKILL.md` | 스킬 아홉 개: constitution · specify · clarify · plan · checklist · tasks · analyze · implement · converge |
-| `.specify/templates/` | `spec-template.md`, `plan-template.md`, `tasks-template.md`, `checklist-template.md`, `constitution-template.md` |
-| `.specify/scripts/bash/` | 기능 폴더를 만들고(`create-new-feature.sh`) 필요한 문서가 있는지 확인하는(`check-prerequisites.sh`) 스크립트 |
-| `.specify/memory/constitution.md` | 헌법. 처음에는 `[PRINCIPLE_1_NAME]` 같은 빈칸만 있는 틀입니다 |
-| `.specify/init-options.json` | 선택한 에이전트, 스크립트 종류(`sh`), 기능 번호 방식(`sequential`), 버전 |
-| `.specify/workflows/speckit/workflow.yml` | specify → plan → tasks → implement를 한 번에 실행하는 워크플로 정의(이 교재에서는 단계별로 직접 실행) |
+| [`.specify/templates/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-02-setup/.specify/templates) | `spec-template.md`, `plan-template.md`, `tasks-template.md`, `checklist-template.md`, `constitution-template.md` |
+| [`.specify/scripts/bash/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-02-setup/.specify/scripts/bash) | 기능 폴더를 만들고(`create-new-feature.sh`) 필요한 문서가 있는지 확인하는(`check-prerequisites.sh`) 스크립트 |
+| [`.specify/memory/constitution.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-02-setup/.specify/memory/constitution.md) | 헌법. 처음에는 `[PRINCIPLE_1_NAME]` 같은 빈칸만 있는 틀입니다 |
+| [`.specify/init-options.json`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-02-setup/.specify/init-options.json) | 선택한 에이전트, 스크립트 종류(`sh`), 기능 번호 방식(`sequential`), 버전 |
+| [`.specify/workflows/speckit/workflow.yml`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-02-setup/.specify/workflows/speckit/workflow.yml) | specify → plan → tasks → implement를 한 번에 실행하는 워크플로 정의(이 교재에서는 단계별로 직접 실행) |
 
 스킬 파일은 마크다운으로 된 작업 지침입니다. 예를 들어 `speckit-clarify/SKILL.md`에는 모호함을 찾는 열 가지 범주와 "질문은 최대 5개, 한 번에 하나씩" 같은 규칙이 그대로 적혀 있습니다. 5장에서 이 내용을 자세히 봅니다.
 

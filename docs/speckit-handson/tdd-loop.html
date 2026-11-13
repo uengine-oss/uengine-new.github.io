@@ -64,6 +64,17 @@
 <p>사양의 Given/When/Then 한 줄이 어떻게 Java(JUnit 5)와 TypeScript(Vitest) 시험이 되는지, 그 시험이 「실패 → 구현 → 통과」를 어떻게 지키는지 봅니다. 이어서 같은 지시를 수렴할 때까지 되풀이하는 <strong>랄프 루프(Ralph loop)</strong>로, 요구사항 하나를 더한 뒤 사람의 개입 없이 시험·구현·커밋까지 가는 과정을 실제로 실행해 봅니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/CRg8z5GzoGg" title="TDD와 랄프 루프 — 영상 3:38" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>이 장이 끝났을 때의 파일이 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-speckit-handson">uengine-oss/tutorial-speckit-handson</a>의 태그 <a href="https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-11-ralph"><code>step-11-ralph</code></a>에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/PROMPT.md"><code>PROMPT.md</code></a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/ralph.sh"><code>ralph.sh</code></a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/commit/e7486f9">사양 먼저(FR-021)</a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/commit/ae70323">루프가 남긴 커밋(시험 먼저)</a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/backend/src/test/java/kr/parking/recommend/RecommendationApiTest.java"><code>RecommendationApiTest.java</code></a></li>
+</ul>
+</div>
 <h2 id="사양-한-줄에서-시험까지">사양 한 줄에서 시험까지<a class="anchor" href="#사양-한-줄에서-시험까지" title="Permanent link">#</a></h2>
 <p>이 실습의 헌법 I은 "인수 시나리오마다 자동 시험을 먼저 쓰고 실패를 확인한 뒤 구현한다"입니다. 그래서 사양의 시나리오가 그대로 시험의 이름과 검사 내용이 됩니다. 마지막에 더한 요구사항 FR-021로 과정을 살펴봅니다.</p>
 <p><strong>① 사양(spec.md).</strong> 사람이 요구사항과 시나리오를 먼저 씁니다.</p>
@@ -201,7 +212,7 @@
 <tr>
 <td>한 바퀴</td>
 <td>사람이 <code>/speckit-converge</code> → 판단 → <code>/speckit-implement</code></td>
-<td><code>PROMPT.md</code> 한 장을 <code>claude -p</code>가 되풀이</td>
+<td><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/PROMPT.md"><code>PROMPT.md</code></a> 한 장을 <code>claude -p</code>가 되풀이</td>
 </tr>
 <tr>
 <td>결정이 필요한 작업</td>
@@ -220,7 +231,7 @@
 </tr>
 <tr>
 <td>남는 기록</td>
-<td>대화와 <code>tasks.md</code>의 수렴 절</td>
+<td>대화와 <a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/specs/001-parking-search-reserve/tasks.md"><code>tasks.md</code></a>의 수렴 절</td>
 <td>반복마다 커밋, <code>.ralph-N.log</code></td>
 </tr>
 </tbody>
@@ -232,11 +243,11 @@
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>사양의 시나리오와 시험은 무엇으로 이어지나요?</summary>
-<p>세 가지로 이어집니다. 시험 이름(<code>@DisplayName</code>, <code>it(...)</code>)에 시나리오 문장과 요구사항 번호(FR-021)를 적고, <code>tasks.md</code>의 작업 설명과 추적표가 FR 번호와 시험 파일을 함께 가리키고, <code>/speckit-converge</code>가 <code>US1/AC5</code> 같은 시나리오 번호를 기준으로 구현을 다시 대조합니다.</p>
+<p>세 가지로 이어집니다. 시험 이름(<code>@DisplayName</code>, <code>it(...)</code>)에 시나리오 문장과 요구사항 번호(FR-021)를 적고, <a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/specs/001-parking-search-reserve/tasks.md"><code>tasks.md</code></a>의 작업 설명과 추적표가 FR 번호와 시험 파일을 함께 가리키고, <code>/speckit-converge</code>가 <code>US1/AC5</code> 같은 시나리오 번호를 기준으로 구현을 다시 대조합니다.</p>
 </details>
 <details class="answer">
 <summary>랄프 루프에서 지시(PROMPT.md)는 왜 매번 같아야 하나요?</summary>
-<p>루프의 상태는 지시가 아니라 파일과 git에 쌓이기 때문입니다. 에이전트는 매번 같은 지시를 받고, 지난 반복에서 남긴 <code>tasks.md</code>의 체크, 코드, 커밋을 읽어 이어서 일합니다. 그래서 지시는 「무엇이 남았는지 스스로 찾고 처리하라」처럼 반복해도 뜻이 같은 문장으로 씁니다. Spec Kit에서는 <code>/speckit-converge</code>가 그 「찾기」를 맡습니다.</p>
+<p>루프의 상태는 지시가 아니라 파일과 git에 쌓이기 때문입니다. 에이전트는 매번 같은 지시를 받고, 지난 반복에서 남긴 <a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/specs/001-parking-search-reserve/tasks.md"><code>tasks.md</code></a>의 체크, 코드, 커밋을 읽어 이어서 일합니다. 그래서 지시는 「무엇이 남았는지 스스로 찾고 처리하라」처럼 반복해도 뜻이 같은 문장으로 씁니다. Spec Kit에서는 <code>/speckit-converge</code>가 그 「찾기」를 맡습니다.</p>
 </details>
 <details class="answer">
 <summary>US3 시험은 처음부터 통과했습니다. 랄프 루프는 이런 경우를 잡아 주나요?</summary>

@@ -2,6 +2,12 @@
 
 > `/speckit-clarify`는 사양을 열 가지 범주로 훑어 범주마다 「분명함·일부·빠짐」으로 평가하고, 영향과 불확실성이 큰 순서로 최대 다섯 개를 하나씩 묻습니다. 그 기준이 무엇인지, 질문이 어떤 형식으로 나오는지, 답이 사양의 어디에 들어가는지 실제 질문 다섯 개로 확인합니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-05-clarify`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-05-clarify)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`spec.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-05-clarify/specs/001-parking-search-reserve/spec.md)
+    - [명확화로 바뀐 점](https://github.com/uengine-oss/tutorial-speckit-handson/commit/step-05-clarify)
+
 ## 무엇을 · 왜
 
 명세 단계는 "합리적인 기본값이 있으면 추측하라"는 지시를 받습니다. 그래서 질문 없이 끝나기 쉽습니다. 명확화는 반대로 접근합니다. 이미 쓴 사양을 정해진 범주에 하나씩 대조하고, **답에 따라 설계나 시험이 달라지는 빈 부분**만 골라 사람에게 묻습니다.
@@ -73,7 +79,7 @@ Spec Kit은 명확화를 계획(`/speckit-plan`) **전에** 끝내라고 합니�
 
 ## 산출물: 답이 사양에 들어가는 자리
 
-답 하나를 받을 때마다 `spec.md`를 바로 저장합니다. 먼저 `## Clarifications` 아래 오늘 날짜 세션에 문답 한 줄을 남깁니다.
+답 하나를 받을 때마다 [`spec.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-05-clarify/specs/001-parking-search-reserve/spec.md)를 바로 저장합니다. 먼저 `## Clarifications` 아래 오늘 날짜 세션에 문답 한 줄을 남깁니다.
 
 ```markdown
 ## Clarifications

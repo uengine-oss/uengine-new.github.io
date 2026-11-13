@@ -2,6 +2,13 @@
 
 > `/speckit-tasks`가 사양과 계획을 63개 작업으로 나눕니다. `- [ ] T017 [P] [US1] …` 한 줄에 담긴 뜻, 사용자 이야기별 단계, 병렬 표시 `[P]`의 조건을 봅니다. 이어서 `/speckit-analyze`가 사양·계획·작업 세 문서를 대조해 찾아낸 문제와, 수정을 승인하는 과정까지 봅니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-08-tasks`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-08-tasks)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/tasks.md)
+    - [분석 수정안 적용 뒤 `tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-analyze/specs/001-parking-search-reserve/tasks.md)
+    - [분석으로 바뀐 점(FR-019, T033a)](https://github.com/uengine-oss/tutorial-speckit-handson/commit/step-08-analyze)
+
 ## 무엇을 · 왜
 
 작업 목록은 구현 에이전트가 그대로 따라갈 실행 계획입니다. 그래서 형식이 엄격합니다.
@@ -87,9 +94,9 @@ Spec Kit의 작업 목록 규칙에서 시험 작업은 **선택**입니다. 사
 
 **② 승인 뒤 바뀐 것.** 일곱 개 문서가 함께 고쳐졌습니다.
 
-- `spec.md`: 새 FR-019(결제 승인 시점에 이용 가능 여부 재확인), 인수 시나리오 3개 추가(US2-3 중복 요청, US2-4 면수 감소, US3-3 결제 중 만차)로 8개 → 11개, 가정 4줄 추가.
-- `tasks.md`: 번호를 밀지 않으려고 **T033a**(재확인 시험)를 끼워 넣고, T044 설명을 고치고, 추적표에 FR-019 행을 더했습니다.
-- `contracts/api.md`: `400 LOT_UNAVAILABLE` 응답 추가. `data-model.md`의 `startAt`은 결제 승인 시점으로.
+- [`spec.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/spec.md): 새 FR-019(결제 승인 시점에 이용 가능 여부 재확인), 인수 시나리오 3개 추가(US2-3 중복 요청, US2-4 면수 감소, US3-3 결제 중 만차)로 8개 → 11개, 가정 4줄 추가.
+- [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/tasks.md): 번호를 밀지 않으려고 **T033a**(재확인 시험)를 끼워 넣고, T044 설명을 고치고, 추적표에 FR-019 행을 더했습니다.
+- [`contracts/api.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/contracts/api.md): `400 LOT_UNAVAILABLE` 응답 추가. [`data-model.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/data-model.md)의 `startAt`은 결제 승인 시점으로.
 
 !!! note "분석은 고치지 않는다, 사람이 승인한다"
     분석 스킬의 규칙은 "엄격히 읽기 전용"입니다. 고칠지 말지는 사람이 정합니다. 이 실습에서 Claude는 제안 때 U3를 "사양 변경 없음"이라고 했다가, 적용하면서 "승인 시점 기준이 가정에만 있으면 요구사항으로 남지 않는다"며 FR-019로 추가했다고 따로 밝혔습니다. 제안과 적용 결과가 다를 수 있으니 적용 뒤의 요약도 꼭 읽으세요.

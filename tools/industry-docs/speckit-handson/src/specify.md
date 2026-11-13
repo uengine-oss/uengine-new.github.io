@@ -2,6 +2,12 @@
 
 > 기능 설명 한 단락을 전달하면 `spec.md`가 생깁니다. 우선순위가 붙은 사용자 이야기, Given/When/Then 인수 시나리오, 시험할 수 있는 기능 요구사항, 기술과 무관한 성공 기준, 그리고 AI가 기본값으로 정한 가정이 어디에 어떻게 적히는지 확인합니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-04-specify`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-04-specify)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`spec.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-04-specify/specs/001-parking-search-reserve/spec.md)
+    - [`checklists/requirements.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-04-specify/specs/001-parking-search-reserve/checklists/requirements.md)
+
 ## 무엇을 · 왜
 
 명세는 **무엇을, 왜** 만드는지만 씁니다. 언어·프레임워크·API 같은 **어떻게**는 다음 장의 계획에서 정합니다. 그래서 기능 설명에도 기술 내용을 넣지 않습니다.
@@ -10,11 +16,11 @@
 
 | 순서 | 하는 일 |
 |---|---|
-| 1 | 설명에서 2~4 단어의 짧은 이름을 뽑아 기능 폴더 `specs/001-parking-search-reserve/`를 만듭니다 (번호는 순번) |
+| 1 | 설명에서 2~4 단어의 짧은 이름을 뽑아 기능 폴더 [`specs/001-parking-search-reserve/`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-04-specify/specs/001-parking-search-reserve)를 만듭니다 (번호는 순번) |
 | 2 | 현재 기능 폴더를 `.specify/feature.json`에 적어, 다음 스킬들이 같은 폴더를 찾게 합니다 |
 | 3 | 사양 틀(`spec-template`)의 각 절을 채웁니다 |
 | 4 | 불분명한 곳은 업계 관행으로 추측해 채우고, 정할 수 없는 곳에만 `[NEEDS CLARIFICATION: 질문]`을 남깁니다. **최대 3개**, 우선순위는 범위 > 보안·개인정보 > 사용자 경험 > 기술 세부 |
-| 5 | 사양 품질 점검표 `checklists/requirements.md`를 만들어 스스로 검사하고, 통과하지 못한 항목은 고칩니다(최대 3회) |
+| 5 | 사양 품질 점검표 [`checklists/requirements.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-04-specify/specs/001-parking-search-reserve/checklists/requirements.md)를 만들어 스스로 검사하고, 통과하지 못한 항목은 고칩니다(최대 3회) |
 
 ## 따라 하기
 
@@ -75,7 +81,7 @@
 
 ## 함께 생기는 품질 점검표
 
-`checklists/requirements.md`는 명세 단계가 스스로 평가하는 16개 항목으로 구성됩니다. 내용 품질(구현 세부가 없는지, 비전문가가 읽을 수 있는지), 요구사항 완전성(시험할 수 있는지, 성공 기준을 측정할 수 있는지, 범위가 정해졌는지), 기능 준비도로 나뉩니다. 이 실습에서는 모두 `[x]`로 통과했습니다. 다만 이 점검표는 **글의 모양**을 보는 것이라, 「근처」의 범위처럼 내용이 빠진 부분은 찾지 못합니다. 그 일은 다음 장의 명확화와 7장의 품질 점검이 맡습니다.
+[`checklists/requirements.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-04-specify/specs/001-parking-search-reserve/checklists/requirements.md)는 명세 단계가 스스로 평가하는 16개 항목으로 구성됩니다. 내용 품질(구현 세부가 없는지, 비전문가가 읽을 수 있는지), 요구사항 완전성(시험할 수 있는지, 성공 기준을 측정할 수 있는지, 범위가 정해졌는지), 기능 준비도로 나뉩니다. 이 실습에서는 모두 `[x]`로 통과했습니다. 다만 이 점검표는 **글의 모양**을 보는 것이라, 「근처」의 범위처럼 내용이 빠진 부분은 찾지 못합니다. 그 일은 다음 장의 명확화와 7장의 품질 점검이 맡습니다.
 
 ## 확인 문제
 
