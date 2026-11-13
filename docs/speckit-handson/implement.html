@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>구현과 병렬 에이전트 — Claude Code × Spec Kit 핸즈온 튜토리얼</title>
-<meta name="description" content="`/speckit-implement`는 체크리스트 관문을 먼저 확인한 뒤 `tasks.md`를 단계 순서대로 실행합니다. 이 실습에서는 `[P]` 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 35번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.">
+<meta name="description" content="`/speckit-implement`는 체크리스트 관문을 먼저 확인한 뒤 `tasks.md`를 단계 순서대로 실행합니다. 이 실습에서는 `[P]` 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 37번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/speckit-handson/implement.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="구현과 병렬 에이전트 — Claude Code × Spec Kit 핸즈온 튜토리얼">
-<meta property="og:description" content="`/speckit-implement`는 체크리스트 관문을 먼저 확인한 뒤 `tasks.md`를 단계 순서대로 실행합니다. 이 실습에서는 `[P]` 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 35번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.">
+<meta property="og:description" content="`/speckit-implement`는 체크리스트 관문을 먼저 확인한 뒤 `tasks.md`를 단계 순서대로 실행합니다. 이 실습에서는 `[P]` 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 37번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/speckit-handson/implement.html">
 <meta property="og:image" content="https://www.uengine.org/docs/speckit-handson/img/sk-app.webp">
 <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
@@ -61,7 +61,7 @@
     <h1>구현과 병렬 에이전트</h1>
     <article>
 <blockquote>
-<p><code>/speckit-implement</code>는 체크리스트 관문을 먼저 확인한 뒤 <code>tasks.md</code>를 단계 순서대로 실행합니다. 이 실습에서는 <code>[P]</code> 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 35번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.</p>
+<p><code>/speckit-implement</code>는 체크리스트 관문을 먼저 확인한 뒤 <code>tasks.md</code>를 단계 순서대로 실행합니다. 이 실습에서는 <code>[P]</code> 작업을 서브에이전트에 나눠 맡기라고 지시해, 14분 동안 서브에이전트가 37번 일했습니다. 관문, 병렬 실행, 시험 결과, 그리고 Claude가 스스로 보고한 어긋난 점까지 봅니다.</p>
 </blockquote>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <p>구현 스킬에 적힌 실행 규칙은 다섯 가지입니다.</p>
@@ -131,7 +131,7 @@
 </ol>
 <h2 id="산출물과-결과">산출물과 결과<a class="anchor" href="#산출물과-결과" title="Permanent link">#</a></h2>
 <p><strong>① tasks.md의 체크.</strong> 끝난 작업은 <code>- [ ]</code>가 <code>- [X]</code>로 바뀝니다. 63개가 모두 체크됐습니다.</p>
-<p><strong>② 나뉜 일.</strong> 서브에이전트는 35번 일했고, 한 번에 6~43초가 걸렸습니다. 메인 에이전트가 직접 한 일은 실패·통과 확인, 같은 파일을 여러 번 고치는 작업(<code>ReservationService.java</code>, <code>App.vue</code>, <code>api.ts</code>), 전체 시험이었습니다.</p>
+<p><strong>② 나뉜 일.</strong> 서브에이전트는 37번 일했고, 한 번에 6~43초가 걸렸습니다. 메인 에이전트가 직접 한 일은 실패·통과 확인, 같은 파일을 여러 번 고치는 작업(<code>ReservationService.java</code>, <code>App.vue</code>, <code>api.ts</code>), 전체 시험이었습니다.</p>
 <table>
 <thead>
 <tr>
@@ -150,7 +150,7 @@
 </tr>
 <tr>
 <td>Phase 4 US2</td>
-<td>T033·T033a·T035·T036·T038·T039(시험), T041·T042·T045(구현)</td>
+<td>T033·T033a·T034~T039(시험 8개를 한꺼번에), T041·T042·T045(구현)</td>
 </tr>
 <tr>
 <td>Phase 5 US3</td>
