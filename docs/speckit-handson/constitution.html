@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헌법: 프로젝트 원칙 — Claude Code × Spec Kit 핸즈온 튜토리얼</title>
+<meta name="description" content="모든 기능이 지켜야 할 원칙을 `constitution.md` 한 장에 적습니다. 원칙은 계획 단계의 헌법 점검, 일관성 분석, 수렴 단계에서 가장 중요한 기준으로 다시 쓰입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/speckit-handson/constitution.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="헌법: 프로젝트 원칙 — Claude Code × Spec Kit 핸즈온 튜토리얼">
+<meta property="og:description" content="모든 기능이 지켜야 할 원칙을 `constitution.md` 한 장에 적습니다. 원칙은 계획 단계의 헌법 점검, 일관성 분석, 수렴 단계에서 가장 중요한 기준으로 다시 쓰입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/speckit-handson/constitution.html">
+<meta property="og:image" content="https://www.uengine.org/docs/speckit-handson/img/sk-app.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × Spec Kit 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: clarify, [P], converge, 랄프 루프)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="concepts.html"><span class="n">01</span>스펙 주도 개발과 BDD</a></li>
+</ul>
+<div class="nav-part">실습 · 사양까지</div><ul>
+<li><a href="setup.html"><span class="n">02</span>설치와 프로젝트 준비</a></li>
+<li><a href="constitution.html" class="on" aria-current="page"><span class="n">03</span>헌법: 프로젝트 원칙</a></li>
+<li><a href="specify.html"><span class="n">04</span>명세: spec.md</a></li>
+<li><a href="clarify.html"><span class="n">05</span>명확화: 모호함을 재는 기준</a></li>
+</ul>
+<div class="nav-part">실습 · 계획과 작업</div><ul>
+<li><a href="plan.html"><span class="n">06</span>계획: plan.md와 설계 문서</a></li>
+<li><a href="checklist.html"><span class="n">07</span>요구사항 품질 점검</a></li>
+<li><a href="tasks.html"><span class="n">08</span>작업 목록과 일관성 분석</a></li>
+</ul>
+<div class="nav-part">실습 · 구현과 수렴</div><ul>
+<li><a href="implement.html"><span class="n">09</span>구현과 병렬 에이전트</a></li>
+<li><a href="converge.html"><span class="n">10</span>수렴과 동작 확인</a></li>
+<li><a href="tdd-loop.html"><span class="n">11</span>TDD와 랄프 루프</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">실습 · 사양까지<span class="chap">3</span></div>
+    <h1>헌법: 프로젝트 원칙</h1>
+    <article>
+<blockquote>
+<p>모든 기능이 지켜야 할 원칙을 <code>constitution.md</code> 한 장에 적습니다. 원칙은 계획 단계의 헌법 점검, 일관성 분석, 수렴 단계에서 가장 중요한 기준으로 다시 쓰입니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>헌법(constitution)은 기능 하나가 아니라 프로젝트 전체에 적용되는 규칙입니다. 사양마다 "시험은 먼저 쓴다", "외부 연동은 모의로 둔다"를 되풀이하는 대신 한 곳에 두고, 이후 단계에서 이 문서를 읽고 따릅니다.</p>
+<table>
+<thead>
+<tr>
+<th>다시 쓰이는 곳</th>
+<th>어떻게</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/speckit-plan</code></td>
+<td>plan.md의 「Constitution Check」 표에서 원칙마다 통과 여부를 적습니다. 설계 전과 후, 두 번 확인합니다</td>
+</tr>
+<tr>
+<td><code>/speckit-tasks</code></td>
+<td>「시험 먼저」 원칙이 있으면 시험 작업을 필수로 넣습니다(원칙이 없으면 시험 작업은 선택)</td>
+</tr>
+<tr>
+<td><code>/speckit-analyze</code></td>
+<td>헌법의 MUST를 어기면 심각도 CRITICAL로 보고합니다</td>
+</tr>
+<tr>
+<td><code>/speckit-converge</code></td>
+<td>코드가 MUST 원칙을 어기면 가장 먼저 고칠 작업으로 덧붙입니다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>원칙을 말로 적어 넘깁니다.</strong> 이 실습에서는 원칙 네 개를 제시했습니다.
+
+
+<div class="hl"><pre><span></span><code>/speckit-constitution 전국 주차장 검색·예약 서비스의 원칙을 정해 줘. 1) 시험 먼저: 인수 시나리오(Given/When/Then)마다 자동 시험을 먼저 쓰고 실패를 확인한 뒤 구현한다. 2) 단순함: 백엔드 서비스 하나와 웹 화면 하나로 시작하고, 결제 같은 외부 연동은 모의로 둔다. 3) 사양이 기준: spec.md 에 없는 기능은 만들지 않는다. 4) 문서와 화면 문구는 한국어로 쓴다.
+</code></pre></div>
+
+
+</li>
+<li><strong>결과를 읽고 풀어 쓴 규칙을 확인합니다.</strong> 22초 만에 <code>.specify/memory/constitution.md</code>가 채워졌습니다. Claude는 "말씀하신 원칙에서 제가 풀어 쓴 규칙"으로 세 가지를 따로 알려 주었습니다. 모의 구현은 교체 가능한 인터페이스 뒤에 둔다, 구조를 늘리려면 plan.md에 근거를 적는다, 코드 식별자는 영어를 허용한다. 원치 않으면 이때 고치라고 합니다.
+
+
+<figure><a href="img/sk-constitution.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="헌법을 쓴 뒤의 요약: 버전 1.0.0, 원칙 네 개, 풀어 쓴 규칙" src="img/sk-constitution.webp" loading="lazy" decoding="async"></a><figcaption>헌법을 쓴 뒤의 요약: 버전 1.0.0, 원칙 네 개, 풀어 쓴 규칙</figcaption></figure>
+</li>
+</ol>
+<h2 id="산출물-constitutionmd">산출물: constitution.md<a class="anchor" href="#산출물-constitutionmd" title="Permanent link">#</a></h2>
+<p>틀의 빈칸(<code>[PRINCIPLE_1_NAME]</code> 등)이 원칙 네 개로 채워지고, 원칙마다 MUST·MUST NOT와 근거가 붙습니다.</p>
+<div class="hl"><pre><span></span><code><span class="gu">### I. 시험 먼저 (NON-NEGOTIABLE)</span>
+spec.md 의 인수 시나리오(Given/When/Then)마다 자동 시험을 먼저 작성해야 한다(MUST).
+구현 전에 해당 시험을 실행해 실패하는 것을 확인해야 하며(MUST), 그 뒤에 시험을 통과시키는
+최소한의 구현을 한다.
+근거: 시나리오와 시험을 1:1로 묶어 두어야 사양 충족 여부를 사람의 판단 없이 확인할 수 있다.
+
+<span class="gu">### III. 사양이 기준</span>
+spec.md 에 없는 기능은 만들지 않는다(MUST NOT). 구현 중 필요한 기능이 발견되면 먼저
+spec.md 를 갱신(`/speckit-specify` 또는 <span class="sb">`/speckit-clarify`</span>)한 뒤 시험과 구현을 진행한다.
+</code></pre></div>
+
+<p>맨 위에는 화면에 보이지 않는 주석으로 <strong>Sync Impact Report</strong>가 붙습니다. 무엇이 바뀌었는지, 다른 문서에 미칠 영향이 있는지를 적는 자리입니다.</p>
+<div class="hl"><pre><span></span><code>&lt;!--
+Sync Impact Report
+<span class="k">-</span><span class="w"> </span>Version change: (템플릿 미작성) → 1.0.0
+<span class="k">-</span><span class="w"> </span>Added principles: I. 시험 먼저, II. 단순함, III. 사양이 기준, IV. 한국어 사용
+<span class="k">-</span><span class="w"> </span>Added sections: 기술 및 범위 제약, 개발 절차와 품질 관문, Governance
+--&gt;
+</code></pre></div>
+
+<p>맨 아래 「Governance」에는 헌법을 고치는 규칙이 있습니다. 버전은 의미적 버전(semantic versioning)을 따릅니다. 원칙을 지우거나 다시 정의하면 MAJOR, 원칙이나 절을 더하면 MINOR, 표현만 다듬으면 PATCH를 올립니다. 이 실습의 헌법은 <code>1.0.0</code>으로 시작했습니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">원칙은 짧고 검사할 수 있게</p>
+<p>"코드 품질을 높인다"보다 "인수 시나리오마다 자동 시험을 먼저 쓴다"가 낫습니다. 이후 점검과 분석에서 준수 여부를 확인할 수 있어야 유효한 원칙입니다. 이 실습에서는 「사양이 기준」 원칙 덕분에, 계획에만 있고 사양에는 없던 「결제 중 만차」 처리가 체크리스트에서 헌법 위반으로 지적됐습니다(7장).</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>헌법에 「시험 먼저」 원칙이 없으면 tasks.md는 어떻게 달라지나요?</summary>
+<p>Spec Kit의 작업 목록 스킬은 "시험 작업은 선택이며, 사양에서 요청하거나 TDD를 요청한 경우에만 만든다"고 정해 두었습니다. 원칙이 없으면 시험 작업 없이 구현 작업만 나올 수 있습니다. 이 실습은 원칙 I이 있어서 이야기마다 시험 작성 → 실패 확인 → 구현 → 통과 확인 순서의 작업이 생겼습니다.</p>
+</details>
+<details class="answer">
+<summary>원칙 하나를 새로 더하면 헌법 버전은 어떻게 바뀌나요?</summary>
+<p>MINOR 버전이 올라갑니다(예: 1.0.0 → 1.1.0). 원칙을 지우거나 뜻을 바꾸면 MAJOR, 문장만 다듬으면 PATCH입니다. 고칠 때마다 맨 위 Sync Impact Report에 바뀐 내용과 영향을 받는 문서를 적습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="setup.html"><span>이전</span>설치와 프로젝트 준비</a><a class="next" href="specify.html"><span>다음</span>명세: spec.md</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물-constitutionmd">산출물: constitution.md</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

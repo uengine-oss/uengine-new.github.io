@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>명확화: 모호함을 재는 기준 — Claude Code × Spec Kit 핸즈온 튜토리얼</title>
+<meta name="description" content="`/speckit-clarify`는 사양을 열 가지 범주로 훑어 범주마다 「분명함·일부·빠짐」으로 평가하고, 영향과 불확실성이 큰 순서로 최대 다섯 개를 하나씩 묻습니다. 그 기준이 무엇인지, 질문이 어떤 형식으로 나오는지, 답이 사양의 어디에 들어가는지 실제 질문 다섯 개로 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/speckit-handson/clarify.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="명확화: 모호함을 재는 기준 — Claude Code × Spec Kit 핸즈온 튜토리얼">
+<meta property="og:description" content="`/speckit-clarify`는 사양을 열 가지 범주로 훑어 범주마다 「분명함·일부·빠짐」으로 평가하고, 영향과 불확실성이 큰 순서로 최대 다섯 개를 하나씩 묻습니다. 그 기준이 무엇인지, 질문이 어떤 형식으로 나오는지, 답이 사양의 어디에 들어가는지 실제 질문 다섯 개로 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/speckit-handson/clarify.html">
+<meta property="og:image" content="https://www.uengine.org/docs/speckit-handson/img/sk-app.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × Spec Kit 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: clarify, [P], converge, 랄프 루프)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="concepts.html"><span class="n">01</span>스펙 주도 개발과 BDD</a></li>
+</ul>
+<div class="nav-part">실습 · 사양까지</div><ul>
+<li><a href="setup.html"><span class="n">02</span>설치와 프로젝트 준비</a></li>
+<li><a href="constitution.html"><span class="n">03</span>헌법: 프로젝트 원칙</a></li>
+<li><a href="specify.html"><span class="n">04</span>명세: spec.md</a></li>
+<li><a href="clarify.html" class="on" aria-current="page"><span class="n">05</span>명확화: 모호함을 재는 기준</a></li>
+</ul>
+<div class="nav-part">실습 · 계획과 작업</div><ul>
+<li><a href="plan.html"><span class="n">06</span>계획: plan.md와 설계 문서</a></li>
+<li><a href="checklist.html"><span class="n">07</span>요구사항 품질 점검</a></li>
+<li><a href="tasks.html"><span class="n">08</span>작업 목록과 일관성 분석</a></li>
+</ul>
+<div class="nav-part">실습 · 구현과 수렴</div><ul>
+<li><a href="implement.html"><span class="n">09</span>구현과 병렬 에이전트</a></li>
+<li><a href="converge.html"><span class="n">10</span>수렴과 동작 확인</a></li>
+<li><a href="tdd-loop.html"><span class="n">11</span>TDD와 랄프 루프</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">실습 · 사양까지<span class="chap">5</span></div>
+    <h1>명확화: 모호함을 재는 기준</h1>
+    <article>
+<blockquote>
+<p><code>/speckit-clarify</code>는 사양을 열 가지 범주로 훑어 범주마다 「분명함·일부·빠짐」으로 평가하고, 영향과 불확실성이 큰 순서로 최대 다섯 개를 하나씩 묻습니다. 그 기준이 무엇인지, 질문이 어떤 형식으로 나오는지, 답이 사양의 어디에 들어가는지 실제 질문 다섯 개로 확인합니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>명세 단계는 "합리적인 기본값이 있으면 추측하라"는 지시를 받습니다. 그래서 질문 없이 끝나기 쉽습니다. 명확화는 반대로 접근합니다. 이미 쓴 사양을 정해진 범주에 하나씩 대조하고, <strong>답에 따라 설계나 시험이 달라지는 빈 부분</strong>만 골라 사람에게 묻습니다.</p>
+<p>Spec Kit은 명확화를 계획(<code>/speckit-plan</code>) <strong>전에</strong> 끝내라고 합니다. 건너뛰면 "뒤에서 다시 고칠 위험이 커진다"고 경고만 하고 넘어갑니다.</p>
+<h2 id="모호함을-재는-열-가지-범주">모호함을 재는 열 가지 범주<a class="anchor" href="#모호함을-재는-열-가지-범주" title="Permanent link">#</a></h2>
+<p>명확화 스킬(<code>.claude/skills/speckit-clarify/SKILL.md</code>)에 적힌 범주를 그대로 옮겼습니다. 범주마다 상태를 <strong>Clear(분명함) · Partial(일부만) · Missing(빠짐)</strong>으로 분류한 내부 현황표를 만듭니다.</p>
+<table>
+<thead>
+<tr>
+<th>범주</th>
+<th>들여다보는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기능 범위와 동작</td>
+<td>핵심 목표와 성공 기준, 범위 밖이라고 밝힌 것, 사용자 역할 구분</td>
+</tr>
+<tr>
+<td>도메인과 데이터 모델</td>
+<td>엔터티·속성·관계, 식별자와 유일성 규칙, 상태 변화(수명주기), 데이터 규모 가정</td>
+</tr>
+<tr>
+<td>상호작용과 화면 흐름</td>
+<td>핵심 사용자 여정, 오류·빈 결과·로딩 상태, 접근성·현지화</td>
+</tr>
+<tr>
+<td>비기능 품질</td>
+<td>성능(지연·처리량), 확장성, 신뢰성·가용성, 관찰성(로그·지표), 보안·개인정보, 규제</td>
+</tr>
+<tr>
+<td>연동과 외부 의존</td>
+<td>외부 서비스와 그 실패 방식, 데이터 입출력 형식, 프로토콜·버전 가정</td>
+</tr>
+<tr>
+<td>엣지 케이스와 실패 처리</td>
+<td>부정 시나리오, 요청 제한, 충돌 해결(동시 수정 등)</td>
+</tr>
+<tr>
+<td>제약과 절충</td>
+<td>기술 제약(언어·저장소·호스팅), 명시한 절충안과 제외한 대안</td>
+</tr>
+<tr>
+<td>용어와 일관성</td>
+<td>표준 용어집, 쓰지 않기로 한 동의어</td>
+</tr>
+<tr>
+<td>완료 신호</td>
+<td>인수 기준을 시험할 수 있는지, 측정할 수 있는 완료 기준</td>
+</tr>
+<tr>
+<td>기타·자리표시</td>
+<td>TODO와 미결정, 수치 없는 형용사("빠른", "직관적인", "견고한")</td>
+</tr>
+</tbody>
+</table>
+<h2 id="무엇을-묻고-무엇을-묻지-않나">무엇을 묻고 무엇을 묻지 않나<a class="anchor" href="#무엇을-묻고-무엇을-묻지-않나" title="Permanent link">#</a></h2>
+<p>일부(Partial)나 빠짐(Missing)인 범주마다 질문 후보를 만들고, 다음 규칙으로 걸러 <strong>최대 5개</strong>만 남깁니다.</p>
+<ul>
+<li><strong>묻는 것:</strong> 답에 따라 아키텍처, 데이터 모델, 작업 나누기, 시험 설계, 화면 동작, 운영 준비, 규제 검증이 실제로 달라지는 것.</li>
+<li><strong>묻지 않는 것:</strong> 이미 답이 있는 것, 취향 문제, 계획 단계에서 정할 실행 세부, 기술 스택 비교(그것이 기능 자체를 가로막지 않는 한).</li>
+<li><strong>고르는 순서:</strong> 미해결 범주가 5개를 넘으면 <strong>영향 × 불확실성</strong>이 큰 순서. 덜 중요한 질문 두 개보다 중요한 질문 하나(예: 보안)를 먼저.</li>
+</ul>
+<p>질문은 <strong>한 번에 하나씩</strong> 나오고, 다음 질문을 미리 보여 주지 않습니다. 형식도 정해져 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>부분</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Question</strong></td>
+<td>물음표로 끝나는 온전한 질문. 요구사항 번호나 주제 이름만 제시하는 것은 금지</td>
+</tr>
+<tr>
+<td><strong>Why it matters</strong></td>
+<td>이 답이 인수나 출시에 왜 중요한지 한 문장</td>
+</tr>
+<tr>
+<td><strong>Recommended / Suggested</strong></td>
+<td>추천하는 답과 이유. 선택지형이면 Recommended, 단답형이면 Suggested</td>
+</tr>
+<tr>
+<td>선택지 표</td>
+<td>서로 겹치지 않는 2~5개 선택지, 필요하면 「Short: 5단어 이내 직접 입력」</td>
+</tr>
+</tbody>
+</table>
+<p>답은 선택지 문자(<code>A</code>), 추천을 받아들이는 <code>yes</code>, 또는 5단어 이내의 직접 입력으로 합니다. <code>done</code>·<code>stop</code>이라고 하면 거기서 멈춥니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>인자 없이 실행합니다.</strong> <code>/speckit-clarify</code>만 입력하면 사양 전체를 훑습니다. 특정 부분만 다시 보고 싶으면 뒤에 영역을 적습니다(7장에서 그렇게 씁니다).
+</li>
+<li><strong>다섯 질문에 답합니다.</strong> 이 실습에서는 추천 답을 네 번 받아들이고, 한 번은 직접 답했습니다.
+
+| # | 질문 | 답 |
+|---|---|---|
+| 1 | 추천 1곳을 고를 때 가격·거리·요금을 어떤 규칙으로 따지는가? | A: 총요금이 가장 낮은 곳, 같으면 가까운 곳 |
+| 2 | 「목적지 근처」는 몇 m 안까지인가? | yes(추천 B): 1km 이내 |
+| 3 | 예약이 확정되면 잔여 면수를 줄이는가? | A: 1 줄이고, 0이면 검색에서 제외 |
+| 4 | 모의 결제는 어떤 조건에서 실패하는가? | 직접 입력: <strong>결제 화면에서 실패를 고르면</strong> (제안은 「특정 카드번호로 실패」였음) |
+| 5 | 「2시간 주차」 요금은 어떻게 계산하는가? | A: 시간당 요금 × 이용 시간, 1시간 단위 올림 |
+
+질문마다 "Why it matters"가 붙어 왜 지금 정해야 하는지 알려 줍니다. 예를 들어 1번은 "규칙이 없으면 같은 입력의 정답이 사람마다 달라져 시험에서 맞다·틀리다를 가릴 수 없다"였습니다.
+
+
+<figure><a href="img/sk-clarify-q1.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="명확화의 첫 질문: Question, Why it matters, Recommended, 선택지 표" src="img/sk-clarify-q1.webp" loading="lazy" decoding="async"></a><figcaption>명확화의 첫 질문: Question, Why it matters, Recommended, 선택지 표</figcaption></figure>
+</li>
+<li><strong>완료 보고를 읽습니다.</strong> 몇 개를 물었는지, 어느 절을 고쳤는지, 품질 점검표가 어떻게 바뀌었는지, 범주별로 무엇이 남았는지 정리해 줍니다.
+
+
+<figure><a href="img/sk-clarify-done.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="명확화 완료 보고: 결정 표와 커버리지 요약" src="img/sk-clarify-done.webp" loading="lazy" decoding="async"></a><figcaption>명확화 완료 보고: 결정 표와 커버리지 요약</figcaption></figure>
+</li>
+</ol>
+<h2 id="산출물-답이-사양에-들어가는-자리">산출물: 답이 사양에 들어가는 자리<a class="anchor" href="#산출물-답이-사양에-들어가는-자리" title="Permanent link">#</a></h2>
+<p>답 하나를 받을 때마다 <code>spec.md</code>를 바로 저장합니다. 먼저 <code>## Clarifications</code> 아래 오늘 날짜 세션에 문답 한 줄을 남깁니다.</p>
+<div class="hl"><pre><span></span><code><span class="gu">## Clarifications</span>
+
+<span class="gu">### Session 2026-11-13</span>
+
+<span class="k">-</span><span class="w"> </span>Q: &quot;목적지 근처&quot;는 목적지에서 얼마 안의 주차장까지 후보로 보는가? → A: 목적지에서 1km 이내.
+<span class="k">-</span><span class="w"> </span>Q: 모의 결제는 어떤 조건에서 실패하는가? → A: 모의 결제 화면에서 운전자가 &quot;실패&quot;를 고르면 실패한다(&quot;승인&quot;을 고르면 승인).
+</code></pre></div>
+
+<p>그다음 답의 종류에 맞는 절을 고칩니다. 규칙은 스킬에 이렇게 정해져 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>답의 종류</th>
+<th>고치는 곳</th>
+<th>이 실습에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기능의 모호함</td>
+<td>기능 요구사항</td>
+<td>FR-003에 「1km 이내」, FR-004에 추천 규칙</td>
+</tr>
+<tr>
+<td>데이터 모양</td>
+<td>핵심 엔터티</td>
+<td>주차장에 「시간당 요금」</td>
+</tr>
+<tr>
+<td>비기능 제약</td>
+<td>성공 기준(측정 가능한 수치로)</td>
+<td>이번에는 해당 없음</td>
+</tr>
+<tr>
+<td>엣지 케이스</td>
+<td>엣지 케이스</td>
+<td>「1km 이내에 후보가 없으면 없다는 안내」</td>
+</tr>
+<tr>
+<td>용어 충돌</td>
+<td>문서 전체에서 용어 통일</td>
+<td>이번에는 해당 없음</td>
+</tr>
+</tbody>
+</table>
+<p>새 요구사항이 생기면 번호가 밀립니다. 이 실습에서는 요금 계산 규칙이 새 FR-005가 되어 기능 요구사항이 14개에서 16개로 늘었습니다. 앞서 쓴 내용과 모순되는 문장은 덧붙이지 않고 <strong>바꿔 씁니다</strong>. 예를 들어 "결제는 시험을 위해 성공·실패를 결정할 수 있다"던 가정은 「결제 화면에서 운전자가 고른다」로 바뀌었습니다.</p>
+<h2 id="범주별-결과커버리지-요약">범주별 결과(커버리지 요약)<a class="anchor" href="#범주별-결과커버리지-요약" title="Permanent link">#</a></h2>
+<p>완료 보고의 마지막 표는 범주마다 네 가지 중 하나로 상태를 적습니다.</p>
+<table>
+<thead>
+<tr>
+<th>상태</th>
+<th>뜻</th>
+<th>이 실습</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resolved (해결)</td>
+<td>일부·빠짐이었고 이번 질문으로 채움</td>
+<td>기능 범위, 도메인·데이터, 엣지 케이스, 완료 신호</td>
+</tr>
+<tr>
+<td>Clear (이미 분명)</td>
+<td>처음부터 충분</td>
+<td>용어 일관성</td>
+</tr>
+<tr>
+<td>Deferred (미룸)</td>
+<td>질문 수 한도를 넘었거나 계획 단계에서 정할 일</td>
+<td>성능·관찰성 수치(성공 기준에 10초 목표가 있어 계획에서 다룸)</td>
+</tr>
+<tr>
+<td>Outstanding (남음)</td>
+<td>아직 일부·빠짐이지만 영향이 작음</td>
+<td>화면 상태(로딩·빈 결과) 세부</td>
+</tr>
+</tbody>
+</table>
+<p>미룸이나 남음이 있으면 바로 계획으로 갈지, 계획 뒤에 명확화를 한 번 더 실행할지 권고합니다. 이 실습에서는 "이 상태로 계획으로 넘어가도 된다"는 권고를 받았습니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">직접 답할 때는 짧게, 하지만 구체적으로</p>
+<p>4번 질문의 제안은 「특정 카드번호로 실패」였습니다. 시연할 때 화면에서 확인하려고 「결제 화면에서 실패를 고르면」으로 직접 답했고, 이 답은 FR-009와 가정에 들어가 결국 화면에 「승인」·「실패」 단추로 구현됩니다. 직접 입력하는 답은 5단어 이내로 제한되므로, 길게 설명해야 하는 결정이라면 명확화가 끝난 뒤 사양을 직접 고치거나 <code>/speckit-specify</code>로 다시 쓰는 편이 낫습니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>명확화는 왜 「어떤 프레임워크를 쓸까요?」 같은 질문을 하지 않나요?</summary>
+<p>기술 스택 비교와 구현 방법은 계획 단계의 몫이라 질문 후보에서 뺍니다. 명확화는 답에 따라 사양(무엇을, 왜)과 인수 시험이 달라지는 빈 부분만 묻습니다. 기술 선택이 없으면 기능 자체를 정할 수 없는 예외적인 경우에만 묻습니다.</p>
+</details>
+<details class="answer">
+<summary>미해결 범주가 일곱 개인데 질문은 다섯 개뿐이라면 무엇부터 묻나요?</summary>
+<p>영향 × 불확실성이 큰 순서로 다섯 개를 고릅니다. 같은 범주의 덜 중요한 질문 두 개보다, 아직 다루지 않은 중요한 범주(예: 보안) 하나를 먼저 묻도록 범주 간 균형도 고려합니다. 묻지 못한 중요한 범주는 완료 보고에 Deferred로 이유와 함께 남습니다.</p>
+</details>
+<details class="answer">
+<summary>답이 앞서 쓴 사양 문장과 모순되면 어떻게 되나요?</summary>
+<p>모순되는 기존 문장을 지우고 새 답으로 바꿔 씁니다. 같은 내용을 두 번 적거나 모순을 남기지 않는 것이 명확화의 검증 항목입니다. 용어가 바뀌면 문서 전체에서 새 용어로 통일하고, 꼭 필요할 때만 「(이전 이름 "X")」를 한 번 남깁니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="specify.html"><span>이전</span>명세: spec.md</a><a class="next" href="plan.html"><span>다음</span>계획: plan.md와 설계 문서</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#모호함을-재는-열-가지-범주">모호함을 재는 열 가지 범주</a></li><li><a href="#무엇을-묻고-무엇을-묻지-않나">무엇을 묻고 무엇을 묻지 않나</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물-답이-사양에-들어가는-자리">산출물: 답이 사양에 들어가는 자리</a></li><li><a href="#범주별-결과커버리지-요약">범주별 결과(커버리지 요약)</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

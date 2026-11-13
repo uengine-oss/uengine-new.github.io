@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>요구사항 품질 점검 — Claude Code × Spec Kit 핸즈온 튜토리얼</title>
+<meta name="description" content="`/speckit-checklist`는 코드가 아니라 **요구사항 문장**을 시험합니다. Spec Kit은 이것을 「영어로 쓴 글을 위한 단위 시험」이라고 부릅니다. 예약·결제 흐름에 대해 34개 항목을 만들게 했더니, 사양과 계획이 어긋난 곳 네 군데가 실제로 드러났습니다. 그 네 곳을 명확화로 사양에 반영하는 과정까지 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/speckit-handson/checklist.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="요구사항 품질 점검 — Claude Code × Spec Kit 핸즈온 튜토리얼">
+<meta property="og:description" content="`/speckit-checklist`는 코드가 아니라 **요구사항 문장**을 시험합니다. Spec Kit은 이것을 「영어로 쓴 글을 위한 단위 시험」이라고 부릅니다. 예약·결제 흐름에 대해 34개 항목을 만들게 했더니, 사양과 계획이 어긋난 곳 네 군데가 실제로 드러났습니다. 그 네 곳을 명확화로 사양에 반영하는 과정까지 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/speckit-handson/checklist.html">
+<meta property="og:image" content="https://www.uengine.org/docs/speckit-handson/img/sk-app.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>Claude Code × Spec Kit 핸즈온 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: clarify, [P], converge, 랄프 루프)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="concepts.html"><span class="n">01</span>스펙 주도 개발과 BDD</a></li>
+</ul>
+<div class="nav-part">실습 · 사양까지</div><ul>
+<li><a href="setup.html"><span class="n">02</span>설치와 프로젝트 준비</a></li>
+<li><a href="constitution.html"><span class="n">03</span>헌법: 프로젝트 원칙</a></li>
+<li><a href="specify.html"><span class="n">04</span>명세: spec.md</a></li>
+<li><a href="clarify.html"><span class="n">05</span>명확화: 모호함을 재는 기준</a></li>
+</ul>
+<div class="nav-part">실습 · 계획과 작업</div><ul>
+<li><a href="plan.html"><span class="n">06</span>계획: plan.md와 설계 문서</a></li>
+<li><a href="checklist.html" class="on" aria-current="page"><span class="n">07</span>요구사항 품질 점검</a></li>
+<li><a href="tasks.html"><span class="n">08</span>작업 목록과 일관성 분석</a></li>
+</ul>
+<div class="nav-part">실습 · 구현과 수렴</div><ul>
+<li><a href="implement.html"><span class="n">09</span>구현과 병렬 에이전트</a></li>
+<li><a href="converge.html"><span class="n">10</span>수렴과 동작 확인</a></li>
+<li><a href="tdd-loop.html"><span class="n">11</span>TDD와 랄프 루프</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">실습 · 계획과 작업<span class="chap">7</span></div>
+    <h1>요구사항 품질 점검</h1>
+    <article>
+<blockquote>
+<p><code>/speckit-checklist</code>는 코드가 아니라 <strong>요구사항 문장</strong>을 시험합니다. Spec Kit은 이것을 「영어로 쓴 글을 위한 단위 시험」이라고 부릅니다. 예약·결제 흐름에 대해 34개 항목을 만들게 했더니, 사양과 계획이 어긋난 곳 네 군데가 실제로 드러났습니다. 그 네 곳을 명확화로 사양에 반영하는 과정까지 봅니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>명세 단계의 품질 점검표(<code>requirements.md</code>)는 글의 <strong>모양</strong>을 봅니다. 구현 세부가 섞이지 않았는지, 성공 기준을 측정할 수 있는지 같은 것입니다. <code>/speckit-checklist</code>는 한 주제를 정해 그 주제의 요구사항이 <strong>충분하고 분명하고 서로 맞는지</strong>를 묻습니다.</p>
+<p>스킬은 "체크리스트는 요구사항 작성을 위한 단위 시험이지, 구현을 확인하는 시험이 아니다"라고 명시합니다. 이 실습에 적용하면 이렇습니다.</p>
+<table>
+<thead>
+<tr>
+<th>이렇게 묻는다 (요구사항 시험)</th>
+<th>이렇게 묻지 않는다 (구현 시험)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"결제 금액이 어떻게 정해지는지 요구사항에 적혀 있는가?"</td>
+<td>"결제 금액이 맞게 계산되는가?"</td>
+</tr>
+<tr>
+<td>"'빠른 응답'이 구체적인 시간으로 정해져 있는가?"</td>
+<td>"응답이 빠른가?"</td>
+</tr>
+<tr>
+<td>"모든 버튼의 눌림 상태 요구가 서로 같은가?"</td>
+<td>"버튼이 잘 눌리는가?"</td>
+</tr>
+</tbody>
+</table>
+<p>항목마다 품질 차원을 대괄호로 붙입니다.</p>
+<table>
+<thead>
+<tr>
+<th>차원</th>
+<th>묻는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Completeness (완전성)</td>
+<td>필요한 요구사항이 다 있는가</td>
+</tr>
+<tr>
+<td>Clarity (명확성)</td>
+<td>구체적이고 한 가지로만 읽히는가</td>
+</tr>
+<tr>
+<td>Consistency (일관성)</td>
+<td>요구사항끼리, 사양과 계획이 서로 맞는가</td>
+</tr>
+<tr>
+<td>Measurability (측정 가능성)</td>
+<td>객관적으로 확인할 수 있는가</td>
+</tr>
+<tr>
+<td>Coverage (범위)</td>
+<td>모든 흐름과 예외, 경계 상황을 다뤘는가</td>
+</tr>
+</tbody>
+</table>
+<p>이 점검은 계획(<code>plan.md</code>)이 있어야 실행됩니다. 사양과 계획, 계약을 함께 읽어야 서로 어긋난 곳을 찾을 수 있기 때문입니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>주제를 정해 실행합니다.</strong>
+
+
+<div class="hl"><pre><span></span><code>/speckit-checklist 예약과 결제 흐름의 요구사항 품질
+</code></pre></div>
+
+
+
+36초 뒤 <code>checklists/reservation-payment.md</code>에 34개 항목(CHK001~CHK034)이 생겼습니다. 묶음은 완전성, 명확성, 일관성, 인수 기준, 시나리오·예외, 비기능, 의존성·가정 일곱 개입니다. 모두 <code>[ ]</code>로 비어 있습니다. 체크는 검토자가 하는 일이기 때문입니다.
+</li>
+<li><strong>「먼저 보라」는 네 항목을 읽습니다.</strong> 항목을 만들다가 실제로 발견한 문제를 따로 짚어 주었습니다.
+
+| 항목 | 걸린 곳 |
+|---|---|
+| CHK014 | 계획과 계약에는 「결제 중 만차」(409 LOT_FULL)가 있는데 사양에는 없습니다. <strong>헌법 III 위반</strong> |
+| CHK001 | 결제 금액이 검색 때 보여 준 총요금과 같아야 하는지 사양에 없습니다 |
+| CHK008 | 「같은 결제 요청」의 기준이 사양에 없고 계획의 <code>idempotencyKey</code>에만 있습니다 |
+| CHK018 | 사양의 「결제 시도」 엔터티는 결과를 담는데, 데이터 모델은 저장하지 않는다고 합니다 |
+
+
+<figure><a href="img/sk-checklist.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="체크리스트를 만든 뒤 먼저 보라고 짚은 네 항목" src="img/sk-checklist.webp" loading="lazy" decoding="async"></a><figcaption>체크리스트를 만든 뒤 먼저 보라고 짚은 네 항목</figcaption></figure>
+</li>
+<li><strong>발견한 문제를 명확화로 사양에 반영합니다.</strong> 명확화에 영역을 인자로 주면 그 부분만 묻습니다.
+
+
+<div class="hl"><pre><span></span><code>/speckit-clarify 체크리스트에서 걸린 CHK001·CHK008·CHK014·CHK018: 결제 금액, 같은 결제 요청의 기준, 결제 중 만차, 결제 시도 기록
+</code></pre></div>
+
+
+
+질문 네 개가 하나씩 나왔고 모두 추천 답을 받아들였습니다. 사양에는 <code>### Session 2026-11-13 (체크리스트 후속)</code> 세션이 새로 생겼고, FR-009·FR-013이 고쳐지고 FR-017(결제 중 만차)·FR-018(결제 시도는 저장하지 않음)이 새로 생겼습니다. 계획 쪽 문서(<code>research.md</code>, <code>data-model.md</code>, <code>contracts/api.md</code>)도 사양에 맞춰 문구가 정리됐고, 이제 409 응답에 사양의 근거가 생겨 헌법 III와의 충돌이 해결됐습니다.
+</li>
+</ol>
+<h2 id="산출물-항목-읽는-법">산출물: 항목 읽는 법<a class="anchor" href="#산출물-항목-읽는-법" title="Permanent link">#</a></h2>
+<p>항목은 질문으로 끝나고, 뒤에 품질 차원과 근거 위치가 붙습니다. <code>[Gap]</code>은 빠진 것, <code>[Ambiguity]</code>는 여러 뜻으로 읽히는 것, <code>[Conflict]</code>는 문서끼리 충돌하는 것입니다.</p>
+<div class="hl"><pre><span></span><code><span class="gu">## 요구사항 완전성</span>
+<span class="k">- [ ]</span> CHK001 결제 금액이 어떻게 정해지는지(검색 때 보여 준 총요금과 같아야 하는지) 요구사항에 적혀 있는가? [Gap, Spec §FR-005, §FR-009]
+<span class="k">- [ ]</span> CHK005 검색 후 결제까지 걸리는 동안 자리를 잡아 두는지(홀드 여부)가 요구사항 또는 범위 밖으로 명시되어 있는가? [Gap, Assumption]
+
+<span class="gu">## 요구사항 일관성</span>
+<span class="k">- [ ]</span> CHK014 plan·계약의 &quot;결제 중 만차(LOT_FULL) 처리&quot;가 spec 의 요구사항으로 뒷받침되는가(헌장 III: 사양에 없는 기능 금지)? [Conflict, Plan Research §6, Contracts §409]
+<span class="k">- [ ]</span> CHK018 Key Entities 의 &quot;결제 시도&quot;(승인/실패 결과 포함)와 data-model 의 &quot;결제 시도는 저장하지 않음&quot;이 충돌하지 않는가? [Conflict, Spec §Key Entities, Data Model]
+</code></pre></div>
+
+<p>파일 머리에는 "이 점검표는 검토자가 소유한다. <code>[x]</code>는 요구사항 품질 기준을 검토해 충족했다는 뜻이지 구현이 끝났다는 뜻이 아니다"라는 안내가 붙습니다. 체크되지 않은 항목은 구현 직전 관문(9장)에서 다시 나타납니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">체크리스트 → 명확화의 짝</p>
+<p>체크리스트는 빈 부분을 <strong>찾고</strong>, 명확화는 빈 부분을 <strong>묻고 채웁니다</strong>. 체크리스트에서 지적한 번호를 그대로 명확화의 인자로 넘기면, 질문 범위가 그 항목들로 좁혀져 짧게 끝납니다. 이 실습에서는 네 항목을 질문 네 개로 확인했습니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>"결제 금액이 맞게 계산되는가?"는 왜 체크리스트 항목이 될 수 없나요?</summary>
+<p>구현이 맞는지 묻는 문장이기 때문입니다. 그것은 자동 시험이 할 일입니다. 체크리스트는 요구사항 문장을 시험하므로 "결제 금액이 어떻게 정해지는지 요구사항에 적혀 있는가?"처럼 사양에 그 내용이 충분하고 분명하게 있는지를 묻습니다.</p>
+</details>
+<details class="answer">
+<summary>CHK014는 어떤 차원의 문제였고, 무엇으로 해결했나요?</summary>
+<p>Consistency(일관성) 차원의 <code>[Conflict]</code>였습니다. 계획과 계약에는 「결제 중 만차」 처리가 있는데 사양에는 없어서, 헌법 III 「사양에 없는 기능은 만들지 않는다」와 충돌했습니다. 명확화에 이 항목을 넘겨 사양에 FR-017로 올렸고, 계약의 409 응답이 사양의 근거를 갖게 되었습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="plan.html"><span>이전</span>계획: plan.md와 설계 문서</a><a class="next" href="tasks.html"><span>다음</span>작업 목록과 일관성 분석</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#산출물-항목-읽는-법">산출물: 항목 읽는 법</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
