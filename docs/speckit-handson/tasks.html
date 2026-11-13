@@ -64,6 +64,15 @@
 <p><code>/speckit-tasks</code>가 사양과 계획을 63개 작업으로 나눕니다. <code>- [ ] T017 [P] [US1] …</code> 한 줄에 담긴 뜻, 사용자 이야기별 단계, 병렬 표시 <code>[P]</code>의 조건을 봅니다. 이어서 <code>/speckit-analyze</code>가 사양·계획·작업 세 문서를 대조해 찾아낸 문제와, 수정을 승인하는 과정까지 봅니다.</p>
 </blockquote>
 <div class="video"><iframe src="https://www.youtube.com/embed/VlsLiiWrUQQ" title="작업 목록과 일관성 분석 — 영상 4:06" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition tip">
+<p class="admonition-title">이 장의 산출물 · GitHub</p>
+<p>이 장이 끝났을 때의 파일이 공개 저장소 <a href="https://github.com/uengine-oss/tutorial-speckit-handson">uengine-oss/tutorial-speckit-handson</a>의 태그 <a href="https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-08-tasks"><code>step-08-tasks</code></a>에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.</p>
+<ul>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/tasks.md"><code>tasks.md</code></a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-analyze/specs/001-parking-search-reserve/tasks.md">분석 수정안 적용 뒤 <code>tasks.md</code></a></li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/commit/step-08-analyze">분석으로 바뀐 점(FR-019, T033a)</a></li>
+</ul>
+</div>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <p>작업 목록은 구현 에이전트가 그대로 따라갈 실행 계획입니다. 그래서 형식이 엄격합니다.</p>
 <div class="hl"><pre><span></span><code>- [ ] T017 [P] [US1] 문장 해석 시험 `backend/src/test/java/kr/parking/query/QueryParserTest.java`: … (FR-001, FR-002)
@@ -238,9 +247,9 @@
 <p>그 밖에 MEDIUM 2건(I2 추적표의 시험 이름 불일치, U4 오류 형식 시험의 위치)과 LOW 4건(A1 예약 번호 순번, A2 「한 번의 동작」 기준, D1 중복, F1 모의 결제 문구)이 있었습니다.</p>
 <p><strong>② 승인 뒤 바뀐 것.</strong> 일곱 개 문서가 함께 고쳐졌습니다.</p>
 <ul>
-<li><code>spec.md</code>: 새 FR-019(결제 승인 시점에 이용 가능 여부 재확인), 인수 시나리오 3개 추가(US2-3 중복 요청, US2-4 면수 감소, US3-3 결제 중 만차)로 8개 → 11개, 가정 4줄 추가.</li>
-<li><code>tasks.md</code>: 번호를 밀지 않으려고 <strong>T033a</strong>(재확인 시험)를 끼워 넣고, T044 설명을 고치고, 추적표에 FR-019 행을 더했습니다.</li>
-<li><code>contracts/api.md</code>: <code>400 LOT_UNAVAILABLE</code> 응답 추가. <code>data-model.md</code>의 <code>startAt</code>은 결제 승인 시점으로.</li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/spec.md"><code>spec.md</code></a>: 새 FR-019(결제 승인 시점에 이용 가능 여부 재확인), 인수 시나리오 3개 추가(US2-3 중복 요청, US2-4 면수 감소, US3-3 결제 중 만차)로 8개 → 11개, 가정 4줄 추가.</li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/tasks.md"><code>tasks.md</code></a>: 번호를 밀지 않으려고 <strong>T033a</strong>(재확인 시험)를 끼워 넣고, T044 설명을 고치고, 추적표에 FR-019 행을 더했습니다.</li>
+<li><a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/contracts/api.md"><code>contracts/api.md</code></a>: <code>400 LOT_UNAVAILABLE</code> 응답 추가. <a href="https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-08-tasks/specs/001-parking-search-reserve/data-model.md"><code>data-model.md</code></a>의 <code>startAt</code>은 결제 승인 시점으로.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">분석은 고치지 않는다, 사람이 승인한다</p>

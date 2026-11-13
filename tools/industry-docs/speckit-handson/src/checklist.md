@@ -2,6 +2,13 @@
 
 > `/speckit-checklist`는 코드가 아니라 **요구사항 문장**을 시험합니다. Spec Kit은 이것을 「영어로 쓴 글을 위한 단위 시험」이라고 부릅니다. 예약·결제 흐름에 대해 34개 항목을 만들게 했더니, 사양과 계획이 어긋난 곳 네 군데가 실제로 드러났습니다. 그 네 곳을 명확화로 사양에 반영하는 과정까지 봅니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-07-checklist`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-07-checklist)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`checklists/reservation-payment.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/checklists/reservation-payment.md)
+    - [`spec.md`(FR-017·018)](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/spec.md)
+    - [바뀐 점](https://github.com/uengine-oss/tutorial-speckit-handson/commit/step-07-checklist)
+
 ## 무엇을 · 왜
 
 명세 단계의 품질 점검표(`requirements.md`)는 글의 **모양**을 봅니다. 구현 세부가 섞이지 않았는지, 성공 기준을 측정할 수 있는지 같은 것입니다. `/speckit-checklist`는 한 주제를 정해 그 주제의 요구사항이 **충분하고 분명하고 서로 맞는지**를 묻습니다.
@@ -24,7 +31,7 @@
 | Measurability (측정 가능성) | 객관적으로 확인할 수 있는가 |
 | Coverage (범위) | 모든 흐름과 예외, 경계 상황을 다뤘는가 |
 
-이 점검은 계획(`plan.md`)이 있어야 실행됩니다. 사양과 계획, 계약을 함께 읽어야 서로 어긋난 곳을 찾을 수 있기 때문입니다.
+이 점검은 계획([`plan.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/plan.md))이 있어야 실행됩니다. 사양과 계획, 계약을 함께 읽어야 서로 어긋난 곳을 찾을 수 있기 때문입니다.
 
 ## 따라 하기
 
@@ -35,7 +42,7 @@
 /speckit-checklist 예약과 결제 흐름의 요구사항 품질
 ```
 
-36초 뒤 `checklists/reservation-payment.md`에 34개 항목(CHK001~CHK034)이 생겼습니다. 묶음은 완전성, 명확성, 일관성, 인수 기준, 시나리오·예외, 비기능, 의존성·가정 일곱 개입니다. 모두 `[ ]`로 비어 있습니다. 체크는 검토자가 하는 일이기 때문입니다.
+36초 뒤 [`checklists/reservation-payment.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/checklists/reservation-payment.md)에 34개 항목(CHK001~CHK034)이 생겼습니다. 묶음은 완전성, 명확성, 일관성, 인수 기준, 시나리오·예외, 비기능, 의존성·가정 일곱 개입니다. 모두 `[ ]`로 비어 있습니다. 체크는 검토자가 하는 일이기 때문입니다.
 </li>
 <li markdown="1">**「먼저 보라」는 네 항목을 읽습니다.** 항목을 만들다가 실제로 발견한 문제를 따로 짚어 주었습니다.
 
@@ -55,7 +62,7 @@
 /speckit-clarify 체크리스트에서 걸린 CHK001·CHK008·CHK014·CHK018: 결제 금액, 같은 결제 요청의 기준, 결제 중 만차, 결제 시도 기록
 ```
 
-질문 네 개가 하나씩 나왔고 모두 추천 답을 받아들였습니다. 사양에는 `### Session 2026-11-13 (체크리스트 후속)` 세션이 새로 생겼고, FR-009·FR-013이 고쳐지고 FR-017(결제 중 만차)·FR-018(결제 시도는 저장하지 않음)이 새로 생겼습니다. 계획 쪽 문서(`research.md`, `data-model.md`, `contracts/api.md`)도 사양에 맞춰 문구가 정리됐고, 이제 409 응답에 사양의 근거가 생겨 헌법 III와의 충돌이 해결됐습니다.
+질문 네 개가 하나씩 나왔고 모두 추천 답을 받아들였습니다. 사양에는 `### Session 2026-11-13 (체크리스트 후속)` 세션이 새로 생겼고, FR-009·FR-013이 고쳐지고 FR-017(결제 중 만차)·FR-018(결제 시도는 저장하지 않음)이 새로 생겼습니다. 계획 쪽 문서([`research.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/research.md), [`data-model.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/data-model.md), [`contracts/api.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-07-checklist/specs/001-parking-search-reserve/contracts/api.md))도 사양에 맞춰 문구가 정리됐고, 이제 409 응답에 사양의 근거가 생겨 헌법 III와의 충돌이 해결됐습니다.
 </li>
 </ol>
 

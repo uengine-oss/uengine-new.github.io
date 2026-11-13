@@ -2,16 +2,23 @@
 
 > 구현이 끝났다고 해서 사양을 모두 충족한 것은 아닙니다. `/speckit-converge`는 사양·계획·작업을 유일한 기준으로 현재 코드를 대조해 남은 일을 `tasks.md` 끝에 작업으로 덧붙입니다. 이 실습에서는 6번 만에 「✅ Converged」가 나왔고, 그사이 사람이 브라우저로 직접 확인해야 하는 일도 한 번 있었습니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-10-converge`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-10-converge)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [Phase 7~11 수렴 절이 쌓인 `tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/tasks.md)
+    - [브라우저 확인 기록 `quickstart.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/quickstart.md)
+    - [수렴·구현 커밋 기록](https://github.com/uengine-oss/tutorial-speckit-handson/commits/step-10-converge)
+
 ## 무엇을 · 왜
 
 수렴(converge)은 구현 뒤에 실행하는 점검입니다. 규칙이 엄격합니다.
 
 | 규칙 | 뜻 |
 |---|---|
-| 기준은 문서뿐 | `spec.md`·`plan.md`·`tasks.md`와 헌법만 기준으로 삼습니다. git 기록이나 diff를 보지 않고 **현재 코드**를 봅니다 |
+| 기준은 문서뿐 | [`spec.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/spec.md)·[`plan.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/plan.md)·[`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/tasks.md)와 헌법만 기준으로 삼습니다. git 기록이나 diff를 보지 않고 **현재 코드**를 봅니다 |
 | 완료 표시는 증거가 아니다 | `[X]`가 붙은 작업도 다시 확인합니다 |
-| 덧붙이기만 한다 | 쓰는 것은 `tasks.md` 끝의 `## Phase N: Convergence` 한 절뿐. 사양·계획·코드는 고치지 않고, 기존 작업의 번호도 바꾸지 않습니다 |
-| 다 됐으면 손대지 않는다 | 남은 일이 없으면 `tasks.md`를 한 글자도 바꾸지 않고 「✅ Converged」를 보고합니다 |
+| 덧붙이기만 한다 | 쓰는 것은 [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/tasks.md) 끝의 `## Phase N: Convergence` 한 절뿐. 사양·계획·코드는 고치지 않고, 기존 작업의 번호도 바꾸지 않습니다 |
+| 다 됐으면 손대지 않는다 | 남은 일이 없으면 [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/tasks.md)를 한 글자도 바꾸지 않고 「✅ Converged」를 보고합니다 |
 
 찾은 차이는 네 가지로 나눕니다.
 
@@ -50,7 +57,7 @@
 </li>
 <li markdown="1">**두 번째 수렴: 「완료」였던 작업이 다시 걸립니다.** 6개는 모두 해결됐지만 새로 두 개가 붙었습니다. 그중 T069는 이런 지적이었습니다. "T061은 「브라우저에서 실행」이라고 적혀 있고 완료로 표시됐지만, 실제로는 서버를 띄워 API만 확인했다." 그리고 "에이전트 대신 직접 보시면서 하는 편이 더 정확할 수 있다"고 권했습니다.
 </li>
-<li markdown="1">**사람이 브라우저로 확인합니다.** Claude에게 서버만 띄워 달라고 하고, `quickstart.md`의 수동 시나리오 1~6을 브라우저에서 직접 해 봤습니다. 녹화 스크립트로 재 보니 검색 버튼을 누르고 0.7초 안에 추천 3곳이 보였고, 승인하면 예약 번호 `PK-20261113-0001`이, 다른 곳을 골라 실패한 뒤 다시 시도해 승인하면 `PK-20261113-0002`가 나왔습니다. 이 결과를 알려 주자 Claude가 `quickstart.md`에 기록하고 T069를 완료로 표시했습니다.
+<li markdown="1">**사람이 브라우저로 확인합니다.** Claude에게 서버만 띄워 달라고 하고, [`quickstart.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/quickstart.md)의 수동 시나리오 1~6을 브라우저에서 직접 해 봤습니다. 녹화 스크립트로 재 보니 검색 버튼을 누르고 0.7초 안에 추천 3곳이 보였고, 승인하면 예약 번호 `PK-20261113-0001`이, 다른 곳을 골라 실패한 뒤 다시 시도해 승인하면 `PK-20261113-0002`가 나왔습니다. 이 결과를 알려 주자 Claude가 [`quickstart.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/quickstart.md)에 기록하고 T069를 완료로 표시했습니다.
 </li>
 <li markdown="1">**문서가 맞을 때까지 반복합니다.** 이후 수렴은 코드가 아니라 문서의 사소한 불일치만 찾았습니다. 연구 문서의 문구, 사양에 없는 「새로 검색하기」 버튼(사양에 한 줄 명시해 유지), 계획의 오래된 숫자, 추적표의 빠진 행. 여섯 번째 수렴에서 「✅ Converged — the implementation satisfies the spec, plan, and tasks.」가 나왔습니다.
 
@@ -69,7 +76,7 @@
 | 5 | 1개 (T074) | 추적표의 빠진 행 |
 | 6 | 0개 | ✅ Converged |
 
-마지막 결과는 작업 75개(`[X]`), 백엔드 시험 91개와 화면 시험 28개 통과, 빌드 성공이었습니다. `tasks.md`에는 `Phase 7`부터 `Phase 11`까지 수렴 절이 다섯 개 쌓였고, 앞의 작업 번호는 하나도 바뀌지 않았습니다.
+마지막 결과는 작업 75개(`[X]`), 백엔드 시험 91개와 화면 시험 28개 통과, 빌드 성공이었습니다. [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/tasks.md)에는 `Phase 7`부터 `Phase 11`까지 수렴 절이 다섯 개 쌓였고, 앞의 작업 번호는 하나도 바뀌지 않았습니다.
 
 !!! tip "언제 멈출지는 사람이 정한다"
     3회차부터는 동작에 영향이 없는 문서 정리만 나왔고, Claude도 "건너뛰고 지금 상태로 리뷰하셔도 됩니다"라고 했습니다. 이 실습은 끝까지 가 보려고 Converged까지 실행했지만, 실제로는 기능 차이가 사라진 시점에 리뷰로 넘어가도 됩니다. 반대로 마지막 보고에 남은 두 가지(검토자 몫인 체크리스트 34개, 처음부터 통과해 「실패 확인」을 못 한 US3 시험)는 수렴이 고쳐 주지 않는, 사람이 판단할 일입니다.
@@ -90,7 +97,7 @@ cd frontend && npm install && npm run dev     # 5173, /api 는 8080 으로
 ## 확인 문제
 
 <details class="answer" markdown="1">
-<summary>`tasks.md`에서 이미 `[X]`인 작업을 수렴이 다시 걸 수 있나요?</summary>
+<summary>[`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/tasks.md)에서 이미 `[X]`인 작업을 수렴이 다시 걸 수 있나요?</summary>
 
 네. 수렴 규칙에 "완료 표시는 증거가 아니다"가 있습니다. 이 실습의 T061(브라우저 수동 확인)은 `[X]`였지만, 실제로는 API만 확인했다는 이유로 두 번째 수렴에서 T069로 다시 지적됐습니다. 다만 기존 작업의 체크를 지우지는 않고, 새 작업을 덧붙입니다.
 </details>
@@ -104,5 +111,5 @@ cd frontend && npm install && npm run dev     # 5173, /api 는 8080 으로
 <details class="answer" markdown="1">
 <summary>남은 일이 없을 때 수렴은 무엇을 남기나요?</summary>
 
-아무것도 남기지 않습니다. 빈 `Convergence` 절도 만들지 않고 `tasks.md`를 한 글자도 바꾸지 않은 채 「✅ Converged」와 확인한 항목 수만 보고합니다.
+아무것도 남기지 않습니다. 빈 `Convergence` 절도 만들지 않고 [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-10-converge/specs/001-parking-search-reserve/tasks.md)를 한 글자도 바꾸지 않은 채 「✅ Converged」와 확인한 항목 수만 보고합니다.
 </details>

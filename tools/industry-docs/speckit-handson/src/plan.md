@@ -2,17 +2,26 @@
 
 > 이제 기술을 정합니다. `/speckit-plan`에 선택한 기술을 전달하면 `plan.md`와 함께 설계 결정 기록, 데이터 모델, API 계약, 검증 안내가 생깁니다. 헌법 점검 표가 어떻게 「관문」 역할을 하는지, 사양에 없던 결정이 어디에 들어가는지 확인합니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-06-plan`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-06-plan)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`plan.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/plan.md)
+    - [`research.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/research.md)
+    - [`data-model.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/data-model.md)
+    - [`contracts/api.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/contracts/api.md)
+    - [`quickstart.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/quickstart.md)
+
 ## 무엇을 · 왜
 
 명세가 **무엇을, 왜**였다면 계획은 **어떻게**입니다. 같은 사양으로도 계획은 여러 개 나올 수 있습니다. 그래서 기술 선택은 이 단계에서 사람이 직접 말해 줍니다.
 
 | 문서 | 내용 |
 |---|---|
-| `plan.md` | 요약, 기술 맥락(언어·의존성·저장소·시험·성능 목표·제약), **헌법 점검(Constitution Check)**, 프로젝트 구조 |
-| `research.md` | 설계 결정마다 결정(Decision)·이유(Rationale)·제외한 대안(Alternatives) |
-| `data-model.md` | 엔터티와 필드, 타입, 규칙 |
+| [`plan.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/plan.md) | 요약, 기술 맥락(언어·의존성·저장소·시험·성능 목표·제약), **헌법 점검(Constitution Check)**, 프로젝트 구조 |
+| [`research.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/research.md) | 설계 결정마다 결정(Decision)·이유(Rationale)·제외한 대안(Alternatives) |
+| [`data-model.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/data-model.md) | 엔터티와 필드, 타입, 규칙 |
 | `contracts/` | 화면과 서버 사이의 약속(API 요청·응답·오류) |
-| `quickstart.md` | 실행·시험 방법, 직접 확인할 검증 시나리오, 인수 시나리오 ↔ 시험 추적표 |
+| [`quickstart.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/quickstart.md) | 실행·시험 방법, 직접 확인할 검증 시나리오, 인수 시나리오 ↔ 시험 추적표 |
 
 ## 따라 하기
 
@@ -31,7 +40,7 @@
 </ol>
 
 !!! warning "「제가 정한 결정」은 사양을 비켜 가는 곳이다"
-    두 번째 결정(결제 중 만차)은 사용자에게 보이는 동작인데 `spec.md`에는 없었습니다. 헌법 III 「사양에 없는 기능은 만들지 않는다」와 어긋납니다. 이 실습에서는 바로 다음 장의 품질 점검이 이를 `CHK014`로 찾아냈습니다. 계획의 요약 끝에 나오는 이런 목록은 그냥 넘기지 말고, 사양에 반영할 것과 계획에 둘 것을 구분하는 데 쓰세요.
+    두 번째 결정(결제 중 만차)은 사용자에게 보이는 동작인데 [`spec.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-06-plan/specs/001-parking-search-reserve/spec.md)에는 없었습니다. 헌법 III 「사양에 없는 기능은 만들지 않는다」와 어긋납니다. 이 실습에서는 바로 다음 장의 품질 점검이 이를 `CHK014`로 찾아냈습니다. 계획의 요약 끝에 나오는 이런 목록은 그냥 넘기지 말고, 사양에 반영할 것과 계획에 둘 것을 구분하는 데 쓰세요.
 
 ## 산출물 읽는 법
 

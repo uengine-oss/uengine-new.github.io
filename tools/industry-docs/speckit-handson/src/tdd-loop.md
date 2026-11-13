@@ -2,6 +2,15 @@
 
 > 사양의 Given/When/Then 한 줄이 어떻게 Java(JUnit 5)와 TypeScript(Vitest) 시험이 되는지, 그 시험이 「실패 → 구현 → 통과」를 어떻게 지키는지 봅니다. 이어서 같은 지시를 수렴할 때까지 되풀이하는 **랄프 루프(Ralph loop)**로, 요구사항 하나를 더한 뒤 사람의 개입 없이 시험·구현·커밋까지 가는 과정을 실제로 실행해 봅니다.
 
+!!! tip "이 장의 산출물 · GitHub"
+    이 장이 끝났을 때의 파일이 공개 저장소 [uengine-oss/tutorial-speckit-handson](https://github.com/uengine-oss/tutorial-speckit-handson)의 태그 [`step-11-ralph`](https://github.com/uengine-oss/tutorial-speckit-handson/tree/step-11-ralph)에 있습니다. 본문의 파일 이름을 눌러도 해당 파일이 열립니다.
+
+    - [`PROMPT.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/PROMPT.md)
+    - [`ralph.sh`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/ralph.sh)
+    - [사양 먼저(FR-021)](https://github.com/uengine-oss/tutorial-speckit-handson/commit/e7486f9)
+    - [루프가 남긴 커밋(시험 먼저)](https://github.com/uengine-oss/tutorial-speckit-handson/commit/ae70323)
+    - [`RecommendationApiTest.java`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/backend/src/test/java/kr/parking/recommend/RecommendationApiTest.java)
+
 ## 사양 한 줄에서 시험까지
 
 이 실습의 헌법 I은 "인수 시나리오마다 자동 시험을 먼저 쓰고 실패를 확인한 뒤 구현한다"입니다. 그래서 사양의 시나리오가 그대로 시험의 이름과 검사 내용이 됩니다. 마지막에 더한 요구사항 FR-021로 과정을 살펴봅니다.
@@ -124,11 +133,11 @@ done
 
 | 항목 | 10장(손으로) | 이 장(랄프 루프) |
 |---|---|---|
-| 한 바퀴 | 사람이 `/speckit-converge` → 판단 → `/speckit-implement` | `PROMPT.md` 한 장을 `claude -p`가 되풀이 |
+| 한 바퀴 | 사람이 `/speckit-converge` → 판단 → `/speckit-implement` | [`PROMPT.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/PROMPT.md) 한 장을 `claude -p`가 되풀이 |
 | 결정이 필요한 작업 | 사람이 그때그때 정함(T063 목적지 추가, T068 버튼 제거) | 지시에 미리 적어 두거나, 사람이 사양을 먼저 고침 |
 | 체크리스트 관문 | 매번 `yes`라고 답함 | 지시에 「yes로 진행」을 적어 둠 |
 | 멈추는 때 | 사람이 「✅ Converged」를 보고 판단 | 마지막 줄의 약속 문구, 또는 최대 반복 수 |
-| 남는 기록 | 대화와 `tasks.md`의 수렴 절 | 반복마다 커밋, `.ralph-N.log` |
+| 남는 기록 | 대화와 [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/specs/001-parking-search-reserve/tasks.md)의 수렴 절 | 반복마다 커밋, `.ralph-N.log` |
 
 !!! tip "루프를 안전하게"
     최대 반복 수를 반드시 둡니다(이 실습은 5). 반복마다 커밋하게 하면 잘못된 반복을 되돌리기 쉽습니다. 권한은 자동 모드(`--permission-mode auto`)로 두어 위험한 명령은 분류기가 막게 했습니다. 그리고 루프가 끝나도 사람의 검토는 남습니다. 이 실습에서도 검토자 몫인 체크리스트 34개는 루프가 건드리지 않았습니다.
@@ -138,13 +147,13 @@ done
 <details class="answer" markdown="1">
 <summary>사양의 시나리오와 시험은 무엇으로 이어지나요?</summary>
 
-세 가지로 이어집니다. 시험 이름(`@DisplayName`, `it(...)`)에 시나리오 문장과 요구사항 번호(FR-021)를 적고, `tasks.md`의 작업 설명과 추적표가 FR 번호와 시험 파일을 함께 가리키고, `/speckit-converge`가 `US1/AC5` 같은 시나리오 번호를 기준으로 구현을 다시 대조합니다.
+세 가지로 이어집니다. 시험 이름(`@DisplayName`, `it(...)`)에 시나리오 문장과 요구사항 번호(FR-021)를 적고, [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/specs/001-parking-search-reserve/tasks.md)의 작업 설명과 추적표가 FR 번호와 시험 파일을 함께 가리키고, `/speckit-converge`가 `US1/AC5` 같은 시나리오 번호를 기준으로 구현을 다시 대조합니다.
 </details>
 
 <details class="answer" markdown="1">
 <summary>랄프 루프에서 지시(PROMPT.md)는 왜 매번 같아야 하나요?</summary>
 
-루프의 상태는 지시가 아니라 파일과 git에 쌓이기 때문입니다. 에이전트는 매번 같은 지시를 받고, 지난 반복에서 남긴 `tasks.md`의 체크, 코드, 커밋을 읽어 이어서 일합니다. 그래서 지시는 「무엇이 남았는지 스스로 찾고 처리하라」처럼 반복해도 뜻이 같은 문장으로 씁니다. Spec Kit에서는 `/speckit-converge`가 그 「찾기」를 맡습니다.
+루프의 상태는 지시가 아니라 파일과 git에 쌓이기 때문입니다. 에이전트는 매번 같은 지시를 받고, 지난 반복에서 남긴 [`tasks.md`](https://github.com/uengine-oss/tutorial-speckit-handson/blob/step-11-ralph/specs/001-parking-search-reserve/tasks.md)의 체크, 코드, 커밋을 읽어 이어서 일합니다. 그래서 지시는 「무엇이 남았는지 스스로 찾고 처리하라」처럼 반복해도 뜻이 같은 문장으로 씁니다. Spec Kit에서는 `/speckit-converge`가 그 「찾기」를 맡습니다.
 </details>
 
 <details class="answer" markdown="1">
