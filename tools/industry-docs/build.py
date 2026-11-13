@@ -54,9 +54,9 @@ PRODUCTS = {
                 foot="이 교재의 화면과 수치는 2026년 11월 11일 KANG 공정 PDM v0.1.0 배포본을 고치지 않고 실제로 실행해 얻었습니다. RTU 데이터는 잡음 없는 합성 데이터이며 현장 성능이 아닙니다. 화면 제목의 고객사 이름은 가렸습니다.",
                 chapters=[("index", "시작하기"), ("background", "1부 배경"), ("setup", "2부 돌려 보기"), ("anomaly", "2부 돌려 보기"),
                           ("models", "3부 모델과 학습"), ("operation", "3부 모델과 학습"), ("plcdata", "4부 현장 데이터와 과제"), ("assignments", "4부 현장 데이터와 과제")]),
-    "ai-planning": dict(name="AI 기획·설계 도구 실습", page="axschool.html", pagelabel="AX School", og="board1b.webp", search="교재 검색 (예: 역질문, 겹침 금지, OpenUI)",
-                foot="이 교재의 화면과 결과는 2026년 11월 4일 실제로 실행해 얻었습니다. 실습 주제는 가상의 회사입니다. ChatPRD, Eraser AI, Uizard, bolt.diy 실행 화면은 확인하지 못했습니다.",
-                chapters=[("index", "시작하기"), ("interview", "1부"), ("model", "2부"), ("screen", "3부"), ("wrap", "4부")]),
+    "ai-planning": dict(name="디자인 → MVP → 실제 구현", page="axschool.html", pagelabel="AX School", og="d2c-hifi.webp", search="검색 (예: 와이어프레임, 댓글, 계획 모드, 동시 예약)",
+                foot="이 교재의 화면과 결과는 2026년 11월 7일 claude.ai 유료 계정(Claude Design·Artifacts, Opus 5.5)과 Claude Code 2.1.319(Sonnet 5.5)로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.",
+                chapters=[("index", "시작하기"), ("flow", "실습"), ("design", "실습"), ("mvp", "실습"), ("code", "실습"), ("try", "실습")]),
 }
 KEY = sys.argv[1] if sys.argv[1:] and sys.argv[1] in PRODUCTS else sys.exit(__doc__)
 P = PRODUCTS[KEY]
