@@ -2,6 +2,11 @@
 
 > Figma 파일(`.fig`)을 읽고 쓰는 오픈소스 디자인 편집기 OpenPencil에 사내 모델(Frentis)을 연결해, 2장과 같은 요청으로 주차장 앱 와이어프레임을 그려 봅니다. 외부 AI 서비스에 요구 사항과 화면을 보내지 않고도 같은 흐름을 구현할 수 있는지, 사내 모델을 연결할 때 무엇에 주의해야 하는지 살펴봅니다.
 
+!!! tip "한글 글꼴을 넣은 데스크톱판 OpenPencil KR 내려받기"
+    공개 웹 앱(`app.openpencil.dev`)에서는 한글이 포함된 글 상자가 캔버스에 표시되지 않을 수 있습니다(2026년 11월 14일 확인). uEngine이 최신 소스에 한글 글꼴(Pretendard·Noto Sans KR·나눔명조)을 넣어 빌드한 데스크톱판 **OpenPencil KR**(macOS·Windows)을 [AI 도구 모음 → OpenPencil KR](https://www.uengine.org/contents/aitools.html#openpencil)에서 내려받을 수 있습니다. 데스크톱판에서는 사내 게이트웨이 주소를 입력해 중계 없이 연결합니다.
+
+    ![OpenPencil KR에서 사내 Frentis 모델이 그린 주차장 예약 앱 세 화면(중계 없이 연결, 71초)](img/d2c-op-kr-result.webp)
+
 ## 무엇을 · 왜
 
 2장의 Claude Design은 claude.ai 안에서 Anthropic 모델로 동작합니다. 회사 규정상 외부 AI 서비스에 기획 내용을 보낼 수 없거나, 디자인 팀과 Figma 파일을 주고받아야 한다면 다른 선택지가 필요합니다. **OpenPencil**은 그런 경우에 쓸 수 있는 오픈소스 디자인 편집기입니다.
@@ -9,7 +14,7 @@
 | 항목 | OpenPencil |
 |---|---|
 | 라이선스 | MIT 오픈소스(클라우드 기능만 Apache 2.0) |
-| 실행 | 데스크톱 앱(macOS·Windows·Linux, 약 15MB) 또는 웹 앱 `app.openpencil.dev` |
+| 실행 | 데스크톱 앱(macOS·Windows·Linux, 약 15MB) 또는 웹 앱 `app.openpencil.dev`에서 실행합니다. 한글 글꼴을 내장한 [OpenPencil KR](https://www.uengine.org/contents/aitools.html#openpencil)도 있습니다. |
 | Figma 호환 | `.fig` 파일을 열고 저장하며, 앱 사이에서 노드를 복사·붙여넣기합니다. |
 | AI | 채팅(⌘J)에서 100개가 넘는 도구로 화면을 만들고 수정합니다. 사용자 키를 입력하는 방식(BYOK)으로, OpenAI·Anthropic 호환 주소라면 어떤 모델이든 연결합니다. |
 | 자동화 | CLI(`openpencil`), MCP 서버, Claude Code·Codex 같은 코딩 에이전트 연결 |
@@ -19,7 +24,7 @@
 ## 따라 하기
 
 <ol class="steps" markdown="1">
-<li markdown="block">**OpenPencil 열기.** 웹 앱 `https://app.openpencil.dev`를 열거나 데스크톱 앱을 설치합니다(macOS는 `brew install --cask openpencil`). 첫 화면에 「Welcome to OpenPencil」과 「Import Figma files and make them your own」이라는 안내, 「Design with AI」·「Take the tour」 카드가 보입니다.
+<li markdown="block">**OpenPencil 열기.** 웹 앱 `https://app.openpencil.dev`를 열거나 데스크톱 앱을 설치합니다. 한글로 작업한다면 [OpenPencil KR](https://www.uengine.org/contents/aitools.html#openpencil)을 받아 설치하세요(공식 데스크톱 앱은 macOS에서 `brew install --cask openpencil`). 첫 화면에는 「Welcome to OpenPencil」과 「Import Figma files and make them your own」 안내 문구가 보입니다. 「Design with AI」·「Take the tour」 카드도 있습니다.
 </li>
 <li markdown="block">**사내 모델 등록.** 첫 화면의 「Set up AI」 → 「Advanced settings」를 누르면 Settings의 AI & agents → Models가 열립니다. 「Design model」을 열어 아래와 같이 입력합니다.
 
@@ -70,10 +75,10 @@
 ## 사내 모델을 연결하며 겪은 일
 
 !!! warning "웹 앱에서 http 게이트웨이는 바로 부를 수 없다"
-    웹 앱은 https 페이지이므로 `http://` 주소로 요청을 보내면 브라우저가 차단합니다(혼합 콘텐츠). 공식 문서에 따르면 데스크톱 앱은 CORS를 거치지 않으므로 게이트웨이 주소를 바로 넣으면 됩니다. 이 실습에서는 녹화를 위해 웹 앱을 사용했습니다. 내 PC에 작은 중계(`127.0.0.1:8788`)를 실행해 요청을 게이트웨이로 전달했습니다. 중계가 회사 키와 CORS 헤더를 추가하므로 화면에는 키가 나오지 않습니다. 이때 Chrome은 이 사이트의 로컬 네트워크 접근을 허용할지 묻습니다. 허용하지 않으면 「Could not reach this endpoint from the browser. Try the desktop app or use an endpoint with CORS enabled.」가 나옵니다.
+    웹 앱은 https 페이지이므로 `http://` 주소로 요청을 보내면 브라우저가 차단합니다(혼합 콘텐츠). 공식 문서에 따르면 데스크톱 앱은 CORS를 거치지 않으므로 게이트웨이 주소를 바로 넣으면 됩니다. 이 실습에서는 녹화를 위해 웹 앱을 사용했습니다. 내 PC에 작은 중계(`127.0.0.1:8788`)를 실행해 요청을 게이트웨이로 전달했습니다. 중계가 회사 키와 CORS 헤더를 추가하므로 화면에는 키가 나오지 않습니다. 이때 Chrome은 이 사이트의 로컬 네트워크 접근을 허용할지 묻습니다. 허용하지 않으면 「Could not reach this endpoint from the browser. Try the desktop app or use an endpoint with CORS enabled.」가 나옵니다. OpenPencil KR 데스크톱판에서는 게이트웨이 주소(`http://…/v1`)를 입력하자 중계 없이 「Connected successfully. Model is reachable.」이 표시됐습니다.
 
 !!! warning "추론 모델은 출력 한도가 작으면 빈 답을 낸다"
-    처음에는 요청을 보내도 캔버스에 아무것도 생기지 않고 「Regenerate」만 보였습니다. 중계에서 요청을 확인하니 OpenPencil이 이 사용자 지정 모델에 출력 한도를 `max_tokens: 1024`로 보냈습니다. Frentis는 그 1,024토큰을 모두 추론에 사용해 `finish_reason: length`로 응답을 마쳤습니다. 도구 호출도 텍스트도 없는 빈 응답입니다. 중계에서 출력 한도를 16,384로 올리고 Thinking level을 Low로 낮추자 와이어프레임이 그려졌습니다. 사내 추론 모델을 다른 도구에 연결할 때는 Output limit과 Thinking level부터 확인하세요.
+    처음에는 요청을 보내도 캔버스에 아무것도 생기지 않고 「Regenerate」만 보였습니다. 중계에서 요청을 확인하니 OpenPencil이 이 사용자 지정 모델에 출력 한도를 `max_tokens: 1024`로 보냈습니다. Frentis는 그 1,024토큰을 모두 추론에 사용해 `finish_reason: length`로 응답을 마쳤습니다. 도구 호출도 텍스트도 없는 빈 응답입니다. 중계에서 출력 한도를 16,384로 올리고 Thinking level을 Low로 낮추자 와이어프레임이 그려졌습니다. 사내 추론 모델을 다른 도구에 연결할 때는 Output limit과 Thinking level부터 확인하세요. 최신 소스로 빌드한 OpenPencil KR에서는 Output limit이 자동 추천값인 16,384토큰으로 설정됐습니다. 중계 없이 연결해도 와이어프레임이 그려졌습니다.
 
 ## 확인 문제
 
@@ -86,7 +91,7 @@ AI Provider에서 OpenAI-compatible(또는 Anthropic-compatible)을 선택합니
 <details class="answer" markdown="1">
 <summary>웹 앱과 데스크톱 앱 가운데 사내 게이트웨이에는 어느 쪽이 편한가요?</summary>
 
-데스크톱 앱입니다. 웹 앱은 브라우저의 혼합 콘텐츠·CORS 규칙을 따르므로 게이트웨이가 https와 CORS를 지원해야 하고, 내 PC의 중계를 쓰려면 로컬 네트워크 접근도 허용해야 합니다. 공식 문서에 따르면 데스크톱 앱은 CORS를 거치지 않고 요청합니다.
+데스크톱 앱입니다. 웹 앱은 브라우저의 혼합 콘텐츠·CORS 규칙을 따르므로 게이트웨이가 https와 CORS를 지원해야 하고, 내 PC의 중계를 쓰려면 로컬 네트워크 접근도 허용해야 합니다. 공식 문서에 따르면 데스크톱 앱은 CORS를 거치지 않고 요청합니다. 한글로 작업할 때는 한글 글꼴을 내장한 OpenPencil KR을 사용할 수 있습니다.
 </details>
 
 <details class="answer" markdown="1">
