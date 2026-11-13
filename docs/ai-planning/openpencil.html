@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>디자인 도구 하나 더: OpenPencil과 사내 모델 — 디자인 → MVP → 실제 구현 튜토리얼</title>
+<meta name="description" content="Figma 파일(`.fig`)을 읽고 쓰는 오픈소스 디자인 편집기 OpenPencil에 사내 모델(Frentis)을 연결해, 2장과 같은 요청으로 주차장 앱 와이어프레임을 그려 봅니다. 외부 AI 서비스에 요구 사항과 화면을 보내지 않고도 같은 흐름을 구현할 수 있는지, 사내 모델을 연결할 때 무엇에 주의해야 하는지 살펴봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/ai-planning/openpencil.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="디자인 도구 하나 더: OpenPencil과 사내 모델 — 디자인 → MVP → 실제 구현 튜토리얼">
+<meta property="og:description" content="Figma 파일(`.fig`)을 읽고 쓰는 오픈소스 디자인 편집기 OpenPencil에 사내 모델(Frentis)을 연결해, 2장과 같은 요청으로 주차장 앱 와이어프레임을 그려 봅니다. 외부 AI 서비스에 요구 사항과 화면을 보내지 않고도 같은 흐름을 구현할 수 있는지, 사내 모델을 연결할 때 무엇에 주의해야 하는지 살펴봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/ai-planning/openpencil.html">
+<meta property="og:image" content="https://www.uengine.org/docs/ai-planning/img/d2c-hifi.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>디자인 → MVP → 실제 구현 <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: 와이어프레임, 댓글, 계획 모드, 동시 예약)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">실습</div><ul>
+<li><a href="flow.html"><span class="n">01</span>흐름과 도구</a></li>
+<li><a href="design.html"><span class="n">02</span>디자인: 와이어프레임에서 클릭 프로토타입까지</a></li>
+<li><a href="openpencil.html" class="on" aria-current="page"><span class="n">03</span>디자인 도구 하나 더: OpenPencil과 사내 모델</a></li>
+<li><a href="mvp.html"><span class="n">04</span>동작하는 MVP</a></li>
+<li><a href="code.html"><span class="n">05</span>Claude Code로 실제 구현</a></li>
+<li><a href="try.html"><span class="n">06</span>실제로 써 보기: 동시 예약과 기록</a></li>
+</ul>
+<div class="nav-part">배포</div><ul>
+<li><a href="deploy.html"><span class="n">07</span>배포: Docker Compose와 쿠버네티스(kind)</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">실습<span class="chap">3</span></div>
+    <h1>디자인 도구 하나 더: OpenPencil과 사내 모델</h1>
+    <article>
+<blockquote>
+<p>Figma 파일(<code>.fig</code>)을 읽고 쓰는 오픈소스 디자인 편집기 OpenPencil에 사내 모델(Frentis)을 연결해, 2장과 같은 요청으로 주차장 앱 와이어프레임을 그려 봅니다. 외부 AI 서비스에 요구 사항과 화면을 보내지 않고도 같은 흐름을 구현할 수 있는지, 사내 모델을 연결할 때 무엇에 주의해야 하는지 살펴봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/mZk3oBXOpaU" title="디자인 도구 하나 더: OpenPencil과 사내 모델 — 영상 2:44" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>2장의 Claude Design은 claude.ai 안에서 Anthropic 모델로 동작합니다. 회사 규정상 외부 AI 서비스에 기획 내용을 보낼 수 없거나, 디자인 팀과 Figma 파일을 주고받아야 한다면 다른 선택지가 필요합니다. <strong>OpenPencil</strong>은 그런 경우에 쓸 수 있는 오픈소스 디자인 편집기입니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>OpenPencil</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>라이선스</td>
+<td>MIT 오픈소스(클라우드 기능만 Apache 2.0)</td>
+</tr>
+<tr>
+<td>실행</td>
+<td>데스크톱 앱(macOS·Windows·Linux, 약 15MB) 또는 웹 앱 <code>app.openpencil.dev</code></td>
+</tr>
+<tr>
+<td>Figma 호환</td>
+<td><code>.fig</code> 파일을 열고 저장하며, 앱 사이에서 노드를 복사·붙여넣기합니다.</td>
+</tr>
+<tr>
+<td>AI</td>
+<td>채팅(⌘J)에서 100개가 넘는 도구로 화면을 만들고 수정합니다. 사용자 키를 입력하는 방식(BYOK)으로, OpenAI·Anthropic 호환 주소라면 어떤 모델이든 연결합니다.</td>
+</tr>
+<tr>
+<td>자동화</td>
+<td>CLI(<code>openpencil</code>), MCP 서버, Claude Code·Codex 같은 코딩 에이전트 연결</td>
+</tr>
+</tbody>
+</table>
+<p>이 장에서는 회사 게이트웨이의 <strong>Frentis 모델</strong>(OpenAI 호환 API, 모델 이름 <code>frentis-ai-model</code>)을 연결했습니다. 디자인 요청과 화면 정보가 회사 밖으로 나가지 않습니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>
+<p><strong>OpenPencil 열기.</strong> 웹 앱 <code>https://app.openpencil.dev</code>를 열거나 데스크톱 앱을 설치합니다(macOS는 <code>brew install --cask openpencil</code>). 첫 화면에 「Welcome to OpenPencil」과 「Import Figma files and make them your own」이라는 안내, 「Design with AI」·「Take the tour」 카드가 보입니다.</p>
+</li>
+<li>
+<p><strong>사내 모델 등록.</strong> 첫 화면의 「Set up AI」 → 「Advanced settings」를 누르면 Settings의 AI &amp; agents → Models가 열립니다. 「Design model」을 열어 아래와 같이 입력합니다.</p>
+<table>
+<thead>
+<tr>
+<th>칸</th>
+<th>넣은 값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Frentis 사내 모델</td>
+</tr>
+<tr>
+<td>AI Provider</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Model ID</td>
+<td>「Custom model…」을 고르면 나오는 Custom model ID 칸에 <code>frentis-ai-model</code></td>
+</tr>
+<tr>
+<td>Base URL</td>
+<td>사내 게이트웨이 주소(이 실습은 아래 상자의 로컬 중계 <code>http://127.0.0.1:8788/v1</code>)</td>
+</tr>
+<tr>
+<td>API Type</td>
+<td>Completions(그대로)</td>
+</tr>
+<tr>
+<td>API Key</td>
+<td>사내 키(이 실습은 중계가 키를 넣으므로 아무 글자)</td>
+</tr>
+<tr>
+<td>Advanced settings → Thinking level</td>
+<td>Low(Capabilities의 Tool calling은 켜진 그대로)</td>
+</tr>
+</tbody>
+</table>
+<p>「Test connection」을 누르면 「Connected successfully. Model is reachable.」이라는 안내가 나옵니다. 같은 화면의 Output limit에는 「Automatic recommendation · 16,384 tokens」가 보입니다. 「Save model」로 저장합니다.</p>
+<figure><a href="img/d2c-op-connected.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Test connection 성공: Thinking level Low, Output limit 16,384토큰" src="img/d2c-op-connected.webp" loading="lazy" decoding="async"></a><figcaption>Test connection 성공: Thinking level Low, Output limit 16,384토큰</figcaption></figure>
+</li>
+<li>
+<p><strong>와이어프레임 요청.</strong> 오른쪽 패널의 AI 탭에서 2장의 첫 요청과 같은 내용(화면 3개, A·B 구역 20면씩, 회색 상자와 이름표만)을 보냅니다.</p>
+<div class="hl"><pre><span></span><code>사내 지하 1층 주차장 예약 앱의 와이어프레임을 그려 줘. 모바일 화면 3개(390×844)를 나란히: ① 날짜·시간 고르기와 A·B 구역 배치도(20면씩) ② 이름·차량번호 입력과 예약 버튼 ③ 내 예약 목록과 취소 버튼. 색 없이 회색 상자와 이름표만 써 줘.
+</code></pre></div>
+
+<p>모델이 그리는 동안 캔버스 위에 「Following Pico」와 「Stop following」이 보이고, 화면은 AI가 그리는 위치를 따라 움직입니다. 캔버스에는 디자인 점검 표시(빨간·노란 동그라미)도 나타납니다.</p>
+<figure><a href="img/d2c-op-following.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="사내 모델이 그리는 중: Following Pico 띠와 점검 표시" src="img/d2c-op-following.webp" loading="lazy" decoding="async"></a><figcaption>사내 모델이 그리는 중: Following Pico 띠와 점검 표시</figcaption></figure>
+</li>
+<li>
+<p><strong>결과 보기.</strong> 요청을 보낸 지 55초 만에 작업이 끝났습니다. View 메뉴에서 「Design issues」를 끄면 점검 표시가 사라집니다. Shift+1로 전체를 화면에 맞춥니다. 레이어에는 「Parking Wireframe」 아래 S1-Select, S2-Input, S3-MyReservations 세 프레임(390×844)이 생겼습니다.</p>
+<table>
+<thead>
+<tr>
+<th>화면</th>
+<th>캔버스에 그려진 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1-Select</td>
+<td>날짜 칩 14~20일(16일 선택), 시간 칸 08:00~18:00(11:00 선택), 구역 자리에 「20」 이름표</td>
+</tr>
+<tr>
+<td>S2-Input</td>
+<td>선택 요약 카드(11:00 ~ 13:00 · A-07), 입력 칸 두 개, 아래쪽 버튼</td>
+</tr>
+<tr>
+<td>S3-MyReservations</td>
+<td>예약 카드 세 장(A-07, B-12, 흐리게 처리한 A-03)</td>
+</tr>
+</tbody>
+</table>
+<p>채팅에는 화면별로 만든 내용과 「잔여 항목: 취소/확정 모달, 시간대 스크롤, 배치도 확대 등 세부 플로우 미포함」이 정리됐습니다. 「Revert changes」로 이번 변경을 되돌릴 수 있습니다.</p>
+<figure><a href="img/d2c-op-result.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Frentis가 그린 세 화면과 레이어, 채팅 요약" src="img/d2c-op-result.webp" loading="lazy" decoding="async"></a><figcaption>Frentis가 그린 세 화면과 레이어, 채팅 요약</figcaption></figure>
+<p>채팅 요약에는 「A·B 구역 20면씩 5×4 격자 배치도, 번호 01~20」이라고 적혀 있지만, 캔버스의 구역 자리에는 「20」이라는 작은 이름표만 있고 칸은 그려지지 않았습니다. 모델의 요약에 앞서 캔버스를 직접 확인하고, 같은 채팅에서 「A 구역과 B 구역을 20면씩 5×4 칸으로 그리고 번호를 붙여 줘」처럼 빠진 부분을 하나씩 더 요청해 다듬습니다.</p>
+</li>
+<li>
+<p><strong>Figma 파일로 저장.</strong> File 메뉴의 「Save as…」(⇧⌘S)로 <code>.fig</code> 파일을 저장합니다. 웹 앱에서는 브라우저의 파일 저장 창이 열립니다.</p>
+<figure><a href="img/d2c-op-saveas.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="File 메뉴의 Save as…" src="img/d2c-op-saveas.webp" loading="lazy" decoding="async"></a><figcaption>File 메뉴의 Save as…</figcaption></figure>
+</li>
+</ol>
+<h2 id="사내-모델을-연결하며-겪은-일">사내 모델을 연결하며 겪은 일<a class="anchor" href="#사내-모델을-연결하며-겪은-일" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">웹 앱에서 http 게이트웨이는 바로 부를 수 없다</p>
+<p>웹 앱은 https 페이지이므로 <code>http://</code> 주소로 요청을 보내면 브라우저가 차단합니다(혼합 콘텐츠). 공식 문서에 따르면 데스크톱 앱은 CORS를 거치지 않으므로 게이트웨이 주소를 바로 넣으면 됩니다. 이 실습에서는 녹화를 위해 웹 앱을 사용했습니다. 내 PC에 작은 중계(<code>127.0.0.1:8788</code>)를 실행해 요청을 게이트웨이로 전달했습니다. 중계가 회사 키와 CORS 헤더를 추가하므로 화면에는 키가 나오지 않습니다. 이때 Chrome은 이 사이트의 로컬 네트워크 접근을 허용할지 묻습니다. 허용하지 않으면 「Could not reach this endpoint from the browser. Try the desktop app or use an endpoint with CORS enabled.」가 나옵니다.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">추론 모델은 출력 한도가 작으면 빈 답을 낸다</p>
+<p>처음에는 요청을 보내도 캔버스에 아무것도 생기지 않고 「Regenerate」만 보였습니다. 중계에서 요청을 확인하니 OpenPencil이 이 사용자 지정 모델에 출력 한도를 <code>max_tokens: 1024</code>로 보냈습니다. Frentis는 그 1,024토큰을 모두 추론에 사용해 <code>finish_reason: length</code>로 응답을 마쳤습니다. 도구 호출도 텍스트도 없는 빈 응답입니다. 중계에서 출력 한도를 16,384로 올리고 Thinking level을 Low로 낮추자 와이어프레임이 그려졌습니다. 사내 추론 모델을 다른 도구에 연결할 때는 Output limit과 Thinking level부터 확인하세요.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>OpenPencil에 사내 모델을 연결하려면 어떤 값이 필요한가요?</summary>
+<p>AI Provider에서 OpenAI-compatible(또는 Anthropic-compatible)을 선택합니다. Model ID에서 「Custom model…」을 선택해 게이트웨이의 모델 이름(<code>frentis-ai-model</code>)을 입력합니다. Base URL에는 게이트웨이 주소를, API Key에는 사내 키를 넣습니다. 추론 모델이면 Advanced settings에서 Thinking level을 낮추고, 「Test connection」으로 확인한 뒤 저장합니다.</p>
+</details>
+<details class="answer">
+<summary>웹 앱과 데스크톱 앱 가운데 사내 게이트웨이에는 어느 쪽이 편한가요?</summary>
+<p>데스크톱 앱입니다. 웹 앱은 브라우저의 혼합 콘텐츠·CORS 규칙을 따르므로 게이트웨이가 https와 CORS를 지원해야 하고, 내 PC의 중계를 쓰려면 로컬 네트워크 접근도 허용해야 합니다. 공식 문서에 따르면 데스크톱 앱은 CORS를 거치지 않고 요청합니다.</p>
+</details>
+<details class="answer">
+<summary>채팅 요약에 「배치도 완성」이라고 나오면 그대로 믿어도 되나요?</summary>
+<p>아닙니다. 이 실습의 채팅 요약에는 A·B 구역 20면씩의 격자 배치도를 그렸다고 나왔지만, 캔버스에는 「20」 이름표만 있었습니다. 레이어와 캔버스를 직접 확인하고, 빠진 부분은 같은 채팅에서 구체적으로 다시 요청합니다.</p>
+</details>
+<details class="answer">
+<summary>채팅에 보냈는데 캔버스에 아무것도 생기지 않으면 무엇부터 보나요?</summary>
+<p>모델의 응답이 비어 있는지 확인합니다. 이 실습에서는 출력 한도인 1,024토큰을 모두 추론에 사용해 빈 응답이 왔습니다. 출력 한도를 늘리거나 Thinking level을 낮추고, 모델이 도구 호출(Tool calling)을 지원하는지도 Advanced settings에서 확인합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="design.html"><span>이전</span>디자인: 와이어프레임에서 클릭 프로토타입까지</a><a class="next" href="mvp.html"><span>다음</span>동작하는 MVP</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 결과는 2026년 11월 7일 claude.ai 유료 계정(Claude Design·Artifacts, Opus 5.5)과 Claude Code 2.1.319(Sonnet 5.5)로 실제로 실행해 얻었습니다(OpenPencil 장과 배포 장은 2026년 11월 13일, OpenPencil 웹 앱·사내 Frentis 모델과 Claude Code로 실행). 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#사내-모델을-연결하며-겪은-일">사내 모델을 연결하며 겪은 일</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
