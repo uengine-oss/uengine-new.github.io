@@ -64,6 +64,8 @@ Register form
             data: $(this).serialize(),
             dataType: 'json',
             success: function(response) {
+                // Meta 픽셀 신청 완료 이벤트 (픽셀이 없는 페이지에서는 건너뜀)
+                if (window.fbq) fbq('track', 'CompleteRegistration');
                 // 성공 시 alert 메시지
                 alert('✅ Your request has been sent successfully!\nWe will follow up at the email address you provided.');
                 resetForm();

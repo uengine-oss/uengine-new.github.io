@@ -291,6 +291,8 @@ def build_block(page: str, meta: dict, site: dict) -> str:
         L.append(f'<meta name="google-site-verification" content="{esc(a["googleSiteVerification"])}">')
     if a.get("naverSiteVerification"):
         L.append(f'<meta name="naver-site-verification" content="{esc(a["naverSiteVerification"])}">')
+    if a.get("facebookDomainVerification"):
+        L.append(f'<meta name="facebook-domain-verification" content="{esc(a["facebookDomainVerification"])}">')
 
     for obj in build_jsonld(page, meta, site, canonical, image):
         L.append('<script type="application/ld+json">'
@@ -302,9 +304,24 @@ def build_block(page: str, meta: dict, site: dict) -> str:
         L.append(f'<script async src="https://www.googletagmanager.com/gtag/js?id={gid}"></script>')
         L.append("<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
                  f"gtag('js',new Date());gtag('config','{gid}');</script>")
+    if a.get("metaPixelId"):
+        L.append(meta_pixel_tag(a["metaPixelId"]))
 
     L.append(END)
     return "\n        ".join(L)
+
+
+def meta_pixel_tag(pid: str) -> str:
+    """Meta(페이스북) 픽셀 기본 코드를 GA 처럼 한 줄로. 문서 틀(tools/*/template*.html)에도 같은 줄이 들어 있다.
+
+    <noscript><img> 는 뺐다 — <head> 안 noscript 에 img 가 있으면 스크립트를 끈 브라우저에서 head 가 거기서 끊긴다.
+    iframe 안(홈의 쇼케이스 showcase.html 등)에서는 PageView 를 보내지 않는다 — 한 번 방문이 두 번으로 잡힌다.
+    """
+    return ("<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?"
+            "n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;"
+            "n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];"
+            "s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');"
+            f"fbq('init','{pid}');if(window.top===window.self)fbq('track','PageView');</script>")
 
 
 def build_jsonld(page: str, meta: dict, site: dict, canonical: str, image: str) -> list[dict]:
@@ -434,6 +451,8 @@ CLEAN_PATTERNS = [
     re.compile(r'<meta\s+(?:name|property)=["\']twitter:[^"\']*["\'][^>]*>\s*', re.I),
     re.compile(r'<link\s+rel=["\']canonical["\'][^>]*>\s*', re.I),
     re.compile(r'<meta\s+name=["\'](?:google|naver)-site-verification["\'][^>]*>\s*', re.I),
+    re.compile(r'<meta\s+name=["\']facebook-domain-verification["\'][^>]*>\s*', re.I),
+    re.compile(r"<script>\s*!function\(f,b,e,v,n,t,s\).*?</script\s*>\s*", re.S),
     re.compile(r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>.*?</script\s*>', re.S | re.I),
     re.compile(r'<script[^>]+googletagmanager\.com/gtag[^>]*>\s*</script\s*>\s*', re.I),
     re.compile(r"<script>\s*window\.dataLayer\s*=.*?</script\s*>\s*", re.S | re.I),

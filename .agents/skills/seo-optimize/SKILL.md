@@ -225,6 +225,10 @@ python3 -c "from PIL import Image; im=Image.open('in.gif'); im.seek(0); \
 - `ga4MeasurementId` — GA4 측정 ID (`G-XXXXXXXXXX`). analytics.google.com 에서 발급
 - `googleSiteVerification` — Google Search Console 소유 확인 메타태그 `content` 값
 - `naverSiteVerification` — 네이버 서치어드바이저 소유 확인 값 (국내 B2B 유입에 중요)
+- `metaPixelId` — Meta(페이스북) 픽셀 ID. 광고 계정의 이벤트 관리자에서 만든다. GA 바로 아래에 기본 코드(PageView)가 들어간다.
+  SEO 블록이 없는 문서 틀(`tools/*/template*.html`)에는 같은 줄이 직접 들어 있으므로 ID 를 바꾸면 틀도 함께 바꾼다.
+  문의 폼(`js/contact-form.js`)은 제출 때 `Lead`, 교육 신청 폼(`js/register-form.js`)은 접수 성공 때 `CompleteRegistration` 을 보낸다.
+- `facebookDomainVerification` — Meta 비즈니스 설정 › 도메인에서 받은 `facebook-domain-verification` 메타태그 `content` 값
 
 등록 후에는 Search Console·서치어드바이저에 `https://www.uengine.org/sitemap.xml` 을 제출한다.
 
