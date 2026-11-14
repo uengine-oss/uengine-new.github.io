@@ -84,6 +84,10 @@ node render_check.mjs en/index.html en/contents/processgpt.html   # SITE_URL ove
   links to the Korean chapter, so label such a link as Korean in the translation.
 - **Pages without an English edition yet** (no `en/<page>` on disk): links to them open the Korean
   page instead of a 404.
+- **Korean-only blocks**: anything between `<!-- ko-only -->` and `<!-- /ko-only -->` on a Korean page is left
+  out of the English page. Use it for Korean-language videos with no English edition (the Yu Aejin shorts on
+  the Ontological Studio page, the episode gallery on the Process GPT Lite page). The English Lite page also
+  keeps the product title, description and share image instead of the episode ones.
 - A KO/EN language switch is inserted into the nav on both sides.
 - Links written as `en/contents/x.html` on Korean pages are rewritten to stay inside `en/`.
 

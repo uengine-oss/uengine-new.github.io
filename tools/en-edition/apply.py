@@ -293,6 +293,7 @@ def pgl_rules(s, page):
     s = re.sub(r'src="((?:\.\./)*)images/processgptlite/([A-Za-z0-9_-]+\.jpg)"',
                lambda m: (f'src="{m.group(1)}images/processgptlite/en/{m.group(2)}" '
                           f'onerror="this.onerror=null;this.src=\'{m.group(1)}images/processgptlite/{m.group(2)}\'"'), s)
+    s = s.replace(*PGL_OG_IMAGE)
     return pgl_videos(s, page)
 
 
@@ -313,6 +314,14 @@ PAGE_RULES = {
     'contents/processgptlite.html': pgl_rules,
     'contents/ax-lite-course.html': pgl_videos,
 }
+
+
+# A block wrapped in <!-- ko-only --> ... <!-- /ko-only --> on a Korean page is left out of the English page
+# (Korean-language videos such as the Yu Aejin shorts and episodes).
+KO_ONLY = re.compile(r'[ \t]*<!-- ko-only -->.*?<!-- /ko-only -->[ \t]*\n?', re.S)
+
+# The Korean Lite page shares the Yu Aejin episode image; the English page keeps the product image.
+PGL_OG_IMAGE = ('images/processgptlite/yu-aejin-episodes-share-20261105.png', 'images/full-width-images/main-img-processgptlite.png')
 
 
 def swap_js(s):
@@ -343,6 +352,7 @@ STRIP_SWITCH = (re.compile(r'<li class="pc-chat lang-switch">.*?</li>\s*'), re.c
 def build(page, src, segs, tm):
     missing = []
     s = splice(src, segs, tm, missing)
+    s = KO_ONLY.sub('', s)
     # the Korean source now carries an "EN" link; drop it before adding the "KO" one
     for pat in STRIP_SWITCH:
         s = pat.sub('', s)
