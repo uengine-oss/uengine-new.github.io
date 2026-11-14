@@ -56,6 +56,9 @@
             return false;
         }
 
+        // Meta 픽셀 잠재 고객 이벤트 (픽셀이 없는 페이지에서는 건너뜀)
+        if (window.fbq) fbq('track', 'Lead');
+
         // 유효한 경우에는 제출 후 숨기기 (submit 이후 실행됨)
         setTimeout(() => {
             resetForm();
