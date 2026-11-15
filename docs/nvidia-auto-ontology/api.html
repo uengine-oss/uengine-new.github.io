@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API로 다른 시스템과 연동 — AX School · NVIDIA Auto Ontology 튜토리얼</title>
+<meta name="description" content="사람의 개입 없이 실행되는 스크립트·배치·다른 시스템은 MCP 대신 REST API와 API 토큰을 씁니다. 사용자 메뉴에서 토큰을 만들고, `curl`로 용어를 찾고, 답변 가능성을 확인하고, 짧은 파이썬 스크립트로 질문을 보내 서버가 보내 주는 진행 단계와 답을 스트림으로 받습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/nvidia-auto-ontology/api.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="API로 다른 시스템과 연동 — AX School · NVIDIA Auto Ontology 튜토리얼">
+<meta property="og:description" content="사람의 개입 없이 실행되는 스크립트·배치·다른 시스템은 MCP 대신 REST API와 API 토큰을 씁니다. 사용자 메뉴에서 토큰을 만들고, `curl`로 용어를 찾고, 답변 가능성을 확인하고, 짧은 파이썬 스크립트로 질문을 보내 서버가 보내 주는 진행 단계와 답을 스트림으로 받습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/nvidia-auto-ontology/api.html">
+<meta property="og:image" content="https://www.uengine.org/docs/nvidia-auto-ontology/img/nv-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AX School · NVIDIA Auto Ontology <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기: 무엇을 배우나</a></li>
+<li><a href="setup.html"><span class="n">01</span>설치와 실행</a></li>
+</ul>
+<div class="nav-part">온톨로지 만들기</div><ul>
+<li><a href="connect.html"><span class="n">02</span>데이터베이스 연결</a></li>
+<li><a href="compile.html"><span class="n">03</span>의미 계층 컴파일: 용어·조인 자동 생성과 검토</a></li>
+<li><a href="explore.html"><span class="n">04</span>그래프·용어 둘러보기</a></li>
+</ul>
+<div class="nav-part">질문하기</div><ul>
+<li><a href="ask.html"><span class="n">05</span>질문하기</a></li>
+</ul>
+<div class="nav-part">다른 도구와 잇기</div><ul>
+<li><a href="mcp.html"><span class="n">06</span>MCP로 다른 도구에 붙이기</a></li>
+<li><a href="api.html" class="on" aria-current="page"><span class="n">07</span>API로 다른 시스템과 연동</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="studio.html"><span class="n">08</span>Ontological Studio 소개와 비교</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">09</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">다른 도구와 잇기<span class="chap">7</span></div>
+    <h1>API로 다른 시스템과 연동</h1>
+    <article>
+<blockquote>
+<p>사람의 개입 없이 실행되는 스크립트·배치·다른 시스템은 MCP 대신 REST API와 API 토큰을 씁니다. 사용자 메뉴에서 토큰을 만들고, <code>curl</code>로 용어를 찾고, 답변 가능성을 확인하고, 짧은 파이썬 스크립트로 질문을 보내 서버가 보내 주는 진행 단계와 답을 스트림으로 받습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/8HJL794tdBw" title="API로 다른 시스템과 연동 — 영상 2:24" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>공개 API의 진입점은 웹 앱(공식 3000, 이 교재 3100) 하나입니다. 웹 앱이 사용자를 확인하고 권한을 검사한 뒤 백엔드로 넘깁니다. 브라우저는 세션 쿠키를, 스크립트는 <strong>API 토큰</strong>을 씁니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>토큰 만들기</td>
+<td>오른쪽 위 사용자 메뉴 → <strong>API Tokens</strong> → <strong>New Token</strong> (만료: Never · 30 days · 90 days · 1 year)</td>
+</tr>
+<tr>
+<td>보내는 법</td>
+<td>머리글 <code>x-api-key: &lt;토큰&gt;</code> 또는 <code>Authorization: Bearer &lt;토큰&gt;</code></td>
+</tr>
+<tr>
+<td>권한</td>
+<td>토큰은 발급한 사람의 권한으로 동작합니다. 그 사람의 역할에 허용된 작업만 할 수 있습니다</td>
+</tr>
+<tr>
+<td>보관</td>
+<td>Auto Ontology는 토큰의 SHA-256 해시만 저장합니다. 값은 만들 때 한 번만 보입니다</td>
+</tr>
+<tr>
+<td>무효화</td>
+<td>토큰을 지우거나 주인을 지우면 다음 요청부터 401. 토큰으로 토큰을 만들 수는 없습니다</td>
+</tr>
+</tbody>
+</table>
+<p>API의 87개 작업이 OpenAPI 명세(<code>docs/openapi/auto-ontology-api.json</code>)에 있습니다. 이 장에서는 셋만 씁니다.</p>
+<table>
+<thead>
+<tr>
+<th>작업</th>
+<th>경로</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>용어 찾기</td>
+<td><code>GET /api/terms?query=…</code></td>
+</tr>
+<tr>
+<td>답할 수 있나(MCP <code>check_answerable</code>과 같음)</td>
+<td><code>POST /api/question-entity-coverage</code></td>
+</tr>
+<tr>
+<td>질문하기(Chat·MCP <code>ask_question</code>과 같음)</td>
+<td><code>POST /api/chat/completions</code> — 답이 SSE(server-sent events)로 흘러옴</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>토큰을 만듭니다.</strong> 오른쪽 위 머리글자 단추 → <strong>API Tokens</strong> → <strong>New Token</strong>. 이름(예: <code>ax-school-course</code>)과 만료(30 days)를 고르고 <strong>Create token</strong>을 누릅니다. 「Copy your token now」 상자의 값을 바로 복사해 비밀 관리 도구나 권한 0600 파일에 둡니다. 아래 그림은 토큰 값을 가렸습니다.
+
+<figure><a href="img/nv-token.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="API 토큰 — 만들 때 한 번만 보이는 값(가림)과 토큰 목록" src="img/nv-token.webp" loading="lazy" decoding="async"></a><figcaption>API 토큰 — 만들 때 한 번만 보이는 값(가림)과 토큰 목록</figcaption></figure>
+</li>
+<li><strong>환경 변수에 넣고 용어를 찾습니다.</strong> 토큰 값을 명령에 직접 쓰지 말고 파일에서 읽어 변수에 둡니다.
+
+
+<div class="hl"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AUTO_ONTOLOGY_API_TOKEN</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>~/secrets/auto-ontology-token.txt<span class="k">)</span>
+curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: </span><span class="nv">$AUTO_ONTOLOGY_API_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:3100/api/terms?query=invoice&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-24
+</code></pre></div>
+
+
+
+응답은 <code>{"terms": […], "total": …}</code> 모양이고, 용어마다 <code>name</code>·<code>description</code>·<code>synonyms</code>·<code>certification</code>이 들어 있습니다. 이번에는 Invoice와 Invoice Line이 나왔습니다.
+
+<figure><a href="img/nv-api-curl.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="curl로 용어 찾기" src="img/nv-api-curl.webp" loading="lazy" decoding="async"></a><figcaption>curl로 용어 찾기</figcaption></figure>
+</li>
+<li><strong>답변 가능성을 확인합니다.</strong> MCP의 <code>check_answerable</code>이 부르는 바로 그 API입니다.
+
+
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;x-api-key: </span><span class="nv">$AUTO_ONTOLOGY_API_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;content-type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;question&quot;: &quot;What was return on ad spend for the sushi roll flash drive in June 2015?&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>http://localhost:3100/api/question-entity-coverage<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
+</code></pre></div>
+
+
+
+<code>"coverage": 0.5</code>와 후보 하나(Stock Item의 Recommended Retail Price)가 돌아왔습니다. 6장의 MCP 결과와 같습니다.
+
+<figure><a href="img/nv-api-coverage.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="coverage 0.5" src="img/nv-api-coverage.webp" loading="lazy" decoding="async"></a><figcaption>coverage 0.5</figcaption></figure>
+</li>
+<li><strong>질문을 스트림으로 받습니다.</strong> 아래 스크립트(<code>ask_api.py</code>, 약 45줄)는 용어를 찾고, 포함 비율을 확인하고, 질문을 보내 <code>step</code> 이벤트(진행 단계)를 시간과 함께 출력하다가 <code>result</code> 이벤트에서 답·SQL·행을 꺼냅니다. 질문 하나에 몇 분이 걸릴 수 있으니 시간 제한은 900초로 둡니다.
+
+
+<div class="hl"><pre><span></span><code><span class="k">with</span> <span class="n">api</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BASE</span><span class="si">}</span><span class="s2">/api/chat/completions&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">},</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">900</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">(</span><span class="n">decode_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;data:&quot;</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">removeprefix</span><span class="p">(</span><span class="s2">&quot;data:&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">payload</span> <span class="o">==</span> <span class="s2">&quot;[DONE]&quot;</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;step&quot;</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;phase&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2">s  단계: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;node&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;result&quot;</span><span class="p">:</span>
+            <span class="n">answer</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">답:&quot;</span><span class="p">,</span> <span class="n">answer</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SQL:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sql_code&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;(없음)&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;행:&quot;</span><span class="p">,</span> <span class="n">answer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sql_response_from_db&quot;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">])</span>
+</code></pre></div>
+
+
+
+
+<div class="hl"><pre><span></span><code>python3<span class="w"> </span>ask_api.py<span class="w"> </span><span class="s2">&quot;What was revenue for the USB food flash drive - sushi roll in Pennsylvania in June 2015?&quot;</span>
+</code></pre></div>
+
+
+
+단계가 <code>question_intent</code>(2.1초) → <code>question_extraction</code> → <code>retrieve_candidates</code> → <code>prepare_candidates</code> → <code>construct_sql_from_candidates</code>(32.0초) → <code>validate_sql_query</code> → <code>reconstruct_sql</code>(44.0초, SQL 다시 짜기) … 순서로 흘러왔고, 102.7초 만에 README와 같은 경로의 SQL과 <strong><code>[{"revenue":588.8}]</code></strong>가 왔습니다. 5장 끝에서 만든 Revenue 정의가 쓰였습니다.
+
+<figure><a href="img/nv-api-run.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="ask_api.py — 단계 스트림과 답(588.8)" src="img/nv-api-run.webp" loading="lazy" decoding="async"></a><figcaption>ask_api.py — 단계 스트림과 답(588.8)</figcaption></figure>
+</li>
+</ol>
+<p><strong>대화를 이어 가려면</strong> 요청에 <code>conversation_id</code>(클라이언트가 만든 UUID)를 넣고 같은 값을 계속 씁니다. 백엔드는 최근 다섯 턴까지를 보고 「8월은요?」 같은 후속 질문을 완전한 질문으로 재작성합니다. 앞 턴의 <code>[DONE]</code>을 받기 전에 같은 대화로 다시 보내면 <code>409 Conversation in progress</code>가 돌아옵니다. API로 만든 대화는 웹 화면의 <code>/chat?focus=&lt;conversation_id&gt;</code>에서 그 사용자에게 보입니다(공식 문서 <code>docs/conversation-api.md</code>).</p>
+<div class="admonition note">
+<p class="admonition-title">백엔드(3001)를 직접 부르지 마세요</p>
+<p>백엔드는 웹 앱이 넘겨주는 사용자 헤더를 검증 없이 신뢰합니다. 스크립트는 언제나 웹 앱 주소로 부르고, 3001·3002는 외부에서 접근할 수 없게 둡니다.</p>
+</div>
+<h2 id="막히면">막히면<a class="anchor" href="#막히면" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">막히면</p>
+<ul>
+<li><strong>토큰 목록에 <code>auto_ontol…</code> 앞부분만 보이고 값을 다시 볼 수 없음</strong> — 값은 만들 때 한 번만 보입니다. → 잃어버렸으면 새로 만들고 옛 토큰은 휴지통 단추로 지웁니다.</li>
+<li><strong>설정(Settings)에 API 토큰 메뉴가 없음</strong> — 토큰은 오른쪽 위 머리글자 단추(사용자 메뉴) 안에 있습니다.</li>
+<li><strong>스크립트가 중간에 끊김</strong> — 질문 하나가 몇 분 걸릴 수 있습니다. → <code>timeout=900</code>처럼 넉넉히 둡니다.</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>1. 같은 서버를 부르는데 왜 MCP는 OAuth, REST API는 토큰을 쓰나요?</summary>
+<p>MCP는 사람이 쓰는 에이전트(클라이언트)가 사람 대신 부르므로, 그 사람이 직접 로그인해 승인하는 OAuth로 권한을 그 사람에게 묶습니다. REST API는 사람의 개입 없이 실행되는 스크립트도 쓰므로, 발급한 사람의 권한으로 동작하는 토큰을 씁니다. 어느 쪽이든 권한은 계정에서 오고, 토큰을 지우면 바로 끊깁니다.</p>
+</details>
+<details class="answer">
+<summary>2. `/api/chat/completions`의 응답을 한 번에 받지 않고 스트림으로 읽는 까닭은 무엇인가요?</summary>
+<p>에이전트가 모델을 여러 번 차례로 부르며 수십 초에서 몇 분이 걸리기 때문입니다. <code>step</code> 이벤트로 진행을 보여 주다가 <code>result</code> 이벤트에서 답을 받고 <code>[DONE]</code>에서 끝냅니다.</p>
+</details>
+<p>마지막 장에서는 같은 예제를 uEngine Ontological Studio로 해 본 결과를 짧게 비교합니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="mcp.html"><span>이전</span>MCP로 다른 도구에 붙이기</a><a class="next" href="studio.html"><span>다음</span>Ontological Studio 소개와 비교</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#막히면">막히면</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

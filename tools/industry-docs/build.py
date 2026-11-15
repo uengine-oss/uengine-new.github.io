@@ -10,10 +10,12 @@
     python3 tools/industry-docs/build.py pdm-kang
     python3 tools/industry-docs/build.py pdm-kang-process
     python3 tools/industry-docs/build.py graphrag-law
+    python3 tools/industry-docs/build.py nvidia-auto-ontology
 
 <제품>/src/*.md (장마다 하나) → docs/<제품>/*.html. 목차·순서는 아래 PRODUCTS 가 정한다.
 이미지는 docs/<제품>/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
 <제품>/videos.json 에 장의 유튜브 영상({"<slug>": {"id": …, "len": "2:51"}})이 있으면 장 요약 아래에 넣는다.
+id 가 빈 항목은 아직 올리지 않은 영상의 자리표시다(HTML 주석만 남긴다).
 영문판은 아직 없다. 영문 메뉴는 이 한국어 튜토리얼로 연결된다.
 """
 import html
@@ -64,6 +66,9 @@ PRODUCTS = {
     "graphrag-law": dict(name="법령 GraphRAG 실습 · Neo4j × Claude Code", page="axschool.html", pagelabel="AX School", og="article15-graph.webp", search="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)",
                 foot="이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.",
                 chapters=[("index", "시작하기"), ("why-graph", "이론"), ("how-graphrag", "이론"), ("neo4j-docker", "준비"), ("cypher-basics", "준비"), ("schema", "구축"), ("ingest", "구축"), ("disambiguation", "구축"), ("mcp", "질의"), ("questions", "질의"), ("vector-vs-graph", "비교"), ("wrap-up", "마무리"), ("troubleshooting", "부록")]),
+    "nvidia-auto-ontology": dict(name="AX School · NVIDIA Auto Ontology", page="axschool.html", pagelabel="AX School", og="nv-graph.webp", search="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)",
+                foot="이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.",
+                chapters=[("index", "시작하기"), ("setup", "시작하기"), ("connect", "온톨로지 만들기"), ("compile", "온톨로지 만들기"), ("explore", "온톨로지 만들기"), ("ask", "질문하기"), ("mcp", "다른 도구와 잇기"), ("api", "다른 도구와 잇기"), ("studio", "마무리"), ("troubleshooting", "부록")]),
 }
 KEY = sys.argv[1] if sys.argv[1:] and sys.argv[1] in PRODUCTS else sys.exit(__doc__)
 P = PRODUCTS[KEY]
@@ -160,8 +165,10 @@ def main():
         summary = m.group(1).strip() if m else ""
         body, toc = render(rest)
         body = figures(body)
-        if slug in videos:
+        if slug in videos and videos[slug].get("id"):
             body = video(body, videos[slug], title)
+        elif slug in videos:  # 아직 올리지 않은 영상: 자리만 표시(화면에는 안 보임) — 업로드 뒤 id 를 채우고 다시 빌드
+            body = f"<!-- video:{slug} pending ({videos[slug].get('len', '')}) -->\n" + body
         pages.append(dict(slug=slug, part=part, title=title, summary=summary, body=body, toc=toc))
 
     # 사이드바 — 파트별, 장 번호는 index 를 0 으로.

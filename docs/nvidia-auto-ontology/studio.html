@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontological Studio 소개와 비교 — AX School · NVIDIA Auto Ontology 튜토리얼</title>
+<meta name="description" content="마지막 장에서는 uEngine이 만드는 Ontological Studio로 같은 Wide World Importers 원천과 같은 질문을 따라 한 결과를 짧게 비교합니다. 모델과 실행 조건이 달라서 순위를 매기기보다, 두 도구가 무엇을 다르게 하는지와 어떤 용도에 적합한지를 살펴봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/nvidia-auto-ontology/studio.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ontological Studio 소개와 비교 — AX School · NVIDIA Auto Ontology 튜토리얼">
+<meta property="og:description" content="마지막 장에서는 uEngine이 만드는 Ontological Studio로 같은 Wide World Importers 원천과 같은 질문을 따라 한 결과를 짧게 비교합니다. 모델과 실행 조건이 달라서 순위를 매기기보다, 두 도구가 무엇을 다르게 하는지와 어떤 용도에 적합한지를 살펴봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/nvidia-auto-ontology/studio.html">
+<meta property="og:image" content="https://www.uengine.org/docs/nvidia-auto-ontology/img/nv-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AX School · NVIDIA Auto Ontology <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기: 무엇을 배우나</a></li>
+<li><a href="setup.html"><span class="n">01</span>설치와 실행</a></li>
+</ul>
+<div class="nav-part">온톨로지 만들기</div><ul>
+<li><a href="connect.html"><span class="n">02</span>데이터베이스 연결</a></li>
+<li><a href="compile.html"><span class="n">03</span>의미 계층 컴파일: 용어·조인 자동 생성과 검토</a></li>
+<li><a href="explore.html"><span class="n">04</span>그래프·용어 둘러보기</a></li>
+</ul>
+<div class="nav-part">질문하기</div><ul>
+<li><a href="ask.html"><span class="n">05</span>질문하기</a></li>
+</ul>
+<div class="nav-part">다른 도구와 잇기</div><ul>
+<li><a href="mcp.html"><span class="n">06</span>MCP로 다른 도구에 붙이기</a></li>
+<li><a href="api.html"><span class="n">07</span>API로 다른 시스템과 연동</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="studio.html" class="on" aria-current="page"><span class="n">08</span>Ontological Studio 소개와 비교</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">09</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">마무리<span class="chap">8</span></div>
+    <h1>Ontological Studio 소개와 비교</h1>
+    <article>
+<blockquote>
+<p>마지막 장에서는 uEngine이 만드는 Ontological Studio로 같은 Wide World Importers 원천과 같은 질문을 따라 한 결과를 짧게 비교합니다. 모델과 실행 조건이 달라서 순위를 매기기보다, 두 도구가 무엇을 다르게 하는지와 어떤 용도에 적합한지를 살펴봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/cZO65uWvInU" title="Ontological Studio 소개와 비교 — 영상 3:08" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition note">
+<p class="admonition-title">이 장을 읽기 전에</p>
+<p>이 교재를 만든 uEngine은 Ontological Studio를 만드는 회사입니다. 그래서 숫자마다 조건과 출처를 함께 적었고, NVIDIA 쪽이 앞서는 항목도 그대로 옮겼습니다. 두 제품을 똑같은 조건으로 비교한 벤치마크가 아닙니다.</p>
+</div>
+<h2 id="ontological-studio는-무엇인가">Ontological Studio는 무엇인가<a class="anchor" href="#ontological-studio는-무엇인가" title="Permanent link">#</a></h2>
+<p>Ontological Studio는 macOS·Windows에서 실행되는 오픈소스 <strong>데스크톱 앱</strong>입니다. 설치 파일 하나에 데이터 패브릭·그래프 DB(Ontological DB)·에이전트가 들어 있습니다. 데이터베이스와 문서를 <strong>복사하지 않고</strong> 연결한 뒤, 답해야 할 질문(골든 퀘스천)을 기준으로 클래스·관계를 설계해 온톨로지를 만들고, 질문에는 관계를 따라 근거와 함께 답합니다. 같은 온톨로지 위에서 업무 시스템 API를 부르는 액션과 업무 앱까지 이어 갑니다. 자세한 소개는 <a href="../../contents/ontologystudio.html">제품 페이지</a>와 <a href="../ontological-studio/index.html">Ontological Studio 튜토리얼</a>에 있습니다.</p>
+<h2 id="같은-예제를-studio로-따라-하면">같은 예제를 Studio로 따라 하면<a class="anchor" href="#같은-예제를-studio로-따라-하면" title="Permanent link">#</a></h2>
+<p>같은 PostgreSQL의 <code>wideworldimporters</code>를 같은 읽기 전용 계정(<code>wwi_ro</code>)으로 연결했습니다. 흐름은 이렇습니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>NVIDIA Auto Ontology (이 교재 2~4장)</th>
+<th>Ontological Studio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>연결</td>
+<td>연결 1개, 적재(표본·임베딩) 6초</td>
+<td>스키마마다 데이터소스 5개, 행을 복사하지 않음</td>
+</tr>
+<tr>
+<td>관계</td>
+<td>컴파일이 조인을 추론(모델 사용)</td>
+<td>「관계 제안」이 열 값의 중복 정도를 측정해 후보를 제안(0.4초, 모델 없이)</td>
+</tr>
+<tr>
+<td>개념</td>
+<td>표마다 용어 51개 자동, 승인 대기</td>
+<td>초안 만들기로 클래스 31개·관계 64개(1.9초), 보관 표·뷰 20개는 뺌, 검토 대기</td>
+</tr>
+<tr>
+<td>질문</td>
+<td>Chat → 질문 에이전트가 SQL을 짜서 실행</td>
+<td>질의 탭 → 에이전트(Claude Code)가 온톨로지와 원천 SQL로 답</td>
+</tr>
+</tbody>
+</table>
+<figure><a href="img/st-suggest.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Studio에서 같은 원천의 관계 제안 — 테이블 51개를 0.4초에 재고 64개 제안" src="img/st-suggest.webp" loading="lazy" decoding="async"></a><figcaption>Studio에서 같은 원천의 관계 제안 — 테이블 51개를 0.4초에 재고 64개 제안</figcaption></figure>
+<figure><a href="img/st-q1.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Studio의 Q1 답 — 세전 $512.00과 세금 포함 $588.80을 이름을 붙여 함께 냄" src="img/st-q1.webp" loading="lazy" decoding="async"></a><figcaption>Studio의 Q1 답 — 세전 $512.00과 세금 포함 $588.80을 이름을 붙여 함께 냄</figcaption></figure>
+<h2 id="숫자로-본-차이">숫자로 본 차이<a class="anchor" href="#숫자로-본-차이" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>NVIDIA Auto Ontology</th>
+<th>Ontological Studio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>조인·관계 추론(업무 키 69개) — 맞은 비율 / 찾은 비율</td>
+<td>gpt-4.1(11-14) 82.5% / 68.1% · gpt-6.1-sol(이 교재) 75.8% / 72.5%</td>
+<td>100% / 92.8% (64개 제안, 모두 맞음)</td>
+</tr>
+<tr>
+<td>Q1 (정답 $588.80)</td>
+<td>gpt-4.1(11-14): 물을 때마다 다른 오답 · gpt-6.1-sol(이 교재): 세전 $512.00·빈 값, 「매출」 SQL 속성을 정의한 뒤 $588.80</td>
+<td>세전 $512.00과 세금 포함 $588.80을 이름을 붙여 함께 제시(한국어·영어)</td>
+</tr>
+<tr>
+<td>ROAS</td>
+<td>지어내지 않음(광고비 없음)</td>
+<td>지어내지 않음, 같은 달 매출을 함께 제시</td>
+</tr>
+<tr>
+<td>평가 질문 21개 정답</td>
+<td>gpt-4.1 14개 · gpt-6.1-sol 14개 (각 한 번)</td>
+<td>초안 평균 15.3개 · 검토본 15.7개 (각 세 번)</td>
+</tr>
+<tr>
+<td>질문당 시간(중앙값)</td>
+<td>gpt-4.1 9.1초 · gpt-6.1-sol 29.8초</td>
+<td>15.8~16.5초</td>
+</tr>
+</tbody>
+</table>
+<p><strong>조건과 출처</strong></p>
+<ul>
+<li>NVIDIA 수치: 조인·평가·시간은 11월 14일 측정(gpt-4.1·gpt-6.1-sol, NVIDIA 키가 없어 OpenAI 모델을 중계기로 연결). 조인의 gpt-6.1-sol 값과 Q1의 gpt-6.1-sol 답은 이 교재(11월 15일)의 실행입니다. 기본 모델 Nemotron으로는 재지 못했습니다.</li>
+<li>Studio 수치: 11월 15일 <strong>아직 배포하지 않은 개발 빌드</strong>(보완 패치 적용)로 측정한 값입니다. 지금 내려받을 수 있는 0.1.2판으로 11월 14일에 같은 측정을 했을 때는 조인 24.2% / 20.3%, 평가 12개, 41초였습니다. Studio의 질문 에이전트는 Claude Code(Anthropic 모델)입니다.</li>
+<li>정답 조인 98개(업무 키 69개 + 감사 열 29개)와 평가 질문 21개는 원천 스키마 문서와 데이터로 미리 만든 것이고, 같은 채점 규칙으로 두 도구를 평가했습니다. Studio를 수정하는 쪽은 평가 질문과 정답을 보지 않았습니다.</li>
+<li>모델이 다르고 반복 횟수가 다르므로, 작은 차이는 순위로 읽지 마세요.</li>
+</ul>
+<h2 id="어디에-맞나">어디에 맞나<a class="anchor" href="#어디에-맞나" title="Permanent link">#</a></h2>
+<p><strong>NVIDIA Auto Ontology</strong>는 서버로 띄워 여러 사람이 함께 쓰는 <strong>데이터 팀의 의미 계층 서비스</strong>에 맞습니다. 메타데이터에서 용어집 초안을 자동으로 만들고, 사람의 인증 흐름·역할 기반 권한·SSO·API 토큰·OAuth로 보호한 MCP 서버를 갖췄습니다. Docker Compose·Helm으로 배포하고, 질문은 SQL로 답합니다. 커넥터는 열 가지이며, NVIDIA NIM 모델을 기본으로 씁니다.</p>
+<p><strong>Ontological Studio</strong>는 한 사람이나 작은 팀이 <strong>자기 PC에서 여러 시스템의 데이터를 복사하지 않고 이어 온톨로지를 만들고, 그 위에서 질문·액션·앱까지</strong> 이어 가는 데 맞습니다. 관계를 사람이 검토하는 그래프로 두고 근거와 함께 답하며, 답에서 끝나지 않고 승인 후 실행하는 액션으로 이어집니다. 둘은 겹치는 부분도 있지만 적합한 용도가 다릅니다. 데이터 팀이 운영하는 의미 계층 서비스가 필요하면 Auto Ontology를, 업무 담당자가 온톨로지로 묻고 일을 시키는 도구가 필요하면 Studio를 먼저 살펴보세요.</p>
+<h2 id="더-보기">더 보기<a class="anchor" href="#더-보기" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="../../contents/ontologystudio.html">Ontological Studio 제품 페이지</a> — 내려받기, 데모 영상</li>
+<li><a href="../ontological-studio/index.html">Ontological Studio 튜토리얼</a> — 설치부터 액션·앱까지</li>
+<li><a href="troubleshooting.html">부록 「문제 해결」</a> — 이 교재를 따라 하다 막히는 곳</li>
+</ul>
+<p>수고하셨습니다. 이 교재에서 NVIDIA Auto Ontology로 원천 연결 → 의미 계층 컴파일 → 검토 → 질문 → MCP·API 연동까지 전 과정을 살펴보았습니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="api.html"><span>이전</span>API로 다른 시스템과 연동</a><a class="next" href="troubleshooting.html"><span>다음</span>문제 해결</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#ontological-studio는-무엇인가">Ontological Studio는 무엇인가</a></li><li><a href="#같은-예제를-studio로-따라-하면">같은 예제를 Studio로 따라 하면</a></li><li><a href="#숫자로-본-차이">숫자로 본 차이</a></li><li><a href="#어디에-맞나">어디에 맞나</a></li><li><a href="#더-보기">더 보기</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

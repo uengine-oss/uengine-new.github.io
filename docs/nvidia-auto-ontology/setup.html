@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설치와 실행 — AX School · NVIDIA Auto Ontology 튜토리얼</title>
+<meta name="description" content="Auto Ontology를 이루는 서비스 다섯 가지와 포트를 살펴보고, NVIDIA README의 공식 Quickstart(Docker Compose) 순서를 따라갑니다. 이 교재의 화면은 Docker 없이 같은 서비스를 직접 띄우고 OpenAI 모델을 연결해 찍었으므로, 공식 방법과 무엇이 다른지도 함께 밝힙니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/nvidia-auto-ontology/setup.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="설치와 실행 — AX School · NVIDIA Auto Ontology 튜토리얼">
+<meta property="og:description" content="Auto Ontology를 이루는 서비스 다섯 가지와 포트를 살펴보고, NVIDIA README의 공식 Quickstart(Docker Compose) 순서를 따라갑니다. 이 교재의 화면은 Docker 없이 같은 서비스를 직접 띄우고 OpenAI 모델을 연결해 찍었으므로, 공식 방법과 무엇이 다른지도 함께 밝힙니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/nvidia-auto-ontology/setup.html">
+<meta property="og:image" content="https://www.uengine.org/docs/nvidia-auto-ontology/img/nv-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AX School · NVIDIA Auto Ontology <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기: 무엇을 배우나</a></li>
+<li><a href="setup.html" class="on" aria-current="page"><span class="n">01</span>설치와 실행</a></li>
+</ul>
+<div class="nav-part">온톨로지 만들기</div><ul>
+<li><a href="connect.html"><span class="n">02</span>데이터베이스 연결</a></li>
+<li><a href="compile.html"><span class="n">03</span>의미 계층 컴파일: 용어·조인 자동 생성과 검토</a></li>
+<li><a href="explore.html"><span class="n">04</span>그래프·용어 둘러보기</a></li>
+</ul>
+<div class="nav-part">질문하기</div><ul>
+<li><a href="ask.html"><span class="n">05</span>질문하기</a></li>
+</ul>
+<div class="nav-part">다른 도구와 잇기</div><ul>
+<li><a href="mcp.html"><span class="n">06</span>MCP로 다른 도구에 붙이기</a></li>
+<li><a href="api.html"><span class="n">07</span>API로 다른 시스템과 연동</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="studio.html"><span class="n">08</span>Ontological Studio 소개와 비교</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">09</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap">1</span></div>
+    <h1>설치와 실행</h1>
+    <article>
+<blockquote>
+<p>Auto Ontology를 이루는 서비스 다섯 가지와 포트를 살펴보고, NVIDIA README의 공식 Quickstart(Docker Compose) 순서를 따라갑니다. 이 교재의 화면은 Docker 없이 같은 서비스를 직접 띄우고 OpenAI 모델을 연결해 찍었으므로, 공식 방법과 무엇이 다른지도 함께 밝힙니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/KHiRI_ZAxXA" title="설치와 실행 — 영상 3:31" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>Auto Ontology는 프로그램 하나가 아니라 여러 서비스가 함께 동작하는 구조입니다. README의 구성표를 옮기면 이렇습니다.</p>
+<table>
+<thead>
+<tr>
+<th>구성 요소</th>
+<th>기술</th>
+<th>하는 일</th>
+<th>공식 포트</th>
+<th>이 교재</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>웹 앱(Frontend)</td>
+<td>Next.js, Better Auth, Prisma</td>
+<td>웹 화면, 로그인, 공개 API 관문</td>
+<td>3000</td>
+<td>3100</td>
+</tr>
+<tr>
+<td>백엔드(Backend)</td>
+<td>FastAPI, LangChain</td>
+<td>질문 → SQL 에이전트, 카탈로그·온톨로지 API</td>
+<td>3001</td>
+<td>3101</td>
+</tr>
+<tr>
+<td>적재 서비스(Ingestion)</td>
+<td>FastAPI</td>
+<td>원천 적재와 의미 계층 컴파일</td>
+<td>3002</td>
+<td>3102</td>
+</tr>
+<tr>
+<td>MCP 서버</td>
+<td>FastMCP</td>
+<td>에이전트용 읽기 전용 도구</td>
+<td>3003</td>
+<td>3103</td>
+</tr>
+<tr>
+<td>PostgreSQL + pgvector</td>
+<td>PostgreSQL</td>
+<td>카탈로그·온톨로지·앱 데이터·벡터</td>
+<td>5432</td>
+<td>28930</td>
+</tr>
+</tbody>
+</table>
+<p>외부에서 접속하는 창구는 웹 앱(3000) 하나입니다. README는 백엔드(3001)와 적재 서비스(3002)를 사설망에 두라고 적고 있습니다. 백엔드는 웹 앱이 넘겨주는 사용자 헤더(<code>x-auto-ontology-user-id</code>)을 그대로 신뢰하고, 적재 서비스의 적재·삭제·초기화·컴파일 엔드포인트에는 인증이 없기 때문입니다.</p>
+<p>모델의 역할은 네 가지로 나뉘며, 역할마다 <code>&lt;접두사&gt;_ENDPOINT</code>·<code>&lt;접두사&gt;_API_KEY</code>·<code>&lt;접두사&gt;_MODEL</code> 세 값으로 설정합니다. 비워 둔 값은 <code>DEFAULT_MODELS_*</code>를 따릅니다.</p>
+<table>
+<thead>
+<tr>
+<th>역할(접두사)</th>
+<th>기본 모델</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REASONING</code></td>
+<td><code>nvidia/nemotron-3.5-lightning-30b-a3b</code></td>
+<td>온톨로지(용어·관계·SQL 속성)를 만들고, 답의 SQL과 설명을 쓰고, 답변 가능성을 평가합니다</td>
+</tr>
+<tr>
+<td><code>NON_REASONING</code></td>
+<td><code>nvidia/nemotron-3.5-lightning-30b-a3b</code></td>
+<td>질문 의도·개체 추출, 후보 고르기, SQL 검사·수정처럼 빠른 단계</td>
+</tr>
+<tr>
+<td><code>EMBED</code></td>
+<td><code>nvidia/nemotron-3.5-embed-1b</code></td>
+<td>표·열·용어·SQL 속성을 pgvector에 색인하고 질문과 맞춰 봅니다</td>
+</tr>
+<tr>
+<td><code>RERANK</code></td>
+<td><code>nvidia/nemotron-3.5-rerank-8b</code></td>
+<td>컴파일 중 다리(bridge) 테이블 SQL 속성 후보의 순위를 매깁니다</td>
+</tr>
+</tbody>
+</table>
+<p>README는 NIM 대신 OpenAI 호환 엔드포인트도 쓸 수 있다고 하면서, 구조화 출력을 지원하는 모델을 쓰고 적재와 질문에 같은 임베딩 모델을 쓰라고 당부합니다.</p>
+<h2 id="따라-하기-공식-quickstart">따라 하기: 공식 Quickstart<a class="anchor" href="#따라-하기-공식-quickstart" title="Permanent link">#</a></h2>
+<p>공식 방법은 Docker Compose입니다. Docker(Compose v2), <a href="https://docs.astral.sh/uv/">uv</a>, NVIDIA API 키(<code>nvapi-…</code>)가 필요합니다. 아래 명령은 README를 그대로 옮긴 것입니다.</p>
+<ol class="steps">
+<li><strong>저장소를 받고 <code>.env</code>를 만듭니다.</strong>
+
+
+<div class="hl"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/NVIDIA/auto-ontology.git<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>auto-ontology
+cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+</code></pre></div>
+
+
+
+<code>.env</code>에서 다음 값을 채웁니다. Compose는 PostgreSQL·pgAdmin·웹 앱을 호스트에 열어 두므로 기본 비밀번호는 모두 바꿉니다. <code>.env.example</code>의 역할별 <code>nvapi-your-api-key-here</code>는 지우면 <code>DEFAULT_MODELS_API_KEY</code>를 따릅니다.
+
+
+<div class="hl"><pre><span></span><code>DEFAULT_MODELS_API_KEY=nvapi-...
+AUTH_SECRET=&lt;a long random string, e.g. from openssl rand -base64 32&gt;
+APP_URL=http://localhost:3000
+POSTGRES_PASSWORD=&lt;a new password&gt;
+CONNECTION_STRINGS=postgresql://postgres:&lt;the same password&gt;@postgres:5432/wideworldimporters
+AUTO_ONTOLOGY_ADMIN_PASSWORD=&lt;a new password&gt;
+PGADMIN_PASSWORD=&lt;a new password&gt;
+</code></pre></div>
+
+
+</li>
+<li><strong>PostgreSQL을 띄우고 예제 데이터를 넣습니다.</strong> 데이터를 넣는 스크립트는 <code>auto-ontology-eval</code> 저장소에 있습니다.
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--wait<span class="w"> </span>postgres
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/NVIDIA/auto-ontology-eval.git<span class="w"> </span>../auto-ontology-eval
+<span class="o">(</span><span class="nb">cd</span><span class="w"> </span>../auto-ontology-eval<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span><span class="s1">&#39;&lt;the same password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/seed/seed_wwi.py<span class="w"> </span>--database-name<span class="w"> </span>wideworldimporters<span class="w"> </span>--drop<span class="o">)</span>
+</code></pre></div>
+
+
+</li>
+<li><strong>나머지 서비스를 빌드해 띄웁니다.</strong>
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+</code></pre></div>
+
+
+</li>
+<li><strong>로그인합니다.</strong> <a href="http://localhost:3000">http://localhost:3000</a>을 열고 <code>.env</code>의 <code>AUTO_ONTOLOGY_ADMIN_EMAIL</code>·<code>AUTO_ONTOLOGY_ADMIN_PASSWORD</code>로 로그인합니다. 가입 화면은 없고, 첫 계정은 이 관리자 계정입니다.
+
+<figure><a href="img/nv-login.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="로그인 화면 — 이메일과 비밀번호(가려짐)를 넣은 상태" src="img/nv-login.webp" loading="lazy" decoding="async"></a><figcaption>로그인 화면 — 이메일과 비밀번호(가려짐)를 넣은 상태</figcaption></figure>
+
+로그인하면 Chat 화면이 열립니다. 아직 연결한 데이터가 없어서 대화 목록이 비어 있습니다. 왼쪽 세로 메뉴는 위에서부터 Chat · Discovery(검색) · Terms(용어) · Analysis · Exploration(그래프) · Data(카탈로그) · Analytics · Settings입니다.
+
+<figure><a href="img/nv-home.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="로그인 직후의 Chat 화면" src="img/nv-home.webp" loading="lazy" decoding="async"></a><figcaption>로그인 직후의 Chat 화면</figcaption></figure>
+</li>
+</ol>
+<p>공식 Quickstart는 이어서 Settings → Semantic Compilation을 켜고 Chat에 질문합니다. 이 교재는 그 사이에 <strong>연결을 화면에서 직접 만드는 과정</strong>을 넣었습니다(<a href="connect.html">2장</a>). 공식 방법처럼 <code>.env</code>의 <code>CONNECTION_STRINGS</code>로 연결하면 2장의 화면 대신 시작할 때 자동으로 적재되고, <a href="compile.html">3장</a>으로 바로 가면 됩니다.</p>
+<h2 id="이-교재의-화면은-어떻게-띄웠나">이 교재의 화면은 어떻게 띄웠나<a class="anchor" href="#이-교재의-화면은-어떻게-띄웠나" title="Permanent link">#</a></h2>
+<p>이 교재를 만든 PC는 다른 작업의 Docker 컨테이너가 이미 메모리를 많이 쓰고 있었고, NVIDIA API 키도 없었습니다. 그래서 공식 Quickstart와 같은 소스(1.2.0, 커밋 c447003)를 쓰되 다음처럼 바꿔 띄웠습니다. 화면과 동작은 같지만 <strong>권장하는 설치 방법은 아닙니다.</strong> 따라 할 때는 공식 Docker Compose를 쓰세요.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>공식 Quickstart</th>
+<th>이 교재의 실행</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>띄우는 방법</td>
+<td><code>docker compose up</code></td>
+<td>각 서비스를 직접 실행(Python 3.12 가상환경, <code>next start</code>, <code>uv run auto-ontology-mcp</code>)</td>
+</tr>
+<tr>
+<td>포트</td>
+<td>3000 · 3001 · 3002 · 3003 · 5432</td>
+<td>3100 · 3101 · 3102 · 3103 · 28930</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>PostgreSQL 17 + pgvector 이미지</td>
+<td>PostgreSQL 16 + pgvector에 <code>pg_trgm</code> 확장을 직접 빌드해 넣음</td>
+</tr>
+<tr>
+<td>모델</td>
+<td>NVIDIA Nemotron(NIM)</td>
+<td>OpenAI <code>gpt-6.1-sol</code>(채팅 역할 전부), <code>text-embedding-3-large</code>(임베딩) — 작은 중계기(:3109)를 거침</td>
+</tr>
+<tr>
+<td>연결</td>
+<td><code>.env</code>의 <code>CONNECTION_STRINGS</code></td>
+<td>비워 두고 화면(Settings → Connections)에서 연결</td>
+</tr>
+<tr>
+<td>예제 데이터</td>
+<td><code>seed_wwi.py</code></td>
+<td>같은 스크립트(<code>auto-ontology-eval</code> ec41b2c)로 넣은 데이터</td>
+</tr>
+</tbody>
+</table>
+<p>이 교재의 실행에서 <code>.env</code>의 모델 부분은 다음과 같습니다(키는 지웠습니다). <code>openai/</code> 접두사는 Auto Ontology가 OpenAI 클라이언트를 고르게 하는 표시입니다.</p>
+<div class="hl"><pre><span></span><code>DEFAULT_MODELS_ENDPOINT=http://127.0.0.1:3109/v1
+DEFAULT_MODELS_MODEL=openai/gpt-6.1-sol
+REASONING_MODEL=openai/gpt-6.1-sol
+NON_REASONING_MODEL=openai/gpt-6.1-sol
+EMBED_MODEL=text-embedding-3-large
+RERANK_ENDPOINT=http://127.0.0.1:3109/v1/rerank
+CONNECTION_STRINGS=
+</code></pre></div>
+
+<p>중계기가 하는 일은 네 가지입니다. OpenAI가 인식하지 못하는 <code>openai/</code> 접두사를 떼고, <code>gpt-6.1-sol</code>이 받지 않는 <code>max_tokens</code>를 <code>max_completion_tokens</code>로 바꾸고, 임베딩을 저장소 차원(2048)에 맞춰 요청하고, OpenAI에 없는 재순위(rerank)를 임베딩 유사도로 흉내 냅니다. 5장에서 쓰는 추론 강도(<code>reasoning_effort</code>)도 중계기에서 붙였습니다. Auto Ontology 1.2.0에는 이 값을 지정하는 설정이 없습니다.</p>
+<figure><a href="img/nv-start.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="이 교재의 실행 — 서비스를 내렸다 다시 띄우고 포트를 확인한 터미널" src="img/nv-start.webp" loading="lazy" decoding="async"></a><figcaption>이 교재의 실행 — 서비스를 내렸다 다시 띄우고 포트를 확인한 터미널</figcaption></figure>
+<p>포트를 확인해 보면 웹 앱(3100)과 적재 서비스(3102)는 모든 주소(<code>*</code>)에서, 백엔드(3101)와 MCP(3103)는 <code>127.0.0.1</code>에서만 열렸습니다. 적재 서비스는 소스에서 <code>0.0.0.0</code>으로 고정되어 있어, Docker 없이 띄울 때는 방화벽으로 막아야 합니다. Docker Compose도 3001·3002를 호스트에 그대로 열어 두므로, 공유망에서는 <a href="troubleshooting.html">부록</a>의 조치를 보세요.</p>
+<h2 id="막히면">막히면<a class="anchor" href="#막히면" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">막히면</p>
+<ul>
+<li><strong><code>invalid model ID</code></strong> — 모델 이름의 <code>openai/</code> 접두사가 OpenAI까지 그대로 갔습니다. → Auto Ontology는 이 접두사로 OpenAI 경로를 고르므로 이름에서 빼면 안 됩니다. → 게이트웨이나 중계기에서 접두사를 떼고 넘깁니다.</li>
+<li><strong><code>Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.</code></strong> — gpt-5·6 계열 OpenAI 모델을 연결했습니다. → 최신 추론 모델은 <code>max_completion_tokens</code>만 받습니다. → 게이트웨이나 중계기에서 이름을 바꿔 넘깁니다.</li>
+<li><strong>재순위 호출이 404</strong> — OpenAI에는 rerank API가 없습니다. → <code>RERANK_ENDPOINT</code>·<code>RERANK_MODEL</code>을 재순위 모델이 있는 곳(NVIDIA NIM 등)으로 따로 줍니다.</li>
+<li><strong>다시 띄운 뒤 화면 왼쪽 메뉴가 안 보임</strong> — 브라우저에 이전 로그인 쿠키가 남았습니다(README 안내). → <code>localhost:3000</code>의 사이트 데이터를 지우고 다시 로그인합니다.</li>
+</ul>
+<p>전체 목록은 <a href="troubleshooting.html">부록 「문제 해결」</a>에 있습니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>1. 외부 사용자와 스크립트가 접근하는 창구는 어느 서비스이고, 왜 3001·3002는 사설망에 두어야 하나요?</summary>
+<p>웹 앱(3000)입니다. 로그인·토큰 확인과 권한 검사가 여기에서 일어납니다. 백엔드(3001)는 웹 앱이 넘긴 사용자 헤더을 검증 없이 신뢰하고, 적재 서비스(3002)의 엔드포인트에는 인증이 없어서, 외부에 공개하면 누구나 다른 사람 행세를 하거나 의미 계층을 지울 수 있습니다.</p>
+</details>
+<details class="answer">
+<summary>2. NVIDIA 키 없이 OpenAI 모델을 쓰려면 무엇을 바꾸나요?</summary>
+<p>역할별 <code>*_ENDPOINT</code>·<code>*_API_KEY</code>·<code>*_MODEL</code>을 OpenAI 호환 엔드포인트로 바꿉니다. 모델 이름에 <code>openai/</code> 접두사를 붙이고, 그 접두사를 떼어 주는 게이트웨이를 앞에 둡니다. 임베딩은 2048차원으로 받고, 재순위는 따로 마련합니다.</p>
+</details>
+<p>다음 장에서는 Wide World Importers를 화면에서 연결해 적재합니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기: 무엇을 배우나</a><a class="next" href="connect.html"><span>다음</span>데이터베이스 연결</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기-공식-quickstart">따라 하기: 공식 Quickstart</a></li><li><a href="#이-교재의-화면은-어떻게-띄웠나">이 교재의 화면은 어떻게 띄웠나</a></li><li><a href="#막히면">막히면</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

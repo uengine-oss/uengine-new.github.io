@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시작하기: 무엇을 배우나 — AX School · NVIDIA Auto Ontology 튜토리얼</title>
+<meta name="description" content="NVIDIA Auto Ontology는 데이터베이스의 메타데이터를 읽어 용어·관계·SQL 속성으로 구성된 의미 계층(온톨로지)을 만들고, 에이전트가 그 의미 계층을 참조해 SQL을 작성하고 답하게 하는 오픈소스 라이브러리입니다. NVIDIA README의 Quickstart 예제(Wide World Importers)를 처음부터 따라 하며 연결 → 의미 계층 컴파일 → 둘러보기 → 질문 → MCP·API 연동까지 실제로 실행해 봅니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/nvidia-auto-ontology/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="시작하기: 무엇을 배우나 — AX School · NVIDIA Auto Ontology 튜토리얼">
+<meta property="og:description" content="NVIDIA Auto Ontology는 데이터베이스의 메타데이터를 읽어 용어·관계·SQL 속성으로 구성된 의미 계층(온톨로지)을 만들고, 에이전트가 그 의미 계층을 참조해 SQL을 작성하고 답하게 하는 오픈소스 라이브러리입니다. NVIDIA README의 Quickstart 예제(Wide World Importers)를 처음부터 따라 하며 연결 → 의미 계층 컴파일 → 둘러보기 → 질문 → MCP·API 연동까지 실제로 실행해 봅니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/nvidia-auto-ontology/">
+<meta property="og:image" content="https://www.uengine.org/docs/nvidia-auto-ontology/img/nv-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AX School · NVIDIA Auto Ontology <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html" class="on" aria-current="page"><span class="n">·</span>시작하기: 무엇을 배우나</a></li>
+<li><a href="setup.html"><span class="n">01</span>설치와 실행</a></li>
+</ul>
+<div class="nav-part">온톨로지 만들기</div><ul>
+<li><a href="connect.html"><span class="n">02</span>데이터베이스 연결</a></li>
+<li><a href="compile.html"><span class="n">03</span>의미 계층 컴파일: 용어·조인 자동 생성과 검토</a></li>
+<li><a href="explore.html"><span class="n">04</span>그래프·용어 둘러보기</a></li>
+</ul>
+<div class="nav-part">질문하기</div><ul>
+<li><a href="ask.html"><span class="n">05</span>질문하기</a></li>
+</ul>
+<div class="nav-part">다른 도구와 잇기</div><ul>
+<li><a href="mcp.html"><span class="n">06</span>MCP로 다른 도구에 붙이기</a></li>
+<li><a href="api.html"><span class="n">07</span>API로 다른 시스템과 연동</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="studio.html"><span class="n">08</span>Ontological Studio 소개와 비교</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">09</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">시작하기<span class="chap"></span></div>
+    <h1>시작하기: 무엇을 배우나</h1>
+    <article>
+<blockquote>
+<p>NVIDIA Auto Ontology는 데이터베이스의 메타데이터를 읽어 용어·관계·SQL 속성으로 구성된 의미 계층(온톨로지)을 만들고, 에이전트가 그 의미 계층을 참조해 SQL을 작성하고 답하게 하는 오픈소스 라이브러리입니다. NVIDIA README의 Quickstart 예제(Wide World Importers)를 처음부터 따라 하며 연결 → 의미 계층 컴파일 → 둘러보기 → 질문 → MCP·API 연동까지 실제로 실행해 봅니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/XhNZ5CmaADY" title="시작하기: 무엇을 배우나 — 영상 2:57" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<div class="admonition note">
+<p class="admonition-title">uEngine의 독립 교육 자료입니다</p>
+<p>이 교재는 uEngine AX School이 만든 독립 교육 자료입니다. NVIDIA와 제휴하거나 NVIDIA의 승인·후원을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 귀속됩니다. NVIDIA Auto Ontology는 Apache License 2.0으로 공개된 소프트웨어이고, 이 교재에 인용한 문장은 출처를 밝혀 원문 그대로 옮겼습니다.</p>
+</div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>에이전트에게 데이터베이스를 열어 주면 SQL을 작성해 답합니다. 문제는 그 숫자가 맞는지입니다. 「매출」이 어떤 표의 어떤 열을 뜻하는지, 고객과 도시를 어떤 열로 이어야 하는지를 모르면 그럴듯하지만 틀린 숫자가 나옵니다. NVIDIA는 README 첫머리에서 이 문제를 이렇게 설명합니다.</p>
+<blockquote>
+<p>"Agents need a context layer that tells them where data lives, what it means, whether to use it, how to use it, where it came from, and what is similar. NVIDIA Auto Ontology is an open library that builds that layer from enterprise metadata, reconciles definitions across systems, and exposes it to any agent harness through MCP, CLI, and API."</p>
+<p>— <a href="https://github.com/NVIDIA/auto-ontology">NVIDIA/auto-ontology README</a> (1.2.0, 커밋 c447003)</p>
+</blockquote>
+<p>우리말로 옮기면 이렇습니다. 에이전트에게는 데이터가 어디에 있는지, 무엇을 뜻하는지, 사용해도 되는지, 어떻게 쓰는지, 어디서 왔는지, 비슷한 데이터는 무엇인지 알려 주는 맥락 계층이 필요합니다. Auto Ontology는 기업 메타데이터에서 그 계층을 만들고, 시스템마다 다른 정의를 조정하고, MCP·CLI·API로 어떤 에이전트에게나 제공합니다.</p>
+<h2 id="auto-ontology가-하는-일">Auto Ontology가 하는 일<a class="anchor" href="#auto-ontology가-하는-일" title="Permanent link">#</a></h2>
+<p>README는 동작을 세 단계로 나눕니다. "Auto-Ontology works in three stages: it generates an ontology, people certify it, and the agent answers questions from it."</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>하는 일</th>
+<th>이 교재의 장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>만들기</strong>(Generate)</td>
+<td>원천 DB의 스키마를 읽고 열을 표본 조사한 뒤, 표마다 업무 용어(Term)를 추출하고 표 사이의 조인을 추론해 의미 계층 초안을 작성합니다</td>
+<td><a href="connect.html">2장 연결</a> · <a href="compile.html">3장 컴파일</a></td>
+</tr>
+<tr>
+<td><strong>인증하기</strong>(Certify)</td>
+<td>사람이 초안을 실제 질문으로 시험하고, 설명·SQL 속성을 고친 뒤 인증합니다</td>
+<td><a href="compile.html">3장</a> · <a href="explore.html">4장 둘러보기</a></td>
+</tr>
+<tr>
+<td><strong>답하기</strong>(Answer)</td>
+<td>질문에서 개체를 뽑아 용어·열·SQL 속성을 찾고, SQL을 짜서 검사·실행한 뒤 SQL과 단계를 함께 돌려줍니다</td>
+<td><a href="ask.html">5장 질문</a></td>
+</tr>
+</tbody>
+</table>
+<p>의미 계층에는 세 가지가 들어갑니다.</p>
+<table>
+<thead>
+<tr>
+<th>정의</th>
+<th>뜻</th>
+<th>예 (Wide World Importers)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>용어</strong>(Term)</td>
+<td>업무 개념 하나. 설명·동의어와 그 개념을 담은 열이 붙습니다</td>
+<td>Invoice Line, Customer, Stock Item</td>
+</tr>
+<tr>
+<td><strong>SQL 속성</strong>(SQL attribute)</td>
+<td>용어에 연결된 검토 완료 SQL 식. 에이전트가 같은 식을 다시 써서 지표를 늘 같은 방법으로 계산합니다</td>
+<td>이익률, 누적 합계</td>
+</tr>
+<tr>
+<td><strong>관계</strong>(Relationship)</td>
+<td>표를 연결하는 방법. 키와 데이터에서 추론합니다</td>
+<td>invoicelines.invoiceid → invoices.invoiceid</td>
+</tr>
+</tbody>
+</table>
+<p>만든 의미 계층은 웹 화면(Chat·용어·그래프)뿐 아니라 <a href="mcp.html">MCP 서버</a>와 <a href="api.html">REST API</a>로도 다른 도구에 제공합니다.</p>
+<h2 id="예제-wide-world-importers">예제: Wide World Importers<a class="anchor" href="#예제-wide-world-importers" title="Permanent link">#</a></h2>
+<p>Microsoft가 공개한 가상 도매 회사의 판매·구매·창고 데이터입니다. NVIDIA는 이 데이터를 PostgreSQL에 넣는 스크립트(<code>auto-ontology-eval</code>의 <code>seed_wwi.py</code>)를 함께 공개했습니다. 데이터를 넣으면 스키마 5개(application·purchasing·sales·warehouse·website)에 표 48개와 뷰 3개가 생깁니다. 외래 키는 선언되어 있지 않아서, 표를 어떻게 이을지는 Auto Ontology가 데이터에서 추론해야 합니다.</p>
+<p>이 교재에서 묻는 질문은 넷입니다. README Quickstart의 두 질문과, 11월 14일 비교에서 함께 사용한 두 질문입니다.</p>
+<table>
+<thead>
+<tr>
+<th>번호</th>
+<th>질문</th>
+<th>기대하는 답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>What was revenue for the USB food flash drive - sushi roll in Pennsylvania in June 2015?</td>
+<td><strong>$588.80</strong>, 송장 줄 3개 (README에 적힌 답)</td>
+</tr>
+<tr>
+<td>Q1 한국어</td>
+<td>2015년 6월 펜실베이니아에서 USB food flash drive - sushi roll의 매출은 얼마였나?</td>
+<td>위와 같음</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>Which products drive the most revenue and highest customer count?</td>
+<td>매출 상위 상품과 고객 수 (README 그림의 질문)</td>
+</tr>
+<tr>
+<td>ROAS</td>
+<td>What was return on ad spend for the sushi roll flash drive in June 2015?</td>
+<td>광고비 데이터가 없으므로 <strong>답할 수 없다</strong>고 해야 맞습니다 (README 6단계)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="장-목록">장 목록<a class="anchor" href="#장-목록" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>장</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="setup.html">1. 설치와 실행</a></td>
+<td>공식 Quickstart(Docker Compose)와, 이 교재의 화면을 찍은 방식(Docker 없이 직접 실행·OpenAI 모델)</td>
+</tr>
+<tr>
+<td><a href="connect.html">2. 데이터베이스 연결</a></td>
+<td>읽기 전용 계정을 만들고 Settings → Connections에서 WWI를 연결해 적재</td>
+</tr>
+<tr>
+<td><a href="compile.html">3. 의미 계층 컴파일</a></td>
+<td>Semantic Compilation을 켜고 용어·조인이 자동으로 생기는 과정과 검토할 곳</td>
+</tr>
+<tr>
+<td><a href="explore.html">4. 그래프·용어 둘러보기</a></td>
+<td>용어 목록, 용어 상세, 의미 그래프, 데이터 카탈로그</td>
+</tr>
+<tr>
+<td><a href="ask.html">5. 질문하기</a></td>
+<td>질문 네 개를 Chat에 묻고, 모델이 실제로 낸 답과 SQL·시간을 확인</td>
+</tr>
+<tr>
+<td><a href="mcp.html">6. MCP로 다른 도구에 붙이기</a></td>
+<td>Claude Code를 OAuth로 MCP 서버에 연결해 <code>check_answerable</code>·<code>ask_question</code> 호출</td>
+</tr>
+<tr>
+<td><a href="api.html">7. API로 다른 시스템과 연동</a></td>
+<td>API 토큰을 만들고 짧은 파이썬 스크립트로 용어 검색·답변 가능성·질문 스트림 받기</td>
+</tr>
+<tr>
+<td><a href="studio.html">8. Ontological Studio 소개와 비교</a></td>
+<td>같은 원천·같은 질문으로 해 본 uEngine Ontological Studio와의 가벼운 비교</td>
+</tr>
+<tr>
+<td><a href="troubleshooting.html">부록. 문제 해결</a></td>
+<td>따라 하다 막히는 곳과 조치, 예외 상황, 이 교재를 찍은 환경</td>
+</tr>
+</tbody>
+</table>
+<h2 id="준비물">준비물<a class="anchor" href="#준비물" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>공식 Quickstart 기준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>실행</td>
+<td>Docker(Compose v2), <a href="https://docs.astral.sh/uv/">uv</a>, Git</td>
+</tr>
+<tr>
+<td>모델</td>
+<td>NVIDIA API 키(<code>nvapi-…</code>, <a href="https://build.nvidia.com">build.nvidia.com</a>) — 또는 구조화 출력을 지원하는 OpenAI 호환 엔드포인트</td>
+</tr>
+<tr>
+<td>연동 실습</td>
+<td>MCP 클라이언트(Claude Code·Cursor·Claude Desktop 중 하나), Python 3과 <code>requests</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="이-교재의-화면과-숫자">이 교재의 화면과 숫자<a class="anchor" href="#이-교재의-화면과-숫자" title="Permanent link">#</a></h2>
+<p>화면과 수치는 2026년 11월 15일에 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 실제로 실행해 얻었습니다. 공식 Quickstart와 다른 점이 두 가지 있습니다. NVIDIA API 키 없이 <strong>OpenAI <code>gpt-6.1-sol</code> 모델</strong>을 연결했고, Docker 대신 <strong>각 서비스를 이 PC에서 직접</strong> 띄웠습니다. 그래서 화면의 주소가 공식 문서의 <code>:3000</code> 대신 <code>:3100</code>입니다. 자세한 차이는 <a href="setup.html">1장</a>과 <a href="troubleshooting.html">부록의 「이 교재를 찍은 환경」</a>에 적었습니다.</p>
+<p>모델이 작성하는 SQL과 답은 실행할 때마다 달라질 수 있습니다. 그래서 5장의 답 화면마다 그 답을 낸 모델과 추론 강도를 함께 표시했습니다. 기본 모델인 NVIDIA Nemotron으로 실행하면 결과가 다를 수 있습니다.</p>
+<p>먼저 <a href="setup.html">1장 설치와 실행</a>에서 서비스 구성과 공식 설치 순서를 봅니다.</p>
+    </article>
+    <nav class="pager"><span></span><a class="next" href="setup.html"><span>다음</span>설치와 실행</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#auto-ontology가-하는-일">Auto Ontology가 하는 일</a></li><li><a href="#예제-wide-world-importers">예제: Wide World Importers</a></li><li><a href="#장-목록">장 목록</a></li><li><a href="#준비물">준비물</a></li><li><a href="#이-교재의-화면과-숫자">이 교재의 화면과 숫자</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
