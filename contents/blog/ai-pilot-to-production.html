@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <!-- SEO:BEGIN — 자동 생성됨. 직접 수정하지 마세요. .claude/skills/seo-optimize/seo-meta.json 을 고치고 apply_seo.py 를 다시 실행하세요. -->
+        <title>AI 파일럿은 왜 실무에서 멈출까 — Process GPT 접근이 필요한 이유 | uEngine 블로그</title>
+        <meta name="description" content="AI가 문서를 3초 만에 요약해도 청구서 한 건이 끝나는 시간은 거의 줄지 않습니다. 그 이유를 가상의 숫자로 따라가 보고, 사람·AI·규칙·기존 시스템을 한 흐름으로 잇는 Process GPT 접근과 도입 전에 던질 네 가지 질문을 정리했습니다.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="https://www.uengine.org/contents/blog/ai-pilot-to-production.html">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="uEngine">
+        <meta property="og:locale" content="ko_KR">
+        <meta property="og:title" content="AI 파일럿은 왜 실무에서 멈출까 — Process GPT 접근이 필요한 이유 | uEngine 블로그">
+        <meta property="og:description" content="AI가 문서를 3초 만에 요약해도 청구서 한 건이 끝나는 시간은 거의 줄지 않습니다. 그 이유를 가상의 숫자로 따라가 보고, 사람·AI·규칙·기존 시스템을 한 흐름으로 잇는 Process GPT 접근과 도입 전에 던질 네 가지 질문을 정리했습니다.">
+        <meta property="og:url" content="https://www.uengine.org/contents/blog/ai-pilot-to-production.html">
+        <meta property="og:image" content="https://www.uengine.org/images/blog/ai-pilot-to-production.jpg">
+        <meta property="og:image:alt" content="AI 파일럿은 왜 실무에서 멈출까 — Process GPT 접근이 필요한 이유 | uEngine 블로그">
+        <meta property="article:published_time" content="2026-11-19">
+        <meta property="article:publisher" content="https://www.uengine.org/">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="AI 파일럿은 왜 실무에서 멈출까 — Process GPT 접근이 필요한 이유 | uEngine 블로그">
+        <meta name="twitter:description" content="AI가 문서를 3초 만에 요약해도 청구서 한 건이 끝나는 시간은 거의 줄지 않습니다. 그 이유를 가상의 숫자로 따라가 보고, 사람·AI·규칙·기존 시스템을 한 흐름으로 잇는 Process GPT 접근과 도입 전에 던질 네 가지 질문을 정리했습니다.">
+        <meta name="twitter:image" content="https://www.uengine.org/images/blog/ai-pilot-to-production.jpg">
+        <meta name="google-site-verification" content="9ZGWBuIjNYToBYuO79BveQS6l5kh6oEWg-LqIioIwhk">
+        <meta name="naver-site-verification" content="5c690f447e5e02997ffdc0d4e5ad62bee713a647">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI 파일럿은 왜 실무에서 멈출까 — Process GPT 접근이 필요한 이유","description":"AI가 문서를 3초 만에 요약해도 청구서 한 건이 끝나는 시간은 거의 줄지 않습니다. 그 이유를 가상의 숫자로 따라가 보고, 사람·AI·규칙·기존 시스템을 한 흐름으로 잇는 Process GPT 접근과 도입 전에 던질 네 가지 질문을 정리했습니다.","image":["https://www.uengine.org/images/blog/ai-pilot-to-production.jpg"],"url":"https://www.uengine.org/contents/blog/ai-pilot-to-production.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.uengine.org/contents/blog/ai-pilot-to-production.html"},"inLanguage":"ko","author":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/"},"publisher":{"@type":"Organization","name":"유엔진솔루션즈","url":"https://www.uengine.org/","logo":{"@type":"ImageObject","url":"https://www.uengine.org/images/logo-b.png"}},"datePublished":"2026-11-19","dateModified":"2026-11-19"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"uEngine","item":"https://www.uengine.org/"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://www.uengine.org/contents/bloglist.html"},{"@type":"ListItem","position":3,"name":"AI 파일럿은 왜 실무에서 멈출까","item":"https://www.uengine.org/contents/blog/ai-pilot-to-production.html"}]}</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+        <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+        <!-- SEO:END -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/style.css?after">
+        <link rel="stylesheet" href="../../css/style-responsive.css">
+        <link rel="stylesheet" href="../../css/vertical-rhythm.min.css">
+        <link rel="stylesheet" href="../../css/magnific-popup.css">
+        <link rel="stylesheet" href="../../css/owl.carousel.css">
+        <link rel="stylesheet" href="../../css/splitting.css">
+        <link rel="stylesheet" href="../../css/YTPlayer.css">
+        <link rel="stylesheet" href="../../css/demo-main/demo-main.css">
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    </head>
+    <body class="appear-animate">
+        
+        <!-- Page Loader -->        
+        <div class="page-loader">
+            <div class="loader">Loading...</div>
+        </div>
+        <!-- End Page Loader -->
+
+        <!-- Skip to Content -->
+        <a href="#main" class="btn skip-to-content">Skip to Content</a>
+        <!-- End Skip to Content -->
+        
+        <!-- Page Wrap -->
+        <div class="page" id="top">
+            
+            <!-- Navigation Panel -->
+            <nav class="main-nav dark light-after-scroll transparent stick-fixed wow-menubar">
+                <div class="main-nav-sub full-wrapper">
+                    
+                    <div class="nav-logo-wrap local-scroll">
+                        <a href="../../index.html" class="logo">
+                            <img src="../../images/logo-w.png" alt="uEngine Logo" width="105" height="34" class="logo-white" />
+                            <img src="../../images/logo-b.png" alt="uEngine Logo" width="105" height="34" class="logo-dark" />
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="mobile-nav" role="button" tabindex="0">
+                        <!-- 모바일 문의하기 -->
+                        <!--lang-switch--><a href="../../en/contents/blog/ai-pilot-to-production.html" class="opacity-1 no-hover mobile-chat lang-switch" title="English">EN</a><!--/lang-switch-->
+                        <a href="../contactus.html" class="opacity-1 no-hover mobile-chat"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a>
+
+                        <i class="mobile-nav-icon"></i>
+                        <span class="visually-hidden">Menu</span>
+                    </div>
+                    
+                    <!-- Main Menu -->
+                    <div class="inner-nav desktop-nav">
+                        <ul class="clearlist local-scroll">
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Native Enterprise <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="enterprisebrain.html" style="font-size: 18px;">AI-Native Enterprise란?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Process Solutions · Agent&nbsp;Orchestrator&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Ontology Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../ontologystudio.html" style="font-size: 18px;">Ontological Studio</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologic.html" style="font-size: 18px;">Ontologic Platform</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ontologicaldb.html" style="font-size: 18px;">Ontological DB</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education and Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../axschool.html" style="font-size: 18px;">AX School</a>
+                                            </li>
+                                            <li>
+                                                <a href="../agentstorming.html" style="font-size: 18px;">Agent Storming 워크숍</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationax.html" style="font-size: 18px">AX 전환 컨설팅 교육</a>
+                                            </li>
+                                            <li>
+                                                <a href="../ax-lite-course.html" style="font-size: 18px;">우리 회사 AI 업무교실</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Open Source&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://github.com/uengine-oss/ontology-studio" target="_blank" style="font-size: 18px;">GitHub</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Industry AI Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../industry.html" style="font-size: 18px;">왜 필요한가요?</a>
+                                            </li>
+                                            <li>
+                                                <a href="../erp.html" style="font-size: 18px;">AI-Native ERP</a>
+                                            </li>
+                                            <li>
+                                                <a href="../mes.html" style="font-size: 18px;">AI-Native MES</a>
+                                            </li>
+                                            <li>
+                                                <a href="../wms.html" style="font-size: 18px;">AI-Native WMS</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;AI Tools&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../aitools.html" style="font-size: 18px;">AI 도구 모음</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">AI-Driven Development <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="aidevoutlook.html" style="font-size: 18px;">AI 기반 개발의 현재와 향후 전망</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                            <li>
+                                                <a href="../dreamvibe.html" style="font-size: 18px;">DreamVibe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/operation/introduction/" target="_blank" style="font-size: 18px;">Education for MSA</a>
+                                            </li>
+                                            <li>
+                                                <a href="../educationvibecoding.html" style="font-size: 18px;">Education for Vibecoding</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingmsa.html" style="font-size: 18px;">MSA Consulting</a>
+                                            </li>
+                                            <li>
+                                                <a href="../leaddevelopment.html" style="font-size: 18px;">선도개발 구현 컨설팅</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesmsa.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">BPM <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="bpmalive.html" style="font-size: 18px;">BPM 은 죽지 않았다</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../uengine6bpm.html" style="font-size: 18px;">uEngine6 BPM</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgpt.html" style="font-size: 18px;">Process GPT</a>
+                                            </li>
+                                            <li>
+                                                <a href="../processgptlite.html" style="font-size: 18px;">Process GPT Lite</a>
+                                            </li>
+                                        <li><a href="../uengine-pal.html" style="font-size: 18px;">uEngine PAL</a></li>
+                                            <li>
+                                                <a href="../uenginerpa.html" style="font-size: 18px;">uEngine RPA</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../educationbpm.html" style="font-size: 18px;">Education for BPM</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../consultingbpm.html" style="font-size: 18px;">BPM Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../casestudiesbpm.html" style="font-size: 18px;">Case Studies</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Cloud <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;Vision&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="whymsahard.html" style="font-size: 18px;">왜 클라우드 네이티브는 어려운가?</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Solutions&gt;</span>
+                                        <ul>
+                                            <li><a href="../uenginecloud.html" style="font-size: 18px;">uEngine Cloud</a></li>
+                                            <li>
+                                                <a href="../roboarchitect.html" style="font-size: 18px;">Robo Architect</a>
+                                            </li>
+                                            <li>
+                                                <a href="../roboanalyzer.html" style="font-size: 18px;">Robo Analyzer</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Consulting&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../msaacademy.html" style="font-size: 18px;">CNA/MSA Consulting</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Education&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.msaschool.io/" target="_blank" style="font-size: 18px;">MSA School 바로가기</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Company <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <ul>
+                                            <li>
+                                                <a href="../showcase.html" style="font-size: 18px;">Showcase</a>
+</li>
+<li>
+<a href="../history.html" style="font-size: 18px;">History</a>
+                                            </li>
+                                            <li>
+                                                <a href="../partners.html" style="font-size: 18px;">Partners</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+
+                            <!-- Item With Sub -->
+                            <li>
+                                <a href="#" class="mn-has-sub active">Insight <i class="mi-chevron-down"></i></a>
+
+                                <!-- Sub Megamenu -->
+                                <ul class="mn-sub mn-has-multi">
+
+                                    <!-- Sub Column -->
+                                    <li class="mn-sub-multi">
+                                        <span class="mn-group-title">&lt;News&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../newsroom.html" style="font-size: 18px;">Newsroom</a>
+                                            </li>
+                                            <li>
+                                                <a href="../newsletterlist.html" style="font-size: 18px;">Newsletter</a>
+                                                <!-- 스티비 아카이브로 되돌리려면 위 href 를 https://uengine.stibee.com/ 로 바꾸고 target="_blank" 를 다시 넣으세요 -->
+                                            </li>
+                                            <li>
+                                                <a href="../interview.html" style="font-size: 18px;">Interview</a>
+                                            </li>
+                                        </ul>
+
+                                        <span class="mn-group-title" style="margin-top: 20px;">&lt;Seminar&gt;</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../webinars.html" style="font-size: 18px;">Webinars</a>
+                                            </li>
+                                        </ul>
+
+                                        <ul style="margin-top: 30px;">
+                                            <li>
+                                                <a href="../bloglist.html" style="font-size: 18px;">Blogs</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- End Sub Column -->
+                                </ul>
+                                <!-- End Sub Megamenu -->
+
+                            </li>
+                            <!-- End Item With Sub -->
+                        </ul>
+
+                        <ul class="items-end clearlist">
+
+                            <li class="pc-chat lang-switch"><a href="../../en/contents/blog/ai-pilot-to-production.html" class="opacity-1 no-hover" title="English" hreflang="en"><span class="link-hover-anim underline" data-link-animate="y">EN</span></a></li>
+                            <li class="pc-chat"><a href="../contactus.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">문의하기</span></a></li>
+                            <!-- <li><a href="../bloglist.html" class="opacity-1 no-hover"><span class="link-hover-anim underline" data-link-animate="y">Blogs</span></a></li> -->
+
+                        </ul>
+
+                    </div>
+                    <!-- End Main Menu -->
+                    
+                </div>
+            </nav>
+            <!-- End Navigation Panel -->
+            
+            <main id="main">
+
+                <!-- Header Section -->
+                <section class="page-section bg-dark-1 bg-dark-alpha-70 light-content parallax-5" style="background-image: url(../../images/full-width-images/section-bg-1.jpg)">
+                    <div class="container position-relative pt-30 pt-sm-50">
+
+                        <!-- Section Content -->
+                        <div class="text-center">
+                            <div class="row">
+
+                                <!-- Page Title -->
+                                <div class="col-md-8 offset-md-2">
+
+                                    <h1 class="hs-title-0 mb-20">
+                                        <span class="wow charsAnimIn" data-splitting="chars">AI 파일럿은 왜 실무에서 멈출까 — Process GPT 접근이 필요한 이유</span>
+                                    </h1>
+
+                                    <!-- Author, Categories, Comments -->
+                                    <div class="blog-item-data mt-30 mt-sm-10 mb-0 wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="d-inline-block me-3">
+                                            <a href="#"><i class="mi-clock size-16"></i><span class="visually-hidden">Date:</span>  November 19, 2026</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Author, Categories, Comments -->
+
+                               </div>
+                               <!-- End Page Title -->
+
+                            </div>
+                        </div>
+                        <!-- End Section Content -->
+
+                    </div>
+                </section>
+                <!-- End Header Section -->
+
+
+                <!-- Section -->
+                <section class="page-section">
+                    <div class="container relative">
+
+                        <div class="row">
+
+                            <!-- Content -->
+                            <div class="col-lg-8 offset-lg-2">
+
+                                <!-- Post -->
+                                <div class="blog-item mb-80 mb-xs-40">
+
+                                    <div class="blog-item-body chat-gpt">
+<div class="mb-50"><img src="../../images/blog/ai-pilot-to-production.jpg" alt="AI 파일럿은 왜 실무에서 멈출까 — Process GPT 접근이 필요한 이유" style="width:100%;height:auto;border-radius:12px;" decoding="async"></div>
+<!-- ko-only -->
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">이 글은 <a href="../processgpt.html#processgpt-listen">Process GPT 팟캐스트 01화 「AI 파일럿은 왜 실무에서 멈출까」</a>(13분 25초)의 내용을 글로 옮기고, 표와 예시를 더해 정리한 것입니다. 팟캐스트는 Process GPT 제품소개서를 바탕으로 NotebookLM이 만든 AI 음성 해설입니다.</p>
+<audio controls preload="none" style="width: calc(100% - 20px); margin-left: 20px;"><source src="../../media/processgpt/01-processgpt-pilot-to-production.m4a" type="audio/mp4"></audio></div>
+<!-- /ko-only -->
+<blockquote><p>&nbsp; 1. 시연회의 박수, 한 달 뒤의 야근</p></blockquote>
+<div class="mb-50 prose"><p>수억 원을 들여 최신 AI를 도입했다고 상상해 보세요. 시연회에서 AI가 수백 쪽짜리 문서를 3초 만에 요약하자 박수가 쏟아집니다. 그런데 한 달 뒤 실무 부서에 가 보면 직원들은 여전히 야근을 하고, 결재는 밀려 있고, 업무 처리 속도는 도입 전과 다르지 않습니다.</p>
+<p>많은 기업이 겪는 일입니다. AI가 문서를 요약하고 메일 초안을 써 주면 일이 끝났다고 여기기 쉽습니다. 하지만 이는 마라톤에서 100m 구간만 빨리 달린 것에 지나지 않습니다. 주방 보조가 양파를 아무리 빨리 썰어도 요리하고 서빙할 사람이 없으면 손님은 계속 기다려야 합니다.</p>
+<p>시연과 실무는 환경부터 다릅니다. 시연은 잘 정리된 문서 하나로 하는 실험입니다. 실무에서는 부서마다 양식이 다르고, 꼭 있어야 할 항목이 빠진 문서도 들어옵니다. 무엇보다 한 사람의 작업이 끝나도 일은 다음 사람과 다음 시스템으로 넘어가야 합니다.</p></div>
+<blockquote><p>&nbsp; 2. 3초 요약이 줄인 것과 줄이지 못한 것</p></blockquote>
+<div class="mb-50 prose"><p>청구서 한 건을 처리하는 과정을 가상의 숫자로 따라가 보겠습니다.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd;">단계</th><th style="padding: 12px 16px; border: 1px solid #ddd;">구간</th><th style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">AI 도입 전</th><th style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">개인 AI 도입 후</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">청구서를 읽고 거래처·금액·날짜 정리</td><td style="padding: 12px 16px; border: 1px solid #ddd;">작업 처리</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">20분</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;"><b style="font-weight: bold; color: #7c4dbc;">3초</b></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">정리한 내용을 복사해 그룹웨어 결재 문서에 붙여넣기</td><td style="padding: 12px 16px; border: 1px solid #ddd;">인계</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">5분</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">5분</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">결재선을 지정해 올리기</td><td style="padding: 12px 16px; border: 1px solid #ddd;">인계</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">5분</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">5분</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">팀장 결재 대기</td><td style="padding: 12px 16px; border: 1px solid #ddd;">의사결정 대기</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">1일</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">1일</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">회계 시스템에 다시 입력하고 확인</td><td style="padding: 12px 16px; border: 1px solid #ddd;">인계</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">10분</td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;">10분</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">청구서 한 건을 처리하기까지</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;"></td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;"><b style="font-weight: bold;">1일 40분</b></td><td style="padding: 12px 16px; border: 1px solid #ddd; text-align: right;"><b style="font-weight: bold;">1일 20분</b></td></tr>
+</tbody></table>
+<p class="text-center mt-20" style="font-size: 14px; color: #888;">이해를 돕기 위한 가상의 숫자입니다. 구간은 <a href="../processgpt.html#leadtime-problem" style="color: #888; text-decoration: underline;">Process GPT 소개 페이지의 리드타임 구분</a>을 따랐습니다.</p></div>
+<div class="mb-50 prose"><p>AI는 20분 걸리던 일을 3초 만에 처리합니다. 그런데 청구서 한 건의 처리 시간은 1일 40분에서 1일 20분으로 줄었을 뿐입니다. 나머지 시간은 사람이 복사해 붙여넣고, 결재를 기다리고, 다른 시스템에 다시 입력하는 데 쓰입니다. 시스템 접속 장애라도 생기면 그 상태로 몇 시간을 더 기다려야 합니다.</p>
+<p>이처럼 사람과 시스템 사이의 흐름이 끊긴 구간을 <b>복사·붙여넣기의 늪</b>이라고 부를 수 있습니다. 이 늪이 남아 있는 한, 개인의 작업 속도를 아무리 높여도 조직 전체의 리드타임(일이 시작돼 완료되기까지 걸리는 시간)은 줄어들지 않습니다.</p></div>
+<div class="mb-50 prose" style="border-left: 5px solid #ddd;"><p style="margin-left: 20px;">개인 AI가 줄인 것은 표의 첫 행, 작업 처리 구간뿐입니다. 한 건의 처리 시간은 인계와 대기가 결정합니다.</p></div>
+<blockquote><p>&nbsp; 3. 무엇을 기준으로 볼 것인가</p></blockquote>
+<div class="mb-50 prose"><p>그래서 AI를 하루에 몇 번 썼는지, 몇 명이 썼는지는 성과의 기준이 되기 어렵습니다. Process GPT가 겨냥하는 것은 <b>업무 완료 시간, 산출물 품질, 재작업률, 운영 비용</b>입니다. 이를 개선하려면 AI가 혼자 다 해 줄 것이라는 기대에서 벗어나, 사람과 AI, 기존 시스템을 하나의 업무 흐름에 배치해야 합니다. 식당으로 치면 주방 보조의 칼질만 빠르게 하는 것이 아니라 동선과 레시피 전체를 짜는 일입니다.</p>
+<p>첫걸음은 업무 흐름 지도를 그리는 것입니다. Process GPT에서는 "구매 요청이 들어오면 팀장 승인을 거쳐 구매팀이 발주하는 흐름을 만들어 줘"처럼 말로 설명하면, 누가 어떤 일을 어떤 순서로 처리할지 보여 주는 지도가 만들어집니다. 이 지도는 국제 표준 업무 흐름 표기법인 BPMN으로 그려지므로 사람이 보고 직접 고칠 수 있습니다.</p>
+<p>다만 마법은 아닙니다.</p>
+<ul>
+<li><b style="font-weight: bold;">말로 그리는 것은 논리적인 흐름입니다.</b> 10년 넘게 써 온 사내 시스템이 저절로 연결되지는 않습니다. 필요한 시스템은 API나 연동 도구로 연결해야 하고, API가 없는 시스템은 따로 검토해야 합니다.</li>
+<li><b style="font-weight: bold;">AI가 그린 지도도 사람이 꼼꼼히 검토해야 합니다.</b></li>
+</ul></div>
+<blockquote><p>&nbsp; 4. 사람·AI·규칙에게 각자 잘하는 일을</p></blockquote>
+<div class="mb-50 prose"><p>지도를 그렸으면 각 단계를 누구에게 맡길지 정합니다. 똑똑한 AI에게 전부 맡기면 편할 것 같지만, 그러다 큰 사고가 날 수 있습니다. 생성형 AI의 강점인 유연함이 엄격한 업무 규칙 앞에서는 약점이 되기 때문입니다.</p>
+<p>"법인카드로 50만 원 이상을 쓰면 반드시 팀장 승인을 받는다"는 규정이 있다고 가정합니다. AI가 맥락을 읽고 "이번 출장은 고생했으니 그냥 승인하자"라고 판단하면 안 됩니다. 이런 규칙은 AI가 아니라 규칙 도구에 맡깁니다. Process GPT는 규칙을 DMN(판단 기준을 표로 정리하는 국제 표준)의 결정표로 관리합니다. 입력이 같으면 결과도 언제나 같습니다.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 520px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd;">필수 정보(거래처·금액·날짜)</th><th style="padding: 12px 16px; border: 1px solid #ddd;">금액</th><th style="padding: 12px 16px; border: 1px solid #ddd;">결과</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">하나라도 빠짐</td><td style="padding: 12px 16px; border: 1px solid #ddd;">상관없음</td><td style="padding: 12px 16px; border: 1px solid #ddd;">담당자에게 보완 요청</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;">모두 있음</td><td style="padding: 12px 16px; border: 1px solid #ddd;">50만 원 미만</td><td style="padding: 12px 16px; border: 1px solid #ddd;">담당자 확인 후 처리</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;">모두 있음</td><td style="padding: 12px 16px; border: 1px solid #ddd;">50만 원 이상</td><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">팀장 승인 필요</b></td></tr>
+</tbody></table>
+<p class="text-center mt-20" style="font-size: 14px; color: #888;">청구서 판단 기준을 결정표로 옮긴 예입니다. 표의 한 행이 규칙 하나입니다.</p></div>
+<div class="mb-50 prose"><p>역할을 나누면 다음과 같습니다.</p>
+<ul>
+<li><b style="font-weight: bold;">AI 에이전트:</b> 양식이 제각각인 문서를 정리하거나 초안을 쓰는 등 맥락을 파악하는 일</li>
+<li><b style="font-weight: bold;">규칙(DMN):</b> 필수 입력값 확인이나 금액 한도처럼 답이 딱 떨어지는 판단</li>
+<li><b style="font-weight: bold;">사람:</b> 최종 승인과 모호한 예외 상황의 판단, 결과에 대한 책임</li>
+<li><b style="font-weight: bold;">기존 시스템:</b> 확정된 결과의 기록</li>
+</ul>
+<p>이처럼 사람과 AI, 규칙과 시스템이 맡은 일을 하나의 흐름으로 조율하는 것을 <b>업무 오케스트레이션</b>이라고 합니다. 단순한 계산에까지 생성형 AI를 쓸 필요도, 고정된 규칙을 AI의 판단에 맡길 이유도 없습니다.</p></div>
+<blockquote><p>&nbsp; 5. 같은 청구서를 끝까지 이어진 흐름으로</p></blockquote>
+<div class="mb-50 prose"><p>앞의 청구서 처리 과정을 Process GPT로 다시 설계하면 다음과 같습니다. 특정 고객사의 실제 데이터가 아니라 구조를 보여 주기 위한 가상의 설계 예시입니다.</p></div>
+<div class="mb-50">
+<div style="max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px;">
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;"><span style="font-weight: 800; color: #1a1a2e;">1</span><span style="background: #e8f0fd; color: #2b5fc7; border-radius: 20px; padding: 3px 12px; font-size: 13px; font-weight: 700;">AI 에이전트</span><b style="font-weight: bold;">읽고 정리하기</b></div><div style="font-size: 15px; margin-top: 6px; color: #444;">양식이 다른 청구서를 읽고 거래처·금액·날짜를 해당 단계의 입력 폼에 채웁니다.</div></div>
+<div style="text-align: center; color: #999; font-size: 14px;">↓</div>
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;"><span style="font-weight: 800; color: #1a1a2e;">2</span><span style="background: #f1ebfb; color: #7c4dbc; border-radius: 20px; padding: 3px 12px; font-size: 13px; font-weight: 700;">규칙(DMN)</span><b style="font-weight: bold;">필수 정보와 한도 확인</b></div><div style="font-size: 15px; margin-top: 6px; color: #444;">빠진 정보가 없는지, 한도를 넘지 않는지 결정표로 확인하고 승인자를 정합니다.</div></div>
+<div style="text-align: center; color: #999; font-size: 14px;">↓</div>
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;"><span style="font-weight: 800; color: #1a1a2e;">3</span><span style="background: #fdf0e6; color: #c0601c; border-radius: 20px; padding: 3px 12px; font-size: 13px; font-weight: 700;">사람</span><b style="font-weight: bold;">검토하고 승인하기</b></div><div style="font-size: 15px; margin-top: 6px; color: #444;">정리된 내용과 근거를 보고 승인하거나 반려합니다. 복사해 붙여넣거나 결재선을 지정할 필요가 없습니다.</div></div>
+<div style="text-align: center; color: #999; font-size: 14px;">↓</div>
+<div style="background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 14px 18px; box-shadow: 0 4px 14px rgba(26,26,46,0.06);"><div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;"><span style="font-weight: 800; color: #1a1a2e;">4</span><span style="background: #efefef; color: #444; border-radius: 20px; padding: 3px 12px; font-size: 13px; font-weight: 700;">기존 시스템</span><b style="font-weight: bold;">반영하고 확인하기</b></div><div style="font-size: 15px; margin-top: 6px; color: #444;">승인된 결과를 회계 시스템에 반영합니다. 반영 여부를 확인해야 청구서 한 건의 처리가 끝납니다.</div></div>
+<div style="border: 2px dashed #c0601c; border-radius: 14px; padding: 14px 18px; margin-top: 8px; background: #fffaf6;"><div style="font-size: 12px; font-weight: 700; color: #c0601c; letter-spacing: .04em;">예외 상황의 처리 경로</div><div style="font-size: 15px; margin-top: 6px; color: #444;">2단계에서 금액이 빠졌다면 담당자에게 보완을 요청합니다.<br>4단계에서 회계 시스템 오류가 나면 업무가 담당자에게 돌아갑니다. AI가 임의로 되돌리지 않습니다.</div></div>
+</div>
+<p class="text-center mt-20" style="font-size: 14px; color: #888;">앞의 표에서 사람이 손으로 잇던 세 구간(붙여넣기, 결재선 지정, 다시 입력하기)이 하나의 흐름으로 이어졌습니다.</p>
+</div>
+<div class="mb-50 prose"><p>앞의 표와 비교해 보세요. 복사해 붙여넣기, 결재선 지정, 회계 시스템에 다시 입력하기는 흐름 안에서 이어집니다. 팀장은 필요한 정보가 모두 정리된 승인 요청을 받습니다. 결재 대기처럼 사람이 판단하는 시간은 여전히 남지만, 어디서 얼마나 걸리는지 기록으로 확인할 수 있습니다.</p>
+<p>예외 처리도 설계해야 합니다. 금액이 빠졌거나 회계 시스템에서 오류가 나면 Process GPT가 알아서 복구해 줄까요? 그렇게 약속하지 않습니다. 이미 외부 시스템에 반영된 것을 AI가 마음대로 되돌리면 금융 사고로 이어질 수 있습니다. 좋은 흐름 설계는 오류가 없다고 약속하는 대신, 오류가 나면 담당자에게 업무가 돌아가도록 경로를 미리 마련하는 것입니다.</p></div>
+<blockquote><p>&nbsp; 6. 회사의 맥락은 지식지도로, 경험은 스킬로</p></blockquote>
+<div class="mb-50 prose"><p>AI는 우리 회사의 예산 규정이나 용어를 어떻게 알까요? 그때마다 모델을 다시 학습시키는 것은 비효율적입니다. Process GPT는 <b>온톨로지</b>를 활용합니다. 온톨로지는 조직의 대상, 관계, 규정을 서로 이어 놓은 지식지도입니다. 에이전트는 문서를 처리하면서 이 지식지도를 조회해 근거를 찾습니다. 사용자가 결과에 피드백을 주면 그 내용이 스킬과 규칙으로 정리되어 다음 실행에 쓰입니다.</p>
+<p>그렇다고 오류가 0이 되지는 않습니다. 근거가 탄탄해질 뿐, 사람의 검토와 통제는 계속 필요합니다. 지식은 판단의 근거가 되고, 프로세스는 그 판단을 실행으로 이어 줍니다.</p></div>
+<blockquote><p>&nbsp; 7. 도입 전에 던질 네 가지 질문</p></blockquote>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd;">질문</th><th style="padding: 12px 16px; border: 1px solid #ddd;">확인할 것</th><th style="padding: 12px 16px; border: 1px solid #ddd;">청구서 예시라면</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">1. 어떤 결과를 바꿀 것인가</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">응답 속도가 아니라 완료 시간, 비용, 재작업률</td><td style="padding: 12px 16px; border: 1px solid #ddd;">접수부터 회계 반영까지 걸리는 시간, 보완 요청 비율</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">2. 전체 흐름이 이어져 있는가</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">사람이 복사해 붙여넣거나 다시 입력하는 구간</td><td style="padding: 12px 16px; border: 1px solid #ddd;">그룹웨어에 붙여넣기, 회계 시스템에 다시 입력하기</td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">3. 누가 무엇을 맡는가</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">단계마다 사람·AI·규칙이 맡을 몫</td><td style="padding: 12px 16px; border: 1px solid #ddd;">읽기는 AI, 한도 확인은 결정표, 승인은 팀장</td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">4. 운영 준비가 되었는가</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">오류와 예외 상황의 처리 경로</td><td style="padding: 12px 16px; border: 1px solid #ddd;">금액이 빠지거나 회계 시스템에 오류가 나면 누구에게 돌아가는가</td></tr>
+</tbody></table></div>
+<div class="mb-50 prose"><p>도입 기간, 비용, 절감률은 업무의 복잡도와 기존 환경에 따라 달라 미리 숫자로 약속할 수 없습니다. 대표 업무 하나를 골라 작게 시작하고, 우리 환경에서 얼마나 나아지는지 측정하면서 확대하는 것이 가장 현실적입니다. Process GPT의 실행 분석은 경과 시간을 사람의 판단, 에이전트의 수행, 대기로 나눠 보여 주므로 도입 전후를 같은 기준으로 비교할 수 있습니다.</p></div>
+<blockquote><p>&nbsp; 8. Process GPT에서는 이렇게 합니다</p></blockquote>
+<div class="mb-50 prose"><p>이 글에서 다룬 내용이 Process GPT의 어떤 기능에 해당하는지 정리했습니다. 링크를 누르면 제품 소개 페이지나 튜토리얼의 해당 부분으로 이동합니다.</p></div>
+<div class="mb-50" style="overflow-x: auto;"><table style="width: 100%; min-width: 600px; border-collapse: collapse; font-size: 15px; word-break: keep-all;">
+<thead><tr style="background-color: #1a1a2e; color: #fff;"><th style="padding: 12px 16px; border: 1px solid #ddd; width: 28%;">이 글에서</th><th style="padding: 12px 16px; border: 1px solid #ddd;">Process GPT 기능</th></tr></thead>
+<tbody>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">말로 그리는 업무 흐름 지도</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">업무를 한두 문장으로 설명하면 사람과 에이전트의 역할을 레인으로 나눈 BPMN 프로세스와 단계별 입력 폼을 만듭니다.<br><a href="../processgpt.html#feat-f-goal-team" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/process-create.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 대화로 프로세스 만들기</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">규정 문서에서 시작하기</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">규정 PDF를 읽고 단계·담당자·금액별 승인과 반려 경로를 담은 초안을 근거 문서의 쪽 번호와 함께 보여 줍니다. 사람이 승인해야 다음으로 넘어갑니다.<br><a href="../processgpt.html#diff-reverse" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/document-process.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 문서로 프로세스 만들기</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">규칙은 결정표로</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">업무 규칙을 DMN 결정표로 관리해 에이전트의 분기 판단을 명시적인 규칙으로 통제합니다.<br><a href="../processgpt.html#diff-bpmn" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/dmn.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 비즈니스 규칙(DMN)</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">사람의 승인과 반려</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">사람의 최종 결정이 필요한 핵심 경로에 승인 단계를 넣습니다. 반려하면 앞 단계로 되돌아가는 갈림길도 만들 수 있습니다.<br><a href="../processgpt.html#diff-agent" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/gateway.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 승인과 반려</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">AI가 맡는 단계</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">에이전트가 맡은 단계를 차례로 처리하고 결과를 단계 폼에 입력합니다. 자료에 없는 수치는 지어내지 않고 없다고 명시합니다.<br><a href="../processgpt.html#feat-f-draft" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/agent-steps.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 에이전트가 맡는 단계</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">기존 시스템 연결</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">MCP 허브에서 연결을 저장하기 전에 실제로 접속해 확인하고, 툴 단위로 권한을 주며, 되돌릴 수 없는 툴만 따로 막을 수 있습니다. API가 없어 화면만 있는 시스템은 <a href="../uenginerpa.html">uEngine RPA</a>로 잇습니다.<br><a href="../processgpt.html#feat-mcphub" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/mcp-hub.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: MCP로 외부 도구 연결하기</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">회사의 지식지도</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">딥 에이전트가 실행 중에 <a href="../ontologystudio.html">Ontology Studio</a>로 만든 지식그래프를 탐색해 근거 조항을 인용합니다.<br><a href="../processgpt.html#diff-ontology" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/knowledge.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 지식 베이스</a></td></tr>
+<tr><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">피드백을 스킬로</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">같은 업무에 대한 피드백이 쌓이면 스킬 개선안을 만들어 사람의 승인을 받은 뒤 반영합니다.<br><a href="../processgpt.html#diff-selflearning" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/skills.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 스킬로 일하는 방법 가르치기</a></td></tr>
+<tr style="background-color: #f7f7fa;"><td style="padding: 12px 16px; border: 1px solid #ddd;"><b style="font-weight: bold;">리드타임 측정</b></td><td style="padding: 12px 16px; border: 1px solid #ddd;">전체 경과 시간을 사람의 판단, 에이전트의 수행, 대기로 나눠 어디를 개선해야 할지 찾습니다.<br><a href="../processgpt.html#feat-leadtime" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 소개 페이지에서 보기</a> · <a href="../../docs/process-gpt/analytics.html" style="font-size: 13px; font-weight: 600; text-decoration: underline; color: #7c4dbc;">↗ 튜토리얼: 실행 분석</a></td></tr>
+</tbody></table></div>
+<blockquote><p>&nbsp; 9. 맺으며: 시험하는 조직에서 운영하는 조직으로</p></blockquote>
+<div class="mb-50 prose"><p>Process GPT가 지향하는 것은 화려한 시연이 아닙니다. 사람이 책임지고 업무를 끝까지 운영하는 구조입니다. AI를 시험만 해 보는 조직에서 AI와 함께 업무를 운영하는 조직으로 바뀌는 것입니다.</p>
+<p>업무 흐름이 지도로 그려지고 반복 작업과 문맥 파악을 AI와 규칙이 맡게 되면, 사람의 최종 결정과 책임은 엑셀 내용을 복사해 붙여넣는 지금보다 오히려 더 무겁고 가치 있어집니다.</p>
+<p>다음 주 회의에서 우리 팀 업무 하나를 펼쳐 놓고 네 가지 질문을 던져 보세요. 업무를 사람과 에이전트의 몫으로 나눠 보는 연습은 <a href="../agentstorming.html">Agent Storming 워크숍</a>에서, 조직 전체의 전환 계획은 <a href="../educationax.html#tracks">AX 전환 컨설팅 교육</a>에서 함께할 수 있습니다. 우리 조직의 병목을 함께 찾고 싶다면 <a href="../contactus.html">문의하기</a>로 연락 주세요.</p>
+<p>먼저 직접 해 보고 싶다면 <a href="../../docs/process-gpt/">Process GPT 튜토리얼</a>과 <a href="../processgpt.html">Process GPT 제품 소개</a>에서 시작할 수 있습니다.</p></div>
+<blockquote><p>&nbsp; 참고 자료</p></blockquote>
+<div class="mb-50 prose"><ul style="font-size: 14px;">
+<li><a href="../processgpt.html#processgpt-listen">Process GPT 팟캐스트 01 · AI 파일럿은 왜 실무에서 멈출까 (13분 25초)</a></li>
+<li><a href="../../docs/ProcessGPT-제품소개서-2026.10.pdf">Process GPT 제품소개서 (PDF)</a></li>
+<li><a href="../processgpt.html#leadtime-problem">개인은 빨라졌는데, 왜 조직의 일은 여전히 오래 걸릴까요? — Process GPT 소개</a></li>
+<li><a href="../../docs/process-gpt/">Process GPT 튜토리얼</a></li>
+</ul></div>
+</div>
+                                <!-- End Post -->
+
+                                <!-- Prev/Next Post -->
+                                <div class="clearfix mt-80">
+                                    <a href="../bloglist.html" class="blog-item-more left"><i class="mi-chevron-left"></i>&nbsp;Back to blog</a>
+                                </div>
+                            </div>
+                            <!-- End Content -->
+
+                        </div>
+
+                    </div>
+                </section>
+                <!-- End Section -->
+
+           </main>
+            
+            <!-- Footer -->
+            <footer class="page-section footer bg-gray-light-1 pb-30">
+                <div class="container">
+
+                    <div class="row pb-120 pb-sm-80 pb-xs-50">
+
+                        <div class="col-md-4 col-lg-3 text-gray mb-sm-50" style="font-size: 14px;">
+
+                            <div class="mb-30">
+                                <img src="../../images/logo-b.png" width="105" height="34" alt="uEngine Logo" />
+                            </div>
+
+                            <p>
+                                유엔진솔루션즈는 2003년 이래 업무 프로세스 관리 (Business Process Management), AI, MSA, 기업용 SNS, PaaS 를 포함한 클라우드 플랫폼, 도메인 기반 개발 방법을 지향하는 개발 프레임워크 등을 개발하고 오픈소스 프로젝트로 제공하는 기술 집약적 기업입니다.
+                            </p>
+
+                            <div>
+                                <!-- 본사: 서울특별시 서초구 신반포로45길 18 5층 502호<br> -->
+                                본사: 서울 서초구 사임당로 31 궁현빌딩 3층 301호<br>
+                                지사: 경상남도 창원시 성산구 상남로37
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>T.</strong> 02.567.8301</a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <strong>E.</strong> help@uengine.org</a>
+                            </div>
+
+                            <div class="clearlinks" style="margin-top: 5px;">
+                                <a href="https://www.facebook.com/groups/cloudswmoding" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-facebook"></i>
+                                    Facebook
+                                </a>
+                            </div>
+
+                            <div class="clearlinks">
+                                <a href="https://www.youtube.com/channel/UCWXNEfACspVtCa-hyYBC76g" rel="noopener nofollow" target="_blank">
+                                    <i class="fa-youtube"></i>
+                                    Youtube
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-8 offset-md-1 offset-lg-1">
+                            <div class="row mt-n30">
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Native Enterprise</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="enterprisebrain.html">AI-Native Enterprise란?</a></li>
+                                        <li><a href="../processgptlite.html">Process GPT Lite</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../ontologystudio.html">Ontological Studio</a></li>
+                                        <li><a href="../ontologic.html">Ontologic Platform</a></li>
+                                        <li><a href="../ontologicaldb.html">Ontological DB</a></li>
+                                        <li><a href="../aitools.html">AI 도구 모음</a></li>
+                                        <li><a href="../axschool.html">AX School</a></li>
+                                        <li><a href="../agentstorming.html">Agent Storming 워크숍</a></li>
+                                        <li><a href="../educationax.html">AX 전환 컨설팅 교육</a></li>
+                                        <li><a href="../ax-lite-course.html">우리 회사 AI 업무교실</a></li>
+                                        <li><a href="https://github.com/uengine-oss/ontology-studio" target="_blank">GitHub</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                        <li><a href="../industry.html">왜 필요한가요?</a></li>
+                                        <li><a href="../erp.html">AI-Native ERP</a></li>
+                                        <li><a href="../mes.html">AI-Native MES</a></li>
+                                        <li><a href="../wms.html">AI-Native WMS</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">AI-Driven Development</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="aidevoutlook.html">AI 기반 개발의 현재와 향후 전망</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../dreamvibe.html">DreamVibe</a></li>
+                                        <li><a href="https://www.msaschool.io/operation/introduction/" target="_blank">Education for MSA</a></li>
+                                        <li><a href="../educationvibecoding.html">Education for Vibecoding</a></li>
+                                        <li><a href="../consultingmsa.html">MSA Consulting</a></li>
+                                        <li><a href="../leaddevelopment.html">선도개발 구현 컨설팅</a></li>
+                                        <li><a href="../casestudiesmsa.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">BPM</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="bpmalive.html">BPM 은 죽지 않았다</a></li>
+                                        <li><a href="../uengine6bpm.html">uEngine6 BPM</a></li>
+                                        <li><a href="../processgpt.html">Process GPT</a></li>
+                                        <li><a href="../uengine-pal.html">uEngine PAL</a></li>
+                                        <li><a href="../uenginerpa.html">uEngine RPA</a></li>
+                                        <li><a href="../educationbpm.html">Education for BPM</a></li>
+                                        <li><a href="../consultingbpm.html">BPM Consulting</a></li>
+                                        <li><a href="../casestudiesbpm.html">Case Studies</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+<!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Cloud</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../uenginecloud.html">uEngine Cloud</a></li>
+                                        <li><a href="whymsahard.html">왜 클라우드 네이티브는 어려운가?</a></li>
+                                        <li><a href="../roboarchitect.html">Robo Architect</a></li>
+                                        <li><a href="../roboanalyzer.html">Robo Analyzer</a></li>
+                                        <li><a href="../msaacademy.html">CNA/MSA Consulting</a></li>
+                                        <li><a href="https://www.msaschool.io/" target="_blank">MSA School 바로가기</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Company</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../showcase.html">Showcase</a></li><li><a href="../history.html">History</a></li>
+                                        <li><a href="../partners.html">Partners</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+
+                                <!-- Footer Widget -->
+                                <div class="col-sm mt-30">
+
+                                    <h3 class="fw-title">Insight</h3>
+
+                                    <ul class="fw-menu clearlist">
+                                        <li><a href="../newsroom.html">Newsroom</a></li>
+                                        <li><a href="../newsletterlist.html">Newsletter</a></li>
+                                        <!-- 스티비 복구용: <li><a href="https://uengine.stibee.com/" target="_blank">Newsletter</a></li> -->
+                                        <li><a href="../interview.html">Interview</a></li>
+                                        <li><a href="../webinars.html">Webinars</a></li>
+                                        <li><a href="../bloglist.html">Blogs</a></li>
+                                    </ul>
+
+                                </div>
+                                <!-- End Footer Widget -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Text -->
+                    <div class="row text-gray">
+
+                        <div style="width: 100%; text-align: center; margin: 0 auto;">
+                            <span style="font-size: 14px;">유엔진솔루션즈 | 사업자등록번호: 2118795355 | 대표: 장진영</span><br>
+                            <b>© uEngine 2026. All Rights Reserved.</b>
+                        </div>
+
+                        <div class="col-md-4 col-lg-3">
+                            <!-- <b>© uEngine 2026.</b> -->
+                        </div>
+
+                        <div class="col-md-7 offset-md-1 offset-lg-2 clearfix">
+
+                            <!-- Back to Top Link -->
+                            <div class="local-scroll float-end mt-n50 mt-sm-10">
+                                <a href="#top" class="link-to-top">
+                                    <i class="mi-arrow-up size-24"></i>
+                                    <span class="visually-hidden">Scroll to top</span>
+                                </a>
+                            </div>
+                            <!-- End Back to Top Link -->
+
+                        </div>
+
+                    </div>
+                    <!-- End Footer Text -->
+
+                 </div>
+            </footer>
+            <!-- End Footer -->
+        
+        </div>
+        <!-- End Page Wrap -->      
+        
+        <!-- JS -->
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/plugins.js"></script>
+        <script src="../../js/jquery.ajaxchimp.min.js"></script>             
+        <script src="../../js/contact-form.js"></script>        
+        <script src="../../js/all.js"></script> 
+        <!-- End JS -->       
+        
+    </body>
+</html>
