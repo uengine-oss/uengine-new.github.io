@@ -46,13 +46,27 @@
 | DB·로그인 서버 | Process GPT `.env`의 `POSTGRES_PASSWORD`, `ANON_KEY`, `SERVICE_ROLE_KEY` | `POSTGRES_PASSWORD`, `JWT_SECRET`, `ANON_KEY`, `SERVICE_ROLE_KEY` (자동 생성) |
 | 보관함 마스터 키(KEK) | `server/.vault-keyring.json` (0600) 또는 `PRO_VAULT_KEK` | `VAULT_KEK` (자동 생성) |
 | 예약 콜백 비밀 | `PRO_CRON_SECRET` | `CRON_SECRET` (자동 생성) |
-| Google 로그인·메일 연결 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | 같은 이름 |
+| Google 로그인·메일 연결 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` (회사 Google 연결 클라이언트를 넣으면 그 값이 먼저) | 같은 이름 |
 | 회의 받아쓰기 | `PRO_TRANSCRIBE_API_KEY` | `TRANSCRIBE_API_KEY` |
 
 사용자 각자의 비밀(커넥터 토큰, Google 메일 연결 토큰, 사이트 로그인, 카드)은 설정 파일이 아니라 **그 사람의 보관함**에 암호문으로 들어갑니다.
 
 !!! warning "개발 설정을 그대로 공유 서버에 쓰지 마세요"
     `PRO_CRON_SECRET`은 비워 두면 코드에 적힌 기본값을 씁니다. 여러 사람이 쓰는 서버라면 직접 정한 값으로 바꾸세요. 설치 번들은 설치할 때 무작위 값을 만듭니다.
+
+## 회사 Google 연결 클라이언트
+
+메일 연결에 쓰는 Google OAuth 클라이언트는 서버 설정 파일 대신 **회사 관리 화면**에서 넣을 수도 있습니다. 여러 회사가 한 서버를 함께 쓰는 곳(예: `<회사>.process-gpt.io/lite`)에서는 이 방법만 씁니다. 회사마다 자기 클라이언트를 둘 수 있습니다.
+
+<ol class="steps">
+<li>「설정 › 시스템 설정 › 회사 Google 연결」을 엽니다(회사 관리자에게만 보입니다).</li>
+<li>화면에 보이는 <b>리디렉션 URI</b>를 「복사」해, Google Cloud 콘솔의 해당 OAuth 클라이언트에 「승인된 리디렉션 URI」로 추가합니다. 예: <code>https://uengine.process-gpt.io/lite/api/auth/google/callback</code></li>
+<li>Client ID와 Client secret을 넣고 「저장」합니다. Client secret은 다시 보여 주지 않고, 보관함에 회사용으로 암호화해 둡니다.</li>
+</ol>
+
+Client ID를 바꿀 때는 그 클라이언트의 Client secret도 함께 넣어야 합니다. 이전 클라이언트로 연결한 사람은 다시 연결해야 합니다.
+
+![회사 Google 연결 — 리디렉션 URI 와 「복사」, Client ID · Client secret](img/gc-admin.webp)
 
 ## 데모 로그인 끄기
 
