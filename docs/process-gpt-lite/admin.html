@@ -209,7 +209,7 @@
 </tr>
 <tr>
 <td>Google 로그인·메일 연결</td>
-<td><code>GOOGLE_CLIENT_ID</code>, <code>GOOGLE_CLIENT_SECRET</code></td>
+<td><code>GOOGLE_CLIENT_ID</code>, <code>GOOGLE_CLIENT_SECRET</code> (회사 Google 연결 클라이언트를 넣으면 그 값이 먼저)</td>
 <td>같은 이름</td>
 </tr>
 <tr>
@@ -224,6 +224,16 @@
 <p class="admonition-title">개발 설정을 그대로 공유 서버에 쓰지 마세요</p>
 <p><code>PRO_CRON_SECRET</code>은 비워 두면 코드에 적힌 기본값을 씁니다. 여러 사람이 쓰는 서버라면 직접 정한 값으로 바꾸세요. 설치 번들은 설치할 때 무작위 값을 만듭니다.</p>
 </div>
+<h2 id="회사-google-연결-클라이언트">회사 Google 연결 클라이언트<a class="anchor" href="#회사-google-연결-클라이언트" title="Permanent link">#</a></h2>
+<p>메일 연결에 쓰는 Google OAuth 클라이언트는 서버 설정 파일 대신 <strong>회사 관리 화면</strong>에서 넣을 수도 있습니다. 여러 회사가 한 서버를 함께 쓰는 곳(예: <code>&lt;회사&gt;.process-gpt.io/lite</code>)에서는 이 방법만 씁니다. 회사마다 자기 클라이언트를 둘 수 있습니다.</p>
+<ol class="steps">
+<li>「설정 › 시스템 설정 › 회사 Google 연결」을 엽니다(회사 관리자에게만 보입니다).</li>
+<li>화면에 보이는 <b>리디렉션 URI</b>를 「복사」해, Google Cloud 콘솔의 해당 OAuth 클라이언트에 「승인된 리디렉션 URI」로 추가합니다. 예: <code>https://uengine.process-gpt.io/lite/api/auth/google/callback</code></li>
+<li>Client ID와 Client secret을 넣고 「저장」합니다. Client secret은 다시 보여 주지 않고, 보관함에 회사용으로 암호화해 둡니다.</li>
+</ol>
+
+<p>Client ID를 바꿀 때는 그 클라이언트의 Client secret도 함께 넣어야 합니다. 이전 클라이언트로 연결한 사람은 다시 연결해야 합니다.</p>
+<figure><a href="img/gc-admin.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="회사 Google 연결 — 리디렉션 URI 와 「복사」, Client ID · Client secret" src="img/gc-admin.webp" / loading="lazy" decoding="async"></a><figcaption>회사 Google 연결 — 리디렉션 URI 와 「복사」, Client ID · Client secret</figcaption></figure>
 <h2 id="데모-로그인-끄기">데모 로그인 끄기<a class="anchor" href="#데모-로그인-끄기" title="Permanent link">#</a></h2>
 <p>코드 <code>000000</code>으로 아무 이메일이나 들어오는 <strong>데모 로그인</strong>은 체험용입니다.</p>
 <table>
@@ -431,7 +441,7 @@
     <nav class="pager"><a class="prev" href="architecture.html"><span>이전</span>구조 — Process GPT 백엔드 위의 Lite</a><a class="next" href="agentic.html"><span>다음</span>에이전트 가드레일 — 맡길 일, 볼 일, 막을 일</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 튜토리얼의 화면과 결과는 Process GPT Lite 0.1.1 이후 개발판에서 실제로 실행해 얻었습니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#팀원과-역할">팀원과 역할</a><ul><li><a href="#누가-바꿀-수-있나">누가 바꿀 수 있나</a></li></ul></li><li><a href="#관리자">관리자</a></li><li><a href="#키는-어디에-있나">키는 어디에 있나</a></li><li><a href="#데모-로그인-끄기">데모 로그인 끄기</a></li><li><a href="#보관함-암호화와-키-교체">보관함 암호화와 키 교체</a></li><li><a href="#백업과-업그레이드">백업과 업그레이드</a></li><li><a href="#업그레이드-전-회귀-테스트">업그레이드 전 회귀 테스트</a></li><li><a href="#개인정보를-지키는-기본값">개인정보를 지키는 기본값</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#팀원과-역할">팀원과 역할</a><ul><li><a href="#누가-바꿀-수-있나">누가 바꿀 수 있나</a></li></ul></li><li><a href="#관리자">관리자</a></li><li><a href="#키는-어디에-있나">키는 어디에 있나</a></li><li><a href="#회사-google-연결-클라이언트">회사 Google 연결 클라이언트</a></li><li><a href="#데모-로그인-끄기">데모 로그인 끄기</a></li><li><a href="#보관함-암호화와-키-교체">보관함 암호화와 키 교체</a></li><li><a href="#백업과-업그레이드">백업과 업그레이드</a></li><li><a href="#업그레이드-전-회귀-테스트">업그레이드 전 회귀 테스트</a></li><li><a href="#개인정보를-지키는-기본값">개인정보를 지키는 기본값</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>
