@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마무리 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
+<meta name="description" content="이 교재에서 수행한 작업을 장별로 정리하고, 정리 노트에서 꼽은 어려운 시나리오(스키마 구축 비용, 이력 데이터)와 실제 실행에서 드러난 한계(Cypher 오류, 큰 컨텍스트, LLM 추출 오류, PDF에 없는 별표)를 짚습니다. 이어서 혼자 해 볼 확장 과제와 참고 자료를 소개합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/graphrag-law/wrap-up.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="마무리 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
+<meta property="og:description" content="이 교재에서 수행한 작업을 장별로 정리하고, 정리 노트에서 꼽은 어려운 시나리오(스키마 구축 비용, 이력 데이터)와 실제 실행에서 드러난 한계(Cypher 오류, 큰 컨텍스트, LLM 추출 오류, PDF에 없는 별표)를 짚습니다. 이어서 혼자 해 볼 확장 과제와 참고 자료를 소개합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/graphrag-law/wrap-up.html">
+<meta property="og:image" content="https://www.uengine.org/docs/graphrag-law/img/article15-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="why-graph.html"><span class="n">01</span>왜 그래프인가</a></li>
+<li><a href="how-graphrag.html"><span class="n">02</span>GraphRAG 동작 과정</a></li>
+</ul>
+<div class="nav-part">준비</div><ul>
+<li><a href="neo4j-docker.html"><span class="n">03</span>Docker로 Neo4j 띄우기</a></li>
+<li><a href="cypher-basics.html"><span class="n">04</span>Cypher 기초</a></li>
+</ul>
+<div class="nav-part">구축</div><ul>
+<li><a href="schema.html"><span class="n">05</span>골든 퀘스천에서 스키마 설계하기</a></li>
+<li><a href="ingest.html"><span class="n">06</span>인제스천 바이브 코딩: PDF → 조·항·호 → Neo4j</a></li>
+<li><a href="disambiguation.html"><span class="n">07</span>엔티티 추출과 중의성 해소</a></li>
+</ul>
+<div class="nav-part">질의</div><ul>
+<li><a href="mcp.html"><span class="n">08</span>Neo4j MCP 서버 연결</a></li>
+<li><a href="questions.html"><span class="n">09</span>골든 퀘스천 5개 묻기</a></li>
+</ul>
+<div class="nav-part">비교</div><ul>
+<li><a href="vector-vs-graph.html"><span class="n">10</span>같은 질문에 벡터 RAG 적용하기: 재현율 비교</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="wrap-up.html" class="on" aria-current="page"><span class="n">11</span>마무리</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">12</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">마무리<span class="chap">11</span></div>
+    <h1>마무리</h1>
+    <article>
+<blockquote>
+<p>이 교재에서 수행한 작업을 장별로 정리하고, 정리 노트에서 꼽은 어려운 시나리오(스키마 구축 비용, 이력 데이터)와 실제 실행에서 드러난 한계(Cypher 오류, 큰 컨텍스트, LLM 추출 오류, PDF에 없는 별표)를 짚습니다. 이어서 혼자 해 볼 확장 과제와 참고 자료를 소개합니다.</p>
+</blockquote>
+<h2 id="한-일">한 일<a class="anchor" href="#한-일" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>장</th>
+<th>한 일</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>Docker로 Neo4j 5.26 + APOC 실행하기</td>
+<td>시작 4.6초, 메모리 926MiB / 상한 2GiB</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cypher 맛보기</td>
+<td><code>MERGE</code>는 다시 실행해도 노드가 늘지 않음, 한국어 전문 색인은 <code>cjk</code> 분석기</td>
+</tr>
+<tr>
+<td>5</td>
+<td>골든 퀘스천에서 스키마 설계</td>
+<td><code>schema.md</code>·<code>schema.cypher</code>. 사람이 검토한 뒤 두 가지를 수정하도록 함(표기 차이 → 별칭, 직접 작성한 Norm → LLM 추출로)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PDF 9종 → 조·항·호 → Neo4j</td>
+<td>노드 6,272 · 관계 17,537. 9개 법령 모두 현행 조 집합이 PDF와 일치</td>
+</tr>
+<tr>
+<td>7</td>
+<td>엔티티 추출과 엔티티 중의성 해소</td>
+<td>이름 228가지 → Actor 136, Norm 410. 그래프 전체 노드 6,818 · 관계 18,643</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Neo4j MCP 서버를 읽기 전용으로 연결</td>
+<td>도구 2개: <code>get-schema</code>, <code>read-cypher</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>골든 퀘스천 5개 묻기</td>
+<td>대화형 5개, 헤드리스 15회 모두 답의 결론이 원문과 일치</td>
+</tr>
+<tr>
+<td>10</td>
+<td>같은 질문을 벡터 RAG로</td>
+<td>그래프는 필수 조항 재현율 100%, 보충 포함 98%. 벡터와의 비교는 10장</td>
+</tr>
+</tbody>
+</table>
+<p>한 문장으로 정리하면, <strong>틀(온톨로지)은 골든 퀘스천에서 출발해 사람이 정하고, 인스턴스는 코드와 LLM이 채우고, 질의는 Claude Code가 MCP로 수행하고, 사람은 각 단계의 결과를 원문과 대조했습니다.</strong></p>
+<h2 id="한계와-어려운-점">한계와 어려운 점<a class="anchor" href="#한계와-어려운-점" title="Permanent link">#</a></h2>
+<h3 id="노트가-꼽은-어려운-시나리오">노트가 꼽은 어려운 시나리오<a class="anchor" href="#노트가-꼽은-어려운-시나리오" title="Permanent link">#</a></h3>
+<p><strong>스키마 구축 비용.</strong> 이 교재의 스키마는 Claude Code가 두 차례(4분 56초, 4분 36초)에 걸쳐 작성했지만, 그 사이에 사람이 PDF와 질문을 읽고 수정할 부분을 짚어야 했습니다. 첫 설계에는 골든 퀘스천용 의무 14건을 직접 작성한 표가 있었는데, 다른 법령으로 확장하기 어려워 LLM 추출 단계로 미뤘습니다. 또 이 틀은 다섯 질문에서 출발했으므로, 인허가나 개정 이력처럼 다른 종류의 질문에 답하려면 레이블과 관계를 다시 설계해야 합니다.</p>
+<p><strong>이력 데이터를 보관할 수 있는가.</strong> 국가법령정보센터 PDF에는 현행 조문 뒤에 같은 번호의 시행 예정 조문이 함께 실리는 경우가 있습니다. 이 교재의 9개 법령에서는 세 곳이었습니다. 조 번호만으로 <code>MERGE</code> 하면 뒤의 판본이 앞의 판본을 덮어쓰므로, 시행 예정 판본은 <code>pid</code>에 시행일을 붙여 따로 넣고 <code>isCurrent</code>를 <code>false</code>로 두었습니다(<a href="troubleshooting.html#gl-07">부록 GL-07</a>).</p>
+<table>
+<thead>
+<tr>
+<th><code>pid</code></th>
+<th><code>effectiveFrom</code></th>
+<th><code>isCurrent</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>폐기물관리법 시행규칙:제10조@20261210</td>
+<td>2026-12-10</td>
+<td>false</td>
+</tr>
+<tr>
+<td>폐기물관리법:제13조의2@20270708</td>
+<td>2027-07-08</td>
+<td>false</td>
+</tr>
+<tr>
+<td>폐기물관리법:제68조@20270108</td>
+<td>2027-01-08</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p>질문할 때는 <code>isCurrent</code>가 참인 조문만 조회합니다. 다만 이 방식은 PDF에 실린 두 판본(현행, 시행 예정)만 다룹니다. 이전 판본(연혁)은 그래프에 없고, 조문마다 개정 날짜 목록(<code>amendedOn</code>)만 속성으로 남아 있습니다. 「작년 이맘때는 기한이 며칠이었나」 같은 질문에는 답할 수 없습니다.</p>
+<p><strong>memGPT와 비교.</strong> memGPT는 LLM이 운영체제처럼 제한된 컨텍스트와 외부 기억 사이에서 내용을 스스로 옮기는 방식입니다. GraphRAG는 지식을 사람이 검토할 수 있는 구조로 LLM 바깥에 둡니다.</p>
+<h3 id="실제-실행에서-드러난-한계">실제 실행에서 드러난 한계<a class="anchor" href="#실제-실행에서-드러난-한계" title="Permanent link">#</a></h3>
+<p><strong>Cypher 오류와 재시도.</strong> 헤드리스 15회 중 10회에서 Cypher 오류가 한두 번씩 발생했고, 모든 경우에 모델이 오류 문구를 읽고 Cypher를 수정했습니다. 가장 흔한 오류는 목록 속성에 <code>toString()</code>을 쓴 오류와 집계 뒤에 집계 전 변수를 <code>ORDER BY</code>에 쓴 오류였습니다. 또 답의 결론은 15회 모두 맞았지만, <strong>그래프에 대한 설명이 틀린 곳</strong>이 두 번 있었습니다. 한 번은 존재하는 <code>PENALIZES</code> 관계(제36조제15호 → 제27조)를 「없다」고 했고, 한 번은 형량이 조가 아닌 항에 연결된 것을 「연결되어 있지 않다」고 했습니다. 모델의 설명보다 답에 제시된 근거 조문을 원문으로 확인하는 습관이 필요합니다.</p>
+<p><strong>큰 컨텍스트.</strong> 그래프의 컨텍스트는 질문 한 번에 평균 약 5만 자였고, 그중 스키마가 약 9천 자입니다. 실행마다 19,139자에서 79,876자까지 달라졌습니다. 2장에서 본 골든 퀘스천 2번 실행에서는 법령 179개를 모두 조회한 호출 하나가 34,774자를 차지했습니다. 컨텍스트가 크면 비용도 늘어나, 질문 한 번에 API 요금 환산 $0.39~1.04가 들었습니다. 벡터 RAG는 k=5일 때 약 4천 자이므로, 같은 분량을 기준으로 한 비교는 10장에서 따로 합니다.</p>
+<p><strong>LLM 추출 오류와 사람의 검토.</strong> LLM이 추출한 의미층에는 사람이 수정해야 할 부분이 남아 있었습니다.</p>
+<ul>
+<li>「표기 그대로」라는 지시에도 두 이름을 임의로 묶어 만든 이름 8가지(「기술원 또는 안전원」 등)가 있었습니다.</li>
+<li>조건(<code>trigger</code>) 104건과 기한 6건이 조문 원문과 달라 값을 비우고 <code>uncheckedFields</code>에 표시했습니다.</li>
+<li>엔티티 중의성 해소에서 관계인 = 관계자, 대리인 → 대리자처럼 잘못 통합한 사례가 있었습니다(검토로 찾아 수정, 7장).</li>
+<li>「그 밖의 관계기관」을 나누다가 Actor 「 밖의 관계기관」이 생겼습니다(9장 질의 중 Claude가 발견, <a href="troubleshooting.html#gl-14">부록 GL-14</a>).</li>
+<li>주체가 아닌 「제조소등」「행정안전부령」 같은 이름이 Actor(종류 「기타」 51개)로 남았습니다.</li>
+</ul>
+<p>그래서 Norm 410개는 모두 <code>reviewed: false</code>로 두었고, 9장의 답에서도 Claude는 Norm 값을 그대로 쓰지 않고 조문 원문과 대조했다고 밝혔습니다.</p>
+<p><strong>PDF에 없는 별표.</strong> 과태료 세부 금액처럼 별표·서식에 있는 내용은 이 교재에서 받은 PDF에 본문이 포함되어 있지 않습니다. 그래프에는 별표·서식을 가리키는 노드 349개가 있지만 모두 내용이 없는 자리표시(<code>inCorpus: false</code>)입니다. 그래서 과태료 금액을 물으면 시행령 제23조가 별표 9를 가리킨다는 것까지만 답할 수 있습니다.</p>
+<p><strong>원문 대조의 범위.</strong> 사람이 글자까지 대조한 것은 위험물안전관리법 3종의 표본 조문과 골든 퀘스천의 근거 조문입니다. 화학물질관리법·폐기물관리법의 벌칙 관계와 용어, 줄바꿈 위치의 띄어쓰기를 규칙으로 정하지 못한 약 9%는 전부 확인하지 못했습니다.</p>
+<h2 id="확장-과제">확장 과제<a class="anchor" href="#확장-과제" title="Permanent link">#</a></h2>
+<ol>
+<li><strong>다른 법령 넣기.</strong> 국가법령정보센터에서 다른 법령(예: 소관 업무에 쓰는 다른 안전 법령)의 법률·시행령·시행규칙을 받아 같은 코드로 적재해 보세요. 6장처럼 그래프의 조 수와 PDF의 「제N조」 줄을 대조하고, 표본 조문 세 개를 글자까지 대조합니다. 의미층(Norm·Actor)을 9개 법령 전체로 확장하면, 위험물 3종의 실측값을 글자 수에 비례해 추산할 때 API 환산 비용은 약 $1.6이며, 동시 6개 처리 시 약 35분이 걸립니다(어림값이며 실측이 아닙니다).</li>
+<li><strong>골든 퀘스천 세 개 더 쓰기.</strong> 화학물질관리법이나 폐기물관리법에서 되도록 여러 조문을 살펴봐야 답을 찾을 수 있는 질문을 세 개 작성합니다. 먼저 원문을 읽고 모범 답과 근거 조항을 적은 뒤 Claude Code에 묻고, 답의 근거 조문을 원문과 대조하세요. 9장의 헤드리스 명령으로 세 번씩 실행하면 회차마다 달라지는 부분도 볼 수 있습니다.</li>
+<li><strong>벡터 색인 섞기.</strong> 조문 노드에 임베딩을 넣고 벡터 색인을 만든 뒤(2장의 문법), 벡터로 찾은 조문에서 <code>PENALIZES</code>·<code>IMPLEMENTS</code>를 따라 탐색 범위를 넓히는 질의를 만들어 보세요. 10장의 채점기는 <code>{qid, retrieved_text, answer}</code> 형식의 결과 파일만 읽으므로, 같은 기준으로 재현율과 컨텍스트 크기를 측정할 수 있습니다.</li>
+<li><strong>개정 추적.</strong> 이 교재의 출발점인 PBL 교재의 주제는 인허가 법령의 개정 추적이었습니다. 법령 노드의 번호·시행일(<code>lawNumber</code>, <code>effectiveOn</code>)을 판본별로 남기고, 새로 받은 PDF와 그래프의 조문 내용을 비교해 바뀐 조문과 그 조문을 가리키는 벌칙·위임 관계를 찾아보세요. 시행 예정 판본을 따로 둔 방식(<code>@시행일</code>, <code>isCurrent</code>)을 전체 판본에 적용하는 일입니다.</li>
+<li><strong>질의 방법 안내.</strong> 9장에서 Claude는 적재할 때 만든 전문 색인을 쓰지 않고 대부분 문자열 포함 조건(<code>CONTAINS</code>)과 조 번호 지정으로 찾았습니다. 「질문 낱말은 먼저 Term·Actor 의 별칭 열쇠로 찾아라」 같은 안내를 프롬프트나 프로젝트 지침에 넣고, 호출 수와 컨텍스트 크기가 어떻게 바뀌는지 비교해 보세요.</li>
+</ol>
+<h2 id="참고-자료">참고 자료<a class="anchor" href="#참고-자료" title="Permanent link">#</a></h2>
+<p>정리 노트 「Graph DB based RAG」에 있는 링크입니다.</p>
+<ul>
+<li>Knowledge Graphs &amp; LLMs: Multi-Hop Question Answering — <a href="https://medium.com/neo4j/knowledge-graphs-llms-multi-hop-question-answering-322113f53f51">https://medium.com/neo4j/knowledge-graphs-llms-multi-hop-question-answering-322113f53f51</a></li>
+<li>Unifying LLMs &amp; Knowledge Graphs for GenAI: Use Cases &amp; Best Practices — <a href="https://neo4j.com/blog/unifying-llm-knowledge-graph/">https://neo4j.com/blog/unifying-llm-knowledge-graph/</a></li>
+<li>노트의 「프롬프트」 항목(공유 대화) — <a href="https://chat.openai.com/share/8a78ce53-4105-4aba-a380-cdf4ca53382a">https://chat.openai.com/share/8a78ce53-4105-4aba-a380-cdf4ca53382a</a></li>
+<li>Creating a Knowledge Graph From Video Transcripts With GPT-4 — <a href="https://medium.com/neo4j/creating-a-knowledge-graph-from-video-transcripts-with-gpt-4-52d7c7b9f32c">https://medium.com/neo4j/creating-a-knowledge-graph-from-video-transcripts-with-gpt-4-52d7c7b9f32c</a></li>
+<li>ai graph db disambiguation (YouTube) — <a href="https://youtu.be/eirBMLpAtcA">https://youtu.be/eirBMLpAtcA</a></li>
+<li>Constructing knowledge graphs from text using OpenAI functions — <a href="https://bratanic-tomaz.medium.com/constructing-knowledge-graphs-from-text-using-openai-functions-096a6d010c17">https://bratanic-tomaz.medium.com/constructing-knowledge-graphs-from-text-using-openai-functions-096a6d010c17</a></li>
+<li>LangChain Cypher 체인 코드 — <a href="https://api.python.langchain.com/en/latest/_modules/langchain/chains/graph_qa/cypher.html">https://api.python.langchain.com/en/latest/_modules/langchain/chains/graph_qa/cypher.html</a></li>
+<li>Vector search indexes — Cypher Manual — <a href="https://neo4j.com/docs/cypher-manual/current/indexes/semantic-indexes/vector-indexes/">https://neo4j.com/docs/cypher-manual/current/indexes/semantic-indexes/vector-indexes/</a></li>
+<li>Harnessing Large Language Models with Neo4j — <a href="https://medium.com/neo4j/harnessing-large-language-models-with-neo4j-306ccbdd2867">https://medium.com/neo4j/harnessing-large-language-models-with-neo4j-306ccbdd2867</a></li>
+<li>neo4j/naLLM — <a href="https://github.com/neo4j/naLLM">https://github.com/neo4j/naLLM</a></li>
+<li>Multimodal RAG pipeline with LlamaIndex and Neo4j — <a href="https://blog.llamaindex.ai/multimodal-rag-pipeline-with-llamaindex-and-neo4j-a2c542eb0206">https://blog.llamaindex.ai/multimodal-rag-pipeline-with-llamaindex-and-neo4j-a2c542eb0206</a></li>
+<li>Graph RAG: The New LLM Stack with Knowledge Graphs (NebulaGraph) — <a href="https://medium.com/@nebulagraph/graph-rag-the-new-llm-stack-with-knowledge-graphs-e1e902c504ed">https://medium.com/@nebulagraph/graph-rag-the-new-llm-stack-with-knowledge-graphs-e1e902c504ed</a></li>
+</ul>
+<p>노트의 「Graph DB 자체(neo4j)」 항목(Cypher 문법, Cypher 기본, Neo4j 학습 환경)에는 링크가 없어 공식 문서로 대신합니다.</p>
+<ul>
+<li>Neo4j Cypher Manual — <a href="https://neo4j.com/docs/cypher-manual/current/">https://neo4j.com/docs/cypher-manual/current/</a></li>
+<li>Neo4j Getting Started — <a href="https://neo4j.com/docs/getting-started/">https://neo4j.com/docs/getting-started/</a></li>
+<li>Neo4j GraphAcademy(무료 학습 과정) — <a href="https://graphacademy.neo4j.com/">https://graphacademy.neo4j.com/</a></li>
+</ul>
+<p>이 교재에서 사용한 도구와 자료입니다.</p>
+<ul>
+<li>Neo4j MCP 서버(공식) — <a href="https://github.com/neo4j/mcp">https://github.com/neo4j/mcp</a>, 문서 <a href="https://neo4j.com/docs/mcp/current/">https://neo4j.com/docs/mcp/current/</a></li>
+<li>Neo4j Docker 운영 문서 — <a href="https://neo4j.com/docs/operations-manual/current/docker/">https://neo4j.com/docs/operations-manual/current/docker/</a></li>
+<li>국가법령정보센터 — <a href="https://www.law.go.kr">https://www.law.go.kr</a></li>
+<li>MemGPT: Towards LLMs as Operating Systems — <a href="https://arxiv.org/abs/2310.08560">https://arxiv.org/abs/2310.08560</a></li>
+</ul>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>시행 예정 조문을 현행 조문과 같은 `pid`로 `MERGE` 하면 어떤 문제가 생기나요?</summary>
+<p><code>MERGE</code>는 같은 키의 노드가 있으면 새로 만들지 않고 그 노드를 그대로 사용합니다. 그래서 이어지는 <code>SET</code>이 속성을 덮어써 PDF에서 뒤에 나오는 시행 예정 판본이 현행 조문을 덮어쓰거나, 두 판본의 항·호가 한 조 아래에 섞입니다. 이 교재는 시행 예정 판본의 <code>pid</code>에 <code>@시행일</code>을 붙여 다른 노드로 두고, <code>isCurrent</code>와 <code>effectiveFrom</code>으로 구분했습니다.</p>
+</details>
+<details class="answer">
+<summary>답의 결론이 15회 모두 맞았는데도 근거 조문을 원문으로 확인해야 하는 이유는 무엇인가요?</summary>
+<p>모델이 작성하는 Cypher와 문장은 실행할 때마다 달라지고, 실제로 그래프에 대한 설명이 틀린 경우가 두 번 있었습니다. 의미층의 Norm 값도 LLM이 추출한 것으로 사람이 검토하지 않은 상태(<code>reviewed: false</code>)입니다. 조문 원문은 그래프에 그대로 들어 있으므로, 답에 제시된 조문을 원문과 대조하는 것이 가장 확실한 검증입니다.</p>
+</details>
+<details class="answer">
+<summary>골든 퀘스천을 새로 쓸 때 모범 답을 먼저 원문에서 적어 두는 이유는 무엇인가요?</summary>
+<p>모델의 답을 본 뒤에 판단하면 그럴듯한 답에 영향을 받기 쉽습니다. 근거 조항과 핵심 사실(기한, 기관, 형량)을 먼저 적어 두면 답이 맞았는지, 어느 조항을 놓쳤는지를 같은 기준으로 평가할 수 있습니다. 10장의 재현율도 이렇게 미리 정한 정답 조항을 기준으로 측정합니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="vector-vs-graph.html"><span>이전</span>같은 질문에 벡터 RAG 적용하기: 재현율 비교</a><a class="next" href="troubleshooting.html"><span>다음</span>문제 해결</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#한-일">한 일</a></li><li><a href="#한계와-어려운-점">한계와 어려운 점</a><ul><li><a href="#노트가-꼽은-어려운-시나리오">노트가 꼽은 어려운 시나리오</a></li><li><a href="#실제-실행에서-드러난-한계">실제 실행에서 드러난 한계</a></li></ul></li><li><a href="#확장-과제">확장 과제</a></li><li><a href="#참고-자료">참고 자료</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

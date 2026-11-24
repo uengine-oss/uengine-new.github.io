@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker로 Neo4j 띄우기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
+<meta name="description" content="Docker로 APOC 플러그인을 활성화하고 메모리 상한을 설정해 Neo4j 5.26 Community를 실행합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/graphrag-law/neo4j-docker.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker로 Neo4j 띄우기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
+<meta property="og:description" content="Docker로 APOC 플러그인을 활성화하고 메모리 상한을 설정해 Neo4j 5.26 Community를 실행합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/graphrag-law/neo4j-docker.html">
+<meta property="og:image" content="https://www.uengine.org/docs/graphrag-law/img/article15-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="why-graph.html"><span class="n">01</span>왜 그래프인가</a></li>
+<li><a href="how-graphrag.html"><span class="n">02</span>GraphRAG 동작 과정</a></li>
+</ul>
+<div class="nav-part">준비</div><ul>
+<li><a href="neo4j-docker.html" class="on" aria-current="page"><span class="n">03</span>Docker로 Neo4j 띄우기</a></li>
+<li><a href="cypher-basics.html"><span class="n">04</span>Cypher 기초</a></li>
+</ul>
+<div class="nav-part">구축</div><ul>
+<li><a href="schema.html"><span class="n">05</span>골든 퀘스천에서 스키마 설계하기</a></li>
+<li><a href="ingest.html"><span class="n">06</span>인제스천 바이브 코딩: PDF → 조·항·호 → Neo4j</a></li>
+<li><a href="disambiguation.html"><span class="n">07</span>엔티티 추출과 중의성 해소</a></li>
+</ul>
+<div class="nav-part">질의</div><ul>
+<li><a href="mcp.html"><span class="n">08</span>Neo4j MCP 서버 연결</a></li>
+<li><a href="questions.html"><span class="n">09</span>골든 퀘스천 5개 묻기</a></li>
+</ul>
+<div class="nav-part">비교</div><ul>
+<li><a href="vector-vs-graph.html"><span class="n">10</span>같은 질문에 벡터 RAG 적용하기: 재현율 비교</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="wrap-up.html"><span class="n">11</span>마무리</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">12</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">준비<span class="chap">3</span></div>
+    <h1>Docker로 Neo4j 띄우기</h1>
+    <article>
+<blockquote>
+<p>Docker로 APOC 플러그인을 활성화하고 메모리 상한을 설정해 Neo4j 5.26 Community를 실행합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.</p>
+</blockquote>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>이 교재의 그래프 DB는 Docker 컨테이너 하나로 띄운 <strong>Neo4j 5.26 Community</strong>입니다. 이미지 태그(<code>neo4j:5.26</code>)로 5.26 버전을 선택하고(내려받는 날에 따라 5.26.33의 마지막 자리는 달라질 수 있습니다), DB 파일은 실습 폴더 안의 <code>neo4j/data</code>에 두어 컨테이너를 지우고 다시 만들어도 데이터가 남게 합니다.</p>
+<p>컨테이너를 띄울 때 세 가지를 함께 정합니다.</p>
+<ul>
+<li><strong>APOC 플러그인</strong> — 8장에서 연결하는 Neo4j MCP 서버의 <code>get-schema</code> 도구가 APOC의 <code>apoc.meta.schema</code>로 스키마를 읽습니다. 지금 켜 두면 나중에 컨테이너를 다시 만들 필요가 없습니다.</li>
+<li><strong>메모리 상한</strong> — 노트북에서 다른 프로그램과 함께 쓰므로 자바 힙·페이지 캐시와 컨테이너 전체 메모리에 상한을 둡니다. 이 교재의 데이터(최종 노드 6,818개·관계 18,643개)로 이 상한 안에서 모든 장의 실습을 마쳤습니다.</li>
+<li><strong>비밀번호</strong> — 각자 정한 값을 화면과 명령 기록에 남기지 않습니다. 같은 값을 6장의 파이썬 코드와 8장의 MCP 서버가 <code>.env</code> 파일과 환경변수로 받습니다.</li>
+</ul>
+<p>이 교재의 바탕이 된 PBL 특강 교재(Ch.4)에서는 Neo4j Desktop을 설치했지만, 여기서는 같은 Neo4j를 Docker로 띄웁니다.</p>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>실습 폴더를 git 저장소로 만듭니다.</strong> 이 폴더(<code>law-graph</code>)에서 5장부터 Claude Code를 열고 단계마다 커밋합니다. <code>.gitignore</code>에는 비밀번호가 담긴 <code>.env</code>, 8장의 <code>.mcp.json</code>, DB 파일 폴더 <code>neo4j/</code>, 파이썬 가상환경, Claude Code 개인 설정을 넣습니다.
+
+
+<div class="hl"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>law-graph<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>law-graph
+git<span class="w"> </span>init
+<span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;.env\n.mcp.json\nneo4j/\n.venv/\n__pycache__/\n.claude/settings.local.json\n&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>.gitignore
+cat<span class="w"> </span>.gitignore
+git<span class="w"> </span>add<span class="w"> </span>.gitignore<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-qm<span class="w"> </span><span class="s2">&quot;실습 폴더 시작&quot;</span>
+</code></pre></div>
+
+
+
+<code>git init</code>은 한국어 환경에서 「…/.git/ 안의 빈 깃 저장소를 초기화했습니다」를 출력합니다. 이 기록에서도 <code>.gitignore</code> 커밋이 실습 폴더의 첫 커밋이었습니다.
+</li>
+<li><strong>Docker를 확인하고 이미지를 받습니다.</strong> Docker Desktop이 켜져 있어야 합니다. 이 기록에서는 Docker 29.1.2를 사용했고, <code>neo4j:5.26</code> 태그로 Neo4j 5.26.33 Community 이미지를 받았습니다.
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>--version
+docker<span class="w"> </span>pull<span class="w"> </span>neo4j:5.26
+</code></pre></div>
+
+
+
+
+<div class="hl"><pre><span></span><code>Docker version 29.1.2, build 890dcca
+5.26: Pulling from library/neo4j
+Digest: sha256:c5fd91e41d44858ea678813fd53f8e60602e771a7656c502385247ffbcb0aec0
+Status: Downloaded newer image for neo4j:5.26
+docker.io/library/neo4j:5.26
+</code></pre></div>
+
+
+</li>
+<li><strong>비밀번호를 정해 환경변수와 .env로 전달합니다.</strong> <code>read -s</code>는 입력한 글자를 화면에 보여 주지 않습니다. macOS 기본 셸(zsh)과 bash는 문법이 조금 다릅니다. <code>.env</code>는 6장의 <code>ingest.py</code>가 읽는 파일로, 1단계에서 git 추적 대상에서 제외했습니다.
+
+
+<div class="hl"><pre><span></span><code><span class="c1"># zsh</span>
+<span class="nb">read</span><span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;NEO4J_PASSWORD?Neo4j 비밀번호: &quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span>NEO4J_PASSWORD<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span>
+<span class="c1"># bash 라면 대신: read -s -p &quot;Neo4j 비밀번호: &quot; NEO4J_PASSWORD &amp;&amp; export NEO4J_PASSWORD &amp;&amp; echo</span>
+
+<span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;NEO4J_PASSWORD=%s\n&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NEO4J_PASSWORD</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>.env
+mkdir<span class="w"> </span>-p<span class="w"> </span>neo4j/data<span class="w"> </span>neo4j/logs
+</code></pre></div>
+
+
+
+새 터미널을 열면 환경변수가 사라집니다. 그때는 실습 폴더에서 <code>set -a; . ./.env; set +a</code> 한 줄로 <code>.env</code>의 값을 환경변수로 다시 설정합니다(8장에서도 사용합니다).
+</li>
+<li><strong>컨테이너를 실행합니다.</strong> 줄 끝의 <code>\</code>는 한 명령을 여러 줄로 나눠 쓴다는 뜻입니다. 실행하면 컨테이너 ID가 한 줄로 출력됩니다.
+
+
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>graphrag-law-neo4j<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">7474</span>:7474<span class="w"> </span>-p<span class="w"> </span><span class="m">7687</span>:7687<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">NEO4J_AUTH</span><span class="o">=</span>neo4j/<span class="nv">$NEO4J_PASSWORD</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">NEO4J_PLUGINS</span><span class="o">=</span><span class="s1">&#39;[&quot;apoc&quot;]&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">NEO4J_server_memory_heap_initial__size</span><span class="o">=</span>512m<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">NEO4J_server_memory_heap_max__size</span><span class="o">=</span>1G<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">NEO4J_server_memory_pagecache_size</span><span class="o">=</span>512M<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--memory<span class="w"> </span>2g<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/neo4j/data:/data&quot;</span><span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/neo4j/logs:/logs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>neo4j:5.26
+</code></pre></div>
+
+
+</li>
+</ol>
+<h3 id="옵션별-설명">옵션별 설명<a class="anchor" href="#옵션별-설명" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-d</code> · <code>--name</code></td>
+<td>백그라운드에서 실행하고 이름(<code>graphrag-law-neo4j</code>)을 붙입니다. 이후 <code>logs</code>·<code>exec</code>·<code>stats</code>가 모두 이 이름을 씁니다</td>
+</tr>
+<tr>
+<td><code>-p 7474:7474</code></td>
+<td>HTTP 포트. 웹 화면 Neo4j Browser(<code>http://localhost:7474</code>)</td>
+</tr>
+<tr>
+<td><code>-p 7687:7687</code></td>
+<td>Bolt 포트. cypher-shell, 파이썬 드라이버(6장), Neo4j MCP 서버(8장)가 접속하는 곳(<code>bolt://localhost:7687</code>)</td>
+</tr>
+<tr>
+<td><code>NEO4J_AUTH</code></td>
+<td>사용자 <code>neo4j</code>의 초기 비밀번호(<code>neo4j/비밀번호</code>). 셸이 <code>$NEO4J_PASSWORD</code> 값을 채우므로 명령 기록에는 변수 이름만 남습니다</td>
+</tr>
+<tr>
+<td><code>NEO4J_PLUGINS</code></td>
+<td><code>'["apoc"]'</code>로 APOC 플러그인을 켭니다. 로그를 보면 이미지 안의 <code>labs</code> 폴더에서 jar를 복사하므로 따로 내려받지 않습니다</td>
+</tr>
+<tr>
+<td><code>…heap_initial__size</code><br><code>…heap_max__size</code></td>
+<td>자바 힙의 초기(512m)·최대(1G) 크기입니다. <code>server.memory.heap.max_size</code> 등의 설정을 환경변수 이름으로 바꾼 것으로, 앞에 <code>NEO4J_server_memory_</code>가 붙습니다(<code>.</code>는 <code>_</code>, <code>_</code>는 <code>__</code>)</td>
+</tr>
+<tr>
+<td><code>…pagecache_size</code></td>
+<td>페이지 캐시(512M). 그래프 파일을 메모리에 올려 두는 공간의 크기입니다</td>
+</tr>
+<tr>
+<td><code>--memory 2g</code></td>
+<td>컨테이너 전체의 메모리 상한(Docker). 힙 1G + 페이지 캐시 512M에 여유를 둔 값입니다</td>
+</tr>
+<tr>
+<td><code>-v …/neo4j/data:/data</code><br><code>-v …/neo4j/logs:/logs</code></td>
+<td>DB 파일과 로그를 실습 폴더(<code>$PWD</code>)에 둡니다. 컨테이너를 지워도 남습니다</td>
+</tr>
+<tr>
+<td><code>neo4j:5.26</code></td>
+<td>2단계에서 받은 이미지</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">비밀번호가 보이는 곳</p>
+<p>화면과 명령 기록에는 비밀번호가 남지 않지만, <code>.env</code> 파일과 컨테이너 설정(<code>docker inspect</code>로 보는 환경변수)에는 값이 들어 있습니다. 여러 사람이 쓰는 PC라면 실습용으로만 쓰는 비밀번호를 정하세요.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Windows(PowerShell)에서 달라지는 줄 — 확인 못 함</p>
+<p>이 교재의 실습은 macOS(zsh)에서만 기록했습니다. 아래는 PowerShell에서 수정해야 할 것으로 보이는 줄이며, <strong>실제로 실행해 확인하지 못했습니다.</strong></p>
+<ul>
+<li>여러 줄 명령의 줄 끝 <code>\</code> → 백틱 <code>`</code></li>
+<li>비밀번호 입력: <code>$s = Read-Host -AsSecureString "Neo4j 비밀번호"</code> 다음 <code>$env:NEO4J_PASSWORD = [System.Net.NetworkCredential]::new('', $s).Password</code></li>
+<li><code>-e NEO4J_AUTH=neo4j/$NEO4J_PASSWORD</code> → <code>-e "NEO4J_AUTH=neo4j/$env:NEO4J_PASSWORD"</code></li>
+<li><code>-v "$PWD/neo4j/data:/data"</code> → <code>-v "${PWD}/neo4j/data:/data"</code></li>
+<li><code>.env</code> 쓰기: <code>Set-Content -Encoding ascii .env "NEO4J_PASSWORD=$env:NEO4J_PASSWORD"</code> (Windows PowerShell 5.1의 <code>Out-File -Encoding utf8</code>은 파일 앞에 BOM을 붙여 <code>.env</code>를 읽는 프로그램이 첫 줄을 인식하지 못할 수 있습니다)</li>
+<li><code>-e NEO4J_PLUGINS='["apoc"]'</code>: Windows PowerShell 5.1은 외부 명령에 전달하는 인자의 큰따옴표를 누락하는 경우가 있어 <code>'[\"apoc\"]'</code>처럼 써야 할 수 있습니다</li>
+</ul>
+<p>문제가 생기면 부록 <a href="troubleshooting.html">문제 해결</a>의 예외 상황을 보세요.</p>
+</div>
+<h2 id="확인">확인<a class="anchor" href="#확인" title="Permanent link">#</a></h2>
+<p>세 가지 방법으로 확인합니다. 모두 확인되면 다음 장으로 넘어갑니다.</p>
+<h3 id="1-로그에-started가-나오는지">1. 로그에 Started.가 나오는지<a class="anchor" href="#1-로그에-started가-나오는지" title="Permanent link">#</a></h3>
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>graphrag-law-neo4j<span class="w">      </span><span class="c1"># &quot;Started.&quot; 가 나오면 Ctrl+C 로 빠져나옵니다</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>Warning: Folder mounted to &quot;/logs&quot; is not writable from inside container. Changing folder owner to neo4j.
+Warning: Folder mounted to &quot;/data&quot; is not writable from inside container. Changing folder owner to neo4j.
+Installing Plugin &#39;apoc&#39; from /var/lib/neo4j/labs/apoc-*-core.jar to /var/lib/neo4j/plugins/apoc.jar
+Applying default values for plugin apoc to neo4j.conf
+Changed password for user &#39;neo4j&#39;. IMPORTANT: this change will only take effect if performed before the database is started for the first time.
+… INFO  Starting...
+… INFO  ======== Neo4j 5.26.33 ========
+… INFO  Bolt enabled on 0.0.0.0:7687.
+… INFO  HTTP enabled on 0.0.0.0:7474.
+… INFO  Remote interface available at http://localhost:7474/
+… INFO  Started.
+</code></pre></div>
+
+<p>(시각과 서버 ID 줄은 <code>…</code>로 줄였습니다.) 처음 두 줄의 <code>Warning</code>은 마운트한 폴더의 소유자를 컨테이너 안의 <code>neo4j</code> 사용자로 바꿨다는 안내이며, 이 기록에서는 그대로 진행해도 문제가 없었습니다. <code>Starting...</code>부터 <code>Started.</code>까지 4.6초 걸렸습니다.</p>
+<h3 id="2-cypher-shell로-버전과-apoc-확인">2. cypher-shell로 버전과 APOC 확인<a class="anchor" href="#2-cypher-shell로-버전과-apoc-확인" title="Permanent link">#</a></h3>
+<p>컨테이너 안에 들어 있는 명령줄 도구 <code>cypher-shell</code>로 Bolt 포트에 접속해 봅니다. 문장 끝의 <code>;</code>를 빠뜨리지 마세요.</p>
+<div class="hl"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>graphrag-law-neo4j<span class="w"> </span>cypher-shell<span class="w"> </span>-u<span class="w"> </span>neo4j<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NEO4J_PASSWORD</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;CALL dbms.components() YIELD name, versions, edition RETURN name, versions, edition;&quot;</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>graphrag-law-neo4j<span class="w"> </span>cypher-shell<span class="w"> </span>-u<span class="w"> </span>neo4j<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NEO4J_PASSWORD</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;RETURN apoc.version() AS apoc;&quot;</span>
+docker<span class="w"> </span>stats<span class="w"> </span>--no-stream<span class="w"> </span>graphrag-law-neo4j
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>name, versions, edition
+&quot;Neo4j Kernel&quot;, [&quot;5.26.33&quot;], &quot;community&quot;
+apoc
+&quot;5.26.33&quot;
+CONTAINER ID   NAME                 CPU %     MEM USAGE / LIMIT   MEM %     NET I/O          BLOCK I/O       PIDS
+8953f7929eef   graphrag-law-neo4j   0.62%     926.4MiB / 2GiB     45.23%    1.6kB / 1.01kB   237MB / 206MB   87
+</code></pre></div>
+
+<p><code>MEM USAGE / LIMIT</code>의 <code>2GiB</code>는 <code>--memory 2g</code>로 설정한 상한이 적용되었다는 뜻입니다. 이 교재의 모든 장(의미층 적재와 질의까지)을 마친 뒤에도 같은 컨테이너의 메모리 사용량은 1.49GiB / 2GiB였습니다.</p>
+<h3 id="3-neo4j-browser">3. Neo4j Browser<a class="anchor" href="#3-neo4j-browser" title="Permanent link">#</a></h3>
+<p>먼저 HTTP 포트가 응답하는지 확인합니다.</p>
+<div class="hl"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>localhost:7474<span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>{&quot;bolt_routing&quot;:&quot;neo4j://localhost:7687&quot;,&quot;query&quot;:&quot;http://localhost:7474/db/{databaseName}/query/v2&quot;,&quot;transaction&quot;:&quot;http://localhost:7474/db/{databaseName}/tx&quot;,&quot;bolt_direct&quot;:&quot;bolt://localhost:7687&quot;,&quot;neo4j_version&quot;:&quot;5.26.33&quot;,&quot;neo4j_edition&quot;:&quot;community&quot;}
+</code></pre></div>
+
+<p>웹 브라우저로 <code>http://localhost:7474</code>를 엽니다. 「Connect to instance」 창에 연결 주소 <code>neo4j://localhost:7687</code>이 채워져 있습니다. Database user에 <code>neo4j</code>, Password에 정한 비밀번호를 입력하고 Connect를 누릅니다.</p>
+<figure><a href="img/gl-01-browser-login.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Neo4j Browser 첫 화면 「Connect to instance」 — 연결 주소 neo4j://localhost:7687, 사용자 neo4j" src="img/gl-01-browser-login.webp" loading="lazy" decoding="async"></a><figcaption>Neo4j Browser 첫 화면 「Connect to instance」 — 연결 주소 neo4j://localhost:7687, 사용자 neo4j</figcaption></figure>
+<p>처음 접속하면 「Work in tabs」 안내 풍선이 뜹니다(Dismiss로 닫습니다). 위쪽 입력칸에 질의를 입력하고 Run을 누르면 결과가 아래에 쌓입니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">CALL</span><span class="w"> </span><span class="n">dbms</span><span class="p">.</span><span class="n">components</span><span class="p">()</span><span class="w"> </span><span class="k">YIELD</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">versions</span><span class="p">,</span><span class="w"> </span><span class="n">edition</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">versions</span><span class="p">,</span><span class="w"> </span><span class="n">edition</span>
+</code></pre></div>
+
+<figure><a href="img/gl-01-browser-connected.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="접속한 뒤 dbms.components() 결과 — Neo4j Kernel 5.26.33 community" src="img/gl-01-browser-connected.webp" loading="lazy" decoding="async"></a><figcaption>접속한 뒤 dbms.components() 결과 — Neo4j Kernel 5.26.33 community</figcaption></figure>
+<p>APOC의 스키마 프로시저가 있는지도 확인합니다. 이 기록에서는 <code>apoc.meta.schema</code>를 포함해 10개가 조회되었습니다.</p>
+<div class="hl"><pre><span></span><code><span class="n">SHOW</span><span class="w"> </span><span class="n">PROCEDURES</span><span class="w"> </span><span class="k">YIELD</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">STARTS</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="s">&quot;apoc.meta&quot;</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">name</span>
+</code></pre></div>
+
+<h2 id="멈추기-다시-켜기-지우기">멈추기 · 다시 켜기 · 지우기<a class="anchor" href="#멈추기-다시-켜기-지우기" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>하려는 일</th>
+<th>명령</th>
+<th>데이터</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>멈추기</td>
+<td><code>docker stop graphrag-law-neo4j</code></td>
+<td><code>neo4j/data</code>에 그대로</td>
+</tr>
+<tr>
+<td>다시 켜기</td>
+<td><code>docker start graphrag-law-neo4j</code></td>
+<td>멈추기 전 그대로</td>
+</tr>
+<tr>
+<td>컨테이너만 지우기</td>
+<td><code>docker rm -f graphrag-law-neo4j</code></td>
+<td><code>neo4j/data</code>에 남습니다. 4단계의 <code>docker run</code>으로 다시 만들면 이어서 사용합니다</td>
+</tr>
+<tr>
+<td>처음부터 다시</td>
+<td>컨테이너를 지운 뒤 <code>rm -rf neo4j/data neo4j/logs</code></td>
+<td>모두 사라짐</td>
+</tr>
+</tbody>
+</table>
+<p><code>neo4j/data</code>를 남긴 채 다른 비밀번호로 <code>docker run</code>을 다시 하면, 로그의 <code>Changed password … only take effect if performed before the database is started for the first time.</code>라는 문구대로 새 비밀번호가 적용되지 않을 수 있습니다(이 기록에서는 시도하지 않아 확인하지 못했습니다). 비밀번호를 바꾸려면 처음부터 다시 만드는 편이 확실합니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">막히면</p>
+<p>이 장의 실습 단계에서는 학습자도 겪을 만한 문제가 기록되지 않았습니다. 포트 7474·7687 충돌, Docker 메모리 부족, 이미지 내려받기 실패, Windows 경로처럼 이 기록에서 겪지 않은 상황은 부록 <a href="troubleshooting.html">문제 해결</a>의 「예외 상황」에 확인 여부와 함께 모아 두었습니다.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>7474 포트와 7687 포트는 각각 누가 쓰나요?</summary>
+<p>7474는 HTTP 포트로 웹 화면인 Neo4j Browser가 씁니다. 7687은 Bolt 포트로 cypher-shell, 6장의 파이썬 드라이버(<code>bolt://localhost:7687</code>), 8장의 Neo4j MCP 서버가 씁니다. Neo4j Browser도 로그인한 뒤에는 질의를 Bolt(<code>neo4j://localhost:7687</code>)로 보냅니다.</p>
+</details>
+<details class="answer">
+<summary>APOC 플러그인을 켜려고 인터넷에서 무엇을 더 내려받았나요?</summary>
+<p>없습니다. 로그의 <code>Installing Plugin 'apoc' from /var/lib/neo4j/labs/apoc-*-core.jar to /var/lib/neo4j/plugins/apoc.jar</code>처럼 이미지 안의 <code>labs</code> 폴더에 있는 jar를 <code>plugins</code> 폴더로 복사합니다. 이미지를 받은 뒤라면 APOC를 위해 추가로 네트워크에 접속할 필요는 없습니다.</p>
+</details>
+<details class="answer">
+<summary>컨테이너를 지우고 다시 만들어도 적재한 데이터가 남는 까닭은 무엇인가요?</summary>
+<p><code>-v "$PWD/neo4j/data:/data"</code>로 컨테이너 안의 DB 폴더(<code>/data</code>)를 실습 폴더의 <code>neo4j/data</code>에 연결했기 때문입니다. 데이터는 컨테이너가 아니라 이 폴더에 쓰입니다. 그래서 <code>.gitignore</code>에 <code>neo4j/</code>를 넣어 커밋 대상에서 제외했습니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="how-graphrag.html"><span>이전</span>GraphRAG 동작 과정</a><a class="next" href="cypher-basics.html"><span>다음</span>Cypher 기초</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a><ul><li><a href="#옵션별-설명">옵션별 설명</a></li></ul></li><li><a href="#확인">확인</a><ul><li><a href="#1-로그에-started가-나오는지">1. 로그에 Started.가 나오는지</a></li><li><a href="#2-cypher-shell로-버전과-apoc-확인">2. cypher-shell로 버전과 APOC 확인</a></li><li><a href="#3-neo4j-browser">3. Neo4j Browser</a></li></ul></li><li><a href="#멈추기-다시-켜기-지우기">멈추기 · 다시 켜기 · 지우기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
