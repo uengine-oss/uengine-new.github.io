@@ -1,6 +1,6 @@
 # Cypher 기초
 
-> 위험물안전관리법 조문 일곱 개로 작은 그래프를 만들며 Cypher의 CREATE·MERGE·MATCH·WHERE·가변 길이 경로·OPTIONAL MATCH·집계·제약과 색인을 익힙니다. 질의와 출력은 cypher-shell과 Neo4j Browser의 실제 실행 기록에서 옮겼습니다.
+> 위험물안전관리법의 조와 항으로 노드 일곱 개짜리 작은 그래프를 만들며 Cypher의 CREATE·MERGE·MATCH·WHERE·가변 길이 경로·OPTIONAL MATCH·집계·제약과 색인을 익힙니다. 질의와 출력은 cypher-shell과 Neo4j Browser의 실제 실행 기록에서 옮겼습니다.
 
 ## 무엇을 · 왜
 

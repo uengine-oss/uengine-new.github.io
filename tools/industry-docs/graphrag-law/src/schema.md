@@ -57,7 +57,7 @@ git add pdf && git commit -qm "법령 PDF 9개"
 결과는 schema.md(노드·관계·속성 표 + mermaid 그림)와 schema.cypher(제약·색인)로 저장하고, 골든 퀘스천은 golden-questions.md 에 그대로 적어 둬.
 ```
 
-Claude는 `pdftotext -layout`으로 PDF의 텍스트를 추출해 `grep`으로 조 제목·「제N조」 인용·「대통령령으로 정하는」·벌칙 문구를 훑었습니다. 이때 셸 명령 승인을 11번 요청했고, 모두 읽기만 하는 명령이라 1(Yes)을 골랐습니다. 파일을 처음 쓸 때는 2(이 세션 동안 편집은 묻지 않기)를 골랐습니다. 4분 56초 뒤 `schema.md`(405줄)·`schema.cypher`(86줄)·`golden-questions.md`가 생성됐습니다.
+Claude는 `pdftotext -layout`으로 PDF의 텍스트를 추출해 `grep`으로 조 제목·「제N조」 인용·「대통령령으로 정하는」·벌칙 문구를 훑었습니다. 이때 셸 명령 승인을 10번 요청했고, 모두 읽기만 하는 명령이라 1(Yes)을 골랐습니다. 첫 파일 `schema.cypher`를 만들 때도 1을 골랐고, 다음 파일 `schema.md`를 만들 때는 2(이 세션 동안 편집은 묻지 않기)를 골랐습니다. 4분 56초 뒤 `schema.md`(405줄)·`schema.cypher`(86줄)·`golden-questions.md`가 생성됐습니다.
 </li>
 <li markdown="1">**설계를 읽고 고쳐 달라고 합니다(P2).** 첫 설계에는 골든 퀘스천용 의무(`Norm`) 14건을 손으로 적은 표까지 들어 있었습니다. 검토하면서 두 가지 문제를 발견했습니다. 질문의 낱말과 조문의 표기가 다르다는 점, 그리고 손으로 만든 14건은 다른 법으로 확장하기 어렵다는 점입니다.
 
