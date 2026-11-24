@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>의미 계층 컴파일: 용어·조인 자동 생성과 검토 — AX School · NVIDIA Auto Ontology 튜토리얼</title>
+<meta name="description" content="Settings → Semantic Compilation을 켜면 적재 서비스가 표 51개를 하나씩 읽어 업무 용어 51개를 만들고, 선언된 외래 키가 하나도 없는 WWI에서 조인 117개를 추론합니다. gpt-6.1-sol로 8분 6초(486초)가 걸렸습니다. 결과는 모두 「승인 대기」 초안입니다. 이 장에서는 무엇이 생겼는지 보고, 사람이 검토해야 할 부분을 짚습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/nvidia-auto-ontology/compile.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="의미 계층 컴파일: 용어·조인 자동 생성과 검토 — AX School · NVIDIA Auto Ontology 튜토리얼">
+<meta property="og:description" content="Settings → Semantic Compilation을 켜면 적재 서비스가 표 51개를 하나씩 읽어 업무 용어 51개를 만들고, 선언된 외래 키가 하나도 없는 WWI에서 조인 117개를 추론합니다. gpt-6.1-sol로 8분 6초(486초)가 걸렸습니다. 결과는 모두 「승인 대기」 초안입니다. 이 장에서는 무엇이 생겼는지 보고, 사람이 검토해야 할 부분을 짚습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/nvidia-auto-ontology/compile.html">
+<meta property="og:image" content="https://www.uengine.org/docs/nvidia-auto-ontology/img/nv-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AX School · NVIDIA Auto Ontology <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기: 무엇을 배우나</a></li>
+<li><a href="setup.html"><span class="n">01</span>설치와 실행</a></li>
+</ul>
+<div class="nav-part">온톨로지 만들기</div><ul>
+<li><a href="connect.html"><span class="n">02</span>데이터베이스 연결</a></li>
+<li><a href="compile.html" class="on" aria-current="page"><span class="n">03</span>의미 계층 컴파일: 용어·조인 자동 생성과 검토</a></li>
+<li><a href="explore.html"><span class="n">04</span>그래프·용어 둘러보기</a></li>
+</ul>
+<div class="nav-part">질문하기</div><ul>
+<li><a href="ask.html"><span class="n">05</span>질문하기</a></li>
+</ul>
+<div class="nav-part">다른 도구와 잇기</div><ul>
+<li><a href="mcp.html"><span class="n">06</span>MCP로 다른 도구에 붙이기</a></li>
+<li><a href="api.html"><span class="n">07</span>API로 다른 시스템과 연동</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="studio.html"><span class="n">08</span>Ontological Studio 소개와 비교</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">09</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">온톨로지 만들기<span class="chap">3</span></div>
+    <h1>의미 계층 컴파일: 용어·조인 자동 생성과 검토</h1>
+    <article>
+<blockquote>
+<p>Settings → Semantic Compilation을 켜면 적재 서비스가 표 51개를 하나씩 읽어 업무 용어 51개를 만들고, 선언된 외래 키가 하나도 없는 WWI에서 조인 117개를 추론합니다. gpt-6.1-sol로 8분 6초(486초)가 걸렸습니다. 결과는 모두 「승인 대기」 초안입니다. 이 장에서는 무엇이 생겼는지 보고, 사람이 검토해야 할 부분을 짚습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/X7bE_vdHttw" title="의미 계층 컴파일: 용어·조인 자동 생성과 검토 — 영상 3:11" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><a href="connect.html">2장</a>에서 만든 카탈로그에는 표와 열 이름만 있습니다. 에이전트가 「펜실베이니아의 매출」을 SQL로 옮기려면 「매출은 송장 줄(invoicelines)의 금액」, 「주(州)는 고객 → 도시 → 주로 이어 찾는다」 같은 의미와 연결 경로를 알아야 합니다. 의미 계층 컴파일이 그 초안을 작성합니다. README가 적은 순서는 이렇습니다.</p>
+<ol>
+<li>원천 읽기 — 스키마를 추출하고 열을 프로파일링한 뒤 값을 표본으로 모읍니다.</li>
+<li>개체 이름 짓기 — 표마다 용어를 뽑고 열에 연결합니다.</li>
+<li>관계 풀기 — 표 사이 조인과 다리 테이블을 추론하고, 질의 기록에서 SQL 속성을 제안합니다.</li>
+<li>온톨로지 쓰기 — 용어·관계·SQL 속성을 Postgres에, 임베딩을 pgvector에 저장합니다.</li>
+</ol>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>컴파일 화면을 엽니다.</strong> Settings → <strong>Semantic Compilation</strong>. 연결이 있으면 「You can enable the semantic compilation」이 보입니다. 바로 위의 <strong>Distinct Value Scanning</strong>은 기본으로 켜져 있습니다. 값의 종류가 적은 텍스트 열은 표본에 없던 드문 값까지 모두 훑어 둡니다. 「Pennsylvania」 같은 필터 값을 확인할 때 쓰입니다.
+
+<figure><a href="img/nv-compile-before.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="켜기 전의 Semantic Compilation — Distinct Value Scanning은 켜져 있음" src="img/nv-compile-before.webp" loading="lazy" decoding="async"></a><figcaption>켜기 전의 Semantic Compilation — Distinct Value Scanning은 켜져 있음</figcaption></figure>
+</li>
+<li><strong>Enable Semantic Compilation을 켭니다.</strong> 켜는 순간 컴파일이 한 번 시작되고, 그 뒤로는 서비스가 시작될 때와 24시간마다 다시 실행됩니다. 상태 줄이 「Semantic compilation is running」으로 바뀝니다.
+
+<figure><a href="img/nv-compile-running.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="켠 직후 — 「Semantic compilation is running」" src="img/nv-compile-running.webp" loading="lazy" decoding="async"></a><figcaption>켠 직후 — 「Semantic compilation is running」</figcaption></figure>
+</li>
+<li><strong>끝날 때까지 기다립니다.</strong> 이 교재의 실행에서는 8분 6초(적재 서비스 기록 486.1초)가 걸렸고, 끝나면 「Semantic compilation is ready」와 마지막 컴파일 시각이 뜹니다. 화면은 자동으로 갱신되지 않으므로 새로 고침해서 확인합니다.
+
+<figure><a href="img/nv-compile-ready.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="컴파일 완료 — 「Semantic compilation is ready」" src="img/nv-compile-ready.webp" loading="lazy" decoding="async"></a><figcaption>컴파일 완료 — 「Semantic compilation is ready」</figcaption></figure>
+</li>
+</ol>
+<h3 id="걸린-시간과-모델-호출">걸린 시간과 모델 호출<a class="anchor" href="#걸린-시간과-모델-호출" title="Permanent link">#</a></h3>
+<p>적재 서비스 기록과 모델 중계기 기록을 맞춰 보면 이렇습니다.</p>
+<table>
+<thead>
+<tr>
+<th>구간</th>
+<th>시간</th>
+<th>한 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>표 51개 처리</td>
+<td>약 3분 45초</td>
+<td>표마다 열 값 표본 → 외래 키 후보 표시 → 용어·열 속성 추출 → 임베딩</td>
+</tr>
+<tr>
+<td>조인 추론</td>
+<td>약 4분</td>
+<td>후보 열 145개(선언된 외래 키 0개)를 하나씩 대상 표와 맞춰 봄</td>
+</tr>
+<tr>
+<td>다리 테이블</td>
+<td>몇 초</td>
+<td>「No eligible bridge tables found」 — WWI에는 해당 없음</td>
+</tr>
+<tr>
+<td><strong>합계</strong></td>
+<td><strong>486.1초</strong></td>
+<td>모델 호출 318번, 모두 <code>gpt-6.1-sol</code>(추론 강도 기본값)</td>
+</tr>
+</tbody>
+</table>
+<p>같은 데이터를 11월 14일 <code>gpt-4.1</code>로 컴파일했을 때는 205.9초였습니다. 추론 모델은 단계마다 추론에 시간이 들어 두 배 넘게 걸렸습니다. 기본 모델인 NVIDIA Nemotron은 이 교재에서 측정하지 못했습니다.</p>
+<h2 id="무엇이-생겼나">무엇이 생겼나<a class="anchor" href="#무엇이-생겼나" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>개수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>용어(Term)</td>
+<td>51</td>
+<td>표 51개마다 하나. 모두 <strong>Pending Approval</strong>(승인 대기)</td>
+</tr>
+<tr>
+<td>└ 그중 <code>Archived …</code></td>
+<td>17</td>
+<td><code>_archive</code>로 끝나는 보관용 사본 표의 용어</td>
+</tr>
+<tr>
+<td>└ 그중 뷰에서 온 중복</td>
+<td>3</td>
+<td><code>Customer (wideworldimporters.website.customers)</code>처럼 website 스키마 뷰가 따로 용어가 됨</td>
+</tr>
+<tr>
+<td>조인(semantic FK)</td>
+<td>117</td>
+<td>후보 122개 가운데 원천 열이 비어 있는 5개를 뺀 수</td>
+</tr>
+<tr>
+<td>└ 기본 조인 경로로 쓰는 것</td>
+<td>103</td>
+<td>한 표에서 같은 대상 표로 가는 열이 여럿이면 하나만 기본으로 고름</td>
+</tr>
+<tr>
+<td>SQL 속성</td>
+<td>0</td>
+<td>README는 질의 기록에서 제안한다고 적었는데, 새 DB라 기록이 없음</td>
+</tr>
+</tbody>
+</table>
+<p>조인의 예입니다. 앞의 다섯 줄이 README 예시 답의 SQL에서 사용하는 경로입니다.</p>
+<table>
+<thead>
+<tr>
+<th>원천 열</th>
+<th>→ 대상</th>
+<th>기본 경로</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sales.invoicelines.invoiceid</code></td>
+<td><code>sales.invoices.invoiceid</code></td>
+<td>예</td>
+</tr>
+<tr>
+<td><code>sales.invoicelines.stockitemid</code></td>
+<td><code>warehouse.stockitems.stockitemid</code></td>
+<td>예</td>
+</tr>
+<tr>
+<td><code>sales.invoices.customerid</code></td>
+<td><code>sales.customers.customerid</code></td>
+<td>예</td>
+</tr>
+<tr>
+<td><code>sales.customers.deliverycityid</code></td>
+<td><code>application.cities.cityid</code></td>
+<td>예</td>
+</tr>
+<tr>
+<td><code>application.cities.stateprovinceid</code></td>
+<td><code>application.stateprovinces.stateprovinceid</code></td>
+<td>예</td>
+</tr>
+<tr>
+<td><code>sales.customers.postalcityid</code></td>
+<td><code>application.cities.cityid</code></td>
+<td>아니오 — 배송 도시와 같은 대상이라 하나만 기본</td>
+</tr>
+<tr>
+<td><code>warehouse.colors_archive.lasteditedby</code></td>
+<td><code>application.people.personid</code></td>
+<td>예 — 원천에 없는 조인</td>
+</tr>
+</tbody>
+</table>
+<h3 id="조인을-채점해-보면">조인을 채점해 보면<a class="anchor" href="#조인을-채점해-보면" title="Permanent link">#</a></h3>
+<p>11월 14일 비교 때 원천 스키마 문서로 만든 정답 조인 98개(업무 키 69개 + 「마지막으로 고친 사람」 열 29개)로 채점했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>기본 조인 경로 기준</th>
+<th>이번(gpt-6.1-sol)</th>
+<th>11-14(gpt-4.1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>업무 키 — 맞은 비율</td>
+<td>75.8% (66개 중)</td>
+<td>82.5% (57개 중)</td>
+</tr>
+<tr>
+<td>업무 키 — 찾은 비율</td>
+<td>72.5% (69개 중 50)</td>
+<td>68.1% (69개 중 47)</td>
+</tr>
+<tr>
+<td>감사 열(<code>lasteditedby</code>) 조인</td>
+<td>37개, 그중 13개는 원천에 없음</td>
+<td>20개, 그중 13개는 원천에 없음</td>
+</tr>
+</tbody>
+</table>
+<p>모델에 따라 조인이 달라집니다. 같은 원천이라도 컴파일할 때마다 다를 수 있다는 뜻입니다.</p>
+<h2 id="검토-어디를-보아야-하나">검토: 어디를 보아야 하나<a class="anchor" href="#검토-어디를-보아야-하나" title="Permanent link">#</a></h2>
+<p>README는 두 번째 단계를 사람이 하는 일로 둡니다. "Test with real questions in Chat … Refine terms, descriptions, and SQL attributes … Certify names, descriptions, and SQL attributes once they're correct." 이번 초안에서 먼저 검토할 부분은 세 군데입니다.</p>
+<ol>
+<li><strong>보관용 사본 표.</strong> <code>Archived …</code> 용어 17개와 그 조인은 현재 데이터에 대한 질문에 영향을 줄 수 있습니다. 11월 14일 실행에서 Q1이 틀린 까닭 가운데 하나가 이 표들을 거친 조인이었습니다. 연결의 <strong>Table Denylist</strong>에 <code>_archive$</code>를 넣고 Settings → Semantic Compilation → <strong>Reset Semantic Layer</strong> 후 다시 컴파일하면 처음부터 빠집니다(이 교재에서는 공식 예제와 같게 두었고, 이 방법으로 다시 돌려 보지는 않았습니다).</li>
+<li><strong>「마지막으로 고친 사람」 조인.</strong> WWI의 거의 모든 표에 있는 <code>lasteditedby → people.personid</code>가 기본 조인 경로에 37개 들어갔습니다. 1.2.0의 화면과 공개 API에서는 조인 하나를 끄는 방법을 찾지 못했습니다. 질문에서 「누가 고쳤나」를 묻지 않는 한 쓰이지 않지만, 경로를 고를 때 잘못된 경로로 이어질 수 있습니다.</li>
+<li><strong>지표의 정의.</strong> 「매출」이 세금을 포함한 <code>extendedprice</code>인지, 세금을 뺀 값인지는 데이터만 보고 정할 수 없습니다. 지금은 SQL 속성이 0개라 모델이 질문마다 정의를 선택합니다. <a href="ask.html">5장</a>에서 이 차이가 실제로 답을 바꾸는 것을 보고, 끝에서 SQL 속성을 하나 만들어 인증해 봅니다.</li>
+</ol>
+<p>용어를 고치고 인증하는 곳은 용어 상세 화면입니다. <strong>Edit</strong>을 누르면 이름·설명을 고칠 수 있고, 이름과 설명 옆의 방패 모양 단추에서 인증 상태를 바꿉니다. 용어 화면은 <a href="explore.html">4장</a>에서 둘러봅니다.</p>
+<figure><a href="img/nv-term-edit.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="용어 편집 화면 — 이름·설명 옆 방패 단추가 인증 상태" src="img/nv-term-edit.webp" loading="lazy" decoding="async"></a><figcaption>용어 편집 화면 — 이름·설명 옆 방패 단추가 인증 상태</figcaption></figure>
+<h2 id="막히면">막히면<a class="anchor" href="#막히면" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">막히면</p>
+<ul>
+<li><strong>컴파일이 몇 분째 「running」에서 안 바뀜</strong> — 화면은 자동으로 새로 고쳐지지 않고, 추론 모델은 오래 걸립니다(이 교재 8분 6초). → 새로 고침해서 확인하고, 진행 상황은 적재 서비스 로그의 <code>[n/51] Processing table</code>·<code>Resolving semantic FK edges… (n/145)</code> 줄에서 확인합니다.</li>
+<li><strong>「Please connect any data source」만 보임</strong> — 연결이 없거나 적재가 끝나지 않았습니다. → <a href="connect.html">2장</a>의 연결을 먼저 만듭니다.</li>
+<li><strong>조인 하나를 끄고 싶음</strong> — 1.2.0 화면·공개 API에는 그 기능이 없습니다. → 표 자체를 빼려면 연결의 Table Denylist + Reset Semantic Layer + 다시 컴파일합니다.</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>1. WWI에는 선언된 외래 키가 하나도 없는데 조인은 어떻게 생겼나요?</summary>
+<p>컴파일이 열마다 「다른 표를 가리키는 키인가」를 모델로 판단하고, 임베딩으로 대상 후보를 찾은 뒤 표본 값이 실제로 대상 표에 있는지 확인해 추론했습니다. 기록의 <code>0 declared + 122 inferred</code>가 그 결과입니다.</p>
+</details>
+<details class="answer">
+<summary>2. 컴파일이 끝난 용어가 모두 「Pending Approval」인 까닭은 무엇이고, 다음에 할 일은 무엇인가요?</summary>
+<p>자동으로 만든 초안이라 아직 아무도 확인하지 않았기 때문입니다. 실제 질문으로 시험하고, 설명과 SQL 속성을 고친 뒤, 맞는 것을 인증합니다.</p>
+</details>
+<p>다음 장에서는 만들어진 용어와 그래프를 화면에서 둘러봅니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="connect.html"><span>이전</span>데이터베이스 연결</a><a class="next" href="explore.html"><span>다음</span>그래프·용어 둘러보기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a><ul><li><a href="#걸린-시간과-모델-호출">걸린 시간과 모델 호출</a></li></ul></li><li><a href="#무엇이-생겼나">무엇이 생겼나</a><ul><li><a href="#조인을-채점해-보면">조인을 채점해 보면</a></li></ul></li><li><a href="#검토-어디를-보아야-하나">검토: 어디를 보아야 하나</a></li><li><a href="#막히면">막히면</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

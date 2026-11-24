@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>그래프·용어 둘러보기 — AX School · NVIDIA Auto Ontology 튜토리얼</title>
+<meta name="description" content="컴파일이 만든 의미 계층을 네 가지 화면에서 살펴봅니다. Terms(용어 목록과 상세), Exploration(의미 그래프와 데이터 그래프), Data(카탈로그), Discovery(검색)입니다. 용어 하나가 어느 표·열을 가리키고 어떤 용어와 연결되는지를 확인하는 것이 검토의 첫걸음입니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/nvidia-auto-ontology/explore.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="그래프·용어 둘러보기 — AX School · NVIDIA Auto Ontology 튜토리얼">
+<meta property="og:description" content="컴파일이 만든 의미 계층을 네 가지 화면에서 살펴봅니다. Terms(용어 목록과 상세), Exploration(의미 그래프와 데이터 그래프), Data(카탈로그), Discovery(검색)입니다. 용어 하나가 어느 표·열을 가리키고 어떤 용어와 연결되는지를 확인하는 것이 검토의 첫걸음입니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/nvidia-auto-ontology/explore.html">
+<meta property="og:image" content="https://www.uengine.org/docs/nvidia-auto-ontology/img/nv-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>AX School · NVIDIA Auto Ontology <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기: 무엇을 배우나</a></li>
+<li><a href="setup.html"><span class="n">01</span>설치와 실행</a></li>
+</ul>
+<div class="nav-part">온톨로지 만들기</div><ul>
+<li><a href="connect.html"><span class="n">02</span>데이터베이스 연결</a></li>
+<li><a href="compile.html"><span class="n">03</span>의미 계층 컴파일: 용어·조인 자동 생성과 검토</a></li>
+<li><a href="explore.html" class="on" aria-current="page"><span class="n">04</span>그래프·용어 둘러보기</a></li>
+</ul>
+<div class="nav-part">질문하기</div><ul>
+<li><a href="ask.html"><span class="n">05</span>질문하기</a></li>
+</ul>
+<div class="nav-part">다른 도구와 잇기</div><ul>
+<li><a href="mcp.html"><span class="n">06</span>MCP로 다른 도구에 붙이기</a></li>
+<li><a href="api.html"><span class="n">07</span>API로 다른 시스템과 연동</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="studio.html"><span class="n">08</span>Ontological Studio 소개와 비교</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">09</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">온톨로지 만들기<span class="chap">4</span></div>
+    <h1>그래프·용어 둘러보기</h1>
+    <article>
+<blockquote>
+<p>컴파일이 만든 의미 계층을 네 가지 화면에서 살펴봅니다. Terms(용어 목록과 상세), Exploration(의미 그래프와 데이터 그래프), Data(카탈로그), Discovery(검색)입니다. 용어 하나가 어느 표·열을 가리키고 어떤 용어와 연결되는지를 확인하는 것이 검토의 첫걸음입니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/O8LfHR_hb04" title="그래프·용어 둘러보기 — 영상 2:53" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p><a href="compile.html">3장</a>의 결과는 숫자로만 보면 「용어 51개, 조인 117개」입니다. 검토하려면 용어마다 이름과 설명이 맞는지, 어떤 열을 담았는지, 어떤 용어와 연결되는지를 하나씩 보아야 합니다. 왼쪽 세로 메뉴에서 각 화면으로 이동합니다.</p>
+<table>
+<thead>
+<tr>
+<th>메뉴</th>
+<th>화면</th>
+<th>보는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>따옴표 모양</td>
+<td><strong>Terms</strong></td>
+<td>용어 목록, 용어 상세(설명·동의어·담당자·인증·열 속성·SQL 속성·관련 용어)</td>
+</tr>
+<tr>
+<td>나침반 모양</td>
+<td><strong>Exploration</strong></td>
+<td>용어와 관계를 원으로 그린 의미 그래프, 표·열의 데이터 그래프</td>
+</tr>
+<tr>
+<td>데이터베이스 모양</td>
+<td><strong>Data</strong></td>
+<td>데이터베이스 → 스키마 → 표 → 열 카탈로그</td>
+</tr>
+<tr>
+<td>돋보기 모양</td>
+<td><strong>Discovery</strong></td>
+<td>용어·속성·카탈로그를 이름·설명·동의어로 검색</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li><strong>용어 목록.</strong> Terms를 엽니다. 카드마다 이름·설명과 Tags·담당자(Unassigned)·<strong>Pending Approval</strong>이 붙고, 아래 칸에 열 속성·SQL 속성·관련 용어 수가 보입니다. 위쪽 검색 칸에 <code>Invoice</code>를 넣으면 이름에 그 글자가 들어간 용어만 남습니다.
+
+<figure><a href="img/nv-terms.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="용어 목록 — 모든 카드가 Pending Approval" src="img/nv-terms.webp" loading="lazy" decoding="async"></a><figcaption>용어 목록 — 모든 카드가 Pending Approval</figcaption></figure>
+</li>
+<li><strong>용어 상세 — Invoice Line.</strong> 카드 이름을 누르면 상세 화면이 열립니다. 설명은 「An individual item on an invoice, including its description, quantity, pricing, tax, profit, and last edit timestamp.」입니다. <strong>Entities</strong>는 이 용어가 가리키는 표(<code>invoicelines</code>), <strong>Related Terms</strong>는 조인으로 이어진 용어 셋(Invoice · Package Type · Stock Item)입니다.
+
+<figure><a href="img/nv-term.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Invoice Line 상세 — 설명, 표 invoicelines, 관련 용어 3개" src="img/nv-term.webp" loading="lazy" decoding="async"></a><figcaption>Invoice Line 상세 — 설명, 표 invoicelines, 관련 용어 3개</figcaption></figure>
+</li>
+<li><strong>열 속성.</strong> 아래로 내리면 <strong>Column Attributes</strong> 9개가 나옵니다. 표의 열 13개 가운데 다른 표를 가리키는 키(<code>invoiceid</code>·<code>stockitemid</code>·<code>packagetypeid</code>·<code>lasteditedby</code>)는 열 속성이 아니라 관계가 되었습니다. 이름은 사람이 이해하기 쉬운 표현으로 바뀌었습니다. 예를 들어 <code>extendedprice</code>는 <strong>Line Total Including Tax</strong>(세금 포함 줄 합계)입니다. 5장의 Q1에 올바르게 답하려면 바로 이 열을 써야 합니다.
+
+| 열 속성 | 원천 열 |
+|---|---|
+| Line Total Including Tax | <code>extendedprice</code> |
+| Tax Amount | <code>taxamount</code> |
+| Unit Price · Quantity · Tax Rate | <code>unitprice</code> · <code>quantity</code> · <code>taxrate</code> |
+| Line Profit | <code>lineprofit</code> |
+
+맨 아래 <strong>SQL Attributes</strong>는 「SQL Attribute Does Not Exist」입니다. 3장에서 본 것처럼 SQL 속성은 하나도 생기지 않았습니다.
+
+<figure><a href="img/nv-term-columns.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Invoice Line의 열 속성 9개" src="img/nv-term-columns.webp" loading="lazy" decoding="async"></a><figcaption>Invoice Line의 열 속성 9개</figcaption></figure>
+</li>
+<li><strong>의미 그래프.</strong> Exploration을 엽니다. 원 하나가 용어 하나이고, 선이 관계입니다. 오른쪽 아래 범례에 「Terms 51」이 보입니다. 원이 촘촘해 잘 안 보이면 왼쪽 위 검색 칸에 <code>Order</code>를 넣고 목록에서 <strong>Order</strong>를 고릅니다. 그 원이 가운데로 오고 오른쪽 상자에 이름·설명과 「Related Terms: 7 · Attribute Columns: 10 · SQL Attributes: 0」이 나옵니다. README가 그림으로 보여 준 장면과 같은 화면입니다.
+
+<figure><a href="img/nv-graph-order.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="의미 그래프에서 Order를 고른 모습 — 오른쪽 정보 상자" src="img/nv-graph-order.webp" loading="lazy" decoding="async"></a><figcaption>의미 그래프에서 Order를 고른 모습 — 오른쪽 정보 상자</figcaption></figure>
+</li>
+<li><strong>데이터 그래프.</strong> <strong>Switch to Data Objects</strong>를 누르면 같은 화면이 표·뷰·열 그래프로 바뀝니다. 범례에 「Tables 48 · Views 3」이 나옵니다. 의미 그래프(용어)와 데이터 그래프(물리 표)를 오가며 어떤 용어가 어떤 표에 연결되었는지 확인합니다.
+
+<figure><a href="img/nv-graph-data.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="데이터 그래프 — 표 48개와 뷰 3개" src="img/nv-graph-data.webp" loading="lazy" decoding="async"></a><figcaption>데이터 그래프 — 표 48개와 뷰 3개</figcaption></figure>
+</li>
+<li><strong>카탈로그.</strong> Data → <strong>All Data</strong>에서 <code>wideworldimporters</code> → <code>sales</code> → <code>invoicelines</code>를 차례로 엽니다. 표 설명(컴파일 과정에서 작성한 설명, 승인 대기), 형식(base table), 열 13개와 자료형이 나옵니다. 여기의 설명도 <strong>Edit</strong>으로 고칠 수 있습니다.
+
+<figure><a href="img/nv-catalog.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="카탈로그의 sales.invoicelines — 열 13개" src="img/nv-catalog.webp" loading="lazy" decoding="async"></a><figcaption>카탈로그의 sales.invoicelines — 열 13개</figcaption></figure>
+</li>
+<li><strong>검색.</strong> Discovery는 용어·열 속성·SQL 속성·카탈로그를 이름·설명·동의어로 한 번에 찾습니다(오른쪽 위 「Search Auto Ontology」 단추도 같은 검색). <code>revenue</code>를 넣고 <strong>Apply</strong>를 누르면 「No Results Match Your Search」가 나옵니다. 컴파일이 만든 이름과 설명 어디에도 「revenue」라는 낱말이 없기 때문입니다. 질문에 등장하는 업무 용어이 의미 계층에 없으면, 에이전트는 비슷한 열을 스스로 골라야 합니다. <a href="ask.html">5장</a>에서 그 결과를 봅니다.
+
+<figure><a href="img/nv-discovery.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="Discovery에서 revenue를 찾은 결과 — 없음" src="img/nv-discovery.webp" loading="lazy" decoding="async"></a><figcaption>Discovery에서 revenue를 찾은 결과 — 없음</figcaption></figure>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">검토할 때 이 화면들을 이렇게 씁니다</p>
+<ul>
+<li>용어 이름이 업무에서 쓰는 말과 다르면 <strong>Edit</strong>으로 고치고 동의어를 더합니다. Discovery에서 업무 용어(예: revenue)로 검색하면 누락된 용어를 확인할 수 있습니다.</li>
+<li>열 속성 이름이 의미를 바꾸지는 않았는지 원천 열과 맞춰 봅니다(<code>extendedprice</code> = 세금 포함).</li>
+<li>관련 용어가 이상하게 많으면(예: 거의 모든 용어가 Person에 이어짐) 「마지막으로 고친 사람」 조인입니다(<a href="compile.html">3장</a>).</li>
+<li>맞다고 확인한 이름·설명은 방패 단추로 인증합니다. 인증 표시는 검토가 끝났다는 기록입니다.</li>
+</ul>
+</div>
+<h2 id="막히면">막히면<a class="anchor" href="#막히면" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">막히면</p>
+<ul>
+<li><strong>그래프의 원이 뭉쳐서 고를 수 없음</strong> — 용어 51개가 한 화면에 그려집니다. → 왼쪽 위 검색 칸에서 이름으로 고르거나, 오른쪽 위 + / −로 확대합니다.</li>
+<li><strong>목록에서 찾는 용어가 안 보임</strong> — 목록은 이름순이고 <code>Archived …</code> 17개가 앞에 옵니다. → 위쪽 검색 칸에 이름 일부를 넣습니다.</li>
+</ul>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>1. invoicelines 표의 열은 13개인데 Invoice Line의 열 속성은 왜 9개뿐인가요?</summary>
+<p>다른 표를 가리키는 키 열(<code>invoiceid</code>·<code>stockitemid</code>·<code>packagetypeid</code>·<code>lasteditedby</code>)은 열 속성이 아니라 다른 용어와의 관계(조인)로 바뀌었기 때문입니다. 그래서 Related Terms에 Invoice·Stock Item·Package Type이 보입니다.</p>
+</details>
+<details class="answer">
+<summary>2. 「매출」을 묻는 질문에 쓸 수 있는 Invoice Line의 열 속성은 무엇이고, 무엇이 헷갈릴 수 있나요?</summary>
+<p><code>Line Total Including Tax</code>(<code>extendedprice</code>)입니다. 세금을 뺀 값(<code>extendedprice − taxamount</code>)도 매출로 볼 수 있어서, 어느 쪽인지 정의(SQL 속성)가 없으면 모델이 질문마다 다르게 고를 수 있습니다.</p>
+</details>
+<p>다음 장에서는 Chat에 질문 네 개를 묻고 모델이 실제로 낸 답을 봅니다.</p>
+    </article>
+    <nav class="pager"><a class="prev" href="compile.html"><span>이전</span>의미 계층 컴파일: 용어·조인 자동 생성과 검토</a><a class="next" href="ask.html"><span>다음</span>질문하기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#막히면">막히면</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
