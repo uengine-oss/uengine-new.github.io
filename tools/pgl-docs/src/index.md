@@ -39,7 +39,7 @@ Process GPT Lite는 **대화 하나로 일하는 AI 업무 비서**입니다. �
 <a href="folders.html"><b>4 · 팀으로 일하기</b><span>공유 폴더, 산출물 공유와 @멘션, 메신저와 번역, 원격 회의와 통역</span></a>
 <a href="process-create.html"><b>5 · 프로세스로 일하기</b><span>대화로 프로세스 만들기, 실행, 프로세스 마이닝</span></a>
 <a href="bottleneck.html"><b>6 · 프로세스 개선</b><span>병목 찾기, 가치 흐름과 제약 이론, 크리티컬 패스와 개선 실행</span></a>
-<a href="workroom.html"><b>7 · 확장과 운영</b><span>에이전트 작업실, 구조, 운영과 보안, 에이전트 가드레일, 팀 맥락 공유</span></a>
+<a href="workroom.html"><b>7 · 확장과 운영</b><span>에이전트 작업실, 내 PC의 CLI 에이전트, 구조, 운영과 보안, 에이전트 가드레일, 팀 맥락 공유</span></a>
 <a href="prototype-request.html"><b>8 · 산업별 예시</b><span>전자 제품 시작품, 이벤트 소싱 ERP 전표·전망, AI-DLC 개발 팀 대시보드</span></a>
 <a href="project.html"><b>9 · 종합 과제</b><span>새 고객 요청을 처음부터 끝까지</span></a>
 </div>
@@ -61,7 +61,7 @@ Process GPT Lite는 **대화 하나로 일하는 AI 업무 비서**입니다. �
 | 컴퓨터 | Docker가 도는 macOS·Linux·Windows(WSL2), 메모리 16GB 권장 |
 | 디스크 | 20GB 이상 여유 (컨테이너 이미지 포함) |
 | LLM 키 | OpenAI 호환 API 키 하나. 받아쓰기(원격 회의)를 쓰려면 받아쓰기용 키도 필요합니다 |
-| 코딩 에이전트 (선택) | [Claude Code](https://claude.com/claude-code) 또는 Codex CLI — 7부의 에이전트 작업실에서 씁니다 |
+| 코딩 에이전트 (선택) | [Claude Code](https://claude.com/claude-code) 또는 Codex CLI — 7부의 에이전트 작업실과 데스크톱 앱(내 PC의 CLI 에이전트)에서 씁니다 |
 | 브라우저 | Chrome 또는 Edge 최신판. 원격 회의에는 카메라·마이크가 필요합니다 |
 
 !!! tip "먼저 영상으로 보고 싶다면"

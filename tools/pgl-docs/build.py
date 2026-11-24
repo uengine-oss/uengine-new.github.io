@@ -62,6 +62,7 @@ CHAPTERS = [
     ("value-stream", "프로세스 개선"),
     ("critical-path", "프로세스 개선"),
     ("workroom", "확장과 운영"),
+    ("local-agents", "확장과 운영"),
     ("architecture", "확장과 운영"),
     ("admin", "확장과 운영"),
     ("agentic", "확장과 운영"),
