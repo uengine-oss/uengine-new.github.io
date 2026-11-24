@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif" font-size="16" role="img" aria-label="적재 때 중의성 해소와 질문 때 엔티티 연결">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+  <rect width="960" height="540" fill="#ffffff"/>
+
+  <!-- 위: 적재 때 -->
+  <text x="20" y="32" font-size="18" font-weight="700" fill="#111827">적재 때 · 중의성 해소 — 조문에서 뽑은 여러 표기를 노드 하나로</text>
+  <text x="20" y="62" fill="#4b5563">뽑힌 이름 (228가지 중 6개)</text>
+  <text x="495" y="62" text-anchor="middle" fill="#4b5563">LLM · 규칙·사전 + 사람 검토</text>
+  <text x="640" y="62" fill="#4b5563">Actor 노드 (136개 중 5개)</text>
+
+  <g fill="#f3f4f6" stroke="#9ca3af">
+    <rect x="20" y="76" width="330" height="34" rx="6"/>
+    <rect x="20" y="120" width="330" height="34" rx="6"/>
+    <rect x="20" y="164" width="330" height="34" rx="6"/>
+    <rect x="20" y="208" width="330" height="34" rx="6"/>
+    <rect x="20" y="252" width="330" height="34" rx="6"/>
+    <rect x="20" y="296" width="330" height="34" rx="6"/>
+  </g>
+  <g fill="#111827">
+    <text x="32" y="99">제조소등의 관계인</text>
+    <text x="32" y="143">당해 제조소등의 관계인</text>
+    <text x="32" y="187">대통령령이 정하는 제조소등의 관계인</text>
+    <text x="32" y="231">시ㆍ도지사, 소방본부장 또는 소방서장</text>
+    <text x="32" y="275">위험물안전관리자</text>
+    <text x="32" y="319">안전관리자</text>
+  </g>
+
+  <g stroke="#6b7280" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+    <line x1="350" y1="93" x2="638" y2="115"/>
+    <line x1="350" y1="137" x2="638" y2="115"/>
+    <line x1="350" y1="181" x2="638" y2="115"/>
+    <line x1="350" y1="225" x2="638" y2="181"/>
+    <line x1="350" y1="225" x2="638" y2="225"/>
+    <line x1="350" y1="225" x2="638" y2="269"/>
+    <line x1="350" y1="269" x2="638" y2="313"/>
+    <line x1="350" y1="313" x2="638" y2="313"/>
+  </g>
+
+  <g fill="#dbeafe" stroke="#2563eb">
+    <rect x="640" y="98" width="300" height="34" rx="17"/>
+    <rect x="640" y="164" width="300" height="34" rx="17"/>
+    <rect x="640" y="208" width="300" height="34" rx="17"/>
+    <rect x="640" y="252" width="300" height="34" rx="17"/>
+    <rect x="640" y="296" width="300" height="34" rx="17"/>
+  </g>
+  <g fill="#1e3a8a">
+    <text x="658" y="121">관계인 · 별칭 8</text>
+    <text x="658" y="187">시ㆍ도지사</text>
+    <text x="658" y="231">소방본부장 · 별칭 없음</text>
+    <text x="658" y="275">소방서장 · 별칭 4</text>
+    <text x="658" y="319">안전관리자 · 별칭 3</text>
+  </g>
+
+  <text x="20" y="358" fill="#b91c1c">「또는」 묶음 이름은 낱개로 쪼개 각각 연결 · 소방본부장과 소방서장은 한 묶음 금지</text>
+
+  <!-- 아래: 질문 때 -->
+  <line x1="20" y1="374" x2="940" y2="374" stroke="#e5e7eb" stroke-width="2"/>
+  <text x="20" y="404" font-size="18" font-weight="700" fill="#111827">질문 때 · 엔티티 연결 — 질문 속 말을 이미 있는 노드에</text>
+
+  <rect x="20" y="420" width="380" height="64" rx="8" fill="#fef3c7" stroke="#d97706"/>
+  <text x="34" y="446" fill="#111827">위험물안전관리자가 해임되거나 퇴직하면</text>
+  <text x="34" y="472" fill="#111827">관계인은 며칠 안에 다시 선임해야 하고 …</text>
+
+  <line x1="400" y1="452" x2="428" y2="452" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arr)"/>
+  <rect x="430" y="420" width="220" height="64" rx="8" fill="#ecfdf5" stroke="#059669"/>
+  <text x="444" y="446" fill="#111827">별칭 열쇠(normKeys)</text>
+  <text x="444" y="472" fill="#111827">전문 색인 + MENTIONS</text>
+
+  <line x1="650" y1="452" x2="678" y2="452" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arr)"/>
+  <rect x="680" y="420" width="260" height="64" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="694" y="446" fill="#1e3a8a">Actor 안전관리자 · 관계인</text>
+  <text x="694" y="472" fill="#1e3a8a">조문 1위 법 제15조제2항</text>
+
+  <line x1="790" y1="420" x2="790" y2="334" stroke="#2563eb" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#arrb)"/>
+  <text x="800" y="362" fill="#2563eb">합쳐 둔 별칭</text>
+
+  <text x="20" y="522" fill="#4b5563">적재 때 합치지 않은 표기는 질문 때 열쇠로는 안 맞고, 전문 색인 점수에 기대야 합니다.</text>
+</svg>

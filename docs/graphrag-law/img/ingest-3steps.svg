@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif" font-size="16" role="img" aria-label="적재 3단계: 조각내기, 엔티티·관계 추출, 중의성 해소를 위험물안전관리법 제15조로 본 예">
+  <defs>
+    <marker id="i3-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="960" height="470" fill="#ffffff"/>
+
+  <g fill="#f9fafb" stroke="#d1d5db" stroke-width="1.4">
+    <rect x="16" y="14" width="300" height="442" rx="14"/>
+    <rect x="330" y="14" width="300" height="442" rx="14"/>
+    <rect x="644" y="14" width="300" height="442" rx="14"/>
+  </g>
+  <g font-size="18" font-weight="700" fill="#111827">
+    <text x="32" y="44">① 조각내기 (Chunking)</text>
+    <text x="346" y="44">② 엔티티 · 관계 추출</text>
+    <text x="660" y="44">③ 중의성 해소</text>
+  </g>
+
+  <!-- ① -->
+  <path d="M36 66 L116 66 L136 86 L136 196 L36 196 Z" fill="#ffffff" stroke="#6b7280" stroke-width="1.5"/>
+  <path d="M116 66 L116 86 L136 86" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="86" y="126" text-anchor="middle" font-weight="700" fill="#111827">법령 PDF</text>
+  <text x="86" y="150" text-anchor="middle" fill="#4b5563">위험물</text>
+  <text x="86" y="172" text-anchor="middle" fill="#4b5563">3종</text>
+  <line x1="140" y1="131" x2="166" y2="131" stroke="#6b7280" stroke-width="1.8" marker-end="url(#i3-a)"/>
+  <g fill="#ffffff" stroke="#7c3aed" stroke-width="1.4">
+    <rect x="170" y="62" width="130" height="30" rx="6"/>
+    <rect x="170" y="98" width="130" height="30" rx="6"/>
+    <rect x="170" y="134" width="130" height="30" rx="6"/>
+    <rect x="170" y="170" width="130" height="30" rx="6"/>
+  </g>
+  <g fill="#111827">
+    <text x="182" y="83">법 제15조</text>
+    <text x="182" y="119">법 제18조</text>
+    <text x="182" y="155">영 제21조</text>
+    <text x="182" y="191">규칙 제53조</text>
+  </g>
+  <text x="235" y="224" text-anchor="middle" fill="#4b5563">… 모두 157개</text>
+  <g fill="#374151">
+    <text x="32" y="270" font-weight="700" fill="#111827">조 하나 = 덩어리 하나</text>
+    <text x="32" y="298">157개 · 합계 64,845자</text>
+    <text x="32" y="322">중앙 322자 · 최대 1,952자</text>
+    <text x="32" y="362">조·항·호 구조는 규칙(들여쓰기)</text>
+    <text x="32" y="386">으로 나누고(6장), 조문 속 주체와</text>
+    <text x="32" y="410">의무는 LLM 이 뽑는다(7장)</text>
+  </g>
+
+  <!-- ② -->
+  <rect x="346" y="62" width="268" height="118" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="1.4"/>
+  <text x="360" y="88" font-weight="700" fill="#1d4ed8">법 제15조 ③ (원문)</text>
+  <g fill="#374151">
+    <text x="360" y="114">제조소등의 관계인은 … 선임한</text>
+    <text x="360" y="138">날부터 14일 이내에 … 소방본부장</text>
+    <text x="360" y="162">또는 소방서장에게 신고하여야 한다.</text>
+  </g>
+  <line x1="480" y1="182" x2="480" y2="222" stroke="#6b7280" stroke-width="1.8" marker-end="url(#i3-a)"/>
+  <text x="492" y="208" fill="#4b5563">LLM (haiku)</text>
+  <rect x="346" y="226" width="268" height="140" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.4"/>
+  <text x="360" y="252" font-weight="700" fill="#111827">뽑힌 관계 (조문 표기 그대로)</text>
+  <g fill="#9a3412" font-weight="700">
+    <text x="360" y="280">주체</text>
+    <text x="360" y="304">할 일</text>
+    <text x="360" y="328">기한</text>
+    <text x="360" y="352">상대</text>
+  </g>
+  <g fill="#111827">
+    <text x="408" y="280">제조소등의 관계인</text>
+    <text x="408" y="304">신고하다 (의무)</text>
+    <text x="408" y="328">선임한 날부터 14일 이내</text>
+    <text x="408" y="352">소방본부장 또는 소방서장</text>
+  </g>
+  <g fill="#374151">
+    <text x="346" y="398">조문 157개에 157번 호출</text>
+    <text x="346" y="422">약 6분 · $0.268 (API 환산)</text>
+    <text x="346" y="446">이름 228가지 · 관계 410건</text>
+  </g>
+
+  <!-- ③ -->
+  <g fill="#ffffff" stroke="#9ca3af" stroke-width="1.3">
+    <rect x="660" y="62" width="210" height="28" rx="6"/>
+    <rect x="660" y="96" width="210" height="28" rx="6"/>
+    <rect x="660" y="130" width="210" height="28" rx="6"/>
+    <rect x="660" y="164" width="210" height="28" rx="6"/>
+  </g>
+  <g fill="#111827">
+    <text x="672" y="82">관계인</text>
+    <text x="672" y="116">제조소등의 관계인</text>
+    <text x="672" y="150">당해 제조소등의 관계인</text>
+    <text x="672" y="184">제조소 등의 관계인 …</text>
+  </g>
+  <path d="M878 66 Q892 66 892 80 L892 114 Q892 127 904 127 Q892 127 892 140 L892 174 Q892 188 878 188" fill="none" stroke="#6b7280" stroke-width="1.6"/>
+  <path d="M904 127 L918 127 L918 226 L874 226" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#i3-a)"/>
+  <rect x="660" y="206" width="210" height="40" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.6"/>
+  <text x="765" y="232" text-anchor="middle" font-weight="700" fill="#111827">관계인 · 별칭 8</text>
+
+  <rect x="660" y="276" width="268" height="30" rx="6" fill="#ffffff" stroke="#9ca3af" stroke-width="1.3"/>
+  <text x="794" y="297" text-anchor="middle" fill="#111827">소방본부장 또는 소방서장</text>
+  <g stroke="#6b7280" stroke-width="1.8" fill="none" marker-end="url(#i3-a)">
+    <line x1="760" y1="306" x2="724" y2="336"/>
+    <line x1="828" y1="306" x2="864" y2="336"/>
+  </g>
+  <g fill="#dbeafe" stroke="#2563eb" stroke-width="1.6">
+    <rect x="660" y="340" width="120" height="40" rx="8"/>
+    <rect x="808" y="340" width="120" height="40" rx="8"/>
+  </g>
+  <g font-weight="700" fill="#111827" text-anchor="middle">
+    <text x="720" y="366">소방본부장</text>
+    <text x="868" y="366">소방서장</text>
+    <text x="794" y="368" font-size="22" fill="#c2410c">≠</text>
+  </g>
+  <g fill="#374151">
+    <text x="660" y="422">LLM · 규칙·사전 + 사람 검토</text>
+    <text x="660" y="446">이름 228가지 → Actor 136개</text>
+  </g>
+</svg>

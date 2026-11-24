@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 690" width="960" height="690" font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif" font-size="16" role="img" aria-label="질의 순서도: 사용자, Claude Code, Neo4j MCP 서버와 Neo4j, Claude 모델 사이에 오가는 메시지">
+  <defs>
+    <marker id="qs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="960" height="690" fill="#ffffff"/>
+
+  <!-- 참여자 -->
+  <g stroke-width="1.6">
+    <rect x="20" y="14" width="200" height="70" rx="10" fill="#f3f4f6" stroke="#6b7280"/>
+    <rect x="260" y="14" width="200" height="70" rx="10" fill="#ede9fe" stroke="#7c3aed"/>
+    <rect x="500" y="14" width="200" height="70" rx="10" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="740" y="14" width="200" height="70" rx="10" fill="#dcfce7" stroke="#16a34a"/>
+  </g>
+  <g font-weight="700" fill="#111827" text-anchor="middle">
+    <text x="120" y="44">사용자 · 터미널</text>
+    <text x="360" y="44">Claude Code</text>
+    <text x="600" y="44">Neo4j MCP 서버 + Neo4j</text>
+    <text x="840" y="44">Claude 모델</text>
+  </g>
+  <g fill="#4b5563" text-anchor="middle">
+    <text x="120" y="68">(UI 자리)</text>
+    <text x="360" y="68">(Application API 자리)</text>
+    <text x="600" y="68">(Neo4j 자리)</text>
+    <text x="840" y="68">(LLM 자리)</text>
+  </g>
+  <g stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 6">
+    <line x1="120" y1="84" x2="120" y2="600"/>
+    <line x1="360" y1="84" x2="360" y2="600"/>
+    <line x1="600" y1="84" x2="600" y2="600"/>
+    <line x1="840" y1="84" x2="840" y2="600"/>
+  </g>
+
+  <!-- 되풀이 상자 -->
+  <rect x="304" y="332" width="600" height="170" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="7 5"/>
+  <g fill="#c2410c" font-weight="700" text-anchor="end">
+    <text x="292" y="400">되풀이</text>
+  </g>
+  <g fill="#9a3412" text-anchor="end">
+    <text x="292" y="424">Q2 기록:</text>
+    <text x="292" y="446">read-cypher 5번,</text>
+    <text x="292" y="468">그중 1번 오류</text>
+  </g>
+
+  <!-- 메시지 -->
+  <g stroke="#374151" stroke-width="1.8" fill="none" marker-end="url(#qs-a)">
+    <line x1="120" y1="120" x2="356" y2="120"/>
+    <line x1="360" y1="160" x2="836" y2="160"/>
+    <line x1="360" y1="240" x2="596" y2="240"/>
+    <line x1="360" y1="320" x2="836" y2="320"/>
+    <line x1="360" y1="400" x2="596" y2="400"/>
+    <line x1="360" y1="480" x2="836" y2="480"/>
+  </g>
+  <g stroke="#374151" stroke-width="1.8" fill="none" stroke-dasharray="6 4" marker-end="url(#qs-a)">
+    <line x1="840" y1="200" x2="364" y2="200"/>
+    <line x1="600" y1="280" x2="364" y2="280"/>
+    <line x1="840" y1="360" x2="364" y2="360"/>
+    <line x1="600" y1="440" x2="364" y2="440"/>
+    <line x1="840" y1="540" x2="364" y2="540"/>
+    <line x1="360" y1="580" x2="124" y2="580"/>
+  </g>
+  <g fill="#111827" text-anchor="middle">
+    <text x="240" y="112">① 질문 s1</text>
+    <text x="600" y="152">s1 + 쓸 수 있는 도구 목록</text>
+    <text x="600" y="192">get-schema 를 부르겠다</text>
+    <text x="480" y="232">② get-schema</text>
+    <text x="480" y="272">schema1 (9,137자)</text>
+    <text x="600" y="312">s1 + schema1</text>
+    <text x="600" y="352">③ read-cypher(cypher1) — Cypher 생성</text>
+    <text x="480" y="392">④ cypher1 실행</text>
+    <text x="480" y="432">d1 (결과 행 또는 오류)</text>
+    <text x="600" y="472">s1 + d1</text>
+    <text x="600" y="532">⑤ 답 c1 (근거 조문 포함)</text>
+    <text x="240" y="572">답 c1</text>
+  </g>
+  <g fill="#1d4ed8">
+    <text x="612" y="236">APOC 으로 스키마 추론</text>
+    <text x="612" y="396">읽기 전용으로 실행</text>
+  </g>
+
+  <!-- 아래 설명 -->
+  <line x1="20" y1="616" x2="940" y2="616" stroke="#e5e7eb" stroke-width="1.4"/>
+  <text x="20" y="644" fill="#111827"><tspan font-weight="700">원래 순서도</tspan> ① 질문 → ② DB 에서 스키마 추론 → ③ 스키마 + 질문으로 Cypher 생성 → ④ 실행 → ⑤ 결과 + 질문으로 답 생성</text>
+  <text x="20" y="672" fill="#4b5563">이 교재에서는 모델이 어느 도구를 언제 부를지 스스로 정하고, Cypher 가 틀리면 오류 문구를 읽고 고쳐 다시 부릅니다.</text>
+</svg>

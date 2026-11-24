@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>문제 해결 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
+<meta name="description" content="이 교재를 만드는 과정에서 실제로 겪은 문제 14건을 단계별로 모았습니다. 오류 문구는 기록 그대로 옮겼으니 화면에 나온 문구로 검색하세요. 기록에 없는 예외 상황은 확인 여부를 구분해 따로 적었습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/graphrag-law/troubleshooting.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="문제 해결 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
+<meta property="og:description" content="이 교재를 만드는 과정에서 실제로 겪은 문제 14건을 단계별로 모았습니다. 오류 문구는 기록 그대로 옮겼으니 화면에 나온 문구로 검색하세요. 기록에 없는 예외 상황은 확인 여부를 구분해 따로 적었습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/graphrag-law/troubleshooting.html">
+<meta property="og:image" content="https://www.uengine.org/docs/graphrag-law/img/article15-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="why-graph.html"><span class="n">01</span>왜 그래프인가</a></li>
+<li><a href="how-graphrag.html"><span class="n">02</span>GraphRAG 동작 과정</a></li>
+</ul>
+<div class="nav-part">준비</div><ul>
+<li><a href="neo4j-docker.html"><span class="n">03</span>Docker로 Neo4j 띄우기</a></li>
+<li><a href="cypher-basics.html"><span class="n">04</span>Cypher 기초</a></li>
+</ul>
+<div class="nav-part">구축</div><ul>
+<li><a href="schema.html"><span class="n">05</span>골든 퀘스천에서 스키마 설계하기</a></li>
+<li><a href="ingest.html"><span class="n">06</span>인제스천 바이브 코딩: PDF → 조·항·호 → Neo4j</a></li>
+<li><a href="disambiguation.html"><span class="n">07</span>엔티티 추출과 중의성 해소</a></li>
+</ul>
+<div class="nav-part">질의</div><ul>
+<li><a href="mcp.html"><span class="n">08</span>Neo4j MCP 서버 연결</a></li>
+<li><a href="questions.html"><span class="n">09</span>골든 퀘스천 5개 묻기</a></li>
+</ul>
+<div class="nav-part">비교</div><ul>
+<li><a href="vector-vs-graph.html"><span class="n">10</span>같은 질문에 벡터 RAG 적용하기: 재현율 비교</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="wrap-up.html"><span class="n">11</span>마무리</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html" class="on" aria-current="page"><span class="n">12</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">부록<span class="chap">12</span></div>
+    <h1>문제 해결</h1>
+    <article>
+<blockquote>
+<p>이 교재를 만드는 과정에서 실제로 겪은 문제 14건을 단계별로 모았습니다. 오류 문구는 기록 그대로 옮겼으니 화면에 나온 문구로 검색하세요. 기록에 없는 예외 상황은 확인 여부를 구분해 따로 적었습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/H4DAgPTvY2w" title="문제 해결 — 영상 3:43" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="이-부록을-읽는-법">이 부록을 읽는 법<a class="anchor" href="#이-부록을-읽는-법" title="Permanent link">#</a></h2>
+<p>항목마다 <strong>증상 → 원인 → 조치 → 확인</strong>을 정리했습니다. 「확인」은 조치 후 실제로 문제가 해결됐는지 확인한 결과입니다. 각 장의 「막히면」 상자에는 학습자가 해당 장에서 겪을 수 있는 문제만 옮겼고, 여기에는 모든 항목을 모았습니다. 이 교재의 녹화 환경에서만 발생한 문제는 마지막 「이 교재를 녹화한 환경」에 따로 정리했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>항목</th>
+<th>관련 장</th>
+<th>확인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>설치·실행</td>
+<td><a href="#gl-05">GL-05</a> claude를 처음 실행하면 Enter 한 번에 종료됩니다</td>
+<td><a href="schema.html">5장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>Cypher·색인</td>
+<td><a href="#gl-02">GL-02</a> 전문 색인을 만들었는데 「없는 색인」이라고 나옵니다</td>
+<td><a href="cypher-basics.html">4장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>Cypher·색인</td>
+<td><a href="#gl-03">GL-03</a> 기본 전문 색인이 「선임」으로 「선임하여야」를 찾지 못합니다</td>
+<td><a href="cypher-basics.html">4장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>스키마 설계</td>
+<td><a href="#gl-04">GL-04</a> 커밋을 요청했더니 실습 폴더 밖 메모리 파일을 수정하려 합니다</td>
+<td><a href="schema.html">5장</a></td>
+<td>확인함 — 메모 파일 1개는 남음</td>
+</tr>
+<tr>
+<td>인제스천</td>
+<td><a href="#gl-06">GL-06</a> 적재한 조문의 띄어쓰기가 PDF와 다릅니다</td>
+<td><a href="ingest.html">6장</a></td>
+<td>확인함 — 규칙으로 판단하지 못한 자리 약 9%는 남음</td>
+</tr>
+<tr>
+<td>인제스천</td>
+<td><a href="#gl-07">GL-07</a> 같은 조 번호가 두 번 나와 덮어씁니다</td>
+<td><a href="ingest.html">6장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>인제스천</td>
+<td><a href="#gl-08">GL-08</a> 다시 적재했는데 삭제되어야 할 관계가 남아 있습니다</td>
+<td><a href="ingest.html">6장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>인제스천</td>
+<td><a href="#gl-09">GL-09</a> 가운뎃점을 「·」로 통일했더니 「도지사」 검색 결과가 1건뿐입니다</td>
+<td><a href="ingest.html">6장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>중의성 해소</td>
+<td><a href="#gl-10">GL-10</a> LLM 중의성 해소가 서로 다른 주체를 합치고 약칭은 묶지 못합니다</td>
+<td><a href="disambiguation.html">7장</a></td>
+<td>확인함 — 남은 한계 있음</td>
+</tr>
+<tr>
+<td>MCP 연결</td>
+<td><a href="#gl-11">GL-11</a> .mcp.json을 만들었는데 MCP 서버가 연결되지 않습니다</td>
+<td><a href="mcp.html">8장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>MCP 연결</td>
+<td><a href="#gl-12">GL-12</a> <code>${NEO4J_PASSWORD}</code>를 쓴 MCP 서버가 인증 실패로 실행되지 않습니다(예방)</td>
+<td><a href="mcp.html">8장</a></td>
+<td>확인함(예방 조치로 띄워 봄)</td>
+</tr>
+<tr>
+<td>질의</td>
+<td><a href="#gl-14">GL-14</a> 답변 중에 「 밖의 관계기관」이라는 이상한 Actor가 보고됐습니다</td>
+<td><a href="disambiguation.html">7장</a>, <a href="questions.html">9장</a></td>
+<td>고치지 않음 — 남아 있음을 확인, 고친 판은 재현 안 함</td>
+</tr>
+<tr>
+<td>이 교재를 녹화한 환경</td>
+<td><a href="#gl-01">GL-01</a> tmux로 보낸 명령에서 세미콜론이 사라집니다</td>
+<td><a href="neo4j-docker.html">3장</a></td>
+<td>확인함</td>
+</tr>
+<tr>
+<td>이 교재를 녹화한 환경</td>
+<td><a href="#gl-13">GL-13</a> claude가 auto mode로 실행되고 /mcp에 다른 서버가 함께 보입니다</td>
+<td><a href="schema.html">5장</a>, <a href="mcp.html">8장</a></td>
+<td>확인함</td>
+</tr>
+</tbody>
+</table>
+<p>학습자도 겪을 수 있는 문제 12건, 이 교재의 녹화 환경에서만 발생한 문제 2건입니다. 제품 결함으로 판단한 항목은 없습니다.</p>
+<h2 id="설치실행">설치·실행<a class="anchor" href="#설치실행" title="Permanent link">#</a></h2>
+<h3 id="gl-05">GL-05 · claude를 처음 실행하면 Enter 한 번에 종료됩니다<a class="anchor" href="#gl-05" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="schema.html">5장</a></p>
+<ul>
+<li><strong>증상</strong> 처음 <code>claude</code>를 실행하면 「Accessing workspace … Is this a project you created or one you trust?」에서 기본 선택은 <code>❯ No, exit</code>입니다. 그대로 Enter를 누르면 Claude Code가 종료됩니다.</li>
+<li><strong>원인</strong> Claude Code 2.1.x의 폴더 신뢰 확인 화면의 기본값 때문입니다.</li>
+<li><strong>조치</strong> ↓로 <code>Yes, I trust this folder</code>를 선택한 뒤 Enter를 누릅니다.</li>
+<li><strong>확인</strong> <em>확인함</em> — 5장 녹화의 Claude Code 첫 실행 장면에서 확인됩니다.</li>
+</ul>
+<h2 id="cypher색인">Cypher·색인<a class="anchor" href="#cypher색인" title="Permanent link">#</a></h2>
+<h3 id="gl-02">GL-02 · 전문 색인을 만들었는데 「없는 색인」이라고 나옵니다<a class="anchor" href="#gl-02" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="cypher-basics.html">4장</a></p>
+<ul>
+<li><strong>증상</strong> <code>CREATE FULLTEXT INDEX zz_cjk IF NOT EXISTS FOR (n:ZzT) ON EACH [n.text] OPTIONS {indexConfig: {`fulltext.analyzer`: 'cjk'}}</code>가 오류 없이 완료됐는데 조회하면 <code>There is no such fulltext schema index: zz_cjk</code>가 나옵니다.</li>
+<li><strong>원인</strong> 같은 레이블·속성(ZzT.text)에 다른 이름(zz_std)의 전문 색인이 이미 있으면 IF NOT EXISTS가 별도 알림 없이 생성을 건너뜁니다(이름이 달라도 같은 대상이면 '이미 있음').</li>
+<li><strong>조치</strong> <code>DROP INDEX zz_std IF EXISTS;</code>를 먼저 실행하고 다시 CREATE를 실행합니다. 확인: <code>SHOW INDEXES YIELD name, type, labelsOrTypes, properties;</code></li>
+<li><strong>확인</strong> <em>확인함</em> — DROP 후 다시 만들어 cjk 색인으로 <code>선임</code> 0.13 · <code>안전관리자 선임</code> 0.85가 조회됩니다.</li>
+</ul>
+<h3 id="gl-03">GL-03 · 기본 전문 색인이 「선임」으로 「선임하여야」를 찾지 못합니다<a class="anchor" href="#gl-03" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="cypher-basics.html">4장</a></p>
+<ul>
+<li><strong>증상</strong> 기본 전문 색인에서 <code>CALL db.index.fulltext.queryNodes(…, '선임')</code>로 「…선임하여야 한다」 항을 찾지 못합니다(0건). <code>'선임*'</code>로만 찾을 수 있습니다.</li>
+<li><strong>원인</strong> 기본 분석기(standard-no-stop-words)는 띄어쓰기 단위로 낱말을 나누므로 조사·어미가 붙은 한국어 낱말(선임하여야)은 「선임」과 다른 낱말로 처리됩니다.</li>
+<li><strong>조치</strong> 한국어 본문 색인은 cjk 분석기로 만듭니다: <code>CREATE FULLTEXT INDEX … OPTIONS {indexConfig: {`fulltext.analyzer`: 'cjk'}};</code> (분석기 목록: <code>CALL db.index.fulltext.listAvailableAnalyzers()</code>)</li>
+<li><strong>확인</strong> <em>확인함</em> — cjk 색인으로 <code>선임</code> · <code>관리자</code> · <code>안전관리자 선임 신고</code> 모두 찾습니다(4장 녹화의 전문 색인 장면).</li>
+</ul>
+<h2 id="스키마-설계">스키마 설계<a class="anchor" href="#스키마-설계" title="Permanent link">#</a></h2>
+<h3 id="gl-04">GL-04 · 커밋을 요청했더니 실습 폴더 밖 메모리 파일을 수정하려 합니다<a class="anchor" href="#gl-04" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="schema.html">5장</a></p>
+<ul>
+<li><strong>증상</strong> 「main에 커밋해 줘」라고 했더니 Claude Code가 <code>Wrote 1 memory</code>로 <code>~/.claude/projects/-Users-…-lab-law-graph/memory/commit-directly-on-main.md</code>를 만들고, 이어서 MEMORY.md 색인에 줄을 추가하는 Bash의 승인을 요청합니다(실습 폴더 밖 경로).</li>
+<li><strong>원인</strong> Claude Code 자동 메모리(auto memory) 기능: 사용자 지시를 다음 세션용 메모로 남깁니다. 메모 파일 작성은 승인 없이 진행하고, 색인에 추가하는 Bash만 승인을 요청했습니다.</li>
+<li><strong>조치</strong> 권한 요청에서 3(No) → 「메모리 파일은 건드리지 말고 넘어가자. 실습 폴더 밖은 고치지 마.」 (메모를 아예 끄려면 /memory 또는 설정에서 자동 메모리 끄기)</li>
+<li><strong>확인</strong> <em>확인함 — 메모 파일 1개는 남음</em> — 색인 추가는 반영되지 않았고, 메모 파일 1개(796B)는 남았습니다. 실습 결과에는 영향이 없습니다.</li>
+</ul>
+<h2 id="인제스천">인제스천<a class="anchor" href="#인제스천" title="Permanent link">#</a></h2>
+<h3 id="gl-06">GL-06 · 적재한 조문의 띄어쓰기가 PDF와 다릅니다<a class="anchor" href="#gl-06" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="ingest.html">6장</a></p>
+<ul>
+<li><strong>증상</strong> 적재한 시행령 제21조 머리글이 「다만, 동일한시ㆍ도에 있는 둘 이상의…」로 붙어 나옵니다(PDF 원문은 「동일한 시ㆍ도에」). PDF에서 낱말 사이에 줄바꿈이 있어 띄어쓰기 여부를 알 수 없습니다.</li>
+<li><strong>원인</strong> PyMuPDF로 읽은 글을 줄 단위로 이을 때 앞줄 끝의 여백과 다른 줄에 나온 낱말만으로 띄어쓰기를 추정했고, 근거가 없으면 붙였습니다(첫 판).</li>
+<li><strong>조치</strong> Claude Code에 「시행령 제21조 머리글이 「동일한시ㆍ도에」로 붙었어. PDF 원문은 「동일한 시ㆍ도에」야. 줄바꿈 자리 띄어쓰기 규칙을 고쳐 줘 …」 → 어절 끝(조사·어미)·인용 표기 뒤·닫는 낫표 뒤·여는 따옴표 앞이면 띄우는 규칙을 추가합니다. <code>uv run parse_law.py &amp;&amp; uv run ingest.py --prune</code></li>
+<li><strong>확인</strong> <em>확인함 — 규칙으로 판단하지 못한 자리 약 9%는 남음</em> — 위험물 3종 줄바꿈 자리 692곳 중 25곳(9개 법령 3,871곳 중 78곳)이 붙임→띄움으로 바뀌었고, 법 제15조·영 제21조·규칙 제53조의 공백을 뺀 글자 수가 PDF와 일치합니다(1,167·567·674). 규칙으로 판단하지 못한 자리(약 9%)는 여전히 붙여 둡니다.</li>
+</ul>
+<h3 id="gl-07">GL-07 · 같은 조 번호가 두 번 나와 덮어씁니다<a class="anchor" href="#gl-07" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="ingest.html">6장</a></p>
+<ul>
+<li><strong>증상</strong> 폐기물관리법 제13조의2·제68조, 폐기물관리법 시행규칙 제10조가 PDF에 두 번 나옵니다(현행 조문 뒤에 같은 번호의 시행 예정 조문이 있으며, 끝에 <code>[시행일: 2027. 7. 8.]</code> 등). 조 번호만으로 MERGE하면 뒤의 조문이 앞의 조문을 덮어쓰거나 항·호가 섞입니다. 부칙의 제1조·제8조도 본칙 번호와 겹칩니다.</li>
+<li><strong>원인</strong> 국가법령정보센터 PDF는 시행일이 다른 판본을 같은 문서에 함께 싣습니다.</li>
+<li><strong>조치</strong> 이번 파서는 부칙을 조문 노드로 적재하지 않고, <code>[시행일: …]</code> 꼬리표가 붙은 판본은 pid에 <code>@YYYYMMDD</code>를 붙여 따로 적재합니다(isCurrent=false, effectiveFrom). 질의에서는 isCurrent=true만 조회합니다. 확인 질의: <code>MATCH (a:Article) WHERE NOT a.isCurrent RETURN a.pid, a.effectiveFrom</code></li>
+<li><strong>확인</strong> <em>확인함</em> — 그래프에 <code>폐기물관리법:제68조</code>(현행, 3,091자)와 <code>폐기물관리법:제68조@20270108</code>(3,104자), <code>제13조의2</code>(703자)/<code>@20270708</code>(768자), 시행규칙 <code>제10조</code>(3,079자)/<code>@20261210</code>(3,057자)가 따로 있습니다. 현행·비삭제 조 수: 위험물 46·29·82, 화학 76·32·74, 폐기물 99·68·150 (삭제 조까지 포함하면 46·29·82, 79·34·85, 110·72·158 — PDF의 「제N조(」·「제N조 삭제」 줄 집합과 그래프의 조 집합이 9개 법령 모두 일치합니다)</li>
+</ul>
+<h3 id="gl-08">GL-08 · 다시 적재했는데 삭제되어야 할 관계가 남아 있습니다<a class="anchor" href="#gl-08" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="ingest.html">6장</a></p>
+<ul>
+<li><strong>증상</strong> 추출 규칙을 고쳐 다시 <code>uv run ingest.py</code>를 실행했는데, 수정 후에는 없어야 할 MENTIONS 관계 7개가 DB에 그대로 남습니다.</li>
+<li><strong>원인</strong> MERGE는 기존 항목을 유지하고 없는 항목만 추가합니다. 다시 실행해도 중복은 생기지 않지만, 이번 추출에서 빠진 기존 노드·관계는 삭제하지 않습니다.</li>
+<li><strong>조치</strong> Claude가 ingest.py에 --prune 옵션(이 스크립트의 레이블이 붙은 노드·관계 중 이번 추출에 없는 항목 삭제)을 추가했습니다: <code>uv run ingest.py --prune</code> (<code>data/</code>에 9개 법령이 모두 있을 때만). 처음부터 다시 적재하려면: <code>uv run ingest.py --reset</code></li>
+<li><strong>확인</strong> <em>확인함</em> — --prune을 한 번 실행한 뒤 7개만 삭제됐고, 옵션 없이 다시 적재해도 노드 6,272·관계 17,537이 그대로 유지됩니다.</li>
+</ul>
+<h3 id="gl-09">GL-09 · 가운뎃점을 「·」로 통일했더니 「도지사」 검색 결과가 1건뿐입니다<a class="anchor" href="#gl-09" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="ingest.html">6장</a></p>
+<ul>
+<li><strong>증상</strong> 전문 색인에 가운뎃점을 「·」로 통일해 넣었더니 「도지사」로 찾을 때 조문이 1건만 검색됩니다.</li>
+<li><strong>원인</strong> Lucene(전문 색인)이 「·」를 낱말을 잇는 글자로 보아 「시·도지사」·「위치·구조·설비」를 한 낱말로 묶습니다.</li>
+<li><strong>조치</strong> 전문 색인용 텍스트(normText·searchText)는 가운뎃점을 공백으로 바꿔 넣고, 용어 키(normName·normKeys)만 「·」로 통일합니다(lawtext.py search_text / norm_key).</li>
+<li><strong>확인</strong> <em>확인함</em> — 변경 후 「도지사」는 37건이 검색됩니다. 「위치·구조·설비」 1건 → 「위치 구조 설비」 12건으로 바뀝니다.</li>
+</ul>
+<h2 id="중의성-해소">중의성 해소<a class="anchor" href="#중의성-해소" title="Permanent link">#</a></h2>
+<h3 id="gl-10">GL-10 · LLM 중의성 해소가 서로 다른 주체를 합치고 약칭은 묶지 못합니다<a class="anchor" href="#gl-10" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="disambiguation.html">7장</a></p>
+<ul>
+<li><strong>증상</strong> WorkFlowy 자료의 LLM 중의성 해소 프롬프트(값 목록 → 같은 엔티티에 같은 번호)로 주체 이름 228가지를 haiku에 한 번 보냈더니 「관계인」=「관계자」, 「대리자」=「대리인」, 「자」=「사람」=「누구든지」를 같은 번호로 묶고, 약칭(탱크시험자/탱크안전성능시험자, 시ㆍ도/특별시ㆍ광역시ㆍ…)은 묶지 못합니다. 「소방본부장 또는 소방서장」 같은 묶음 이름은 나누지 않고 하나의 엔티티로 둡니다.</li>
+<li><strong>원인</strong> LLM은 이름 목록만 받아 조문의 문맥이나 법에서 정한 약칭을 알지 못하고, 뜻이 비슷해 보이는 낱말을 합칩니다. 규칙·사전 방식은 근거가 분명하지만 228가지 중 200가지를 개별 항목으로 남깁니다.</li>
+<li><strong>조치</strong> 두 방법을 결합하고 사람이 검토합니다: 묶음 이름은 「또는·및·,」로 나누어 개별 Actor에 연결, 소방본부장≠소방서장 검사, 관계인+수식어는 합치고 관계자는 분리, 자·사람·누구든지는 Actor에서 제외, 약칭은 Term 사전 우선. 잘못 묶인 이름은 ingest_semantic.py의 <code>STAND_ALONE</code> 목록에 넣고 <code>uv run ingest_semantic.py --reset</code>을 실행합니다.</li>
+<li><strong>확인</strong> <em>확인함 — 남은 한계 있음</em> — Actor 228가지 → 134 → (대리인·탱크시험자의 업무에 종사하는 자 분리) 136. 소방본부장·소방서장은 별개 노드이며, 관계인의 9가지 표기 → 1 노드(별칭 8)로 바뀝니다. 질문 2번의 「위험물안전관리자」「관계인」이 별칭 키로 Term·Actor에 연결됩니다. 남은 한계: kind=기타 비주체 Actor 51개, 수식절을 떼고 합친 14가지</li>
+</ul>
+<h2 id="mcp-연결">MCP 연결<a class="anchor" href="#mcp-연결" title="Permanent link">#</a></h2>
+<h3 id="gl-11">GL-11 · .mcp.json을 만들었는데 MCP 서버가 연결되지 않습니다<a class="anchor" href="#gl-11" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="mcp.html">8장</a></p>
+<ul>
+<li><strong>증상</strong> .mcp.json을 만든 뒤 claude를 다시 실행하면 「New MCP server found in this project: neo4j」 창의 기본 선택이 <code>❯ Continue without using this MCP server</code>라서, 그대로 Enter를 누르면 서버 없이 시작됩니다(/mcp에 연결되지 않음).</li>
+<li><strong>원인</strong> Claude Code의 프로젝트 MCP 승인 창의 기본값 때문입니다.</li>
+<li><strong>조치</strong> ↑를 두 번 눌러 <code>Use this MCP server</code>(또는 <code>Use this and all future MCP servers in this project</code>)를 선택하고 Enter를 누릅니다. 이미 넘어갔다면 /mcp에서 neo4j를 선택해 Enable하거나 <code>claude mcp reset-project-choices</code>를 실행한 후 다시 시작합니다.</li>
+<li><strong>확인</strong> <em>확인함</em> — 8장 녹화에서 서버를 승인한 뒤 /mcp에서 ✔ connected, 2 tools를 확인했습니다.</li>
+</ul>
+<h3 id="gl-12">GL-12 · <code>${NEO4J_PASSWORD}</code>를 쓴 MCP 서버가 인증 실패로 실행되지 않습니다(예방)<a class="anchor" href="#gl-12" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="mcp.html">8장</a></p>
+<ul>
+<li><strong>증상</strong> (예방) .mcp.json에 <code>"NEO4J_MCP_PASSWORD": "${NEO4J_PASSWORD}"</code>로 쓰면, claude를 실행한 셸에 NEO4J_PASSWORD가 없을 때 MCP 서버가 인증 실패로 실행되지 않습니다(Claude가 설정 중 안내). 반대로 교재 pptx처럼 비밀번호를 파일에 직접 쓰면 .mcp.json이 비밀 정보를 담은 파일이 됩니다.</li>
+<li><strong>원인</strong> Claude Code는 .mcp.json의 <code>${변수}</code>를 claude 프로세스의 환경 변수 값으로 치환합니다. .env는 자동으로 읽지 않습니다.</li>
+<li><strong>조치</strong> 새 터미널을 열 때마다 실행합니다: <code>cd law-graph &amp;&amp; set -a; . ./.env; set +a; claude</code>  (.env와 .mcp.json은 .gitignore에 등록합니다)</li>
+<li><strong>확인</strong> <em>확인함(예방 조치로 띄워 봄)</em> — 이 순서로 실행해 /mcp에서 connected를 확인했습니다(8장). 헤드리스 실행(runs/graph)도 같은 셸 환경에서 동작합니다.</li>
+</ul>
+<h2 id="질의">질의<a class="anchor" href="#질의" title="Permanent link">#</a></h2>
+<h3 id="gl-14">GL-14 · 답변 중에 「 밖의 관계기관」이라는 이상한 Actor가 보고됐습니다<a class="anchor" href="#gl-14" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="disambiguation.html">7장</a>, <a href="questions.html">9장</a></p>
+<ul>
+<li><strong>증상</strong> 골든 퀘스천 4번 답변 중 Claude가 「제27조제2항 Norm의 수신 Actor 중 하나가 이름이 " 밖의 관계기관" 으로 저장되어 있다」고 보고했습니다. 원문은 「소방서, 경찰서 또는 그 밖의 관계기관」입니다.</li>
+<li><strong>원인</strong> ingest_semantic.py가 묶음 이름을 나눌 때 접속어 「이나·나·과 그」까지 넓게 적용해, 「그 밖의」의 「그」를 접속어로 잘라 냅니다(P12 반영 때 Claude가 확장한 규칙).</li>
+<li><strong>조치</strong> (아직 안 고침 — 헤드리스 기록을 같은 데이터로 남기려고 그대로 둠) 고치려면 Claude Code에 「" 밖의 관계기관" Actor는 「그 밖의 관계기관」이야. 쪼개기 접속어에서 「그」를 빼고 다시 적재해 줘」 → <code>uv run ingest_semantic.py --reset</code></li>
+<li><strong>확인</strong> <em>고치지 않음 — 남아 있음을 확인, 고친 판은 재현 안 함</em> — <code>MATCH (a:Actor) WHERE a.name STARTS WITH ' ' OR a.name CONTAINS '관계기관' RETURN a.name, a.aliases</code> → " 밖의 관계기관", ["그 밖의 관계기관"], 연결 Norm 1건 — 남아 있음을 확인(고친 판 재현은 안 함)</li>
+</ul>
+<h2 id="예외-상황">예외 상황<a class="anchor" href="#예외-상황" title="Permanent link">#</a></h2>
+<p>이 기록에는 없지만 실습 중 겪을 수 있는 상황입니다. 기록으로 확인한 사실은 「확인함」, 추정하거나 시도하지 않은 내용은 「확인 못 함」으로 구분했습니다. 「확인 못 함」은 확정된 내용이 아니니 공식 문서와 함께 보세요.</p>
+<h3 id="네트워크프록시와-이미지-내려받기">네트워크·프록시와 이미지 내려받기<a class="anchor" href="#네트워크프록시와-이미지-내려받기" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>확인함</strong> 인터넷이 필요한 곳: <code>docker pull neo4j:5.26</code>(<a href="neo4j-docker.html">3장</a>), uv가 Python 3.12와 패키지(PyMuPDF·neo4j·python-dotenv)를 받을 때(<a href="ingest.html">6장</a>), <code>uvx neo4j-mcp-server@2.1.2</code> 첫 실행 때 약 9.9MiB(<a href="mcp.html">8장</a>), Claude Code 자체. APOC 플러그인은 이미지 안의 <code>labs</code> 폴더에서 복사되므로 이미지를 받은 뒤에는 따로 내려받지 않습니다.</li>
+<li><strong>확인 못 함</strong> 회사 프록시를 사용한다면 Docker Desktop의 프록시 설정(Settings → Resources → Proxies)과 셸의 <code>HTTPS_PROXY</code>를 맞춰야 할 수 있습니다. 이미지를 내려받을 수 없다면 인터넷에 연결된 PC에서 <code>docker save neo4j:5.26 -o neo4j-5.26.tar</code>로 저장해 옮긴 뒤 <code>docker load -i neo4j-5.26.tar</code>로 불러오는 방법이 있습니다.</li>
+</ul>
+<h3 id="포트-74747687-충돌">포트 7474·7687 충돌<a class="anchor" href="#포트-74747687-충돌" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>확인 못 함</strong> Neo4j Desktop(PBL 특강 교재의 방식)이나 다른 Neo4j 컨테이너가 이미 실행 중이면 <code>docker run</code>이 포트를 잡지 못해 컨테이너가 시작되지 않습니다(이 기록에서는 겪지 않아 오류 문구가 없습니다). 포트 사용 주체는 macOS·Linux에서 <code>lsof -i :7687</code>, Windows에서 <code>netstat -ano | findstr 7687</code>, 컨테이너라면 <code>docker ps</code>로 확인합니다.</li>
+<li><strong>확인 못 함</strong> 사용 중인 프로그램이나 컨테이너를 중지하거나 <code>-p 17474:7474 -p 17687:7687</code>처럼 외부 포트를 바꿉니다. 바꾸면 Bolt 주소를 쓰는 곳을 모두 고쳐야 합니다: Neo4j Browser 로그인 창의 Connection URL, 6장 <code>ingest.py</code>의 <code>URI</code>(코드에 <code>bolt://localhost:7687</code>로 적혀 있음), 8장 <code>.mcp.json</code>의 <code>NEO4J_MCP_URI</code>.</li>
+</ul>
+<h3 id="메모리-부족과-힙-설정">메모리 부족과 힙 설정<a class="anchor" href="#메모리-부족과-힙-설정" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>확인함</strong> 이 교재의 설정(힙 512m~1G, 페이지 캐시 512M, 컨테이너 상한 <code>--memory 2g</code>)으로 모든 장을 마쳤습니다. 컨테이너 메모리는 시작 직후 926.4MiB / 2GiB, 의미층 적재와 질의까지 마친 뒤 1.49GiB / 2GiB였습니다. 그때 DB 폴더(<code>neo4j/data</code>)는 트랜잭션 로그를 포함해 약 530MB였습니다.</li>
+<li><strong>확인 못 함</strong> Docker Desktop의 VM 메모리(Settings → Resources)가 부족하거나 다른 컨테이너가 많으면 Neo4j가 느려지거나 꺼질 수 있습니다. 꺼졌다면 <code>docker ps -a</code>로 상태를, <code>docker inspect -f '{{.State.OOMKilled}}' graphrag-law-neo4j</code>로 메모리 초과 때문인지 확인합니다. 힙과 페이지 캐시의 합은 <code>--memory</code> 상한보다 충분히 작게 설정하세요.</li>
+</ul>
+<h3 id="apple-siliconintel-windows-경로-차이">Apple Silicon·Intel, Windows 경로 차이<a class="anchor" href="#apple-siliconintel-windows-경로-차이" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>확인함</strong> Apple Silicon macOS에서 <code>neo4j:5.26</code>은 arm64 버전으로 내려받아 그대로 실행했습니다(<code>docker image inspect neo4j:5.26 --format '{{.Architecture}}'</code> → <code>arm64</code>). 마운트한 폴더의 소유자를 바꾼다는 경고(<code>Changing folder owner to neo4j</code>)는 무해했습니다.</li>
+<li><strong>확인 못 함</strong> Intel Mac, Windows, Linux에서는 실행해 보지 않았습니다. Windows PowerShell에서 바꿔 써야 할 줄은 <a href="neo4j-docker.html">3장</a>의 「Windows(PowerShell)에서 달라지는 줄」 상자에 모았습니다. WSL2 안에서 따라 하면 이 교재의 bash 명령을 그대로 쓸 수 있을 것으로 보이며, 실습 폴더는 WSL 파일 시스템 안(예: <code>~/law-graph</code>)에 두는 편이 볼륨 마운트에 유리하다고 알려져 있습니다.</li>
+</ul>
+<h3 id="claude-플랜-한도느린-응답">Claude 플랜 한도·느린 응답<a class="anchor" href="#claude-플랜-한도느린-응답" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>확인함</strong> 실제로 걸린 시간: 스키마 설계 4분 56초와 수정 4분 36초(<a href="schema.html">5장</a>), 적재 코드 작성 14분 35초와 띄어쓰기 수정 5분 39초(<a href="ingest.html">6장</a>), 엔티티 추출 157번 호출 약 6분(<a href="disambiguation.html">7장</a>), 골든 퀘스천 한 개 약 20~50초(<a href="questions.html">9장</a>). 생각하는 동안 화면이 오래 멈춘 듯 보여도 기다리면 됩니다. <code>claude -p</code>가 돌려주는 비용(<code>total_cost_usd</code>)은 API 요금 환산치이며, 구독 로그인에서는 따로 청구되지 않고 사용 한도에 반영됩니다.</li>
+<li><strong>확인 못 함</strong> 이 기록은 Claude Ultra 플랜에서 Fable 5.2(medium effort)로 녹화했습니다. 하위 플랜에서 사용 한도에 걸리는지는 확인하지 못했습니다. 한도에 걸리면 화면에 나오는 초기화 시각까지 기다리거나, 7장의 추출처럼 호출이 많은 단계는 법령 범위를 줄여 나누어 실행하세요.</li>
+</ul>
+<h3 id="한글가운뎃점인코딩">한글·가운뎃점·인코딩<a class="anchor" href="#한글가운뎃점인코딩" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>확인함</strong> 조문은 가운뎃점을 <code>ㆍ</code>(U+318D)로, 질문은 보통 <code>·</code>(U+00B7)로 씁니다. 눈에는 같아 보여도 <code>CONTAINS</code>와 키 비교에서는 다른 글자입니다. 그래서 <a href="schema.html">5장</a>에서 가운뎃점 7종을 <code>·</code>로 맞추는 정규화를 적용했고, 전문 색인에서는 <code>·</code>를 공백으로 바꿉니다(GL-09). cypher-shell 표는 한글 폭 때문에 세로줄이 어긋나지만 값은 맞습니다. Python 3.12와 PyMuPDF로 한글 PDF 텍스트를 그대로 읽었습니다.</li>
+<li><strong>확인 못 함</strong> Windows 콘솔에서 한글이 깨지면 <code>chcp 65001</code>을 쓰거나 Windows Terminal과 PowerShell 7을 쓰세요. <code>.env</code>를 만들 때 UTF-8 BOM이 붙으면 읽는 쪽이 첫 줄의 변수 이름을 알아보지 못할 수 있습니다.</li>
+</ul>
+<h3 id="lawgokr-접속과-법령-판본">law.go.kr 접속과 법령 판본<a class="anchor" href="#lawgokr-접속과-법령-판본" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>확인함</strong> 이 교재는 국가법령정보센터(law.go.kr)에서 미리 받아 둔 PDF 9개를 썼습니다. 파일 이름에 법령 종류·번호·시행일이 들어 있습니다(예: <code>위험물안전관리법(법률)(제20231호)(20250807).pdf</code>). PDF에는 시행 예정 판본이 함께 실리고(GL-07), 별표·서식 본문은 없습니다.</li>
+<li><strong>확인 못 함</strong> 내려받는 화면과 절차는 기록하지 않았습니다. 받는 날에 따라 판본이 바뀌면 조·항·호 수와 9장의 답이 이 교재와 달라질 수 있습니다. 참고한 PBL 특강 교재에는 클라우드 환경(해외 IP)에서 law.go.kr 접속이 막혀 내 PC에서 실행했다는 내용이 있으나, 이 교재에서는 확인하지 못했습니다.</li>
+</ul>
+<h3 id="공식-설치-방법과-다른-점">공식 설치 방법과 다른 점<a class="anchor" href="#공식-설치-방법과-다른-점" title="Permanent link">#</a></h3>
+<ul>
+<li>PBL 특강 교재와 달리 Neo4j Desktop 대신 Docker를, <code>pip install</code> 대신 uv를 썼습니다. Neo4j MCP 서버는 공식 저장소(github.com/neo4j/mcp)가 PyPI에 올린 <code>neo4j-mcp-server</code>를 <code>uvx</code>로 실행했습니다(<a href="mcp.html">8장</a>).</li>
+</ul>
+<h2 id="알려진-제약">알려진 제약<a class="anchor" href="#알려진-제약" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>별표·서식 본문이 없습니다.</strong> PDF에 이름만 있어 과태료 세부 금액(시행령 별표 9), 행정처분 기준, 신고서 서식 내용은 답할 수 없고 상한(예: 500만원 이하)만 제시됩니다.</li>
+<li><strong>줄바꿈 자리 띄어쓰기의 약 9%는 정하지 못했습니다.</strong> 9개 법령의 줄바꿈 자리 3,871곳 가운데 규칙으로 정하지 못한 자리는 붙여 두었습니다. 위험물안전관리법 3종의 표본 3개 조만 PDF와 글자 단위로 대조했고, 전체를 확인하지는 않았습니다.</li>
+<li><strong>화학물질관리법·폐기물관리법은 대조하지 않았습니다.</strong> 두 법의 벌칙 연결(<code>PENALIZES</code>)과 <code>Term</code>은 원문과 대조하지 않았고, 「변경」「용기」 같은 흔한 낱말이 괄호 정의로 잡혀 용어가 된 경우가 있습니다. 해결하지 못한 인용 7건도 검토하지 않았습니다.</li>
+<li><strong>법령마다 시행일이 다릅니다.</strong> 위험물안전관리법은 2025-08-07, 시행령·시행규칙은 2026-07-01 기준입니다. 답변에는 <code>Law.effectiveOn</code>을 함께 보여 주세요.</li>
+<li><strong>의미층은 검수 전입니다.</strong> 위험물안전관리법 3종만 넣었고 <code>Norm</code>은 모두 <code>reviewed=false</code>입니다. GL-14(「 밖의 관계기관」 Actor)는 기록을 같은 데이터로 남기려고 고치지 않았습니다. 주체가 아닌 말이 <code>Actor</code>로 남은 것(kind=기타 51개), 수식절을 떼고 넓게 합친 이름 14가지, 조문 텍스트와 달라 값을 비워 둔 <code>Norm</code> 속성(trigger 104건·deadline 6건, <code>uncheckedFields</code>에 표시)도 남아 있습니다. <code>DELEGATED_TO</code>·<code>NEXT</code>·<code>ON_BREACH_OF</code>·<code>SANCTIONED_BY</code> 관계는 아직 추출하지 않았습니다.</li>
+<li><strong>비용 수치는 환산치입니다.</strong> <code>claude -p</code>의 <code>total_cost_usd</code>는 API 요금 환산치이며 구독 로그인이라 실제 청구액이 아닙니다. 9개 법령 전체를 추출할 때의 비용은 글자 수에 비례해 추산한 값입니다.</li>
+<li><strong>법령 해석은 원문으로 확인하세요.</strong> 그래프와 모델의 답은 근거 조문을 찾아 주는 도구이며, 판단은 원문과 담당자의 몫입니다.</li>
+</ul>
+<h2 id="이-교재를-녹화한-환경">이 교재를 녹화한 환경<a class="anchor" href="#이-교재를-녹화한-환경" title="Permanent link">#</a></h2>
+<p>본문의 화면과 수치는 아래 환경에서 얻었습니다. 이 절의 항목은 학습자의 기본 설치 환경에서는 발생하지 않습니다.</p>
+<ul>
+<li><strong>기록일과 버전:</strong> 2026-11-24, macOS(Apple Silicon), Docker Desktop 29.1.2, Neo4j 5.26.33 Community(<code>neo4j:5.26</code>), Claude Code 2.1.331(Fable 5.2, medium effort, Claude Ultra 플랜), uv 0.9.18, Python 3.12.12, PyMuPDF 2.1, Neo4j MCP 서버 2.1.2.</li>
+<li><strong>Docker VM:</strong> 이 맥의 Docker Desktop VM(메모리 약 31GiB)은 다른 작업의 컨테이너와 함께 쓰는 환경이었습니다. Neo4j 컨테이너는 <code>--memory 2g</code> 상한 내에서 실행됐고, 다른 컨테이너 때문에 생긴 문제는 기록에 없습니다.</li>
+<li><strong>녹화:</strong> 터미널은 tmux 세션(126×30)을 웹 화면으로 그려 Playwright로 녹화했고, Neo4j Browser도 Playwright로 녹화했습니다. 녹화용 셸에서는 언어 설정(LANG)을 맞추고 claude.ai 커넥터 MCP를 껐습니다(<code>ENABLE_CLAUDEAI_MCP_SERVERS=false</code>). 모델이 생각하는 긴 대기 시간은 영상에서 잘라 냈습니다.</li>
+<li><strong>Claude Code 설정:</strong> 프로젝트 <code>.claude/settings.local.json</code>에 <code>disableAllHooks: true</code>(이 맥의 명령 변환 훅을 끄려고)와 <code>effortLevel: medium</code>을 두었습니다. 권한 요청은 녹화 도구가 화면을 읽어 승인했고(위험한 명령과 실습 폴더 밖 경로에서는 멈춤), 삭제 명령(<code>ingest.py --prune</code>)과 실습 폴더 밖 메모리 색인 쓰기는 사람이 검토해 승인 여부를 결정했습니다.</li>
+<li><strong>git:</strong> 녹화 전에 실습 폴더에 <code>.git</code>이 이미 있어 <code>git init</code>이 「빈 깃 저장소를 다시 초기화했습니다」라고 나왔습니다. 새로 시작하면 「초기화했습니다」가 나옵니다.</li>
+<li><strong>남겨 둔 것:</strong> 5장에서 생긴 자동 메모리 파일 하나(GL-04)는 실습 폴더 밖에 그대로 두었습니다.</li>
+</ul>
+<p>이 환경에서만 생긴 문제는 두 건입니다.</p>
+<h3 id="gl-01">GL-01 · tmux로 보낸 명령에서 세미콜론이 사라집니다<a class="anchor" href="#gl-01" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="neo4j-docker.html">3장</a></p>
+<ul>
+<li><strong>증상</strong> tmux로 입력한 명령에서 세미콜론이 사라집니다: <code>curl -s localhost:7474; echo</code>가 <code>curl -s localhost:7474 echo</code>로 들어가고, cypher-shell 문장 끝의 <code>;</code>가 빠집니다.</li>
+<li><strong>원인</strong> tmux send-keys는 단독 인자 <code>;</code>를 tmux 명령 구분자로 처리합니다(-l을 지정해도 그 글자 하나만 보내면 해당합니다).</li>
+<li><strong>조치</strong> tools/type.sh에서 <code>;</code>는 <code>\;</code>로 보내도록 수정했습니다(이미 반영). 직접 보낼 때: <code>tmux send-keys -t gl -l '\;'</code></li>
+<li><strong>확인</strong> <em>확인함</em> — 고친 뒤 <code>echo a; echo b</code>와 cypher-shell <code>…;</code>이 그대로 입력되는 것을 확인했고, 3장 녹화의 해당 장면은 다시 촬영했습니다.</li>
+</ul>
+<h3 id="gl-13">GL-13 · claude가 auto mode로 실행되고 /mcp에 다른 서버가 함께 보입니다<a class="anchor" href="#gl-13" title="Permanent link">#</a></h3>
+<p>관련 장: <a href="schema.html">5장</a>, <a href="mcp.html">8장</a></p>
+<ul>
+<li><strong>증상</strong> claude를 실행할 때마다 <code>⏵⏵ auto mode on</code>으로 시작하고, /mcp에 easel(plugin)·computer-use가 함께 보입니다.</li>
+<li><strong>원인</strong> 이 맥 사용자의 전역 설정(~/.claude/settings.json: autoMode·플러그인)이 프로젝트에도 적용됩니다. 학습자의 기본 설치 환경에는 없습니다.</li>
+<li><strong>조치</strong> 녹화에서는 shift+tab 한 번으로 manual mode(묻고 실행)로 전환했습니다. 전역 설정은 수정하지 않았습니다(프로젝트 .claude/settings.local.json에 disableAllHooks·effortLevel medium·code-review-graph 플러그인 비활성화만 설정했습니다). 편집할 때 /mcp 화면의 easel·computer-use 줄은 가리거나 설명합니다.</li>
+<li><strong>확인</strong> <em>확인함</em> — manual mode로 전환되고 권한 요청이 표시되는 것을 녹화로 확인했습니다.</li>
+</ul>
+    </article>
+    <nav class="pager"><a class="prev" href="wrap-up.html"><span>이전</span>마무리</a><span></span></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#이-부록을-읽는-법">이 부록을 읽는 법</a></li><li><a href="#설치실행">설치·실행</a><ul><li><a href="#gl-05">GL-05 · claude를 처음 실행하면 Enter 한 번에 종료됩니다</a></li></ul></li><li><a href="#cypher색인">Cypher·색인</a><ul><li><a href="#gl-02">GL-02 · 전문 색인을 만들었는데 「없는 색인」이라고 나옵니다</a></li><li><a href="#gl-03">GL-03 · 기본 전문 색인이 「선임」으로 「선임하여야」를 찾지 못합니다</a></li></ul></li><li><a href="#스키마-설계">스키마 설계</a><ul><li><a href="#gl-04">GL-04 · 커밋을 요청했더니 실습 폴더 밖 메모리 파일을 수정하려 합니다</a></li></ul></li><li><a href="#인제스천">인제스천</a><ul><li><a href="#gl-06">GL-06 · 적재한 조문의 띄어쓰기가 PDF와 다릅니다</a></li><li><a href="#gl-07">GL-07 · 같은 조 번호가 두 번 나와 덮어씁니다</a></li><li><a href="#gl-08">GL-08 · 다시 적재했는데 삭제되어야 할 관계가 남아 있습니다</a></li><li><a href="#gl-09">GL-09 · 가운뎃점을 「·」로 통일했더니 「도지사」 검색 결과가 1건뿐입니다</a></li></ul></li><li><a href="#중의성-해소">중의성 해소</a><ul><li><a href="#gl-10">GL-10 · LLM 중의성 해소가 서로 다른 주체를 합치고 약칭은 묶지 못합니다</a></li></ul></li><li><a href="#mcp-연결">MCP 연결</a><ul><li><a href="#gl-11">GL-11 · .mcp.json을 만들었는데 MCP 서버가 연결되지 않습니다</a></li><li><a href="#gl-12">GL-12 · ${NEO4J_PASSWORD}를 쓴 MCP 서버가 인증 실패로 실행되지 않습니다(예방)</a></li></ul></li><li><a href="#질의">질의</a><ul><li><a href="#gl-14">GL-14 · 답변 중에 「 밖의 관계기관」이라는 이상한 Actor가 보고됐습니다</a></li></ul></li><li><a href="#예외-상황">예외 상황</a><ul><li><a href="#네트워크프록시와-이미지-내려받기">네트워크·프록시와 이미지 내려받기</a></li><li><a href="#포트-74747687-충돌">포트 7474·7687 충돌</a></li><li><a href="#메모리-부족과-힙-설정">메모리 부족과 힙 설정</a></li><li><a href="#apple-siliconintel-windows-경로-차이">Apple Silicon·Intel, Windows 경로 차이</a></li><li><a href="#claude-플랜-한도느린-응답">Claude 플랜 한도·느린 응답</a></li><li><a href="#한글가운뎃점인코딩">한글·가운뎃점·인코딩</a></li><li><a href="#lawgokr-접속과-법령-판본">law.go.kr 접속과 법령 판본</a></li><li><a href="#공식-설치-방법과-다른-점">공식 설치 방법과 다른 점</a></li></ul></li><li><a href="#알려진-제약">알려진 제약</a></li><li><a href="#이-교재를-녹화한-환경">이 교재를 녹화한 환경</a><ul><li><a href="#gl-01">GL-01 · tmux로 보낸 명령에서 세미콜론이 사라집니다</a></li><li><a href="#gl-13">GL-13 · claude가 auto mode로 실행되고 /mcp에 다른 서버가 함께 보입니다</a></li></ul></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

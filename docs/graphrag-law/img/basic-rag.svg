@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440" font-family="Pretendard, 'Apple SD Gothic Neo', sans-serif" font-size="16" role="img" aria-label="기본 RAG 의 검색 · 보강 · 생성 흐름에 골든 퀘스천 5번을 넣은 예">
+  <defs>
+    <marker id="br-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="960" height="440" fill="#ffffff"/>
+
+  <!-- 세 구역 -->
+  <rect x="210" y="16" width="262" height="408" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
+  <rect x="488" y="16" width="226" height="408" rx="14" fill="#fff7ed" stroke="#fed7aa"/>
+  <rect x="730" y="16" width="214" height="408" rx="14" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <g font-size="19" font-weight="700">
+    <text x="228" y="48" fill="#1d4ed8">R · 검색 (Retrieval)</text>
+    <text x="504" y="48" fill="#c2410c">A · 보강 (Augmentation)</text>
+    <text x="746" y="48" fill="#15803d">G · 생성 (Generation)</text>
+  </g>
+
+  <!-- 질문 -->
+  <rect x="16" y="120" width="178" height="150" rx="12" fill="#1e3a5f"/>
+  <g fill="#ffffff">
+    <text x="30" y="148" font-weight="700">질문 (골든 퀘스천 5)</text>
+    <text x="30" y="176">안전관리자 선임</text>
+    <text x="30" y="198">의무(제15조)를 지키지</text>
+    <text x="30" y="220">않으면 어느 벌칙·</text>
+    <text x="30" y="242">과태료 조항이 적용?</text>
+  </g>
+
+  <!-- 검색기 -->
+  <rect x="232" y="76" width="218" height="68" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="341" y="104" text-anchor="middle" font-weight="700" fill="#111827">검색기 (Retriever)</text>
+  <text x="341" y="128" text-anchor="middle" fill="#4b5563">뜻이 가까운 청크 k개</text>
+
+  <!-- 벡터 DB 원통 -->
+  <path d="M241 296 L241 380 A100 18 0 0 0 441 380 L441 296" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+  <ellipse cx="341" cy="296" rx="100" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="341" y="342" text-anchor="middle" font-weight="700" fill="#111827">벡터 DB</text>
+  <text x="341" y="366" text-anchor="middle" fill="#4b5563">조문 청크 + 임베딩</text>
+
+  <g stroke="#6b7280" stroke-width="1.8" fill="none" marker-end="url(#br-a)">
+    <line x1="194" y1="170" x2="230" y2="118"/>
+    <line x1="310" y1="146" x2="310" y2="274"/>
+    <line x1="372" y1="274" x2="372" y2="146"/>
+    <line x1="452" y1="110" x2="512" y2="110"/>
+    <line x1="690" y1="110" x2="752" y2="110"/>
+    <line x1="837" y1="146" x2="837" y2="196"/>
+  </g>
+  <text x="302" y="214" text-anchor="end" fill="#4b5563">질문</text>
+  <text x="302" y="234" text-anchor="end" fill="#4b5563">벡터</text>
+  <text x="380" y="214" fill="#4b5563">가까운</text>
+  <text x="380" y="234" fill="#4b5563">청크</text>
+
+  <!-- 프롬프트 -->
+  <rect x="514" y="76" width="176" height="330" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="602" y="102" text-anchor="middle" font-weight="700" fill="#111827">프롬프트</text>
+  <rect x="528" y="114" width="148" height="34" rx="6" fill="#1e3a5f"/>
+  <text x="602" y="137" text-anchor="middle" fill="#ffffff">질문</text>
+  <text x="602" y="170" text-anchor="middle" font-weight="700" fill="#111827">+ 찾은 청크 5개</text>
+  <g fill="#fff7ed" stroke="#fdba74">
+    <rect x="528" y="182" width="148" height="30" rx="6"/>
+    <rect x="528" y="216" width="148" height="30" rx="6"/>
+    <rect x="528" y="250" width="148" height="30" rx="6"/>
+    <rect x="528" y="284" width="148" height="30" rx="6"/>
+    <rect x="528" y="318" width="148" height="30" rx="6"/>
+  </g>
+  <g fill="#111827">
+    <text x="540" y="203">시행규칙 제53조</text>
+    <text x="540" y="237">시행규칙 제67조</text>
+    <text x="540" y="271">법 제15조</text>
+    <text x="540" y="305">시행규칙 제54조</text>
+    <text x="540" y="339">시행령 제13조</text>
+  </g>
+  <text x="602" y="374" text-anchor="middle" fill="#c2410c" font-weight="700">벌칙 조문은</text>
+  <text x="602" y="396" text-anchor="middle" fill="#c2410c" font-weight="700">5위 안에 없음</text>
+
+  <!-- LLM 과 답 -->
+  <rect x="752" y="76" width="170" height="68" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="837" y="104" text-anchor="middle" font-weight="700" fill="#111827">LLM</text>
+  <text x="837" y="128" text-anchor="middle" fill="#4b5563">받은 자료만 보고 답</text>
+  <rect x="752" y="200" width="170" height="150" rx="12" fill="#166534"/>
+  <g fill="#ffffff">
+    <text x="766" y="228" font-weight="700">답</text>
+    <text x="766" y="256">자료에 벌칙 조문이</text>
+    <text x="766" y="278">없으면 「자료에서</text>
+    <text x="766" y="300">찾을 수 없음」</text>
+  </g>
+</svg>

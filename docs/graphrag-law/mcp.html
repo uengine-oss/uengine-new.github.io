@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neo4j MCP 서버 연결 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
+<meta name="description" content="Claude Code가 Neo4j를 직접 조회하도록 공식 Neo4j MCP 서버 2.1.2를 연결합니다. 비밀번호는 파일 밖에서 환경변수로 전달하고 서버를 읽기 전용으로 실행해, 도구 두 개(get-schema, read-cypher)만으로 그래프에 질의하도록 합니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/graphrag-law/mcp.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neo4j MCP 서버 연결 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
+<meta property="og:description" content="Claude Code가 Neo4j를 직접 조회하도록 공식 Neo4j MCP 서버 2.1.2를 연결합니다. 비밀번호는 파일 밖에서 환경변수로 전달하고 서버를 읽기 전용으로 실행해, 도구 두 개(get-schema, read-cypher)만으로 그래프에 질의하도록 합니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/graphrag-law/mcp.html">
+<meta property="og:image" content="https://www.uengine.org/docs/graphrag-law/img/article15-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="why-graph.html"><span class="n">01</span>왜 그래프인가</a></li>
+<li><a href="how-graphrag.html"><span class="n">02</span>GraphRAG 동작 과정</a></li>
+</ul>
+<div class="nav-part">준비</div><ul>
+<li><a href="neo4j-docker.html"><span class="n">03</span>Docker로 Neo4j 띄우기</a></li>
+<li><a href="cypher-basics.html"><span class="n">04</span>Cypher 기초</a></li>
+</ul>
+<div class="nav-part">구축</div><ul>
+<li><a href="schema.html"><span class="n">05</span>골든 퀘스천에서 스키마 설계하기</a></li>
+<li><a href="ingest.html"><span class="n">06</span>인제스천 바이브 코딩: PDF → 조·항·호 → Neo4j</a></li>
+<li><a href="disambiguation.html"><span class="n">07</span>엔티티 추출과 중의성 해소</a></li>
+</ul>
+<div class="nav-part">질의</div><ul>
+<li><a href="mcp.html" class="on" aria-current="page"><span class="n">08</span>Neo4j MCP 서버 연결</a></li>
+<li><a href="questions.html"><span class="n">09</span>골든 퀘스천 5개 묻기</a></li>
+</ul>
+<div class="nav-part">비교</div><ul>
+<li><a href="vector-vs-graph.html"><span class="n">10</span>같은 질문에 벡터 RAG 적용하기: 재현율 비교</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="wrap-up.html"><span class="n">11</span>마무리</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">12</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">질의<span class="chap">8</span></div>
+    <h1>Neo4j MCP 서버 연결</h1>
+    <article>
+<blockquote>
+<p>Claude Code가 Neo4j를 직접 조회하도록 공식 Neo4j MCP 서버 2.1.2를 연결합니다. 비밀번호는 파일 밖에서 환경변수로 전달하고 서버를 읽기 전용으로 실행해, 도구 두 개(get-schema, read-cypher)만으로 그래프에 질의하도록 합니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/k8mhSfUdu_M" title="Neo4j MCP 서버 연결 — 영상 3:30" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
+<p>MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 사용하는 표준 인터페이스입니다. MCP 서버가 「이런 도구가 있다」고 알려 주면 Claude Code는 질문에 따라 필요한 도구를 호출하고, 반환된 결과를 읽고 답합니다. <a href="ingest.html">6</a>·<a href="disambiguation.html">7장</a>에서는 Claude가 파이썬 스크립트와 cypher-shell을 직접 작성해 Neo4j에 접근했습니다. MCP 서버를 연결하면 Claude가 스키마를 읽고(<code>get-schema</code>) Cypher를 작성하고 실행하는(<code>read-cypher</code>) 도구를 바로 사용합니다. <a href="how-graphrag.html">2장</a>에서 본 질의 과정(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답)이 이 두 도구로 이루어집니다. 읽기 전용으로 실행하면 질의 중에 그래프가 변경되지 않습니다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>이 실습</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>서버</td>
+<td>공식 <a href="https://github.com/neo4j/mcp">neo4j/mcp</a>(Go 바이너리 <code>neo4j-mcp</code>), 최신 릴리스 v2.1.2(2026-11-23)</td>
+</tr>
+<tr>
+<td>설치·실행</td>
+<td>PyPI 패키지 <code>neo4j-mcp-server</code> 2.1.2(바이너리를 담은 휠)를 <code>uvx neo4j-mcp-server@2.1.2</code>로 실행합니다. 처음 실행할 때 9.9MiB를 내려받습니다. <code>brew install neo4j-mcp</code>나 릴리스 바이너리로도 설치할 수 있습니다</td>
+</tr>
+<tr>
+<td>연결 방식</td>
+<td>STDIO — Claude Code가 서버를 자식 프로세스로 실행해 표준입출력으로 데이터를 주고받습니다</td>
+</tr>
+<tr>
+<td>문서</td>
+<td><a href="https://neo4j.com/docs/mcp/current/">neo4j.com/docs/mcp/current</a>(installation, stdio-configuration)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
+<ol class="steps">
+<li>
+<p><strong>Claude Code에 <code>.mcp.json</code>을 만들게 합니다.</strong> 7장까지 사용하던 세션에서 입력합니다.</p>
+<div class="hl"><pre><span></span><code>이제 Claude Code 가 Neo4j 를 직접 조회하도록 Neo4j MCP 서버를 붙이자. 공식 서버(github.com/neo4j/mcp)의 문서를 확인해서 이 프로젝트의 .mcp.json 을 만들어 줘.
+- uvx 로 실행하고, 읽기 전용(쓰기 도구는 끔), 텔레메트리는 끔.
+- 비밀번호는 파일에 쓰지 말고 환경변수 NEO4J_PASSWORD 를 넘겨 받게 해(.mcp.json 은 .gitignore 에 들어 있어).
+- 서버 버전과 제공하는 도구 이름도 확인해 줘.
+</code></pre></div>
+
+<p>Claude는 저장소의 README·<code>.env.example</code>·설정 코드(<code>internal/config/config.go</code>)를 읽어 변수 이름을 확인하고, <code>uvx neo4j-mcp-server@2.1.2 --version</code>으로 <code>neo4j-mcp version: 2.1.2</code>를 확인한 뒤 <code>.mcp.json</code>을 작성했습니다. 이어서 <strong>그 파일의 명령과 환경변수로 서버를 실행하고 MCP 요청을 직접 보내</strong> 시험했습니다(1분 9초).</p>
+<div class="hl"><pre><span></span><code>serverInfo {&#39;name&#39;: &#39;neo4j-mcp&#39;, &#39;version&#39;: &#39;2.1.2&#39;} | protocol 2025-06-18
+tool get-schema | {… &#39;readOnlyHint&#39;: True, &#39;title&#39;: &#39;Get Neo4j Schema&#39;} | []
+tool read-cypher | {… &#39;readOnlyHint&#39;: True, &#39;title&#39;: &#39;Read Cypher&#39;} | [&#39;query&#39;, &#39;params&#39;]
+read-cypher → {&quot;content&quot;: [{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;[\n  {\n    \&quot;norms\&quot;: 410\n  }\n]&quot;}]}
+read-cypher 로 쓰기 시도 → … &quot;read-cypher can only run read-only Cypher statements. For write operations (CREATE, MERGE, DELETE, SET, etc...), schema/admin commands, or PROFILE queries, use write-cypher instead.&quot; …
+write-cypher 호출 → {&quot;code&quot;: -32602, &quot;message&quot;: &quot;unknown tool \&quot;write-cypher\&quot;&quot;}
+</code></pre></div>
+
+</li>
+<li>
+<p><strong>생성된 <code>.mcp.json</code>을 읽습니다.</strong> 비밀번호 값은 파일에 없습니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;neo4j&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uvx&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;neo4j-mcp-server@2.1.2&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;NEO4J_MCP_URI&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bolt://localhost:7687&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;NEO4J_MCP_USERNAME&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;neo4j&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;NEO4J_MCP_PASSWORD&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${NEO4J_PASSWORD}&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;NEO4J_MCP_DATABASE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;neo4j&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;NEO4J_MCP_READ_ONLY&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;NEO4J_MCP_TELEMETRY&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;false&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>환경변수</th>
+<th>값</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NEO4J_MCP_URI</code></td>
+<td><code>bolt://localhost:7687</code></td>
+<td><a href="neo4j-docker.html">3장</a>에서 띄운 Docker Neo4j</td>
+</tr>
+<tr>
+<td><code>NEO4J_MCP_USERNAME</code></td>
+<td><code>neo4j</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>NEO4J_MCP_PASSWORD</code></td>
+<td><code>${NEO4J_PASSWORD}</code></td>
+<td>Claude Code가 서버를 실행할 때 자신의 환경변수 값으로 치환합니다. 파일에는 비밀번호가 남지 않습니다</td>
+</tr>
+<tr>
+<td><code>NEO4J_MCP_DATABASE</code></td>
+<td><code>neo4j</code></td>
+<td>v2.0.0부터 STDIO에서 기본값이 없어져 반드시 지정해야 합니다(<code>--help</code>에는 아직 「default: neo4j」로 나옵니다)</td>
+</tr>
+<tr>
+<td><code>NEO4J_MCP_READ_ONLY</code></td>
+<td><code>true</code></td>
+<td>쓰기 도구 <code>write-cypher</code>를 목록에서 제외합니다. AI가 질의 중에 그래프를 삭제하거나 변경하지 못하게 합니다(기본값 false)</td>
+</tr>
+<tr>
+<td><code>NEO4J_MCP_TELEMETRY</code></td>
+<td><code>false</code></td>
+<td>사용 통계 전송을 끕니다(기본값 true)</td>
+</tr>
+</tbody>
+</table>
+<p>변수 이름의 접두사는 <code>NEO4J_MCP_</code>입니다. v2.0.0(2026-10-28)에서 접두사가 없는 이전 변수(<code>NEO4J_URI</code> 등)가 제거되었으므로, 이전 문서를 보고 <code>NEO4J_URI</code>로 지정하면 인식되지 않습니다. 그 밖에 <code>NEO4J_MCP_SCHEMA_SAMPLE_SIZE</code>(스키마를 만들 때 레이블마다 확인하는 노드 수, 기본 100), <code>NEO4J_MCP_LOG_LEVEL</code>, <code>NEO4J_MCP_TOOLS</code>, <code>NEO4J_MCP_REQUEST_TIMEOUT</code>(기본 3m) 같은 선택적 설정 변수가 있습니다. <code>@2.1.2</code>처럼 버전을 고정해 두면 교재와 같은 서버로 따라 할 수 있습니다.</p>
+</li>
+<li>
+<p><strong>git의 추적 대상에서 제외되었는지 확인합니다.</strong> <code>/exit</code>로 Claude Code를 종료하고 셸에서 확인합니다. 3장에서 만든 <code>.gitignore</code>에 두 파일이 들어 있습니다.</p>
+<div class="hl"><pre><span></span><code>git<span class="w"> </span>check-ignore<span class="w"> </span>-v<span class="w"> </span>.mcp.json<span class="w"> </span>.env
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>.gitignore:2:.mcp.json  .mcp.json
+.gitignore:1:.env   .env
+</code></pre></div>
+
+<p><code>.mcp.json</code>에 비밀번호가 없더라도 개인 환경 설정이므로 저장소에 올리지 않습니다.</p>
+</li>
+<li>
+<p><strong><code>.env</code>의 내용을 환경변수로 설정하고 Claude Code를 다시 실행합니다.</strong> Claude Code는 <code>.env</code>를 자동으로 읽지 않습니다. <code>${NEO4J_PASSWORD}</code>가 치환되려면 <code>claude</code>를 실행하는 셸에 해당 변수가 있어야 합니다. 새 터미널을 열 때마다 이렇게 시작합니다.</p>
+<div class="hl"><pre><span></span><code><span class="nb">set</span><span class="w"> </span>-a<span class="p">;</span><span class="w"> </span>.<span class="w"> </span>./.env<span class="p">;</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>+a
+claude
+</code></pre></div>
+
+</li>
+<li>
+<p><strong>승인 창에서 <code>Use this MCP server</code>를 고릅니다.</strong> 프로젝트에서 새 MCP 서버를 찾으면 이 창이 뜹니다. <strong>기본 선택이 맨 아래 <code>Continue without using this MCP server</code></strong>이므로, 그냥 Enter를 누르면 서버 없이 시작됩니다. ↑를 두 번 눌러 고른 뒤 Enter를 누릅니다.</p>
+<div class="hl"><pre><span></span><code>  New MCP server found in this project: neo4j
+
+  MCP servers may execute code or access system resources. All tool calls require approval. Learn more in the MCP
+  documentation.
+
+    Use this MCP server
+    Use this and all future MCP servers in this project
+  ❯ Continue without using this MCP server
+
+  Enter to confirm · Esc to cancel
+</code></pre></div>
+
+</li>
+<li>
+<p><strong><code>/mcp</code>로 연결을 확인합니다.</strong> 목록에서 <code>neo4j</code>를 골라 Enter를 누르면 상태가 나옵니다(다른 MCP 서버를 쓰고 있다면 목록에 함께 나옵니다).</p>
+<div class="hl"><pre><span></span><code>  MCP servers
+    Project MCPs (…/law-graph/.mcp.json)
+  ❯ ✔ neo4j   2 tools
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>  neo4j
+  MCP server
+
+  Status:           ✔ connected
+  Command:          uvx neo4j-mcp-server@2.1.2
+  Protocol:         2026-07-28
+  Config location:  …/law-graph/.mcp.json
+  Capabilities:     2 tools
+</code></pre></div>
+
+</li>
+<li>
+<p><strong>도구 두 개를 확인합니다.</strong> <code>View tools</code>를 고르면 도구 목록이, 도구를 고르면 설명과 파라미터가 나옵니다.</p>
+<div class="hl"><pre><span></span><code>  Tools for neo4j
+  2 tools
+
+  ❯ Get Neo4j Schema   read-only · open-world
+    Read Cypher        read-only · open-world
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>도구</th>
+<th>이름(Claude가 호출할 때 쓰는 이름)</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Get Neo4j Schema</td>
+<td><code>get-schema</code> (<code>mcp__neo4j__get-schema</code>)</td>
+<td>노드 레이블·관계 타입·속성 키를 반환합니다. 파라미터는 없습니다. 레이블마다 표본을 추출해 만듭니다(APOC의 meta 스키마 사용)</td>
+</tr>
+<tr>
+<td>Read Cypher</td>
+<td><code>read-cypher</code> (<code>mcp__neo4j__read-cypher</code>)</td>
+<td>읽기 전용 Cypher를 실행합니다. <code>query</code>(필수, string)와 <code>params</code>(object)</td>
+</tr>
+</tbody>
+</table>
+<p>README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. <code>write-cypher</code>는 <code>NEO4J_MCP_READ_ONLY=true</code>라서 목록에서 빠졌고, <code>list-gds-procedures</code>는 이 Neo4j에 GDS(Graph Data Science) 플러그인이 없어서 빠진 것으로 보입니다(확인은 하지 않았습니다).</p>
+</li>
+<li>
+<p><strong>첫 질문으로 연결을 확인합니다.</strong> 골든 퀘스천 1번을 넣으면 Claude가 도구를 처음 호출할 때 권한을 요청합니다. 처음에는 <code>get-schema</code>, 다음에는 <code>read-cypher</code>의 권한을 요청합니다.</p>
+<div class="hl"><pre><span></span><code> Tool use
+ neo4j — Read Cypher Tool: (MCP)
+ query:
+   │ MATCH (n:Norm)-[:BASED_ON]-&gt;(p) WHERE n.object CONTAINS &#39;품명&#39; OR …
+
+ Do you want to proceed?
+ ❯ 1. Yes
+   2. Yes, and don&#39;t ask again for neo4j — Read Cypher commands in …/law-graph
+   3. No
+</code></pre></div>
+
+<p>서버가 읽기 전용이므로 <code>read-cypher</code>는 2번(이 프로젝트에서 다시 묻지 않기)을 골랐습니다. 화면에 <code>Called neo4j 5 times</code>가 나오고 근거 조문이 포함된 답이 나오면 연결된 것입니다. 질문과 답은 <a href="questions.html">9장</a>에서 하나씩 살펴봅니다.</p>
+</li>
+</ol>
+<h2 id="확인">확인<a class="anchor" href="#확인" title="Permanent link">#</a></h2>
+<ul>
+<li><code>/mcp</code>에서 <code>✔ neo4j  2 tools</code>, 상세 화면에 <code>Status: ✔ connected</code>가 보입니다.</li>
+<li>도구 목록에 <code>get-schema</code>·<code>read-cypher</code> 두 개만 있고 <code>write-cypher</code>가 없습니다.</li>
+<li>첫 질문에서 <code>neo4j — Get Neo4j Schema</code>·<code>neo4j — Read Cypher</code> 권한 요청이 나오고 답변이 반환됩니다.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">교재 pptx(Ch.4 Step 4)와 다른 점</p>
+<p><code>uvx neo4j-mcp-server</code>, 접두사 <code>NEO4J_MCP_</code>, <code>READ_ONLY</code>·<code>TELEMETRY</code>, 공식 서버 v2.1.2는 pptx와 같으며 현재도 유효합니다. 다른 점은 다섯 가지입니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>교재 pptx</th>
+<th>이 교재</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Neo4j</td>
+<td>Neo4j Desktop</td>
+<td>Docker <code>neo4j:5.26</code> + <code>NEO4J_PLUGINS='["apoc"]'</code></td>
+</tr>
+<tr>
+<td>비밀번호</td>
+<td><code>.mcp.json</code>에 직접 작성합니다</td>
+<td><code>${NEO4J_PASSWORD}</code>로 파일 밖에서 전달합니다. 대신 <code>claude</code>를 실행하는 셸에 변수가 있어야 합니다</td>
+</tr>
+<tr>
+<td>서버 버전</td>
+<td><code>neo4j-mcp-server</code>(고정 안 함)</td>
+<td><code>neo4j-mcp-server@2.1.2</code>로 고정, <code>"type": "stdio"</code> 명시</td>
+</tr>
+<tr>
+<td>도구</td>
+<td>표에 4개(<code>write-cypher</code>, <code>list-gds-procedures</code> 포함)</td>
+<td>실제로 보이는 것은 2개</td>
+</tr>
+<tr>
+<td>연결 순서</td>
+<td>「프로젝트 MCP 서버 사용 승인」</td>
+<td>승인 창의 기본 선택이 「Continue without…」이라 ↑로 선택해야 합니다</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">막히면</p>
+<p><strong>Enter를 눌렀더니 <code>/mcp</code>에 연결이 없습니다 (GL-11).</strong> 증상: <code>.mcp.json</code>을 만들고 <code>claude</code>를 다시 실행했는데 「New MCP server found in this project: neo4j」 창의 기본 선택이 <code>❯ Continue without using this MCP server</code>라서 서버 없이 시작됩니다. 원인: Claude Code의 프로젝트 MCP 승인 창 기본값입니다. 조치: ↑ 두 번으로 <code>Use this MCP server</code>(또는 <code>Use this and all future MCP servers in this project</code>)를 고르고 Enter를 누르세요. 이미 넘어갔다면 <code>/mcp</code>에서 neo4j를 골라 켜거나, <code>claude mcp reset-project-choices</code> 뒤 다시 시작합니다.</p>
+<p><strong>서버가 실행되지 않습니다 — 인증 실패 (GL-12).</strong> 증상: <code>"NEO4J_MCP_PASSWORD": "${NEO4J_PASSWORD}"</code>로 썼는데 <code>claude</code>를 실행한 셸에 <code>NEO4J_PASSWORD</code>가 없으면 MCP 서버가 인증 실패로 실행되지 않습니다. 원인: Claude Code는 <code>.mcp.json</code>의 <code>${변수}</code>를 claude 프로세스의 환경변수 값으로 치환하고, <code>.env</code>는 자동으로 읽지 않습니다. 조치: 새 터미널마다 <code>cd law-graph &amp;&amp; set -a; . ./.env; set +a; claude</code>를 실행하세요. 반대로 비밀번호를 <code>.mcp.json</code>에 직접 쓰면 그 파일이 비밀 파일이 되므로 <code>.gitignore</code>에서 빠지지 않게 주의하세요.</p>
+</div>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<p><strong>1.</strong> <code>.mcp.json</code>에 비밀번호 대신 <code>${NEO4J_PASSWORD}</code>를 썼습니다. 이 값은 언제, 어디서 치환되나요?</p>
+<details class="answer">
+<summary>정답</summary>
+<p>Claude Code가 MCP 서버를 실행할 때, <code>claude</code> 프로세스의 환경변수 값으로 치환합니다. 그래서 <code>claude</code>를 실행하는 셸에 <code>NEO4J_PASSWORD</code>가 있어야 하고(<code>set -a; . ./.env; set +a</code>), 없으면 서버가 인증 실패로 실행되지 않습니다. 파일에는 비밀번호가 남지 않습니다.</p>
+</details>
+<p><strong>2.</strong> 공식 README에는 도구가 네 개인데 <code>/mcp</code>에는 두 개만 보입니다. 왜 그런가요?</p>
+<details class="answer">
+<summary>정답</summary>
+<p><code>NEO4J_MCP_READ_ONLY=true</code>로 실행해 쓰기 도구 <code>write-cypher</code>가 목록에서 빠졌고, <code>list-gds-procedures</code>는 이 Neo4j에 GDS 플러그인이 없어서 빠진 것으로 보입니다. 질문에 답하는 데는 스키마를 읽는 <code>get-schema</code>와 읽기 전용 Cypher를 실행하는 <code>read-cypher</code>로 충분합니다.</p>
+</details>
+<p><strong>3.</strong> 서버 승인 창에서 아무것도 고르지 않고 Enter를 눌렀습니다. 어떻게 되고, 어떻게 바로잡나요?</p>
+<details class="answer">
+<summary>정답</summary>
+<p>기본 선택이 <code>Continue without using this MCP server</code>라서 서버 없이 시작됩니다. <code>/mcp</code>에서 neo4j를 골라 켜거나, <code>claude mcp reset-project-choices</code>를 실행한 뒤 다시 실행해 <code>Use this MCP server</code>를 고릅니다.</p>
+</details>
+    </article>
+    <nav class="pager"><a class="prev" href="disambiguation.html"><span>이전</span>엔티티 추출과 중의성 해소</a><a class="next" href="questions.html"><span>다음</span>골든 퀘스천 5개 묻기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>

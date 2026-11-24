@@ -9,6 +9,7 @@
     python3 tools/industry-docs/build.py pdm
     python3 tools/industry-docs/build.py pdm-kang
     python3 tools/industry-docs/build.py pdm-kang-process
+    python3 tools/industry-docs/build.py graphrag-law
 
 <제품>/src/*.md (장마다 하나) → docs/<제품>/*.html. 목차·순서는 아래 PRODUCTS 가 정한다.
 이미지는 docs/<제품>/img/ 에 두고 본문에서 img/<이름>.webp 로 부른다.
@@ -60,6 +61,9 @@ PRODUCTS = {
     "speckit-handson": dict(name="Claude Code × Spec Kit 핸즈온", page="axschool.html", pagelabel="AX School", og="sk-app.webp", search="검색 (예: clarify, [P], converge, 랄프 루프)",
                 foot="이 튜토리얼의 화면과 결과는 2026년 11월 13일 Spec Kit 1.4.0과 Claude Code 2.1.323(Sonnet 5.5)으로 실제로 실행해 얻었습니다. 회사와 데이터는 가상이며 모델이 쓰는 문장은 실행할 때마다 달라질 수 있습니다.",
                 chapters=[("index", "시작하기"), ("concepts", "이론"), ("setup", "실습 · 사양까지"), ("constitution", "실습 · 사양까지"), ("specify", "실습 · 사양까지"), ("clarify", "실습 · 사양까지"), ("plan", "실습 · 계획과 작업"), ("checklist", "실습 · 계획과 작업"), ("tasks", "실습 · 계획과 작업"), ("implement", "실습 · 구현과 수렴"), ("converge", "실습 · 구현과 수렴"), ("tdd-loop", "실습 · 구현과 수렴"), ("extension", "확장")]),
+    "graphrag-law": dict(name="법령 GraphRAG 실습 · Neo4j × Claude Code", page="axschool.html", pagelabel="AX School", og="article15-graph.webp", search="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)",
+                foot="이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.",
+                chapters=[("index", "시작하기"), ("why-graph", "이론"), ("how-graphrag", "이론"), ("neo4j-docker", "준비"), ("cypher-basics", "준비"), ("schema", "구축"), ("ingest", "구축"), ("disambiguation", "구축"), ("mcp", "질의"), ("questions", "질의"), ("vector-vs-graph", "비교"), ("wrap-up", "마무리"), ("troubleshooting", "부록")]),
 }
 KEY = sys.argv[1] if sys.argv[1:] and sys.argv[1] in PRODUCTS else sys.exit(__doc__)
 P = PRODUCTS[KEY]

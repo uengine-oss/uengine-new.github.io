@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GraphRAG 동작 과정 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
+<meta name="description" content="글을 그래프로 바꾸는 적재(조각내기 → 엔티티·관계 추출 → 엔티티 중의성 해소)와 그래프에서 답을 찾는 질의(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답 생성)를 단계별로 이 교재의 실제 기록과 함께 살펴봅니다. 질의 순서도에서 애플리케이션이 하던 일은 이 교재에서 Claude Code와 Neo4j MCP 서버가 맡습니다.">
+<link rel="canonical" href="https://www.uengine.org/docs/graphrag-law/how-graphrag.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraphRAG 동작 과정 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
+<meta property="og:description" content="글을 그래프로 바꾸는 적재(조각내기 → 엔티티·관계 추출 → 엔티티 중의성 해소)와 그래프에서 답을 찾는 질의(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답 생성)를 단계별로 이 교재의 실제 기록과 함께 살펴봅니다. 질의 순서도에서 애플리케이션이 하던 일은 이 교재에서 Claude Code와 Neo4j MCP 서버가 맡습니다.">
+<meta property="og:url" content="https://www.uengine.org/docs/graphrag-law/how-graphrag.html">
+<meta property="og:image" content="https://www.uengine.org/docs/graphrag-law/img/article15-graph.webp">
+<link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/code.css">
+<script>try{var t=localStorage.getItem('inddocs-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTYBRCZDQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0DTYBRCZDQ');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1869530160891593');if(window.top===window.self)fbq('track','PageView');</script>
+</head>
+<body>
+<header class="top">
+  <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
+  <div class="search">
+    <input id="q" type="search" placeholder="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)" autocomplete="off" aria-label="튜토리얼 검색">
+    <div id="results" class="results" hidden></div>
+  </div>
+  <nav class="links">
+    <a href="../../contents/axschool.html">AX School</a>
+    <a href="../../index.html">uEngine</a>
+    <button id="theme" type="button" aria-label="낮/밤 테마 바꾸기">◐</button>
+  </nav>
+</header>
+<div class="wrap">
+  <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
+</ul>
+<div class="nav-part">이론</div><ul>
+<li><a href="why-graph.html"><span class="n">01</span>왜 그래프인가</a></li>
+<li><a href="how-graphrag.html" class="on" aria-current="page"><span class="n">02</span>GraphRAG 동작 과정</a></li>
+</ul>
+<div class="nav-part">준비</div><ul>
+<li><a href="neo4j-docker.html"><span class="n">03</span>Docker로 Neo4j 띄우기</a></li>
+<li><a href="cypher-basics.html"><span class="n">04</span>Cypher 기초</a></li>
+</ul>
+<div class="nav-part">구축</div><ul>
+<li><a href="schema.html"><span class="n">05</span>골든 퀘스천에서 스키마 설계하기</a></li>
+<li><a href="ingest.html"><span class="n">06</span>인제스천 바이브 코딩: PDF → 조·항·호 → Neo4j</a></li>
+<li><a href="disambiguation.html"><span class="n">07</span>엔티티 추출과 중의성 해소</a></li>
+</ul>
+<div class="nav-part">질의</div><ul>
+<li><a href="mcp.html"><span class="n">08</span>Neo4j MCP 서버 연결</a></li>
+<li><a href="questions.html"><span class="n">09</span>골든 퀘스천 5개 묻기</a></li>
+</ul>
+<div class="nav-part">비교</div><ul>
+<li><a href="vector-vs-graph.html"><span class="n">10</span>같은 질문에 벡터 RAG 적용하기: 재현율 비교</a></li>
+</ul>
+<div class="nav-part">마무리</div><ul>
+<li><a href="wrap-up.html"><span class="n">11</span>마무리</a></li>
+</ul>
+<div class="nav-part">부록</div><ul>
+<li><a href="troubleshooting.html"><span class="n">12</span>문제 해결</a></li>
+</ul></aside>
+  <main class="doc">
+    <div class="crumb">이론<span class="chap">2</span></div>
+    <h1>GraphRAG 동작 과정</h1>
+    <article>
+<blockquote>
+<p>글을 그래프로 바꾸는 적재(조각내기 → 엔티티·관계 추출 → 엔티티 중의성 해소)와 그래프에서 답을 찾는 질의(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답 생성)를 단계별로 이 교재의 실제 기록과 함께 살펴봅니다. 질의 순서도에서 애플리케이션이 하던 일은 이 교재에서 Claude Code와 Neo4j MCP 서버가 맡습니다.</p>
+</blockquote>
+<div class="video"><iframe src="https://www.youtube.com/embed/PUnpYnls_zA" title="GraphRAG 동작 과정 — 영상 3:54" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<h2 id="학습-내용과-목적">학습 내용과 목적<a class="anchor" href="#학습-내용과-목적" title="Permanent link">#</a></h2>
+<p>GraphRAG는 두 과정으로 이루어집니다. 문서를 한 번 그래프로 <strong>적재</strong>하고, 질문을 받을 때마다 그래프에서 <strong>질의</strong>해 답을 만듭니다. 정리 노트도 「자연어를 그래프 DB 로 구조화하는 과정(적재)」과 「Graph DB 에서 지식 추출」을 구분해 적었습니다. 이 장에서 두 과정의 단계를 미리 익혀 두면 5~9장에서 Claude Code가 하는 일이 어느 단계에 해당하는지 알 수 있습니다.</p>
+<h2 id="적재-글을-그래프로-바꾸는-3단계">적재: 글을 그래프로 바꾸는 3단계<a class="anchor" href="#적재-글을-그래프로-바꾸는-3단계" title="Permanent link">#</a></h2>
+<figure><a href="img/ingest-3steps.svg" target="_blank" rel="noopener" title="크게 보기"><img alt="적재 3단계를 위험물안전관리법으로 본 예. 조 단위로 자르고, LLM이 조문에서 주체·할 일·기한·상대를 뽑고, 서로 다른 표기를 노드 하나로 합칩니다" src="img/ingest-3steps.svg" loading="lazy" decoding="async"></a><figcaption>적재 3단계를 위험물안전관리법으로 본 예. 조 단위로 자르고, LLM이 조문에서 주체·할 일·기한·상대를 뽑고, 서로 다른 표기를 노드 하나로 합칩니다</figcaption></figure>
+<h3 id="1-조각내기chunking">1. 조각내기(Chunking)<a class="anchor" href="#1-조각내기chunking" title="Permanent link">#</a></h3>
+<p>노트의 설명은 「LLM 의 토큰 크기에 맞춰 일단 문서를 자른다」입니다. 법령에는 조(條)라는 자연스러운 단위가 있어 이 교재에서는 <strong>조 하나를 덩어리 하나</strong>로 잘랐습니다. 위험물안전관리법 법률·시행령·시행규칙의 조문은 157개로 총 64,845자이며, 덩어리 크기의 중앙값은 322자이고 가장 긴 시행규칙 제65조는 1,952자입니다.</p>
+<p>조·항·호·목의 구조는 LLM을 쓰지 않고 PDF의 들여쓰기와 「제N조」 같은 문형으로 나눴습니다(6장). 구조는 규칙으로 정확하게 나누고, 사람이 읽어야 파악할 수 있는 의미만 LLM에 맡기는 분업입니다.</p>
+<h3 id="2-엔티티노드-관계엣지-추출">2. 엔티티(노드) · 관계(엣지) 추출<a class="anchor" href="#2-엔티티노드-관계엣지-추출" title="Permanent link">#</a></h3>
+<p>각 덩어리를 LLM에 보내 엔티티와 관계를 뽑습니다. 이 교재에서는 조문 속 주체·기관과 「누가 → 무엇을 해야 하나 → 언제까지 → 누구에게」를 뽑았습니다. 다음은 법 제15조로 시범 호출한 실제 결과 중 제3항에 해당하는 부분입니다.</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;provision&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;제3항&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;modality&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;의무&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;subject&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;제조소등의 관계인&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;행정안전부령으로 정하는 바에 따라 신고하다&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;안전관리자 선임&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;trigger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;제1항 및 제2항에 따라 안전관리자를 선임한 경우&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;deadline&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;선임한 날부터 14일 이내&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;recipient&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;소방본부장 또는 소방서장&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+<p>157개 조문에 대해 157번 호출했으며, 6개씩 동시에 처리해 약 6분이 걸렸고 API 요금으로 환산하면 $0.268이 들었습니다. 주체·기관 이름 228가지, 용어 215가지, 관계 410건(의무 278, 권한 105, 금지 27)이 나왔습니다. 이 관계는 그래프에서 <code>Norm</code> 노드가 되고, 주체와 상대는 <code>HAS_SUBJECT</code>·<code>ADDRESSED_TO</code> 관계로 <code>Actor</code> 노드에 이어집니다.</p>
+<h3 id="3-엔티티-중의성-해소entity-disambiguation">3. 엔티티 중의성 해소(Entity Disambiguation)<a class="anchor" href="#3-엔티티-중의성-해소entity-disambiguation" title="Permanent link">#</a></h3>
+<p>노트의 설명은 「분리된 결과에 따라 동의의 엔티티 노드들을 merge(통일)시켜야 함」입니다. 조문마다 따로 뽑으면 같은 대상의 표기가 여러 가지로 나뉩니다. 실제로 「관계인」이 포함된 이름은 18가지(제조소등의 관계인, 관계인, 당해 제조소등의 관계인, 제조소 등의 관계인 …), 「소방서장」이 포함된 이름은 19가지였습니다. 그대로 두면 질문의 「관계인」이 노드 하나가 아니라 여러 노드에 흩어집니다.</p>
+<p>노트에는 여러 방법이 소개되어 있습니다. 첫째는 <strong>LLM이 같은 뜻의 이름에 같은 번호를 매기게 하는 방법</strong>이고, 「돈이 많이 든다」는 단서가 붙어 있습니다. 노트에 실린 프롬프트 원문입니다(오타도 원문 그대로).</p>
+<div class="hl"><pre><span></span><code>disambiguation_prompt = &quot;&quot;&quot;
+#Act as a entity disambiugation tool and tell me which values reference the same entity.
+#For example if I give you
+##Birds
+#Bird
+#Ant
+##You return to me
+##Birds, 1
+#Bird, 1
+#Ant, 2
+##As the Bird and Birds values have the same integer assigned to them, it means that they reference the same entity.
+#Now process the following values\n
+&quot;&quot;&quot;
+</code></pre></div>
+
+<p>둘째는 <strong>그래프 DB를 사전처럼 써서 동의어를 찾는 방법</strong>입니다. 이 교재에서는 법에서 직접 정한 정의와 약칭(제2조 정의, 「이하 "…"라 한다」)을 <code>Term</code> 노드의 대표 이름·별칭으로 넣어 두고, 가운뎃점(ㆍ·)과 공백을 통일한 문자열이 같을 때만 묶었습니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>LLM 방식</th>
+<th>규칙·사전 방식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>이름 228가지를 묶은 결과</td>
+<td>164묶음</td>
+<td>217묶음</td>
+</tr>
+<tr>
+<td>시간 · 비용</td>
+<td>1번 호출 94.9초 · $0.0156</td>
+<td>0.018초 · 없음</td>
+</tr>
+<tr>
+<td>잘 처리한 것</td>
+<td>소방서장 / 관할소방서장 / 관할 소방서장을 한 묶음으로</td>
+<td>탱크시험자 / 탱크안전성능시험자처럼 법에서 정한 약칭</td>
+</tr>
+<tr>
+<td>잘못 처리한 것</td>
+<td>관계인 = 관계자, 대리자 = 대리인을 같은 것으로 처리</td>
+<td>표기가 조금만 달라도 못 묶음</td>
+</tr>
+</tbody>
+</table>
+<p>두 방법이 똑같이 묶은 이름 쌍은 8개뿐이었습니다. 이 교재에서는 두 결과를 합친 뒤 사람이 검토해 Actor 136개로 정리했습니다. 이 과정은 7장에서 따라 합니다.</p>
+<h2 id="질의-그래프에서-답을-찾는-5단계">질의: 그래프에서 답을 찾는 5단계<a class="anchor" href="#질의-그래프에서-답을-찾는-5단계" title="Permanent link">#</a></h2>
+<p>노트의 순서도는 네 참여자(UI, 애플리케이션 API, Neo4j, LLM) 사이에서 다음과 같이 진행됩니다. 질문을 받으면 DB에서 스키마를 추론하고, 스키마와 질문으로 LLM에게 Cypher를 만들게 하고, 그 Cypher를 DB에서 실행하고, 결과와 질문을 LLM에 넘겨 답을 만듭니다. 이 교재에서는 다음 구성 요소가 각각의 역할을 맡습니다.</p>
+<figure><a href="img/query-sequence.svg" target="_blank" rel="noopener" title="크게 보기"><img alt="질의 순서도. 노트의 UI·Application API·Neo4j·LLM 자리에 터미널·Claude Code·Neo4j MCP 서버·Claude 모델이 들어갑니다" src="img/query-sequence.svg" loading="lazy" decoding="async"></a><figcaption>질의 순서도. 노트의 UI·Application API·Neo4j·LLM 자리에 터미널·Claude Code·Neo4j MCP 서버·Claude 모델이 들어갑니다</figcaption></figure>
+<p>노트에 코드 링크가 있는 LangChain의 Cypher 체인은 애플리케이션이 순서를 정해 스키마 → Cypher 생성 → 실행 → 답 생성 단계를 한 번씩 호출합니다. Claude Code에서는 모델이 MCP 도구 목록을 보고 어느 도구를 언제 호출할지 스스로 정합니다. Cypher가 틀리면 오류 문구를 읽고 수정해 다시 호출하고, 결과가 부족하면 추가로 조회합니다.</p>
+<p>아래는 골든 퀘스천 2번을 헤드리스로 질문한 1회차 기록입니다. 도구는 Neo4j MCP의 <code>get-schema</code>·<code>read-cypher</code> 두 개만 허용했고(파일 읽기·셸은 비활성화), MCP 호출 6번(오류 1번), 30.4초, 7턴이 걸렸습니다. 모델이 쓴 Cypher와 문장은 실행할 때마다 달라질 수 있습니다.</p>
+<h3 id="①-엔티티-연결-질문-속-말을-그래프에-연결하기">① 엔티티 연결: 질문 속 말을 그래프에 연결하기<a class="anchor" href="#①-엔티티-연결-질문-속-말을-그래프에-연결하기" title="Permanent link">#</a></h3>
+<p><strong>엔티티 연결(Entity Linking)</strong>은 질문의 낱말이 그래프의 어느 노드나 속성을 가리키는지 정하는 일입니다. 이 실행에서 모델은 별칭 노드나 전문 색인을 쓰지 않고, 질문에서 고른 낱말을 부분 문자열로 사용해 조문 내용과 Norm 속성에 연결했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>질문 속 낱말</th>
+<th>그래프 쪽 조건(실제 Cypher에서)</th>
+<th>검색 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>위험물안전관리자</td>
+<td>Norm의 <code>object</code>, 조문의 <code>text</code>에 <code>CONTAINS '안전관리자'</code></td>
+<td>더 짧은 「안전관리자」로 찾아 약칭과 정식 이름을 함께 찾음</td>
+</tr>
+<tr>
+<td>해임되거나 퇴직하면</td>
+<td>Norm의 <code>trigger</code>에 <code>CONTAINS '해임'</code>, <code>'퇴직'</code></td>
+<td>법 제15조제2항의 Norm(기한 「해임하거나 퇴직한 날부터 30일 이내」)</td>
+</tr>
+<tr>
+<td>관계인</td>
+<td>조건에 쓰지 않음</td>
+<td>반환된 Norm의 주체가 Actor 「관계인」(적재 때 9가지 표기를 합친 노드)</td>
+</tr>
+<tr>
+<td>어떤 절차</td>
+<td>조문 <code>pid</code>를 <code>STARTS WITH</code>로 직접 지정</td>
+<td>앞선 결과의 번호를 따라 시행규칙 제53조·제54조 조회</td>
+</tr>
+</tbody>
+</table>
+<p>별칭 키와 전문 색인으로 「위험물안전관리자」를 Term·Actor 노드 「안전관리자」에 연결하는 방법은 7장에서 직접 실행해 봅니다.</p>
+<h3 id="②-스키마를-컨텍스트에-get-schema">② 스키마를 컨텍스트에: <code>get-schema</code><a class="anchor" href="#②-스키마를-컨텍스트에-get-schema" title="Permanent link">#</a></h3>
+<p>모델은 먼저 <code>get-schema</code>를 호출했습니다. Neo4j MCP 서버가 레이블마다 표본 100개(기본값)를 추출해 APOC으로 만든 스키마이고, 길이는 9,137자입니다. 노드 레이블 11종, 관계 타입 15종과 속성 타입·관계 방향이 들어 있습니다. 그중 <code>Norm</code> 항목입니다(줄 바꿈만 했습니다).</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="s2">&quot;Norm&quot;</span><span class="p">,</span><span class="nt">&quot;value&quot;</span><span class="p">:{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;node&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:{</span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;deadlineKind&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deadlineText&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;deadlineUnit&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;deadlineValue&quot;</span><span class="p">:</span><span class="s2">&quot;INTEGER&quot;</span><span class="p">,</span><span class="nt">&quot;extractedBy&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;modality&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;normId&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;recipientText&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;reviewed&quot;</span><span class="p">:</span><span class="s2">&quot;BOOLEAN&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;subjectText&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;trigger&quot;</span><span class="p">:</span><span class="s2">&quot;STRING&quot;</span><span class="p">,</span><span class="nt">&quot;uncheckedFields&quot;</span><span class="p">:</span><span class="s2">&quot;LIST&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;relationships&quot;</span><span class="p">:{</span>
+<span class="w">    </span><span class="nt">&quot;ADDRESSED_TO&quot;</span><span class="p">:{</span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="nt">&quot;labels&quot;</span><span class="p">:[</span><span class="s2">&quot;Actor&quot;</span><span class="p">]},</span>
+<span class="w">    </span><span class="nt">&quot;BASED_ON&quot;</span><span class="p">:{</span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="s2">&quot;out&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;labels&quot;</span><span class="p">:[</span><span class="s2">&quot;Article&quot;</span><span class="p">,</span><span class="s2">&quot;Provision&quot;</span><span class="p">,</span><span class="s2">&quot;Item&quot;</span><span class="p">,</span><span class="s2">&quot;Paragraph&quot;</span><span class="p">,</span><span class="s2">&quot;SubItem&quot;</span><span class="p">]},</span>
+<span class="w">    </span><span class="nt">&quot;HAS_SUBJECT&quot;</span><span class="p">:{</span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="nt">&quot;labels&quot;</span><span class="p">:[</span><span class="s2">&quot;Actor&quot;</span><span class="p">]}}}}</span>
+</code></pre></div>
+
+<p>모델은 이 내용만 보고 <code>Norm</code>에 <code>trigger</code>·<code>deadlineText</code>가 있고, <code>BASED_ON</code>으로 조문에 연결된다는 것을 파악합니다.</p>
+<h3 id="③-cypher-생성-틀린-시도-포함">③ Cypher 생성: 틀린 시도 포함<a class="anchor" href="#③-cypher-생성-틀린-시도-포함" title="Permanent link">#</a></h3>
+<p>첫 시도에서는 모든 노드의 모든 속성을 문자열로 검색하는 질의를 실행했지만 오류가 났습니다.</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">any</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">keys</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">toString</span><span class="p">(</span><span class="n">n</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;안전관리자&#39;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">AND</span><span class="w"> </span><span class="k">any</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">keys</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">toString</span><span class="p">(</span><span class="n">n</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;해임&#39;</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">labels</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">labels</span><span class="p">,</span><span class="w"> </span><span class="n">properties</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">props</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="m">40</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code>failed to execute read query: Neo4jError: Neo.ClientError.Statement.TypeError (Invalid input for function &#39;toString()&#39;: Expected a String, Float, Integer, Boolean, Temporal or Duration, got: StringArray[영])
+</code></pre></div>
+
+<p>목록 속성(<code>aliases</code>, <code>amendedOn</code> 등)에 <code>toString()</code>을 쓸 수 없어서입니다. 모델은 스키마를 다시 보고 레이블과 속성을 골라 질의를 수정했습니다. 다음은 의미층(Norm)을 검색한 질의입니다(<code>RETURN</code>의 열은 일부 줄였습니다).</p>
+<div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="n">Norm</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">BASED_ON</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;해임&#39;</span><span class="w"> </span><span class="n">OR</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;퇴직&#39;</span>
+<span class="w">       </span><span class="n">OR</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;선임&#39;</span><span class="w"> </span><span class="n">OR</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">action</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;선임&#39;</span>
+<span class="w">       </span><span class="n">OR</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">object</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">&#39;안전관리자&#39;</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_SUBJECT</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span>
+<span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ADDRESSED_TO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">normId</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">modality</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineText</span><span class="p">,</span>
+<span class="w">       </span><span class="n">n</span><span class="p">.</span><span class="n">reviewed</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">subject</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">recipient</span><span class="p">,</span>
+<span class="w">       </span><span class="n">p</span><span class="p">.</span><span class="n">citation</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">isCurrent</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">text</span>
+</code></pre></div>
+
+<p>이어서 조문 내용에서 「안전관리자」와 「해임·퇴직·선임」이 함께 나오는 조문을 찾고, 법령 목록으로 판본과 시행일을 확인하고, 시행규칙 제53조·제54조와 벌칙(제36조·제39조)을 <code>pid</code>로 직접 조회했습니다. 헤드리스 15회 중 10회에서 이런 Cypher 오류가 한두 번씩 났고, 모델이 모두 수정해 다시 실행했습니다.</p>
+<h3 id="④-실행-반환된-부분-그래프">④ 실행: 반환된 부분 그래프<a class="anchor" href="#④-실행-반환된-부분-그래프" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>호출</th>
+<th>반환된 결과</th>
+<th>글자 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get-schema</code></td>
+<td>스키마</td>
+<td>9,137</td>
+</tr>
+<tr>
+<td><code>read-cypher</code> 1</td>
+<td>오류 문구</td>
+<td>206</td>
+</tr>
+<tr>
+<td><code>read-cypher</code> 2</td>
+<td>Norm 30행(근거 조문 원문 포함)</td>
+<td>23,208</td>
+</tr>
+<tr>
+<td><code>read-cypher</code> 3</td>
+<td>조문 19개</td>
+<td>7,536</td>
+</tr>
+<tr>
+<td><code>read-cypher</code> 4</td>
+<td>법령 179개(적재한 9 + 조문이 인용한 외부 법령)</td>
+<td>34,774</td>
+</tr>
+<tr>
+<td><code>read-cypher</code> 5</td>
+<td>하위법령 절차와 제재 17행</td>
+<td>5,005</td>
+</tr>
+</tbody>
+</table>
+<p>모두 합쳐 약 8만 자가 컨텍스트에 들어갔습니다. 2번 호출의 핵심 행입니다(조문 원문 열은 뺐습니다).</p>
+<div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;n.normId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;위험물안전관리법:제15조:제2항#1&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;n.modality&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;의무&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;n.name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;다시 안전관리자를 선임하다&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;n.trigger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;안전관리자를 해임하거나 안전관리자가 퇴직한 때&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;n.deadlineText&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;해임하거나 퇴직한 날부터 30일 이내&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;n.reviewed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;subject&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;관계인&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;recipient&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;p.citation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;위험물안전관리법 제15조제2항&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;p.isCurrent&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+</code></pre></div>
+
+<p>관계로 나타내면 다음과 같은 부분 그래프입니다. Norm(제15조②)은 <code>BASED_ON</code>으로 법 제15조제2항에, Norm(제15조③)은 법 제15조제3항과 <code>ADDRESSED_TO</code>로 소방본부장·소방서장에 이어집니다. 시행규칙 제53조제1항은 <code>IMPLEMENTS</code>로 법 제15조제3항에 연결되고, 법 제36조제6호와 제39조제1항제5호는 <code>PENALIZES</code>로 제15조의 항을 가리킵니다.</p>
+<h3 id="⑤-답-생성">⑤ 답 생성<a class="anchor" href="#⑤-답-생성" title="Permanent link">#</a></h3>
+<p>모델은 질문과 반환된 결과를 바탕으로 답을 썼습니다. 첫머리와 끝맺음입니다.</p>
+<blockquote>
+<p>해임·퇴직한 날부터 <strong>30일 이내</strong>에 다시 선임해야 하고, 선임한 뒤에는 <strong>선임한 날부터 14일 이내</strong>에 소방본부장 또는 소방서장에게 선임신고를 해야 합니다. 모두 그래프에서 현행(<code>isCurrent: true</code>)으로 표시된 조문입니다.</p>
+<p>…</p>
+<p>기한 값(30일·14일)은 Norm 노드에서 찾은 뒤 조문 원문과 대조해 일치함을 확인했습니다. 해당 Norm 노드들은 아직 <code>reviewed: false</code> 상태입니다.</p>
+</blockquote>
+<p>LLM이 뽑은 Norm 값만 믿지 않고 함께 가져온 조문 원문으로 확인했다고 밝힌 점에 주목하세요. 답 전체(재선임 기한, 신고 서식과 첨부서류, 대리자, 제재, 기준 시점)는 9장에서 살펴봅니다.</p>
+<h2 id="적재-때-엔티티-중의성-해소와-질문-때-엔티티-연결">적재 때 엔티티 중의성 해소와 질문 때 엔티티 연결<a class="anchor" href="#적재-때-엔티티-중의성-해소와-질문-때-엔티티-연결" title="Permanent link">#</a></h2>
+<p>둘 다 「같은 것을 알아보는」 일이라 헷갈리기 쉽지만, 수행 시점과 결과가 다릅니다.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>엔티티 중의성 해소(적재 때)</th>
+<th>엔티티 연결(질문 때)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>언제</td>
+<td>그래프를 만들 때 한 번</td>
+<td>질문을 받을 때마다</td>
+</tr>
+<tr>
+<td>입력</td>
+<td>조문에서 뽑은 여러 표기</td>
+<td>질문 속 낱말</td>
+</tr>
+<tr>
+<td>하는 일</td>
+<td>같은 대상인지 판정해 노드 하나로 합침</td>
+<td>기존 노드 중 어느 노드에 연결할지 선택</td>
+</tr>
+<tr>
+<td>그래프</td>
+<td>바뀜(합친 결과가 고정됨)</td>
+<td>바뀌지 않음</td>
+</tr>
+<tr>
+<td>방법</td>
+<td>LLM, 규칙·사전 + 사람 검토</td>
+<td>별칭 키, 전문 색인, 부분 문자열 조건</td>
+</tr>
+<tr>
+<td>틀리면</td>
+<td>고쳐서 다시 적재</td>
+<td>다음 질의에서 다시 찾음</td>
+</tr>
+<tr>
+<td>이 교재의 예</td>
+<td>관계인 9가지 표기 → Actor 「관계인」 하나</td>
+<td>질문의 「관계인」 → Actor 「관계인」</td>
+</tr>
+</tbody>
+</table>
+<p>두 과정은 서로 연결됩니다. 질문의 「관계인」 한 낱말로 제15조의 의무가 한꺼번에 나오는 것은 적재 때 「제조소등의 관계인」 같은 표기를 Actor 「관계인」 하나로 합쳐 두었기 때문입니다.</p>
+<h2 id="벡터-색인과의-혼합">벡터 색인과의 혼합<a class="anchor" href="#벡터-색인과의-혼합" title="Permanent link">#</a></h2>
+<p>노트는 질의의 장점으로 「Multi-hop Query 로 가능하던 Query 를 한번에 할 수 있다」를 들고, 이어서 <strong>임베딩 벡터와의 혼합</strong>을 언급했습니다. 그래프 질의는 어디서 출발할지 알아야 시작할 수 있습니다. 질문의 낱말이 조문 표기와 다르거나 조 번호를 모를 때는 색인으로 출발점을 찾고, 그곳에서 관계를 따라 검색 범위를 넓힙니다.</p>
+<figure><a href="img/hybrid-retrieval.svg" target="_blank" rel="noopener" title="크게 보기"><img alt="색인으로 진입 노드(조문)를 찾고, 관계를 따라 하위법령·벌칙·형량까지 검색 범위를 넓혀 LLM에 넘기는 혼합 방식" src="img/hybrid-retrieval.svg" loading="lazy" decoding="async"></a><figcaption>색인으로 진입 노드(조문)를 찾고, 관계를 따라 하위법령·벌칙·형량까지 검색 범위를 넓혀 LLM에 넘기는 혼합 방식</figcaption></figure>
+<p>Neo4j에는 두 종류의 검색 색인이 있습니다.</p>
+<ul>
+<li><strong>전문 색인(full-text index)</strong>: 낱말로 찾습니다. 이 교재에서는 조문·용어·Norm에 <code>cjk</code> 분석기로 전문 색인 세 개를 만들었습니다(한국어는 기본 분석기로 「선임」이 「선임하여야」를 찾지 못합니다. 4장). 7장에서 골든 퀘스천 2번 문장 전체로 조문 색인을 조회하고, 앞서 찾은 용어를 언급하는 조문의 순위를 높였더니 법 제15조제2항(점수 31.86), 제15조제4항(24.67), 제11조의2제4항(22.81) 순으로 나왔습니다.</li>
+<li><strong>벡터 색인(vector index)</strong>: 임베딩의 코사인 유사도로 뜻이 가까운 노드를 찾습니다. 이 교재의 Neo4j 5.26에도 <code>db.index.vector.queryNodes</code> 프로시저가 있지만, <strong>이 교재에서는 벡터 색인을 만들지 않았습니다.</strong> Cypher 매뉴얼에 따른 생성 문법은 다음과 같습니다.</li>
+</ul>
+<div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">VECTOR</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">provision_embedding</span><span class="w"> </span><span class="n">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">EXISTS</span>
+<span class="n">FOR</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Provision</span><span class="p">)</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">embedding</span>
+<span class="n">OPTIONS</span><span class="w"> </span><span class="p">{</span><span class="n">indexConfig</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nv">`vector.dimensions`</span><span class="p">:</span><span class="w"> </span><span class="m">1024</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">`vector.similarity_function`</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;cosine&#39;</span>
+<span class="p">}}</span>
+</code></pre></div>
+
+<p>벡터 색인으로 진입 노드를 찾은 뒤 <code>PENALIZES</code>·<code>IMPLEMENTS</code>를 따라가면, 벡터 검색이 놓친 벌칙 조문을 관계로 보충할 수 있습니다. 반대로 벡터 검색만 쓰는 기본 RAG가 같은 골든 퀘스천에서 무엇을 찾고 놓치는지는 10장에서 측정합니다. 그래프에 벡터 색인을 더하는 일은 11장의 확장 과제입니다.</p>
+<h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
+<details class="answer">
+<summary>노트의 순서도에서 「Application API」가 하던 일은 이 교재에서 누가 하나요?</summary>
+<p>Claude Code가 합니다. 질문을 받아 모델에 넘기고, 모델이 고른 MCP 도구(<code>get-schema</code>, <code>read-cypher</code>)를 Neo4j MCP 서버에 보내고, 반환된 결과를 다시 모델에 넘깁니다. 다른 점은 순서를 애플리케이션 코드가 정하지 않고 모델이 정한다는 것입니다. 그래서 Cypher가 틀리면 오류 문구를 읽고 수정해 다시 호출할 수 있습니다.</p>
+</details>
+<details class="answer">
+<summary>LLM 중의성 해소가 「관계인」과 「관계자」를 한 묶음으로 만든 이유는 무엇이고, 어떻게 바로잡았나요?</summary>
+<p>LLM은 이름 목록만 받아서 조문 문맥과 법이 정한 정의를 모른 채, 뜻이 비슷해 보이는 낱말을 합쳤습니다. 이 교재에서는 규칙·사전 방식의 결과와 나란히 비교한 뒤 사람이 「관계자는 관계인이 아니니 떼어 내라」고 지시해 따로 두었습니다(7장).</p>
+</details>
+<details class="answer">
+<summary>질문 때 엔티티 연결을 아무리 잘해도, 적재 때 중의성 해소가 안 되어 있으면 어떤 일이 생기나요?</summary>
+<p>질문의 「관계인」이 노드 하나에 연결되어도 「제조소등의 관계인」「당해 제조소등의 관계인」처럼 따로 남은 노드에 연결된 의무는 나오지 않습니다. 질의 단계에서 표기를 하나하나 모두 알아맞혀야 하므로 빠뜨리기 쉽습니다. 적재 때 합쳐 두어야 한 낱말로 관련 의무를 모두 모을 수 있습니다.</p>
+</details>
+<h2 id="참고-자료">참고 자료<a class="anchor" href="#참고-자료" title="Permanent link">#</a></h2>
+<ul>
+<li>Creating a Knowledge Graph From Video Transcripts With GPT-4 — <a href="https://medium.com/neo4j/creating-a-knowledge-graph-from-video-transcripts-with-gpt-4-52d7c7b9f32c">https://medium.com/neo4j/creating-a-knowledge-graph-from-video-transcripts-with-gpt-4-52d7c7b9f32c</a> (노트에서 중의성 해소 프롬프트 바로 아래에 있는 글)</li>
+<li>ai graph db disambiguation (YouTube) — <a href="https://youtu.be/eirBMLpAtcA">https://youtu.be/eirBMLpAtcA</a></li>
+<li>Constructing knowledge graphs from text using OpenAI functions — <a href="https://bratanic-tomaz.medium.com/constructing-knowledge-graphs-from-text-using-openai-functions-096a6d010c17">https://bratanic-tomaz.medium.com/constructing-knowledge-graphs-from-text-using-openai-functions-096a6d010c17</a></li>
+<li>LangChain Cypher 체인 코드 — <a href="https://api.python.langchain.com/en/latest/_modules/langchain/chains/graph_qa/cypher.html">https://api.python.langchain.com/en/latest/_modules/langchain/chains/graph_qa/cypher.html</a></li>
+<li>Vector search indexes — Cypher Manual — <a href="https://neo4j.com/docs/cypher-manual/current/indexes/semantic-indexes/vector-indexes/">https://neo4j.com/docs/cypher-manual/current/indexes/semantic-indexes/vector-indexes/</a></li>
+<li>Harnessing Large Language Models with Neo4j — <a href="https://medium.com/neo4j/harnessing-large-language-models-with-neo4j-306ccbdd2867">https://medium.com/neo4j/harnessing-large-language-models-with-neo4j-306ccbdd2867</a></li>
+<li>neo4j/naLLM (오픈소스) — <a href="https://github.com/neo4j/naLLM">https://github.com/neo4j/naLLM</a></li>
+</ul>
+    </article>
+    <nav class="pager"><a class="prev" href="why-graph.html"><span>이전</span>왜 그래프인가</a><a class="next" href="neo4j-docker.html"><span>다음</span>Docker로 Neo4j 띄우기</a></nav>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+  </main>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#학습-내용과-목적">학습 내용과 목적</a></li><li><a href="#적재-글을-그래프로-바꾸는-3단계">적재: 글을 그래프로 바꾸는 3단계</a><ul><li><a href="#1-조각내기chunking">1. 조각내기(Chunking)</a></li><li><a href="#2-엔티티노드-관계엣지-추출">2. 엔티티(노드) · 관계(엣지) 추출</a></li><li><a href="#3-엔티티-중의성-해소entity-disambiguation">3. 엔티티 중의성 해소(Entity Disambiguation)</a></li></ul></li><li><a href="#질의-그래프에서-답을-찾는-5단계">질의: 그래프에서 답을 찾는 5단계</a><ul><li><a href="#①-엔티티-연결-질문-속-말을-그래프에-연결하기">① 엔티티 연결: 질문 속 말을 그래프에 연결하기</a></li><li><a href="#②-스키마를-컨텍스트에-get-schema">② 스키마를 컨텍스트에: get-schema</a></li><li><a href="#③-cypher-생성-틀린-시도-포함">③ Cypher 생성: 틀린 시도 포함</a></li><li><a href="#④-실행-반환된-부분-그래프">④ 실행: 반환된 부분 그래프</a></li><li><a href="#⑤-답-생성">⑤ 답 생성</a></li></ul></li><li><a href="#적재-때-엔티티-중의성-해소와-질문-때-엔티티-연결">적재 때 엔티티 중의성 해소와 질문 때 엔티티 연결</a></li><li><a href="#벡터-색인과의-혼합">벡터 색인과의 혼합</a></li><li><a href="#확인-문제">확인 문제</a></li><li><a href="#참고-자료">참고 자료</a></li></ul></aside>
+</div>
+<script src="assets/docs.js"></script>
+</body>
+</html>
