@@ -133,6 +133,48 @@ PGPT_URL=http://localhost:18080 MAILPIT_URL=http://localhost:18025 npm run test:
 
 업그레이드 때마다 smoke와 feature를, 큰 릴리스 전에는 agent까지 돌리는 것을 권합니다.
 
+## 기본 모델 바꾸기
+
+비서와 에이전트가 사용하는 모델은 몇 가지 설정으로 바꿀 수 있습니다. OpenAI 호환 주소로 제공되는 모델이라면 어느 회사의 모델이든 사용할 수 있습니다. Anthropic의 Claude처럼 OpenAI 형식이 아닌 모델은 LiteLLM 같은 중계 서버(프록시)를 앞에 두고 해당 주소를 사용합니다.
+
+| 설정 (설치 번들 `.env`) | 서버 환경 변수 | 쓰는 곳 |
+|---|---|---|
+| `LLM_MODEL` | `PRO_LLM_MODEL` · 에이전트 `LLM_MODEL` | 비서의 답변, 에이전트의 작업 |
+| `LLM_FAST_MODEL` | `PRO_LLM_FAST_MODEL` | 메시지 분류 · 폴더 색인처럼 짧은 판단 |
+| `LLM_ODDS_MODEL` | `PRO_LLM_ODDS_MODEL` | 첫 토큰의 확률을 기준으로 선택하는 판정(고르기 · 습관 · 가드레일). 비워 두면 `LLM_MODEL` 사용 |
+| `LLM_USE_RESPONSES_API` | 에이전트 `LLM_USE_RESPONSES_API` | OpenAI 추론 모델은 `true`, 프록시를 거치는 Claude는 `false` |
+
+순서는 다음과 같습니다.
+
+<ol class="steps" markdown="1">
+<li markdown="1">**모델을 사용할 수 있도록 설정합니다.** LiteLLM을 사용한다면 관리 화면 「Models + Endpoints → Add Model」에서 Provider(예: Anthropic), 모델 이름(목록에 없으면 「Custom Model Name」), 서비스에서 호출할 이름(Public Model Name), API 키를 입력합니다. Claude 5.5 계열은 「Advanced Settings → LiteLLM Params」에 아래 값을 입력하면 프록시가 Claude에서 지원하지 않는 매개변수를 제거합니다.
+
+```json
+{"max_tokens":32000,"additional_drop_params":["temperature","top_p","top_k","reasoning_effort","thinking","chat_template_kwargs","logprobs","top_logprobs"],"timeout":300,"stream_timeout":300,"num_retries":1}
+```
+
+![LiteLLM 관리 화면의 모델 추가](img/admin-litellm-add-model.webp)
+</li>
+<li markdown="1">**서비스 키에서 모델 사용을 허용합니다.** Lite가 사용하는 프록시 키에 허용 모델 목록이 있으면(「Virtual Keys → 키 → Settings → Edit Settings → Models」) 새 모델을 추가합니다. 빠뜨리면 호출이 401 「key not allowed to access model」 오류로 거부됩니다.</li>
+<li markdown="1">**한 번 호출해 봅니다.** 프록시의 Playground나 `curl`로 새 모델 이름을 호출해 응답하는지 확인합니다.</li>
+<li markdown="1">**설정을 바꾸고 다시 실행합니다.** 설치 번들은 `.env`를 수정한 뒤 `docker compose up -d`를 실행합니다. 로그 확률을 제공하지 않는 모델(Claude)을 `LLM_MODEL`로 사용한다면 `LLM_ODDS_MODEL`에 로그 확률을 제공하는 모델을 지정합니다. 비워 두면 확률 없이 기본값으로 판정합니다.</li>
+<li markdown="1">**확인합니다.** 아래 「배포 뒤 점검」과 smoke 테스트를 실행하고, 비서에게 한 번 질문합니다.</li>
+<li markdown="1">**되돌리려면** 변경한 설정을 이전 값으로 복원하고 다시 실행합니다. 프록시에 추가한 모델은 남겨 두어도 됩니다.</li>
+</ol>
+
+Lite가 자동으로 처리하는 부분도 있습니다. 모델이 특정 매개변수(예: `temperature`)를 거부하면 해당 매개변수를 빼고 다시 요청하며, 이후에도 해당 모델에는 그 매개변수를 보내지 않습니다. JSON으로 응답하도록 요청했는데 모델이 `` ```json `` 울타리로 감싸서 응답하면 울타리 안의 JSON을 읽습니다.
+
+## 배포 뒤 점검
+
+로그인하지 않고도 외부에서 확인할 수 있는 항목입니다.
+
+| 확인 | 방법 | 정상 |
+|---|---|---|
+| 기본 도구가 에이전트에 연결되었는지 | `curl -s <Lite 주소>/api/config`의 `agentTools` | 모두 `true`. 폴더 · 패널 앱 · 개선 · ArtCraft · 이음오피스 같은 기본 도구는 회사(테넌트)마다 등록하지 않아도 플랫폼이 연결합니다. `agentToolsVia`는 연결 방식을 알려 줍니다 |
+| 받아쓰기가 작동하는지 | 같은 응답의 `transcribe` | `ok: true`. 서버에 포함된 짧은 음성을 회의에 사용하는 모델로 받아써 본 결과입니다. 실패하면 `error`에 원인이 표시됩니다(`http-401`이면 해당 키로 모델을 사용할 수 없음) |
+| 세 가지를 한 번에 확인 | `cd e2e && PGPT_LITE_URL=<Lite 주소> npx playwright test --project=deploy tests/deploy/agent-tools.spec.js tests/deploy/craft-install.spec.js tests/deploy/stt.spec.js` | 모두 통과 |
+| 모델이 실제로 사용되는지 | 프록시의 「Logs」 화면 | 새 모델 이름으로 성공한 호출이 표시됨 |
+
 ## 개인정보를 지키는 기본값
 
 | 영역 | 기본 동작 |
@@ -156,10 +198,12 @@ PGPT_URL=http://localhost:18080 MAILPIT_URL=http://localhost:18025 npm run test:
     1. 박서연이 퇴사해 계정을 막고 싶습니다. 팀에서 빼는 것 말고 무엇을 확인해야 할까요?
     2. 서버를 새 PC로 옮기면서 데이터베이스만 백업해 왔습니다. 무엇이 안 될까요?
     3. 업그레이드 뒤 smoke는 통과했는데 feature에서 ArtCraft 시험이 모두 “건너뜀”입니다. 실패인가요?
+    4. 기본 모델을 Claude로 바꾼 뒤 비서는 잘 답하지만, 같은 요청에 대해 자동으로 선택하던 작업(방 규칙 · 습관 묻기)이 늘 같은 쪽으로만 선택됩니다. 무엇을 확인해야 할까요?
 
 <details class="answer" markdown="1"><summary>답</summary>
 
 1. 관리자가 팀에서 빼면 역할 담당에서도 빠지므로, 그 사람이 맡던 역할의 새 담당자를 정합니다(비워 두면 일을 시작한 사람이 맡습니다). 뺀 사람은 다시 로그인해도 저절로 팀에 들어오지 않습니다. 로그인 자체를 막으려면 데모 로그인이 꺼져 있는지 확인하고, 로그인 서버(Supabase Auth)에서 계정을 막습니다.
 2. KEK가 없으면 보관함 항목(로그인·카드·커넥터 토큰)을 열 수 없습니다. 파일 저장소가 없으면 카드의 문서·그림이 열리지 않고, 공유 폴더 볼륨이 없으면 폴더의 이력과 변형이 사라집니다.
 3. 아닙니다. `--with-craft` 없이 설치했다면 ArtCraft 앱이 없어 그 시험은 이유를 단 건너뜀으로 끝납니다. `/api/config`의 `craft`에 앱이 있다고 나오는데도 건너뛴다면 그때 원인을 봅니다.
+4. Claude는 로그 확률을 제공하지 않으므로 확률을 기준으로 선택하는 판정에서 기본값이 사용됩니다. `LLM_ODDS_MODEL`(서버 `PRO_LLM_ODDS_MODEL`)에 로그 확률을 제공하는 모델을 지정하고 다시 실행합니다. 해당 모델도 프록시의 서비스 키에서 사용이 허용되어 있어야 합니다.
 </details>
