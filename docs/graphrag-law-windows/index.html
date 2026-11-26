@@ -333,6 +333,7 @@
 </ul>
 <h3 id="한-번에-확인하기">한 번에 확인하기<a class="anchor" href="#한-번에-확인하기" title="Permanent link">#</a></h3>
 <p>이미 설치한 것이 있는지 PowerShell 창에 아래를 붙여 넣어 한 번에 봅니다. 없는 프로그램은 <code>없음</code>으로 나옵니다.</p>
+<p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
 <div class="hl"><pre><span></span><code><span class="k">foreach</span> <span class="p">(</span><span class="nv">$c</span> <span class="k">in</span> <span class="s1">'powershell'</span><span class="p">,</span><span class="s1">'pwsh'</span><span class="p">,</span><span class="s1">'java'</span><span class="p">,</span><span class="s1">'git'</span><span class="p">,</span><span class="s1">'uv'</span><span class="p">,</span><span class="s1">'claude'</span><span class="p">)</span> <span class="p">{</span>
   <span class="nv">$p</span> <span class="p">=</span> <span class="nb">Get-Command</span> <span class="nv">$c</span> <span class="n">-ErrorAction</span> <span class="n">SilentlyContinue</span>
   <span class="s1">'{0,-11} {1}'</span> <span class="o">-f</span> <span class="nv">$c</span><span class="p">,</span> <span class="p">($(</span><span class="k">if</span> <span class="p">(</span><span class="nv">$p</span><span class="p">)</span> <span class="p">{</span> <span class="nv">$p</span><span class="p">.</span><span class="n">Source</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="s1">'없음'</span> <span class="p">}))</span>
@@ -457,6 +458,36 @@
 <p class="admonition-title">법령 해석은 원문으로</p>
 <p>모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있습니다. 실무에서 쓸 때는 답에 붙은 근거 조문을 반드시 원문으로 확인하세요.</p>
 </div>
+<h2 id="정리와-다음-장">정리와 다음 장<a class="anchor" href="#정리와-다음-장" title="Permanent link">#</a></h2>
+<p><strong>이 장에서 한 일</strong></p>
+<table>
+<thead>
+<tr>
+<th>한 일</th>
+<th>어디서</th>
+<th>남은 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>실습 목표와 골든 퀘스천 다섯 개를 읽었습니다</td>
+<td>이 페이지</td>
+<td>마지막(9장)에 확인할 질문</td>
+</tr>
+<tr>
+<td>필요한 도구(Claude Code 유료 플랜, uv, Git, JDK 21, Neo4j 5.26)와 버전을 확인했습니다</td>
+<td>작업 창(Windows PowerShell)</td>
+<td>한 번에 확인 스크립트의 결과</td>
+</tr>
+<tr>
+<td>위험물안전관리법 PDF 3개(법률·시행령·시행규칙)를 받았습니다</td>
+<td>웹 브라우저</td>
+<td><code>다운로드</code> 폴더의 PDF 3개</td>
+</tr>
+</tbody>
+</table>
+<p><strong>왜 중요한가요?</strong> 목표(골든 퀘스천)를 먼저 정해 두어야 5장에서 스키마를 설계할 때 「무엇을 답하려고 만드는 그래프인가」를 Claude에게 설명할 수 있습니다.</p>
+<p><strong>다음 장(3장)에서 할 일:</strong> 아직 설치되지 않은 도구를 설치하고, Docker 없이 Neo4j ZIP을 풀어 APOC를 켠 뒤, 매번 쓸 <code>env.ps1</code>을 만들어 Neo4j를 실행합니다. 모든 명령은 <strong>작업 창(Windows PowerShell)</strong> 에 입력합니다.</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>법령을 9개에서 1개(PDF 3개)로 줄여도 골든 퀘스천 다섯 개에 모두 답할 수 있는 이유는 무엇인가요?</summary>
@@ -468,9 +499,9 @@
 </details>
     </article>
     <nav class="pager"><span></span><a class="next" href="neo4j-windows.html"><span>다음</span>Windows에 Neo4j 설치하기</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#원-교재와-무엇이-다른가요">원 교재와 무엇이 다른가요</a></li><li><a href="#골든-퀘스천">골든 퀘스천</a></li><li><a href="#장-안내">장 안내</a></li><li><a href="#필요한-기술-스택">필요한 기술 스택</a><ul><li><a href="#꼭-준비할-것">꼭 준비할 것</a></li><li><a href="#한눈에-보기">한눈에 보기</a></li><li><a href="#구성-요소별-설명과-내려받기">구성 요소별 설명과 내려받기</a></li><li><a href="#한-번에-확인하기">한 번에 확인하기</a></li><li><a href="#실습-폴더-위치">실습 폴더 위치</a></li><li><a href="#법령-pdf-받기">법령 PDF 받기</a></li></ul></li><li><a href="#이-교재의-수치와-검증-범위">이 교재의 수치와 검증 범위</a></li><li><a href="#걸리는-시간과-비용">걸리는 시간과 비용</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#원-교재와-무엇이-다른가요">원 교재와 무엇이 다른가요</a></li><li><a href="#골든-퀘스천">골든 퀘스천</a></li><li><a href="#장-안내">장 안내</a></li><li><a href="#필요한-기술-스택">필요한 기술 스택</a><ul><li><a href="#꼭-준비할-것">꼭 준비할 것</a></li><li><a href="#한눈에-보기">한눈에 보기</a></li><li><a href="#구성-요소별-설명과-내려받기">구성 요소별 설명과 내려받기</a></li><li><a href="#한-번에-확인하기">한 번에 확인하기</a></li><li><a href="#실습-폴더-위치">실습 폴더 위치</a></li><li><a href="#법령-pdf-받기">법령 PDF 받기</a></li></ul></li><li><a href="#이-교재의-수치와-검증-범위">이 교재의 수치와 검증 범위</a></li><li><a href="#걸리는-시간과-비용">걸리는 시간과 비용</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

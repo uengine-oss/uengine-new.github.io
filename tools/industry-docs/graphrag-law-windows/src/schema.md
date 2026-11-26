@@ -18,6 +18,8 @@
 
 **왜 하나요?** Claude Code는 실습 폴더 안의 파일만 읽습니다. 원본 PDF를 커밋해 두면 나중에 판본이 바뀌어도 어느 PDF로 만든 그래프인지 기록이 남고, 6장에서 원문과 대조할 기준이 됩니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 New-Item -ItemType Directory -Force pdf | Out-Null
@@ -25,6 +27,8 @@ Copy-Item "$HOME\Downloads\위험물안전관리법*.pdf" pdf\
 Get-ChildItem pdf -Name
 git add pdf; git commit -qm "위험물안전관리법 PDF 3개"
 ```
+
+**출력 예시**
 
 ```text
 위험물안전관리법 시행규칙(행정안전부령)(제00628호)(20260701).pdf
@@ -38,6 +42,8 @@ git add pdf; git commit -qm "위험물안전관리법 PDF 3개"
 
 **왜 하나요?** Claude Code는 실행한 폴더를 작업 범위로 삼습니다. 실습 폴더에서 열어야 PDF를 읽고 결과 파일을 그 폴더에 만들며, 폴더 밖의 파일은 건드리지 않습니다.
 
+**Claude Code 화면 예시**
+
 ```text
  Accessing workspace:
  …/law-graph
@@ -47,6 +53,8 @@ git add pdf; git commit -qm "위험물안전관리법 PDF 3개"
 ```
 
 Windows에서는 **PowerShell 창에서 `C:\lab\law-graph`로 이동하고 `env.ps1`을 점 소싱한 뒤** `claude`를 실행합니다. 처음 실행하면 브라우저가 열려 Claude 계정 로그인을 요청합니다.
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 Set-Location C:\lab\law-graph
@@ -61,6 +69,8 @@ Windows용 Claude Code는 Claude가 셸 명령을 실행할 때 Git for Windows�
 <li markdown="1">**설계를 요청합니다(P1).** 구축 목적, 골든 퀘스천, 「아직 코드는 만들지 말고 PDF부터 열어 보라」는 작업 순서, 결과 파일 이름을 한 번에 전달합니다. 여러 줄을 입력할 때는 줄 끝에서 `\` + Enter를 눌렀습니다.
 
 **왜 하나요?** 답해야 할 질문이 정해져야 어떤 노드와 관계가 필요한지 정할 수 있습니다. 코드를 짜기 전에 PDF를 먼저 보게 하면, 실제 조문의 모양(항 없이 호만 있는 조, 가지번호 등)을 설계 단계에서 반영해 나중에 고칠 일이 줄어듭니다.
+
+**▶ Claude Code 입력창에 붙여 넣기**
 
 ```text
 우리 회사에 「위험물 안전관리 매뉴얼」을 내부 구축하려고 해. pdf/ 폴더에 위험물안전관리법 PDF 3개(법률·시행령·시행규칙)가 있어. 이 PC는 Windows 이고, 코드는 나중에 PowerShell 에서 uv 로 실행할 거야. 이걸 Neo4j 그래프로 만들어서 아래 골든 퀘스천에 근거 조문과 함께 답하게 하고 싶어.
@@ -79,6 +89,8 @@ Windows용 Claude Code는 Claude가 셸 명령을 실행할 때 Git for Windows�
 
 **왜 하나요?** AI의 설계를 그대로 받아들이지 않고 사람이 검토하는 것이 바이브 코딩의 핵심입니다. 질문의 낱말과 조문 표기가 다르다는 문제는 지금 잡지 않으면 9장에서 「검색이 안 된다」로 드러납니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 schema.md 읽어 봤어. 두 가지 고쳐 줘.
 1. 질문에 쓰는 말과 조문 표기가 달라. 질문은 「안전관리자」「시·도지사」「위치·구조·설비」(가운뎃점 ·)라고 쓰는데 PDF 는 「위험물안전관리자」「시ㆍ도지사」(ㆍ)「특별시장ㆍ광역시장ㆍ…ㆍ도지사」로 쓰고, 「제조소등」은 「제조소ㆍ저장소 및 취급소」야. Term·Actor 에 대표 이름, 별칭(aliases), 가운뎃점을 맞춘 정규화 이름을 두고, 정의 조항(제2조)과 「이하 "…"라 한다」 약칭에서 별칭을 채우는 규칙을 적어 줘. 질문의 낱말을 어떤 색인으로 이 노드에 연결하는지도 Q2 를 예로 보여 줘.
@@ -92,9 +104,13 @@ schema.md 읽어 봤어. 두 가지 고쳐 줘.
 
 **왜 하나요?** 검토를 마친 설계를 커밋해 두면 6장의 코드가 이 설계를 기준으로 만들어지고, 나중에 설계를 바꿀 때 무엇이 바뀌었는지 비교할 수 있습니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 좋아, schema.md·schema.cypher·golden-questions.md 를 커밋해 줘.
 ```
+
+**▶ Claude Code 입력창에 붙여 넣기**
 
 ```text
 이 실습은 main 하나로 할게. main 으로 합치고 앞으로도 main 에 커밋해 줘.
@@ -108,10 +124,14 @@ Claude는 `git merge --ff-only`로 합치고 브랜치를 지웠습니다. 이�
 
 세 파일이 main에 반영됐는지 확인합니다. 커밋 번호와 메시지는 사용자마다 다릅니다(아래는 이 실습의 기록이며, 첫 커밋 줄은 생략했습니다).
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Get-ChildItem schema.md, schema.cypher, golden-questions.md
 git log --oneline
 ```
+
+**출력 예시**
 
 ```text
 27726ff 법령 그래프 스키마 설계와 골든 퀘스천 5개
@@ -191,6 +211,8 @@ P1에서 「먼저 PDF를 열어 보라」고 요청한 덕분에 Claude가 스�
 
 설계 당시에는 데이터가 없어 이 경로를 실행해 보지 못했고, 6장에서 적재한 뒤 Q1~Q4의 진입 조문이 최상위에 나오고 Q5의 벌칙 10건이 기대 답과 일치하는 것을 확인했습니다. Q2의 진입 질의는 다음과 같습니다(`schema.md` 7절).
 
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
+
 ```cypher
 // 질문 안에 Term 의 열쇠(정규화한 대표 이름·별칭)가 들어 있나
 MATCH (t:Term {family: '위험물안전관리법'})
@@ -221,6 +243,8 @@ Claude는 「제조소」를 「제조소등」의 별칭이 아닌 **구성원(
 | 범위 색인 8개 | `term_family`, `term_norm_name`, `provision_law_article`, `provision_level`, `provision_current`, `provision_citation`, `law_family`, `sanction_type` |
 | 전문 색인 2개(`cjk`) | `provision_text`(조 제목·정규화한 텍스트), `term_text`(용어 `searchText`) |
 | 주석으로 둔 것 | 의미층(`Norm`·`Actor`) 제약과 색인, 벡터 색인 |
+
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
 
 ```cypher
 // 조·항·호·목은 모두 :Provision 라벨을 함께 갖는다(:Article / :Paragraph / :Item / :SubItem).
@@ -264,6 +288,21 @@ OPTIONS { indexConfig: { `fulltext.analyzer`: 'cjk' } };
     - 증상: 「main에 커밋해 줘」라고 하자 `Wrote 1 memory`로 `%USERPROFILE%\.claude\projects\C--lab-law-graph\memory\…`(원 교재는 `~/.claude/projects/…`)를 만들고, 이어서 `MEMORY.md` 색인에 줄을 추가하는 Bash를 승인해 달라고 합니다(경로가 실습 폴더 밖).
     - 원인: Claude Code의 자동 메모리(auto memory) 기능이 사용자 지시를 다음 세션용 메모로 남깁니다. 메모 파일 작성에는 승인을 요청하지 않고, 색인을 추가하는 Bash에만 승인을 요청했습니다.
     - 조치: 권한 요청에서 3(No) → 「메모리 파일은 건드리지 말고 넘어가자. 실습 폴더 밖은 고치지 마.」 메모를 아예 끄려면 `/memory` 또는 설정에서 자동 메모리를 끕니다. 남은 메모 파일 하나는 실습 결과에 영향이 없었습니다.
+
+## 정리와 다음 장
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 결과물 |
+|---|---|---|
+| 법령 PDF 3개를 `pdf\`에 넣고 커밋 | 작업 창 | `pdf\위험물안전관리법*.pdf` |
+| 실습 폴더에서 Claude Code 실행 | 작업 창 → Claude Code | 폴더 신뢰 확인 완료 |
+| 스키마 설계 요청(P1)과 수정 요청(P2) | Claude Code 입력창 | 설계 문서와 `schema.cypher` |
+| 커밋 요청(P3) | Claude Code 입력창 | git 커밋(작업 창의 `git log`로 확인) |
+
+**사람이 한 일:** 설계는 Claude가 했지만, 골든 퀘스천마다 「어느 노드와 관계를 따라가면 답이 나오는가」를 읽고 빠진 것을 짚어 고치게 한 것은 학생입니다. 이 검토가 6장 적재 결과를 판단하는 기준이 됩니다.
+
+**다음 장(6장)에서 할 일:** 같은 Claude Code 세션에서 PDF를 읽어 Neo4j에 넣는 적재 코드를 만들게 합니다. 적재가 끝나면 **원문 PDF와 조 개수·표본 조문을 직접 대조**합니다(Neo4j 창은 계속 켜 둡니다).
 
 ## 확인 문제
 

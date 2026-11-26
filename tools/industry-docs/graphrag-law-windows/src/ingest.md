@@ -15,6 +15,8 @@ Windows의 파이썬은 따로 지정하지 않으면 파일을 시스템 코드
 1. **파이썬을 UTF-8 모드로 실행합니다.** 3장의 `env.ps1`이 `$env:PYTHONUTF8 = '1'`을 설정합니다. Claude Code 안에서 Claude가 실행하는 명령도 `claude`를 실행한 창의 환경변수를 물려받으므로, `env.ps1`을 점 소싱한 창에서 `claude`를 엽니다.
 2. **프롬프트에 조건을 적습니다.** 아래 P4에 「파일은 항상 `encoding='utf-8'`로 열고 경로는 `pathlib`로」라는 줄을 넣었습니다. 코드가 어느 PC에서든 같게 동작하도록 하는 것이 목적입니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -30,6 +32,8 @@ claude
 <li markdown="1">**적재 코드를 요청합니다(P4).** 5장에서 사용한 Claude Code 세션에 이어서 입력합니다(새로 열었다면 위 명령으로 엽니다). 사용할 도구, 파일 두 개의 역할, `MERGE`, 비밀번호 처리 방법, Windows 조건, 완료 후 보고할 수치를 적었습니다.
 
 **왜 하나요?** PDF에서 조·항·호를 나누는 일은 규칙이 많고 지루해 AI에게 맡기기 좋습니다. 대신 사용할 도구, 비밀번호 처리, Windows 인코딩 조건, 보고할 수치를 미리 적어야 원하는 코드가 한 번에 나오고 결과를 검증할 수 있습니다.
+
+**▶ Claude Code 입력창에 붙여 넣기**
 
 ```text
 좋아. 이제 schema.md 대로 적재 코드를 만들어 줘.
@@ -57,6 +61,8 @@ claude
 
 **왜 하나요?** 고친 코드가 처음부터 다시 돌려도 같은 결과를 내는지(재현성) 확인합니다. 걸린 시간은 나중에 법령을 늘릴 때 얼마나 걸릴지 가늠하는 기준이 됩니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -77,6 +83,8 @@ Set-Location C:\lab\law-graph
 | `ingest.py` | `schema.cypher`의 제약·색인을 먼저 적용하고 `UNWIND $rows … MERGE`로 일괄 적재합니다. `--dry-run`·`--reset`·`--prune` |
 
 `data\`는 PDF에서 다시 만들 수 있어 3장에서 `.gitignore`에 넣었습니다. 원 교재에서 Claude가 작성한 핵심 코드를 발췌하면 다음과 같습니다(실행할 때마다 달라질 수 있습니다).
+
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
 
 ```python
 # parse_law.py — 줄의 들여쓰기(x 좌표, pt)로 단계를 가른다
@@ -103,6 +111,8 @@ def merge_edges(session, kind, rows):
 
 파싱 출력은 다음과 같아야 합니다(원 교재에서 P5까지 반영한 최종 결과 중 위험물안전관리법 3종).
 
+**출력 예시**
+
 ```text
 법령                         조     항     호     목    삭제    예정  시행일
 위험물안전관리법 시행규칙     82   130   159    47     7     0  2026-07-01
@@ -121,6 +131,8 @@ cypher-shell에 한글이 들어간 질의를 넘길 때는 4장처럼 **`Write-
 
 ### 1. 조 수
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -131,6 +143,8 @@ RETURN l.lawId AS 법령, count(a) AS 현행조수 ORDER BY 법령;
 '@
 & $cs -u neo4j -p $env:NEO4J_PASSWORD --format plain -f check-articles.cypher
 ```
+
+**출력 예시**
 
 ```text
 법령, 현행조수
@@ -145,6 +159,8 @@ RETURN l.lawId AS 법령, count(a) AS 현행조수 ORDER BY 법령;
 
 조 수가 맞아도 조 안의 항·호가 틀릴 수 있습니다. 구조가 서로 다른 세 조문을 골라 확인합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Write-Utf8 check-samples.cypher @'
 MATCH (a:Article)
@@ -155,6 +171,8 @@ RETURN a.pid AS 조, a.text AS 머리글, collect(p.label) AS 항호;
 '@
 & $cs -u neo4j -p $env:NEO4J_PASSWORD --format plain -f check-samples.cypher
 ```
+
+**출력 예시**
 
 ```text
 조, 머리글, 항호
@@ -183,6 +201,8 @@ PDF에서 「동일한」으로 줄이 끝나고 다음 줄이 「시ㆍ도에�
 
 「띄어쓰기 고쳐 줘」 대신 **어디가 · 어떻게 틀렸고 · 맞는 글은 무엇이며 · 고친 뒤 무엇으로 확인할지**를 적습니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 시행령 제21조 머리글이 「동일한시ㆍ도에」로 붙었어. PDF 원문은 「동일한 시ㆍ도에」야. 줄바꿈 자리 띄어쓰기 규칙을 고쳐 줘.
 고친 뒤 위험물안전관리법 3종에서 줄바꿈 자리 판정이 바뀐 곳의 개수와 예를 보여 주고, 법 제15조·시행령 제21조·시행규칙 제53조 본문을 PDF 와 다시 대조해. 다시 적재해서 노드·관계 수가 그대로인지 확인하고 커밋해 줘.
@@ -210,6 +230,8 @@ PDF에서 「동일한」으로 줄이 끝나고 다음 줄이 「시ㆍ도에�
 
 중복이 없는지는 같은 명령을 두 번 실행해 노드·관계 수가 같은지로 확인합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Write-Utf8 check-total.cypher @'
 MATCH (n) WITH count(n) AS 노드 MATCH ()-[r]->() RETURN 노드, count(r) AS 관계;
@@ -224,6 +246,8 @@ uv run ingest.py | Out-Null; & $cs -u neo4j -p $env:NEO4J_PASSWORD --format plai
 
 국가법령정보센터 PDF에는 시행일이 다른 판본이 같은 문서에 함께 실리기도 합니다. 현행 조문 뒤에 `[시행일: …]`이 붙은 같은 번호의 조문이 한 번 더 나오는 경우입니다. 원 교재의 판본에서는 폐기물관리법에만 있었고 위험물안전관리법 3종에는 없었습니다. 그래도 나중에 받은 판본에는 생길 수 있으므로, 파서가 그런 조문의 `pid` 끝에 `@시행일`을 붙여 따로 적재하고 `isCurrent=false`로 표시하는지 확인해 둡니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (a:Article) WHERE NOT a.isCurrent RETURN a.pid AS 조, a.effectiveFrom AS 시행일 ORDER BY 조
 ```
@@ -236,15 +260,21 @@ MATCH (a:Article) WHERE NOT a.isCurrent RETURN a.pid AS 조, a.effectiveFrom AS 
 
 레이블·관계 타입별 개수를 세어 `ingest.py`의 보고와 맞춰 봅니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (n) UNWIND labels(n) AS 레이블 RETURN 레이블, count(*) AS 노드수 ORDER BY 노드수 DESC
 ```
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
 
 ```cypher
 MATCH ()-[r]->() RETURN type(r) AS 관계, count(*) AS 수 ORDER BY 수 DESC
 ```
 
 제15조와 그 항을 가리키는 하위법령·벌칙 조문을 함께 그려 봅니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
 
 ```cypher
 MATCH (l:Law {lawId:'위험물안전관리법'})-[ha:HAS_ARTICLE]->(a:Article {pid:'위험물안전관리법:제15조'})-[h:HAS_PART]->(p:Paragraph)
@@ -258,6 +288,8 @@ RETURN l, ha, a, h, p, pen, pz, low, im
 이 그림은 위험물안전관리법 3종 안에서만 이어지므로, 법령을 하나로 줄인 이 교재에서도 같은 노드 26 · 관계 26이 나와야 합니다.
 
 골든 퀘스천 5번의 경로인 「제재 ← 벌칙 조·항 → 벌칙 호 → 의무 항 ← 조」를 한 번에 그립니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
 
 ```cypher
 MATCH path = (s:Sanction)<-[:IMPOSES]-(:Provision)-[:HAS_PART*1..2]->(pen)-[:PENALIZES]->(:Provision)<-[:HAS_PART]-(a:Article)
@@ -303,6 +335,21 @@ RETURN path
     - 조치: 전문 색인용 글(`normText`·`searchText`)은 가운뎃점을 공백으로 바꾸고, 용어 키(`normName`·`normKeys`)만 「·」로 통일합니다.
 
     명령 두 개를 이어 쓸 때는 `;`를 씁니다. 원 교재의 `&&`(앞 명령이 성공했을 때만 다음 명령)는 PowerShell 7에서는 되지만 Windows PowerShell 5.1에서는 오류이므로, 이 교재는 `;`로 통일했습니다.
+
+## 정리와 다음 장
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 결과물 |
+|---|---|---|
+| 적재 코드 요청(P4)과 실행 승인 | Claude Code 입력창 | `uv` 프로젝트, 파서·적재 스크립트 |
+| 조·항·호·목 수와 표본 조문을 원문과 대조 | 작업 창(`& $cs -f`) / Neo4j Browser | 조 157 · 항 276 · 호 357 · 목 67 |
+| 틀린 곳을 구체적으로 짚어 수정 요청(P5) | Claude Code 입력창 | 고쳐진 적재 코드 |
+| 처음부터 다시 실행해 중복이 없는지 확인 | 작업 창 | 두 번 실행해도 같은 수치 |
+
+**왜 중요한가요?** 이후 모든 답은 이 그래프에서 나옵니다. 적재가 틀리면 Claude가 아무리 질의를 잘 써도 답이 틀립니다. 「Claude가 다 했다」가 아니라 「원문과 맞는지 사람이 확인했다」가 이 장의 완료 조건입니다.
+
+**다음 장(7장)에서 할 일:** 조문 속 「관계인」「소방서장」 같은 행위자(Actor) 이름을 LLM으로 뽑아, 같은 대상을 가리키는 다른 이름을 하나로 합치는 의미층을 만듭니다. 주로 **Claude Code 입력창**에서 진행합니다.
 
 ## 확인 문제
 

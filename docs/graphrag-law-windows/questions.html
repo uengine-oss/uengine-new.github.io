@@ -74,6 +74,7 @@
 <li>
 <p><strong>질문을 하나씩 붙여 넣습니다.</strong> 골든 퀘스천 원문 뒤에 같은 문구 하나만 붙입니다. 그래프 구조에 대한 힌트는 주지 않습니다.</p>
 <p><strong>왜 하나요?</strong> 그래프 구조에 대한 힌트 없이 질문 원문만 주어야, 실제 사용자가 물었을 때와 같은 조건에서 그래프가 답의 근거를 제공하는지 볼 수 있습니다.</p>
+<p><strong>▶ Claude Code 입력창에 붙여 넣기</strong></p>
 <div class="hl"><pre><span></span><code>제조소등에서 위치·구조·설비 변경 없이 저장·취급하는 위험물의 품명·수량(지정수량 배수)을 바꾸려면 언제까지 누구에게 신고해야 하는가? Neo4j 에서 찾아 근거 조문과 함께 답해 줘.
 위험물안전관리자가 해임되거나 퇴직하면 관계인은 며칠 안에 다시 선임해야 하고, 선임한 뒤에는 어떤 절차를 밟아야 하는가? Neo4j 에서 찾아 근거 조문과 함께 답해 줘.
 정기점검을 마친 제조소등의 관계인은 점검 결과를 언제까지 누구에게 제출해야 하는가? Neo4j 에서 찾아 근거 조문과 함께 답해 줘.
@@ -143,6 +144,7 @@
 <p>시간은 질문을 입력한 시점부터 마지막 기록까지이며, 권한 요청에 대한 응답을 기다린 시간도 포함합니다. 모델이 작성하는 Cypher와 문장은 실행할 때마다 달라질 수 있습니다.</p>
 <h3 id="1번-품명수량-변경-신고">1번 — 품명·수량 변경 신고<a class="anchor" href="#1번-품명수량-변경-신고" title="Permanent link">#</a></h3>
 <p>Claude는 먼저 MCP 도구 정의를 불러오고(<code>ToolSearch</code>) <code>get-schema</code>로 스키마(9,111자)를 받은 뒤, 의미층(Norm)에서 「품명」을 찾았습니다.</p>
+<p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="n">Norm</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">BASED_ON</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">object</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'품명'</span><span class="w"> </span><span class="n">OR</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'품명'</span><span class="w"> </span><span class="n">OR</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">action</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'품명'</span><span class="w"> </span><span class="n">OR</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'품명'</span>
 <span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_SUBJECT</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span><span class="w"> </span><span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ADDRESSED_TO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">normId</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">modality</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineText</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineKind</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineValue</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineUnit</span><span class="p">,</span>
@@ -156,16 +158,19 @@
 <p><strong>판정: 맞음.</strong> 법 제15조제2항 「… 해임하거나 퇴직한 날부터 30일 이내에 다시 안전관리자를 선임하여야 한다.」, 제3항 「… 선임한 날부터 14일 이내에 행정안전부령으로 정하는 바에 따라 소방본부장 또는 소방서장에게 신고하여야 한다.」</p>
 <h3 id="3번-정기점검-결과-제출-cypher-오류를-스스로-고친-장면">3번 — 정기점검 결과 제출: Cypher 오류를 스스로 고친 장면<a class="anchor" href="#3번-정기점검-결과-제출-cypher-오류를-스스로-고친-장면" title="Permanent link">#</a></h3>
 <p>첫 질의는 조문 텍스트·Sanction·Norm·Actor를 한 번에 연결하고 <code>collect</code>로 모은 뒤 <code>ORDER BY p.lawId</code>로 정렬하려다 실패했습니다.</p>
+<p><strong>Claude가 보여 준 결과 예시</strong>(직접 입력하지 않음)</p>
 <div class="hl"><pre><span></span><code>error during GetQueryType: Neo4jError: Neo.ClientError.Statement.SyntaxError (In a WITH/RETURN with DISTINCT or an aggregation, it is not possible to access variables declared before the WITH/RETURN: p (line 6, column 244 (offset: 571))
 </code></pre></div>
 
 <p>집계(<code>collect</code>)를 한 뒤에는 집계 전 변수(<code>p</code>)를 <code>ORDER BY</code>에 쓸 수 없다는 뜻입니다. Claude는 오류를 읽고 질의를 나눴습니다. 집계가 없는 질의로 법 제18조·제39조제1항, 시행규칙 제64조·제68조를 <code>pid</code>로 조회하고, Norm 하나만 따로 가져왔습니다.</p>
+<p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="n">Norm</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">BASED_ON</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="p">{</span><span class="n">pid</span><span class="p">:</span><span class="s">'위험물안전관리법:제18조:제2항'</span><span class="p">})</span>
 <span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ADDRESSED_TO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span><span class="w"> </span><span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_SUBJECT</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">sj</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">normId</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineText</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineValue</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineUnit</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineKind</span><span class="p">,</span>
 <span class="w">       </span><span class="n">n</span><span class="p">.</span><span class="n">reviewed</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">uncheckedFields</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">sj</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">subj</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">recip</span>
 </code></pre></div>
 
+<p><strong>Claude가 보여 준 결과 예시</strong>(직접 입력하지 않음)</p>
 <div class="hl"><pre><span></span><code>"n.deadlineText": "점검을 한 날부터 30일 이내", "n.deadlineValue": 30, "n.deadlineUnit": "일",
 "n.reviewed": false, "recip": ["시ㆍ도지사"], "subj": ["관계인"], …
 </code></pre></div>
@@ -174,6 +179,7 @@
 <p><strong>판정: 맞음.</strong> 법 제18조제2항 「제1항에 따라 정기점검을 한 제조소등의 관계인은 점검을 한 날부터 30일 이내에 점검결과를 시ㆍ도지사에게 제출하여야 한다.」, 시행령 제21조제11호 「법 제18조제2항에 따른 정기점검 결과의 수리」.</p>
 <h3 id="4번-유출-사고-데이터-오류를-찾아낸-장면">4번 — 유출 사고: 데이터 오류를 찾아낸 장면<a class="anchor" href="#4번-유출-사고-데이터-오류를-찾아낸-장면" title="Permanent link">#</a></h3>
 <p>Claude는 제27조의 Norm을 <code>WITH</code>로 먼저 모은 뒤 결과를 받았습니다(3번에서 발생한 오류를 피한 것으로 보입니다).</p>
+<p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="n">Norm</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">BASED_ON</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="k">STARTS</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="s">'위험물안전관리법:제27조'</span>
 <span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ADDRESSED_TO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span><span class="w"> </span><span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_SUBJECT</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">sj</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span>
 <span class="k">WITH</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">sj</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">subj</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">recip</span>
@@ -182,6 +188,7 @@
 </code></pre></div>
 
 <p>제2항에 해당하는 행에서 <code>"recip": ["경찰서", " 밖의 관계기관", "소방서"]</code>가 반환되었고, Claude는 답 끝에 이렇게 적었습니다.</p>
+<p><strong>Claude가 보여 준 결과 예시</strong>(직접 입력하지 않음)</p>
 <div class="hl"><pre><span></span><code>제27조제2항 Norm의 수신 Actor 중 하나가 이름이 " 밖의 관계기관"으로 저장되어 있습니다. "그 밖의 관계기관"에서 앞 글자
 "그"가 잘린 추출 오류로 보입니다.
 </code></pre></div>
@@ -190,6 +197,7 @@
 <p><strong>판정: 맞음.</strong> 법 제27조제1항 「제조소등의 관계인은 당해 제조소등에서 위험물의 유출 그 밖의 사고가 발생한 때에는 즉시 그리고 지속적으로 … 응급조치를 강구하여야 한다.」, 제2항 「제1항의 사태를 발견한 자는 즉시 그 사실을 소방서, 경찰서 또는 그 밖의 관계기관에 통보하여야 한다.」, 제3항 「소방본부장 또는 소방서장은 제조소등의 관계인이 제1항의 응급조치를 강구하지 아니하였다고 인정하는 때에는 제1항의 응급조치를 강구하도록 명할 수 있다.」 명령 위반은 제36조제15호(1천500만원 이하의 벌금)에 해당합니다.</p>
 <h3 id="5번-벌칙과태료-여러-조문을-연결하는-질문">5번 — 벌칙·과태료: 여러 조문을 연결하는 질문<a class="anchor" href="#5번-벌칙과태료-여러-조문을-연결하는-질문" title="Permanent link">#</a></h3>
 <p>의무 조항(제15조·제18조)과 관련된 벌칙을 찾으려면 한 조문만으로는 답할 수 없습니다. 의무 조항 ←<code>PENALIZES</code>— 벌칙 호 ←<code>HAS_PART</code>— 벌칙 조 —<code>IMPOSES</code>→ 제재(Sanction)로 세 단계를 거쳐야 합니다. Claude의 첫 질의는 이 경로를 한 번에 탐색했습니다.</p>
+<p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-[</span><span class="n">r</span><span class="p">:</span><span class="n">PENALIZES</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">lawId</span><span class="p">=</span><span class="s">'위험물안전관리법'</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">articleNo</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="o">[</span><span class="m">15</span><span class="p">,</span><span class="m">18</span><span class="o">]</span>
 <span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">parent</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_PART</span><span class="p">*</span><span class="m">1</span><span class="p">..</span><span class="m">2</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">parent</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">IMPOSES</span><span class="o">]-&gt;</span><span class="p">()</span>
 <span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">parent</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">IMPOSES</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Sanction</span><span class="p">)</span>
@@ -204,6 +212,7 @@
 <h2 id="같은-질문을-15번">같은 질문을 15번<a class="anchor" href="#같은-질문을-15번" title="Permanent link">#</a></h2>
 <p>대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(<code>claude -p</code>)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 <code>--tools ""</code>로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.</p>
 <p>원 교재의 bash 명령을 PowerShell 반복문으로 옮겼습니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 <code>golden-questions.md</code>의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 <code>$reps = 1</code>로 한 번씩만 돌려 보는 것을 권합니다.</p>
+<p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
 <div class="hl"><pre><span></span><code><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">law-graph</span>
 <span class="p">.</span> <span class="p">.\</span><span class="n">env</span><span class="p">.</span><span class="n">ps1</span>
 <span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">runs</span><span class="p">\</span><span class="n">graph</span> <span class="p">|</span> <span class="nb">Out-Null</span>
@@ -252,6 +261,7 @@
 </tbody>
 </table>
 <p>결과 파일마다 도구 호출 수, 걸린 시간, 비용을 모아 보는 명령입니다. <code>stream-json</code>의 마지막 <code>result</code> 줄에 시간(<code>duration_ms</code>)과 비용(<code>total_cost_usd</code>)이 들어 있습니다.</p>
+<p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
 <div class="hl"><pre><span></span><code><span class="nb">Get-ChildItem</span> <span class="n">runs</span><span class="p">\</span><span class="n">graph</span><span class="p">\*.</span><span class="n">jsonl</span> <span class="p">|</span> <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span>
   <span class="nv">$ev</span> <span class="p">=</span> <span class="nb">Get-Content</span> <span class="n">-Encoding</span> <span class="n">utf8</span> <span class="nv">$_</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span> <span class="p">}</span> <span class="p">|</span> <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span> <span class="nv">$_</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span> <span class="p">}</span>
   <span class="nv">$res</span> <span class="p">=</span> <span class="nv">$ev</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="nb">type </span><span class="o">-eq</span> <span class="s1">'result'</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-Last</span> <span class="n">1</span>
@@ -311,13 +321,13 @@
 <li><strong>Cypher 오류</strong>: 15번 중 10번에서 1~2건이 발생했고, 모두 모델이 수정해 다시 실행했습니다. 가장 흔한 첫 시도는 모든 속성을 문자열로 검색하는 <code>MATCH (n) WHERE any(k IN keys(n) WHERE toString(n[k]) CONTAINS '안전관리자') …</code>였고 <code>TypeError (Invalid input for function 'toString()': … got: StringArray[…])</code>로 실패했습니다(목록 속성 때문). 다음은 3번에서 본 집계 뒤 <code>ORDER BY</code> 오류였습니다.</li>
 <li><strong>그래프 구조를 틀리게 설명한 2건</strong>: q4-r3은 「제36조제15호에서 제27조로 가는 <code>PENALIZES</code>·<code>REFERS_TO</code> 관계가 없습니다」라고 했지만 실제로는 <code>제36조제15호 -PENALIZES-&gt; 제27조</code>가 있습니다. 모델이 조건에 <code>t.articleSub IS NULL</code>을 넣었는데 이 그래프는 가지번호가 없으면 0을 저장해 두므로 결과가 비었고, 모델은 이를 「관계가 없다」로 해석했습니다. q3-r1은 「제39조에는 Sanction 이 연결되어 있지 않다」고 했는데, 조 노드에는 없고 제39조제1항에 <code>IMPOSES</code>가 있어 반만 맞습니다. 두 회차 모두 벌칙 내용은 조문 텍스트에서 확인해 답 자체는 맞았습니다.</li>
 </ul>
-<p>근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 <a href="vector-vs-graph.html">10장</a>에서 벡터 RAG와 같은 기준으로 측정합니다.</p>
+<p>근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 <a href="https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html">원 교재 10장</a>에서 벡터 RAG와 같은 기준으로 측정합니다.</p>
 <div class="admonition warning">
 <p class="admonition-title">답의 근거 조문은 반드시 원문으로 확인하세요</p>
 <p>15번 모두 결론이 맞았지만, 같은 실행 안에서도 그래프에 대한 설명은 틀릴 수 있었습니다. 빈 결과는 「없다」가 아니라 「이 조건으로는 안 나왔다」일 수 있습니다. 답에 인용된 조문 번호를 원문에서 찾아 문구를 대조하고, 그래프에 대한 주장(「관계가 없다」 등)은 직접 Cypher로 다시 확인하세요. 의미층 Norm은 아직 <code>reviewed=false</code>입니다.</p>
 </div>
 <h2 id="동작-과정-다시-보기-2번-질문">동작 과정 다시 보기 — 2번 질문<a class="anchor" href="#동작-과정-다시-보기-2번-질문" title="Permanent link">#</a></h2>
-<p><a href="how-graphrag.html">2장</a>에서 본 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.</p>
+<p><a href="https://www.uengine.org/docs/graphrag-law/how-graphrag.html">원 교재 2장</a>에서 본 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.</p>
 <table>
 <thead>
 <tr>
@@ -349,12 +359,14 @@
 </tbody>
 </table>
 <p>두 번째 질의와 결과 일부입니다.</p>
+<p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="n">Norm</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">BASED_ON</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">lawId</span><span class="w"> </span><span class="k">STARTS</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="s">'위험물안전관리법'</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'안전관리자'</span><span class="p">)</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'선임'</span><span class="w"> </span><span class="n">OR</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'해임'</span><span class="p">)</span>
 <span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_SUBJECT</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span><span class="w"> </span><span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">ADDRESSED_TO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">:</span><span class="n">Actor</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">normId</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">modality</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">trigger</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineText</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineValue</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineUnit</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">deadlineKind</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">reviewed</span><span class="p">,</span>
 <span class="w">       </span><span class="k">collect</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">subj</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">recip</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">citation</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="m">40</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>위험물안전관리법:제15조:제2항#1  subj ["관계인"]  deadlineText "해임하거나 퇴직한 날부터 30일 이내"
 위험물안전관리법:제15조:제3항#1  subj ["관계인"]  recip ["소방본부장", "소방서장"]  deadlineText "선임한 날부터 14일 이내"
 위험물안전관리법 시행규칙:제53조:제1항#1  subj ["관계인"]  recip ["소방본부장", "소방서장"]
@@ -362,6 +374,7 @@
 </code></pre></div>
 
 <p>화면에는 이 과정이 한 줄로 접혀 나오고, 그 아래 답이 이어집니다.</p>
+<p><strong>Claude Code 화면 예시</strong></p>
 <div class="hl"><pre><span></span><code>  Called neo4j 3 times (ctrl+o to expand)
 
 ⏺ 해임하거나 퇴직한 날부터 30일 이내에 다시 선임해야 하고, 선임한 날부터 14일 이내에 소방본부장 또는 소방서장에게 선임신고를
@@ -374,6 +387,46 @@
 <p><strong>다른 날 다시 열었더니 neo4j 도구가 없습니다 (GL-12).</strong> 증상: <code>/mcp</code>에 neo4j가 연결되지 않고 질문해도 MCP 호출이 나오지 않습니다. 원인: <code>.mcp.json</code>의 <code>${NEO4J_PASSWORD}</code>는 claude를 실행한 셸의 환경변수 값으로 치환되는데, 새 터미널에는 그 변수가 없습니다. 조치: <code>Set-Location C:\lab\law-graph; . .\env.ps1</code> 뒤 <code>claude</code>를 다시 실행합니다(8장).</p>
 <p><strong>답에 <code>" 밖의 관계기관"</code> 같은 이상한 이름이 나옵니다 (GL-14).</strong> 증상: 4번 질문에서 제27조제2항 Norm의 상대방 Actor 이름이 <code>" 밖의 관계기관"</code>입니다. 원인: 7장에서 묶음 이름을 쪼갤 때 「그 밖의」의 「그」를 접속어로 잘라냈습니다. 조치: 7장 「막히면」대로 쪼개기 규칙을 고치고 <code>uv run ingest_semantic.py --reset</code>을 실행합니다. 이 교재의 기록은 고치기 전 데이터입니다.</p>
 </div>
+<h2 id="정리와-마무리">정리와 마무리<a class="anchor" href="#정리와-마무리" title="Permanent link">#</a></h2>
+<p><strong>이 장에서 한 일</strong></p>
+<table>
+<thead>
+<tr>
+<th>한 일</th>
+<th>어디서</th>
+<th>결과물</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>골든 퀘스천 5개 질문</td>
+<td>Claude Code 입력창</td>
+<td>근거 조문이 붙은 답 5개</td>
+</tr>
+<tr>
+<td>도구 호출(Cypher) 펼쳐 보기</td>
+<td>Claude Code(<code>ctrl+o</code>)</td>
+<td>그래프에서 답을 찾은 경로</td>
+</tr>
+<tr>
+<td>근거 조문을 원문과 대조</td>
+<td>PDF 뷰어 / Neo4j Browser</td>
+<td>맞는 답과 틀린 답의 구분</td>
+</tr>
+<tr>
+<td>같은 질문 반복 실행과 요약</td>
+<td>작업 창</td>
+<td><code>runs\graph\*.jsonl</code>, 시간·비용·호출 횟수 표</td>
+</tr>
+</tbody>
+</table>
+<p><strong>전체 실습의 목표를 이루었나요?</strong> 다음 세 가지에 모두 「예」라고 답할 수 있으면 완료입니다.</p>
+<ol>
+<li>위험물안전관리법 PDF 3개가 Neo4j 그래프에 들어 있고, 조 개수와 표본 조문이 원문과 맞습니다(6장).</li>
+<li>Claude Code가 Neo4j MCP(<code>read-cypher</code>)로 그래프를 조회해 골든 퀘스천 다섯 개에 답했습니다(8·9장).</li>
+<li>답에 인용된 조문을 학생이 직접 원문과 대조했고, 틀린 곳이 있으면 그 원인(적재·의미층·질의)을 짚을 수 있습니다(9장).</li>
+</ol>
+<p><strong>다음에 할 일:</strong> 실습이 끝나면 Neo4j 창에서 <code>Ctrl+C</code>로 Neo4j를 멈춥니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 원 교재의 <a href="https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html">10장 벡터 RAG로 같은 질문</a>과 <a href="https://www.uengine.org/docs/graphrag-law/wrap-up.html">11장 마무리</a>에서 이어서 읽을 수 있습니다(원 교재는 macOS·Docker 기준이므로 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다).</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <p><strong>1.</strong> 헤드리스 q4-r3에서 Claude는 「제36조제15호에서 제27조로 가는 PENALIZES 관계가 없다」고 했지만 실제로는 있었습니다. 왜 이런 설명이 나왔고, 어떻게 확인하나요?</p>
 <details class="answer">
@@ -392,9 +445,9 @@
 </details>
     </article>
     <nav class="pager"><a class="prev" href="mcp.html"><span>이전</span>Neo4j MCP 서버 연결</a><span></span></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#질문별-기록">질문별 기록</a><ul><li><a href="#1번-품명수량-변경-신고">1번 — 품명·수량 변경 신고</a></li><li><a href="#2번-안전관리자-재선임과-신고">2번 — 안전관리자 재선임과 신고</a></li><li><a href="#3번-정기점검-결과-제출-cypher-오류를-스스로-고친-장면">3번 — 정기점검 결과 제출: Cypher 오류를 스스로 고친 장면</a></li><li><a href="#4번-유출-사고-데이터-오류를-찾아낸-장면">4번 — 유출 사고: 데이터 오류를 찾아낸 장면</a></li><li><a href="#5번-벌칙과태료-여러-조문을-연결하는-질문">5번 — 벌칙·과태료: 여러 조문을 연결하는 질문</a></li></ul></li><li><a href="#같은-질문을-15번">같은 질문을 15번</a></li><li><a href="#동작-과정-다시-보기-2번-질문">동작 과정 다시 보기 — 2번 질문</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#질문별-기록">질문별 기록</a><ul><li><a href="#1번-품명수량-변경-신고">1번 — 품명·수량 변경 신고</a></li><li><a href="#2번-안전관리자-재선임과-신고">2번 — 안전관리자 재선임과 신고</a></li><li><a href="#3번-정기점검-결과-제출-cypher-오류를-스스로-고친-장면">3번 — 정기점검 결과 제출: Cypher 오류를 스스로 고친 장면</a></li><li><a href="#4번-유출-사고-데이터-오류를-찾아낸-장면">4번 — 유출 사고: 데이터 오류를 찾아낸 장면</a></li><li><a href="#5번-벌칙과태료-여러-조문을-연결하는-질문">5번 — 벌칙·과태료: 여러 조문을 연결하는 질문</a></li></ul></li><li><a href="#같은-질문을-15번">같은 질문을 15번</a></li><li><a href="#동작-과정-다시-보기-2번-질문">동작 과정 다시 보기 — 2번 질문</a></li><li><a href="#정리와-마무리">정리와 마무리</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

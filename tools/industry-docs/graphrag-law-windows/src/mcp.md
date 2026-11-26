@@ -4,7 +4,7 @@
 
 ## 무엇을 · 왜
 
-MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 사용하는 표준 인터페이스입니다. MCP 서버가 「이런 도구가 있다」고 알려 주면 Claude Code는 질문에 따라 필요한 도구를 호출하고, 반환된 결과를 읽고 답합니다. [6](ingest.html)·[7장](disambiguation.html)에서는 Claude가 파이썬 스크립트와 cypher-shell을 직접 작성해 Neo4j에 접근했습니다. MCP 서버를 연결하면 Claude가 스키마를 읽고(`get-schema`) Cypher를 작성하고 실행하는(`read-cypher`) 도구를 바로 사용합니다. [2장](how-graphrag.html)에서 본 질의 과정(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답)이 이 두 도구로 이루어집니다. 읽기 전용으로 실행하면 질의 중에 그래프가 변경되지 않습니다.
+MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 사용하는 표준 인터페이스입니다. MCP 서버가 「이런 도구가 있다」고 알려 주면 Claude Code는 질문에 따라 필요한 도구를 호출하고, 반환된 결과를 읽고 답합니다. [6](ingest.html)·[7장](disambiguation.html)에서는 Claude가 파이썬 스크립트와 cypher-shell을 직접 작성해 Neo4j에 접근했습니다. MCP 서버를 연결하면 Claude가 스키마를 읽고(`get-schema`) Cypher를 작성하고 실행하는(`read-cypher`) 도구를 바로 사용합니다. [원 교재 2장](https://www.uengine.org/docs/graphrag-law/how-graphrag.html)에서 본 질의 과정(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답)이 이 두 도구로 이루어집니다. 읽기 전용으로 실행하면 질의 중에 그래프가 변경되지 않습니다.
 
 | 항목 | 이 실습 |
 |---|---|
@@ -23,6 +23,8 @@ MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 
 
 **왜 하나요?** MCP 서버를 연결해야 Claude가 파이썬 스크립트 없이 그래프를 직접 조회할 수 있습니다. 공식 문서를 확인하게 하면 버전마다 바뀌는 설정 이름(예: `NEO4J_MCP_` 접두사)을 틀리지 않습니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 이제 Claude Code 가 Neo4j 를 직접 조회하도록 Neo4j MCP 서버를 붙이자. 공식 서버(github.com/neo4j/mcp)의 문서를 확인해서 이 프로젝트의 .mcp.json 을 만들어 줘.
 - uvx 로 실행하고, 읽기 전용(쓰기 도구는 끔), 텔레메트리는 끔.
@@ -31,6 +33,8 @@ MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 
 ```
 
 Claude는 저장소의 README·`.env.example`·설정 코드(`internal/config/config.go`)를 읽어 변수 이름을 확인하고, `uvx neo4j-mcp-server@2.1.2 --version`으로 `neo4j-mcp version: 2.1.2`를 확인한 뒤 `.mcp.json`을 작성했습니다. 이어서 **그 파일의 명령과 환경변수로 서버를 실행하고 MCP 요청을 직접 보내** 시험했습니다(1분 9초).
+
+**Claude가 보여 준 결과 예시**(직접 입력하지 않음)
 
 ```text
 serverInfo {'name': 'neo4j-mcp', 'version': '2.1.2'} | protocol 2025-06-18
@@ -44,6 +48,8 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 <li markdown="block">**생성된 `.mcp.json`을 읽습니다.** 비밀번호 값은 파일에 없습니다.
 
 **왜 하나요?** AI가 만든 설정이라도 비밀번호가 파일에 적히지 않았는지, 읽기 전용으로 되어 있는지 사람이 확인해야 합니다. 읽기 전용이어야 질의 중에 AI가 그래프를 바꾸지 못합니다.
+
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
 
 ```json
 {
@@ -80,10 +86,14 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 
 **왜 하나요?** `.env`와 `.mcp.json`은 개인 환경 설정이라 저장소에 올라가면 안 됩니다. 커밋하기 전에 git이 이 파일들을 무시하는지 명령으로 확인합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 git check-ignore -v .mcp.json .env
 ```
+
+**출력 예시**
 
 ```text
 .gitignore:2:.mcp.json	.mcp.json
@@ -96,6 +106,8 @@ git check-ignore -v .mcp.json .env
 
 **왜 하나요?** Claude Code는 `.mcp.json`의 `${NEO4J_PASSWORD}`를 실행한 창의 환경변수로 채웁니다. 변수가 없는 창에서 `claude`를 열면 MCP 서버가 비밀번호 없이 접속하다 실패합니다. 늘 같은 두 줄로 시작하면 「어제는 됐는데 오늘은 안 된다」를 막을 수 있습니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -107,6 +119,8 @@ claude
 
 MCP 서버가 뜨는지 Claude Code를 열기 전에 확인할 수도 있습니다. 같은 창에서 실행합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 claude mcp list
 ```
@@ -116,6 +130,8 @@ claude mcp list
 <li markdown="block">**승인 창에서 `Use this MCP server`를 고릅니다.** 프로젝트에서 새 MCP 서버를 찾으면 이 창이 뜹니다. **기본 선택이 맨 아래 `Continue without using this MCP server`**이므로, 그냥 Enter를 누르면 서버 없이 시작됩니다. ↑를 두 번 눌러 고른 뒤 Enter를 누릅니다.
 
 **왜 하나요?** 프로젝트에 들어 있는 MCP 서버는 코드를 실행할 수 있어서 Claude Code가 한 번 확인을 받습니다. 기본 선택이 「사용 안 함」이라 그냥 Enter를 누르면 연결되지 않으므로 직접 골라야 합니다.
+
+**Claude Code 화면 예시**
 
 ```text
   New MCP server found in this project: neo4j
@@ -134,11 +150,15 @@ claude mcp list
 
 **왜 하나요?** 질문하기 전에 서버가 실제로 연결되었는지 확인하면, 답이 이상할 때 원인이 연결 문제인지 질의 문제인지 구분할 수 있습니다.
 
+**Claude Code 화면 예시**
+
 ```text
   MCP servers
     Project MCPs (…/law-graph/.mcp.json)
   ❯ ✔ neo4j   2 tools
 ```
+
+**Claude Code 화면 예시**
 
 ```text
   neo4j
@@ -154,6 +174,8 @@ claude mcp list
 <li markdown="block">**도구 두 개를 확인합니다.** `View tools`를 고르면 도구 목록이, 도구를 고르면 설명과 파라미터가 나옵니다.
 
 **왜 하나요?** Claude가 쓸 수 있는 도구가 읽기 전용 두 개뿐인지 확인합니다. 쓰기 도구(`write-cypher`)가 보이면 읽기 전용 설정이 빠진 것입니다.
+
+**Claude Code 화면 예시**
 
 ```text
   Tools for neo4j
@@ -173,6 +195,8 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
 <li markdown="block">**첫 질문으로 연결을 확인합니다.** 골든 퀘스천 1번을 넣으면 Claude가 도구를 처음 호출할 때 권한을 요청합니다. 처음에는 `get-schema`, 다음에는 `read-cypher`의 권한을 요청합니다.
 
 **왜 하나요?** 실제 질문 하나로 스키마 조회 → Cypher 실행 → 답까지 전체 흐름이 도는지 확인합니다. 도구 사용 권한도 이때 한 번 정해 두면 9장에서 질문마다 묻지 않습니다.
+
+**Claude Code 화면 예시**
 
 ```text
  Tool use
@@ -211,6 +235,22 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
     **Enter를 눌렀더니 `/mcp`에 연결이 없습니다 (GL-11).** 증상: `.mcp.json`을 만들고 `claude`를 다시 실행했는데 「New MCP server found in this project: neo4j」 창의 기본 선택이 `❯ Continue without using this MCP server`라서 서버 없이 시작됩니다. 원인: Claude Code의 프로젝트 MCP 승인 창 기본값입니다. 조치: ↑ 두 번으로 `Use this MCP server`(또는 `Use this and all future MCP servers in this project`)를 고르고 Enter를 누르세요. 이미 넘어갔다면 `/mcp`에서 neo4j를 골라 켜거나, `claude mcp reset-project-choices` 뒤 다시 시작합니다.
 
     **서버가 실행되지 않습니다 — 인증 실패 (GL-12).** 증상: `"NEO4J_MCP_PASSWORD": "${NEO4J_PASSWORD}"`로 썼는데 `claude`를 실행한 창에 `NEO4J_PASSWORD`가 없으면 MCP 서버가 인증 실패로 실행되지 않습니다. Windows PC에서 확인해 보니 서버는 시작할 때(initialize) DB 접속을 먼저 검사해 `impossible to verify connectivity … Unauthorized`로 멈추고, 그 뒤의 도구 목록 요청도 실패합니다. 원인: Claude Code는 `.mcp.json`의 `${변수}`를 claude 프로세스의 환경변수 값으로 치환하고, `.env`는 자동으로 읽지 않습니다. 조치: 새 PowerShell 창마다 `Set-Location C:\lab\law-graph; . .\env.ps1; claude`를 실행하세요. 반대로 비밀번호를 `.mcp.json`에 직접 쓰면 그 파일이 비밀 파일이 되므로 `.gitignore`에서 빠지지 않게 주의하세요.
+
+## 정리와 다음 장
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 결과물 |
+|---|---|---|
+| `.mcp.json` 작성 요청 | Claude Code 입력창 | 읽기 전용 Neo4j MCP 설정(비밀번호는 파일 밖) |
+| `.mcp.json`·`.env`가 git에서 빠지는지 확인 | 작업 창 | `git check-ignore` 결과 두 줄 |
+| `env.ps1`을 불러온 창에서 `claude` 재실행 | 작업 창 | `claude mcp list`에 `✓ Connected` |
+| 승인 창에서 서버 사용, `/mcp`로 도구 확인 | Claude Code | `get-schema`·`read-cypher` 두 개 |
+| 첫 질문으로 전체 흐름 확인 | Claude Code 입력창 | 근거 조문이 붙은 답 |
+
+**기억할 것:** 새 PowerShell 창에서는 언제나 `Set-Location C:\lab\law-graph; . .\env.ps1; claude` 순서로 시작합니다. 이 순서를 빼먹으면 MCP 서버가 비밀번호 없이 접속하다 실패합니다.
+
+**다음 장(9장)에서 할 일:** 골든 퀘스천 다섯 개를 차례로 묻고, Claude가 어떤 Cypher로 답을 찾았는지 펼쳐 본 뒤, 답에 인용된 조문을 **원문 PDF와 대조**합니다. 마지막에는 같은 질문을 여러 번 자동 실행해 답이 일정한지 확인합니다.
 
 ## 확인 문제
 

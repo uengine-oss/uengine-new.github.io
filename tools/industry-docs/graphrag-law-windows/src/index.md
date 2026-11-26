@@ -139,6 +139,8 @@ Docker Desktop과 WSL은 필요 없습니다.
 
 이미 설치한 것이 있는지 PowerShell 창에 아래를 붙여 넣어 한 번에 봅니다. 없는 프로그램은 `없음`으로 나옵니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 foreach ($c in 'powershell','pwsh','java','git','uv','claude') {
   $p = Get-Command $c -ErrorAction SilentlyContinue
@@ -201,6 +203,20 @@ java -version
 
 !!! warning "법령 해석은 원문으로"
     모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있습니다. 실무에서 쓸 때는 답에 붙은 근거 조문을 반드시 원문으로 확인하세요.
+
+## 정리와 다음 장
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 남은 것 |
+|---|---|---|
+| 실습 목표와 골든 퀘스천 다섯 개를 읽었습니다 | 이 페이지 | 마지막(9장)에 확인할 질문 |
+| 필요한 도구(Claude Code 유료 플랜, uv, Git, JDK 21, Neo4j 5.26)와 버전을 확인했습니다 | 작업 창(Windows PowerShell) | 한 번에 확인 스크립트의 결과 |
+| 위험물안전관리법 PDF 3개(법률·시행령·시행규칙)를 받았습니다 | 웹 브라우저 | `다운로드` 폴더의 PDF 3개 |
+
+**왜 중요한가요?** 목표(골든 퀘스천)를 먼저 정해 두어야 5장에서 스키마를 설계할 때 「무엇을 답하려고 만드는 그래프인가」를 Claude에게 설명할 수 있습니다.
+
+**다음 장(3장)에서 할 일:** 아직 설치되지 않은 도구를 설치하고, Docker 없이 Neo4j ZIP을 풀어 APOC를 켠 뒤, 매번 쓸 `env.ps1`을 만들어 Neo4j를 실행합니다. 모든 명령은 **작업 창(Windows PowerShell)** 에 입력합니다.
 
 ## 확인 문제
 

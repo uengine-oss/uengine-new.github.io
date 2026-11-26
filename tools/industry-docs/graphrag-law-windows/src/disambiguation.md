@@ -28,6 +28,8 @@
 
 **왜 하나요?** 「누가, 무엇을, 언제까지, 누구에게」는 정규식으로 잡을 표지가 없어 문장을 이해하는 LLM이 필요합니다. 조 하나씩 나눠 보내면 문맥이 끊기지 않고, 호출마다 비용과 시간을 잴 수 있습니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 이제 의미층을 LLM 으로 뽑아 보자(schema.md 9절). 범위는 위험물안전관리법 법률·시행령·시행규칙.
 - Chunking: 조(Article) 하나를 한 덩어리로 잘라 LLM 에 보낸다. 덩어리 크기(글자 수)도 보여 줘.
@@ -41,6 +43,8 @@ Claude는 법 제15조로 한 번 시범 호출한 뒤(26초, $0.0045) 156건을
 
 `extract_entities.py`가 조마다 부르는 명령은 다음과 같습니다. 파이썬이 인자 목록으로 넘기므로 셸 문법과 상관없이 동작합니다. 같은 호출을 PowerShell에서 손으로 시험하려면 `env.ps1`을 점 소싱한 창에서 줄 끝 `` ` ``(백틱)으로 줄을 잇습니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Get-Content -Encoding utf8 data\extract\sample-article.txt |
   claude -p --model haiku --output-format json --system-prompt "<추출 지시>" `
@@ -51,6 +55,8 @@ Get-Content -Encoding utf8 data\extract\sample-article.txt |
 파이프로 넘기는 조문의 한글은 `env.ps1`이 `$OutputEncoding`을 UTF-8로 바꿔 두어야 그대로 전달됩니다(Windows PowerShell 5.1의 기본값은 ASCII라 한글이 `?`가 됩니다). 원 교재의 `--tools ""`(도구 모두 끄기)는 `--tools=`로 바꿨습니다. Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 `""`을 넘기지 못하고 빼 버리기 때문입니다(실제로 확인함). `--tools=`는 5.1과 7 모두에서 같은 뜻으로 전달됩니다.
 
 법 제27조(388자)를 보내 받은 응답에는 주체·기관 8개, 용어 4개, 관계 4건이 있었습니다. 다음은 그중 제2항의 관계 한 건입니다.
+
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
 
 ```json
 {"provision": "제2항", "modality": "의무", "subject": "제1항의 사태를 발견한 자",
@@ -72,6 +78,8 @@ Get-Content -Encoding utf8 data\extract\sample-article.txt |
 **왜 하나요?** 같은 기관이 여러 표기로 뽑힌다는 문제를 눈으로 확인해야 왜 중의성 해소가 필요한지, 어떤 기준으로 합칠지 정할 수 있습니다.
 
 별도의 PowerShell 창(`C:\lab\law-graph`)에서 실행합니다. 원 교재의 `awk` 한 줄을 PowerShell로 옮긴 것입니다. `actors.tsv`는 첫 줄이 머리글이고 첫 열이 이름, 셋째 열이 나온 조의 수라고 가정합니다(Claude가 다른 열 순서로 만들었다면 `$c[0]`, `$c[2]`의 번호를 바꿉니다).
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 Get-Content -Encoding utf8 data\extract\actors.tsv | Select-Object -Skip 1 |
@@ -95,6 +103,8 @@ Get-Content -Encoding utf8 data\extract\actors.tsv | Select-Object -Skip 1 |
 
 **왜 하나요?** LLM 방식과 규칙·사전 방식은 잘하는 일이 다릅니다. 같은 목록에 두 방법을 적용해 나란히 비교하면 어느 쪽을 믿고 어디에 사람의 검토가 필요한지 근거를 가지고 정할 수 있습니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 이제 중의성 해소(Entity Disambiguation)를 두 방법으로 해 보고 비교해 줘. 대상은 방금 뽑은 주체·기관 이름 목록.
 (가) LLM 방식: 아래 프롬프트에 이름 목록을 붙여 claude -p 로 한 번 보내고, 같은 번호끼리 묶어.
@@ -115,6 +125,8 @@ Get-Content -Encoding utf8 data\extract\actors.tsv | Select-Object -Skip 1 |
 
 (가)는 이름 228개를 한 줄씩 붙여 한 번 보냈습니다. 다음은 응답 일부입니다(같은 번호 = 같은 대상).
 
+**출력 예시**
+
 ```text
 소방서장, 2
 관할소방서장, 2
@@ -130,6 +142,8 @@ Get-Content -Encoding utf8 data\extract\actors.tsv | Select-Object -Skip 1 |
 
 **왜 하나요?** 잘못 합친 노드는 질의 결과를 조용히 틀리게 만듭니다(예: 소방본부장과 소방서장을 하나로 보면 권한 주체가 틀림). 사람이 기준을 정해 주어야 그래프에 넣을 수 있는 품질이 됩니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 검토했어. 이렇게 고쳐서 합치자.
 1. 「소방본부장 또는 소방서장」「시ㆍ도지사, 소방본부장 또는 소방서장」처럼 「또는·및·,」로 묶인 이름은 한 기관이 아니야. 낱개(소방본부장 / 소방서장 / 시ㆍ도지사 …)로 쪼개서 각각에 연결해. 특히 소방본부장과 소방서장은 다른 기관이니 절대 한 묶음에 넣지 마.
@@ -144,6 +158,8 @@ Claude가 만든 `ingest_semantic.py`는 묶음 이름 30가지를 낱개로 쪼
 <li markdown="block">**잘못 합친 두 개를 떼어 냅니다.**
 
 **왜 하나요?** AI가 스스로 보고한 오류도 사람이 판단해 바로잡아야 합니다. 「합치면 안 되는 이름」을 코드에 목록으로 남겨 두면 다시 적재해도 같은 실수가 반복되지 않습니다.
+
+**▶ Claude Code 입력창에 붙여 넣기**
 
 ```text
 말한 대로 잘못 합친 두 개도 고쳐 줘. 「대리인」(양벌규정)은 「대리자」(안전관리자 대리)가 아니고, 「탱크시험자의 업무에 종사하는 자」는 「기술인력」이 아니야. 둘 다 별칭에서 떼어 내서 다시 적재하고, 고친 뒤 Actor 수와 관계인·소방본부장·소방서장·안전관리자·대리자 노드의 별칭을 보여 줘.
@@ -162,11 +178,15 @@ LLM의 묶음에서 제외할 이름 목록 `STAND_ALONE`이 생기고, `uv run 
 
 **왜 하나요?** 적재 때 합쳐 둔 별칭이 실제로 질문의 낱말을 올바른 노드에 연결하는지 확인해야, 9장에서 Claude가 질문을 받았을 때 제대로 찾아갈 수 있다는 것을 미리 알 수 있습니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 이번엔 질문 쪽을 보자. 골든 퀘스천 2번 문장의 「위험물안전관리자」「관계인」이 별칭(normKeys·aliases)과 전문 색인으로 그래프의 어떤 Term·Actor 노드와 조문에 연결되는지 Cypher 로 직접 돌려서 보여 줘(질의문과 결과 그대로). 적재 때 한 중의성 해소와, 질문 때 하는 엔티티 연결이 어떻게 다른지도 두세 줄로 정리해 줘.
 ```
 
 Claude가 실행한 질의 다섯 개 중 두 개입니다. 먼저 공백을 뺀 질문 문장에 Actor의 별칭 키(`normKeys`)가 들어 있는지 확인합니다(두 번째 질문 문장은 `'…'`로 줄였습니다).
+
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
 
 ```cypher
 MATCH (a:Actor)
@@ -176,6 +196,8 @@ RETURN a.name AS actor, a.kind AS kind, [k IN a.normKeys WHERE '…' CONTAINS k]
        size(a.aliases) AS aliasCount, t.termId AS definedBy
 ```
 
+**출력 예시**
+
 ```text
 actor, kind, matchedKeys, aliasCount, definedBy
 "안전관리자", "수범자", ["안전관리자", "위험물안전관리자"], 3, "위험물안전관리법:안전관리자"
@@ -184,6 +206,8 @@ actor, kind, matchedKeys, aliasCount, definedBy
 
 다음은 조문 전문 색인(`provision_text`, cjk 분석기)으로 찾고, 그 Term을 언급(`MENTIONS`)하는 조문을 먼저 표시합니다.
 
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
+
 ```cypher
 CALL db.index.fulltext.queryNodes('provision_text', '위험물안전관리자가 해임되거나 퇴직하면 관계인은 며칠 안에 다시 선임해야 하고 선임한 뒤에는 어떤 절차를 밟아야 하는가') YIELD node AS p, score
 WHERE p.lawId = '위험물안전관리법' AND p.isCurrent AND p.status = '현행'
@@ -191,6 +215,8 @@ WITH p, score, [t IN ['위험물안전관리법:안전관리자', '위험물안�
 RETURN p.citation AS provision, [m IN mentioned | split(m, ':')[1]] AS mentions, round(score, 2) AS score
 ORDER BY size(mentioned) DESC, score DESC LIMIT 5
 ```
+
+**출력 예시**
 
 ```text
 provision, mentions, score
@@ -236,6 +262,8 @@ provision, mentions, score
 
 6장처럼 별도의 PowerShell 창에서 `Write-Utf8`로 저장해 cypher-shell로 확인합니다(Neo4j Browser에 붙여 넣어도 됩니다).
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -250,12 +278,16 @@ RETURN a.name AS actor, size(a.aliases) AS aliases,
 
 파일에 담은 질의는 다음과 같습니다.
 
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
+
 ```cypher
 MATCH (a:Actor) WHERE a.name IN ['관계인', '소방본부장', '소방서장', '안전관리자']
 RETURN a.name AS actor, size(a.aliases) AS aliases,
   COUNT { (a)<-[:HAS_SUBJECT]-(:Norm) } AS asSubject,
   COUNT { (a)<-[:ADDRESSED_TO]-(:Norm) } AS asRecipient ORDER BY actor;
 ```
+
+**출력 예시**
 
 ```text
 actor, aliases, asSubject, asRecipient
@@ -275,6 +307,21 @@ Actor 136개 중 「제조소등」「행정안전부령」「정기검사」처
     **LLM이 서로 다른 주체를 같은 번호로 묶습니다 (GL-10).** 증상: 노트의 프롬프트로 이름 228가지를 보냈더니 「관계인」=「관계자」, 「대리자」=「대리인」, 「자」=「사람」=「누구든지」가 같은 번호로 묶이고, 약칭(탱크시험자/탱크안전성능시험자)은 묶지 못하고, 「소방본부장 또는 소방서장」은 한 엔티티로 둡니다. 원인: LLM은 이름 목록만 받아 조문 문맥과 법에서 정한 약칭을 모릅니다. 조치: 묶음 이름은 「또는·및·,」로 쪼개고, 소방본부장≠소방서장 검사를 추가하고, 약칭은 Term 사전을 우선합니다. 잘못 묶인 이름은 `ingest_semantic.py`의 `STAND_ALONE`에 넣고 `uv run ingest_semantic.py --reset`을 실행합니다.
 
     **Actor 이름의 앞 글자가 잘렸습니다 (GL-14).** 증상: 9장 4번 질문 중 Claude가 「제27조제2항 Norm 의 수신 Actor 중 하나가 이름이 `" 밖의 관계기관"` 으로 저장되어 있다」고 보고했습니다(원문은 「소방서, 경찰서 또는 그 밖의 관계기관」). 원인: 묶음 이름을 쪼갤 때 접속어를 「이나·나·과 그」까지 넓혀 「그 밖의」의 「그」를 잘라 냈습니다. 조치: Claude Code에 「" 밖의 관계기관" Actor 는 「그 밖의 관계기관」이야. 쪼개기 접속어에서 「그」를 빼고 다시 적재해 줘」라고 요청하고 `uv run ingest_semantic.py --reset`을 실행합니다. 확인: `MATCH (a:Actor) WHERE a.name STARTS WITH ' ' OR a.name CONTAINS '관계기관' RETURN a.name, a.aliases`를 실행합니다. (이 교재는 9장 기록과 같은 데이터를 유지하려고 고치지 않았습니다.)
+
+## 정리와 다음 장
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 결과물 |
+|---|---|---|
+| 조 단위로 Norm·Actor 추출 | Claude Code 입력창(`claude -p` 시험은 작업 창) | 추출 결과 파일 |
+| 합치기 전 이름 목록 확인 | Claude Code 입력창의 `!` 명령 | 이름별 빈도표 |
+| 두 방법으로 중의성 해소, 사람이 검토해 `MERGE` | Claude Code 입력창 | Actor 노드와 별칭(alias) |
+| 잘못 합친 것 분리, 질문 때 엔티티 연결 확인 | Claude Code 입력창 / 작업 창 | `check-actors` 결과 |
+
+**왜 중요한가요?** 「관할 소방서장」「소방본부장 또는 소방서장」처럼 같은 대상이 여러 이름으로 적혀 있으면, 질문할 때 일부 조문을 놓칩니다. 이름을 합쳐 두어야 9장의 질문이 관련 조문을 빠짐없이 찾습니다.
+
+**다음 장(8장)에서 할 일:** 지금까지 Claude가 파이썬 스크립트로 그래프에 접근했다면, 이제는 **Neo4j MCP 서버**를 연결해 Claude Code가 그래프를 직접 조회하게 합니다. `.mcp.json`은 Claude가 만들고, 연결 확인은 **작업 창**과 Claude Code의 `/mcp`에서 합니다.
 
 ## 확인 문제
 

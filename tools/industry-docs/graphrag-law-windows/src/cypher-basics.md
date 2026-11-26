@@ -39,6 +39,8 @@ cypher-shell을 대화형으로 열어(`& $cs -u neo4j -p $env:NEO4J_PASSWORD`) 
 
 파일 방식은 이렇게 씁니다. 3장의 `env.ps1`이 만든 `Write-Utf8` 함수로 저장하면 Windows PowerShell 5.1에서도 BOM 없이 저장됩니다(5.1의 `Set-Content -Encoding utf8`은 BOM을 붙입니다). 메모장에서 「UTF-8」(「BOM 포함 UTF-8」이 아님)로 저장해도 됩니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -48,6 +50,8 @@ Write-Utf8 toy.cypher "MATCH (n) RETURN count(n) AS 노드수;"
 
 여러 줄 질의는 here-string으로 넘깁니다. 시작 `@'`는 줄 끝에, 끝 `'@`는 줄 맨 앞에 있어야 합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Write-Utf8 toy.cypher @'
 CREATE (l:Law {name:'위험물안전관리법', kind:'법률'}) RETURN l;
@@ -56,6 +60,8 @@ CREATE (l:Law {name:'위험물안전관리법', kind:'법률'}) RETURN l;
 ```
 
 아래 질의는 어느 방법으로 실행해도 됩니다. 출력은 cypher-shell 형식으로 적었고, Browser에서는 같은 값이 표(Table 보기)로 나옵니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
 
 ```cypher
 MATCH (n) RETURN count(n) AS 노드수;
@@ -67,9 +73,13 @@ MATCH (n) RETURN count(n) AS 노드수;
 
 **왜 하나요?** 그래프의 가장 작은 단위인 노드와 속성을 직접 만들어 보면, 6장에서 Claude가 만드는 수천 개의 노드도 같은 구조라는 것을 이해할 수 있습니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 CREATE (l:Law {name:'위험물안전관리법', kind:'법률'}) RETURN l;
 ```
+
+**출력 예시**
 
 ```text
 | (:Law {name: "위험물안전관리법", kind: "법률"}) |
@@ -80,12 +90,16 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 
 **왜 하나요?** 적재 코드는 수정할 때마다 여러 번 다시 돌립니다. `CREATE`로는 실행할 때마다 노드가 늘어나 그래프가 망가지므로, 다시 실행해도 결과가 같은 `MERGE`의 동작을 눈으로 확인해 둡니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (l:Law {name:'위험물안전관리법'})
 UNWIND [['제15조','위험물안전관리자'],['제18조','정기점검 및 정기검사'],['제36조','벌칙'],['제39조','과태료']] AS r
 MERGE (a:Article {law:l.name, no:r[0]}) SET a.title = r[1]
 MERGE (l)-[:HAS_ARTICLE]->(a);
 ```
+
+**출력 예시**
 
 ```text
 Added 4 nodes, Created 4 relationships, Set 12 properties, Added 4 labels
@@ -97,6 +111,8 @@ Added 4 nodes, Created 4 relationships, Set 12 properties, Added 4 labels
 
 **왜 하나요?** 법령은 조 안에 항이 있는 계층 구조입니다. 이 관계를 만들어 두어야 「제15조 전체」를 한 번에 가져오거나 「30일」이 들어 있는 항을 찾을 수 있습니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (a:Article {no:'제15조'})
 MERGE (a)-[:HAS_PARAGRAPH]->(p2:Paragraph {id:'제15조②'})
@@ -104,6 +120,8 @@ MERGE (a)-[:HAS_PARAGRAPH]->(p2:Paragraph {id:'제15조②'})
 MERGE (a)-[:HAS_PARAGRAPH]->(p3:Paragraph {id:'제15조③'})
   SET p3.no = 3, p3.text = '제조소등의 관계인은 제1항 및 제2항에 따라 안전관리자를 선임한 경우에는 선임한 날부터 14일 이내에 행정안전부령으로 정하는 바에 따라 소방본부장 또는 소방서장에게 신고하여야 한다.';
 ```
+
+**출력 예시**
 
 ```text
 Added 2 nodes, Created 2 relationships, Set 6 properties, Added 2 labels
@@ -113,6 +131,8 @@ Added 2 nodes, Created 2 relationships, Set 6 properties, Added 2 labels
 
 **왜 하나요?** 「벌칙 조문이 어느 의무 조문을 가리키는가」는 글자 검색으로는 찾기 어렵고 관계로 두어야 따라갈 수 있습니다. 골든 퀘스천 5번(벌칙)이 바로 이 관계를 거쳐 답합니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (a15:Article {no:'제15조'}), (a18:Article {no:'제18조'}),
       (p36:Article {no:'제36조'}), (p39:Article {no:'제39조'})
@@ -120,6 +140,8 @@ MERGE (p36)-[:REFERS_TO {at:'제6호'}]->(a15)
 MERGE (p39)-[:REFERS_TO {at:'제5호'}]->(a15)
 MERGE (p39)-[:REFERS_TO {at:'제7호, 제7호의2'}]->(a18);
 ```
+
+**출력 예시**
 
 ```text
 Created 3 relationships, Set 3 properties
@@ -135,10 +157,14 @@ Created 3 relationships, Set 3 properties
 
 「제15조를 가리키는 조문은?」이라는 질문을 화살표 방향에 맞춰 질의로 씁니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (pen:Article)-[r:REFERS_TO]->(a:Article {no:'제15조'})
 RETURN pen.no AS 조문, pen.title AS 제목, r.at AS 호;
 ```
+
+**출력 예시**
 
 ```text
 | "제39조" | "과태료" | "제5호" |
@@ -150,11 +176,15 @@ RETURN pen.no AS 조문, pen.title AS 제목, r.at AS 호;
 
 ### WHERE — 조건
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (a:Article)-[:HAS_PARAGRAPH]->(p:Paragraph)
 WHERE p.text CONTAINS '30일'
 RETURN a.no AS 조, p.no AS 항, left(p.text, 40) AS 본문앞부분;
 ```
+
+**출력 예시**
 
 ```text
 | "제15조" | 2 | "제1항의 규정에 따라 안전관리자를 선임한 제조소등의 관계인은 그 안전관리" |
@@ -167,6 +197,8 @@ RETURN a.no AS 조, p.no AS 항, left(p.text, 40) AS 본문앞부분;
 
 `RETURN`은 노드 전체(`RETURN l`), 속성(`pen.no`), 계산한 값을 반환하고 `AS`로 열 이름을 붙입니다. `MATCH` 없이 값만 계산할 수도 있습니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 RETURN '위험물안전관리법 제15조' AS 조문, size('제조소등') AS 글자수;   // 글자수 4
 ```
@@ -175,10 +207,14 @@ RETURN '위험물안전관리법 제15조' AS 조문, size('제조소등') AS �
 
 `*1..3`은 「관계 1~3개를 건너서」라는 뜻입니다. 관계 타입을 적지 않으면 어떤 관계든 따라갑니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH path = (:Article {no:'제39조'})-[*1..3]->(p:Paragraph)
 RETURN length(path) AS 길이, [x IN nodes(path) | coalesce(x.id, x.no)] AS 경로;
 ```
+
+**출력 예시**
 
 ```text
 | 2  | ["제39조", "제15조", "제15조②"] |
@@ -190,11 +226,15 @@ RETURN length(path) AS 길이, [x IN nodes(path) | coalesce(x.id, x.no)] AS 경�
 
 ### OPTIONAL MATCH — 없어도 빠뜨리지 않기
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (a:Article)
 OPTIONAL MATCH (a)-[:HAS_PARAGRAPH]->(p:Paragraph)
 RETURN a.no AS 조, a.title AS 제목, count(p) AS 항수 ORDER BY 조;
 ```
+
+**출력 예시**
 
 ```text
 | "제15조" | "위험물안전관리자"    | 2  |
@@ -210,11 +250,15 @@ RETURN a.no AS 조, a.title AS 제목, count(p) AS 항수 ORDER BY 조;
 
 `count`는 개수를 세고, `collect`는 값을 목록으로 모읍니다. 집계하지 않은 열(`a.no`, `a.title`)이 그룹을 나누는 기준이 됩니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (pen:Article)-[:REFERS_TO]->(a:Article)
 RETURN a.no AS 조문, a.title AS 제목, count(pen) AS 참조수, collect(pen.no) AS 참조하는조문
 ORDER BY 참조수 DESC LIMIT 1;
 ```
+
+**출력 예시**
 
 ```text
 | "제15조" | "위험물안전관리자" | 2   | ["제36조", "제39조"] |
@@ -230,6 +274,8 @@ ORDER BY 참조수 DESC LIMIT 1;
 
 **제약**은 잘못된 데이터가 들어오지 못하게 막고, 그 속성에 색인도 함께 만듭니다. **전문(full-text) 색인**은 낱말로 조문을 찾을 수 있게 합니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 CREATE CONSTRAINT law_name IF NOT EXISTS FOR (l:Law) REQUIRE l.name IS UNIQUE;
 CREATE CONSTRAINT article_key IF NOT EXISTS FOR (a:Article) REQUIRE (a.law, a.no) IS UNIQUE;
@@ -237,6 +283,8 @@ CREATE FULLTEXT INDEX paragraph_text IF NOT EXISTS FOR (p:Paragraph) ON EACH [p.
   OPTIONS {indexConfig: {`fulltext.analyzer`: 'cjk'}};
 SHOW CONSTRAINTS YIELD name, type, labelsOrTypes, properties;
 ```
+
+**출력 예시**
 
 ```text
 Added 1 constraints
@@ -248,9 +296,13 @@ Added 1 indexes
 
 두 속성을 묶은 유일 제약(`(a.law, a.no)`)도 Community 판에서 사용할 수 있습니다(존재까지 강제하는 `NODE KEY`는 Enterprise 판 기능). 같은 이름의 법령을 다시 만들려고 하면 제약이 이를 막습니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 CREATE (:Law {name:'위험물안전관리법'});
 ```
+
+**출력 예시**
 
 ```text
 Node(0) already exists with label `Law` and property `name` = '위험물안전관리법'
@@ -258,10 +310,14 @@ Node(0) already exists with label `Law` and property `name` = '위험물안전�
 
 전문 색인으로 찾아봅니다. 점수(`score`)가 높을수록 질의에 사용한 낱말과 더 잘 일치합니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 CALL db.index.fulltext.queryNodes('paragraph_text', '안전관리자 선임 신고') YIELD node, score
 RETURN node.id AS 항, round(score, 3) AS 점수;
 ```
+
+**출력 예시**
 
 ```text
 | "제15조③" | 0.805 |
@@ -276,11 +332,15 @@ RETURN node.id AS 항, round(score, 3) AS 점수;
 
 6장에서 실제 데이터를 넣기 전에 맛보기 그래프와 제약·색인을 모두 지웁니다. `DETACH DELETE`는 노드에 붙은 관계까지 함께 지웁니다(관계가 남은 노드는 `DELETE`만으로 지울 수 없습니다).
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (n) DETACH DELETE n;
 DROP CONSTRAINT law_name; DROP CONSTRAINT article_key; DROP INDEX paragraph_text;
 MATCH (n) RETURN count(n) AS 노드수;
 ```
+
+**출력 예시**
 
 ```text
 Deleted 7 nodes, Deleted 9 relationships
@@ -294,6 +354,8 @@ Removed 1 indexes
 
 지우기 전에 같은 데이터를 Neo4j Browser(`http://localhost:7474`)에서 보면 표 대신 그림으로 나옵니다. Browser에서는 문장 끝 `;`를 생략해도 됩니다.
 
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+
 ```cypher
 MATCH (n) OPTIONAL MATCH (n)-[r]->(m)
 RETURN n, r, m
@@ -302,6 +364,8 @@ RETURN n, r, m
 ![전체 맛보기 그래프 — 노드 7(Article 4·Law 1·Paragraph 2), 관계 9(HAS_ARTICLE 4·HAS_PARAGRAPH 2·REFERS_TO 3)](img/gl-02-browser-toy-graph.webp)
 
 오른쪽 Results overview에 레이블·관계 타입별 개수가 나옵니다. 노드를 누르면 속성이 보입니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
 
 ```cypher
 MATCH path = (:Article {no:'제39조'})-[*1..3]->(:Paragraph)
@@ -347,6 +411,21 @@ RETURN path
     - 증상: 기본 분석기로 만든 전문 색인에서 `CALL db.index.fulltext.queryNodes(…, '선임')`이 「…선임하여야 한다」 항을 찾지 못합니다(0건). `'선임*'`로만 찾을 수 있습니다.
     - 원인: 기본 분석기(`standard-no-stop-words`)는 띄어쓰기 단위로 낱말을 잘라, 조사·어미가 붙은 낱말을 다른 낱말로 봅니다.
     - 조치: 한국어 본문 색인은 `` OPTIONS {indexConfig: {`fulltext.analyzer`: 'cjk'}} ``로 만듭니다. 사용할 수 있는 분석기는 `CALL db.index.fulltext.listAvailableAnalyzers()`로 확인합니다.
+
+## 정리와 다음 장
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 배운 것 |
+|---|---|---|
+| 법·조·항 노드와 관계를 만들었습니다 | Neo4j Browser(또는 작업 창의 `& $cs -f`) | `CREATE`와 `MERGE`의 차이 |
+| 패턴으로 조회했습니다 | Neo4j Browser | `MATCH`·`WHERE`·`RETURN`, 가변 길이 경로, `OPTIONAL MATCH`, 집계 |
+| 제약과 전문 색인을 만들었습니다 | Neo4j Browser | 중복 방지(제약)와 한글 검색(`cjk` 전문 색인) |
+| 연습 데이터를 지웠습니다 | Neo4j Browser | `DETACH DELETE` |
+
+**왜 중요한가요?** 다음 장부터는 Claude Code가 Cypher를 씁니다. 학생이 Cypher를 읽을 줄 알아야 Claude가 만든 스키마와 질의가 맞는지 **직접 검증**할 수 있습니다.
+
+**다음 장(5장)에서 할 일:** 법령 PDF 3개를 실습 폴더에 넣고, **Claude Code**에게 골든 퀘스천에 답할 수 있는 그래프 스키마를 설계하게 합니다. 이때부터 프롬프트는 **Claude Code 입력창**에, 확인 명령은 **작업 창**에 입력합니다.
 
 ## 확인 문제
 

@@ -22,6 +22,8 @@
 
 **왜 하나요?** 그래프 구조에 대한 힌트 없이 질문 원문만 주어야, 실제 사용자가 물었을 때와 같은 조건에서 그래프가 답의 근거를 제공하는지 볼 수 있습니다.
 
+**▶ Claude Code 입력창에 붙여 넣기**
+
 ```text
 제조소등에서 위치·구조·설비 변경 없이 저장·취급하는 위험물의 품명·수량(지정수량 배수)을 바꾸려면 언제까지 누구에게 신고해야 하는가? Neo4j 에서 찾아 근거 조문과 함께 답해 줘.
 위험물안전관리자가 해임되거나 퇴직하면 관계인은 며칠 안에 다시 선임해야 하고, 선임한 뒤에는 어떤 절차를 밟아야 하는가? Neo4j 에서 찾아 근거 조문과 함께 답해 줘.
@@ -56,6 +58,8 @@
 
 Claude는 먼저 MCP 도구 정의를 불러오고(`ToolSearch`) `get-schema`로 스키마(9,111자)를 받은 뒤, 의미층(Norm)에서 「품명」을 찾았습니다.
 
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
+
 ```cypher
 MATCH (n:Norm)-[:BASED_ON]->(p) WHERE n.object CONTAINS '품명' OR n.trigger CONTAINS '품명' OR n.action CONTAINS '품명' OR p.text CONTAINS '품명'
 OPTIONAL MATCH (n)-[:HAS_SUBJECT]->(s:Actor) OPTIONAL MATCH (n)-[:ADDRESSED_TO]->(r:Actor)
@@ -77,11 +81,15 @@ RETURN n.normId, n.name, n.modality, n.trigger, n.action, n.object, n.deadlineTe
 
 첫 질의는 조문 텍스트·Sanction·Norm·Actor를 한 번에 연결하고 `collect`로 모은 뒤 `ORDER BY p.lawId`로 정렬하려다 실패했습니다.
 
+**Claude가 보여 준 결과 예시**(직접 입력하지 않음)
+
 ```text
 error during GetQueryType: Neo4jError: Neo.ClientError.Statement.SyntaxError (In a WITH/RETURN with DISTINCT or an aggregation, it is not possible to access variables declared before the WITH/RETURN: p (line 6, column 244 (offset: 571))
 ```
 
 집계(`collect`)를 한 뒤에는 집계 전 변수(`p`)를 `ORDER BY`에 쓸 수 없다는 뜻입니다. Claude는 오류를 읽고 질의를 나눴습니다. 집계가 없는 질의로 법 제18조·제39조제1항, 시행규칙 제64조·제68조를 `pid`로 조회하고, Norm 하나만 따로 가져왔습니다.
+
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
 
 ```cypher
 MATCH (n:Norm)-[:BASED_ON]->(p {pid:'위험물안전관리법:제18조:제2항'})
@@ -89,6 +97,8 @@ OPTIONAL MATCH (n)-[:ADDRESSED_TO]->(r:Actor) OPTIONAL MATCH (n)-[:HAS_SUBJECT]-
 RETURN n.normId, n.action, n.object, n.trigger, n.deadlineText, n.deadlineValue, n.deadlineUnit, n.deadlineKind,
        n.reviewed, n.uncheckedFields, collect(DISTINCT sj.name) AS subj, collect(DISTINCT r.name) AS recip
 ```
+
+**Claude가 보여 준 결과 예시**(직접 입력하지 않음)
 
 ```text
 "n.deadlineText": "점검을 한 날부터 30일 이내", "n.deadlineValue": 30, "n.deadlineUnit": "일",
@@ -103,6 +113,8 @@ RETURN n.normId, n.action, n.object, n.trigger, n.deadlineText, n.deadlineValue,
 
 Claude는 제27조의 Norm을 `WITH`로 먼저 모은 뒤 결과를 받았습니다(3번에서 발생한 오류를 피한 것으로 보입니다).
 
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
+
 ```cypher
 MATCH (n:Norm)-[:BASED_ON]->(p) WHERE p.pid STARTS WITH '위험물안전관리법:제27조'
 OPTIONAL MATCH (n)-[:ADDRESSED_TO]->(r:Actor) OPTIONAL MATCH (n)-[:HAS_SUBJECT]->(sj:Actor)
@@ -112,6 +124,8 @@ RETURN n.normId, n.modality, n.action, n.object, n.trigger, n.deadlineText, n.su
 ```
 
 제2항에 해당하는 행에서 `"recip": ["경찰서", " 밖의 관계기관", "소방서"]`가 반환되었고, Claude는 답 끝에 이렇게 적었습니다.
+
+**Claude가 보여 준 결과 예시**(직접 입력하지 않음)
 
 ```text
 제27조제2항 Norm의 수신 Actor 중 하나가 이름이 " 밖의 관계기관"으로 저장되어 있습니다. "그 밖의 관계기관"에서 앞 글자
@@ -125,6 +139,8 @@ RETURN n.normId, n.modality, n.action, n.object, n.trigger, n.deadlineText, n.su
 ### 5번 — 벌칙·과태료: 여러 조문을 연결하는 질문
 
 의무 조항(제15조·제18조)과 관련된 벌칙을 찾으려면 한 조문만으로는 답할 수 없습니다. 의무 조항 ←`PENALIZES`— 벌칙 호 ←`HAS_PART`— 벌칙 조 —`IMPOSES`→ 제재(Sanction)로 세 단계를 거쳐야 합니다. Claude의 첫 질의는 이 경로를 한 번에 탐색했습니다.
+
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
 
 ```cypher
 MATCH (i)-[r:PENALIZES]->(t) WHERE t.lawId='위험물안전관리법' AND t.articleNo IN [15,18]
@@ -148,6 +164,8 @@ Claude는 두 번째 질의로 벌칙 장과 제12조·제13조 원문에서 「
 대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(`claude -p`)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 `--tools ""`로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.
 
 원 교재의 bash 명령을 PowerShell 반복문으로 옮겼습니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 `golden-questions.md`의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 `$reps = 1`로 한 번씩만 돌려 보는 것을 권합니다.
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 Set-Location C:\lab\law-graph
@@ -174,6 +192,8 @@ for ($n = 1; $n -le $qs.Count; $n++) {
 | `--tools ""` | `--tools=` | Windows PowerShell 5.1은 빈 문자열 인자 `""`을 빼 버려 `--tools`가 다음 인자를 값으로 삼습니다. `--tools=`는 5.1과 7 모두 같은 뜻입니다 |
 
 결과 파일마다 도구 호출 수, 걸린 시간, 비용을 모아 보는 명령입니다. `stream-json`의 마지막 `result` 줄에 시간(`duration_ms`)과 비용(`total_cost_usd`)이 들어 있습니다.
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 Get-ChildItem runs\graph\*.jsonl | ForEach-Object {
@@ -202,14 +222,14 @@ Get-ChildItem runs\graph\*.jsonl | ForEach-Object {
 - **Cypher 오류**: 15번 중 10번에서 1~2건이 발생했고, 모두 모델이 수정해 다시 실행했습니다. 가장 흔한 첫 시도는 모든 속성을 문자열로 검색하는 `MATCH (n) WHERE any(k IN keys(n) WHERE toString(n[k]) CONTAINS '안전관리자') …`였고 `TypeError (Invalid input for function 'toString()': … got: StringArray[…])`로 실패했습니다(목록 속성 때문). 다음은 3번에서 본 집계 뒤 `ORDER BY` 오류였습니다.
 - **그래프 구조를 틀리게 설명한 2건**: q4-r3은 「제36조제15호에서 제27조로 가는 `PENALIZES`·`REFERS_TO` 관계가 없습니다」라고 했지만 실제로는 `제36조제15호 -PENALIZES-> 제27조`가 있습니다. 모델이 조건에 `t.articleSub IS NULL`을 넣었는데 이 그래프는 가지번호가 없으면 0을 저장해 두므로 결과가 비었고, 모델은 이를 「관계가 없다」로 해석했습니다. q3-r1은 「제39조에는 Sanction 이 연결되어 있지 않다」고 했는데, 조 노드에는 없고 제39조제1항에 `IMPOSES`가 있어 반만 맞습니다. 두 회차 모두 벌칙 내용은 조문 텍스트에서 확인해 답 자체는 맞았습니다.
 
-근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 [10장](vector-vs-graph.html)에서 벡터 RAG와 같은 기준으로 측정합니다.
+근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 [원 교재 10장](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)에서 벡터 RAG와 같은 기준으로 측정합니다.
 
 !!! warning "답의 근거 조문은 반드시 원문으로 확인하세요"
     15번 모두 결론이 맞았지만, 같은 실행 안에서도 그래프에 대한 설명은 틀릴 수 있었습니다. 빈 결과는 「없다」가 아니라 「이 조건으로는 안 나왔다」일 수 있습니다. 답에 인용된 조문 번호를 원문에서 찾아 문구를 대조하고, 그래프에 대한 주장(「관계가 없다」 등)은 직접 Cypher로 다시 확인하세요. 의미층 Norm은 아직 `reviewed=false`입니다.
 
 ## 동작 과정 다시 보기 — 2번 질문
 
-[2장](how-graphrag.html)에서 본 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.
+[원 교재 2장](https://www.uengine.org/docs/graphrag-law/how-graphrag.html)에서 본 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.
 
 | 단계 | 이 세션의 실제 동작 |
 |---|---|
@@ -221,12 +241,16 @@ Get-ChildItem runs\graph\*.jsonl | ForEach-Object {
 
 두 번째 질의와 결과 일부입니다.
 
+**참고 — Claude가 만든 내용(직접 입력하지 않음)**
+
 ```cypher
 MATCH (n:Norm)-[:BASED_ON]->(p) WHERE p.lawId STARTS WITH '위험물안전관리법' AND (p.text CONTAINS '안전관리자') AND (p.text CONTAINS '선임' OR p.text CONTAINS '해임')
 OPTIONAL MATCH (n)-[:HAS_SUBJECT]->(s:Actor) OPTIONAL MATCH (n)-[:ADDRESSED_TO]->(r:Actor)
 RETURN n.normId, n.modality, n.action, n.trigger, n.deadlineText, n.deadlineValue, n.deadlineUnit, n.deadlineKind, n.reviewed,
        collect(DISTINCT s.name) AS subj, collect(DISTINCT r.name) AS recip, p.citation LIMIT 40
 ```
+
+**출력 예시**
 
 ```text
 위험물안전관리법:제15조:제2항#1  subj ["관계인"]  deadlineText "해임하거나 퇴직한 날부터 30일 이내"
@@ -236,6 +260,8 @@ RETURN n.normId, n.modality, n.action, n.trigger, n.deadlineText, n.deadlineValu
 ```
 
 화면에는 이 과정이 한 줄로 접혀 나오고, 그 아래 답이 이어집니다.
+
+**Claude Code 화면 예시**
 
 ```text
   Called neo4j 3 times (ctrl+o to expand)
@@ -250,6 +276,25 @@ RETURN n.normId, n.modality, n.action, n.trigger, n.deadlineText, n.deadlineValu
     **다른 날 다시 열었더니 neo4j 도구가 없습니다 (GL-12).** 증상: `/mcp`에 neo4j가 연결되지 않고 질문해도 MCP 호출이 나오지 않습니다. 원인: `.mcp.json`의 `${NEO4J_PASSWORD}`는 claude를 실행한 셸의 환경변수 값으로 치환되는데, 새 터미널에는 그 변수가 없습니다. 조치: `Set-Location C:\lab\law-graph; . .\env.ps1` 뒤 `claude`를 다시 실행합니다(8장).
 
     **답에 `" 밖의 관계기관"` 같은 이상한 이름이 나옵니다 (GL-14).** 증상: 4번 질문에서 제27조제2항 Norm의 상대방 Actor 이름이 `" 밖의 관계기관"`입니다. 원인: 7장에서 묶음 이름을 쪼갤 때 「그 밖의」의 「그」를 접속어로 잘라냈습니다. 조치: 7장 「막히면」대로 쪼개기 규칙을 고치고 `uv run ingest_semantic.py --reset`을 실행합니다. 이 교재의 기록은 고치기 전 데이터입니다.
+
+## 정리와 마무리
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 결과물 |
+|---|---|---|
+| 골든 퀘스천 5개 질문 | Claude Code 입력창 | 근거 조문이 붙은 답 5개 |
+| 도구 호출(Cypher) 펼쳐 보기 | Claude Code(`ctrl+o`) | 그래프에서 답을 찾은 경로 |
+| 근거 조문을 원문과 대조 | PDF 뷰어 / Neo4j Browser | 맞는 답과 틀린 답의 구분 |
+| 같은 질문 반복 실행과 요약 | 작업 창 | `runs\graph\*.jsonl`, 시간·비용·호출 횟수 표 |
+
+**전체 실습의 목표를 이루었나요?** 다음 세 가지에 모두 「예」라고 답할 수 있으면 완료입니다.
+
+1. 위험물안전관리법 PDF 3개가 Neo4j 그래프에 들어 있고, 조 개수와 표본 조문이 원문과 맞습니다(6장).
+2. Claude Code가 Neo4j MCP(`read-cypher`)로 그래프를 조회해 골든 퀘스천 다섯 개에 답했습니다(8·9장).
+3. 답에 인용된 조문을 학생이 직접 원문과 대조했고, 틀린 곳이 있으면 그 원인(적재·의미층·질의)을 짚을 수 있습니다(9장).
+
+**다음에 할 일:** 실습이 끝나면 Neo4j 창에서 `Ctrl+C`로 Neo4j를 멈춥니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 원 교재의 [10장 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)과 [11장 마무리](https://www.uengine.org/docs/graphrag-law/wrap-up.html)에서 이어서 읽을 수 있습니다(원 교재는 macOS·Docker 기준이므로 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다).
 
 ## 확인 문제
 

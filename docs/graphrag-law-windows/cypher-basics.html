@@ -109,6 +109,8 @@ cypher-shell을 대화형으로 열어(<code>&amp; $cs -u neo4j -p $env:NEO4J_PA
 
 파일 방식은 이렇게 씁니다. 3장의 <code>env.ps1</code>이 만든 <code>Write-Utf8</code> 함수로 저장하면 Windows PowerShell 5.1에서도 BOM 없이 저장됩니다(5.1의 <code>Set-Content -Encoding utf8</code>은 BOM을 붙입니다). 메모장에서 「UTF-8」(「BOM 포함 UTF-8」이 아님)로 저장해도 됩니다.
 
+<strong>▶ 작업 창(Windows PowerShell)에 입력</strong>
+
 
 <div class="hl"><pre><span></span><code><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">law-graph</span>
 <span class="p">.</span> <span class="p">.\</span><span class="n">env</span><span class="p">.</span><span class="n">ps1</span>
@@ -120,6 +122,8 @@ cypher-shell을 대화형으로 열어(<code>&amp; $cs -u neo4j -p $env:NEO4J_PA
 
 여러 줄 질의는 here-string으로 넘깁니다. 시작 <code>@'</code>는 줄 끝에, 끝 <code>'@</code>는 줄 맨 앞에 있어야 합니다.
 
+<strong>▶ 작업 창(Windows PowerShell)에 입력</strong>
+
 
 <div class="hl"><pre><span></span><code><span class="nb">Write-Utf8</span> <span class="n">toy</span><span class="p">.</span><span class="n">cypher</span> <span class="sh">@'</span>
 <span class="sh">CREATE (l:Law {name:'위험물안전관리법', kind:'법률'}) RETURN l;</span>
@@ -130,6 +134,8 @@ cypher-shell을 대화형으로 열어(<code>&amp; $cs -u neo4j -p $env:NEO4J_PA
 
 
 아래 질의는 어느 방법으로 실행해도 됩니다. 출력은 cypher-shell 형식으로 적었고, Browser에서는 같은 값이 표(Table 보기)로 나옵니다.
+
+<strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다
 
 
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">노드수</span><span class="p">;</span>
@@ -143,11 +149,15 @@ cypher-shell을 대화형으로 열어(<code>&amp; $cs -u neo4j -p $env:NEO4J_PA
 
 <strong>왜 하나요?</strong> 그래프의 가장 작은 단위인 노드와 속성을 직접 만들어 보면, 6장에서 Claude가 만드는 수천 개의 노드도 같은 구조라는 것을 이해할 수 있습니다.
 
+<strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다
+
 
 <div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">Law</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'위험물안전관리법'</span><span class="p">,</span><span class="w"> </span><span class="n">kind</span><span class="p">:</span><span class="s">'법률'</span><span class="p">})</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">l</span><span class="p">;</span>
 </code></pre></div>
 
 
+
+<strong>출력 예시</strong>
 
 
 <div class="hl"><pre><span></span><code>| (:Law {name: "위험물안전관리법", kind: "법률"}) |
@@ -160,6 +170,8 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 
 <strong>왜 하나요?</strong> 적재 코드는 수정할 때마다 여러 번 다시 돌립니다. <code>CREATE</code>로는 실행할 때마다 노드가 늘어나 그래프가 망가지므로, 다시 실행해도 결과가 같은 <code>MERGE</code>의 동작을 눈으로 확인해 둡니다.
 
+<strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다
+
 
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">Law</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'위험물안전관리법'</span><span class="p">})</span>
 <span class="k">UNWIND</span><span class="w"> </span><span class="o">[[</span><span class="s">'제15조'</span><span class="p">,</span><span class="s">'위험물안전관리자'</span><span class="o">]</span><span class="p">,</span><span class="o">[</span><span class="s">'제18조'</span><span class="p">,</span><span class="s">'정기점검 및 정기검사'</span><span class="o">]</span><span class="p">,</span><span class="o">[</span><span class="s">'제36조'</span><span class="p">,</span><span class="s">'벌칙'</span><span class="o">]</span><span class="p">,</span><span class="o">[</span><span class="s">'제39조'</span><span class="p">,</span><span class="s">'과태료'</span><span class="o">]]</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">r</span>
@@ -168,6 +180,8 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 </code></pre></div>
 
 
+
+<strong>출력 예시</strong>
 
 
 <div class="hl"><pre><span></span><code>Added 4 nodes, Created 4 relationships, Set 12 properties, Added 4 labels
@@ -181,6 +195,8 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 
 <strong>왜 하나요?</strong> 법령은 조 안에 항이 있는 계층 구조입니다. 이 관계를 만들어 두어야 「제15조 전체」를 한 번에 가져오거나 「30일」이 들어 있는 항을 찾을 수 있습니다.
 
+<strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다
+
 
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제15조'</span><span class="p">})</span>
 <span class="k">MERGE</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_PARAGRAPH</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p2</span><span class="p">:</span><span class="n">Paragraph</span><span class="w"> </span><span class="p">{</span><span class="n">id</span><span class="p">:</span><span class="s">'제15조②'</span><span class="p">})</span>
@@ -190,6 +206,8 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 </code></pre></div>
 
 
+
+<strong>출력 예시</strong>
 
 
 <div class="hl"><pre><span></span><code>Added 2 nodes, Created 2 relationships, Set 6 properties, Added 2 labels
@@ -201,6 +219,8 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 
 <strong>왜 하나요?</strong> 「벌칙 조문이 어느 의무 조문을 가리키는가」는 글자 검색으로는 찾기 어렵고 관계로 두어야 따라갈 수 있습니다. 골든 퀘스천 5번(벌칙)이 바로 이 관계를 거쳐 답합니다.
 
+<strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다
+
 
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a15</span><span class="p">:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제15조'</span><span class="p">}),</span><span class="w"> </span><span class="p">(</span><span class="n">a18</span><span class="p">:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제18조'</span><span class="p">}),</span>
 <span class="w">      </span><span class="p">(</span><span class="n">p36</span><span class="p">:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제36조'</span><span class="p">}),</span><span class="w"> </span><span class="p">(</span><span class="n">p39</span><span class="p">:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제39조'</span><span class="p">})</span>
@@ -210,6 +230,8 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 </code></pre></div>
 
 
+
+<strong>출력 예시</strong>
 
 
 <div class="hl"><pre><span></span><code>Created 3 relationships, Set 3 properties
@@ -223,10 +245,12 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 <h2 id="따라-하기-②-묻기">따라 하기 ② 묻기<a class="anchor" href="#따라-하기-②-묻기" title="Permanent link">#</a></h2>
 <h3 id="match-패턴과-방향">MATCH — 패턴과 방향<a class="anchor" href="#match-패턴과-방향" title="Permanent link">#</a></h3>
 <p>「제15조를 가리키는 조문은?」이라는 질문을 화살표 방향에 맞춰 질의로 씁니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">pen</span><span class="p">:</span><span class="n">Article</span><span class="p">)</span><span class="o">-[</span><span class="n">r</span><span class="p">:</span><span class="n">REFERS_TO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제15조'</span><span class="p">})</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">pen</span><span class="p">.</span><span class="n">no</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">조문</span><span class="p">,</span><span class="w"> </span><span class="n">pen</span><span class="p">.</span><span class="n">title</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">제목</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">at</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">호</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>| "제39조" | "과태료" | "제5호" |
 | "제36조" | "벌칙"  | "제6호" |
 2 rows
@@ -234,11 +258,13 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 
 <p>화살표를 거꾸로 쓰면 <code>MATCH (pen:Article)&lt;-[:REFERS_TO]-(a:Article {no:'제15조'}) RETURN pen.no;</code>는 <strong>0 rows</strong>입니다. 제15조가 다른 조를 가리키는 관계는 없기 때문입니다. 방향을 구분하지 않으려면 <code>-[:REFERS_TO]-</code>처럼 화살표 머리를 빼고 씁니다.</p>
 <h3 id="where-조건">WHERE — 조건<a class="anchor" href="#where-조건" title="Permanent link">#</a></h3>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Article</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_PARAGRAPH</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Paragraph</span><span class="p">)</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="s">'30일'</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">no</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">조</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">no</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">항</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">text</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">본문앞부분</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>| "제15조" | 2 | "제1항의 규정에 따라 안전관리자를 선임한 제조소등의 관계인은 그 안전관리" |
 1 row
 </code></pre></div>
@@ -246,15 +272,18 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 <p><code>CONTAINS</code>는 문자열이 그대로 포함되어 있는지만 확인합니다. 띄어쓰기나 가운뎃점(<code>ㆍ</code>와 <code>·</code>)이 다르면 찾지 못합니다. 그래서 5장의 스키마는 가운뎃점을 통일한 정규화 본문과 전문 색인(아래 「제약과 색인」)을 따로 둡니다.</p>
 <h3 id="return-돌려줄-것">RETURN — 돌려줄 것<a class="anchor" href="#return-돌려줄-것" title="Permanent link">#</a></h3>
 <p><code>RETURN</code>은 노드 전체(<code>RETURN l</code>), 속성(<code>pen.no</code>), 계산한 값을 반환하고 <code>AS</code>로 열 이름을 붙입니다. <code>MATCH</code> 없이 값만 계산할 수도 있습니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">RETURN</span><span class="w"> </span><span class="s">'위험물안전관리법 제15조'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">조문</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="s">'제조소등'</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">글자수</span><span class="p">;</span><span class="w">   </span><span class="c1">// 글자수 4</span>
 </code></pre></div>
 
 <h3 id="가변-길이-경로-몇-걸음-건너서">가변 길이 경로 — 몇 걸음 건너서<a class="anchor" href="#가변-길이-경로-몇-걸음-건너서" title="Permanent link">#</a></h3>
 <p><code>*1..3</code>은 「관계 1~3개를 건너서」라는 뜻입니다. 관계 타입을 적지 않으면 어떤 관계든 따라갑니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제39조'</span><span class="p">})</span><span class="o">-[</span><span class="p">*</span><span class="m">1</span><span class="p">..</span><span class="m">3</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Paragraph</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">길이</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">x</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">nodes</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="n">coalesce</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">no</span><span class="p">)</span><span class="o">]</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">경로</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>| 2  | ["제39조", "제15조", "제15조②"] |
 | 2  | ["제39조", "제15조", "제15조③"] |
 2 rows
@@ -262,11 +291,13 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 
 <p>과태료 조문에서 두 걸음 만에 의무 조항의 항에 도달했습니다. 이렇게 여러 조문을 거치는 질문이 1장에서 설명한 멀티홉이며, 9장 골든 퀘스천 5번(벌칙)이 이 유형입니다. <code>[x IN 목록 | 식]</code>은 목록의 원소마다 식을 계산하고, <code>coalesce</code>는 앞에서부터 확인해 처음으로 값이 있는 것을 선택합니다.</p>
 <h3 id="optional-match-없어도-빠뜨리지-않기">OPTIONAL MATCH — 없어도 빠뜨리지 않기<a class="anchor" href="#optional-match-없어도-빠뜨리지-않기" title="Permanent link">#</a></h3>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Article</span><span class="p">)</span>
 <span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">HAS_PARAGRAPH</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Paragraph</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">no</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">조</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">title</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">제목</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">항수</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="err">조</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>| "제15조" | "위험물안전관리자"    | 2  |
 | "제18조" | "정기점검 및 정기검사" | 0  |
 | "제36조" | "벌칙"          | 0  |
@@ -277,11 +308,13 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 <p>두 번째 줄을 <code>MATCH</code>로 바꾸면 <code>MATCH (a:Article)-[:HAS_PARAGRAPH]-&gt;(p:Paragraph) RETURN a.no AS 조, count(p) AS 항수;</code>는 <code>"제15조" | 2</code> <strong>한 행</strong>만 남습니다. 항이 없는 조가 결과에서 사라집니다.</p>
 <h3 id="집계-order-by-limit">집계 · ORDER BY · LIMIT<a class="anchor" href="#집계-order-by-limit" title="Permanent link">#</a></h3>
 <p><code>count</code>는 개수를 세고, <code>collect</code>는 값을 목록으로 모읍니다. 집계하지 않은 열(<code>a.no</code>, <code>a.title</code>)이 그룹을 나누는 기준이 됩니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">pen</span><span class="p">:</span><span class="n">Article</span><span class="p">)</span><span class="o">-[</span><span class="p">:</span><span class="n">REFERS_TO</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Article</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">no</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">조문</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">title</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">제목</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">참조수</span><span class="p">,</span><span class="w"> </span><span class="k">collect</span><span class="p">(</span><span class="n">pen</span><span class="p">.</span><span class="n">no</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">참조하는조문</span>
 <span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="err">참조수</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>| "제15조" | "위험물안전관리자" | 2   | ["제36조", "제39조"] |
 1 row
 </code></pre></div>
@@ -293,6 +326,7 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 </div>
 <h2 id="따라-하기-③-제약과-색인">따라 하기 ③ 제약과 색인<a class="anchor" href="#따라-하기-③-제약과-색인" title="Permanent link">#</a></h2>
 <p><strong>제약</strong>은 잘못된 데이터가 들어오지 못하게 막고, 그 속성에 색인도 함께 만듭니다. <strong>전문(full-text) 색인</strong>은 낱말로 조문을 찾을 수 있게 합니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">CONSTRAINT</span><span class="w"> </span><span class="n">law_name</span><span class="w"> </span><span class="n">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">EXISTS</span><span class="w"> </span><span class="n">FOR</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">:</span><span class="n">Law</span><span class="p">)</span><span class="w"> </span><span class="n">REQUIRE</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">UNIQUE</span><span class="p">;</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="n">CONSTRAINT</span><span class="w"> </span><span class="n">article_key</span><span class="w"> </span><span class="n">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">EXISTS</span><span class="w"> </span><span class="n">FOR</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">Article</span><span class="p">)</span><span class="w"> </span><span class="n">REQUIRE</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">law</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">no</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">UNIQUE</span><span class="p">;</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="n">FULLTEXT</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">paragraph_text</span><span class="w"> </span><span class="n">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">EXISTS</span><span class="w"> </span><span class="n">FOR</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Paragraph</span><span class="p">)</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">EACH</span><span class="w"> </span><span class="o">[</span><span class="n">p</span><span class="p">.</span><span class="n">text</span><span class="o">]</span>
@@ -300,6 +334,7 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 <span class="n">SHOW</span><span class="w"> </span><span class="n">CONSTRAINTS</span><span class="w"> </span><span class="k">YIELD</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">labelsOrTypes</span><span class="p">,</span><span class="w"> </span><span class="n">properties</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>Added 1 constraints
 Added 1 constraints
 Added 1 indexes
@@ -308,17 +343,21 @@ Added 1 indexes
 </code></pre></div>
 
 <p>두 속성을 묶은 유일 제약(<code>(a.law, a.no)</code>)도 Community 판에서 사용할 수 있습니다(존재까지 강제하는 <code>NODE KEY</code>는 Enterprise 판 기능). 같은 이름의 법령을 다시 만들려고 하면 제약이 이를 막습니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="p">(:</span><span class="n">Law</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'위험물안전관리법'</span><span class="p">});</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>Node(0) already exists with label `Law` and property `name` = '위험물안전관리법'
 </code></pre></div>
 
 <p>전문 색인으로 찾아봅니다. 점수(<code>score</code>)가 높을수록 질의에 사용한 낱말과 더 잘 일치합니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">CALL</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">fulltext</span><span class="p">.</span><span class="n">queryNodes</span><span class="p">(</span><span class="s">'paragraph_text'</span><span class="p">,</span><span class="w"> </span><span class="s">'안전관리자 선임 신고'</span><span class="p">)</span><span class="w"> </span><span class="k">YIELD</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">score</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">항</span><span class="p">,</span><span class="w"> </span><span class="n">round</span><span class="p">(</span><span class="n">score</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">점수</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>| "제15조③" | 0.805 |
 | "제15조②" | 0.676 |
 </code></pre></div>
@@ -327,11 +366,13 @@ Added 1 indexes
 <p><code>SHOW INDEXES YIELD name, type, labelsOrTypes, properties WHERE type &lt;&gt; 'LOOKUP';</code>로 확인하면 제약이 만든 <code>article_key</code>·<code>law_name</code>(RANGE)과 <code>paragraph_text</code>(FULLTEXT) 세 개가 나옵니다.</p>
 <h2 id="지우기">지우기<a class="anchor" href="#지우기" title="Permanent link">#</a></h2>
 <p>6장에서 실제 데이터를 넣기 전에 맛보기 그래프와 제약·색인을 모두 지웁니다. <code>DETACH DELETE</code>는 노드에 붙은 관계까지 함께 지웁니다(관계가 남은 노드는 <code>DELETE</code>만으로 지울 수 없습니다).</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="n">DETACH</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
 <span class="n">DROP</span><span class="w"> </span><span class="n">CONSTRAINT</span><span class="w"> </span><span class="n">law_name</span><span class="p">;</span><span class="w"> </span><span class="n">DROP</span><span class="w"> </span><span class="n">CONSTRAINT</span><span class="w"> </span><span class="n">article_key</span><span class="p">;</span><span class="w"> </span><span class="n">DROP</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">paragraph_text</span><span class="p">;</span>
 <span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">RETURN</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">노드수</span><span class="p">;</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>Deleted 7 nodes, Deleted 9 relationships
 Removed 1 constraints
 Removed 1 constraints
@@ -341,12 +382,14 @@ Removed 1 indexes
 
 <h2 id="확인-neo4j-browser로-보기">확인 — Neo4j Browser로 보기<a class="anchor" href="#확인-neo4j-browser로-보기" title="Permanent link">#</a></h2>
 <p>지우기 전에 같은 데이터를 Neo4j Browser(<code>http://localhost:7474</code>)에서 보면 표 대신 그림으로 나옵니다. Browser에서는 문장 끝 <code>;</code>를 생략해도 됩니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">OPTIONAL</span><span class="w"> </span><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">-[</span><span class="n">r</span><span class="o">]-&gt;</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">m</span>
 </code></pre></div>
 
 <figure><a href="img/gl-02-browser-toy-graph.webp" target="_blank" rel="noopener" title="크게 보기"><img alt="전체 맛보기 그래프 — 노드 7(Article 4·Law 1·Paragraph 2), 관계 9(HAS_ARTICLE 4·HAS_PARAGRAPH 2·REFERS_TO 3)" src="img/gl-02-browser-toy-graph.webp" loading="lazy" decoding="async"></a><figcaption>전체 맛보기 그래프 — 노드 7(Article 4·Law 1·Paragraph 2), 관계 9(HAS_ARTICLE 4·HAS_PARAGRAPH 2·REFERS_TO 3)</figcaption></figure>
 <p>오른쪽 Results overview에 레이블·관계 타입별 개수가 나옵니다. 노드를 누르면 속성이 보입니다.</p>
+<p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
 <div class="hl"><pre><span></span><code><span class="k">MATCH</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(:</span><span class="n">Article</span><span class="w"> </span><span class="p">{</span><span class="n">no</span><span class="p">:</span><span class="s">'제39조'</span><span class="p">})</span><span class="o">-[</span><span class="p">*</span><span class="m">1</span><span class="p">..</span><span class="m">3</span><span class="o">]-&gt;</span><span class="p">(:</span><span class="n">Paragraph</span><span class="p">)</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">path</span>
 </code></pre></div>
@@ -452,6 +495,41 @@ Removed 1 indexes
 <li>조치: 한국어 본문 색인은 <code>OPTIONS {indexConfig: {`fulltext.analyzer`: 'cjk'}}</code>로 만듭니다. 사용할 수 있는 분석기는 <code>CALL db.index.fulltext.listAvailableAnalyzers()</code>로 확인합니다.</li>
 </ul>
 </div>
+<h2 id="정리와-다음-장">정리와 다음 장<a class="anchor" href="#정리와-다음-장" title="Permanent link">#</a></h2>
+<p><strong>이 장에서 한 일</strong></p>
+<table>
+<thead>
+<tr>
+<th>한 일</th>
+<th>어디서</th>
+<th>배운 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>법·조·항 노드와 관계를 만들었습니다</td>
+<td>Neo4j Browser(또는 작업 창의 <code>&amp; $cs -f</code>)</td>
+<td><code>CREATE</code>와 <code>MERGE</code>의 차이</td>
+</tr>
+<tr>
+<td>패턴으로 조회했습니다</td>
+<td>Neo4j Browser</td>
+<td><code>MATCH</code>·<code>WHERE</code>·<code>RETURN</code>, 가변 길이 경로, <code>OPTIONAL MATCH</code>, 집계</td>
+</tr>
+<tr>
+<td>제약과 전문 색인을 만들었습니다</td>
+<td>Neo4j Browser</td>
+<td>중복 방지(제약)와 한글 검색(<code>cjk</code> 전문 색인)</td>
+</tr>
+<tr>
+<td>연습 데이터를 지웠습니다</td>
+<td>Neo4j Browser</td>
+<td><code>DETACH DELETE</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>왜 중요한가요?</strong> 다음 장부터는 Claude Code가 Cypher를 씁니다. 학생이 Cypher를 읽을 줄 알아야 Claude가 만든 스키마와 질의가 맞는지 <strong>직접 검증</strong>할 수 있습니다.</p>
+<p><strong>다음 장(5장)에서 할 일:</strong> 법령 PDF 3개를 실습 폴더에 넣고, <strong>Claude Code</strong>에게 골든 퀘스천에 답할 수 있는 그래프 스키마를 설계하게 합니다. 이때부터 프롬프트는 <strong>Claude Code 입력창</strong>에, 확인 명령은 <strong>작업 창</strong>에 입력합니다.</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>3단계의 MERGE 문장을 두 번 실행하면 조 노드는 몇 개가 되나요?</summary>
@@ -471,9 +549,9 @@ Removed 1 indexes
 </details>
     </article>
     <nav class="pager"><a class="prev" href="neo4j-windows.html"><span>이전</span>Windows에 Neo4j 설치하기</a><a class="next" href="schema.html"><span>다음</span>골든 퀘스천에서 스키마 설계하기</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#노드-관계-속성">노드 · 관계 · 속성</a></li><li><a href="#따라-하기-①-만들기">따라 하기 ① 만들기</a></li><li><a href="#따라-하기-②-묻기">따라 하기 ② 묻기</a><ul><li><a href="#match-패턴과-방향">MATCH — 패턴과 방향</a></li><li><a href="#where-조건">WHERE — 조건</a></li><li><a href="#return-돌려줄-것">RETURN — 돌려줄 것</a></li><li><a href="#가변-길이-경로-몇-걸음-건너서">가변 길이 경로 — 몇 걸음 건너서</a></li><li><a href="#optional-match-없어도-빠뜨리지-않기">OPTIONAL MATCH — 없어도 빠뜨리지 않기</a></li><li><a href="#집계-order-by-limit">집계 · ORDER BY · LIMIT</a></li></ul></li><li><a href="#따라-하기-③-제약과-색인">따라 하기 ③ 제약과 색인</a></li><li><a href="#지우기">지우기</a></li><li><a href="#확인-neo4j-browser로-보기">확인 — Neo4j Browser로 보기</a></li><li><a href="#한-장-요약표">한 장 요약표</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#노드-관계-속성">노드 · 관계 · 속성</a></li><li><a href="#따라-하기-①-만들기">따라 하기 ① 만들기</a></li><li><a href="#따라-하기-②-묻기">따라 하기 ② 묻기</a><ul><li><a href="#match-패턴과-방향">MATCH — 패턴과 방향</a></li><li><a href="#where-조건">WHERE — 조건</a></li><li><a href="#return-돌려줄-것">RETURN — 돌려줄 것</a></li><li><a href="#가변-길이-경로-몇-걸음-건너서">가변 길이 경로 — 몇 걸음 건너서</a></li><li><a href="#optional-match-없어도-빠뜨리지-않기">OPTIONAL MATCH — 없어도 빠뜨리지 않기</a></li><li><a href="#집계-order-by-limit">집계 · ORDER BY · LIMIT</a></li></ul></li><li><a href="#따라-하기-③-제약과-색인">따라 하기 ③ 제약과 색인</a></li><li><a href="#지우기">지우기</a></li><li><a href="#확인-neo4j-browser로-보기">확인 — Neo4j Browser로 보기</a></li><li><a href="#한-장-요약표">한 장 요약표</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

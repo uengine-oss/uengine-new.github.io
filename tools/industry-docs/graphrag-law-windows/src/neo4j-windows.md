@@ -51,6 +51,8 @@ Neo4j Desktop에서 만든 DBMS도 폴더 구조가 같습니다(`bin`, `conf`, 
 - **화면에서 켜기** — Desktop에서 DBMS를 고르고 플러그인(Plugins) 목록에서 APOC를 찾아 설치(Install)를 누른 뒤 DBMS를 다시 시작합니다. Desktop이 같은 버전의 jar를 `plugins`에 넣고 설정을 맞춰 줍니다.
 - **파일로 켜기** — DBMS를 멈춘 상태에서 그 DBMS 폴더(DBMS 메뉴의 폴더 열기 → DBMS)를 PowerShell에서 `$h`로 두고 ZIP과 같은 명령을 실행합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 $h = '<DBMS 폴더 경로>'      # 예: C:\Users\<이름>\.Neo4jDesktop2\Data\dbmss\dbms-…
 Copy-Item "$h\labs\apoc-*-core.jar" "$h\plugins\"
@@ -62,6 +64,8 @@ Get-ChildItem "$h\plugins"
 ### 켜졌는지 확인하기
 
 Neo4j를 (다시) 시작한 뒤 Neo4j Browser나 cypher-shell에서 실행합니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
 
 ```cypher
 RETURN apoc.version() AS apoc;
@@ -80,6 +84,8 @@ CALL apoc.meta.schema() YIELD value RETURN size(keys(value)) AS 레이블과관�
 
 **왜 하나요?** Neo4j는 자바 프로그램이라 JDK가 없으면 실행되지 않고, 6장 이후의 파이썬 코드(uv)·커밋(Git)·명령 입력(PowerShell)도 모두 여기서 설치한 도구로 합니다. 버전을 맞춰 두면 교재의 출력과 여러분의 출력이 같아져 문제를 찾기 쉽습니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 winget install --id Microsoft.OpenJDK.21 -e      # JDK 21
 winget install --id Git.Git -e                   # Git for Windows (Claude Code보다 먼저)
@@ -88,11 +94,15 @@ winget install --id astral-sh.uv -e              # uv (Python 3.12는 uv가 나�
 
 `winget`이 처음 실행될 때 원본 약관 동의(`Y`)를 물을 수 있습니다. 설치가 끝나면 **PowerShell 창을 닫고 새로 엽니다.** 새 창이어야 바뀐 `Path`가 적용됩니다. 그다음 Claude Code를 설치합니다. Git for Windows가 먼저 있어야 Claude Code가 명령을 실행할 Git Bash를 찾습니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 irm https://claude.ai/install.ps1 | iex
 ```
 
 설치가 끝나면 다시 **창을 닫고 새로 연 뒤** 버전을 모두 확인합니다.
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 $PSVersionTable.PSVersion
@@ -106,6 +116,8 @@ claude --version
 
 `java -version`의 첫 줄에 `21.`이 보이면 됩니다(Microsoft 배포판은 `openjdk version "21.…"`, Oracle JDK는 `java version "21.…"`). Neo4j 5.26은 Java 17 또는 21에서 동작합니다. PowerShell 7을 쓰고 싶다면 `winget install --id Microsoft.PowerShell -e`로 따로 설치할 수 있지만 필수는 아닙니다. 여러 자바가 설치되어 있다면 이 세션에서만 JDK 21을 쓰도록 `JAVA_HOME`을 지정합니다(경로는 설치된 버전에 맞게 고칩니다).
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Get-ChildItem 'C:\Program Files\Microsoft\jdk-21*' -Directory | Select-Object -ExpandProperty FullName
 $env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.9.10-hotspot'   # 위 출력으로 바꿉니다
@@ -117,6 +129,8 @@ $env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.9.10-hotspot'   # 위 출�
 
 **왜 하나요?** Windows는 기본으로 모든 `.ps1` 스크립트를 막습니다. 비밀번호를 코드에 쓰지 않고 환경변수로 넘기고 한글 설정을 한 번에 적용하려면 `env.ps1`을 실행할 수 있어야 하므로, 내 계정에서 내가 만든 스크립트만 허용합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 Get-ExecutionPolicy -List
@@ -127,6 +141,8 @@ Get-ExecutionPolicy -List
 <li markdown="1">**실습 폴더를 git 저장소로 만듭니다.** 이 폴더(`C:\lab\law-graph`)에서 5장부터 Claude Code를 열고 단계마다 커밋합니다. `.gitignore`에는 비밀번호가 담긴 `.env`, 8장의 `.mcp.json`, 파이썬 가상환경, Claude Code 개인 설정을 넣습니다.
 
 **왜 하나요?** 5장부터 Claude Code가 파일을 만들고 고칩니다. 단계마다 커밋해 두면 AI가 잘못 고쳤을 때 바로 되돌릴 수 있고, `.gitignore`로 비밀번호 파일이 실수로 공유되는 것을 처음부터 막습니다.
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 New-Item -ItemType Directory -Force C:\lab\law-graph | Out-Null
@@ -143,6 +159,8 @@ PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. `-Encoding ascii`로 
 
 **왜 하나요?** Docker 없이 Neo4j를 쓰는 가장 단순한 방법입니다. 설치 프로그램이나 관리자 권한 없이 폴더 하나로 끝나므로, 지우고 다시 하기도 쉽고 원 교재와 같은 5.26 버전을 정확히 고를 수 있습니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 $v = '5.26.33'
 $ProgressPreference = 'SilentlyContinue'   # 5.1에서 진행 표시줄 때문에 내려받기가 아주 느려지는 것을 막습니다
@@ -157,6 +175,8 @@ Get-ChildItem C:\lab\neo4j
 <li markdown="1">**APOC를 켜고 메모리 상한을 설정합니다.** APOC jar는 ZIP 안의 `labs` 폴더에 이미 들어 있어 따로 내려받지 않습니다. 설정은 `neo4j.conf`에서 같은 키의 줄을 지우고 원하는 값으로 다시 씁니다.
 
 **왜 하나요?** 8장의 MCP 서버가 그래프 구조를 Claude에게 알려 줄 때 APOC 프로시저를 씁니다. 메모리 상한은 노트북에서 Neo4j가 메모리를 다 차지해 다른 프로그램(브라우저, Claude Code)이 느려지는 것을 막습니다.
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 Copy-Item C:\lab\neo4j\labs\apoc-*-core.jar C:\lab\neo4j\plugins\
@@ -191,6 +211,8 @@ C:\lab\neo4j\bin\neo4j-admin.bat server validate-config
 
 **왜 하나요?** 같은 비밀번호를 Neo4j, 6장의 파이썬 코드, 8장의 MCP 서버가 함께 씁니다. 화면과 명령 기록에 남기지 않고 `.env` 한 곳에만 두면, 코드와 설정 파일을 공유해도 비밀번호는 새지 않습니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 $s = Read-Host -AsSecureString 'Neo4j 비밀번호(영문·숫자 8자 이상)'
@@ -204,6 +226,8 @@ C:\lab\neo4j\bin\neo4j-admin.bat dbms set-initial-password $env:NEO4J_PASSWORD
 <li markdown="1">**창마다 쓸 설정 스크립트 env.ps1을 만듭니다.** `.env`의 비밀번호를 환경변수로 읽고, 한글이 깨지지 않도록 콘솔·파이썬·자바의 출력 인코딩을 UTF-8로 맞추고, cypher-shell 경로를 `$cs`에, 한글 파일을 BOM 없는 UTF-8로 저장하는 `Write-Utf8` 함수를 정의합니다. 원 교재의 `set -a; . ./.env; set +a`에 해당합니다.
 
 **왜 하나요?** 새 PowerShell 창은 환경변수도 인코딩 설정도 모두 기본값으로 시작합니다. 창을 열 때마다 여러 줄을 손으로 치면 하나쯤 빠뜨리기 쉽고, 그러면 「어제는 됐는데 오늘은 비밀번호 오류」나 「한글이 깨진다」가 생깁니다. 한 파일로 만들어 두면 한 줄로 같은 상태를 만들 수 있습니다.
+
+**▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 Set-Location C:\lab\law-graph
@@ -231,6 +255,8 @@ git add env.ps1; git commit -qm "env.ps1: .env 와 UTF-8 설정"
 
 `.Length`가 0이 아닌 숫자(비밀번호 글자 수)를 출력하면 됩니다. 이제부터 **새 PowerShell 창을 열 때마다** 이 두 줄로 시작합니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -241,6 +267,8 @@ Set-Location C:\lab\law-graph
 <li markdown="1">**Neo4j를 실행합니다.** PowerShell 창을 **하나 더** 열고 아래를 실행합니다. 이 창은 Neo4j 전용으로 두고 실습하는 동안 닫지 않습니다. 앞으로 이 창을 「**Neo4j 창**」, 명령을 입력하는 원래 창을 「**작업 창**」이라고 부릅니다.
 
 **왜 하나요?** 이후 모든 장이 `localhost:7687`(Bolt)과 `localhost:7474`(Browser)에 접속합니다. 전용 창에 띄워 두면 로그를 바로 볼 수 있고, Ctrl+C 한 번으로 깔끔하게 멈출 수 있습니다.
+
+**▶ Neo4j 창(Windows PowerShell)에 입력**
 
 ```powershell
 Set-Location C:\lab\law-graph
@@ -276,6 +304,8 @@ C:\lab\neo4j\bin\neo4j.bat console
 
 Neo4j를 띄운 창에 다음과 같은 줄이 나옵니다.
 
+**출력 예시**
+
 ```text
 … INFO  Starting...
 … INFO  ======== Neo4j 5.26.33 ========
@@ -291,6 +321,8 @@ Docker판과 달리 `Bolt enabled on localhost:7687`처럼 `localhost`로 나옵
 
 처음 창(`C:\lab\law-graph`)으로 돌아와 ZIP에 들어 있는 `cypher-shell.bat`으로 Bolt 포트에 접속합니다. 문장 끝의 `;`를 빠뜨리지 마세요.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
@@ -298,6 +330,8 @@ Set-Location C:\lab\law-graph
 & $cs -u neo4j -p $env:NEO4J_PASSWORD "RETURN apoc.version() AS apoc;"
 & $cs -u neo4j -p $env:NEO4J_PASSWORD "SHOW PROCEDURES YIELD name WHERE name STARTS WITH 'apoc.meta' RETURN count(*) AS n;"
 ```
+
+**출력 예시**
 
 ```text
 name, versions, edition
@@ -314,9 +348,13 @@ n
 
 먼저 HTTP 포트가 응답하는지 확인합니다. `curl.exe`는 Windows 10 1803부터 기본으로 들어 있습니다. Windows PowerShell 5.1에서 `curl`이라고만 쓰면 `Invoke-WebRequest`의 별칭이 실행되므로 반드시 `.exe`까지 씁니다.
 
+**▶ 작업 창(Windows PowerShell)에 입력**
+
 ```powershell
 curl.exe -s http://localhost:7474
 ```
+
+**출력 예시**
 
 ```text
 {"bolt_routing":"neo4j://localhost:7687","query":"http://localhost:7474/db/{databaseName}/query/v2","transaction":"http://localhost:7474/db/{databaseName}/tx","bolt_direct":"bolt://localhost:7687","neo4j_version":"5.26.33","neo4j_edition":"community"}
@@ -327,6 +365,8 @@ curl.exe -s http://localhost:7474
 ![Neo4j Browser 첫 화면 「Connect to instance」 — 연결 주소 neo4j://localhost:7687, 사용자 neo4j (원 교재 화면, Windows에서도 같습니다)](img/gl-01-browser-login.webp)
 
 위쪽 입력칸에 질의를 입력하고 Run(또는 Ctrl+Enter)을 누르면 결과가 아래에 쌓입니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
 
 ```cypher
 CALL dbms.components() YIELD name, versions, edition
@@ -366,6 +406,23 @@ RETURN name, versions, edition
 
     - 원인: 5.26의 마지막 자리 번호가 바뀌어 예전 파일이 내려갔습니다.
     - 조치: Deployment Center에서 최신 5.26.x 번호를 확인해 `$v`를 바꿉니다.
+
+## 정리와 다음 장
+
+**이 장에서 한 일**
+
+| 한 일 | 어디서 | 결과물 |
+|---|---|---|
+| JDK 21·Git·uv·Claude Code 설치와 버전 확인 | 작업 창 | `java -version` 등이 버전을 출력 |
+| 실습 폴더와 git 저장소, `.gitignore` 준비 | 작업 창 | `C:\lab\law-graph` |
+| Neo4j 5.26 ZIP 설치, APOC jar 복사, `neo4j.conf` 수정 | 작업 창 | `C:\lab\neo4j`, `validate-config` 통과 |
+| 비밀번호를 `.env`에 저장하고 초기 비밀번호 설정 | 작업 창 | `.env`(git에 올라가지 않음) |
+| `env.ps1` 작성 | 작업 창 | 환경변수·한글(UTF-8)·`$cs`·`Write-Utf8`을 한 번에 준비 |
+| Neo4j 실행과 확인 | Neo4j 창 / 작업 창 / Browser | `Started.`, `RETURN apoc.version()` 결과 |
+
+**기억할 것:** PowerShell 창은 두 개를 씁니다. **Neo4j 창**은 `neo4j.bat console`을 띄운 채 그대로 두고, 명령은 **작업 창**에 입력합니다. 새 창을 열면 언제나 `Set-Location C:\lab\law-graph; . .\env.ps1`부터 실행합니다.
+
+**다음 장(4장)에서 할 일:** 지금 띄운 Neo4j에 작은 연습용 그래프(위험물안전관리법 제15조 일부)를 직접 만들고 조회하면서 `CREATE`·`MERGE`·`MATCH` 같은 Cypher 기본 문법을 익힙니다. 주로 **Neo4j Browser**에 붙여 넣습니다.
 
 ## 확인 문제
 

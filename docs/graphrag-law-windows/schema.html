@@ -71,6 +71,8 @@
 
 <strong>왜 하나요?</strong> Claude Code는 실습 폴더 안의 파일만 읽습니다. 원본 PDF를 커밋해 두면 나중에 판본이 바뀌어도 어느 PDF로 만든 그래프인지 기록이 남고, 6장에서 원문과 대조할 기준이 됩니다.
 
+<strong>▶ 작업 창(Windows PowerShell)에 입력</strong>
+
 
 <div class="hl"><pre><span></span><code><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">law-graph</span>
 <span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">pdf</span> <span class="p">|</span> <span class="nb">Out-Null</span>
@@ -80,6 +82,8 @@
 </code></pre></div>
 
 
+
+<strong>출력 예시</strong>
 
 
 <div class="hl"><pre><span></span><code>위험물안전관리법 시행규칙(행정안전부령)(제00628호)(20260701).pdf
@@ -95,6 +99,8 @@
 
 <strong>왜 하나요?</strong> Claude Code는 실행한 폴더를 작업 범위로 삼습니다. 실습 폴더에서 열어야 PDF를 읽고 결과 파일을 그 폴더에 만들며, 폴더 밖의 파일은 건드리지 않습니다.
 
+<strong>Claude Code 화면 예시</strong>
+
 
 <div class="hl"><pre><span></span><code> Accessing workspace:
  …/law-graph
@@ -106,6 +112,8 @@
 
 
 Windows에서는 <strong>PowerShell 창에서 <code>C:\lab\law-graph</code>로 이동하고 <code>env.ps1</code>을 점 소싱한 뒤</strong> <code>claude</code>를 실행합니다. 처음 실행하면 브라우저가 열려 Claude 계정 로그인을 요청합니다.
+
+<strong>▶ 작업 창(Windows PowerShell)에 입력</strong>
 
 
 <div class="hl"><pre><span></span><code><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">law-graph</span>
@@ -122,6 +130,8 @@ Windows용 Claude Code는 Claude가 셸 명령을 실행할 때 Git for Windows�
 <li><strong>설계를 요청합니다(P1).</strong> 구축 목적, 골든 퀘스천, 「아직 코드는 만들지 말고 PDF부터 열어 보라」는 작업 순서, 결과 파일 이름을 한 번에 전달합니다. 여러 줄을 입력할 때는 줄 끝에서 <code>\</code> + Enter를 눌렀습니다.
 
 <strong>왜 하나요?</strong> 답해야 할 질문이 정해져야 어떤 노드와 관계가 필요한지 정할 수 있습니다. 코드를 짜기 전에 PDF를 먼저 보게 하면, 실제 조문의 모양(항 없이 호만 있는 조, 가지번호 등)을 설계 단계에서 반영해 나중에 고칠 일이 줄어듭니다.
+
+<strong>▶ Claude Code 입력창에 붙여 넣기</strong>
 
 
 <div class="hl"><pre><span></span><code>우리 회사에 「위험물 안전관리 매뉴얼」을 내부 구축하려고 해. pdf/ 폴더에 위험물안전관리법 PDF 3개(법률·시행령·시행규칙)가 있어. 이 PC는 Windows 이고, 코드는 나중에 PowerShell 에서 uv 로 실행할 거야. 이걸 Neo4j 그래프로 만들어서 아래 골든 퀘스천에 근거 조문과 함께 답하게 하고 싶어.
@@ -142,6 +152,8 @@ Windows용 Claude Code는 Claude가 셸 명령을 실행할 때 Git for Windows�
 
 <strong>왜 하나요?</strong> AI의 설계를 그대로 받아들이지 않고 사람이 검토하는 것이 바이브 코딩의 핵심입니다. 질문의 낱말과 조문 표기가 다르다는 문제는 지금 잡지 않으면 9장에서 「검색이 안 된다」로 드러납니다.
 
+<strong>▶ Claude Code 입력창에 붙여 넣기</strong>
+
 
 <div class="hl"><pre><span></span><code>schema.md 읽어 봤어. 두 가지 고쳐 줘.
 1. 질문에 쓰는 말과 조문 표기가 달라. 질문은 「안전관리자」「시·도지사」「위치·구조·설비」(가운뎃점 ·)라고 쓰는데 PDF 는 「위험물안전관리자」「시ㆍ도지사」(ㆍ)「특별시장ㆍ광역시장ㆍ…ㆍ도지사」로 쓰고, 「제조소등」은 「제조소ㆍ저장소 및 취급소」야. Term·Actor 에 대표 이름, 별칭(aliases), 가운뎃점을 맞춘 정규화 이름을 두고, 정의 조항(제2조)과 「이하 "…"라 한다」 약칭에서 별칭을 채우는 규칙을 적어 줘. 질문의 낱말을 어떤 색인으로 이 노드에 연결하는지도 Q2 를 예로 보여 줘.
@@ -157,11 +169,15 @@ Windows용 Claude Code는 Claude가 셸 명령을 실행할 때 Git for Windows�
 
 <strong>왜 하나요?</strong> 검토를 마친 설계를 커밋해 두면 6장의 코드가 이 설계를 기준으로 만들어지고, 나중에 설계를 바꿀 때 무엇이 바뀌었는지 비교할 수 있습니다.
 
+<strong>▶ Claude Code 입력창에 붙여 넣기</strong>
+
 
 <div class="hl"><pre><span></span><code>좋아, schema.md·schema.cypher·golden-questions.md 를 커밋해 줘.
 </code></pre></div>
 
 
+
+<strong>▶ Claude Code 입력창에 붙여 넣기</strong>
 
 
 <div class="hl"><pre><span></span><code>이 실습은 main 하나로 할게. main 으로 합치고 앞으로도 main 에 커밋해 줘.
@@ -174,10 +190,12 @@ Claude는 <code>git merge --ff-only</code>로 합치고 브랜치를 지웠습�
 </ol>
 <h2 id="확인">확인<a class="anchor" href="#확인" title="Permanent link">#</a></h2>
 <p>세 파일이 main에 반영됐는지 확인합니다. 커밋 번호와 메시지는 사용자마다 다릅니다(아래는 이 실습의 기록이며, 첫 커밋 줄은 생략했습니다).</p>
+<p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
 <div class="hl"><pre><span></span><code><span class="nb">Get-ChildItem</span> <span class="n">schema</span><span class="p">.</span><span class="n">md</span><span class="p">,</span> <span class="n">schema</span><span class="p">.</span><span class="n">cypher</span><span class="p">,</span> <span class="n">golden-questions</span><span class="p">.</span><span class="nb">md</span>
 <span class="n">git</span> <span class="n">log</span> <span class="p">-</span><span class="n">-oneline</span>
 </code></pre></div>
 
+<p><strong>출력 예시</strong></p>
 <div class="hl"><pre><span></span><code>27726ff 법령 그래프 스키마 설계와 골든 퀘스천 5개
 d08ed21 위험물안전관리법 PDF 3개
 …
@@ -420,6 +438,7 @@ d08ed21 위험물안전관리법 PDF 3개
 </tbody>
 </table>
 <p>설계 당시에는 데이터가 없어 이 경로를 실행해 보지 못했고, 6장에서 적재한 뒤 Q1~Q4의 진입 조문이 최상위에 나오고 Q5의 벌칙 10건이 기대 답과 일치하는 것을 확인했습니다. Q2의 진입 질의는 다음과 같습니다(<code>schema.md</code> 7절).</p>
+<p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="c1">// 질문 안에 Term 의 열쇠(정규화한 대표 이름·별칭)가 들어 있나</span>
 <span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="p">:</span><span class="n">Term</span><span class="w"> </span><span class="p">{</span><span class="n">family</span><span class="p">:</span><span class="w"> </span><span class="s">'위험물안전관리법'</span><span class="p">})</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="k">any</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">normKeys</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">qKey</span><span class="w"> </span><span class="n">CONTAINS</span><span class="w"> </span><span class="n">k</span><span class="p">)</span>
@@ -488,6 +507,7 @@ d08ed21 위험물안전관리법 PDF 3개
 </tr>
 </tbody>
 </table>
+<p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="c1">// 조·항·호·목은 모두 :Provision 라벨을 함께 갖는다(:Article / :Paragraph / :Item / :SubItem).</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="n">CONSTRAINT</span><span class="w"> </span><span class="n">provision_pid</span><span class="w"> </span><span class="n">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">EXISTS</span>
 <span class="n">FOR</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Provision</span><span class="p">)</span><span class="w"> </span><span class="n">REQUIRE</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">pid</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">UNIQUE</span><span class="p">;</span>
@@ -568,6 +588,41 @@ d08ed21 위험물안전관리법 PDF 3개
 <li>조치: 권한 요청에서 3(No) → 「메모리 파일은 건드리지 말고 넘어가자. 실습 폴더 밖은 고치지 마.」 메모를 아예 끄려면 <code>/memory</code> 또는 설정에서 자동 메모리를 끕니다. 남은 메모 파일 하나는 실습 결과에 영향이 없었습니다.</li>
 </ul>
 </div>
+<h2 id="정리와-다음-장">정리와 다음 장<a class="anchor" href="#정리와-다음-장" title="Permanent link">#</a></h2>
+<p><strong>이 장에서 한 일</strong></p>
+<table>
+<thead>
+<tr>
+<th>한 일</th>
+<th>어디서</th>
+<th>결과물</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>법령 PDF 3개를 <code>pdf\</code>에 넣고 커밋</td>
+<td>작업 창</td>
+<td><code>pdf\위험물안전관리법*.pdf</code></td>
+</tr>
+<tr>
+<td>실습 폴더에서 Claude Code 실행</td>
+<td>작업 창 → Claude Code</td>
+<td>폴더 신뢰 확인 완료</td>
+</tr>
+<tr>
+<td>스키마 설계 요청(P1)과 수정 요청(P2)</td>
+<td>Claude Code 입력창</td>
+<td>설계 문서와 <code>schema.cypher</code></td>
+</tr>
+<tr>
+<td>커밋 요청(P3)</td>
+<td>Claude Code 입력창</td>
+<td>git 커밋(작업 창의 <code>git log</code>로 확인)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>사람이 한 일:</strong> 설계는 Claude가 했지만, 골든 퀘스천마다 「어느 노드와 관계를 따라가면 답이 나오는가」를 읽고 빠진 것을 짚어 고치게 한 것은 학생입니다. 이 검토가 6장 적재 결과를 판단하는 기준이 됩니다.</p>
+<p><strong>다음 장(6장)에서 할 일:</strong> 같은 Claude Code 세션에서 PDF를 읽어 Neo4j에 넣는 적재 코드를 만들게 합니다. 적재가 끝나면 <strong>원문 PDF와 조 개수·표본 조문을 직접 대조</strong>합니다(Neo4j 창은 계속 켜 둡니다).</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
 <summary>설계를 요청하면서 「아직 코드는 만들지 말고 먼저 PDF를 열어 보라」고 한 까닭은 무엇인가요?</summary>
@@ -587,9 +642,9 @@ d08ed21 위험물안전관리법 PDF 3개
 </details>
     </article>
     <nav class="pager"><a class="prev" href="cypher-basics.html"><span>이전</span>Cypher 기초</a><a class="next" href="ingest.html"><span>다음</span>인제스천 바이브 코딩: PDF → 조·항·호 → Neo4j</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a></li><li><a href="#claude가-낸-설계">Claude가 낸 설계</a><ul><li><a href="#네-층">네 층</a></li><li><a href="#노드">노드</a></li><li><a href="#관계">관계</a></li><li><a href="#pdf를-열어-보고-바뀐-것">PDF를 열어 보고 바뀐 것</a></li></ul></li><li><a href="#골든-퀘스천마다-어느-경로로-답하나">골든 퀘스천마다 어느 경로로 답하나</a></li><li><a href="#p2로-바뀐-것">P2로 바뀐 것</a></li><li><a href="#schemacypher">schema.cypher</a></li><li><a href="#교재-pptx의-설계와-다른-점">교재 pptx의 설계와 다른 점</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a></li><li><a href="#claude가-낸-설계">Claude가 낸 설계</a><ul><li><a href="#네-층">네 층</a></li><li><a href="#노드">노드</a></li><li><a href="#관계">관계</a></li><li><a href="#pdf를-열어-보고-바뀐-것">PDF를 열어 보고 바뀐 것</a></li></ul></li><li><a href="#골든-퀘스천마다-어느-경로로-답하나">골든 퀘스천마다 어느 경로로 답하나</a></li><li><a href="#p2로-바뀐-것">P2로 바뀐 것</a></li><li><a href="#schemacypher">schema.cypher</a></li><li><a href="#교재-pptx의-설계와-다른-점">교재 pptx의 설계와 다른 점</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>
