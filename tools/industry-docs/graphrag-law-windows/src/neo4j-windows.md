@@ -119,9 +119,12 @@ claude --version
 **▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
+where.exe java                                         # 자바가 여러 개면 여러 줄이 나옵니다
 Get-ChildItem 'C:\Program Files\Microsoft\jdk-21*' -Directory | Select-Object -ExpandProperty FullName
 $env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.9.10-hotspot'   # 위 출력으로 바꿉니다
 ```
+
+winget으로 설치했다면 두 번째 줄이 JDK 21 폴더를 보여 줍니다. 아무것도 나오지 않으면 JDK를 다른 곳에 설치한 것입니다. `where.exe java`가 보여 준 경로 중 `jdk-21`이 들어간 줄에서 끝의 `\bin\java.exe`를 뺀 폴더가 `JAVA_HOME`입니다(예: `D:\Dev_tools\jdk-21.0.8\bin\java.exe` → `D:\Dev_tools\jdk-21.0.8`). 실제 PC에서도 JDK가 `D:\Dev_tools`에 있어 두 번째 줄은 빈 결과였습니다.
 
 이 설정은 지금 창에만 적용됩니다. `java -version`이 처음부터 21을 보여 주었다면 필요 없습니다. 필요한 경우에는 6단계에서 `env.ps1`을 만든 뒤 `Add-Content -Encoding ascii env.ps1 "`$env:JAVA_HOME = '<위 경로>'"`로 한 줄을 덧붙여 두면, Neo4j를 띄우는 창에서도 자동으로 JDK 21이 쓰입니다.
 </li>
@@ -165,10 +168,14 @@ PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. `-Encoding ascii`로 
 $v = '5.26.33'
 $ProgressPreference = 'SilentlyContinue'   # 5.1에서 진행 표시줄 때문에 내려받기가 아주 느려지는 것을 막습니다
 Invoke-WebRequest "https://dist.neo4j.org/neo4j-community-$v-windows.zip" -OutFile C:\lab\neo4j.zip
-Expand-Archive C:\lab\neo4j.zip -DestinationPath C:\lab
-Rename-Item "C:\lab\neo4j-community-$v" C:\lab\neo4j
+if (-not (Test-Path C:\lab\neo4j)) {
+  Expand-Archive C:\lab\neo4j.zip -DestinationPath C:\lab -Force
+  Rename-Item "C:\lab\neo4j-community-$v" C:\lab\neo4j
+}
 Get-ChildItem C:\lab\neo4j
 ```
+
+`if (-not (Test-Path …))`는 이미 `C:\lab\neo4j`가 있으면 압축 풀기와 이름 바꾸기를 건너뜁니다. 이 줄이 없으면 이 단계를 두 번 실행했을 때 `Cannot create a file when that file already exists.` 오류가 납니다(실제 PC에서 확인). 처음부터 다시 설치하고 싶다면 Neo4j를 멈춘 뒤 `C:\lab\neo4j` 폴더를 지우고 다시 실행합니다.
 
 `bin`, `conf`, `data`, `labs`, `lib`, `logs`, `plugins` 폴더가 보이면 됩니다. 이후 명령은 폴더 이름에 버전이 없도록 `C:\lab\neo4j`로 부릅니다.
 </li>
@@ -392,10 +399,15 @@ RETURN name, versions, edition
     - 원인: `java`가 `Path`에 없거나, 다른 버전(예: Java 8·11)이 먼저 잡혔습니다.
     - 조치: Neo4j를 띄우는 창에서 `$env:JAVA_HOME`을 JDK 21 폴더로 지정한 뒤 다시 실행합니다(1단계). `& "$env:JAVA_HOME\bin\java.exe" -version`으로 확인합니다.
 
+    **`Lock file has been locked by another process` 또는 `Neo4j web server failed to start`가 나옵니다**
+
+    - 원인: 같은 Neo4j가 이미 다른 창(또는 Neo4j Desktop)에서 실행 중입니다. 실제 PC에서 두 번째로 `console`을 실행하자 이 오류로 끝났고, 먼저 띄운 Neo4j는 계속 정상으로 동작했습니다.
+    - 조치: 새로 띄울 필요가 없습니다. 이미 떠 있는 Neo4j 창을 그대로 쓰거나, 그 창에서 Ctrl+C로 멈춘 뒤 다시 실행합니다.
+
     **포트 7474·7687을 이미 쓰고 있다고 나옵니다**
 
     - 원인: Neo4j Desktop의 다른 DBMS나 Docker 컨테이너가 같은 포트로 떠 있습니다.
-    - 조치: `Get-NetTCPConnection -LocalPort 7474,7687 -State Listen | Select-Object LocalPort, OwningProcess`로 프로세스를 찾고, 그 프로그램을 멈춘 뒤 다시 실행합니다.
+    - 조치: `Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort, OwningProcess`로 프로세스를 찾고, 그 프로그램을 멈춘 뒤 다시 실행합니다.
 
     **비밀번호가 틀렸다고 나옵니다(`The client is unauthorized due to authentication failure.`)**
 

@@ -209,11 +209,14 @@
 <strong>▶ 작업 창(Windows PowerShell)에 입력</strong>
 
 
-<div class="hl"><pre><span></span><code><span class="nb">Get-ChildItem</span> <span class="s1">'C:\Program Files\Microsoft\jdk-21*'</span> <span class="n">-Directory</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">FullName</span>
+<div class="hl"><pre><span></span><code><span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">java</span>                                         <span class="c"># 자바가 여러 개면 여러 줄이 나옵니다</span>
+<span class="nb">Get-ChildItem</span> <span class="s1">'C:\Program Files\Microsoft\jdk-21*'</span> <span class="n">-Directory</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">FullName</span>
 <span class="nv">$env:JAVA_HOME</span> <span class="p">=</span> <span class="s1">'C:\Program Files\Microsoft\jdk-21.0.9.10-hotspot'</span>   <span class="c"># 위 출력으로 바꿉니다</span>
 </code></pre></div>
 
 
+
+winget으로 설치했다면 두 번째 줄이 JDK 21 폴더를 보여 줍니다. 아무것도 나오지 않으면 JDK를 다른 곳에 설치한 것입니다. <code>where.exe java</code>가 보여 준 경로 중 <code>jdk-21</code>이 들어간 줄에서 끝의 <code>\bin\java.exe</code>를 뺀 폴더가 <code>JAVA_HOME</code>입니다(예: <code>D:\Dev_tools\jdk-21.0.8\bin\java.exe</code> → <code>D:\Dev_tools\jdk-21.0.8</code>). 실제 PC에서도 JDK가 <code>D:\Dev_tools</code>에 있어 두 번째 줄은 빈 결과였습니다.
 
 이 설정은 지금 창에만 적용됩니다. <code>java -version</code>이 처음부터 21을 보여 주었다면 필요 없습니다. 필요한 경우에는 6단계에서 <code>env.ps1</code>을 만든 뒤 <code>Add-Content -Encoding ascii env.ps1 "</code>$env:JAVA_HOME = '&lt;위 경로&gt;'"`로 한 줄을 덧붙여 두면, Neo4j를 띄우는 창에서도 자동으로 JDK 21이 쓰입니다.
 </li>
@@ -261,12 +264,16 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. <code>-Encodi
 <div class="hl"><pre><span></span><code><span class="nv">$v</span> <span class="p">=</span> <span class="s1">'5.26.33'</span>
 <span class="nv">$ProgressPreference</span> <span class="p">=</span> <span class="s1">'SilentlyContinue'</span>   <span class="c"># 5.1에서 진행 표시줄 때문에 내려받기가 아주 느려지는 것을 막습니다</span>
 <span class="nb">Invoke-WebRequest</span> <span class="s2">"https://dist.neo4j.org/neo4j-community-$v-windows.zip"</span> <span class="n">-OutFile</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">neo4j</span><span class="p">.</span><span class="n">zip</span>
-<span class="nb">Expand-Archive</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">neo4j</span><span class="p">.</span><span class="n">zip</span> <span class="n">-DestinationPath</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span>
-<span class="nb">Rename-Item</span> <span class="s2">"C:\lab\neo4j-community-$v"</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">neo4j</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">-not</span> <span class="p">(</span><span class="nb">Test-Path</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">neo4j</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nb">Expand-Archive</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">neo4j</span><span class="p">.</span><span class="n">zip</span> <span class="n">-DestinationPath</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span> <span class="n">-Force</span>
+  <span class="nb">Rename-Item</span> <span class="s2">"C:\lab\neo4j-community-$v"</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">neo4j</span>
+<span class="p">}</span>
 <span class="nb">Get-ChildItem</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">neo4j</span>
 </code></pre></div>
 
 
+
+<code>if (-not (Test-Path …))</code>는 이미 <code>C:\lab\neo4j</code>가 있으면 압축 풀기와 이름 바꾸기를 건너뜁니다. 이 줄이 없으면 이 단계를 두 번 실행했을 때 <code>Cannot create a file when that file already exists.</code> 오류가 납니다(실제 PC에서 확인). 처음부터 다시 설치하고 싶다면 Neo4j를 멈춘 뒤 <code>C:\lab\neo4j</code> 폴더를 지우고 다시 실행합니다.
 
 <code>bin</code>, <code>conf</code>, <code>data</code>, <code>labs</code>, <code>lib</code>, <code>logs</code>, <code>plugins</code> 폴더가 보이면 됩니다. 이후 명령은 폴더 이름에 버전이 없도록 <code>C:\lab\neo4j</code>로 부릅니다.
 </li>
@@ -518,10 +525,15 @@ n
 <li>원인: <code>java</code>가 <code>Path</code>에 없거나, 다른 버전(예: Java 8·11)이 먼저 잡혔습니다.</li>
 <li>조치: Neo4j를 띄우는 창에서 <code>$env:JAVA_HOME</code>을 JDK 21 폴더로 지정한 뒤 다시 실행합니다(1단계). <code>&amp; "$env:JAVA_HOME\bin\java.exe" -version</code>으로 확인합니다.</li>
 </ul>
+<p><strong><code>Lock file has been locked by another process</code> 또는 <code>Neo4j web server failed to start</code>가 나옵니다</strong></p>
+<ul>
+<li>원인: 같은 Neo4j가 이미 다른 창(또는 Neo4j Desktop)에서 실행 중입니다. 실제 PC에서 두 번째로 <code>console</code>을 실행하자 이 오류로 끝났고, 먼저 띄운 Neo4j는 계속 정상으로 동작했습니다.</li>
+<li>조치: 새로 띄울 필요가 없습니다. 이미 떠 있는 Neo4j 창을 그대로 쓰거나, 그 창에서 Ctrl+C로 멈춘 뒤 다시 실행합니다.</li>
+</ul>
 <p><strong>포트 7474·7687을 이미 쓰고 있다고 나옵니다</strong></p>
 <ul>
 <li>원인: Neo4j Desktop의 다른 DBMS나 Docker 컨테이너가 같은 포트로 떠 있습니다.</li>
-<li>조치: <code>Get-NetTCPConnection -LocalPort 7474,7687 -State Listen | Select-Object LocalPort, OwningProcess</code>로 프로세스를 찾고, 그 프로그램을 멈춘 뒤 다시 실행합니다.</li>
+<li>조치: <code>Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort, OwningProcess</code>로 프로세스를 찾고, 그 프로그램을 멈춘 뒤 다시 실행합니다.</li>
 </ul>
 <p><strong>비밀번호가 틀렸다고 나옵니다(<code>The client is unauthorized due to authentication failure.</code>)</strong></p>
 <ul>

@@ -210,11 +210,13 @@
 <p>Claude는 두 번째 질의로 벌칙 장과 제12조·제13조 원문에서 「제15조」「제18조」「안전관리자」「정기점검」을 문자열로 다시 찾아 <code>PENALIZES</code>에 빠진 호가 없는지 확인했고, 제12조의 허가취소·사용정지 사유도 덧붙였습니다. 양벌규정(제38조)은 「이번에 조회하지 않았다」고 밝혔습니다.</p>
 <p><strong>판정: 맞음(9개 호 모두 원문과 일치).</strong> 예: 제36조제6호 「제15조제1항 또는 제2항의 규정을 위반하여 안전관리자를 선임하지 아니한 관계인으로서 제6조제1항의 규정에 따른 허가를 받은 자」, 제39조제1항제7호의2 「제18조제2항을 위반하여 기간 이내에 점검결과를 제출하지 아니한 자」.</p>
 <h2 id="같은-질문을-15번">같은 질문을 15번<a class="anchor" href="#같은-질문을-15번" title="Permanent link">#</a></h2>
-<p>대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(<code>claude -p</code>)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 <code>--tools ""</code>로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.</p>
+<p>대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(<code>claude -p</code>)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 <code>--tools=</code>(원 교재의 <code>--tools ""</code>)로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.</p>
 <p>원 교재의 bash 명령을 PowerShell 반복문으로 옮겼습니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 <code>golden-questions.md</code>의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 <code>$reps = 1</code>로 한 번씩만 돌려 보는 것을 권합니다.</p>
+<p>반복 실행 전에 <strong>MCP 서버가 연결되는지 먼저 확인합니다.</strong> MCP 서버가 연결되지 않은 채 헤드리스로 질문하면 Claude가 답을 내지 못하고 10분 넘게 멈춰 있는 경우를 실제 PC에서 겪었습니다(그때는 APOC가 꺼져 있었습니다). <code>claude mcp list</code>에 <code>✓ Connected</code>가 보이지 않으면 반복 실행을 시작하지 말고 <a href="mcp.html">8장 「막히면」</a>부터 해결합니다. 실행 중 멈춘 것 같으면 Ctrl+C로 중단합니다.</p>
 <p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
 <div class="hl"><pre><span></span><code><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">law-graph</span>
 <span class="p">.</span> <span class="p">.\</span><span class="n">env</span><span class="p">.</span><span class="n">ps1</span>
+<span class="n">claude</span> <span class="n">mcp</span> <span class="n">list</span>          <span class="c"># neo4j … ✓ Connected 를 확인한 뒤 아래를 실행합니다</span>
 <span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">runs</span><span class="p">\</span><span class="n">graph</span> <span class="p">|</span> <span class="nb">Out-Null</span>
 <span class="nv">$qs</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-Content</span> <span class="n">-Encoding</span> <span class="n">utf8</span> <span class="n">golden-questions</span><span class="p">.</span><span class="n">md</span><span class="p">)</span> <span class="o">-match</span> <span class="s1">'^\d+\. '</span> <span class="o">-replace</span> <span class="s1">'^\d+\. '</span><span class="p">,</span> <span class="s1">''</span>
 <span class="nv">$reps</span> <span class="p">=</span> <span class="n">3</span>

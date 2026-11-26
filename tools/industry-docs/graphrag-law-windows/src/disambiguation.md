@@ -52,7 +52,9 @@ Get-Content -Encoding utf8 data\extract\sample-article.txt |
     --no-session-persistence --disable-slash-commands --strict-mcp-config
 ```
 
-파이프로 넘기는 조문의 한글은 `env.ps1`이 `$OutputEncoding`을 UTF-8로 바꿔 두어야 그대로 전달됩니다(Windows PowerShell 5.1의 기본값은 ASCII라 한글이 `?`가 됩니다). 원 교재의 `--tools ""`(도구 모두 끄기)는 `--tools=`로 바꿨습니다. Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 `""`을 넘기지 못하고 빼 버리기 때문입니다(실제로 확인함). `--tools=`는 5.1과 7 모두에서 같은 뜻으로 전달됩니다.
+파이프로 넘기는 조문의 한글은 `env.ps1`이 `$OutputEncoding`을 UTF-8로 바꿔 두어야 그대로 전달됩니다(Windows PowerShell 5.1의 기본값은 ASCII라 한글이 `?`가 됩니다). **`--json-schema`에 실제 JSON을 넣을 때 주의:** Windows PowerShell 5.1은 외부 프로그램에 인자를 넘길 때 작은따옴표 문자열 안의 큰따옴표(`"`)를 지워 버립니다. 실제 PC에서 JSON을 그대로 넣자 `--json-schema is not valid JSON`으로 실패했고, 큰따옴표를 `\"`로 바꿔 넘기자 성공했습니다(`structured_output={"actors":[…]}` 반환, 약 7초). 5.1에서 손으로 시험할 때는 `$schema = '{"type":"object", …}'`처럼 변수에 담은 뒤 `--json-schema $schema.Replace('"','\"')`로 넘깁니다. PowerShell 7.3 이상은 큰따옴표를 그대로 넘기므로 `--json-schema $schema`로 씁니다. 실제 실습에서는 `extract_entities.py`가 파이썬에서 호출하므로 이 문제가 생기지 않습니다.
+
+원 교재의 `--tools ""`(도구 모두 끄기)는 `--tools=`로 바꿨습니다. Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 `""`을 넘기지 못하고 빼 버리기 때문입니다(실제로 확인함). `--tools=`는 5.1과 7 모두에서 같은 뜻으로 전달됩니다.
 
 법 제27조(388자)를 보내 받은 응답에는 주체·기관 8개, 용어 4개, 관계 4건이 있었습니다. 다음은 그중 제2항의 관계 한 건입니다.
 

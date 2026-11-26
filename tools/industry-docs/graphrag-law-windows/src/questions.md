@@ -161,15 +161,18 @@ Claude는 두 번째 질의로 벌칙 장과 제12조·제13조 원문에서 「
 
 ## 같은 질문을 15번
 
-대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(`claude -p`)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 `--tools ""`로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.
+대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(`claude -p`)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 `--tools=`(원 교재의 `--tools ""`)로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.
 
 원 교재의 bash 명령을 PowerShell 반복문으로 옮겼습니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 `golden-questions.md`의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 `$reps = 1`로 한 번씩만 돌려 보는 것을 권합니다.
+
+반복 실행 전에 **MCP 서버가 연결되는지 먼저 확인합니다.** MCP 서버가 연결되지 않은 채 헤드리스로 질문하면 Claude가 답을 내지 못하고 10분 넘게 멈춰 있는 경우를 실제 PC에서 겪었습니다(그때는 APOC가 꺼져 있었습니다). `claude mcp list`에 `✓ Connected`가 보이지 않으면 반복 실행을 시작하지 말고 [8장 「막히면」](mcp.html)부터 해결합니다. 실행 중 멈춘 것 같으면 Ctrl+C로 중단합니다.
 
 **▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
 Set-Location C:\lab\law-graph
 . .\env.ps1
+claude mcp list          # neo4j … ✓ Connected 를 확인한 뒤 아래를 실행합니다
 New-Item -ItemType Directory -Force runs\graph | Out-Null
 $qs = (Get-Content -Encoding utf8 golden-questions.md) -match '^\d+\. ' -replace '^\d+\. ', ''
 $reps = 3

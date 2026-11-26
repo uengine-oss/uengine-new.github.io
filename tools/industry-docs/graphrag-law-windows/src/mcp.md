@@ -125,7 +125,7 @@ MCP 서버가 뜨는지 Claude Code를 열기 전에 확인할 수도 있습니�
 claude mcp list
 ```
 
-`neo4j: uvx neo4j-mcp-server@2.1.2 - ✓ Connected`처럼 나오면 됩니다. 이 프로젝트의 MCP 서버를 아직 승인하지 않았다면 다음 단계의 승인 창을 먼저 거쳐야 할 수 있습니다.
+`neo4j: uvx neo4j-mcp-server@2.1.2 - ✓ Connected`처럼 나오면 됩니다. 처음 실행하면 `⏸ Pending approval (run claude to approve)`가 나옵니다(실제 PC에서 확인). 아직 이 프로젝트의 MCP 서버를 승인하지 않았다는 뜻이며 오류가 아닙니다. `claude`를 실행해 다음 단계의 승인 창에서 승인하면 `✓ Connected`로 바뀝니다. `✗ Failed`가 나오면 아래 「막히면」의 GL-12(비밀번호)와 APOC 항목을 확인합니다.
 </li>
 <li markdown="block">**승인 창에서 `Use this MCP server`를 고릅니다.** 프로젝트에서 새 MCP 서버를 찾으면 이 창이 뜹니다. **기본 선택이 맨 아래 `Continue without using this MCP server`**이므로, 그냥 Enter를 누르면 서버 없이 시작됩니다. ↑를 두 번 눌러 고른 뒤 Enter를 누릅니다.
 
@@ -233,6 +233,8 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
 
 !!! warning "막히면"
     **Enter를 눌렀더니 `/mcp`에 연결이 없습니다 (GL-11).** 증상: `.mcp.json`을 만들고 `claude`를 다시 실행했는데 「New MCP server found in this project: neo4j」 창의 기본 선택이 `❯ Continue without using this MCP server`라서 서버 없이 시작됩니다. 원인: Claude Code의 프로젝트 MCP 승인 창 기본값입니다. 조치: ↑ 두 번으로 `Use this MCP server`(또는 `Use this and all future MCP servers in this project`)를 고르고 Enter를 누르세요. 이미 넘어갔다면 `/mcp`에서 neo4j를 골라 켜거나, `claude mcp reset-project-choices` 뒤 다시 시작합니다.
+
+    **서버가 실행되지 않습니다 — APOC가 없음.** 증상: `/mcp`나 `claude mcp list`에서 neo4j가 `failed`이고, 서버 로그에 `please ensure the APOC plugin is installed and includes the 'meta' component`가 나옵니다. 원인: Neo4j MCP 서버는 시작할 때 `get-schema`에 쓸 APOC의 `apoc.meta` 프로시저가 있는지 검사합니다. Windows PC에서 APOC가 꺼진 DBMS에 연결하자 도구 등록 직후 초기화가 이 오류로 실패했습니다. 조치: 3장 5단계(APOC jar를 `plugins`로 복사하고 `dbms.security.procedures.unrestricted=apoc.*` 설정)를 다시 확인하고 Neo4j를 재시작한 뒤, Neo4j Browser에서 `RETURN apoc.version()`이 버전을 돌려주는지 봅니다.
 
     **서버가 실행되지 않습니다 — 인증 실패 (GL-12).** 증상: `"NEO4J_MCP_PASSWORD": "${NEO4J_PASSWORD}"`로 썼는데 `claude`를 실행한 창에 `NEO4J_PASSWORD`가 없으면 MCP 서버가 인증 실패로 실행되지 않습니다. Windows PC에서 확인해 보니 서버는 시작할 때(initialize) DB 접속을 먼저 검사해 `impossible to verify connectivity … Unauthorized`로 멈추고, 그 뒤의 도구 목록 요청도 실패합니다. 원인: Claude Code는 `.mcp.json`의 `${변수}`를 claude 프로세스의 환경변수 값으로 치환하고, `.env`는 자동으로 읽지 않습니다. 조치: 새 PowerShell 창마다 `Set-Location C:\lab\law-graph; . .\env.ps1; claude`를 실행하세요. 반대로 비밀번호를 `.mcp.json`에 직접 쓰면 그 파일이 비밀 파일이 되므로 `.gitignore`에서 빠지지 않게 주의하세요.
 
