@@ -30,7 +30,7 @@ Cypher는 Neo4j의 질의 언어입니다. 찾으려는 패턴을 `(노드)-[관
 
 **왜 하나요?** Browser는 한글 질의와 결과를 깨짐 없이 다루고, 결과를 표와 그래프 그림으로 함께 보여 줍니다. 처음 Cypher를 배울 때는 내가 만든 노드와 관계를 그림으로 바로 보는 것이 이해에 가장 도움이 됩니다.
 
-입력칸에 여러 문장을 `;`로 이어 붙여 넣으면 문장마다 결과가 차례로 나옵니다. 아래 출력 예시는 글자로 적었고, Browser에서는 같은 값이 표(Table 보기)로 나옵니다.
+처음 접속하면 「New · Work in tabs」 같은 안내 창이 결과 위를 가릴 수 있습니다. **Dismiss**를 눌러 닫습니다. 입력칸에 여러 문장을 `;`로 이어 붙여 넣으면 결과 칸 하나에 문장 목록(#1, #2 …)이 나오고, 문장마다 초록 체크가 붙으면 모두 성공한 것입니다. 각 문장의 결과 표는 그 줄의 **View results**를 눌러 펼칩니다. 아래 출력 예시는 글자로 적었고, Browser에서는 같은 값이 표(Table 보기)로 나옵니다.
 
 **▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
@@ -118,6 +118,8 @@ MERGE (p39)-[:REFERS_TO {at:'제7호, 제7호의2'}]->(a18);
 Created 3 relationships, Set 3 properties
 ```
 
+노드 네 개를 쉼표로 이어 `MATCH` 하면 Browser가 「CartesianProduct」(서로 연결되지 않은 패턴의 모든 조합) 알림을 띄울 수 있습니다. 여기서는 노드마다 하나씩만 찾으므로 조합이 1개뿐이라 그대로 두어도 됩니다.
+
 `MATCH (n) RETURN labels(n)[0] AS 레이블, count(*) AS 수;`로 세면 Law 1 · Article 4 · Paragraph 2입니다.
 </li>
 </ol>
@@ -132,14 +134,14 @@ Created 3 relationships, Set 3 properties
 
 ```cypher
 MATCH (pen:Article)-[r:REFERS_TO]->(a:Article {no:'제15조'})
-RETURN pen.no AS 조문, pen.title AS 제목, r.at AS 호;
+RETURN pen.no AS 조문, pen.title AS 제목, r.at AS 호 ORDER BY 조문;
 ```
 
 **출력 예시**
 
 ```text
-| "제39조" | "과태료" | "제5호" |
 | "제36조" | "벌칙"  | "제6호" |
+| "제39조" | "과태료" | "제5호" |
 2 rows
 ```
 
@@ -261,8 +263,8 @@ SHOW CONSTRAINTS YIELD name, type, labelsOrTypes, properties;
 Added 1 constraints
 Added 1 constraints
 Added 1 indexes
-| "article_key" | "UNIQUENESS" | ["Article"]   | ["law", "no"] |
-| "law_name"    | "UNIQUENESS" | ["Law"]       | ["name"]      |
+| "article_key" | "NODE_PROPERTY_UNIQUENESS" | ["Article"] | ["law", "no"] |
+| "law_name"    | "NODE_PROPERTY_UNIQUENESS" | ["Law"]     | ["name"]      |
 ```
 
 두 속성을 묶은 유일 제약(`(a.law, a.no)`)도 만들 수 있습니다. Desktop의 인스턴스는 Enterprise 판이라 값의 존재까지 강제하는 `NODE KEY`도 쓸 수 있지만, 이 교재는 어느 판에서나 되는 유일 제약만 씁니다. 같은 이름의 법령을 다시 만들려고 하면 제약이 이를 막습니다.
@@ -278,6 +280,8 @@ CREATE (:Law {name:'위험물안전관리법'});
 ```text
 Node(0) already exists with label `Law` and property `name` = '위험물안전관리법'
 ```
+
+`Node(0)`의 숫자는 노드의 내부 번호라 이 장을 다시 해 보면 다른 숫자가 나올 수 있습니다. 「already exists」가 나오면 제약이 제대로 막은 것입니다.
 
 전문 색인으로 찾아봅니다. 점수(`score`)가 높을수록 질의에 사용한 낱말과 더 잘 일치합니다.
 
@@ -295,7 +299,9 @@ RETURN node.id AS 항, round(score, 3) AS 점수;
 | "제15조②" | 0.676 |
 ```
 
-**한국어 본문에는 `cjk` 분석기를 씁니다.** 기본 분석기는 띄어쓰기 단위로 낱말을 자르므로 「선임하여야」를 「선임」과 다른 낱말로 봅니다. 기본 분석기로는 `'선임'`이 이 항을 찾지 못했고(0건) `'선임*'`처럼 별표를 붙여야 찾았습니다. `cjk`는 두 글자씩 잘라 색인해 `'선임'`(0.13), `'관리자'`(0.36), `'안전관리자 선임'`(0.85)을 모두 찾았습니다. 5장의 스키마도 전문 색인을 모두 `cjk`로 만듭니다.
+최신 Neo4j(2026년판)에서는 결과와 함께 `db.index.fulltext.queryNodes is deprecated. It is replaced by SEARCH` 알림이 나옵니다. 앞으로 새 문법(`SEARCH`)으로 바뀔 예정이라는 안내일 뿐이고 지금은 그대로 동작합니다. 이 교재는 여러 버전에서 같은 질의가 돌도록 `queryNodes`를 씁니다.
+
+**한국어 본문에는 `cjk` 분석기를 씁니다.** 기본 분석기는 띄어쓰기 단위로 낱말을 자르므로 「선임하여야」를 「선임」과 다른 낱말로 봅니다. 기본 분석기로는 `'선임'`이 이 항을 찾지 못했고(0건) `'선임*'`처럼 별표를 붙여야 찾았습니다. `cjk`는 두 글자씩 잘라 색인해 `'선임'`, `'관리자'`, `'안전관리자 선임'`으로 모두 찾았습니다(점수는 각각 약 0.12, 0.28, 0.68이며 버전에 따라 조금 다를 수 있습니다). 5장의 스키마도 전문 색인을 모두 `cjk`로 만듭니다.
 
 `SHOW INDEXES YIELD name, type, labelsOrTypes, properties WHERE type <> 'LOOKUP';`로 확인하면 제약이 만든 `article_key`·`law_name`(RANGE)과 `paragraph_text`(FULLTEXT) 세 개가 나옵니다.
 

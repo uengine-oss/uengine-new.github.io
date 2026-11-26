@@ -194,9 +194,10 @@ CALL dbms.components() YIELD name, versions, edition RETURN name, versions, edit
 ```text
 name            versions        edition
 "Neo4j Kernel"  ["2026.10.2"]   "enterprise"
+"Cypher"        ["5", "25"]     ""
 ```
 
-인스턴스의 Neo4j 버전과 판(Desktop은 `enterprise`)이 나오면 접속된 것입니다. 버전 번호는 인스턴스를 만들 때 고른 것에 따라 다릅니다.
+`Neo4j Kernel` 행에 인스턴스의 Neo4j 버전과 판(Desktop은 `enterprise`)이 나오면 접속된 것입니다. `Cypher` 행은 이 버전이 쓸 수 있는 Cypher 언어 판입니다. 버전 번호는 인스턴스를 만들 때 고른 것에 따라 다릅니다.
 
 ![접속한 뒤 dbms.components() 결과](img/gl-01-browser-connected.webp)
 
