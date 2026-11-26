@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cypher 기초 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼</title>
+<title>Cypher 기초 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
 <meta name="description" content="위험물안전관리법의 조와 항으로 노드 일곱 개짜리 작은 그래프를 만들며 Cypher의 CREATE·MERGE·MATCH·WHERE·가변 길이 경로·OPTIONAL MATCH·집계·제약과 색인을 익힙니다. Windows에서는 한글 입력이 확실한 Neo4j Browser를 기본으로 쓰고, cypher-shell은 UTF-8 파일을 -f로 실행하는 방법을 함께 봅니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/graphrag-law-windows/cypher-basics.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cypher 기초 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼">
+<meta property="og:title" content="Cypher 기초 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
 <meta property="og:description" content="위험물안전관리법의 조와 항으로 노드 일곱 개짜리 작은 그래프를 만들며 Cypher의 CREATE·MERGE·MATCH·WHERE·가변 길이 경로·OPTIONAL MATCH·집계·제약과 색인을 익힙니다. Windows에서는 한글 입력이 확실한 Neo4j Browser를 기본으로 쓰고, cypher-shell은 UTF-8 파일을 -f로 실행하는 방법을 함께 봅니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/graphrag-law-windows/cypher-basics.html">
 <meta property="og:image" content="https://www.uengine.org/docs/graphrag-law-windows/img/article15-graph.webp">
@@ -23,7 +23,7 @@
 <body>
 <header class="top">
   <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
-  <a class="brand" href="index.html"><span>Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 <em>튜토리얼</em></span></a>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
   <div class="search">
     <input id="q" type="search" placeholder="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
     <div id="results" class="results" hidden></div>
@@ -103,7 +103,7 @@
 | 방법 | 쓰는 법 | 이럴 때 |
 |---|---|---|
 | <strong>Neo4j Browser</strong>(권장) | 브라우저로 <code>http://localhost:7474</code>에 접속해 위쪽 입력칸에 붙여 넣고 Ctrl+Enter | 한글 입력·출력이 깨질 걱정이 없고, 결과를 그래프 그림으로도 봅니다. 여러 문장을 <code>;</code>로 이어 한 번에 실행할 수 있습니다 |
-| <strong>cypher-shell + 파일</strong> | 질의를 BOM 없는 UTF-8 파일(예: <code>toy.cypher</code>)에 저장한 뒤 <code>&amp; $cs -u neo4j -p $env:NEO4J_PASSWORD -f toy.cypher</code> | 명령줄에서 결과를 글자로 받고 싶을 때. 출력 형식이 원 교재와 같습니다 |
+| <strong>cypher-shell + 파일</strong> | 질의를 BOM 없는 UTF-8 파일(예: <code>toy.cypher</code>)에 저장한 뒤 <code>&amp; $cs -u neo4j -p $env:NEO4J_PASSWORD -f toy.cypher</code> | 명령줄에서 결과를 글자로 받고 싶을 때. 결과가 표 형식 글자로 나옵니다 |
 
 cypher-shell을 대화형으로 열어(<code>&amp; $cs -u neo4j -p $env:NEO4J_PASSWORD</code>) 한글을 직접 입력하는 방법은 콘솔 설정에 따라 한글이 깨질 수 있어 권하지 않습니다. 꼭 쓰려면 3장의 <code>env.ps1</code>을 먼저 점 소싱한 창에서 여세요.
 
@@ -549,7 +549,7 @@ Removed 1 indexes
 </details>
     </article>
     <nav class="pager"><a class="prev" href="neo4j-windows.html"><span>이전</span>Windows에 Neo4j 설치하기</a><a class="next" href="schema.html"><span>다음</span>골든 퀘스천에서 스키마 설계하기</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#노드-관계-속성">노드 · 관계 · 속성</a></li><li><a href="#따라-하기-①-만들기">따라 하기 ① 만들기</a></li><li><a href="#따라-하기-②-묻기">따라 하기 ② 묻기</a><ul><li><a href="#match-패턴과-방향">MATCH — 패턴과 방향</a></li><li><a href="#where-조건">WHERE — 조건</a></li><li><a href="#return-돌려줄-것">RETURN — 돌려줄 것</a></li><li><a href="#가변-길이-경로-몇-걸음-건너서">가변 길이 경로 — 몇 걸음 건너서</a></li><li><a href="#optional-match-없어도-빠뜨리지-않기">OPTIONAL MATCH — 없어도 빠뜨리지 않기</a></li><li><a href="#집계-order-by-limit">집계 · ORDER BY · LIMIT</a></li></ul></li><li><a href="#따라-하기-③-제약과-색인">따라 하기 ③ 제약과 색인</a></li><li><a href="#지우기">지우기</a></li><li><a href="#확인-neo4j-browser로-보기">확인 — Neo4j Browser로 보기</a></li><li><a href="#한-장-요약표">한 장 요약표</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>

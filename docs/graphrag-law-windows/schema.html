@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>골든 퀘스천에서 스키마 설계하기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼</title>
-<meta name="description" content="답해야 할 질문 다섯 개를 Claude Code에 주고, 위험물안전관리법 PDF 3개를 직접 열어 본 뒤 노드·관계·속성을 설계하게 합니다. Windows에서 Claude Code를 처음 여는 방법, 설계를 검토하고 고쳐 달라고 요청하는 프롬프트, 질문별 그래프 탐색 경로와 제약·색인 파일을 원 교재의 실행 기록과 함께 살펴봅니다.">
+<title>골든 퀘스천에서 스키마 설계하기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
+<meta name="description" content="답해야 할 질문 다섯 개를 Claude Code에 주고, 위험물안전관리법 PDF 3개를 직접 열어 본 뒤 노드·관계·속성을 설계하게 합니다. Windows에서 Claude Code를 처음 여는 방법, 설계를 검토하고 고쳐 달라고 요청하는 프롬프트, 질문별 그래프 탐색 경로와 제약·색인 파일을 실행 기록과 함께 살펴봅니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/graphrag-law-windows/schema.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="골든 퀘스천에서 스키마 설계하기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼">
-<meta property="og:description" content="답해야 할 질문 다섯 개를 Claude Code에 주고, 위험물안전관리법 PDF 3개를 직접 열어 본 뒤 노드·관계·속성을 설계하게 합니다. Windows에서 Claude Code를 처음 여는 방법, 설계를 검토하고 고쳐 달라고 요청하는 프롬프트, 질문별 그래프 탐색 경로와 제약·색인 파일을 원 교재의 실행 기록과 함께 살펴봅니다.">
+<meta property="og:title" content="골든 퀘스천에서 스키마 설계하기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
+<meta property="og:description" content="답해야 할 질문 다섯 개를 Claude Code에 주고, 위험물안전관리법 PDF 3개를 직접 열어 본 뒤 노드·관계·속성을 설계하게 합니다. Windows에서 Claude Code를 처음 여는 방법, 설계를 검토하고 고쳐 달라고 요청하는 프롬프트, 질문별 그래프 탐색 경로와 제약·색인 파일을 실행 기록과 함께 살펴봅니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/graphrag-law-windows/schema.html">
 <meta property="og:image" content="https://www.uengine.org/docs/graphrag-law-windows/img/article15-graph.webp">
 <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
@@ -23,7 +23,7 @@
 <body>
 <header class="top">
   <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
-  <a class="brand" href="index.html"><span>Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 <em>튜토리얼</em></span></a>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
   <div class="search">
     <input id="q" type="search" placeholder="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
     <div id="results" class="results" hidden></div>
@@ -56,7 +56,7 @@
     <h1>골든 퀘스천에서 스키마 설계하기</h1>
     <article>
 <blockquote>
-<p>답해야 할 질문 다섯 개를 Claude Code에 주고, 위험물안전관리법 PDF 3개를 직접 열어 본 뒤 노드·관계·속성을 설계하게 합니다. Windows에서 Claude Code를 처음 여는 방법, 설계를 검토하고 고쳐 달라고 요청하는 프롬프트, 질문별 그래프 탐색 경로와 제약·색인 파일을 원 교재의 실행 기록과 함께 살펴봅니다.</p>
+<p>답해야 할 질문 다섯 개를 Claude Code에 주고, 위험물안전관리법 PDF 3개를 직접 열어 본 뒤 노드·관계·속성을 설계하게 합니다. Windows에서 Claude Code를 처음 여는 방법, 설계를 검토하고 고쳐 달라고 요청하는 프롬프트, 질문별 그래프 탐색 경로와 제약·색인 파일을 실행 기록과 함께 살펴봅니다.</p>
 </blockquote>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <p>스키마(온톨로지)는 그래프의 틀입니다. 어떤 노드를 두고 무엇을 관계로 연결할지 정하므로, 같은 법령으로도 쓰임새에 따라 전혀 다른 그래프가 나옵니다. 그래서 <strong>모델부터 그리지 않고 답해야 할 질문 목록에서 출발합니다.</strong> 이 교재의 구축 목적은 「위험물 안전관리 매뉴얼 내부 구축」이고, 질문은 0장의 <a href="index.html">골든 퀘스천 5개</a>입니다.</p>
@@ -129,7 +129,7 @@ Windows에서는 <strong>PowerShell 창에서 <code>C:\lab\law-graph</code>로 �
 
 Windows용 Claude Code는 Claude가 셸 명령을 실행할 때 Git for Windows의 <strong>Git Bash</strong>를 씁니다. 그래서 승인 창에 나오는 명령은 PowerShell이 아니라 bash 문법(<code>ls</code>, <code>grep</code>, <code>/c/lab/law-graph</code> 같은 경로)입니다. 사람이 직접 입력하는 명령만 PowerShell로 쓰면 됩니다. Git Bash를 찾지 못한다는 오류가 나오면 Git for Windows를 설치한 뒤 새 창에서 다시 실행합니다.
 
-시작 화면에는 Claude Code 버전(원 교재 기록은 v2.1.331)과 모델·플랜이 나옵니다(이 기록은 <code>Fable 5.2 with medium effort · Claude Ultra</code>, 사용자마다 다릅니다). 기본 권한 모드에서는 명령을 실행하거나 파일을 쓰기 전에 매번 승인을 요청합니다.
+시작 화면에는 Claude Code 버전(기록 당시 v2.1.331)과 모델·플랜이 나옵니다(이 기록은 <code>Fable 5.2 with medium effort · Claude Ultra</code>, 사용자마다 다릅니다). 기본 권한 모드에서는 명령을 실행하거나 파일을 쓰기 전에 매번 승인을 요청합니다.
 </li>
 <li><strong>설계를 요청합니다(P1).</strong> 구축 목적, 골든 퀘스천, 「아직 코드는 만들지 말고 PDF부터 열어 보라」는 작업 순서, 결과 파일 이름을 한 번에 전달합니다. 여러 줄을 입력할 때는 줄 끝에서 <code>\</code> + Enter를 눌렀습니다.
 
@@ -150,7 +150,7 @@ Windows용 Claude Code는 Claude가 셸 명령을 실행할 때 Git for Windows�
 
 
 
-원 교재(macOS)에서 Claude는 <code>pdftotext -layout</code>으로 PDF의 텍스트를 추출해 <code>grep</code>으로 조 제목·「제N조」 인용·「대통령령으로 정하는」·벌칙 문구를 훑었습니다. Windows의 Git Bash에는 <code>pdftotext</code>가 없으므로, Claude는 보통 <code>uv run --with pymupdf python -c …</code>처럼 PyMuPDF로 텍스트를 뽑습니다. 어느 쪽이든 읽기만 하는 명령이면 1(Yes)로 승인합니다. 파일을 만들 때는 1을, 같은 세션의 다음 파일부터는 2(이 세션 동안 편집은 묻지 않기)를 고르면 편합니다. 원 교재 기록에서는 4분 56초 뒤 <code>schema.md</code>(405줄)·<code>schema.cypher</code>(86줄)·<code>golden-questions.md</code>가 생성됐습니다.
+Claude는 PDF의 텍스트를 추출해 조 제목·「제N조」 인용·「대통령령으로 정하는」·벌칙 문구를 훑습니다. Windows의 Git Bash에는 <code>pdftotext</code>가 없으므로, Claude는 보통 <code>uv run --with pymupdf python -c …</code>처럼 PyMuPDF로 텍스트를 뽑습니다. 어느 쪽이든 읽기만 하는 명령이면 1(Yes)로 승인합니다. 파일을 만들 때는 1을, 같은 세션의 다음 파일부터는 2(이 세션 동안 편집은 묻지 않기)를 고르면 편합니다. 기록에서는 4분 56초 뒤 <code>schema.md</code>(405줄)·<code>schema.cypher</code>(86줄)·<code>golden-questions.md</code>가 생성됐습니다.
 </li>
 <li><strong>설계를 읽고 고쳐 달라고 합니다(P2).</strong> 첫 설계에는 골든 퀘스천용 의무(<code>Norm</code>) 14건을 손으로 적은 표까지 들어 있었습니다. 검토하면서 두 가지 문제를 발견했습니다. 질문의 낱말과 조문의 표기가 다르다는 점, 그리고 손으로 만든 14건은 다른 법으로 확장하기 어렵다는 점입니다.
 
@@ -207,7 +207,7 @@ d08ed21 위험물안전관리법 PDF 3개
 
 <p><code>schema.md</code>를 열어 노드·관계 표와 「질문별 탐색 경로」 절이 있는지, <code>golden-questions.md</code>에 다섯 질문이 그대로 있는지 확인합니다. 아래에서 그 내용을 살펴봅니다.</p>
 <h2 id="claude가-낸-설계">Claude가 낸 설계<a class="anchor" href="#claude가-낸-설계" title="Permanent link">#</a></h2>
-<p>모델이 작성하는 설계와 문장은 실행할 때마다 달라질 수 있습니다. 아래는 원 교재에서 P2까지 반영해 커밋한 설계입니다. 원 교재는 법령 9개로 설계했지만 노드·관계의 종류는 법령 수와 상관이 없어, PDF 3개로 설계해도 같은 틀이 나오는 것이 정상입니다. 표의 예는 모두 위험물안전관리법입니다.</p>
+<p>모델이 작성하는 설계와 문장은 실행할 때마다 달라질 수 있습니다. 아래는 P2까지 반영해 커밋한 설계 기록입니다. 노드·관계의 종류는 법령 수와 상관이 없으므로, 여러분의 설계도 비슷한 틀이 나오는 것이 정상입니다. 표의 예는 모두 위험물안전관리법입니다.</p>
 <h3 id="네-층">네 층<a class="anchor" href="#네-층" title="Permanent link">#</a></h3>
 <table>
 <thead>
@@ -393,7 +393,7 @@ d08ed21 위험물안전관리법 PDF 3개
 </tr>
 <tr>
 <td>같은 조 번호가 두 번</td>
-<td>부칙의 제1조가 본칙 제1조와 겹침(원 교재에서는 폐기물관리법의 <code>[시행일: …]</code> 판본도)</td>
+<td>부칙의 제1조가 본칙 제1조와 겹침(판본에 따라 <code>[시행일: …]</code>이 붙은 같은 번호 조문도)</td>
 <td><code>pid</code>에 판본 꼬리표, 부칙은 적재하지 않음</td>
 </tr>
 <tr>
@@ -527,13 +527,13 @@ d08ed21 위험물안전관리법 PDF 3개
 </code></pre></div>
 
 <p>(파일에서 발췌했습니다. 주석은 Claude가 쓴 그대로입니다.) 4장에서 손으로 해 본 <code>cjk</code> 분석기를 Claude도 스스로 골랐습니다.</p>
-<h2 id="교재-pptx의-설계와-다른-점">교재 pptx의 설계와 다른 점<a class="anchor" href="#교재-pptx의-설계와-다른-점" title="Permanent link">#</a></h2>
-<p>이 교재의 출발점인 PBL 특강 교재(Ch.4)는 사람이 arrows.app으로 노드 9종(법령·장·조·항·호·소관부처·하위법령·기업·인허가증)과 관계 10종을 그려 Claude에 주었습니다. 이번에는 Claude Code가 골든 퀘스천을 바탕으로 설계했으며, 다음과 같은 차이가 있습니다.</p>
+<h2 id="다른-설계-대신-이것을-고른-이유">다른 설계 대신 이것을 고른 이유<a class="anchor" href="#다른-설계-대신-이것을-고른-이유" title="Permanent link">#</a></h2>
+<p>법령 그래프를 사람이 처음 그리면 흔히 법령·장·조·항·호·소관부처·하위법령·기업·인허가증처럼 문서 구조를 그대로 옮긴 노드를 만듭니다. 이번에는 Claude Code가 골든 퀘스천을 바탕으로 설계했고, 그래서 다음과 같은 선택을 했습니다.</p>
 <table>
 <thead>
 <tr>
 <th>항목</th>
-<th>PBL 특강 교재(arrows.app)</th>
+<th>흔한 다른 선택</th>
 <th>이 교재</th>
 <th>왜</th>
 </tr>
@@ -572,7 +572,7 @@ d08ed21 위험물안전관리법 PDF 3개
 <tr>
 <td>범위</td>
 <td>위험물안전관리법 1개</td>
-<td>위험물안전관리법 3종(원 교재는 법령 9개)</td>
+<td>위험물안전관리법 3종(법률·시행령·시행규칙)</td>
 <td>법률과 시행령·시행규칙이 서로 인용합니다</td>
 </tr>
 </tbody>
@@ -587,7 +587,7 @@ d08ed21 위험물안전관리법 PDF 3개
 </ul>
 <p><strong>커밋을 요청했더니 실습 폴더 밖 파일을 수정해도 되는지 묻습니다</strong></p>
 <ul>
-<li>증상: 「main에 커밋해 줘」라고 하자 <code>Wrote 1 memory</code>로 <code>%USERPROFILE%\.claude\projects\C--lab-law-graph\memory\…</code>(원 교재는 <code>~/.claude/projects/…</code>)를 만들고, 이어서 <code>MEMORY.md</code> 색인에 줄을 추가하는 Bash를 승인해 달라고 합니다(경로가 실습 폴더 밖).</li>
+<li>증상: 「main에 커밋해 줘」라고 하자 <code>Wrote 1 memory</code>로 <code>%USERPROFILE%\.claude\projects\C--lab-law-graph\memory\…</code>를 만들고, 이어서 <code>MEMORY.md</code> 색인에 줄을 추가하는 Bash를 승인해 달라고 합니다(경로가 실습 폴더 밖).</li>
 <li>원인: Claude Code의 자동 메모리(auto memory) 기능이 사용자 지시를 다음 세션용 메모로 남깁니다. 메모 파일 작성에는 승인을 요청하지 않고, 색인을 추가하는 Bash에만 승인을 요청했습니다.</li>
 <li>조치: 권한 요청에서 3(No) → 「메모리 파일은 건드리지 말고 넘어가자. 실습 폴더 밖은 고치지 마.」 메모를 아예 끄려면 <code>/memory</code> 또는 설정에서 자동 메모리를 끕니다. 남은 메모 파일 하나는 실습 결과에 영향이 없었습니다.</li>
 </ul>
@@ -646,9 +646,9 @@ d08ed21 위험물안전관리법 PDF 3개
 </details>
     </article>
     <nav class="pager"><a class="prev" href="cypher-basics.html"><span>이전</span>Cypher 기초</a><a class="next" href="ingest.html"><span>다음</span>인제스천 바이브 코딩: PDF → 조·항·호 → Neo4j</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a></li><li><a href="#claude가-낸-설계">Claude가 낸 설계</a><ul><li><a href="#네-층">네 층</a></li><li><a href="#노드">노드</a></li><li><a href="#관계">관계</a></li><li><a href="#pdf를-열어-보고-바뀐-것">PDF를 열어 보고 바뀐 것</a></li></ul></li><li><a href="#골든-퀘스천마다-어느-경로로-답하나">골든 퀘스천마다 어느 경로로 답하나</a></li><li><a href="#p2로-바뀐-것">P2로 바뀐 것</a></li><li><a href="#schemacypher">schema.cypher</a></li><li><a href="#교재-pptx의-설계와-다른-점">교재 pptx의 설계와 다른 점</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a></li><li><a href="#claude가-낸-설계">Claude가 낸 설계</a><ul><li><a href="#네-층">네 층</a></li><li><a href="#노드">노드</a></li><li><a href="#관계">관계</a></li><li><a href="#pdf를-열어-보고-바뀐-것">PDF를 열어 보고 바뀐 것</a></li></ul></li><li><a href="#골든-퀘스천마다-어느-경로로-답하나">골든 퀘스천마다 어느 경로로 답하나</a></li><li><a href="#p2로-바뀐-것">P2로 바뀐 것</a></li><li><a href="#schemacypher">schema.cypher</a></li><li><a href="#다른-설계-대신-이것을-고른-이유">다른 설계 대신 이것을 고른 이유</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

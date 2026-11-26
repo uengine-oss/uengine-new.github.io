@@ -33,7 +33,7 @@ Cypher는 Neo4j의 질의 언어입니다. 찾으려는 패턴을 `(노드)-[관
 | 방법 | 쓰는 법 | 이럴 때 |
 |---|---|---|
 | **Neo4j Browser**(권장) | 브라우저로 `http://localhost:7474`에 접속해 위쪽 입력칸에 붙여 넣고 Ctrl+Enter | 한글 입력·출력이 깨질 걱정이 없고, 결과를 그래프 그림으로도 봅니다. 여러 문장을 `;`로 이어 한 번에 실행할 수 있습니다 |
-| **cypher-shell + 파일** | 질의를 BOM 없는 UTF-8 파일(예: `toy.cypher`)에 저장한 뒤 `& $cs -u neo4j -p $env:NEO4J_PASSWORD -f toy.cypher` | 명령줄에서 결과를 글자로 받고 싶을 때. 출력 형식이 원 교재와 같습니다 |
+| **cypher-shell + 파일** | 질의를 BOM 없는 UTF-8 파일(예: `toy.cypher`)에 저장한 뒤 `& $cs -u neo4j -p $env:NEO4J_PASSWORD -f toy.cypher` | 명령줄에서 결과를 글자로 받고 싶을 때. 결과가 표 형식 글자로 나옵니다 |
 
 cypher-shell을 대화형으로 열어(`& $cs -u neo4j -p $env:NEO4J_PASSWORD`) 한글을 직접 입력하는 방법은 콘솔 설정에 따라 한글이 깨질 수 있어 권하지 않습니다. 꼭 쓰려면 3장의 `env.ps1`을 먼저 점 소싱한 창에서 여세요.
 

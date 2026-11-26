@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Neo4j MCP 서버 연결 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼</title>
+<title>Neo4j MCP 서버 연결 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
 <meta name="description" content="Claude Code가 Neo4j를 직접 조회하도록 공식 Neo4j MCP 서버 2.1.2를 연결합니다. 비밀번호는 파일 밖에서 환경변수로 전달하고 서버를 읽기 전용으로 실행해, 도구 두 개(get-schema, read-cypher)만으로 그래프에 질의하도록 합니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/graphrag-law-windows/mcp.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Neo4j MCP 서버 연결 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼">
+<meta property="og:title" content="Neo4j MCP 서버 연결 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
 <meta property="og:description" content="Claude Code가 Neo4j를 직접 조회하도록 공식 Neo4j MCP 서버 2.1.2를 연결합니다. 비밀번호는 파일 밖에서 환경변수로 전달하고 서버를 읽기 전용으로 실행해, 도구 두 개(get-schema, read-cypher)만으로 그래프에 질의하도록 합니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/graphrag-law-windows/mcp.html">
 <meta property="og:image" content="https://www.uengine.org/docs/graphrag-law-windows/img/article15-graph.webp">
@@ -23,7 +23,7 @@
 <body>
 <header class="top">
   <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
-  <a class="brand" href="index.html"><span>Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 <em>튜토리얼</em></span></a>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
   <div class="search">
     <input id="q" type="search" placeholder="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
     <div id="results" class="results" hidden></div>
@@ -59,7 +59,7 @@
 <p>Claude Code가 Neo4j를 직접 조회하도록 공식 Neo4j MCP 서버 2.1.2를 연결합니다. 비밀번호는 파일 밖에서 환경변수로 전달하고 서버를 읽기 전용으로 실행해, 도구 두 개(get-schema, read-cypher)만으로 그래프에 질의하도록 합니다.</p>
 </blockquote>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
-<p>MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 사용하는 표준 인터페이스입니다. MCP 서버가 「이런 도구가 있다」고 알려 주면 Claude Code는 질문에 따라 필요한 도구를 호출하고, 반환된 결과를 읽고 답합니다. <a href="ingest.html">6</a>·<a href="disambiguation.html">7장</a>에서는 Claude가 파이썬 스크립트와 cypher-shell을 직접 작성해 Neo4j에 접근했습니다. MCP 서버를 연결하면 Claude가 스키마를 읽고(<code>get-schema</code>) Cypher를 작성하고 실행하는(<code>read-cypher</code>) 도구를 바로 사용합니다. <a href="https://www.uengine.org/docs/graphrag-law/how-graphrag.html">원 교재 2장</a>에서 본 질의 과정(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답)이 이 두 도구로 이루어집니다. 읽기 전용으로 실행하면 질의 중에 그래프가 변경되지 않습니다.</p>
+<p>MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 사용하는 표준 인터페이스입니다. MCP 서버가 「이런 도구가 있다」고 알려 주면 Claude Code는 질문에 따라 필요한 도구를 호출하고, 반환된 결과를 읽고 답합니다. <a href="ingest.html">6</a>·<a href="disambiguation.html">7장</a>에서는 Claude가 파이썬 스크립트와 cypher-shell을 직접 작성해 Neo4j에 접근했습니다. MCP 서버를 연결하면 Claude가 스키마를 읽고(<code>get-schema</code>) Cypher를 작성하고 실행하는(<code>read-cypher</code>) 도구를 바로 사용합니다. <a href="https://www.uengine.org/docs/graphrag-law/how-graphrag.html">2장 GraphRAG 동작 과정</a>에서 설명한 질의 과정(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답)이 이 두 도구로 이루어집니다. 읽기 전용으로 실행하면 질의 중에 그래프가 변경되지 않습니다.</p>
 <table>
 <thead>
 <tr>
@@ -195,7 +195,7 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 <p><code>.mcp.json</code>에 비밀번호가 없더라도 개인 환경 설정이므로 저장소에 올리지 않습니다.</p>
 </li>
 <li>
-<p><strong><code>env.ps1</code>로 비밀번호를 불러온 창에서 Claude Code를 다시 실행합니다.</strong> Claude Code는 <code>.env</code>를 자동으로 읽지 않습니다. <code>${NEO4J_PASSWORD}</code>가 치환되려면 <code>claude</code>를 실행하는 창에 해당 환경변수가 있어야 합니다. 3장에서 만든 <code>env.ps1</code>이 원 교재의 <code>set -a; . ./.env; set +a</code> 역할을 합니다.</p>
+<p><strong><code>env.ps1</code>로 비밀번호를 불러온 창에서 Claude Code를 다시 실행합니다.</strong> Claude Code는 <code>.env</code>를 자동으로 읽지 않습니다. <code>${NEO4J_PASSWORD}</code>가 치환되려면 <code>claude</code>를 실행하는 창에 해당 환경변수가 있어야 합니다. 3장에서 만든 <code>env.ps1</code>이 <code>.env</code>의 값을 이 창의 환경변수로 읽어 들입니다.</p>
 <p><strong>왜 하나요?</strong> Claude Code는 <code>.mcp.json</code>의 <code>${NEO4J_PASSWORD}</code>를 실행한 창의 환경변수로 채웁니다. 변수가 없는 창에서 <code>claude</code>를 열면 MCP 서버가 비밀번호 없이 접속하다 실패합니다. 늘 같은 두 줄로 시작하면 「어제는 됐는데 오늘은 안 된다」를 막을 수 있습니다.</p>
 <p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
 <div class="hl"><pre><span></span><code><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">law-graph</span>
@@ -282,7 +282,7 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 </tr>
 </tbody>
 </table>
-<p>README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. <code>write-cypher</code>는 <code>NEO4J_MCP_READ_ONLY=true</code>라서 목록에서 빠졌습니다(서버 로그 <code>Ignoring tool 'write-cypher': not available in read-only mode</code>). 원 교재의 Community 5.26에서도, Windows PC의 Neo4j Desktop(Enterprise 2026.10, APOC 켬)에서도 <code>tools/list</code>에 나온 도구는 <code>get-schema</code>·<code>read-cypher</code> <strong>두 개</strong>였습니다. Enterprise에서는 서버 로그에 <code>list-gds-procedures</code>까지 3개가 등록되었다고 나오지만, GDS 플러그인이 없어 목록에서는 빠집니다. GDS가 설치된 DBMS라면 세 번째 도구가 보일 수 있으며, 읽기 전용이라 이 실습에는 영향이 없습니다.</p>
+<p>README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. <code>write-cypher</code>는 <code>NEO4J_MCP_READ_ONLY=true</code>라서 목록에서 빠졌습니다(서버 로그 <code>Ignoring tool 'write-cypher': not available in read-only mode</code>). Neo4j 5.26 Community에서도, Windows PC의 Neo4j Desktop(Enterprise 2026.10, APOC 켬)에서도 <code>tools/list</code>에 나온 도구는 <code>get-schema</code>·<code>read-cypher</code> <strong>두 개</strong>였습니다. Enterprise에서는 서버 로그에 <code>list-gds-procedures</code>까지 3개가 등록되었다고 나오지만, GDS 플러그인이 없어 목록에서는 빠집니다. GDS가 설치된 DBMS라면 세 번째 도구가 보일 수 있으며, 읽기 전용이라 이 실습에는 영향이 없습니다.</p>
 </li>
 <li>
 <p><strong>첫 질문으로 연결을 확인합니다.</strong> 골든 퀘스천 1번을 넣으면 Claude가 도구를 처음 호출할 때 권한을 요청합니다. 처음에는 <code>get-schema</code>, 다음에는 <code>read-cypher</code>의 권한을 요청합니다.</p>
@@ -309,41 +309,40 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 <li>첫 질문에서 <code>neo4j — Get Neo4j Schema</code>·<code>neo4j — Read Cypher</code> 권한 요청이 나오고 답변이 반환됩니다.</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">교재 pptx(Ch.4 Step 4)와 다른 점</p>
-<p><code>uvx neo4j-mcp-server</code>, 접두사 <code>NEO4J_MCP_</code>, <code>READ_ONLY</code>·<code>TELEMETRY</code>, 공식 서버 v2.1.2는 pptx와 같으며 현재도 유효합니다. 다른 점은 다섯 가지입니다.</p>
+<p class="admonition-title">이 장의 MCP 설정 요약</p>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>교재 pptx</th>
-<th>이 교재</th>
+<th>항목</th>
+<th>이 교재의 설정</th>
+<th>이유</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Neo4j</td>
-<td>Neo4j Desktop</td>
 <td>Windows ZIP <code>neo4j-community-5.26.33</code> + <code>labs</code>의 APOC</td>
+<td><code>get-schema</code>가 APOC의 <code>apoc.meta</code>로 스키마를 읽습니다</td>
 </tr>
 <tr>
 <td>비밀번호</td>
-<td><code>.mcp.json</code>에 직접 작성합니다</td>
-<td><code>${NEO4J_PASSWORD}</code>로 파일 밖에서 전달합니다. 대신 <code>claude</code>를 실행하는 셸에 변수가 있어야 합니다</td>
+<td><code>${NEO4J_PASSWORD}</code>로 파일 밖에서 전달</td>
+<td><code>.mcp.json</code>에 비밀번호를 남기지 않습니다. 대신 <code>claude</code>를 실행하는 창에 변수가 있어야 합니다</td>
 </tr>
 <tr>
 <td>서버 버전</td>
-<td><code>neo4j-mcp-server</code>(고정 안 함)</td>
 <td><code>neo4j-mcp-server@2.1.2</code>로 고정, <code>"type": "stdio"</code> 명시</td>
+<td>버전이 바뀌어도 같은 결과가 나오게 합니다</td>
 </tr>
 <tr>
 <td>도구</td>
-<td>표에 4개(<code>write-cypher</code>, <code>list-gds-procedures</code> 포함)</td>
-<td>실제로 보이는 것은 2개(GDS가 설치된 DBMS라면 3개)</td>
+<td>읽기 전용(<code>NEO4J_MCP_READ_ONLY=true</code>)이라 2개(GDS가 설치된 DBMS라면 3개)</td>
+<td>질문하다 그래프가 바뀌지 않게 합니다</td>
 </tr>
 <tr>
-<td>연결 순서</td>
-<td>「프로젝트 MCP 서버 사용 승인」</td>
-<td>승인 창의 기본 선택이 「Continue without…」이라 ↑로 선택해야 합니다</td>
+<td>연결 승인</td>
+<td>승인 창의 기본 선택이 「Continue without…」이라 ↑로 골라야 합니다</td>
+<td>그냥 Enter를 누르면 연결되지 않습니다</td>
 </tr>
 </tbody>
 </table>
@@ -412,7 +411,7 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 </details>
     </article>
     <nav class="pager"><a class="prev" href="disambiguation.html"><span>이전</span>엔티티 추출과 중의성 해소</a><a class="next" href="questions.html"><span>다음</span>골든 퀘스천 5개 묻기</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>

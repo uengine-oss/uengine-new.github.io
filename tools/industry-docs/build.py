@@ -67,8 +67,8 @@ PRODUCTS = {
     "graphrag-law": dict(name="법령 GraphRAG 실습 · Neo4j × Claude Code", page="axschool.html", pagelabel="AX School", og="article15-graph.webp", search="검색 (예: MERGE, 중의성 해소, read-cypher, 재현율)",
                 foot="이 교재의 화면과 수치는 2026년 11월 24일 Neo4j 5.26 Community(Docker), Claude Code 2.1.331, Neo4j MCP 서버 2.1.2로 국가법령정보센터의 법령 PDF 9종을 실제로 적재·질의해 얻었습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.",
                 chapters=[("index", "시작하기"), ("why-graph", "이론"), ("how-graphrag", "이론"), ("neo4j-docker", "준비"), ("cypher-basics", "준비"), ("schema", "구축"), ("ingest", "구축"), ("disambiguation", "구축"), ("mcp", "질의"), ("questions", "질의"), ("vector-vs-graph", "비교"), ("wrap-up", "마무리"), ("troubleshooting", "부록")]),
-    "graphrag-law-windows": dict(name="Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편", page="axschool.html", pagelabel="AX School", og="article15-graph.webp", search="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)", first=2,
-                foot="이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.",
+    "graphrag-law-windows": dict(name="법령 GraphRAG 실습 · Neo4j × Claude Code", page="axschool.html", pagelabel="AX School", og="article15-graph.webp", search="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)", first=2,
+                foot="이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.",
                 chapters=[("index", "시작하기"), ("neo4j-windows", "준비"), ("cypher-basics", "준비"), ("schema", "구축"), ("ingest", "구축"), ("disambiguation", "구축"), ("mcp", "질의"), ("questions", "질의")]),
     "nvidia-auto-ontology": dict(name="AX School · NVIDIA Auto Ontology", page="axschool.html", pagelabel="AX School", og="nv-graph.webp", search="검색 (예: 의미 컴파일, check_answerable, API 토큰, 588.80)",
                 foot="이 교재의 화면과 수치는 2026년 11월 15일 NVIDIA Auto Ontology 1.2.0(커밋 c447003)을 Docker 없이 실행하고 OpenAI gpt-6.1-sol 모델을 연결해 얻었습니다. uEngine의 독립 교육 자료이며, NVIDIA와 제휴하거나 NVIDIA의 승인을 받은 자료가 아닙니다. NVIDIA는 NVIDIA Corporation의 상표이며, 그 밖의 제품 이름과 상표는 각 소유자에게 있습니다. 모델이 쓰는 SQL과 답은 실행할 때마다 달라질 수 있습니다.",
@@ -84,7 +84,7 @@ SITE = f"https://www.uengine.org/docs/{KEY}/"
 
 
 def chap_no(i, slug):
-    # first 가 있으면 index 는 「·」, 나머지는 first + 순서(예: Windows판은 3장부터 — 원 교재와 장 번호를 맞춘다)
+    # first 가 있으면 index 는 「·」, 나머지는 first + 순서(예: graphrag-law-windows 는 3장부터)
     if "first" in P:
         return 0 if slug == "index" else i + P["first"]
     return i + FIRST

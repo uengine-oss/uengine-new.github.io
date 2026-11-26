@@ -1,29 +1,29 @@
 # 시작하기
 
-> 「법령 GraphRAG 실습」을 Windows PC에서 Docker 없이 따라 하도록 옮긴 판입니다. 법령은 위험물안전관리법 하나(법률·시행령·시행규칙 PDF 3개)로 줄이고, Neo4j는 ZIP으로 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 바꾸고 실제 PC에서 실행해 확인했습니다. 준비(3장)부터 질의(9장)까지 다룹니다.
+> Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 명령은 실제 Windows PC에서 실행해 확인했습니다. 준비(3장)부터 질의(9장)까지 다룹니다.
 
-## 원 교재와 무엇이 다른가요
+## 무엇을 만드나요
 
-만드는 것은 [원 교재](https://www.uengine.org/docs/graphrag-law/index.html)와 같습니다. 국가법령정보센터의 법령 PDF를 조·항·호 단위의 Neo4j 그래프로 적재하고, Claude Code가 Neo4j MCP 서버로 그래프를 조회해 골든 퀘스천 다섯 개에 근거 조문과 함께 답하게 합니다. 달라진 것은 세 가지입니다.
+국가법령정보센터의 위험물안전관리법 PDF를 조·항·호 단위의 Neo4j 그래프로 적재하고, Claude Code가 Neo4j MCP 서버로 그래프를 조회해 골든 퀘스천 다섯 개에 근거 조문과 함께 답하게 합니다.
 
-| 항목 | 원 교재 | Windows판(이 교재) |
-|---|---|---|
-| 법령 | 위험물안전관리법·화학물질관리법·폐기물관리법 × 법률·시행령·시행규칙 = PDF 9개 | **위험물안전관리법** 법률·시행령·시행규칙 = PDF 3개 |
-| Neo4j | Docker 컨테이너(`neo4j:5.26`) | **Neo4j 5.26 Community Windows ZIP** + JDK 21을 직접 설치 |
-| 셸 | macOS zsh(bash) | **Windows PowerShell 5.1**(기본 포함)과 PowerShell 7 모두에서 동작하는 명령 |
+| 항목 | 이 교재에서 쓰는 것 |
+|---|---|
+| 법령 | **위험물안전관리법** 법률·시행령·시행규칙 = PDF 3개 |
+| Neo4j | **Neo4j 5.26 Community**를 Windows용 ZIP으로 내려받아 설치(JDK 21 필요) |
+| 셸 | **Windows PowerShell 5.1**(기본 포함)과 PowerShell 7 모두에서 동작하는 명령 |
 
-골든 퀘스천 다섯 개는 모두 위험물안전관리법 안에서 답이 나오므로, 법령을 하나로 줄여도 질문과 답은 그대로입니다. 대신 적재하는 조문 수가 원 교재의 약 4분의 1로 줄어 파싱·적재·질의가 더 빨리 끝납니다.
+골든 퀘스천 다섯 개는 모두 위험물안전관리법 법률·시행령·시행규칙 안에서 답이 나옵니다. 법령이 하나라 파싱·적재·질의가 빨리 끝납니다.
 
-1장(왜 그래프인가)과 2장(GraphRAG 동작 과정)은 운영체제와 상관없는 이론이므로 원 교재를 그대로 읽으세요. 이 교재의 장 번호는 원 교재와 맞췄습니다.
+그래프가 왜 필요한지(1장)와 GraphRAG가 질문에 답하는 과정(2장)은 운영체제와 상관없는 이론입니다. 실습 전에 아래 두 페이지를 먼저 읽어 두면 좋습니다.
 
 - [1. 왜 그래프인가](https://www.uengine.org/docs/graphrag-law/why-graph.html)
 - [2. GraphRAG 동작 과정](https://www.uengine.org/docs/graphrag-law/how-graphrag.html)
 
-![위험물안전관리법 제15조(위험물안전관리자)의 항(파란색)과, 그 항에 대응하는 하위법령 조문(IMPLEMENTS)·벌칙과 과태료의 호(PENALIZES) — 적재한 그래프를 Neo4j Browser로 본 모습(노드 26 · 관계 26). 원 교재의 화면이며 이 교재에서 만드는 그래프에도 같은 부분이 있습니다](img/article15-graph.webp)
+![위험물안전관리법 제15조(위험물안전관리자)의 항(파란색)과, 그 항에 대응하는 하위법령 조문(IMPLEMENTS)·벌칙과 과태료의 호(PENALIZES) — 적재한 그래프를 Neo4j Browser로 본 모습(노드 26 · 관계 26)](img/article15-graph.webp)
 
 ## 골든 퀘스천
 
-구축 의도는 원 교재와 같은 「위험물 안전관리 매뉴얼 내부 구축」입니다. 스키마 설계(5장)의 출발점이자 9장에서 답을 채점하는 시험지입니다.
+구축 의도는 「위험물 안전관리 매뉴얼 내부 구축」입니다. 스키마 설계(5장)의 출발점이자 9장에서 답을 채점하는 시험지입니다.
 
 1. 제조소등에서 위치·구조·설비 변경 없이 저장·취급하는 위험물의 품명·수량(지정수량 배수)을 바꾸려면 언제까지 누구에게 신고해야 하는가?
 2. 위험물안전관리자가 해임되거나 퇴직하면 관계인은 며칠 안에 다시 선임해야 하고, 선임한 뒤에는 어떤 절차를 밟아야 하는가?
@@ -43,7 +43,7 @@
 | [8. Neo4j MCP 서버 연결](mcp.html) | 읽기 전용으로 연결하기 | `uvx`, `.mcp.json` |
 | [9. 골든 퀘스천 5개 묻기](questions.html) | 다섯 질문과 답, 원문 대조, 헤드리스 반복 실행 | `get-schema`, `read-cypher` |
 
-10장(벡터 RAG 비교) 이후는 원 교재의 [10장](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)·[11장](https://www.uengine.org/docs/graphrag-law/wrap-up.html)·[부록](https://www.uengine.org/docs/graphrag-law/troubleshooting.html)을 보세요.
+실습을 마친 뒤 더 읽을거리: [10. 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html) · [11. 마무리](https://www.uengine.org/docs/graphrag-law/wrap-up.html) · [부록: 문제 해결](https://www.uengine.org/docs/graphrag-law/troubleshooting.html)
 
 ## 필요한 기술 스택
 
@@ -51,7 +51,7 @@
 
 ### 꼭 준비할 것
 
-원 교재와 같은 준비물 네 가지에, Docker를 쓰지 않으므로 Neo4j를 직접 돌리기 위한 두 가지가 더해집니다.
+준비물은 여섯 가지입니다. 1~4는 실습 자체에, 5·6은 Neo4j를 이 PC에서 직접 실행하는 데 필요합니다.
 
 | | 준비물 | 한 줄 설명 |
 |---|---|---|
@@ -59,8 +59,8 @@
 | 2 | **uv** | 파이썬과 패키지를 설치·실행하는 도구. **Python 3.12도 uv가 알아서 내려받습니다** |
 | 3 | **Git for Windows** | 단계마다 커밋. Claude Code가 명령을 실행할 때 쓰는 Git Bash 포함 |
 | 4 | **위험물안전관리법 PDF 3개**(법률·시행령·시행규칙) | 그래프로 만들 법령 원문(국가법령정보센터) |
-| 5 | **JDK 21** | Neo4j를 실행하는 자바 런타임(Docker 대신 필요) |
-| 6 | **Neo4j 5.26 Community**(APOC 포함) | 그래프 DB(Docker 대신 ZIP으로 직접 설치) |
+| 5 | **JDK 21** | Neo4j를 실행하는 자바 런타임 |
+| 6 | **Neo4j 5.26 Community**(APOC 포함) | 그래프 DB(ZIP으로 내려받아 설치) |
 
 !!! note "Python은 따로 설치하지 않아도 되나요?"
     네, 따로 설치하지 않아도 됩니다. 6장에서 `uv init --python 3.12`로 프로젝트를 만들면 uv가 Python 3.12를 찾고, 없으면 자동으로 내려받아 그 프로젝트 전용으로 씁니다. 이미 다른 버전(예: Python 3.13)이 설치되어 있어도 서로 충돌하지 않습니다. 실습 PC(Python 3.13 설치됨)에서도 `uv init --bare --python 3.12`가 `Using CPython 3.12.12`로 3.12를 따로 준비했습니다. 다만 파이썬 코드를 실행할 때는 `python …`이 아니라 `uv run …`을 써야 그 3.12와 설치한 패키지가 쓰입니다.
@@ -81,7 +81,6 @@
 | Neo4j MCP 서버 | Claude Code와 Neo4j를 잇는 통로 | 2.1.2(`uvx`로 실행, 설치 불필요) | `uvx neo4j-mcp-server@2.1.2 --version` |
 | 웹 브라우저 | Neo4j Browser(`http://localhost:7474`) 화면 | Edge·Chrome 최신판 | |
 
-Docker Desktop과 WSL은 필요 없습니다.
 
 !!! warning "JDK는 21을 쓰세요 — 「21 이상」이 아닙니다"
     Neo4j 5.26이 공식 지원하는 자바는 **Java 17과 Java 21뿐**입니다. Java 22·23·25처럼 더 높은 버전은 지원 목록에 없어 시작하지 않거나 예상치 못한 오류가 날 수 있습니다. 이미 다른 버전의 자바가 설치되어 있어도 괜찮습니다. JDK 21을 함께 설치하고 Neo4j를 띄우는 창에서만 `$env:JAVA_HOME`을 JDK 21로 지정하면 됩니다(3장 1단계). 참고로 Neo4j 2025.x 이후 판은 Java 21 이상을 요구하므로, 두 계열 모두에 맞는 21이 가장 안전합니다.
@@ -100,7 +99,7 @@ Docker Desktop과 WSL은 필요 없습니다.
 - 내려받기: [learn.microsoft.com/java/openjdk/download#openjdk-21](https://learn.microsoft.com/java/openjdk/download#openjdk-21) · 대안 [adoptium.net/temurin/releases/?version=21](https://adoptium.net/temurin/releases/?version=21)
 - 확인: `java -version`의 첫 줄이 `openjdk version "21.…"`. 다른 숫자가 나오면 `where.exe java`로 어느 자바가 먼저 잡히는지 봅니다.
 
-**Neo4j 5.26 Community** — 노드와 관계로 데이터를 저장하는 그래프 데이터베이스입니다. 5.26은 장기 지원(LTS) 판이라 원 교재와 같은 버전을 씁니다. 설치 프로그램 없이 ZIP을 풀면 되고, 웹 화면 Neo4j Browser와 명령줄 도구 `cypher-shell`이 함께 들어 있습니다.
+**Neo4j 5.26 Community** — 노드와 관계로 데이터를 저장하는 그래프 데이터베이스입니다. 5.26은 장기 지원(LTS) 판이라 이 교재는 이 버전으로 검증했습니다. 설치 프로그램 없이 ZIP을 풀면 되고, 웹 화면 Neo4j Browser와 명령줄 도구 `cypher-shell`이 함께 들어 있습니다.
 
 - 내려받기: [neo4j.com/deployment-center](https://neo4j.com/deployment-center/) → Graph Database Self-Managed → Community → 5.26.x → Windows
 - 직접 주소: `https://dist.neo4j.org/neo4j-community-5.26.33-windows.zip`
@@ -169,7 +168,7 @@ java -version
 2. 본문 화면의 저장 기능에서 파일 형식으로 PDF를 선택해 내려받습니다.
 3. 시행령과 시행규칙도 같은 방법으로 내려받습니다. 법률·시행령·시행규칙으로 3개입니다.
 
-원 교재에서 쓴 판본은 다음과 같습니다. 파일 이름은 사이트에서 지정한 그대로 「법령명(종류)(번호)(시행일)」입니다.
+이 교재에서 쓴 판본은 다음과 같습니다. 파일 이름은 사이트에서 지정한 그대로 「법령명(종류)(번호)(시행일)」입니다.
 
 | 법령 | 판본 | 파일 이름 |
 |---|---|---|
@@ -185,7 +184,7 @@ java -version
 이 교재의 화면 출력과 수치는 두 종류입니다. 장마다 어느 쪽인지 밝혀 둡니다.
 
 - **Windows에서 실행한 기록** — 3·4장의 설치·접속·Cypher, 6장의 uv 환경, 8장의 MCP 서버 기동처럼 운영체제에 따라 달라지는 명령은 Windows 11 PC에서 실제로 실행해 확인했습니다.
-- **원 교재의 기록** — Claude Code가 쓰는 코드·설계·답(5~9장)은 모델이 실행할 때마다 달라지므로, 원 교재(macOS)의 실행 기록 가운데 위험물안전관리법 부분을 옮겼습니다. 위험물안전관리법 3종의 조·항·호 수(조 157 · 항 276 · 호 357 · 목 67)와 7장의 추출 수치는 원 교재에서도 3종만 따로 센 값이라 그대로 맞습니다. 그래프 전체의 노드·관계 수는 법령이 줄어 원 교재보다 작습니다.
+- **미리 실행해 둔 기록** — Claude Code가 쓰는 코드·설계·답(5~9장)은 모델이 실행할 때마다 달라집니다. 이 장들의 화면과 수치는 같은 PDF 3개로 미리 실행해 둔 기록이며, 여러분의 결과와 비교하는 기준으로 씁니다. 위험물안전관리법 3종의 조·항·호 수(조 157 · 항 276 · 호 357 · 목 67)는 판본이 같으면 같아야 합니다.
 
 ## 걸리는 시간과 비용
 
@@ -195,9 +194,9 @@ java -version
 | Cypher 실습(4장) | 30분 | |
 | 스키마 설계(5장) | Claude 작업 5~10분 | |
 | 인제스천 코드 작성·검증(6장) | Claude 작업 15~20분 + 사람 대조 | |
-| 엔티티 추출(7장) | 조 157개, 6개 동시 처리로 약 6분 | 원 교재 기록 $0.268 |
+| 엔티티 추출(7장) | 조 157개, 6개 동시 처리로 약 6분 | 기록 $0.268 |
 | MCP 연결(8장) | 5분 | |
-| 질문 하나(9장) | 20~40초 | 원 교재 헤드리스 평균 $0.45~0.88 |
+| 질문 하나(9장) | 20~40초 | 헤드리스 기록 평균 $0.45~0.88 |
 
 비용 칸은 `claude -p`가 돌려준 API 요금 환산치입니다. 구독 플랜으로 로그인한 Claude Code에서는 따로 청구되지 않고 플랜 사용 한도에서 차감됩니다.
 
@@ -221,13 +220,13 @@ java -version
 ## 확인 문제
 
 <details class="answer" markdown="1">
-<summary>법령을 9개에서 1개(PDF 3개)로 줄여도 골든 퀘스천 다섯 개에 모두 답할 수 있는 이유는 무엇인가요?</summary>
+<summary>위험물안전관리법 하나(PDF 3개)만 적재해도 골든 퀘스천 다섯 개에 모두 답할 수 있는 이유는 무엇인가요?</summary>
 
-다섯 질문의 근거 조문(법 제6조·제15조·제18조·제27조와 벌칙 제35~39조, 이를 받는 시행령·시행규칙 조문)이 모두 위험물안전관리법 3종 안에 있기 때문입니다. 원 교재의 9장 기록에서도 다섯 답의 근거 조문은 모두 위험물안전관리법·시행령·시행규칙이었습니다.
+다섯 질문의 근거 조문(법 제6조·제15조·제18조·제27조와 벌칙 제35~39조, 이를 받는 시행령·시행규칙 조문)이 모두 위험물안전관리법 3종 안에 있기 때문입니다. 9장의 기록에서도 다섯 답의 근거 조문은 모두 위험물안전관리법·시행령·시행규칙이었습니다.
 </details>
 
 <details class="answer" markdown="1">
-<summary>이 교재가 원 교재의 `--tools ""`를 `--tools=`로 바꾼 까닭은 무엇인가요?</summary>
+<summary>이 교재에서 도구를 모두 끌 때 `--tools ""`가 아니라 `--tools=`로 쓰는 까닭은 무엇인가요?</summary>
 
 Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 인자(`""`)를 넘기지 못하고 빼 버립니다. 그러면 `--tools` 뒤의 다음 인자가 값으로 잘못 들어갑니다. `--tools=`는 5.1과 7 모두에서 「빈 값」으로 정확히 전달됩니다(Windows PC에서 확인).
 </details>

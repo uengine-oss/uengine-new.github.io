@@ -153,7 +153,7 @@ Get-Content .gitignore
 git add .gitignore; git commit -qm "실습 폴더 시작"
 ```
 
-PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. `-Encoding ascii`로 쓰는 데는 이유가 있습니다. Windows PowerShell 5.1의 `-Encoding utf8`은 파일 맨 앞에 BOM(보이지 않는 3바이트)을 붙이는데, 그러면 git이 첫 줄을 `.env`가 아닌 다른 글자로 읽어 **비밀번호 파일이 커밋될 수 있습니다.** 내용이 영문뿐인 파일은 `ascii`로 쓰면 5.1과 7 모두 안전합니다. 6장에서 `uv init --bare`는 `.gitignore`를 만들지 않으므로 이 단계의 `.gitignore`가 `.env`를 지키는 유일한 장치입니다. 원 교재의 `neo4j/` 줄은 DB 파일을 실습 폴더에 두지 않으므로 뺐고, 6장에서 다시 만들 수 있는 `data/`를 미리 넣었습니다.
+PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. `-Encoding ascii`로 쓰는 데는 이유가 있습니다. Windows PowerShell 5.1의 `-Encoding utf8`은 파일 맨 앞에 BOM(보이지 않는 3바이트)을 붙이는데, 그러면 git이 첫 줄을 `.env`가 아닌 다른 글자로 읽어 **비밀번호 파일이 커밋될 수 있습니다.** 내용이 영문뿐인 파일은 `ascii`로 쓰면 5.1과 7 모두 안전합니다. 6장에서 `uv init --bare`는 `.gitignore`를 만들지 않으므로 이 단계의 `.gitignore`가 `.env`를 지키는 유일한 장치입니다. `data/`는 6장에서 PDF로 다시 만들 수 있는 중간 파일 폴더라 미리 넣었습니다. Neo4j의 DB 파일은 `C:\lab\neo4j`에 있어 실습 폴더에 들어오지 않습니다.
 </li>
 <li markdown="1">**Neo4j ZIP을 내려받아 풉니다.** [Neo4j Deployment Center](https://neo4j.com/deployment-center/)의 Community Edition → Windows 항목과 같은 파일입니다. 아래 `$v`를 Deployment Center에 나온 최신 5.26.x 번호로 바꿔도 됩니다.
 
@@ -227,7 +227,7 @@ C:\lab\neo4j\bin\neo4j-admin.bat dbms set-initial-password $env:NEO4J_PASSWORD
 
 마지막 명령은 `Changed password for user 'neo4j'. IMPORTANT: this change will only take effect if performed before the database is started for the first time.`를 출력합니다. 문구 그대로 **DB를 처음 시작하기 전에만** 적용되므로 Neo4j를 실행하는 단계보다 먼저 합니다. 명령 기록(`Get-History`, PSReadLine 기록)에는 변수 이름만 남고 값은 남지 않습니다.
 </li>
-<li markdown="1">**창마다 쓸 설정 스크립트 env.ps1을 만듭니다.** `.env`의 비밀번호를 환경변수로 읽고, 한글이 깨지지 않도록 콘솔·파이썬·자바의 출력 인코딩을 UTF-8로 맞추고, cypher-shell 경로를 `$cs`에, 한글 파일을 BOM 없는 UTF-8로 저장하는 `Write-Utf8` 함수를 정의합니다. 원 교재의 `set -a; . ./.env; set +a`에 해당합니다.
+<li markdown="1">**창마다 쓸 설정 스크립트 env.ps1을 만듭니다.** `.env`의 비밀번호를 환경변수로 읽고, 한글이 깨지지 않도록 콘솔·파이썬·자바의 출력 인코딩을 UTF-8로 맞추고, cypher-shell 경로를 `$cs`에, 한글 파일을 BOM 없는 UTF-8로 저장하는 `Write-Utf8` 함수를 정의합니다.
 
 **왜 하나요?** 새 PowerShell 창은 환경변수도 인코딩 설정도 모두 기본값으로 시작합니다. 창을 열 때마다 여러 줄을 손으로 치면 하나쯤 빠뜨리기 쉽고, 그러면 「어제는 됐는데 오늘은 비밀번호 오류」나 「한글이 깨진다」가 생깁니다. 한 파일로 만들어 두면 한 줄로 같은 상태를 만들 수 있습니다.
 
@@ -366,7 +366,7 @@ curl.exe -s http://localhost:7474
 
 웹 브라우저로 `http://localhost:7474`를 엽니다. 「Connect to instance」 창에 연결 주소 `neo4j://localhost:7687`이 채워져 있습니다. Database user에 `neo4j`, Password에 정한 비밀번호를 입력하고 Connect를 누릅니다.
 
-![Neo4j Browser 첫 화면 「Connect to instance」 — 연결 주소 neo4j://localhost:7687, 사용자 neo4j (원 교재 화면, Windows에서도 같습니다)](img/gl-01-browser-login.webp)
+![Neo4j Browser 첫 화면 「Connect to instance」 — 연결 주소 neo4j://localhost:7687, 사용자 neo4j](img/gl-01-browser-login.webp)
 
 위쪽 입력칸에 질의를 입력하고 Run(또는 Ctrl+Enter)을 누르면 결과가 아래에 쌓입니다.
 

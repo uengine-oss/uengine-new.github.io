@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>골든 퀘스천 5개 묻기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼</title>
+<title>골든 퀘스천 5개 묻기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
 <meta name="description" content="Neo4j MCP를 연결한 세션에서 골든 퀘스천 5개를 묻고, Claude가 호출한 도구와 Cypher, 답을 실제 기록으로 살펴봅니다. 답마다 근거 조문을 원문과 대조하고, 같은 질문을 15번 실행한 기록으로 호출 수·시간·오류를 측정합니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/graphrag-law-windows/questions.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="골든 퀘스천 5개 묻기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼">
+<meta property="og:title" content="골든 퀘스천 5개 묻기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
 <meta property="og:description" content="Neo4j MCP를 연결한 세션에서 골든 퀘스천 5개를 묻고, Claude가 호출한 도구와 Cypher, 답을 실제 기록으로 살펴봅니다. 답마다 근거 조문을 원문과 대조하고, 같은 질문을 15번 실행한 기록으로 호출 수·시간·오류를 측정합니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/graphrag-law-windows/questions.html">
 <meta property="og:image" content="https://www.uengine.org/docs/graphrag-law-windows/img/article15-graph.webp">
@@ -23,7 +23,7 @@
 <body>
 <header class="top">
   <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
-  <a class="brand" href="index.html"><span>Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 <em>튜토리얼</em></span></a>
+  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
   <div class="search">
     <input id="q" type="search" placeholder="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
     <div id="results" class="results" hidden></div>
@@ -60,7 +60,7 @@
 </blockquote>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
 <p><a href="schema.html">5장</a>에서 스키마를 설계할 때 출발점이었던 질문 다섯 개를 이제 실제로 묻습니다. <a href="mcp.html">8장</a>에서 다시 연 세션은 앞선 설계·적재 대화가 없는 <strong>새 세션</strong>이고, Claude는 파일을 하나도 읽지 않고(Read·Bash 호출 0번) MCP 도구 두 개만으로 답했습니다. 이 장에서는 그래프가 답의 근거를 제대로 제공하는지 확인하고, 그 답을 검증하는 방법을 살펴봅니다.</p>
-<p>아래 「질문별 기록」과 「같은 질문을 15번」은 원 교재(macOS, 법령 9개 그래프)의 실행 기록입니다. 다섯 질문의 근거 조문은 모두 위험물안전관리법 3종에 있어, 이 교재의 그래프에서도 같은 조문에 도달하는 것이 정상입니다. 다만 그래프가 작아 Claude가 받는 결과 행 수와 시간·비용은 원 교재보다 적게 나올 수 있습니다. 여러분의 답을 이 기록과 원문에 대조해 채점하세요.</p>
+<p>아래 「질문별 기록」과 「같은 질문을 15번」은 미리 실행해 둔 기록입니다. 다섯 질문의 근거 조문은 모두 위험물안전관리법 3종에 있으므로, 여러분의 그래프에서도 같은 조문에 도달하는 것이 정상입니다. 결과 행 수와 시간·비용은 그래프와 실행마다 조금씩 다릅니다. 여러분의 답을 이 기록과 원문에 대조해 채점하세요.</p>
 <div class="admonition tip">
 <p class="admonition-title">시작하기 전에</p>
 <p>8장에서 <code>/mcp</code>에 <code>✔ neo4j</code>가 보였어야 합니다. 질문의 답을 원문과 대조할 수 있도록 <code>pdf\</code> 폴더의 PDF 3개나 국가법령정보센터 화면을 옆에 열어 둡니다.</p>
@@ -210,8 +210,8 @@
 <p>Claude는 두 번째 질의로 벌칙 장과 제12조·제13조 원문에서 「제15조」「제18조」「안전관리자」「정기점검」을 문자열로 다시 찾아 <code>PENALIZES</code>에 빠진 호가 없는지 확인했고, 제12조의 허가취소·사용정지 사유도 덧붙였습니다. 양벌규정(제38조)은 「이번에 조회하지 않았다」고 밝혔습니다.</p>
 <p><strong>판정: 맞음(9개 호 모두 원문과 일치).</strong> 예: 제36조제6호 「제15조제1항 또는 제2항의 규정을 위반하여 안전관리자를 선임하지 아니한 관계인으로서 제6조제1항의 규정에 따른 허가를 받은 자」, 제39조제1항제7호의2 「제18조제2항을 위반하여 기간 이내에 점검결과를 제출하지 아니한 자」.</p>
 <h2 id="같은-질문을-15번">같은 질문을 15번<a class="anchor" href="#같은-질문을-15번" title="Permanent link">#</a></h2>
-<p>대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(<code>claude -p</code>)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 <code>--tools=</code>(원 교재의 <code>--tools ""</code>)로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.</p>
-<p>원 교재의 bash 명령을 PowerShell 반복문으로 옮겼습니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 <code>golden-questions.md</code>의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 <code>$reps = 1</code>로 한 번씩만 돌려 보는 것을 권합니다.</p>
+<p>대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(<code>claude -p</code>)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 <code>--tools=</code>로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.</p>
+<p>PowerShell 반복문으로 실행합니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 <code>golden-questions.md</code>의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 <code>$reps = 1</code>로 한 번씩만 돌려 보는 것을 권합니다.</p>
 <p>반복 실행 전에 <strong>MCP 서버가 연결되는지 먼저 확인합니다.</strong> MCP 서버가 연결되지 않은 채 헤드리스로 질문하면 Claude가 답을 내지 못하고 10분 넘게 멈춰 있는 경우를 실제 PC에서 겪었습니다(그때는 APOC가 꺼져 있었습니다). <code>claude mcp list</code>에 <code>✓ Connected</code>(8장에서 승인했다면) 또는 <code>⏸ Pending approval</code>이 아니라 <code>✗ Failed</code>가 나오면 반복 실행을 시작하지 말고 <a href="mcp.html">8장 「막히면」</a>부터 해결합니다. 실행 중 멈춘 것 같으면 Ctrl+C로 중단합니다.</p>
 <p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
 <div class="hl"><pre><span></span><code><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">lab</span><span class="p">\</span><span class="n">law-graph</span>
@@ -238,31 +238,26 @@
 <table>
 <thead>
 <tr>
-<th>원 교재(bash)</th>
-<th>PowerShell</th>
-<th>이유</th>
+<th>명령에 쓴 것</th>
+<th>뜻</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>줄 끝 <code>\</code></td>
-<td>줄 끝 <code>`</code>(백틱), 파이프 <code>\|</code> 뒤에서는 그냥 줄바꿈</td>
-<td>PowerShell의 줄 잇기 문자</td>
+<td>줄 끝 <code>`</code>(백틱)</td>
+<td>다음 줄에 명령이 이어진다는 뜻입니다. 파이프 <code>\|</code> 뒤에서는 백틱 없이 줄을 바꿔도 됩니다</td>
 </tr>
 <tr>
-<td><code>&lt; /dev/null</code></td>
-<td>생략</td>
-<td>PowerShell 창에서 실행한 <code>claude -p</code>는 입력을 기다리지 않습니다</td>
-</tr>
-<tr>
-<td><code>&gt; runs/graph/q&lt;N&gt;-r&lt;M&gt;.jsonl</code></td>
 <td><code>\| Set-Content -Encoding utf8 "runs\graph\q$n-r$m.jsonl"</code></td>
-<td>한글이 든 JSON을 UTF-8로 저장합니다. <code>&gt;</code>는 5.1에서 UTF-16으로 저장해 다른 도구가 읽기 어렵습니다</td>
+<td>한글이 든 결과를 UTF-8 파일로 저장합니다. <code>&gt;</code>로 저장하면 5.1에서 UTF-16이 되어 다른 도구가 읽기 어렵습니다</td>
 </tr>
 <tr>
-<td><code>--tools ""</code></td>
 <td><code>--tools=</code></td>
-<td>Windows PowerShell 5.1은 빈 문자열 인자 <code>""</code>을 빼 버려 <code>--tools</code>가 다음 인자를 값으로 삼습니다. <code>--tools=</code>는 5.1과 7 모두 같은 뜻입니다</td>
+<td>파일 읽기·셸 같은 기본 도구를 모두 끕니다. <code>--tools ""</code>로 쓰면 Windows PowerShell 5.1이 빈 문자열을 빼 버려 <code>--tools</code>가 다음 인자를 값으로 삼습니다</td>
+</tr>
+<tr>
+<td><code>--allowedTools "mcp__neo4j__get-schema,mcp__neo4j__read-cypher"</code></td>
+<td>Neo4j MCP 도구 두 개만 묻지 않고 쓰게 합니다</td>
 </tr>
 </tbody>
 </table>
@@ -277,7 +272,7 @@
 <span class="p">}</span> <span class="p">|</span> <span class="nb">Format-Table</span> <span class="n">-AutoSize</span>
 </code></pre></div>
 
-<p>원 교재 기록은 다음과 같습니다.</p>
+<p>미리 실행해 둔 기록은 다음과 같습니다.</p>
 <table>
 <thead>
 <tr>
@@ -327,13 +322,13 @@
 <li><strong>Cypher 오류</strong>: 15번 중 10번에서 1~2건이 발생했고, 모두 모델이 수정해 다시 실행했습니다. 가장 흔한 첫 시도는 모든 속성을 문자열로 검색하는 <code>MATCH (n) WHERE any(k IN keys(n) WHERE toString(n[k]) CONTAINS '안전관리자') …</code>였고 <code>TypeError (Invalid input for function 'toString()': … got: StringArray[…])</code>로 실패했습니다(목록 속성 때문). 다음은 3번에서 본 집계 뒤 <code>ORDER BY</code> 오류였습니다.</li>
 <li><strong>그래프 구조를 틀리게 설명한 2건</strong>: q4-r3은 「제36조제15호에서 제27조로 가는 <code>PENALIZES</code>·<code>REFERS_TO</code> 관계가 없습니다」라고 했지만 실제로는 <code>제36조제15호 -PENALIZES-&gt; 제27조</code>가 있습니다. 모델이 조건에 <code>t.articleSub IS NULL</code>을 넣었는데 이 그래프는 가지번호가 없으면 0을 저장해 두므로 결과가 비었고, 모델은 이를 「관계가 없다」로 해석했습니다. q3-r1은 「제39조에는 Sanction 이 연결되어 있지 않다」고 했는데, 조 노드에는 없고 제39조제1항에 <code>IMPOSES</code>가 있어 반만 맞습니다. 두 회차 모두 벌칙 내용은 조문 텍스트에서 확인해 답 자체는 맞았습니다.</li>
 </ul>
-<p>근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 <a href="https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html">원 교재 10장</a>에서 벡터 RAG와 같은 기준으로 측정합니다.</p>
+<p>근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 <a href="https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html">10. 벡터 RAG로 같은 질문</a>에서 벡터 RAG와 같은 기준으로 측정합니다.</p>
 <div class="admonition warning">
 <p class="admonition-title">답의 근거 조문은 반드시 원문으로 확인하세요</p>
 <p>15번 모두 결론이 맞았지만, 같은 실행 안에서도 그래프에 대한 설명은 틀릴 수 있었습니다. 빈 결과는 「없다」가 아니라 「이 조건으로는 안 나왔다」일 수 있습니다. 답에 인용된 조문 번호를 원문에서 찾아 문구를 대조하고, 그래프에 대한 주장(「관계가 없다」 등)은 직접 Cypher로 다시 확인하세요. 의미층 Norm은 아직 <code>reviewed=false</code>입니다.</p>
 </div>
 <h2 id="동작-과정-다시-보기-2번-질문">동작 과정 다시 보기 — 2번 질문<a class="anchor" href="#동작-과정-다시-보기-2번-질문" title="Permanent link">#</a></h2>
-<p><a href="https://www.uengine.org/docs/graphrag-law/how-graphrag.html">원 교재 2장</a>에서 본 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.</p>
+<p><a href="https://www.uengine.org/docs/graphrag-law/how-graphrag.html">2장 GraphRAG 동작 과정</a>의 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.</p>
 <table>
 <thead>
 <tr>
@@ -432,7 +427,7 @@
 <li>Claude Code가 Neo4j MCP(<code>read-cypher</code>)로 그래프를 조회해 골든 퀘스천 다섯 개에 답했습니다(8·9장).</li>
 <li>답에 인용된 조문을 학생이 직접 원문과 대조했고, 틀린 곳이 있으면 그 원인(적재·의미층·질의)을 짚을 수 있습니다(9장).</li>
 </ol>
-<p><strong>다음에 할 일:</strong> 실습이 끝나면 Neo4j 창에서 <code>Ctrl+C</code>로 Neo4j를 멈춥니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 원 교재의 <a href="https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html">10장 벡터 RAG로 같은 질문</a>과 <a href="https://www.uengine.org/docs/graphrag-law/wrap-up.html">11장 마무리</a>에서 이어서 읽을 수 있습니다(원 교재는 macOS·Docker 기준이므로 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다).</p>
+<p><strong>다음에 할 일:</strong> 실습이 끝나면 Neo4j 창에서 <code>Ctrl+C</code>로 Neo4j를 멈춥니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 <a href="https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html">10. 벡터 RAG로 같은 질문</a>과 <a href="https://www.uengine.org/docs/graphrag-law/wrap-up.html">11. 마무리</a>에서 이어서 읽을 수 있습니다. 그 페이지의 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다.</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <p><strong>1.</strong> 헤드리스 q4-r3에서 Claude는 「제36조제15호에서 제27조로 가는 PENALIZES 관계가 없다」고 했지만 실제로는 있었습니다. 왜 이런 설명이 나왔고, 어떻게 확인하나요?</p>
 <details class="answer">
@@ -451,7 +446,7 @@
 </details>
     </article>
     <nav class="pager"><a class="prev" href="mcp.html"><span>이전</span>Neo4j MCP 서버 연결</a><span></span></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 5.1·7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#질문별-기록">질문별 기록</a><ul><li><a href="#1번-품명수량-변경-신고">1번 — 품명·수량 변경 신고</a></li><li><a href="#2번-안전관리자-재선임과-신고">2번 — 안전관리자 재선임과 신고</a></li><li><a href="#3번-정기점검-결과-제출-cypher-오류를-스스로-고친-장면">3번 — 정기점검 결과 제출: Cypher 오류를 스스로 고친 장면</a></li><li><a href="#4번-유출-사고-데이터-오류를-찾아낸-장면">4번 — 유출 사고: 데이터 오류를 찾아낸 장면</a></li><li><a href="#5번-벌칙과태료-여러-조문을-연결하는-질문">5번 — 벌칙·과태료: 여러 조문을 연결하는 질문</a></li></ul></li><li><a href="#같은-질문을-15번">같은 질문을 15번</a></li><li><a href="#동작-과정-다시-보기-2번-질문">동작 과정 다시 보기 — 2번 질문</a></li><li><a href="#정리와-마무리">정리와 마무리</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>

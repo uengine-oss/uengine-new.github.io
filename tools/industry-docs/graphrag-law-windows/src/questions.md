@@ -6,7 +6,7 @@
 
 [5장](schema.html)에서 스키마를 설계할 때 출발점이었던 질문 다섯 개를 이제 실제로 묻습니다. [8장](mcp.html)에서 다시 연 세션은 앞선 설계·적재 대화가 없는 **새 세션**이고, Claude는 파일을 하나도 읽지 않고(Read·Bash 호출 0번) MCP 도구 두 개만으로 답했습니다. 이 장에서는 그래프가 답의 근거를 제대로 제공하는지 확인하고, 그 답을 검증하는 방법을 살펴봅니다.
 
-아래 「질문별 기록」과 「같은 질문을 15번」은 원 교재(macOS, 법령 9개 그래프)의 실행 기록입니다. 다섯 질문의 근거 조문은 모두 위험물안전관리법 3종에 있어, 이 교재의 그래프에서도 같은 조문에 도달하는 것이 정상입니다. 다만 그래프가 작아 Claude가 받는 결과 행 수와 시간·비용은 원 교재보다 적게 나올 수 있습니다. 여러분의 답을 이 기록과 원문에 대조해 채점하세요.
+아래 「질문별 기록」과 「같은 질문을 15번」은 미리 실행해 둔 기록입니다. 다섯 질문의 근거 조문은 모두 위험물안전관리법 3종에 있으므로, 여러분의 그래프에서도 같은 조문에 도달하는 것이 정상입니다. 결과 행 수와 시간·비용은 그래프와 실행마다 조금씩 다릅니다. 여러분의 답을 이 기록과 원문에 대조해 채점하세요.
 
 !!! tip "시작하기 전에"
     8장에서 `/mcp`에 `✔ neo4j`가 보였어야 합니다. 질문의 답을 원문과 대조할 수 있도록 `pdf\` 폴더의 PDF 3개나 국가법령정보센터 화면을 옆에 열어 둡니다.
@@ -161,9 +161,9 @@ Claude는 두 번째 질의로 벌칙 장과 제12조·제13조 원문에서 「
 
 ## 같은 질문을 15번
 
-대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(`claude -p`)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 `--tools=`(원 교재의 `--tools ""`)로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.
+대화형 실행 한 번으로는 결과가 우연인지 판단할 수 없어, 녹화 없이 헤드리스(`claude -p`)로 질문마다 3번씩 실행했습니다. schema.md에 적어 둔 「기대 답」이 섞이지 않도록 `--tools=`로 파일 읽기와 셸을 모두 끄고 Neo4j MCP 도구 두 개만 사용하게 했습니다.
 
-원 교재의 bash 명령을 PowerShell 반복문으로 옮겼습니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 `golden-questions.md`의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 `$reps = 1`로 한 번씩만 돌려 보는 것을 권합니다.
+PowerShell 반복문으로 실행합니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 `golden-questions.md`의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 `$reps = 1`로 한 번씩만 돌려 보는 것을 권합니다.
 
 반복 실행 전에 **MCP 서버가 연결되는지 먼저 확인합니다.** MCP 서버가 연결되지 않은 채 헤드리스로 질문하면 Claude가 답을 내지 못하고 10분 넘게 멈춰 있는 경우를 실제 PC에서 겪었습니다(그때는 APOC가 꺼져 있었습니다). `claude mcp list`에 `✓ Connected`(8장에서 승인했다면) 또는 `⏸ Pending approval`이 아니라 `✗ Failed`가 나오면 반복 실행을 시작하지 말고 [8장 「막히면」](mcp.html)부터 해결합니다. 실행 중 멈춘 것 같으면 Ctrl+C로 중단합니다.
 
@@ -190,12 +190,12 @@ for ($n = 1; $n -le $qs.Count; $n++) {
 !!! note "Windows PC에서 확인한 결과"
     Windows PowerShell 5.1에서 이 반복문을 `$reps = 1`, 1번 질문 하나로 두 번 실행했습니다. 두 번 모두 첫 이벤트에 `"mcp_servers":[{"name":"neo4j","status":"connected"}]`가 나왔고, 34초와 27초 만에 「해임한 날부터 30일 이내에 다시 선임」과 제15조 근거를 답했습니다(Neo4j 도구 호출 4번·3번, 비용 약 $0.11·$0.07). `.mcp.json`의 `${NEO4J_PASSWORD}`는 `env.ps1`이 설정한 환경변수로 치환되었습니다. 헤드리스 실행은 `--mcp-config`로 서버를 직접 지정하므로, `claude mcp list`가 `⏸ Pending approval`이어도 연결됩니다.
 
-| 원 교재(bash) | PowerShell | 이유 |
-|---|---|---|
-| 줄 끝 `\` | 줄 끝 `` ` ``(백틱), 파이프 `\|` 뒤에서는 그냥 줄바꿈 | PowerShell의 줄 잇기 문자 |
-| `< /dev/null` | 생략 | PowerShell 창에서 실행한 `claude -p`는 입력을 기다리지 않습니다 |
-| `> runs/graph/q<N>-r<M>.jsonl` | `\| Set-Content -Encoding utf8 "runs\graph\q$n-r$m.jsonl"` | 한글이 든 JSON을 UTF-8로 저장합니다. `>`는 5.1에서 UTF-16으로 저장해 다른 도구가 읽기 어렵습니다 |
-| `--tools ""` | `--tools=` | Windows PowerShell 5.1은 빈 문자열 인자 `""`을 빼 버려 `--tools`가 다음 인자를 값으로 삼습니다. `--tools=`는 5.1과 7 모두 같은 뜻입니다 |
+| 명령에 쓴 것 | 뜻 |
+|---|---|
+| 줄 끝 `` ` ``(백틱) | 다음 줄에 명령이 이어진다는 뜻입니다. 파이프 `\|` 뒤에서는 백틱 없이 줄을 바꿔도 됩니다 |
+| `\| Set-Content -Encoding utf8 "runs\graph\q$n-r$m.jsonl"` | 한글이 든 결과를 UTF-8 파일로 저장합니다. `>`로 저장하면 5.1에서 UTF-16이 되어 다른 도구가 읽기 어렵습니다 |
+| `--tools=` | 파일 읽기·셸 같은 기본 도구를 모두 끕니다. `--tools ""`로 쓰면 Windows PowerShell 5.1이 빈 문자열을 빼 버려 `--tools`가 다음 인자를 값으로 삼습니다 |
+| `--allowedTools "mcp__neo4j__get-schema,mcp__neo4j__read-cypher"` | Neo4j MCP 도구 두 개만 묻지 않고 쓰게 합니다 |
 
 결과 파일마다 도구 호출 수, 걸린 시간, 비용을 모아 보는 명령입니다. `stream-json`의 마지막 `result` 줄에 시간(`duration_ms`)과 비용(`total_cost_usd`)이 들어 있습니다.
 
@@ -211,7 +211,7 @@ Get-ChildItem runs\graph\*.jsonl | ForEach-Object {
 } | Format-Table -AutoSize
 ```
 
-원 교재 기록은 다음과 같습니다.
+미리 실행해 둔 기록은 다음과 같습니다.
 
 | 질문 | 평균 호출 | 평균 시간 | 평균 비용(API 환산) |
 |---|---|---|---|
@@ -228,14 +228,14 @@ Get-ChildItem runs\graph\*.jsonl | ForEach-Object {
 - **Cypher 오류**: 15번 중 10번에서 1~2건이 발생했고, 모두 모델이 수정해 다시 실행했습니다. 가장 흔한 첫 시도는 모든 속성을 문자열로 검색하는 `MATCH (n) WHERE any(k IN keys(n) WHERE toString(n[k]) CONTAINS '안전관리자') …`였고 `TypeError (Invalid input for function 'toString()': … got: StringArray[…])`로 실패했습니다(목록 속성 때문). 다음은 3번에서 본 집계 뒤 `ORDER BY` 오류였습니다.
 - **그래프 구조를 틀리게 설명한 2건**: q4-r3은 「제36조제15호에서 제27조로 가는 `PENALIZES`·`REFERS_TO` 관계가 없습니다」라고 했지만 실제로는 `제36조제15호 -PENALIZES-> 제27조`가 있습니다. 모델이 조건에 `t.articleSub IS NULL`을 넣었는데 이 그래프는 가지번호가 없으면 0을 저장해 두므로 결과가 비었고, 모델은 이를 「관계가 없다」로 해석했습니다. q3-r1은 「제39조에는 Sanction 이 연결되어 있지 않다」고 했는데, 조 노드에는 없고 제39조제1항에 `IMPOSES`가 있어 반만 맞습니다. 두 회차 모두 벌칙 내용은 조문 텍스트에서 확인해 답 자체는 맞았습니다.
 
-근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 [원 교재 10장](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)에서 벡터 RAG와 같은 기준으로 측정합니다.
+근거 조문을 얼마나 빠짐없이 가져왔는지(재현율)는 [10. 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)에서 벡터 RAG와 같은 기준으로 측정합니다.
 
 !!! warning "답의 근거 조문은 반드시 원문으로 확인하세요"
     15번 모두 결론이 맞았지만, 같은 실행 안에서도 그래프에 대한 설명은 틀릴 수 있었습니다. 빈 결과는 「없다」가 아니라 「이 조건으로는 안 나왔다」일 수 있습니다. 답에 인용된 조문 번호를 원문에서 찾아 문구를 대조하고, 그래프에 대한 주장(「관계가 없다」 등)은 직접 Cypher로 다시 확인하세요. 의미층 Norm은 아직 `reviewed=false`입니다.
 
 ## 동작 과정 다시 보기 — 2번 질문
 
-[원 교재 2장](https://www.uengine.org/docs/graphrag-law/how-graphrag.html)에서 본 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.
+[2장 GraphRAG 동작 과정](https://www.uengine.org/docs/graphrag-law/how-graphrag.html)의 질의 단계 이름에 따라 대화형 세션의 2번 질문을 실제 화면을 기준으로 살펴봅니다.
 
 | 단계 | 이 세션의 실제 동작 |
 |---|---|
@@ -300,7 +300,7 @@ RETURN n.normId, n.modality, n.action, n.trigger, n.deadlineText, n.deadlineValu
 2. Claude Code가 Neo4j MCP(`read-cypher`)로 그래프를 조회해 골든 퀘스천 다섯 개에 답했습니다(8·9장).
 3. 답에 인용된 조문을 학생이 직접 원문과 대조했고, 틀린 곳이 있으면 그 원인(적재·의미층·질의)을 짚을 수 있습니다(9장).
 
-**다음에 할 일:** 실습이 끝나면 Neo4j 창에서 `Ctrl+C`로 Neo4j를 멈춥니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 원 교재의 [10장 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)과 [11장 마무리](https://www.uengine.org/docs/graphrag-law/wrap-up.html)에서 이어서 읽을 수 있습니다(원 교재는 macOS·Docker 기준이므로 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다).
+**다음에 할 일:** 실습이 끝나면 Neo4j 창에서 `Ctrl+C`로 Neo4j를 멈춥니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 [10. 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)과 [11. 마무리](https://www.uengine.org/docs/graphrag-law/wrap-up.html)에서 이어서 읽을 수 있습니다. 그 페이지의 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다.
 
 ## 확인 문제
 
