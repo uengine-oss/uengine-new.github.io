@@ -282,7 +282,7 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 </tr>
 </tbody>
 </table>
-<p>README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. <code>write-cypher</code>는 <code>NEO4J_MCP_READ_ONLY=true</code>라서 목록에서 빠졌습니다(서버 로그 <code>Ignoring tool 'write-cypher': not available in read-only mode</code>). 원 교재의 Community 5.26에서는 <code>list-gds-procedures</code>도 보이지 않았지만, Windows PC의 Neo4j Desktop(Enterprise 2026.10)에 연결했을 때는 <code>get-schema</code>·<code>read-cypher</code>·<code>list-gds-procedures</code> <strong>세 개</strong>가 등록되었습니다. 세 번째 도구는 GDS(Graph Data Science) 프로시저 목록을 보여 주는 읽기 전용 도구라 이 실습에는 영향이 없습니다.</p>
+<p>README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. <code>write-cypher</code>는 <code>NEO4J_MCP_READ_ONLY=true</code>라서 목록에서 빠졌습니다(서버 로그 <code>Ignoring tool 'write-cypher': not available in read-only mode</code>). 원 교재의 Community 5.26에서도, Windows PC의 Neo4j Desktop(Enterprise 2026.10, APOC 켬)에서도 <code>tools/list</code>에 나온 도구는 <code>get-schema</code>·<code>read-cypher</code> <strong>두 개</strong>였습니다. Enterprise에서는 서버 로그에 <code>list-gds-procedures</code>까지 3개가 등록되었다고 나오지만, GDS 플러그인이 없어 목록에서는 빠집니다. GDS가 설치된 DBMS라면 세 번째 도구가 보일 수 있으며, 읽기 전용이라 이 실습에는 영향이 없습니다.</p>
 </li>
 <li>
 <p><strong>첫 질문으로 연결을 확인합니다.</strong> 골든 퀘스천 1번을 넣으면 Claude가 도구를 처음 호출할 때 권한을 요청합니다. 처음에는 <code>get-schema</code>, 다음에는 <code>read-cypher</code>의 권한을 요청합니다.</p>
@@ -338,7 +338,7 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 <tr>
 <td>도구</td>
 <td>표에 4개(<code>write-cypher</code>, <code>list-gds-procedures</code> 포함)</td>
-<td>실제로 보이는 것은 2개(Enterprise에서는 3개)</td>
+<td>실제로 보이는 것은 2개(GDS가 설치된 DBMS라면 3개)</td>
 </tr>
 <tr>
 <td>연결 순서</td>

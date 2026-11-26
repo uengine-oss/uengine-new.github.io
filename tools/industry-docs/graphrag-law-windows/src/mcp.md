@@ -190,7 +190,7 @@ claude mcp list
 | Get Neo4j Schema | `get-schema` (`mcp__neo4j__get-schema`) | 노드 레이블·관계 타입·속성 키를 반환합니다. 파라미터는 없습니다. 레이블마다 표본을 추출해 만듭니다(APOC의 meta 스키마 사용) |
 | Read Cypher | `read-cypher` (`mcp__neo4j__read-cypher`) | 읽기 전용 Cypher를 실행합니다. `query`(필수, string)와 `params`(object) |
 
-README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. `write-cypher`는 `NEO4J_MCP_READ_ONLY=true`라서 목록에서 빠졌습니다(서버 로그 `Ignoring tool 'write-cypher': not available in read-only mode`). 원 교재의 Community 5.26에서는 `list-gds-procedures`도 보이지 않았지만, Windows PC의 Neo4j Desktop(Enterprise 2026.10)에 연결했을 때는 `get-schema`·`read-cypher`·`list-gds-procedures` **세 개**가 등록되었습니다. 세 번째 도구는 GDS(Graph Data Science) 프로시저 목록을 보여 주는 읽기 전용 도구라 이 실습에는 영향이 없습니다.
+README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. `write-cypher`는 `NEO4J_MCP_READ_ONLY=true`라서 목록에서 빠졌습니다(서버 로그 `Ignoring tool 'write-cypher': not available in read-only mode`). 원 교재의 Community 5.26에서도, Windows PC의 Neo4j Desktop(Enterprise 2026.10, APOC 켬)에서도 `tools/list`에 나온 도구는 `get-schema`·`read-cypher` **두 개**였습니다. Enterprise에서는 서버 로그에 `list-gds-procedures`까지 3개가 등록되었다고 나오지만, GDS 플러그인이 없어 목록에서는 빠집니다. GDS가 설치된 DBMS라면 세 번째 도구가 보일 수 있으며, 읽기 전용이라 이 실습에는 영향이 없습니다.
 </li>
 <li markdown="block">**첫 질문으로 연결을 확인합니다.** 골든 퀘스천 1번을 넣으면 Claude가 도구를 처음 호출할 때 권한을 요청합니다. 처음에는 `get-schema`, 다음에는 `read-cypher`의 권한을 요청합니다.
 
@@ -228,7 +228,7 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
     | Neo4j | Neo4j Desktop | Windows ZIP `neo4j-community-5.26.33` + `labs`의 APOC(원 교재는 Docker) |
     | 비밀번호 | `.mcp.json`에 직접 작성합니다 | `${NEO4J_PASSWORD}`로 파일 밖에서 전달합니다. 대신 `claude`를 실행하는 셸에 변수가 있어야 합니다 |
     | 서버 버전 | `neo4j-mcp-server`(고정 안 함) | `neo4j-mcp-server@2.1.2`로 고정, `"type": "stdio"` 명시 |
-    | 도구 | 표에 4개(`write-cypher`, `list-gds-procedures` 포함) | 실제로 보이는 것은 2개(Enterprise에서는 3개) |
+    | 도구 | 표에 4개(`write-cypher`, `list-gds-procedures` 포함) | 실제로 보이는 것은 2개(GDS가 설치된 DBMS라면 3개) |
     | 연결 순서 | 「프로젝트 MCP 서버 사용 승인」 | 승인 창의 기본 선택이 「Continue without…」이라 ↑로 선택해야 합니다 |
 
 !!! warning "막히면"
