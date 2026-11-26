@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Windows에 Neo4j 설치하기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼</title>
-<meta name="description" content="Docker 없이 JDK 21과 Neo4j 5.26 Community Windows ZIP을 설치하고, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
+<meta name="description" content="JDK 21을 설치하고 Neo4j 5.26 Community를 Windows용 ZIP으로 내려받아 설치한 뒤, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/graphrag-law-windows/neo4j-windows.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows에 Neo4j 설치하기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼">
-<meta property="og:description" content="Docker 없이 JDK 21과 Neo4j 5.26 Community Windows ZIP을 설치하고, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
+<meta property="og:description" content="JDK 21을 설치하고 Neo4j 5.26 Community를 Windows용 ZIP으로 내려받아 설치한 뒤, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/graphrag-law-windows/neo4j-windows.html">
 <meta property="og:image" content="https://www.uengine.org/docs/graphrag-law-windows/img/article15-graph.webp">
 <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
@@ -56,50 +56,45 @@
     <h1>Windows에 Neo4j 설치하기</h1>
     <article>
 <blockquote>
-<p>Docker 없이 JDK 21과 Neo4j 5.26 Community Windows ZIP을 설치하고, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.</p>
+<p>JDK 21을 설치하고 Neo4j 5.26 Community를 Windows용 ZIP으로 내려받아 설치한 뒤, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.</p>
 </blockquote>
 <h2 id="무엇을-왜">무엇을 · 왜<a class="anchor" href="#무엇을-왜" title="Permanent link">#</a></h2>
-<p>원 교재는 Neo4j를 Docker 컨테이너로 띄웠습니다. 이 교재는 같은 <strong>Neo4j 5.26 Community</strong>를 Windows용 ZIP으로 받아 <code>C:\lab\neo4j</code>에 풀고, 자바로 직접 실행합니다. Docker Desktop, WSL, 관리자 권한이 필요 없습니다.</p>
-<p>컨테이너의 <code>-e</code> 옵션으로 넘기던 설정은 모두 <code>C:\lab\neo4j\conf\neo4j.conf</code> 파일과 <code>neo4j-admin</code> 명령으로 옮겨 갑니다.</p>
+<p>이 장에서는 <strong>Neo4j 5.26 Community</strong>를 Windows용 ZIP으로 내려받아 <code>C:\lab\neo4j</code>에 풀어 설치하고, 자바로 직접 실행합니다. 설치 프로그램이나 관리자 권한이 필요 없고, 폴더 하나에 모든 것이 들어 있어 지우고 다시 설치하기도 쉽습니다.</p>
 <table>
 <thead>
 <tr>
-<th>원 교재(Docker)</th>
-<th>이 교재(Windows ZIP)</th>
+<th>할 일</th>
+<th>방법</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>docker pull neo4j:5.26</code></td>
-<td>ZIP 내려받아 <code>C:\lab\neo4j</code>에 풀기</td>
+<td>Neo4j 설치</td>
+<td>ZIP을 내려받아 <code>C:\lab\neo4j</code>에 풀기</td>
 </tr>
 <tr>
-<td><code>-e NEO4J_PLUGINS='["apoc"]'</code></td>
-<td><code>labs\apoc-*-core.jar</code>를 <code>plugins\</code>로 복사</td>
+<td>APOC 켜기</td>
+<td><code>labs\apoc-*-core.jar</code>를 <code>plugins\</code>로 복사하고 <code>neo4j.conf</code>에 허용 설정</td>
 </tr>
 <tr>
-<td><code>-e NEO4J_server_memory_heap_max__size=1G</code> 등</td>
+<td>메모리 상한</td>
 <td><code>neo4j.conf</code>에 <code>server.memory.heap.max_size=1G</code> 등</td>
 </tr>
 <tr>
-<td><code>--memory 2g</code></td>
-<td>해당 없음(힙 1G + 페이지 캐시 512M이 상한 역할)</td>
-</tr>
-<tr>
-<td><code>-e NEO4J_AUTH=neo4j/…</code></td>
+<td>비밀번호</td>
 <td><code>neo4j-admin dbms set-initial-password</code></td>
 </tr>
 <tr>
-<td><code>-v $PWD/neo4j/data:/data</code></td>
-<td>데이터는 <code>C:\lab\neo4j\data</code>에 저장</td>
+<td>데이터 위치</td>
+<td><code>C:\lab\neo4j\data</code></td>
 </tr>
 <tr>
-<td><code>docker run -d …</code> / <code>docker stop</code></td>
+<td>실행과 멈춤</td>
 <td><code>neo4j.bat console</code>을 창 하나에 띄우고 Ctrl+C로 멈춤</td>
 </tr>
 <tr>
-<td><code>docker exec … cypher-shell</code></td>
-<td><code>C:\lab\neo4j\bin\cypher-shell.bat</code></td>
+<td>질의 도구</td>
+<td><code>C:\lab\neo4j\bin\cypher-shell.bat</code>, Neo4j Browser</td>
 </tr>
 </tbody>
 </table>
@@ -256,7 +251,7 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. <code>-Encodi
 </li>
 <li><strong>Neo4j ZIP을 내려받아 풉니다.</strong> <a href="https://neo4j.com/deployment-center/">Neo4j Deployment Center</a>의 Community Edition → Windows 항목과 같은 파일입니다. 아래 <code>$v</code>를 Deployment Center에 나온 최신 5.26.x 번호로 바꿔도 됩니다.
 
-<strong>왜 하나요?</strong> Docker 없이 Neo4j를 쓰는 가장 단순한 방법입니다. 설치 프로그램이나 관리자 권한 없이 폴더 하나로 끝나므로, 지우고 다시 하기도 쉽고 원 교재와 같은 5.26 버전을 정확히 고를 수 있습니다.
+<strong>왜 하나요?</strong> Windows에서 Neo4j를 설치하는 가장 단순한 방법입니다. 설치 프로그램이나 관리자 권한 없이 폴더 하나로 끝나므로 지우고 다시 하기도 쉽고, 이 교재가 검증한 5.26 버전을 정확히 고를 수 있습니다.
 
 <strong>▶ 작업 창(Windows PowerShell)에 입력</strong>
 
@@ -308,9 +303,9 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. <code>-Encodi
 
 | 설정 | 뜻 |
 |---|---|
-| <code>server.memory.heap.initial_size</code> · <code>max_size</code> | 자바 힙의 초기(512m)·최대(1G) 크기. Docker판의 <code>NEO4J_server_memory_heap_…</code> 환경변수와 같은 설정입니다 |
+| <code>server.memory.heap.initial_size</code> · <code>max_size</code> | 자바 힙의 초기(512m)·최대(1G) 크기. 실습 PC의 메모리를 Neo4j가 너무 많이 쓰지 않게 막습니다 |
 | <code>server.memory.pagecache.size</code> | 페이지 캐시(512M). 그래프 파일을 메모리에 올려 두는 공간입니다 |
-| <code>dbms.security.procedures.unrestricted=apoc.*</code> | APOC 프로시저에 내부 API 접근을 허용합니다. Docker 이미지가 <code>NEO4J_PLUGINS</code>로 APOC를 켤 때 넣어 주는 기본값을 손으로 넣은 것입니다 |
+| <code>dbms.security.procedures.unrestricted=apoc.*</code> | APOC 프로시저에 내부 API 접근을 허용합니다. 이 줄이 없으면 <code>apoc.meta.schema</code> 같은 프로시저가 막혀 8장의 MCP 서버가 스키마를 읽지 못합니다 |
 
 <code>[ordered]@{ … }</code>는 순서를 지키는 키-값 표입니다. <code>Where-Object</code>로 같은 키의 기존 줄을 걸러 낸 뒤 새 줄 네 개를 붙여 다시 저장합니다.
 </li>
@@ -445,7 +440,7 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. <code>-Encodi
 … INFO  Started.
 </code></pre></div>
 
-<p>Docker판과 달리 <code>Bolt enabled on localhost:7687</code>처럼 <code>localhost</code>로 나옵니다(컨테이너는 바깥에서 들어오는 연결을 받으려고 <code>0.0.0.0</code>을 씁니다). 같은 로그는 <code>C:\lab\neo4j\logs\neo4j.log</code>에도 쌓입니다.</p>
+<p><code>Bolt enabled on localhost:7687</code>처럼 <code>localhost</code>로 나오면 이 PC 안에서만 접속을 받는다는 뜻입니다. 같은 로그는 <code>C:\lab\neo4j\logs\neo4j.log</code>에도 쌓입니다.</p>
 <h3 id="2-cypher-shell로-버전과-apoc-확인">2. cypher-shell로 버전과 APOC 확인<a class="anchor" href="#2-cypher-shell로-버전과-apoc-확인" title="Permanent link">#</a></h3>
 <p>처음 창(<code>C:\lab\law-graph</code>)으로 돌아와 ZIP에 들어 있는 <code>cypher-shell.bat</code>으로 Bolt 포트에 접속합니다. 문장 끝의 <code>;</code>를 빠뜨리지 마세요.</p>
 <p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
@@ -532,7 +527,7 @@ n
 </ul>
 <p><strong>포트 7474·7687을 이미 쓰고 있다고 나옵니다</strong></p>
 <ul>
-<li>원인: Neo4j Desktop의 다른 DBMS나 Docker 컨테이너가 같은 포트로 떠 있습니다.</li>
+<li>원인: Neo4j Desktop의 다른 DBMS나 다른 프로그램이 같은 포트로 떠 있습니다.</li>
 <li>조치: <code>Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort, OwningProcess</code>로 프로세스를 찾고, 그 프로그램을 멈춘 뒤 다시 실행합니다.</li>
 </ul>
 <p><strong>비밀번호가 틀렸다고 나옵니다(<code>The client is unauthorized due to authentication failure.</code>)</strong></p>
@@ -593,8 +588,8 @@ n
 <p><strong>다음 장(4장)에서 할 일:</strong> 지금 띄운 Neo4j에 작은 연습용 그래프(위험물안전관리법 제15조 일부)를 직접 만들고 조회하면서 <code>CREATE</code>·<code>MERGE</code>·<code>MATCH</code> 같은 Cypher 기본 문법을 익힙니다. 주로 <strong>Neo4j Browser</strong>에 붙여 넣습니다.</p>
 <h2 id="확인-문제">확인 문제<a class="anchor" href="#확인-문제" title="Permanent link">#</a></h2>
 <details class="answer">
-<summary>Docker판의 -e NEO4J_PLUGINS='["apoc"]'는 Windows ZIP 설치에서 무엇으로 바뀌었나요?</summary>
-<p>ZIP의 <code>labs</code> 폴더에 들어 있는 <code>apoc-*-core.jar</code>를 <code>plugins</code> 폴더로 복사하고, <code>neo4j.conf</code>에 <code>dbms.security.procedures.unrestricted=apoc.*</code>를 넣는 것으로 바뀌었습니다. Docker 이미지가 <code>NEO4J_PLUGINS</code>를 받을 때 내부에서 하던 일을 손으로 한 것입니다.</p>
+<summary>Windows ZIP으로 설치한 Neo4j에서 APOC를 켜려면 무엇을 해야 하나요?</summary>
+<p>ZIP의 <code>labs</code> 폴더에 들어 있는 <code>apoc-*-core.jar</code>를 <code>plugins</code> 폴더로 복사하고, <code>neo4j.conf</code>에 <code>dbms.security.procedures.unrestricted=apoc.*</code>를 넣은 뒤 Neo4j를 다시 시작합니다. 따로 내려받을 파일은 없습니다.</p>
 </details>
 <details class="answer">
 <summary>set-initial-password를 Neo4j를 처음 실행하기 전에 해야 하는 까닭은 무엇인가요?</summary>

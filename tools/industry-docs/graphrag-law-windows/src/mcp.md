@@ -225,7 +225,7 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
 
     | | 교재 pptx | 이 교재 |
     |---|---|---|
-    | Neo4j | Neo4j Desktop | Windows ZIP `neo4j-community-5.26.33` + `labs`의 APOC(원 교재는 Docker) |
+    | Neo4j | Neo4j Desktop | Windows ZIP `neo4j-community-5.26.33` + `labs`의 APOC |
     | 비밀번호 | `.mcp.json`에 직접 작성합니다 | `${NEO4J_PASSWORD}`로 파일 밖에서 전달합니다. 대신 `claude`를 실행하는 셸에 변수가 있어야 합니다 |
     | 서버 버전 | `neo4j-mcp-server`(고정 안 함) | `neo4j-mcp-server@2.1.2`로 고정, `"type": "stdio"` 명시 |
     | 도구 | 표에 4개(`write-cypher`, `list-gds-procedures` 포함) | 실제로 보이는 것은 2개(GDS가 설치된 DBMS라면 3개) |

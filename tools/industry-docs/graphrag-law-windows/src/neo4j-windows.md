@@ -1,23 +1,20 @@
 # Windows에 Neo4j 설치하기
 
-> Docker 없이 JDK 21과 Neo4j 5.26 Community Windows ZIP을 설치하고, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.
+> JDK 21을 설치하고 Neo4j 5.26 Community를 Windows용 ZIP으로 내려받아 설치한 뒤, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.
 
 ## 무엇을 · 왜
 
-원 교재는 Neo4j를 Docker 컨테이너로 띄웠습니다. 이 교재는 같은 **Neo4j 5.26 Community**를 Windows용 ZIP으로 받아 `C:\lab\neo4j`에 풀고, 자바로 직접 실행합니다. Docker Desktop, WSL, 관리자 권한이 필요 없습니다.
+이 장에서는 **Neo4j 5.26 Community**를 Windows용 ZIP으로 내려받아 `C:\lab\neo4j`에 풀어 설치하고, 자바로 직접 실행합니다. 설치 프로그램이나 관리자 권한이 필요 없고, 폴더 하나에 모든 것이 들어 있어 지우고 다시 설치하기도 쉽습니다.
 
-컨테이너의 `-e` 옵션으로 넘기던 설정은 모두 `C:\lab\neo4j\conf\neo4j.conf` 파일과 `neo4j-admin` 명령으로 옮겨 갑니다.
-
-| 원 교재(Docker) | 이 교재(Windows ZIP) |
+| 할 일 | 방법 |
 |---|---|
-| `docker pull neo4j:5.26` | ZIP 내려받아 `C:\lab\neo4j`에 풀기 |
-| `-e NEO4J_PLUGINS='["apoc"]'` | `labs\apoc-*-core.jar`를 `plugins\`로 복사 |
-| `-e NEO4J_server_memory_heap_max__size=1G` 등 | `neo4j.conf`에 `server.memory.heap.max_size=1G` 등 |
-| `--memory 2g` | 해당 없음(힙 1G + 페이지 캐시 512M이 상한 역할) |
-| `-e NEO4J_AUTH=neo4j/…` | `neo4j-admin dbms set-initial-password` |
-| `-v $PWD/neo4j/data:/data` | 데이터는 `C:\lab\neo4j\data`에 저장 |
-| `docker run -d …` / `docker stop` | `neo4j.bat console`을 창 하나에 띄우고 Ctrl+C로 멈춤 |
-| `docker exec … cypher-shell` | `C:\lab\neo4j\bin\cypher-shell.bat` |
+| Neo4j 설치 | ZIP을 내려받아 `C:\lab\neo4j`에 풀기 |
+| APOC 켜기 | `labs\apoc-*-core.jar`를 `plugins\`로 복사하고 `neo4j.conf`에 허용 설정 |
+| 메모리 상한 | `neo4j.conf`에 `server.memory.heap.max_size=1G` 등 |
+| 비밀번호 | `neo4j-admin dbms set-initial-password` |
+| 데이터 위치 | `C:\lab\neo4j\data` |
+| 실행과 멈춤 | `neo4j.bat console`을 창 하나에 띄우고 Ctrl+C로 멈춤 |
+| 질의 도구 | `C:\lab\neo4j\bin\cypher-shell.bat`, Neo4j Browser |
 
 APOC는 8장에서 연결하는 Neo4j MCP 서버의 `get-schema`가 `apoc.meta.schema`로 스키마를 읽기 때문에 지금 켜 둡니다.
 
@@ -160,7 +157,7 @@ PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. `-Encoding ascii`로 
 </li>
 <li markdown="1">**Neo4j ZIP을 내려받아 풉니다.** [Neo4j Deployment Center](https://neo4j.com/deployment-center/)의 Community Edition → Windows 항목과 같은 파일입니다. 아래 `$v`를 Deployment Center에 나온 최신 5.26.x 번호로 바꿔도 됩니다.
 
-**왜 하나요?** Docker 없이 Neo4j를 쓰는 가장 단순한 방법입니다. 설치 프로그램이나 관리자 권한 없이 폴더 하나로 끝나므로, 지우고 다시 하기도 쉽고 원 교재와 같은 5.26 버전을 정확히 고를 수 있습니다.
+**왜 하나요?** Windows에서 Neo4j를 설치하는 가장 단순한 방법입니다. 설치 프로그램이나 관리자 권한 없이 폴더 하나로 끝나므로 지우고 다시 하기도 쉽고, 이 교재가 검증한 5.26 버전을 정확히 고를 수 있습니다.
 
 **▶ 작업 창(Windows PowerShell)에 입력**
 
@@ -208,9 +205,9 @@ C:\lab\neo4j\bin\neo4j-admin.bat server validate-config
 
 | 설정 | 뜻 |
 |---|---|
-| `server.memory.heap.initial_size` · `max_size` | 자바 힙의 초기(512m)·최대(1G) 크기. Docker판의 `NEO4J_server_memory_heap_…` 환경변수와 같은 설정입니다 |
+| `server.memory.heap.initial_size` · `max_size` | 자바 힙의 초기(512m)·최대(1G) 크기. 실습 PC의 메모리를 Neo4j가 너무 많이 쓰지 않게 막습니다 |
 | `server.memory.pagecache.size` | 페이지 캐시(512M). 그래프 파일을 메모리에 올려 두는 공간입니다 |
-| `dbms.security.procedures.unrestricted=apoc.*` | APOC 프로시저에 내부 API 접근을 허용합니다. Docker 이미지가 `NEO4J_PLUGINS`로 APOC를 켤 때 넣어 주는 기본값을 손으로 넣은 것입니다 |
+| `dbms.security.procedures.unrestricted=apoc.*` | APOC 프로시저에 내부 API 접근을 허용합니다. 이 줄이 없으면 `apoc.meta.schema` 같은 프로시저가 막혀 8장의 MCP 서버가 스키마를 읽지 못합니다 |
 
 `[ordered]@{ … }`는 순서를 지키는 키-값 표입니다. `Where-Object`로 같은 키의 기존 줄을 걸러 낸 뒤 새 줄 네 개를 붙여 다시 저장합니다.
 </li>
@@ -322,7 +319,7 @@ Neo4j를 띄운 창에 다음과 같은 줄이 나옵니다.
 … INFO  Started.
 ```
 
-Docker판과 달리 `Bolt enabled on localhost:7687`처럼 `localhost`로 나옵니다(컨테이너는 바깥에서 들어오는 연결을 받으려고 `0.0.0.0`을 씁니다). 같은 로그는 `C:\lab\neo4j\logs\neo4j.log`에도 쌓입니다.
+`Bolt enabled on localhost:7687`처럼 `localhost`로 나오면 이 PC 안에서만 접속을 받는다는 뜻입니다. 같은 로그는 `C:\lab\neo4j\logs\neo4j.log`에도 쌓입니다.
 
 ### 2. cypher-shell로 버전과 APOC 확인
 
@@ -406,7 +403,7 @@ RETURN name, versions, edition
 
     **포트 7474·7687을 이미 쓰고 있다고 나옵니다**
 
-    - 원인: Neo4j Desktop의 다른 DBMS나 Docker 컨테이너가 같은 포트로 떠 있습니다.
+    - 원인: Neo4j Desktop의 다른 DBMS나 다른 프로그램이 같은 포트로 떠 있습니다.
     - 조치: `Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort, OwningProcess`로 프로세스를 찾고, 그 프로그램을 멈춘 뒤 다시 실행합니다.
 
     **비밀번호가 틀렸다고 나옵니다(`The client is unauthorized due to authentication failure.`)**
@@ -439,9 +436,9 @@ RETURN name, versions, edition
 ## 확인 문제
 
 <details class="answer" markdown="1">
-<summary>Docker판의 -e NEO4J_PLUGINS='["apoc"]'는 Windows ZIP 설치에서 무엇으로 바뀌었나요?</summary>
+<summary>Windows ZIP으로 설치한 Neo4j에서 APOC를 켜려면 무엇을 해야 하나요?</summary>
 
-ZIP의 `labs` 폴더에 들어 있는 `apoc-*-core.jar`를 `plugins` 폴더로 복사하고, `neo4j.conf`에 `dbms.security.procedures.unrestricted=apoc.*`를 넣는 것으로 바뀌었습니다. Docker 이미지가 `NEO4J_PLUGINS`를 받을 때 내부에서 하던 일을 손으로 한 것입니다.
+ZIP의 `labs` 폴더에 들어 있는 `apoc-*-core.jar`를 `plugins` 폴더로 복사하고, `neo4j.conf`에 `dbms.security.procedures.unrestricted=apoc.*`를 넣은 뒤 Neo4j를 다시 시작합니다. 따로 내려받을 파일은 없습니다.
 </details>
 
 <details class="answer" markdown="1">
