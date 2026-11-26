@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Windows에 Neo4j 설치하기 — 법령 GraphRAG 실습 · Windows판 튜토리얼</title>
+<title>Windows에 Neo4j 설치하기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼</title>
 <meta name="description" content="Docker 없이 JDK 21과 Neo4j 5.26 Community Windows ZIP을 설치하고, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/graphrag-law-windows/neo4j-windows.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows에 Neo4j 설치하기 — 법령 GraphRAG 실습 · Windows판 튜토리얼">
+<meta property="og:title" content="Windows에 Neo4j 설치하기 — Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 튜토리얼">
 <meta property="og:description" content="Docker 없이 JDK 21과 Neo4j 5.26 Community Windows ZIP을 설치하고, ZIP에 들어 있는 APOC 플러그인을 켜고 메모리 상한을 설정합니다. 비밀번호는 화면에 보이지 않게 입력해 환경변수와 .env 파일로 전달하고, 콘솔 로그·cypher-shell·Neo4j Browser로 준비가 끝났는지 확인합니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/graphrag-law-windows/neo4j-windows.html">
 <meta property="og:image" content="https://www.uengine.org/docs/graphrag-law-windows/img/article15-graph.webp">
@@ -23,7 +23,7 @@
 <body>
 <header class="top">
   <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
-  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Windows판 <em>튜토리얼</em></span></a>
+  <a class="brand" href="index.html"><span>Windows에서 따라 하는 법령 GraphRAG: 위험물안전관리법 편 <em>튜토리얼</em></span></a>
   <div class="search">
     <input id="q" type="search" placeholder="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
     <div id="results" class="results" hidden></div>
@@ -36,7 +36,7 @@
 </header>
 <div class="wrap">
   <aside id="side" class="side"><div class="nav-part">시작하기</div><ul>
-<li><a href="index.html"><span class="n">·</span>시작하기 (Windows판)</a></li>
+<li><a href="index.html"><span class="n">·</span>시작하기</a></li>
 </ul>
 <div class="nav-part">준비</div><ul>
 <li><a href="neo4j-windows.html" class="on" aria-current="page"><span class="n">03</span>Windows에 Neo4j 설치하기</a></li>
@@ -516,7 +516,7 @@ n
 <p><code>neo4j-admin.bat</code>과 <code>cypher-shell.bat</code>은 배치 파일이라 인자를 cmd가 한 번 더 해석합니다. <code>&amp;</code>, <code>^</code>, <code>%</code>, <code>!</code>, <code>"</code> 같은 글자는 cmd에서 특별한 뜻이 있어 비밀번호가 잘리거나 바뀔 수 있습니다.</p>
 </details>
     </article>
-    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기 (Windows판)</a><a class="next" href="cypher-basics.html"><span>다음</span>Cypher 기초</a></nav>
+    <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기</a><a class="next" href="cypher-basics.html"><span>다음</span>Cypher 기초</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 2026년 11월 24일 macOS·Docker로 기록한 「법령 GraphRAG 실습」을 Windows(PowerShell 7)에서 Docker 없이, 위험물안전관리법 하나로 따라 하도록 옮긴 것입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답의 기록은 원 교재에서 옮겼습니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#apoc란-무엇이고-왜-켜나요">APOC란 무엇이고 왜 켜나요</a><ul><li><a href="#zip-설치이-교재의-기본">ZIP 설치(이 교재의 기본)</a></li><li><a href="#neo4j-desktop을-쓰는-경우">Neo4j Desktop을 쓰는 경우</a></li><li><a href="#켜졌는지-확인하기">켜졌는지 확인하기</a></li></ul></li><li><a href="#따라-하기">따라 하기</a><ul><li><a href="#한글이-깨지지-않게-하는-설정">한글이 깨지지 않게 하는 설정</a></li></ul></li><li><a href="#확인">확인</a><ul><li><a href="#1-콘솔에-started가-나오는지">1. 콘솔에 Started.가 나오는지</a></li><li><a href="#2-cypher-shell로-버전과-apoc-확인">2. cypher-shell로 버전과 APOC 확인</a></li><li><a href="#3-neo4j-browser">3. Neo4j Browser</a></li></ul></li><li><a href="#멈추기-다시-켜기-지우기">멈추기 · 다시 켜기 · 지우기</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
