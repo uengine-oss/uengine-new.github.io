@@ -82,6 +82,8 @@ Get-Content .gitignore
 git add .gitignore; git commit -qm "실습 폴더 시작"
 ```
 
+`git add`에서 `warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it`가 나올 수 있습니다. Git for Windows가 기본 설정(`core.autocrlf=true`)으로 줄바꿈을 Windows 방식으로 맞춰 준다는 안내이며 오류가 아닙니다. 같은 블록을 두 번 실행하면 `Reinitialized existing Git repository`와 `nothing to commit, working tree clean`이 나오는데, 이미 커밋해 두었다는 뜻이니 그대로 넘어갑니다.
+
 PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. 내용이 영문뿐인 설정 파일은 `-Encoding ascii`로 저장하면 Windows PowerShell 5.1과 7에서 똑같은 파일이 만들어집니다(5.1의 `-Encoding utf8`은 파일 맨 앞에 BOM이라는 보이지 않는 3바이트를 붙입니다). 6장에서 `uv init --bare`는 `.gitignore`를 만들지 않으므로 이 단계의 `.gitignore`가 `.env`를 지키는 장치입니다. `data/`는 6장에서 PDF로 다시 만들 수 있는 중간 파일 폴더라 미리 넣었습니다. Neo4j의 DB 파일은 Neo4j Desktop이 따로 관리하므로 실습 폴더에 들어오지 않습니다.
 </li>
 <li markdown="1">**Neo4j Desktop을 내려받아 설치합니다.** [Neo4j Deployment Center](https://neo4j.com/deployment-center/)에서 **Neo4j Desktop**의 최신 버전과 **Windows (x86 exe)**를 고르고 Download를 누릅니다. 이름·이메일 같은 간단한 양식을 채우면 내려받기가 시작됩니다. 파일은 `neo4j-desktop-<버전>-x64.exe`(약 620MB)입니다.
@@ -90,7 +92,7 @@ PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. 내용이 영문뿐�
 
 내려받은 `.exe`를 실행해 설치합니다. 「현재 사용자만」 설치를 고르면 관리자 권한이 필요 없습니다. 설치가 끝나면 Neo4j Desktop이 열립니다. 처음 실행할 때 나오는 라이선스 동의 화면을 읽고 동의하면 첫 화면이 나옵니다. Desktop에서 실행하는 Neo4j는 내 PC에서 개발·학습용으로 무료로 쓸 수 있습니다.
 </li>
-<li markdown="1">**실습용 인스턴스를 만듭니다.** Desktop 첫 화면의 **Create instance**를 누르고 다음과 같이 채운 뒤 만들기를 누릅니다.
+<li markdown="1">**실습용 인스턴스를 만듭니다.** Desktop 왼쪽 메뉴의 **Instances** 화면에서 **Create instance**를 누릅니다. **Instance details** 창이 열리면 다음과 같이 채우고 **Create Instance**를 누릅니다.
 
 **왜 하나요?** 인스턴스는 Desktop이 관리하는 Neo4j 데이터베이스 서버 하나입니다. 실습 전용 인스턴스를 따로 만들어 두면 다른 프로젝트의 데이터와 섞이지 않고, 문제가 생기면 이 인스턴스만 지우고 다시 만들 수 있습니다.
 
@@ -98,7 +100,8 @@ PowerShell 문자열 안의 `` `n``은 줄바꿈입니다. 내용이 영문뿐�
 |---|---|---|
 | Instance name | `law-graph` | 화면에 보이는 이름입니다 |
 | Neo4j version | 목록에서 맨 위의 최신 버전(예: `2026.10.2`) | 처음이면 Desktop이 그 버전을 내려받습니다 |
-| Password | 영문과 숫자로 **8자 이상** | 사용자 이름은 `neo4j`입니다. 이 비밀번호를 6단계에서 한 번 더 입력합니다 |
+| Database user | `neo4j`(그대로 둡니다) | 데이터베이스에 접속할 사용자 이름입니다 |
+| Password | 영문과 숫자로 **8자 이상** | 확인 입력칸이 없으니 오타 없이 입력합니다. 이 비밀번호를 6단계에서 한 번 더 입력합니다 |
 
 비밀번호에는 **영문과 숫자만** 쓰세요. 6장의 파이썬 코드와 8장의 MCP 서버가 환경변수로 이 값을 받는데, 특수문자가 있으면 셸에 따라 다르게 해석될 수 있습니다. 만들기가 끝나면 목록에 `law-graph`가 **Local instance**로 나타납니다. `law-graph`의 **Start**를 눌러 시작하고, 상태가 **Running**(실행 중)으로 바뀌는지 봅니다. Desktop은 한 번에 인스턴스 **하나만** 실행합니다. 다른 인스턴스가 켜져 있으면 먼저 그것을 Stop 합니다.
 </li>
@@ -159,7 +162,7 @@ Set-Location C:\lab\law-graph
 | `$OutputEncoding` | PowerShell이 다른 프로그램(`claude` 등)에 파이프로 넘기는 글자를 UTF-8로 맞춥니다. 5.1의 기본값은 ASCII라 한글이 `?`가 됩니다 |
 | `PYTHONUTF8=1` | 파이썬이 파일과 출력을 UTF-8로 다루게 합니다 |
 </li>
-<li markdown="1">**Neo4j Browser로 접속합니다.** `law-graph`가 Running 상태인지 확인한 뒤 웹 브라우저로 `http://localhost:7474`를 엽니다(Desktop의 인스턴스 화면에서 Query 도구나 Browser를 열어도 같은 데이터베이스에 접속합니다). 「Connect to instance」 창에 연결 주소 `neo4j://localhost:7687`이 채워져 있습니다. Database user에 `neo4j`, Password에 5단계의 비밀번호를 입력하고 Connect를 누릅니다.
+<li markdown="1">**Neo4j Browser로 접속합니다.** `law-graph`가 Running 상태인지 확인한 뒤 웹 브라우저로 `http://localhost:7474`를 엽니다(Desktop에서 `law-graph`의 **Connect**를 눌러 여는 **Query** 도구도 같은 데이터베이스에 접속하며, 질의를 붙여 넣고 실행하는 방법은 같습니다). 「Connect to instance」 창에 연결 주소 `neo4j://localhost:7687`이 채워져 있습니다. Database user에 `neo4j`, Password에 5단계의 비밀번호를 입력하고 Connect를 누릅니다.
 
 **왜 하나요?** 4장부터 모든 Cypher 질의를 Neo4j Browser에 붙여 넣어 실행합니다. 6장의 파이썬 코드와 8장의 MCP 서버도 같은 주소(`localhost:7687`)로 접속하므로, 여기서 접속되면 이후 단계의 연결 준비도 끝난 것입니다.
 
@@ -210,10 +213,10 @@ curl.exe -s http://localhost:7474
 **출력 예시**
 
 ```text
-{"bolt_routing":"neo4j://localhost:7687","query":"http://localhost:7474/db/{databaseName}/query/v2","transaction":"http://localhost:7474/db/{databaseName}/tx","bolt_direct":"bolt://localhost:7687","neo4j_version":"2026.10.2","neo4j_edition":"enterprise"}
+{"query_api":"http://localhost:7474/db/{databaseName}/query/v{queryApiMajorVersion}","bolt_routing":"neo4j://localhost:7687","query":"http://localhost:7474/db/{databaseName}/query/v2","dbms/cluster":"http://localhost:7474/dbms/cluster","db/cluster":"http://localhost:7474/db/{databaseName}/cluster","transaction":"http://localhost:7474/db/{databaseName}/tx","bolt_direct":"bolt://localhost:7687","neo4j_version":"2026.10.2","neo4j_edition":"enterprise","auth_config":{"oidc_providers":[]},"query_api_versions":["2.1"]}
 ```
 
-`bolt_direct`가 `bolt://localhost:7687`이면 이후 장에서 쓸 주소가 맞습니다.
+버전에 따라 항목의 수와 순서는 다를 수 있습니다. `bolt_direct`가 `bolt://localhost:7687`이면 이후 장에서 쓸 주소가 맞습니다.
 
 ## 멈추기 · 다시 켜기 · 지우기
 
@@ -227,10 +230,20 @@ curl.exe -s http://localhost:7474
 Desktop 창을 닫아도 실행 중인 인스턴스가 계속 도는지는 Desktop 설정에 따라 다릅니다. 실습하는 동안에는 Desktop을 열어 둡니다.
 
 !!! warning "막히면"
-    **Start를 눌렀는데 실행되지 않거나 포트(7474·7687)를 이미 쓰고 있다고 나옵니다**
+    **Start를 눌렀는데 `port 7687 (bolt) is already in use by another process`처럼 포트(7474·7687)를 이미 쓰고 있다고 나옵니다**
 
-    - 원인: 다른 인스턴스나 다른 Neo4j 프로그램이 같은 포트를 쓰고 있습니다.
-    - 조치: Desktop에서 다른 인스턴스를 모두 Stop 합니다. 그래도 같으면 작업 창에서 `Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort, OwningProcess`로 그 포트를 쓰는 프로세스를 찾아 해당 프로그램을 끕니다.
+    - 원인: 다른 인스턴스나, Desktop 밖에서 따로 실행한 Neo4j(ZIP 판, 서비스, 다른 프로그램)가 같은 포트를 쓰고 있습니다.
+    - 조치 1: Desktop에서 다른 인스턴스를 모두 Stop 하고 다시 Start 합니다.
+    - 조치 2: 그래도 같으면 작업 창에서 그 포트를 쓰는 프로그램을 찾습니다.
+
+    **▶ 작업 창(Windows PowerShell)에 입력**
+
+    ```powershell
+    Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue |
+      ForEach-Object { $p = Get-Process -Id $_.OwningProcess; [pscustomobject]@{ Port = $_.LocalPort; Id = $p.Id; Path = $p.Path } }
+    ```
+
+    - `Path`가 `java.exe`이면 다른 Neo4j입니다. 내가 띄운 것이면 그 창에서 Ctrl+C로 끄거나 해당 프로그램에서 멈춘 뒤 다시 Start 합니다. 누군가 쓰고 있는 DB라면 끄지 말고, 실습이 끝날 때까지 그 DB를 잠시 멈춰도 되는지 먼저 확인합니다.
 
     **Neo4j Browser에서 비밀번호가 틀렸다고 나옵니다(`The client is unauthorized due to authentication failure.`)**
 

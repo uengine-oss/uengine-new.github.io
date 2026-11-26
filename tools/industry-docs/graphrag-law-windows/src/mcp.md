@@ -19,7 +19,7 @@ MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 
 ## 따라 하기
 
 <ol class="steps" markdown="1">
-<li markdown="block">**APOC 플러그인을 설치합니다.** Neo4j Desktop에서 `law-graph` 인스턴스의 플러그인 화면(**Plugins**)을 열고 **APOC**의 **Install**을 누릅니다. 설치가 끝나면 `law-graph`를 **Stop** 한 뒤 다시 **Start** 합니다.
+<li markdown="block">**APOC 플러그인을 설치합니다.** Neo4j Desktop의 **Instances** 화면에서 `law-graph` 오른쪽의 **⋯**(More instance actions)를 누르고 **Plugins**를 고릅니다. 목록의 **APOC**에서 **Install**을 누르고, 「Restart instance to finish plugin installation」이 나오면 **Restart**를 누릅니다.
 
 **왜 하나요?** Neo4j MCP 서버는 시작할 때 APOC의 `apoc.meta` 프로시저가 있는지 확인하고, `get-schema` 도구가 `apoc.meta.schema`로 그래프 구조를 Claude에게 알려 줍니다. **APOC가 없으면 MCP 서버가 시작하지 못합니다.** 플러그인은 인스턴스를 시작할 때 읽히므로 설치 뒤 다시 시작해야 켜집니다.
 

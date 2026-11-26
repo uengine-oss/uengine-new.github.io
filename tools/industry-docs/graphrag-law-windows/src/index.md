@@ -70,7 +70,7 @@
 |---|---|---|---|
 | Windows | 실습 PC | Windows 10(21H2 이상) 또는 11, 64비트, 메모리 8GB 이상 권장 | `winver` |
 | PowerShell | 이 교재의 모든 명령을 입력하는 셸 | Windows PowerShell 5.1(기본 포함) 또는 PowerShell 7.4 이상 | `$PSVersionTable.PSVersion` |
-| Neo4j Desktop | 법령 그래프를 저장·조회하는 그래프 DB를 설치·관리 | 최신판(이 교재는 Desktop 2.3.2, 인스턴스 Neo4j 2026.10.2) | Desktop의 도움말 → About |
+| Neo4j Desktop | 법령 그래프를 저장·조회하는 그래프 DB를 설치·관리 | 최신판(이 교재는 Desktop 2.3.2, 인스턴스 Neo4j 2026.10.2) | Desktop 왼쪽 메뉴의 About |
 | APOC | Neo4j 확장 프로시저. MCP의 `get-schema`가 사용 | 인스턴스와 같은 버전(8장에서 Desktop 플러그인 화면으로 설치) | `RETURN apoc.version();` |
 | uv | 파이썬 설치·가상환경·패키지 관리 | 0.9 이상 | `uv --version` |
 | Python | PDF 파싱·적재 코드 실행 | 3.12 — **따로 설치하지 않음**, uv가 자동으로 내려받음 | `uv python list` |

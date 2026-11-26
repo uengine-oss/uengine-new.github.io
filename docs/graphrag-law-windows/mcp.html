@@ -23,9 +23,9 @@
 <body>
 <header class="top">
   <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
-  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
+  <a class="brand" href="index.html"><img class="brand-logo" src="img/hoseo-logo.png" alt="호서대학교" width="111" height="30"><span>법령 GraphRAG 실습 · Neo4j×Claude</span></a>
   <div class="search">
-    <input id="q" type="search" placeholder="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
+    <input id="q" type="search" placeholder="검색 (예: Create instance, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
     <div id="results" class="results" hidden></div>
   </div>
   <nav class="links">
@@ -93,7 +93,7 @@
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
 <ol class="steps">
 <li>
-<p><strong>APOC 플러그인을 설치합니다.</strong> Neo4j Desktop에서 <code>law-graph</code> 인스턴스의 플러그인 화면(<strong>Plugins</strong>)을 열고 <strong>APOC</strong>의 <strong>Install</strong>을 누릅니다. 설치가 끝나면 <code>law-graph</code>를 <strong>Stop</strong> 한 뒤 다시 <strong>Start</strong> 합니다.</p>
+<p><strong>APOC 플러그인을 설치합니다.</strong> Neo4j Desktop의 <strong>Instances</strong> 화면에서 <code>law-graph</code> 오른쪽의 <strong>⋯</strong>(More instance actions)를 누르고 <strong>Plugins</strong>를 고릅니다. 목록의 <strong>APOC</strong>에서 <strong>Install</strong>을 누르고, 「Restart instance to finish plugin installation」이 나오면 <strong>Restart</strong>를 누릅니다.</p>
 <p><strong>왜 하나요?</strong> Neo4j MCP 서버는 시작할 때 APOC의 <code>apoc.meta</code> 프로시저가 있는지 확인하고, <code>get-schema</code> 도구가 <code>apoc.meta.schema</code>로 그래프 구조를 Claude에게 알려 줍니다. <strong>APOC가 없으면 MCP 서버가 시작하지 못합니다.</strong> 플러그인은 인스턴스를 시작할 때 읽히므로 설치 뒤 다시 시작해야 켜집니다.</p>
 <p><strong>APOC</strong>(Awesome Procedures On Cypher)는 Neo4j 회사가 관리하는 확장 프로시저 모음입니다. 그래프에 어떤 레이블·관계·속성이 있는지 요약하기(<code>apoc.meta.schema</code>), 문자열·날짜 다루기, 데이터 가져오기·내보내기 같은 일을 <code>CALL apoc.…</code> 형태로 부를 수 있게 해 줍니다. Neo4j 본체와 별도의 jar 파일(플러그인)로 배포되며 Neo4j와 <strong>같은 버전</strong>을 써야 합니다. Desktop의 플러그인 화면은 인스턴스와 같은 버전의 <strong>APOC Core</strong>를 설치하고, <code>neo4j.conf</code>에 <code>dbms.security.procedures.unrestricted=apoc.*</code>(APOC가 Neo4j 내부 기능을 쓰도록 허용)를 넣어 줍니다. 별도로 내려받는 APOC Extended는 이 실습에 필요 없습니다.</p>
 <p>다시 시작한 뒤 Neo4j Browser에서 켜졌는지 확인합니다.</p>
@@ -435,7 +435,7 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 </details>
     </article>
     <nav class="pager"><a class="prev" href="disambiguation.html"><span>이전</span>엔티티 추출과 중의성 해소</a><a class="next" href="questions.html"><span>다음</span>골든 퀘스천 5개 묻기</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에 Neo4j Desktop을 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>

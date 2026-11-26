@@ -23,9 +23,9 @@
 <body>
 <header class="top">
   <button class="menu-btn" type="button" aria-label="목차 열기" aria-controls="side" aria-expanded="false">☰</button>
-  <a class="brand" href="index.html"><span>법령 GraphRAG 실습 · Neo4j × Claude Code <em>튜토리얼</em></span></a>
+  <a class="brand" href="index.html"><img class="brand-logo" src="img/hoseo-logo.png" alt="호서대학교" width="111" height="30"><span>법령 GraphRAG 실습 · Neo4j×Claude</span></a>
   <div class="search">
-    <input id="q" type="search" placeholder="검색 (예: neo4j.bat, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
+    <input id="q" type="search" placeholder="검색 (예: Create instance, env.ps1, MERGE, read-cypher)" autocomplete="off" aria-label="튜토리얼 검색">
     <div id="results" class="results" hidden></div>
   </div>
   <nav class="links">
@@ -168,6 +168,8 @@
 
 
 
+<code>git add</code>에서 <code>warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it</code>가 나올 수 있습니다. Git for Windows가 기본 설정(<code>core.autocrlf=true</code>)으로 줄바꿈을 Windows 방식으로 맞춰 준다는 안내이며 오류가 아닙니다. 같은 블록을 두 번 실행하면 <code>Reinitialized existing Git repository</code>와 <code>nothing to commit, working tree clean</code>이 나오는데, 이미 커밋해 두었다는 뜻이니 그대로 넘어갑니다.
+
 PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. 내용이 영문뿐인 설정 파일은 <code>-Encoding ascii</code>로 저장하면 Windows PowerShell 5.1과 7에서 똑같은 파일이 만들어집니다(5.1의 <code>-Encoding utf8</code>은 파일 맨 앞에 BOM이라는 보이지 않는 3바이트를 붙입니다). 6장에서 <code>uv init --bare</code>는 <code>.gitignore</code>를 만들지 않으므로 이 단계의 <code>.gitignore</code>가 <code>.env</code>를 지키는 장치입니다. <code>data/</code>는 6장에서 PDF로 다시 만들 수 있는 중간 파일 폴더라 미리 넣었습니다. Neo4j의 DB 파일은 Neo4j Desktop이 따로 관리하므로 실습 폴더에 들어오지 않습니다.
 </li>
 <li><strong>Neo4j Desktop을 내려받아 설치합니다.</strong> <a href="https://neo4j.com/deployment-center/">Neo4j Deployment Center</a>에서 <strong>Neo4j Desktop</strong>의 최신 버전과 <strong>Windows (x86 exe)</strong>를 고르고 Download를 누릅니다. 이름·이메일 같은 간단한 양식을 채우면 내려받기가 시작됩니다. 파일은 <code>neo4j-desktop-&lt;버전&gt;-x64.exe</code>(약 620MB)입니다.
@@ -176,7 +178,7 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. 내용이 영
 
 내려받은 <code>.exe</code>를 실행해 설치합니다. 「현재 사용자만」 설치를 고르면 관리자 권한이 필요 없습니다. 설치가 끝나면 Neo4j Desktop이 열립니다. 처음 실행할 때 나오는 라이선스 동의 화면을 읽고 동의하면 첫 화면이 나옵니다. Desktop에서 실행하는 Neo4j는 내 PC에서 개발·학습용으로 무료로 쓸 수 있습니다.
 </li>
-<li><strong>실습용 인스턴스를 만듭니다.</strong> Desktop 첫 화면의 <strong>Create instance</strong>를 누르고 다음과 같이 채운 뒤 만들기를 누릅니다.
+<li><strong>실습용 인스턴스를 만듭니다.</strong> Desktop 왼쪽 메뉴의 <strong>Instances</strong> 화면에서 <strong>Create instance</strong>를 누릅니다. <strong>Instance details</strong> 창이 열리면 다음과 같이 채우고 <strong>Create Instance</strong>를 누릅니다.
 
 <strong>왜 하나요?</strong> 인스턴스는 Desktop이 관리하는 Neo4j 데이터베이스 서버 하나입니다. 실습 전용 인스턴스를 따로 만들어 두면 다른 프로젝트의 데이터와 섞이지 않고, 문제가 생기면 이 인스턴스만 지우고 다시 만들 수 있습니다.
 
@@ -184,7 +186,8 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. 내용이 영
 |---|---|---|
 | Instance name | <code>law-graph</code> | 화면에 보이는 이름입니다 |
 | Neo4j version | 목록에서 맨 위의 최신 버전(예: <code>2026.10.2</code>) | 처음이면 Desktop이 그 버전을 내려받습니다 |
-| Password | 영문과 숫자로 <strong>8자 이상</strong> | 사용자 이름은 <code>neo4j</code>입니다. 이 비밀번호를 6단계에서 한 번 더 입력합니다 |
+| Database user | <code>neo4j</code>(그대로 둡니다) | 데이터베이스에 접속할 사용자 이름입니다 |
+| Password | 영문과 숫자로 <strong>8자 이상</strong> | 확인 입력칸이 없으니 오타 없이 입력합니다. 이 비밀번호를 6단계에서 한 번 더 입력합니다 |
 
 비밀번호에는 <strong>영문과 숫자만</strong> 쓰세요. 6장의 파이썬 코드와 8장의 MCP 서버가 환경변수로 이 값을 받는데, 특수문자가 있으면 셸에 따라 다르게 해석될 수 있습니다. 만들기가 끝나면 목록에 <code>law-graph</code>가 <strong>Local instance</strong>로 나타납니다. <code>law-graph</code>의 <strong>Start</strong>를 눌러 시작하고, 상태가 <strong>Running</strong>(실행 중)으로 바뀌는지 봅니다. Desktop은 한 번에 인스턴스 <strong>하나만</strong> 실행합니다. 다른 인스턴스가 켜져 있으면 먼저 그것을 Stop 합니다.
 </li>
@@ -251,7 +254,7 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. 내용이 영
 | <code>$OutputEncoding</code> | PowerShell이 다른 프로그램(<code>claude</code> 등)에 파이프로 넘기는 글자를 UTF-8로 맞춥니다. 5.1의 기본값은 ASCII라 한글이 <code>?</code>가 됩니다 |
 | <code>PYTHONUTF8=1</code> | 파이썬이 파일과 출력을 UTF-8로 다루게 합니다 |
 </li>
-<li><strong>Neo4j Browser로 접속합니다.</strong> <code>law-graph</code>가 Running 상태인지 확인한 뒤 웹 브라우저로 <code>http://localhost:7474</code>를 엽니다(Desktop의 인스턴스 화면에서 Query 도구나 Browser를 열어도 같은 데이터베이스에 접속합니다). 「Connect to instance」 창에 연결 주소 <code>neo4j://localhost:7687</code>이 채워져 있습니다. Database user에 <code>neo4j</code>, Password에 5단계의 비밀번호를 입력하고 Connect를 누릅니다.
+<li><strong>Neo4j Browser로 접속합니다.</strong> <code>law-graph</code>가 Running 상태인지 확인한 뒤 웹 브라우저로 <code>http://localhost:7474</code>를 엽니다(Desktop에서 <code>law-graph</code>의 <strong>Connect</strong>를 눌러 여는 <strong>Query</strong> 도구도 같은 데이터베이스에 접속하며, 질의를 붙여 넣고 실행하는 방법은 같습니다). 「Connect to instance」 창에 연결 주소 <code>neo4j://localhost:7687</code>이 채워져 있습니다. Database user에 <code>neo4j</code>, Password에 5단계의 비밀번호를 입력하고 Connect를 누릅니다.
 
 <strong>왜 하나요?</strong> 4장부터 모든 Cypher 질의를 Neo4j Browser에 붙여 넣어 실행합니다. 6장의 파이썬 코드와 8장의 MCP 서버도 같은 주소(<code>localhost:7687</code>)로 접속하므로, 여기서 접속되면 이후 단계의 연결 준비도 끝난 것입니다.
 
@@ -286,10 +289,10 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. 내용이 영
 </code></pre></div>
 
 <p><strong>출력 예시</strong></p>
-<div class="hl"><pre><span></span><code>{"bolt_routing":"neo4j://localhost:7687","query":"http://localhost:7474/db/{databaseName}/query/v2","transaction":"http://localhost:7474/db/{databaseName}/tx","bolt_direct":"bolt://localhost:7687","neo4j_version":"2026.10.2","neo4j_edition":"enterprise"}
+<div class="hl"><pre><span></span><code>{"query_api":"http://localhost:7474/db/{databaseName}/query/v{queryApiMajorVersion}","bolt_routing":"neo4j://localhost:7687","query":"http://localhost:7474/db/{databaseName}/query/v2","dbms/cluster":"http://localhost:7474/dbms/cluster","db/cluster":"http://localhost:7474/db/{databaseName}/cluster","transaction":"http://localhost:7474/db/{databaseName}/tx","bolt_direct":"bolt://localhost:7687","neo4j_version":"2026.10.2","neo4j_edition":"enterprise","auth_config":{"oidc_providers":[]},"query_api_versions":["2.1"]}
 </code></pre></div>
 
-<p><code>bolt_direct</code>가 <code>bolt://localhost:7687</code>이면 이후 장에서 쓸 주소가 맞습니다.</p>
+<p>버전에 따라 항목의 수와 순서는 다를 수 있습니다. <code>bolt_direct</code>가 <code>bolt://localhost:7687</code>이면 이후 장에서 쓸 주소가 맞습니다.</p>
 <h2 id="멈추기-다시-켜기-지우기">멈추기 · 다시 켜기 · 지우기<a class="anchor" href="#멈추기-다시-켜기-지우기" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -325,10 +328,18 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. 내용이 영
 <p>Desktop 창을 닫아도 실행 중인 인스턴스가 계속 도는지는 Desktop 설정에 따라 다릅니다. 실습하는 동안에는 Desktop을 열어 둡니다.</p>
 <div class="admonition warning">
 <p class="admonition-title">막히면</p>
-<p><strong>Start를 눌렀는데 실행되지 않거나 포트(7474·7687)를 이미 쓰고 있다고 나옵니다</strong></p>
+<p><strong>Start를 눌렀는데 <code>port 7687 (bolt) is already in use by another process</code>처럼 포트(7474·7687)를 이미 쓰고 있다고 나옵니다</strong></p>
 <ul>
-<li>원인: 다른 인스턴스나 다른 Neo4j 프로그램이 같은 포트를 쓰고 있습니다.</li>
-<li>조치: Desktop에서 다른 인스턴스를 모두 Stop 합니다. 그래도 같으면 작업 창에서 <code>Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort, OwningProcess</code>로 그 포트를 쓰는 프로세스를 찾아 해당 프로그램을 끕니다.</li>
+<li>원인: 다른 인스턴스나, Desktop 밖에서 따로 실행한 Neo4j(ZIP 판, 서비스, 다른 프로그램)가 같은 포트를 쓰고 있습니다.</li>
+<li>조치 1: Desktop에서 다른 인스턴스를 모두 Stop 하고 다시 Start 합니다.</li>
+<li>조치 2: 그래도 같으면 작업 창에서 그 포트를 쓰는 프로그램을 찾습니다.</li>
+</ul>
+<p><strong>▶ 작업 창(Windows PowerShell)에 입력</strong></p>
+<p><code>powershell
+Get-NetTCPConnection -LocalPort 7474,7687 -State Listen -ErrorAction SilentlyContinue |
+  ForEach-Object { $p = Get-Process -Id $_.OwningProcess; [pscustomobject]@{ Port = $_.LocalPort; Id = $p.Id; Path = $p.Path } }</code></p>
+<ul>
+<li><code>Path</code>가 <code>java.exe</code>이면 다른 Neo4j입니다. 내가 띄운 것이면 그 창에서 Ctrl+C로 끄거나 해당 프로그램에서 멈춘 뒤 다시 Start 합니다. 누군가 쓰고 있는 DB라면 끄지 말고, 실습이 끝날 때까지 그 DB를 잠시 멈춰도 되는지 먼저 확인합니다.</li>
 </ul>
 <p><strong>Neo4j Browser에서 비밀번호가 틀렸다고 나옵니다(<code>The client is unauthorized due to authentication failure.</code>)</strong></p>
 <ul>
@@ -397,7 +408,7 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. 내용이 영
 </details>
     </article>
     <nav class="pager"><a class="prev" href="index.html"><span>이전</span>시작하기</a><a class="next" href="cypher-basics.html"><span>다음</span>Cypher 기초</a></nav>
-    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
+    <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에 Neo4j Desktop을 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
   <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-왜">무엇을 · 왜</a></li><li><a href="#따라-하기">따라 하기</a></li><li><a href="#확인">확인</a><ul><li><a href="#1-버전">1. 버전</a></li><li><a href="#2-작업-창에서-포트-확인">2. 작업 창에서 포트 확인</a></li></ul></li><li><a href="#멈추기-다시-켜기-지우기">멈추기 · 다시 켜기 · 지우기</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>

@@ -26,7 +26,7 @@ Cypher는 Neo4j의 질의 언어입니다. 찾으려는 패턴을 `(노드)-[관
 ## 따라 하기 ① 만들기
 
 <ol class="steps" markdown="1">
-<li markdown="1">**Neo4j Browser를 엽니다.** Neo4j Desktop에서 `law-graph`가 Running인지 확인하고, 웹 브라우저로 `http://localhost:7474`에 접속합니다(3장 9단계). 이 장의 모든 질의는 위쪽 입력칸에 붙여 넣고 Run(또는 Ctrl+Enter)을 눌러 실행합니다.
+<li markdown="1">**Neo4j Browser를 엽니다.** Neo4j Desktop에서 `law-graph`가 Running인지 확인하고, 웹 브라우저로 `http://localhost:7474`에 접속합니다(3장 8단계). 이 장의 모든 질의는 위쪽 입력칸에 붙여 넣고 Run(또는 Ctrl+Enter)을 눌러 실행합니다.
 
 **왜 하나요?** Browser는 한글 질의와 결과를 깨짐 없이 다루고, 결과를 표와 그래프 그림으로 함께 보여 줍니다. 처음 Cypher를 배울 때는 내가 만든 노드와 관계를 그림으로 바로 보는 것이 이해에 가장 도움이 됩니다.
 
