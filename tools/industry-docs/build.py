@@ -219,6 +219,8 @@ def main():
         chap = str(chap_no(i, p["slug"]) or "")
         # page=None 이면 머리 메뉴에 소개 페이지 링크를 두지 않는다(예지보전 교재: AX School 과 무관, 미완성)
         base = tpl if P["page"] else re.sub(r'\n\s*<a href="\.\./\.\./contents/\{\{page\}\}">\{\{pagelabel\}\}</a>', "", tpl)
+        if P.get("brand"):  # 머리글 왼쪽 제목을 따로 지정(예: 학교 로고 이미지 + 글자)
+            base = base.replace('<span>{{product}} <em>튜토리얼</em></span>', P["brand"])
         out = (base.replace("{{title}}", html.escape(p["title"]))
                .replace("{{product}}", P["name"])
                .replace("{{key}}", KEY)

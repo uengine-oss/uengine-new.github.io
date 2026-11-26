@@ -1,6 +1,6 @@
 # Cypher 기초
 
-> 위험물안전관리법의 조와 항으로 노드 일곱 개짜리 작은 그래프를 만들며 Cypher의 CREATE·MERGE·MATCH·WHERE·가변 길이 경로·OPTIONAL MATCH·집계·제약과 색인을 익힙니다. Windows에서는 한글 입력이 확실한 Neo4j Browser를 기본으로 쓰고, cypher-shell은 UTF-8 파일을 -f로 실행하는 방법을 함께 봅니다.
+> 위험물안전관리법의 조와 항으로 노드 일곱 개짜리 작은 그래프를 만들며 Cypher의 CREATE·MERGE·MATCH·WHERE·가변 길이 경로·OPTIONAL MATCH·집계·제약과 색인을 익힙니다. 모든 질의는 Neo4j Browser에서 실행합니다.
 
 ## 무엇을 · 왜
 
@@ -21,47 +21,18 @@ Cypher는 Neo4j의 질의 언어입니다. 찾으려는 패턴을 `(노드)-[관
 변수(`a`, `r`)는 해당 문장 안에서만 쓰는 이름입니다. 관계에는 항상 방향이 있습니다.
 
 !!! tip "시작하기 전에"
-    3장의 **Neo4j 창**에 `Started.`가 떠 있어야 합니다. 꺼져 있다면 새 PowerShell 창에서 `Set-Location C:\lab\law-graph; . .\env.ps1; C:\lab\neo4j\bin\neo4j.bat console`로 다시 켭니다. 질의는 브라우저의 Neo4j Browser(`http://localhost:7474`)에 붙여 넣는 것이 가장 쉽습니다.
+    Neo4j Desktop에서 3장의 `law-graph` 인스턴스가 **Running**이어야 합니다. 멈춰 있다면 Desktop에서 Start를 누릅니다. 질의는 모두 Neo4j Browser(`http://localhost:7474`)에 붙여 넣습니다.
 
 ## 따라 하기 ① 만들기
 
 <ol class="steps" markdown="1">
-<li markdown="1">**질의를 입력할 곳을 고릅니다.** 이 장의 질의에는 한글이 많습니다. Windows에서는 두 가지 방법 중 하나를 씁니다.
+<li markdown="1">**Neo4j Browser를 엽니다.** Neo4j Desktop에서 `law-graph`가 Running인지 확인하고, 웹 브라우저로 `http://localhost:7474`에 접속합니다(3장 9단계). 이 장의 모든 질의는 위쪽 입력칸에 붙여 넣고 Run(또는 Ctrl+Enter)을 눌러 실행합니다.
 
-**왜 하나요?** Windows 콘솔은 코드 페이지에 따라 한글 입력·출력이 깨질 수 있습니다. 질의가 깨진 채 실행되면 「결과 0건」처럼 엉뚱한 결과가 나와 Cypher를 잘못 배운 것으로 착각하게 되므로, 한글이 확실히 전달되는 방법을 먼저 정합니다.
+**왜 하나요?** Browser는 한글 질의와 결과를 깨짐 없이 다루고, 결과를 표와 그래프 그림으로 함께 보여 줍니다. 처음 Cypher를 배울 때는 내가 만든 노드와 관계를 그림으로 바로 보는 것이 이해에 가장 도움이 됩니다.
 
-| 방법 | 쓰는 법 | 이럴 때 |
-|---|---|---|
-| **Neo4j Browser**(권장) | 브라우저로 `http://localhost:7474`에 접속해 위쪽 입력칸에 붙여 넣고 Ctrl+Enter | 한글 입력·출력이 깨질 걱정이 없고, 결과를 그래프 그림으로도 봅니다. 여러 문장을 `;`로 이어 한 번에 실행할 수 있습니다 |
-| **cypher-shell + 파일** | 질의를 BOM 없는 UTF-8 파일(예: `toy.cypher`)에 저장한 뒤 `& $cs -u neo4j -p $env:NEO4J_PASSWORD -f toy.cypher` | 명령줄에서 결과를 글자로 받고 싶을 때. 결과가 표 형식 글자로 나옵니다 |
+입력칸에 여러 문장을 `;`로 이어 붙여 넣으면 문장마다 결과가 차례로 나옵니다. 아래 출력 예시는 글자로 적었고, Browser에서는 같은 값이 표(Table 보기)로 나옵니다.
 
-cypher-shell을 대화형으로 열어(`& $cs -u neo4j -p $env:NEO4J_PASSWORD`) 한글을 직접 입력하는 방법은 콘솔 설정에 따라 한글이 깨질 수 있어 권하지 않습니다. 꼭 쓰려면 3장의 `env.ps1`을 먼저 점 소싱한 창에서 여세요.
-
-파일 방식은 이렇게 씁니다. 3장의 `env.ps1`이 만든 `Write-Utf8` 함수로 저장하면 Windows PowerShell 5.1에서도 BOM 없이 저장됩니다(5.1의 `Set-Content -Encoding utf8`은 BOM을 붙입니다). 메모장에서 「UTF-8」(「BOM 포함 UTF-8」이 아님)로 저장해도 됩니다.
-
-**▶ 작업 창(Windows PowerShell)에 입력**
-
-```powershell
-Set-Location C:\lab\law-graph
-. .\env.ps1
-Write-Utf8 toy.cypher "MATCH (n) RETURN count(n) AS 노드수;"
-& $cs -u neo4j -p $env:NEO4J_PASSWORD -f toy.cypher
-```
-
-여러 줄 질의는 here-string으로 넘깁니다. 시작 `@'`는 줄 끝에, 끝 `'@`는 줄 맨 앞에 있어야 합니다.
-
-**▶ 작업 창(Windows PowerShell)에 입력**
-
-```powershell
-Write-Utf8 toy.cypher @'
-CREATE (l:Law {name:'위험물안전관리법', kind:'법률'}) RETURN l;
-'@
-& $cs -u neo4j -p $env:NEO4J_PASSWORD -f toy.cypher
-```
-
-아래 질의는 어느 방법으로 실행해도 됩니다. 출력은 cypher-shell 형식으로 적었고, Browser에서는 같은 값이 표(Table 보기)로 나옵니다.
-
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (n) RETURN count(n) AS 노드수;
@@ -73,7 +44,7 @@ MATCH (n) RETURN count(n) AS 노드수;
 
 **왜 하나요?** 그래프의 가장 작은 단위인 노드와 속성을 직접 만들어 보면, 6장에서 Claude가 만드는 수천 개의 노드도 같은 구조라는 것을 이해할 수 있습니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 CREATE (l:Law {name:'위험물안전관리법', kind:'법률'}) RETURN l;
@@ -90,7 +61,7 @@ Added 1 nodes, Set 2 properties, Added 1 labels
 
 **왜 하나요?** 적재 코드는 수정할 때마다 여러 번 다시 돌립니다. `CREATE`로는 실행할 때마다 노드가 늘어나 그래프가 망가지므로, 다시 실행해도 결과가 같은 `MERGE`의 동작을 눈으로 확인해 둡니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (l:Law {name:'위험물안전관리법'})
@@ -111,7 +82,7 @@ Added 4 nodes, Created 4 relationships, Set 12 properties, Added 4 labels
 
 **왜 하나요?** 법령은 조 안에 항이 있는 계층 구조입니다. 이 관계를 만들어 두어야 「제15조 전체」를 한 번에 가져오거나 「30일」이 들어 있는 항을 찾을 수 있습니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (a:Article {no:'제15조'})
@@ -131,7 +102,7 @@ Added 2 nodes, Created 2 relationships, Set 6 properties, Added 2 labels
 
 **왜 하나요?** 「벌칙 조문이 어느 의무 조문을 가리키는가」는 글자 검색으로는 찾기 어렵고 관계로 두어야 따라갈 수 있습니다. 골든 퀘스천 5번(벌칙)이 바로 이 관계를 거쳐 답합니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (a15:Article {no:'제15조'}), (a18:Article {no:'제18조'}),
@@ -157,7 +128,7 @@ Created 3 relationships, Set 3 properties
 
 「제15조를 가리키는 조문은?」이라는 질문을 화살표 방향에 맞춰 질의로 씁니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (pen:Article)-[r:REFERS_TO]->(a:Article {no:'제15조'})
@@ -176,7 +147,7 @@ RETURN pen.no AS 조문, pen.title AS 제목, r.at AS 호;
 
 ### WHERE — 조건
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (a:Article)-[:HAS_PARAGRAPH]->(p:Paragraph)
@@ -197,7 +168,7 @@ RETURN a.no AS 조, p.no AS 항, left(p.text, 40) AS 본문앞부분;
 
 `RETURN`은 노드 전체(`RETURN l`), 속성(`pen.no`), 계산한 값을 반환하고 `AS`로 열 이름을 붙입니다. `MATCH` 없이 값만 계산할 수도 있습니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 RETURN '위험물안전관리법 제15조' AS 조문, size('제조소등') AS 글자수;   // 글자수 4
@@ -207,7 +178,7 @@ RETURN '위험물안전관리법 제15조' AS 조문, size('제조소등') AS �
 
 `*1..3`은 「관계 1~3개를 건너서」라는 뜻입니다. 관계 타입을 적지 않으면 어떤 관계든 따라갑니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH path = (:Article {no:'제39조'})-[*1..3]->(p:Paragraph)
@@ -226,7 +197,7 @@ RETURN length(path) AS 길이, [x IN nodes(path) | coalesce(x.id, x.no)] AS 경�
 
 ### OPTIONAL MATCH — 없어도 빠뜨리지 않기
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (a:Article)
@@ -250,7 +221,7 @@ RETURN a.no AS 조, a.title AS 제목, count(p) AS 항수 ORDER BY 조;
 
 `count`는 개수를 세고, `collect`는 값을 목록으로 모읍니다. 집계하지 않은 열(`a.no`, `a.title`)이 그룹을 나누는 기준이 됩니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (pen:Article)-[:REFERS_TO]->(a:Article)
@@ -267,14 +238,14 @@ ORDER BY 참조수 DESC LIMIT 1;
 
 `ORDER BY 참조수 DESC`로 많이 참조된 순서로 정렬하고 `LIMIT 1`로 첫 번째 행만 가져왔습니다.
 
-!!! note "cypher-shell 표가 삐뚤어져 보일 때"
-    cypher-shell은 한글 한 글자를 한 칸으로 세어 표의 세로줄이 어긋납니다. 값은 맞습니다. 위 출력은 표의 위아래 테두리를 빼고 옮겼습니다. `-f` 파일 실행에 `--format plain`을 붙이면 표 대신 쉼표로 구분한 글자로 나와 읽기 쉽습니다. Browser에서는 결과 칸 왼쪽의 Table을 누르면 같은 표가 나옵니다.
+!!! note "결과를 표로 보기"
+    결과가 그래프 그림으로 나오면 결과 칸 왼쪽의 Table을 누릅니다. 위 출력 예시와 같은 값이 표로 나옵니다.
 
 ## 따라 하기 ③ 제약과 색인
 
 **제약**은 잘못된 데이터가 들어오지 못하게 막고, 그 속성에 색인도 함께 만듭니다. **전문(full-text) 색인**은 낱말로 조문을 찾을 수 있게 합니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 CREATE CONSTRAINT law_name IF NOT EXISTS FOR (l:Law) REQUIRE l.name IS UNIQUE;
@@ -294,9 +265,9 @@ Added 1 indexes
 | "law_name"    | "UNIQUENESS" | ["Law"]       | ["name"]      |
 ```
 
-두 속성을 묶은 유일 제약(`(a.law, a.no)`)도 Community 판에서 사용할 수 있습니다(존재까지 강제하는 `NODE KEY`는 Enterprise 판 기능). 같은 이름의 법령을 다시 만들려고 하면 제약이 이를 막습니다.
+두 속성을 묶은 유일 제약(`(a.law, a.no)`)도 만들 수 있습니다. Desktop의 인스턴스는 Enterprise 판이라 값의 존재까지 강제하는 `NODE KEY`도 쓸 수 있지만, 이 교재는 어느 판에서나 되는 유일 제약만 씁니다. 같은 이름의 법령을 다시 만들려고 하면 제약이 이를 막습니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 CREATE (:Law {name:'위험물안전관리법'});
@@ -310,7 +281,7 @@ Node(0) already exists with label `Law` and property `name` = '위험물안전�
 
 전문 색인으로 찾아봅니다. 점수(`score`)가 높을수록 질의에 사용한 낱말과 더 잘 일치합니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 CALL db.index.fulltext.queryNodes('paragraph_text', '안전관리자 선임 신고') YIELD node, score
@@ -332,7 +303,7 @@ RETURN node.id AS 항, round(score, 3) AS 점수;
 
 6장에서 실제 데이터를 넣기 전에 맛보기 그래프와 제약·색인을 모두 지웁니다. `DETACH DELETE`는 노드에 붙은 관계까지 함께 지웁니다(관계가 남은 노드는 `DELETE`만으로 지울 수 없습니다).
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (n) DETACH DELETE n;
@@ -354,7 +325,7 @@ Removed 1 indexes
 
 지우기 전에 같은 데이터를 Neo4j Browser(`http://localhost:7474`)에서 보면 표 대신 그림으로 나옵니다. Browser에서는 문장 끝 `;`를 생략해도 됩니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (n) OPTIONAL MATCH (n)-[r]->(m)
@@ -365,7 +336,7 @@ RETURN n, r, m
 
 오른쪽 Results overview에 레이블·관계 타입별 개수가 나옵니다. 노드를 누르면 속성이 보입니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH path = (:Article {no:'제39조'})-[*1..3]->(:Paragraph)
@@ -418,7 +389,7 @@ RETURN path
 
 | 한 일 | 어디서 | 배운 것 |
 |---|---|---|
-| 법·조·항 노드와 관계를 만들었습니다 | Neo4j Browser(또는 작업 창의 `& $cs -f`) | `CREATE`와 `MERGE`의 차이 |
+| 법·조·항 노드와 관계를 만들었습니다 | Neo4j Browser | `CREATE`와 `MERGE`의 차이 |
 | 패턴으로 조회했습니다 | Neo4j Browser | `MATCH`·`WHERE`·`RETURN`, 가변 길이 경로, `OPTIONAL MATCH`, 집계 |
 | 제약과 전문 색인을 만들었습니다 | Neo4j Browser | 중복 방지(제약)와 한글 검색(`cjk` 전문 색인) |
 | 연습 데이터를 지웠습니다 | Neo4j Browser | `DETACH DELETE` |

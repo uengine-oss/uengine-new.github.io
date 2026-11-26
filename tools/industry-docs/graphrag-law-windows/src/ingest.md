@@ -24,7 +24,7 @@ claude
 ```
 
 !!! tip "시작하기 전에"
-    5장에서 `schema.md`·`schema.cypher`·`golden-questions.md`를 커밋했고, Neo4j 창이 떠 있어야 합니다. Claude Code 창 하나와, 확인용 질의를 칠 **작업 창**(PowerShell, `. .\env.ps1` 실행) 하나를 함께 씁니다.
+    5장에서 `schema.md`·`schema.cypher`·`golden-questions.md`를 커밋했고, Neo4j Desktop에서 `law-graph`가 Running이어야 합니다. Claude Code 창 하나와, 명령을 칠 **작업 창**(PowerShell, `. .\env.ps1` 실행) 하나, 확인 질의를 붙여 넣을 **Neo4j Browser**를 함께 씁니다.
 
 ## 따라 하기
 
@@ -127,21 +127,16 @@ def merge_edges(session, kind, rows):
 
 ## 원문과 맞춰 보기
 
-cypher-shell에 한글이 들어간 질의를 넘길 때는 4장처럼 **`Write-Utf8`로 저장해 `-f`로 실행**합니다. 아래 명령을 `env.ps1`을 점 소싱한 별도의 PowerShell 창에서 실행합니다.
+아래 질의는 Neo4j Browser에 붙여 넣어 실행합니다. Claude Code와 별개로 사람이 직접 세어 보는 것이 목적입니다.
 
 ### 1. 조 수
 
-**▶ 작업 창(Windows PowerShell)에 입력**
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
-```powershell
-Set-Location C:\lab\law-graph
-. .\env.ps1
-Write-Utf8 check-articles.cypher @'
+```cypher
 MATCH (l:Law {inCorpus:true})-[:HAS_ARTICLE]->(a:Article)
 WHERE a.isCurrent AND a.status <> '삭제'
 RETURN l.lawId AS 법령, count(a) AS 현행조수 ORDER BY 법령;
-'@
-& $cs -u neo4j -p $env:NEO4J_PASSWORD --format plain -f check-articles.cypher
 ```
 
 **출력 예시**
@@ -159,17 +154,14 @@ RETURN l.lawId AS 법령, count(a) AS 현행조수 ORDER BY 법령;
 
 조 수가 맞아도 조 안의 항·호가 틀릴 수 있습니다. 구조가 서로 다른 세 조문을 골라 확인합니다.
 
-**▶ 작업 창(Windows PowerShell)에 입력**
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
-```powershell
-Write-Utf8 check-samples.cypher @'
+```cypher
 MATCH (a:Article)
 WHERE a.pid IN ['위험물안전관리법:제15조', '위험물안전관리법 시행령:제21조', '위험물안전관리법 시행규칙:제53조']
 OPTIONAL MATCH (a)-[:HAS_PART]->(p)
 WITH a, p ORDER BY p.order
 RETURN a.pid AS 조, a.text AS 머리글, collect(p.label) AS 항호;
-'@
-& $cs -u neo4j -p $env:NEO4J_PASSWORD --format plain -f check-samples.cypher
 ```
 
 **출력 예시**
@@ -228,25 +220,31 @@ PDF에서 「동일한」으로 줄이 끝나고 다음 줄이 「시ㆍ도에�
 | `uv run ingest.py --reset` | 이 스크립트의 레이블이 붙은 노드를 모두 지우고 처음부터 적재합니다 |
 | `uv run ingest.py --dry-run` | DB에 쓰지 않고 추출한 개수만 확인합니다 |
 
-중복이 없는지는 같은 명령을 두 번 실행해 노드·관계 수가 같은지로 확인합니다.
+중복이 없는지는 적재를 두 번 실행하고, 그때마다 노드·관계 수가 같은지로 확인합니다. 먼저 작업 창에서 적재를 한 번 실행합니다.
 
 **▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
-Write-Utf8 check-total.cypher @'
-MATCH (n) WITH count(n) AS 노드 MATCH ()-[r]->() RETURN 노드, count(r) AS 관계;
-'@
-uv run ingest.py | Out-Null; & $cs -u neo4j -p $env:NEO4J_PASSWORD --format plain -f check-total.cypher
-uv run ingest.py | Out-Null; & $cs -u neo4j -p $env:NEO4J_PASSWORD --format plain -f check-total.cypher
+Set-Location C:\lab\law-graph
+. .\env.ps1
+uv run ingest.py
 ```
 
-두 번의 출력이 같으면 됩니다.
+그다음 Neo4j Browser에서 전체 수를 셉니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
+
+```cypher
+MATCH (n) WITH count(n) AS 노드 MATCH ()-[r]->() RETURN 노드, count(r) AS 관계;
+```
+
+작업 창에서 `uv run ingest.py`를 한 번 더 실행하고, Browser에서 같은 질의를 다시 실행합니다. 두 번의 결과가 같으면 됩니다.
 
 ### 5. 시행 예정 조문
 
 국가법령정보센터 PDF에는 시행일이 다른 판본이 같은 문서에 함께 실리기도 합니다. 현행 조문 뒤에 `[시행일: …]`이 붙은 같은 번호의 조문이 한 번 더 나오는 경우입니다. 이 교재의 판본(시작하기의 표)에서는 위험물안전관리법 3종에 없었습니다. 그래도 나중에 받은 판본에는 생길 수 있으므로, 파서가 그런 조문의 `pid` 끝에 `@시행일`을 붙여 따로 적재하고 `isCurrent=false`로 표시하는지 확인해 둡니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (a:Article) WHERE NOT a.isCurrent RETURN a.pid AS 조, a.effectiveFrom AS 시행일 ORDER BY 조
@@ -260,13 +258,13 @@ MATCH (a:Article) WHERE NOT a.isCurrent RETURN a.pid AS 조, a.effectiveFrom AS 
 
 레이블·관계 타입별 개수를 세어 `ingest.py`의 보고와 맞춰 봅니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (n) UNWIND labels(n) AS 레이블 RETURN 레이블, count(*) AS 노드수 ORDER BY 노드수 DESC
 ```
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH ()-[r]->() RETURN type(r) AS 관계, count(*) AS 수 ORDER BY 수 DESC
@@ -274,7 +272,7 @@ MATCH ()-[r]->() RETURN type(r) AS 관계, count(*) AS 수 ORDER BY 수 DESC
 
 제15조와 그 항을 가리키는 하위법령·벌칙 조문을 함께 그려 봅니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (l:Law {lawId:'위험물안전관리법'})-[ha:HAS_ARTICLE]->(a:Article {pid:'위험물안전관리법:제15조'})-[h:HAS_PART]->(p:Paragraph)
@@ -289,7 +287,7 @@ RETURN l, ha, a, h, p, pen, pz, low, im
 
 골든 퀘스천 5번의 경로인 「제재 ← 벌칙 조·항 → 벌칙 호 → 의무 항 ← 조」를 한 번에 그립니다.
 
-**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기** — 작업 창에서 `Write-Utf8`로 파일에 저장해 `& $cs … -f 파일`로 실행해도 됩니다
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH path = (s:Sanction)<-[:IMPOSES]-(:Provision)-[:HAS_PART*1..2]->(pen)-[:PENALIZES]->(:Provision)<-[:HAS_PART]-(a:Article)
@@ -313,11 +311,6 @@ RETURN path
 
     - 원인: PyMuPDF 2.x에서 옛 이름 `import fitz`가 권장되지 않게 되었습니다(동작은 합니다).
     - 조치: 「import fitz 를 import pymupdf 로 바꿔 줘」라고 요청합니다.
-
-    **cypher-shell 결과의 한글이 `?`나 깨진 글자로 나옵니다**
-
-    - 원인: 콘솔·자바·파이썬의 인코딩 설정이 서로 어긋났습니다. 콘솔만 UTF-8로 바꾸고 `JAVA_OPTS`를 빼면 오히려 `�`가 나옵니다.
-    - 조치: 새 창에서 `. .\env.ps1`로 네 설정을 한꺼번에 적용하고, 질의는 `Write-Utf8`로 저장한 파일을 `-f`로 넘깁니다.
 
     **적재한 조문의 띄어쓰기가 PDF와 다릅니다**
 
@@ -343,7 +336,7 @@ RETURN path
 | 한 일 | 어디서 | 결과물 |
 |---|---|---|
 | 적재 코드 요청(P4)과 실행 승인 | Claude Code 입력창 | `uv` 프로젝트, 파서·적재 스크립트 |
-| 조·항·호·목 수와 표본 조문을 원문과 대조 | 작업 창(`& $cs -f`) / Neo4j Browser | 조 157 · 항 276 · 호 357 · 목 67 |
+| 조·항·호·목 수와 표본 조문을 원문과 대조 | Neo4j Browser | 조 157 · 항 276 · 호 357 · 목 67 |
 | 틀린 곳을 구체적으로 짚어 수정 요청(P5) | Claude Code 입력창 | 고쳐진 적재 코드 |
 | 처음부터 다시 실행해 중복이 없는지 확인 | 작업 창 | 두 번 실행해도 같은 수치 |
 
@@ -363,12 +356,6 @@ RETURN path
 <summary>Windows에서 P4 프롬프트에 「encoding='utf-8'」 조건을 넣은 이유는 무엇인가요?</summary>
 
 Windows의 파이썬은 인코딩을 지정하지 않으면 시스템 코드 페이지(한국어 Windows는 CP949)로 파일을 읽고 씁니다. UTF-8로 저장된 JSON·Cypher 파일을 읽다가 `UnicodeDecodeError`가 나거나 한글이 깨지므로, 코드에서 항상 UTF-8을 명시하게 했습니다. `PYTHONUTF8=1`은 이를 실행 환경 쪽에서 한 번 더 막는 장치입니다.
-</details>
-
-<details class="answer" markdown="1">
-<summary>cypher-shell에 한글 질의를 넘길 때 파이프 대신 -f 파일을 쓰는 까닭은 무엇인가요?</summary>
-
-PowerShell이 외부 프로그램으로 파이프를 넘길 때는 `$OutputEncoding`에 따라 글자를 다시 인코딩하고(5.1의 기본값은 ASCII라 한글이 `?`가 됩니다), 배치 파일 인자는 cmd를 한 번 더 거치며 큰따옴표가 사라집니다. BOM 없는 UTF-8 파일을 `-f`로 넘기면 cypher-shell이 파일을 직접 읽으므로 이런 변환이 없습니다.
 </details>
 
 <details class="answer" markdown="1">

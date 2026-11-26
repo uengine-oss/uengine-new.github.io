@@ -300,7 +300,7 @@ RETURN n.normId, n.modality, n.action, n.trigger, n.deadlineText, n.deadlineValu
 2. Claude Code가 Neo4j MCP(`read-cypher`)로 그래프를 조회해 골든 퀘스천 다섯 개에 답했습니다(8·9장).
 3. 답에 인용된 조문을 학생이 직접 원문과 대조했고, 틀린 곳이 있으면 그 원인(적재·의미층·질의)을 짚을 수 있습니다(9장).
 
-**다음에 할 일:** 실습이 끝나면 Neo4j 창에서 `Ctrl+C`로 Neo4j를 멈춥니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 [10. 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)과 [11. 마무리](https://www.uengine.org/docs/graphrag-law/wrap-up.html)에서 이어서 읽을 수 있습니다. 그 페이지의 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다.
+**다음에 할 일:** 실습이 끝나면 Neo4j Desktop에서 `law-graph`를 Stop 합니다. 같은 질문을 벡터 검색(RAG)과 비교하는 내용과 전체 정리는 [10. 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html)과 [11. 마무리](https://www.uengine.org/docs/graphrag-law/wrap-up.html)에서 이어서 읽을 수 있습니다. 그 페이지의 명령은 이 교재에서 익힌 Windows 방식으로 바꿔 실행합니다.
 
 ## 확인 문제
 

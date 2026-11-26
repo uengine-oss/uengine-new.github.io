@@ -9,7 +9,7 @@
 | 항목 | 이 교재에서 쓰는 것 |
 |---|---|
 | 법령 | **위험물안전관리법** 법률·시행령·시행규칙 = PDF 3개 |
-| Neo4j | **Neo4j 5.26 Community**를 Windows용 ZIP으로 내려받아 설치(JDK 21 필요) |
+| Neo4j | **Neo4j Desktop** 최신판을 내려받아 설치(자바 포함, JDK 설치 불필요) |
 | 셸 | **Windows PowerShell 5.1**(기본 포함)과 PowerShell 7 모두에서 동작하는 명령 |
 
 골든 퀘스천 다섯 개는 모두 위험물안전관리법 법률·시행령·시행규칙 안에서 답이 나옵니다. 법령이 하나라 파싱·적재·질의가 빨리 끝납니다.
@@ -35,12 +35,12 @@
 
 | 장 | 하는 일 | 주로 쓰는 것 |
 |---|---|---|
-| [3. Windows에 Neo4j 설치하기](neo4j-windows.html) | JDK 21, Neo4j ZIP, APOC, 메모리 상한, 비밀번호, 접속 확인 | `winget`, `neo4j.bat`, Neo4j Browser |
-| [4. Cypher 기초](cypher-basics.html) | `CREATE`·`MERGE`·`MATCH`, 가변 길이 경로, 제약과 전문 색인 | Neo4j Browser, `cypher-shell.bat -f` |
+| [3. Neo4j Desktop 설치하기](neo4j-windows.html) | 도구 설치, Neo4j Desktop, 인스턴스와 비밀번호, 접속 확인 | `winget`, Neo4j Desktop, Neo4j Browser |
+| [4. Cypher 기초](cypher-basics.html) | `CREATE`·`MERGE`·`MATCH`, 가변 길이 경로, 제약과 전문 색인 | Neo4j Browser |
 | [5. 골든 퀘스천에서 스키마 설계하기](schema.html) | 질문에서 레이블·관계·속성 정하기 | Claude Code |
 | [6. 인제스천 바이브 코딩](ingest.html) | PDF 3개 → 조·항·호 → Neo4j, 원문 대조 검증 | uv, PyMuPDF, Claude Code |
 | [7. 엔티티 추출과 중의성 해소](disambiguation.html) | LLM 방식과 규칙·사전 방식, 사람 검토 | `claude -p` |
-| [8. Neo4j MCP 서버 연결](mcp.html) | 읽기 전용으로 연결하기 | `uvx`, `.mcp.json` |
+| [8. Neo4j MCP 서버 연결](mcp.html) | APOC 플러그인 설치, 읽기 전용으로 연결하기 | `uvx`, `.mcp.json` |
 | [9. 골든 퀘스천 5개 묻기](questions.html) | 다섯 질문과 답, 원문 대조, 헤드리스 반복 실행 | `get-schema`, `read-cypher` |
 
 실습을 마친 뒤 더 읽을거리: [10. 벡터 RAG로 같은 질문](https://www.uengine.org/docs/graphrag-law/vector-vs-graph.html) · [11. 마무리](https://www.uengine.org/docs/graphrag-law/wrap-up.html) · [부록: 문제 해결](https://www.uengine.org/docs/graphrag-law/troubleshooting.html)
@@ -51,7 +51,7 @@
 
 ### 꼭 준비할 것
 
-준비물은 여섯 가지입니다. 1~4는 실습 자체에, 5·6은 Neo4j를 이 PC에서 직접 실행하는 데 필요합니다.
+준비물은 다섯 가지입니다.
 
 | | 준비물 | 한 줄 설명 |
 |---|---|---|
@@ -59,8 +59,7 @@
 | 2 | **uv** | 파이썬과 패키지를 설치·실행하는 도구. **Python 3.12도 uv가 알아서 내려받습니다** |
 | 3 | **Git for Windows** | 단계마다 커밋. Claude Code가 명령을 실행할 때 쓰는 Git Bash 포함 |
 | 4 | **위험물안전관리법 PDF 3개**(법률·시행령·시행규칙) | 그래프로 만들 법령 원문(국가법령정보센터) |
-| 5 | **JDK 21** | Neo4j를 실행하는 자바 런타임 |
-| 6 | **Neo4j 5.26 Community**(APOC 포함) | 그래프 DB(ZIP으로 내려받아 설치) |
+| 5 | **Neo4j Desktop**(최신판, APOC 플러그인 포함) | 그래프 DB를 만들고 켜고 끄는 프로그램. Neo4j를 실행하는 자바가 들어 있습니다 |
 
 !!! note "Python은 따로 설치하지 않아도 되나요?"
     네, 따로 설치하지 않아도 됩니다. 6장에서 `uv init --python 3.12`로 프로젝트를 만들면 uv가 Python 3.12를 찾고, 없으면 자동으로 내려받아 그 프로젝트 전용으로 씁니다. 이미 다른 버전(예: Python 3.13)이 설치되어 있어도 서로 충돌하지 않습니다. 다만 파이썬 코드를 실행할 때는 `python …`이 아니라 `uv run …`을 써야 그 3.12와 설치한 패키지가 쓰입니다.
@@ -71,9 +70,8 @@
 |---|---|---|---|
 | Windows | 실습 PC | Windows 10(21H2 이상) 또는 11, 64비트, 메모리 8GB 이상 권장 | `winver` |
 | PowerShell | 이 교재의 모든 명령을 입력하는 셸 | Windows PowerShell 5.1(기본 포함) 또는 PowerShell 7.4 이상 | `$PSVersionTable.PSVersion` |
-| JDK(자바) | Neo4j를 실행하는 런타임 | **Java 21**(17도 가능). 22 이상은 쓰지 않습니다 | `java -version` |
-| Neo4j Community | 법령 그래프를 저장·조회하는 그래프 DB | **5.26.x**(이 교재는 5.26.33) | `C:\lab\neo4j\bin\neo4j.bat version` |
-| APOC | Neo4j 확장 프로시저. MCP의 `get-schema`가 사용 | Neo4j와 같은 버전(ZIP에 포함) | `RETURN apoc.version();` |
+| Neo4j Desktop | 법령 그래프를 저장·조회하는 그래프 DB를 설치·관리 | 최신판(이 교재는 Desktop 2.3.2, 인스턴스 Neo4j 2026.10.2) | Desktop의 도움말 → About |
+| APOC | Neo4j 확장 프로시저. MCP의 `get-schema`가 사용 | 인스턴스와 같은 버전(8장에서 Desktop 플러그인 화면으로 설치) | `RETURN apoc.version();` |
 | uv | 파이썬 설치·가상환경·패키지 관리 | 0.9 이상 | `uv --version` |
 | Python | PDF 파싱·적재 코드 실행 | 3.12 — **따로 설치하지 않음**, uv가 자동으로 내려받음 | `uv python list` |
 | Git for Windows | 단계별 커밋. Claude Code가 명령을 실행할 때 쓰는 Git Bash 포함 | 2.4x 이상 | `git --version` |
@@ -82,32 +80,26 @@
 | 웹 브라우저 | Neo4j Browser(`http://localhost:7474`) 화면 | Edge·Chrome 최신판 | |
 
 
-!!! warning "JDK는 21을 쓰세요 — 「21 이상」이 아닙니다"
-    Neo4j 5.26이 공식 지원하는 자바는 **Java 17과 Java 21뿐**입니다. Java 22·23·25처럼 더 높은 버전은 지원 목록에 없어 시작하지 않거나 예상치 못한 오류가 날 수 있습니다. 이미 다른 버전의 자바가 설치되어 있어도 괜찮습니다. JDK 21을 함께 설치하고 Neo4j를 띄우는 창에서만 `$env:JAVA_HOME`을 JDK 21로 지정하면 됩니다(3장 1단계). 참고로 Neo4j 2025.x 이후 판은 Java 21 이상을 요구하므로, 두 계열 모두에 맞는 21이 가장 안전합니다.
+!!! note "JDK(자바)는 따로 설치하지 않습니다"
+    Neo4j는 자바로 만든 프로그램이지만, Neo4j Desktop 안에 Neo4j를 실행하는 자바가 들어 있습니다. 이 교재는 Cypher 질의도 모두 Neo4j Browser에서 실행하므로 PC에 JDK를 설치할 필요가 없습니다. 이미 다른 버전의 자바가 설치되어 있어도 Desktop에는 영향이 없습니다.
 
 ### 구성 요소별 설명과 내려받기
 
-**PowerShell** — 이 교재의 모든 명령을 입력하는 셸입니다. Windows 10/11에 기본으로 들어 있는 **Windows PowerShell 5.1**로 충분하고, 따로 설치한 **PowerShell 7**(`pwsh`)에서도 같은 명령이 동작합니다. 두 버전은 한글 파일 저장(BOM), 빈 문자열 인자, 파이프 인코딩이 다르게 동작해서, 이 교재는 양쪽에서 똑같이 동작하는 방법만 골라 썼습니다(예: 파일은 `-Encoding ascii`나 `Write-Utf8`로 저장, `--tools ""` 대신 `--tools=`).
+**PowerShell** — 이 교재의 모든 명령을 입력하는 셸입니다. Windows 10/11에 기본으로 들어 있는 **Windows PowerShell 5.1**로 충분하고, 따로 설치한 **PowerShell 7**(`pwsh`)에서도 같은 명령이 동작합니다. 두 버전은 한글 파일 저장(BOM), 빈 문자열 인자, 파이프 인코딩이 다르게 동작해서, 이 교재는 양쪽에서 똑같이 동작하는 방법만 골라 썼습니다(예: 설정 파일은 `-Encoding ascii`로 저장, `--tools ""` 대신 `--tools=`).
 
 - 확인: 시작 메뉴에서 「Windows PowerShell」(파란 아이콘)을 열고 `$PSVersionTable.PSVersion`을 실행합니다. `5.1` 또는 `7.x`이면 됩니다.
 - PowerShell 7을 원하면(선택): `winget install --id Microsoft.PowerShell -e` · [learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows)
 - 「PowerShell ISE」는 쓰지 마세요. 외부 프로그램의 한글 출력과 대화형 입력이 일반 창과 다르게 동작합니다.
 
-**JDK 21** — Neo4j는 자바로 만든 프로그램이라 자바 런타임이 있어야 실행됩니다. 이 교재는 Microsoft Build of OpenJDK 21을 씁니다. Eclipse Temurin 21 등 다른 배포판의 JDK 21도 됩니다.
+**Neo4j Desktop** — 내 PC에서 Neo4j 데이터베이스(인스턴스)를 만들고, 켜고, 끄고, 플러그인을 설치하는 프로그램입니다. 인스턴스는 최신 Neo4j(Enterprise 판, 내 PC에서 개발·학습용으로 무료)로 만들어지고, 웹 화면 Neo4j Browser로 질의합니다. Neo4j를 실행하는 자바가 함께 들어 있습니다.
 
-- 설치: `winget install --id Microsoft.OpenJDK.21 -e`
-- 내려받기: [learn.microsoft.com/java/openjdk/download#openjdk-21](https://learn.microsoft.com/java/openjdk/download#openjdk-21) · 대안 [adoptium.net/temurin/releases/?version=21](https://adoptium.net/temurin/releases/?version=21)
-- 확인: `java -version`의 첫 줄이 `openjdk version "21.…"`. 다른 숫자가 나오면 `where.exe java`로 어느 자바가 먼저 잡히는지 봅니다.
+- 내려받기: [neo4j.com/deployment-center](https://neo4j.com/deployment-center/) → Neo4j Desktop → 최신 버전 → Windows (x86 exe). 간단한 양식을 채우면 `neo4j-desktop-<버전>-x64.exe`(약 620MB)를 받습니다
+- 설치와 인스턴스 만들기는 [3장](neo4j-windows.html)에서 따라 합니다
+- 확인: Desktop을 열었을 때 인스턴스 목록이 보이면 설치된 것입니다
 
-**Neo4j 5.26 Community** — 노드와 관계로 데이터를 저장하는 그래프 데이터베이스입니다. 5.26은 장기 지원(LTS) 판이라 이 교재는 이 버전을 씁니다. 설치 프로그램 없이 ZIP을 풀면 되고, 웹 화면 Neo4j Browser와 명령줄 도구 `cypher-shell`이 함께 들어 있습니다.
+**APOC** — Neo4j용 확장 프로시저 모음입니다. 8장의 MCP 서버가 `apoc.meta.schema`로 그래프 스키마를 읽으므로 8장에서 설치합니다. Desktop의 플러그인 화면에서 인스턴스와 같은 버전을 설치하므로 따로 내려받지 않습니다.
 
-- 내려받기: [neo4j.com/deployment-center](https://neo4j.com/deployment-center/) → Graph Database Self-Managed → Community → 5.26.x → Windows
-- 직접 주소: `https://dist.neo4j.org/neo4j-community-5.26.33-windows.zip`
-- 확인: 이미 설치되어 있다면 그 폴더에서 `bin\neo4j.bat version`. Neo4j Desktop을 쓰고 있다면 3장의 안내 상자를 보세요.
-
-**APOC** — Neo4j용 확장 프로시저 모음입니다. 8장의 MCP 서버가 `apoc.meta.schema`로 그래프 스키마를 읽으므로 반드시 켭니다. Community ZIP의 `labs` 폴더에 같은 버전의 jar가 들어 있어 따로 내려받지 않습니다.
-
-- 문서: [neo4j.com/docs/apoc/5/installation](https://neo4j.com/docs/apoc/5/installation/)
+- 문서: [neo4j.com/docs/apoc/current/installation](https://neo4j.com/docs/apoc/current/installation/)
 - 확인: Neo4j를 띄운 뒤 `RETURN apoc.version();`
 
 **uv와 Python 3.12** — uv는 파이썬 자체와 가상환경, 패키지를 한 번에 관리하는 도구입니다. 파이썬을 따로 설치하지 않아도 `uv`가 프로젝트에 맞는 Python 3.12를 내려받습니다. 6장에서 PDF 파싱(PyMuPDF)과 Neo4j 적재(neo4j 드라이버) 코드를 `uv run`으로 실행하고, 8장의 MCP 서버도 `uvx`로 실행합니다.
@@ -141,26 +133,24 @@
 **▶ 작업 창(Windows PowerShell)에 입력**
 
 ```powershell
-foreach ($c in 'powershell','pwsh','java','git','uv','claude') {
+foreach ($c in 'powershell','pwsh','git','uv','claude') {
   $p = Get-Command $c -ErrorAction SilentlyContinue
   '{0,-11} {1}' -f $c, ($(if ($p) { $p.Source } else { '없음' }))
 }
-java -version
 ```
 
-`java -version`은 결과를 표준 오류로 내보내므로 빨간 글씨로 보일 수 있지만 오류가 아닙니다.
+Neo4j Desktop은 명령이 아니라 프로그램이므로 시작 메뉴에서 「Neo4j Desktop」이 보이는지로 확인합니다.
 
 
 ### 실습 폴더 위치
 
-이 교재는 모든 파일을 `C:\lab` 아래에 둡니다.
+이 교재는 실습 파일을 `C:\lab` 아래에 둡니다. Neo4j의 DB 파일은 Neo4j Desktop이 사용자 폴더 아래(`%USERPROFILE%\.Neo4jDesktop2`)에서 따로 관리합니다.
 
 | 경로 | 내용 |
 |---|---|
-| `C:\lab\neo4j` | Neo4j 설치 폴더(ZIP을 푼 곳). DB 파일은 이 안의 `data`에 생깁니다 |
 | `C:\lab\law-graph` | 실습 폴더(git 저장소). PDF, 파이썬 코드, `.env`, `.mcp.json` |
 
-사용자 폴더(`C:\Users\<이름>`)를 써도 되지만, 사용자 이름에 한글이나 공백이 있으면 자바·배치 파일이 경로를 잘못 읽는 일이 있어 짧은 영문 경로를 권합니다. 다른 드라이브를 쓰려면 명령의 `C:\lab`만 바꾸면 됩니다.
+사용자 폴더(`C:\Users\<이름>`)를 써도 되지만, 사용자 이름에 한글이나 공백이 있으면 일부 도구가 경로를 잘못 읽는 일이 있어 짧은 영문 경로를 권합니다. 다른 드라이브를 쓰려면 명령의 `C:\lab`만 바꾸면 됩니다.
 
 ### 법령 PDF 받기
 
@@ -207,12 +197,12 @@ Claude Code가 쓰는 코드·설계·답(5~9장)은 모델이 실행할 때마�
 | 한 일 | 어디서 | 남은 것 |
 |---|---|---|
 | 실습 목표와 골든 퀘스천 다섯 개를 읽었습니다 | 이 페이지 | 마지막(9장)에 확인할 질문 |
-| 필요한 도구(Claude Code 유료 플랜, uv, Git, JDK 21, Neo4j 5.26)와 버전을 확인했습니다 | 작업 창(Windows PowerShell) | 한 번에 확인 스크립트의 결과 |
+| 필요한 도구(Claude Code 유료 플랜, uv, Git, Neo4j Desktop)와 버전을 확인했습니다 | 작업 창(Windows PowerShell) | 한 번에 확인 스크립트의 결과 |
 | 위험물안전관리법 PDF 3개(법률·시행령·시행규칙)를 받았습니다 | 웹 브라우저 | `다운로드` 폴더의 PDF 3개 |
 
 **왜 중요한가요?** 목표(골든 퀘스천)를 먼저 정해 두어야 5장에서 스키마를 설계할 때 「무엇을 답하려고 만드는 그래프인가」를 Claude에게 설명할 수 있습니다.
 
-**다음 장(3장)에서 할 일:** 아직 설치되지 않은 도구를 설치하고, Neo4j를 ZIP으로 내려받아 설치하고 APOC를 켠 뒤, 매번 쓸 `env.ps1`을 만들어 Neo4j를 실행합니다. 모든 명령은 **작업 창(Windows PowerShell)** 에 입력합니다.
+**다음 장(3장)에서 할 일:** Git·uv·Claude Code를 설치하고, Neo4j Desktop을 내려받아 설치한 뒤 실습용 인스턴스 `law-graph`를 만들어 시작합니다. 비밀번호를 `.env`에 저장하고 매번 쓸 `env.ps1`을 만든 뒤 Neo4j Browser로 접속을 확인합니다. 명령은 **작업 창(Windows PowerShell)** 에, 설치·인스턴스 관리는 **Neo4j Desktop** 화면에서 합니다.
 
 ## 확인 문제
 

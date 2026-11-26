@@ -17,7 +17,7 @@
 ![적재 때는 여러 표기를 Actor 하나로 합치고, 질문 때는 질문 속 말을 그 노드에 붙입니다](img/disambiguation-flow.svg)
 
 !!! tip "시작하기 전에"
-    6장의 적재와 원문 대조를 마치고 커밋했어야 합니다. Neo4j 창이 떠 있어야 하고, Claude Code는 `env.ps1`을 점 소싱한 창에서 열어 둡니다. 이 장은 `claude -p`를 157번 부르므로 약 6분 동안 구독 플랜 사용량을 씁니다.
+    6장의 적재와 원문 대조를 마치고 커밋했어야 합니다. Neo4j Desktop에서 `law-graph`가 Running이어야 하고, Claude Code는 `env.ps1`을 점 소싱한 창에서 열어 둡니다. 이 장은 `claude -p`를 157번 부르므로 약 6분 동안 구독 플랜 사용량을 씁니다.
 
 ## 따라 하기
 
@@ -262,25 +262,9 @@ provision, mentions, score
 
 ## 확인
 
-6장처럼 별도의 PowerShell 창에서 `Write-Utf8`로 저장해 cypher-shell로 확인합니다(Neo4j Browser에 붙여 넣어도 됩니다).
+Neo4j Browser에 붙여 넣어 주요 Actor 네 개를 확인합니다.
 
-**▶ 작업 창(Windows PowerShell)에 입력**
-
-```powershell
-Set-Location C:\lab\law-graph
-. .\env.ps1
-Write-Utf8 check-actors.cypher @'
-MATCH (a:Actor) WHERE a.name IN ['관계인', '소방본부장', '소방서장', '안전관리자']
-RETURN a.name AS actor, size(a.aliases) AS aliases,
-  COUNT { (a)<-[:HAS_SUBJECT]-(:Norm) } AS asSubject,
-  COUNT { (a)<-[:ADDRESSED_TO]-(:Norm) } AS asRecipient ORDER BY actor;
-'@
-& $cs -u neo4j -p $env:NEO4J_PASSWORD --format plain -f check-actors.cypher
-```
-
-파일에 담은 질의는 다음과 같습니다.
-
-**참고 — Claude가 만든 내용(직접 입력하지 않음)**
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
 
 ```cypher
 MATCH (a:Actor) WHERE a.name IN ['관계인', '소방본부장', '소방서장', '안전관리자']
@@ -323,7 +307,7 @@ Actor 136개 중 「제조소등」「행정안전부령」「정기검사」처
 
 **왜 중요한가요?** 「관할 소방서장」「소방본부장 또는 소방서장」처럼 같은 대상이 여러 이름으로 적혀 있으면, 질문할 때 일부 조문을 놓칩니다. 이름을 합쳐 두어야 9장의 질문이 관련 조문을 빠짐없이 찾습니다.
 
-**다음 장(8장)에서 할 일:** 지금까지 Claude가 파이썬 스크립트로 그래프에 접근했다면, 이제는 **Neo4j MCP 서버**를 연결해 Claude Code가 그래프를 직접 조회하게 합니다. `.mcp.json`은 Claude가 만들고, 연결 확인은 **작업 창**과 Claude Code의 `/mcp`에서 합니다.
+**다음 장(8장)에서 할 일:** 지금까지 Claude가 파이썬 스크립트로 그래프에 접근했다면, 이제는 **Neo4j MCP 서버**를 연결해 Claude Code가 그래프를 직접 조회하게 합니다. 먼저 MCP 서버에 필요한 APOC 플러그인을 Neo4j Desktop에서 설치합니다. `.mcp.json`은 Claude가 만들고, 연결 확인은 **작업 창**과 Claude Code의 `/mcp`에서 합니다.
 
 ## 확인 문제
 

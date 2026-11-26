@@ -4,7 +4,7 @@
 
 ## 무엇을 · 왜
 
-MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 사용하는 표준 인터페이스입니다. MCP 서버가 「이런 도구가 있다」고 알려 주면 Claude Code는 질문에 따라 필요한 도구를 호출하고, 반환된 결과를 읽고 답합니다. [6](ingest.html)·[7장](disambiguation.html)에서는 Claude가 파이썬 스크립트와 cypher-shell을 직접 작성해 Neo4j에 접근했습니다. MCP 서버를 연결하면 Claude가 스키마를 읽고(`get-schema`) Cypher를 작성하고 실행하는(`read-cypher`) 도구를 바로 사용합니다. [2장 GraphRAG 동작 과정](https://www.uengine.org/docs/graphrag-law/how-graphrag.html)에서 설명한 질의 과정(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답)이 이 두 도구로 이루어집니다. 읽기 전용으로 실행하면 질의 중에 그래프가 변경되지 않습니다.
+MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 사용하는 표준 인터페이스입니다. MCP 서버가 「이런 도구가 있다」고 알려 주면 Claude Code는 질문에 따라 필요한 도구를 호출하고, 반환된 결과를 읽고 답합니다. [6](ingest.html)·[7장](disambiguation.html)에서는 Claude가 파이썬 스크립트를 직접 작성해 Neo4j에 접근했습니다. MCP 서버를 연결하면 Claude가 스키마를 읽고(`get-schema`) Cypher를 작성하고 실행하는(`read-cypher`) 도구를 바로 사용합니다. [2장 GraphRAG 동작 과정](https://www.uengine.org/docs/graphrag-law/how-graphrag.html)에서 설명한 질의 과정(엔티티 연결 → 스키마를 컨텍스트에 → Cypher 생성 → 실행 → 답)이 이 두 도구로 이루어집니다. 읽기 전용으로 실행하면 질의 중에 그래프가 변경되지 않습니다.
 
 | 항목 | 이 실습 |
 |---|---|
@@ -14,11 +14,37 @@ MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 
 | 문서 | [neo4j.com/docs/mcp/current](https://neo4j.com/docs/mcp/current/)(installation, stdio-configuration) |
 
 !!! tip "시작하기 전에"
-    6·7장까지 적재가 끝나 있어야 합니다. 3장의 APOC가 켜져 있는지 Neo4j Browser에서 `RETURN apoc.version();`로 확인합니다. MCP의 `get-schema`가 APOC를 씁니다.
+    6·7장까지 적재가 끝나 있고, Neo4j Desktop에서 `law-graph`가 Running이어야 합니다. 이 장의 첫 단계에서 APOC 플러그인을 설치합니다.
 
 ## 따라 하기
 
 <ol class="steps" markdown="1">
+<li markdown="block">**APOC 플러그인을 설치합니다.** Neo4j Desktop에서 `law-graph` 인스턴스의 플러그인 화면(**Plugins**)을 열고 **APOC**의 **Install**을 누릅니다. 설치가 끝나면 `law-graph`를 **Stop** 한 뒤 다시 **Start** 합니다.
+
+**왜 하나요?** Neo4j MCP 서버는 시작할 때 APOC의 `apoc.meta` 프로시저가 있는지 확인하고, `get-schema` 도구가 `apoc.meta.schema`로 그래프 구조를 Claude에게 알려 줍니다. **APOC가 없으면 MCP 서버가 시작하지 못합니다.** 플러그인은 인스턴스를 시작할 때 읽히므로 설치 뒤 다시 시작해야 켜집니다.
+
+**APOC**(Awesome Procedures On Cypher)는 Neo4j 회사가 관리하는 확장 프로시저 모음입니다. 그래프에 어떤 레이블·관계·속성이 있는지 요약하기(`apoc.meta.schema`), 문자열·날짜 다루기, 데이터 가져오기·내보내기 같은 일을 `CALL apoc.…` 형태로 부를 수 있게 해 줍니다. Neo4j 본체와 별도의 jar 파일(플러그인)로 배포되며 Neo4j와 **같은 버전**을 써야 합니다. Desktop의 플러그인 화면은 인스턴스와 같은 버전의 **APOC Core**를 설치하고, `neo4j.conf`에 `dbms.security.procedures.unrestricted=apoc.*`(APOC가 Neo4j 내부 기능을 쓰도록 허용)를 넣어 줍니다. 별도로 내려받는 APOC Extended는 이 실습에 필요 없습니다.
+
+다시 시작한 뒤 Neo4j Browser에서 켜졌는지 확인합니다.
+
+**▶ Neo4j Browser(`http://localhost:7474`)에 붙여 넣기**
+
+```cypher
+RETURN apoc.version() AS apoc;
+SHOW PROCEDURES YIELD name WHERE name STARTS WITH 'apoc.meta' RETURN count(*) AS n;
+```
+
+**출력 예시**
+
+```text
+apoc
+"2026.10.2"
+n
+10
+```
+
+첫 결과가 인스턴스의 Neo4j 버전과 같고 둘째 결과가 0보다 크면 켜진 것입니다. 「apoc.version 함수를 찾을 수 없다」는 오류가 나오면 APOC를 설치하지 않았거나 설치한 뒤 인스턴스를 다시 시작하지 않은 것입니다.
+</li>
 <li markdown="block">**Claude Code에 `.mcp.json`을 만들게 합니다.** 7장까지 사용하던 세션에서 입력합니다.
 
 **왜 하나요?** MCP 서버를 연결해야 Claude가 파이썬 스크립트 없이 그래프를 직접 조회할 수 있습니다. 공식 문서를 확인하게 하면 버전마다 바뀌는 설정 이름(예: `NEO4J_MCP_` 접두사)을 틀리지 않습니다.
@@ -73,7 +99,7 @@ write-cypher 호출 → {"code": -32602, "message": "unknown tool \"write-cypher
 
 | 환경변수 | 값 | 이유 |
 |---|---|---|
-| `NEO4J_MCP_URI` | `bolt://localhost:7687` | [3장](neo4j-windows.html)에서 `neo4j.bat console`로 띄운 Neo4j |
+| `NEO4J_MCP_URI` | `bolt://localhost:7687` | [3장](neo4j-windows.html)에서 Neo4j Desktop으로 만든 `law-graph` 인스턴스 |
 | `NEO4J_MCP_USERNAME` | `neo4j` | |
 | `NEO4J_MCP_PASSWORD` | `${NEO4J_PASSWORD}` | Claude Code가 서버를 실행할 때 자신의 환경변수 값으로 치환합니다. 파일에는 비밀번호가 남지 않습니다 |
 | `NEO4J_MCP_DATABASE` | `neo4j` | v2.0.0부터 STDIO에서 기본값이 없어져 반드시 지정해야 합니다(`--help`에는 아직 「default: neo4j」로 나옵니다) |
@@ -223,7 +249,7 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
 !!! note "이 장의 MCP 설정 요약"
     | 항목 | 이 교재의 설정 | 이유 |
     |---|---|---|
-    | Neo4j | Windows ZIP `neo4j-community-5.26.33` + `labs`의 APOC | `get-schema`가 APOC의 `apoc.meta`로 스키마를 읽습니다 |
+    | Neo4j | Neo4j Desktop의 `law-graph` 인스턴스 + APOC 플러그인 | MCP 서버가 시작할 때 APOC의 `apoc.meta`를 확인하고, `get-schema`가 이것으로 스키마를 읽습니다 |
     | 비밀번호 | `${NEO4J_PASSWORD}`로 파일 밖에서 전달 | `.mcp.json`에 비밀번호를 남기지 않습니다. 대신 `claude`를 실행하는 창에 변수가 있어야 합니다 |
     | 서버 버전 | `neo4j-mcp-server@2.1.2`로 고정, `"type": "stdio"` 명시 | 버전이 바뀌어도 같은 결과가 나오게 합니다 |
     | 도구 | 읽기 전용(`NEO4J_MCP_READ_ONLY=true`)이라 2개(GDS가 설치된 DBMS라면 3개) | 질문하다 그래프가 바뀌지 않게 합니다 |
@@ -232,7 +258,7 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
 !!! warning "막히면"
     **Enter를 눌렀더니 `/mcp`에 연결이 없습니다 (GL-11).** 증상: `.mcp.json`을 만들고 `claude`를 다시 실행했는데 「New MCP server found in this project: neo4j」 창의 기본 선택이 `❯ Continue without using this MCP server`라서 서버 없이 시작됩니다. 원인: Claude Code의 프로젝트 MCP 승인 창 기본값입니다. 조치: ↑ 두 번으로 `Use this MCP server`(또는 `Use this and all future MCP servers in this project`)를 고르고 Enter를 누르세요. 이미 넘어갔다면 `/mcp`에서 neo4j를 골라 켜거나, `claude mcp reset-project-choices` 뒤 다시 시작합니다.
 
-    **서버가 실행되지 않습니다 — APOC가 없음.** 증상: `/mcp`나 `claude mcp list`에서 neo4j가 `failed`이고, 서버 로그에 `please ensure the APOC plugin is installed and includes the 'meta' component`가 나옵니다. 원인: Neo4j MCP 서버는 시작할 때 `get-schema`에 쓸 APOC의 `apoc.meta` 프로시저가 있는지 검사합니다. APOC가 꺼진 DBMS에 연결하면 도구 등록 직후 초기화가 이 오류로 실패합니다. 조치: 3장 5단계(APOC jar를 `plugins`로 복사하고 `dbms.security.procedures.unrestricted=apoc.*` 설정)를 다시 확인하고 Neo4j를 재시작한 뒤, Neo4j Browser에서 `RETURN apoc.version()`이 버전을 돌려주는지 봅니다.
+    **서버가 실행되지 않습니다 — APOC가 없음.** 증상: `/mcp`나 `claude mcp list`에서 neo4j가 `failed`이고, 서버 로그에 `please ensure the APOC plugin is installed and includes the 'meta' component`가 나옵니다. 원인: Neo4j MCP 서버는 시작할 때 `get-schema`에 쓸 APOC의 `apoc.meta` 프로시저가 있는지 검사합니다. APOC가 꺼진 DBMS에 연결하면 도구 등록 직후 초기화가 이 오류로 실패합니다. 조치: 이 장 1단계(Neo4j Desktop에서 APOC 플러그인 설치 후 인스턴스 다시 시작)를 확인하고, Neo4j Browser에서 `RETURN apoc.version()`이 버전을 돌려주는지 봅니다.
 
     **서버가 실행되지 않습니다 — 인증 실패 (GL-12).** 증상: `"NEO4J_MCP_PASSWORD": "${NEO4J_PASSWORD}"`로 썼는데 `claude`를 실행한 창에 `NEO4J_PASSWORD`가 없으면 MCP 서버가 인증 실패로 실행되지 않습니다. 서버는 시작할 때(initialize) DB 접속을 먼저 검사해 `impossible to verify connectivity … Unauthorized`로 멈추고, 그 뒤의 도구 목록 요청도 실패합니다. 원인: Claude Code는 `.mcp.json`의 `${변수}`를 claude 프로세스의 환경변수 값으로 치환하고, `.env`는 자동으로 읽지 않습니다. 조치: 새 PowerShell 창마다 `Set-Location C:\lab\law-graph; . .\env.ps1; claude`를 실행하세요. 반대로 비밀번호를 `.mcp.json`에 직접 쓰면 그 파일이 비밀 파일이 되므로 `.gitignore`에서 빠지지 않게 주의하세요.
 
@@ -242,6 +268,7 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
 
 | 한 일 | 어디서 | 결과물 |
 |---|---|---|
+| APOC 플러그인 설치와 확인 | Neo4j Desktop / Neo4j Browser | `apoc.version()`이 인스턴스와 같은 버전 |
 | `.mcp.json` 작성 요청 | Claude Code 입력창 | 읽기 전용 Neo4j MCP 설정(비밀번호는 파일 밖) |
 | `.mcp.json`·`.env`가 git에서 빠지는지 확인 | 작업 창 | `git check-ignore` 결과 두 줄 |
 | `env.ps1`을 불러온 창에서 `claude` 재실행 | 작업 창 | `claude mcp list`에 `✓ Connected` |
