@@ -1,6 +1,6 @@
 # 시작하기
 
-> Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 명령은 실제 Windows PC에서 실행해 확인했습니다. 준비(3장)부터 질의(9장)까지 다룹니다.
+> Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 준비(3장)부터 질의(9장)까지 다룹니다.
 
 ## 무엇을 만드나요
 
@@ -63,7 +63,7 @@
 | 6 | **Neo4j 5.26 Community**(APOC 포함) | 그래프 DB(ZIP으로 내려받아 설치) |
 
 !!! note "Python은 따로 설치하지 않아도 되나요?"
-    네, 따로 설치하지 않아도 됩니다. 6장에서 `uv init --python 3.12`로 프로젝트를 만들면 uv가 Python 3.12를 찾고, 없으면 자동으로 내려받아 그 프로젝트 전용으로 씁니다. 이미 다른 버전(예: Python 3.13)이 설치되어 있어도 서로 충돌하지 않습니다. 실습 PC(Python 3.13 설치됨)에서도 `uv init --bare --python 3.12`가 `Using CPython 3.12.12`로 3.12를 따로 준비했습니다. 다만 파이썬 코드를 실행할 때는 `python …`이 아니라 `uv run …`을 써야 그 3.12와 설치한 패키지가 쓰입니다.
+    네, 따로 설치하지 않아도 됩니다. 6장에서 `uv init --python 3.12`로 프로젝트를 만들면 uv가 Python 3.12를 찾고, 없으면 자동으로 내려받아 그 프로젝트 전용으로 씁니다. 이미 다른 버전(예: Python 3.13)이 설치되어 있어도 서로 충돌하지 않습니다. 다만 파이썬 코드를 실행할 때는 `python …`이 아니라 `uv run …`을 써야 그 3.12와 설치한 패키지가 쓰입니다.
 
 ### 한눈에 보기
 
@@ -99,7 +99,7 @@
 - 내려받기: [learn.microsoft.com/java/openjdk/download#openjdk-21](https://learn.microsoft.com/java/openjdk/download#openjdk-21) · 대안 [adoptium.net/temurin/releases/?version=21](https://adoptium.net/temurin/releases/?version=21)
 - 확인: `java -version`의 첫 줄이 `openjdk version "21.…"`. 다른 숫자가 나오면 `where.exe java`로 어느 자바가 먼저 잡히는지 봅니다.
 
-**Neo4j 5.26 Community** — 노드와 관계로 데이터를 저장하는 그래프 데이터베이스입니다. 5.26은 장기 지원(LTS) 판이라 이 교재는 이 버전으로 검증했습니다. 설치 프로그램 없이 ZIP을 풀면 되고, 웹 화면 Neo4j Browser와 명령줄 도구 `cypher-shell`이 함께 들어 있습니다.
+**Neo4j 5.26 Community** — 노드와 관계로 데이터를 저장하는 그래프 데이터베이스입니다. 5.26은 장기 지원(LTS) 판이라 이 교재는 이 버전을 씁니다. 설치 프로그램 없이 ZIP을 풀면 되고, 웹 화면 Neo4j Browser와 명령줄 도구 `cypher-shell`이 함께 들어 있습니다.
 
 - 내려받기: [neo4j.com/deployment-center](https://neo4j.com/deployment-center/) → Graph Database Self-Managed → Community → 5.26.x → Windows
 - 직접 주소: `https://dist.neo4j.org/neo4j-community-5.26.33-windows.zip`
@@ -179,12 +179,9 @@ java -version
 !!! note "판본이 다르면 숫자가 달라집니다"
     나중에 내려받으면 번호와 시행일이 달라지고 조·항·호 수도 조금씩 달라질 수 있습니다. 같은 결과를 확인하려면 위 판본을 연혁에서 찾아 내려받으세요. 이 PDF에는 별표·서식의 본문이 들어 있지 않습니다.
 
-## 이 교재의 수치와 검증 범위
+## 실행 기록에 대해
 
-이 교재의 화면 출력과 수치는 두 종류입니다. 장마다 어느 쪽인지 밝혀 둡니다.
-
-- **Windows에서 실행한 기록** — 3·4장의 설치·접속·Cypher, 6장의 uv 환경, 8장의 MCP 서버 기동처럼 운영체제에 따라 달라지는 명령은 Windows 11 PC에서 실제로 실행해 확인했습니다.
-- **미리 실행해 둔 기록** — Claude Code가 쓰는 코드·설계·답(5~9장)은 모델이 실행할 때마다 달라집니다. 이 장들의 화면과 수치는 같은 PDF 3개로 미리 실행해 둔 기록이며, 여러분의 결과와 비교하는 기준으로 씁니다. 위험물안전관리법 3종의 조·항·호 수(조 157 · 항 276 · 호 357 · 목 67)는 판본이 같으면 같아야 합니다.
+Claude Code가 쓰는 코드·설계·답(5~9장)은 모델이 실행할 때마다 조금씩 달라집니다. 이 장들의 화면과 수치는 같은 PDF 3개로 실행한 기록이며, 여러분의 결과와 비교하는 기준으로 씁니다. 위험물안전관리법 3종의 조·항·호 수(조 157 · 항 276 · 호 357 · 목 67)는 판본이 같으면 같아야 합니다.
 
 ## 걸리는 시간과 비용
 
@@ -228,5 +225,5 @@ java -version
 <details class="answer" markdown="1">
 <summary>이 교재에서 도구를 모두 끌 때 `--tools ""`가 아니라 `--tools=`로 쓰는 까닭은 무엇인가요?</summary>
 
-Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 인자(`""`)를 넘기지 못하고 빼 버립니다. 그러면 `--tools` 뒤의 다음 인자가 값으로 잘못 들어갑니다. `--tools=`는 5.1과 7 모두에서 「빈 값」으로 정확히 전달됩니다(Windows PC에서 확인).
+Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 인자(`""`)를 넘기지 못하고 빼 버립니다. 그러면 `--tools` 뒤의 다음 인자가 값으로 잘못 들어갑니다. `--tools=`는 5.1과 7 모두에서 「빈 값」으로 정확히 전달됩니다.
 </details>

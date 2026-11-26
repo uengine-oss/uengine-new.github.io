@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>시작하기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼</title>
-<meta name="description" content="Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 명령은 실제 Windows PC에서 실행해 확인했습니다. 준비(3장)부터 질의(9장)까지 다룹니다.">
+<meta name="description" content="Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 준비(3장)부터 질의(9장)까지 다룹니다.">
 <link rel="canonical" href="https://www.uengine.org/docs/graphrag-law-windows/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="시작하기 — 법령 GraphRAG 실습 · Neo4j × Claude Code 튜토리얼">
-<meta property="og:description" content="Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 명령은 실제 Windows PC에서 실행해 확인했습니다. 준비(3장)부터 질의(9장)까지 다룹니다.">
+<meta property="og:description" content="Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 준비(3장)부터 질의(9장)까지 다룹니다.">
 <meta property="og:url" content="https://www.uengine.org/docs/graphrag-law-windows/">
 <meta property="og:image" content="https://www.uengine.org/docs/graphrag-law-windows/img/article15-graph.webp">
 <link rel="icon" href="../../images/favicon.png" type="image/png" sizes="any">
@@ -56,7 +56,7 @@
     <h1>시작하기</h1>
     <article>
 <blockquote>
-<p>Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 명령은 실제 Windows PC에서 실행해 확인했습니다. 준비(3장)부터 질의(9장)까지 다룹니다.</p>
+<p>Windows PC에서 따라 하는 「법령 GraphRAG 실습」입니다. 위험물안전관리법(법률·시행령·시행규칙 PDF 3개)을 그래프로 만들고, Neo4j는 내려받아 직접 설치하며, 모든 명령은 Windows에 기본으로 들어 있는 PowerShell로 입력합니다. 준비(3장)부터 질의(9장)까지 다룹니다.</p>
 </blockquote>
 <h2 id="무엇을-만드나요">무엇을 만드나요<a class="anchor" href="#무엇을-만드나요" title="Permanent link">#</a></h2>
 <p>국가법령정보센터의 위험물안전관리법 PDF를 조·항·호 단위의 Neo4j 그래프로 적재하고, Claude Code가 Neo4j MCP 서버로 그래프를 조회해 골든 퀘스천 다섯 개에 근거 조문과 함께 답하게 합니다.</p>
@@ -193,7 +193,7 @@
 </table>
 <div class="admonition note">
 <p class="admonition-title">Python은 따로 설치하지 않아도 되나요?</p>
-<p>네, 따로 설치하지 않아도 됩니다. 6장에서 <code>uv init --python 3.12</code>로 프로젝트를 만들면 uv가 Python 3.12를 찾고, 없으면 자동으로 내려받아 그 프로젝트 전용으로 씁니다. 이미 다른 버전(예: Python 3.13)이 설치되어 있어도 서로 충돌하지 않습니다. 실습 PC(Python 3.13 설치됨)에서도 <code>uv init --bare --python 3.12</code>가 <code>Using CPython 3.12.12</code>로 3.12를 따로 준비했습니다. 다만 파이썬 코드를 실행할 때는 <code>python …</code>이 아니라 <code>uv run …</code>을 써야 그 3.12와 설치한 패키지가 쓰입니다.</p>
+<p>네, 따로 설치하지 않아도 됩니다. 6장에서 <code>uv init --python 3.12</code>로 프로젝트를 만들면 uv가 Python 3.12를 찾고, 없으면 자동으로 내려받아 그 프로젝트 전용으로 씁니다. 이미 다른 버전(예: Python 3.13)이 설치되어 있어도 서로 충돌하지 않습니다. 다만 파이썬 코드를 실행할 때는 <code>python …</code>이 아니라 <code>uv run …</code>을 써야 그 3.12와 설치한 패키지가 쓰입니다.</p>
 </div>
 <h3 id="한눈에-보기">한눈에 보기<a class="anchor" href="#한눈에-보기" title="Permanent link">#</a></h3>
 <table>
@@ -291,7 +291,7 @@
 <li>내려받기: <a href="https://learn.microsoft.com/java/openjdk/download#openjdk-21">learn.microsoft.com/java/openjdk/download#openjdk-21</a> · 대안 <a href="https://adoptium.net/temurin/releases/?version=21">adoptium.net/temurin/releases/?version=21</a></li>
 <li>확인: <code>java -version</code>의 첫 줄이 <code>openjdk version "21.…"</code>. 다른 숫자가 나오면 <code>where.exe java</code>로 어느 자바가 먼저 잡히는지 봅니다.</li>
 </ul>
-<p><strong>Neo4j 5.26 Community</strong> — 노드와 관계로 데이터를 저장하는 그래프 데이터베이스입니다. 5.26은 장기 지원(LTS) 판이라 이 교재는 이 버전으로 검증했습니다. 설치 프로그램 없이 ZIP을 풀면 되고, 웹 화면 Neo4j Browser와 명령줄 도구 <code>cypher-shell</code>이 함께 들어 있습니다.</p>
+<p><strong>Neo4j 5.26 Community</strong> — 노드와 관계로 데이터를 저장하는 그래프 데이터베이스입니다. 5.26은 장기 지원(LTS) 판이라 이 교재는 이 버전을 씁니다. 설치 프로그램 없이 ZIP을 풀면 되고, 웹 화면 Neo4j Browser와 명령줄 도구 <code>cypher-shell</code>이 함께 들어 있습니다.</p>
 <ul>
 <li>내려받기: <a href="https://neo4j.com/deployment-center/">neo4j.com/deployment-center</a> → Graph Database Self-Managed → Community → 5.26.x → Windows</li>
 <li>직접 주소: <code>https://dist.neo4j.org/neo4j-community-5.26.33-windows.zip</code></li>
@@ -395,12 +395,8 @@
 <p class="admonition-title">판본이 다르면 숫자가 달라집니다</p>
 <p>나중에 내려받으면 번호와 시행일이 달라지고 조·항·호 수도 조금씩 달라질 수 있습니다. 같은 결과를 확인하려면 위 판본을 연혁에서 찾아 내려받으세요. 이 PDF에는 별표·서식의 본문이 들어 있지 않습니다.</p>
 </div>
-<h2 id="이-교재의-수치와-검증-범위">이 교재의 수치와 검증 범위<a class="anchor" href="#이-교재의-수치와-검증-범위" title="Permanent link">#</a></h2>
-<p>이 교재의 화면 출력과 수치는 두 종류입니다. 장마다 어느 쪽인지 밝혀 둡니다.</p>
-<ul>
-<li><strong>Windows에서 실행한 기록</strong> — 3·4장의 설치·접속·Cypher, 6장의 uv 환경, 8장의 MCP 서버 기동처럼 운영체제에 따라 달라지는 명령은 Windows 11 PC에서 실제로 실행해 확인했습니다.</li>
-<li><strong>미리 실행해 둔 기록</strong> — Claude Code가 쓰는 코드·설계·답(5~9장)은 모델이 실행할 때마다 달라집니다. 이 장들의 화면과 수치는 같은 PDF 3개로 미리 실행해 둔 기록이며, 여러분의 결과와 비교하는 기준으로 씁니다. 위험물안전관리법 3종의 조·항·호 수(조 157 · 항 276 · 호 357 · 목 67)는 판본이 같으면 같아야 합니다.</li>
-</ul>
+<h2 id="실행-기록에-대해">실행 기록에 대해<a class="anchor" href="#실행-기록에-대해" title="Permanent link">#</a></h2>
+<p>Claude Code가 쓰는 코드·설계·답(5~9장)은 모델이 실행할 때마다 조금씩 달라집니다. 이 장들의 화면과 수치는 같은 PDF 3개로 실행한 기록이며, 여러분의 결과와 비교하는 기준으로 씁니다. 위험물안전관리법 3종의 조·항·호 수(조 157 · 항 276 · 호 357 · 목 67)는 판본이 같으면 같아야 합니다.</p>
 <h2 id="걸리는-시간과-비용">걸리는 시간과 비용<a class="anchor" href="#걸리는-시간과-비용" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -490,13 +486,13 @@
 </details>
 <details class="answer">
 <summary>이 교재에서 도구를 모두 끌 때 `--tools ""`가 아니라 `--tools=`로 쓰는 까닭은 무엇인가요?</summary>
-<p>Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 인자(<code>""</code>)를 넘기지 못하고 빼 버립니다. 그러면 <code>--tools</code> 뒤의 다음 인자가 값으로 잘못 들어갑니다. <code>--tools=</code>는 5.1과 7 모두에서 「빈 값」으로 정확히 전달됩니다(Windows PC에서 확인).</p>
+<p>Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 인자(<code>""</code>)를 넘기지 못하고 빼 버립니다. 그러면 <code>--tools</code> 뒤의 다음 인자가 값으로 잘못 들어갑니다. <code>--tools=</code>는 5.1과 7 모두에서 「빈 값」으로 정확히 전달됩니다.</p>
 </details>
     </article>
     <nav class="pager"><span></span><a class="next" href="neo4j-windows.html"><span>다음</span>Windows에 Neo4j 설치하기</a></nav>
     <footer class="foot">© uEngine Solutions · <a href="../../contents/contactus.html">문의하기</a> · 이 교재는 Windows PC(PowerShell 5.1·7)에서 Neo4j를 내려받아 설치하고 위험물안전관리법 하나로 따라 하는 법령 GraphRAG 실습입니다. 설치·접속·셸 명령은 Windows PC에서 실행해 확인했고, Claude Code가 쓴 코드·설계·답은 미리 실행해 둔 기록입니다. 모델이 쓰는 문장과 Cypher는 실행할 때마다 달라질 수 있고, 법령 해석은 반드시 원문으로 확인해야 합니다.</footer>
   </main>
-  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-만드나요">무엇을 만드나요</a></li><li><a href="#골든-퀘스천">골든 퀘스천</a></li><li><a href="#장-안내">장 안내</a></li><li><a href="#필요한-기술-스택">필요한 기술 스택</a><ul><li><a href="#꼭-준비할-것">꼭 준비할 것</a></li><li><a href="#한눈에-보기">한눈에 보기</a></li><li><a href="#구성-요소별-설명과-내려받기">구성 요소별 설명과 내려받기</a></li><li><a href="#한-번에-확인하기">한 번에 확인하기</a></li><li><a href="#실습-폴더-위치">실습 폴더 위치</a></li><li><a href="#법령-pdf-받기">법령 PDF 받기</a></li></ul></li><li><a href="#이-교재의-수치와-검증-범위">이 교재의 수치와 검증 범위</a></li><li><a href="#걸리는-시간과-비용">걸리는 시간과 비용</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
+  <aside class="toc"><div class="toc-head">이 장에서</div><ul><li><a href="#무엇을-만드나요">무엇을 만드나요</a></li><li><a href="#골든-퀘스천">골든 퀘스천</a></li><li><a href="#장-안내">장 안내</a></li><li><a href="#필요한-기술-스택">필요한 기술 스택</a><ul><li><a href="#꼭-준비할-것">꼭 준비할 것</a></li><li><a href="#한눈에-보기">한눈에 보기</a></li><li><a href="#구성-요소별-설명과-내려받기">구성 요소별 설명과 내려받기</a></li><li><a href="#한-번에-확인하기">한 번에 확인하기</a></li><li><a href="#실습-폴더-위치">실습 폴더 위치</a></li><li><a href="#법령-pdf-받기">법령 PDF 받기</a></li></ul></li><li><a href="#실행-기록에-대해">실행 기록에 대해</a></li><li><a href="#걸리는-시간과-비용">걸리는 시간과 비용</a></li><li><a href="#정리와-다음-장">정리와 다음 장</a></li><li><a href="#확인-문제">확인 문제</a></li></ul></aside>
 </div>
 <script src="assets/docs.js"></script>
 </body>

@@ -112,8 +112,8 @@
     <span class="p">-</span><span class="n">-no-session-persistence</span> <span class="p">-</span><span class="n">-disable-slash-commands</span> <span class="p">-</span><span class="n">-strict-mcp-config</span>
 </code></pre></div>
 
-<p>파이프로 넘기는 조문의 한글은 <code>env.ps1</code>이 <code>$OutputEncoding</code>을 UTF-8로 바꿔 두어야 그대로 전달됩니다(Windows PowerShell 5.1의 기본값은 ASCII라 한글이 <code>?</code>가 됩니다). <strong><code>--json-schema</code>에 실제 JSON을 넣을 때 주의:</strong> Windows PowerShell 5.1은 외부 프로그램에 인자를 넘길 때 작은따옴표 문자열 안의 큰따옴표(<code>"</code>)를 지워 버립니다. 실제 PC에서 JSON을 그대로 넣자 <code>--json-schema is not valid JSON</code>으로 실패했고, 큰따옴표를 <code>\"</code>로 바꿔 넘기자 성공했습니다(<code>structured_output={"actors":[…]}</code> 반환, 약 7초). 5.1에서 손으로 시험할 때는 <code>$schema = '{"type":"object", …}'</code>처럼 변수에 담은 뒤 <code>--json-schema $schema.Replace('"','\"')</code>로 넘깁니다. PowerShell 7.3 이상은 큰따옴표를 그대로 넘기므로 <code>--json-schema $schema</code>로 씁니다. 실제 실습에서는 <code>extract_entities.py</code>가 파이썬에서 호출하므로 이 문제가 생기지 않습니다.</p>
-<p>도구를 모두 끌 때는 <code>--tools ""</code>가 아니라 <code>--tools=</code>로 씁니다. Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 <code>""</code>을 넘기지 못하고 빼 버리기 때문입니다(실제로 확인함). <code>--tools=</code>는 5.1과 7 모두에서 같은 뜻으로 전달됩니다.</p>
+<p>파이프로 넘기는 조문의 한글은 <code>env.ps1</code>이 <code>$OutputEncoding</code>을 UTF-8로 바꿔 두어야 그대로 전달됩니다(Windows PowerShell 5.1의 기본값은 ASCII라 한글이 <code>?</code>가 됩니다). <strong><code>--json-schema</code>에 실제 JSON을 넣을 때 주의:</strong> Windows PowerShell 5.1은 외부 프로그램에 인자를 넘길 때 작은따옴표 문자열 안의 큰따옴표(<code>"</code>)를 지워 버립니다. 그래서 JSON을 그대로 넣으면 <code>--json-schema is not valid JSON</code>으로 실패하고, 큰따옴표를 <code>\"</code>로 바꿔 넘겨야 <code>structured_output={"actors":[…]}</code>가 돌아옵니다. 5.1에서 손으로 시험할 때는 <code>$schema = '{"type":"object", …}'</code>처럼 변수에 담은 뒤 <code>--json-schema $schema.Replace('"','\"')</code>로 넘깁니다. PowerShell 7.3 이상은 큰따옴표를 그대로 넘기므로 <code>--json-schema $schema</code>로 씁니다. 실제 실습에서는 <code>extract_entities.py</code>가 파이썬에서 호출하므로 이 문제가 생기지 않습니다.</p>
+<p>도구를 모두 끌 때는 <code>--tools ""</code>가 아니라 <code>--tools=</code>로 씁니다. Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 <code>""</code>을 넘기지 못하고 빼 버리기 때문입니다. <code>--tools=</code>는 5.1과 7 모두에서 같은 뜻으로 전달됩니다.</p>
 <p>법 제27조(388자)를 보내 받은 응답에는 주체·기관 8개, 용어 4개, 관계 4건이 있었습니다. 다음은 그중 제2항의 관계 한 건입니다.</p>
 <p><strong>참고 — Claude가 만든 내용(직접 입력하지 않음)</strong></p>
 <div class="hl"><pre><span></span><code><span class="p">{</span><span class="nt">"provision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"제2항"</span><span class="p">,</span><span class="w"> </span><span class="nt">"modality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"의무"</span><span class="p">,</span><span class="w"> </span><span class="nt">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"제1항의 사태를 발견한 자"</span><span class="p">,</span>
@@ -125,7 +125,7 @@
 <thead>
 <tr>
 <th>항목</th>
-<th>실측</th>
+<th>기록</th>
 </tr>
 </thead>
 <tbody>
@@ -367,7 +367,7 @@
 <p>규칙·사전 방식의 0.018초는 실행 기록(<code>summary.json</code>)의 값입니다. 영상 속 Claude의 표에는 같은 값이 「0.3초 이하」로 나옵니다.</p>
 <p>두 방법이 똑같이 묶은 쌍은 <strong>8개뿐</strong>입니다(LLM만 91, 규칙만 4). 둘 다 「A 또는 B」 묶음 이름 51가지를 쪼개지 못했고, 「관계인」과 「제조소등의 관계인」을 따로 두었습니다. LLM은 이름 목록만 받아 조문 문맥과 법에서 정한 약칭을 모르고, 뜻이 비슷해 보이는 낱말을 합칩니다. 규칙·사전은 근거가 분명하지만 228가지 중 200가지를 다른 이름과 묶지 못했습니다(소방서장 같은 기관 이름은 사전에 없습니다).</p>
 <p>노트가 「Graph DB 를 이용하여 동의어들을 찾는 (Dictionary 형식)」이라고 적은 방식이 (나)입니다. 6장에서 정의 조항과 약칭 문형으로 채운 Term의 <code>aliases</code>가 곧 사전입니다. 그래서 두 방식을 결합하고 사람이 검토했습니다. 약칭은 사전이, 수식어 차이는 LLM이, 묶음 쪼개기와 「합치면 안 되는 쌍」은 사람이 정한 규칙이 맡습니다.</p>
-<p>노트는 LLM 방식 옆에 「돈이 많이 듬」이라고 적었습니다. 이번 실측은 추출 157번 $0.268(약 6분), 중의성 해소 1번 $0.0156(94.9초)이고. 비용은 <code>claude -p</code>가 반환한 API 요금 환산치이며 구독 로그인에서는 사용 한도에 반영됩니다. 이 규모에서는 비용이 적게 들었지만 <strong>사람이 틀린 묶음을 찾아 고치는 검토</strong>(따라 하기 4·5단계)가 필요했습니다.</p>
+<p>노트는 LLM 방식 옆에 「돈이 많이 듬」이라고 적었습니다. 기록으로는 추출 157번 $0.268(약 6분), 중의성 해소 1번 $0.0156(94.9초)이고. 비용은 <code>claude -p</code>가 반환한 API 요금 환산치이며 구독 로그인에서는 사용 한도에 반영됩니다. 이 규모에서는 비용이 적게 들었지만 <strong>사람이 틀린 묶음을 찾아 고치는 검토</strong>(따라 하기 4·5단계)가 필요했습니다.</p>
 <h2 id="적재-때-중의성-해소와-질문-때-엔티티-연결">적재 때 중의성 해소와 질문 때 엔티티 연결<a class="anchor" href="#적재-때-중의성-해소와-질문-때-엔티티-연결" title="Permanent link">#</a></h2>
 <table>
 <thead>

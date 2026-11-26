@@ -56,7 +56,7 @@ Copy-Item "$h\labs\apoc-*-core.jar" "$h\plugins\"
 Get-ChildItem "$h\plugins"
 ```
 
-`neo4j.conf`의 `dbms.security.procedures.unrestricted` 줄은 아래 5단계의 「같은 키 지우고 다시 쓰기」 명령에서 `$conf` 경로만 `"$h\conf\neo4j.conf"`로 바꿔 실행합니다. 처음 설치한 Desktop DBMS는 `labs`에 jar만 있고 `plugins`에는 `README.txt`만 있어 APOC가 **꺼진 상태**입니다(실제 PC에서 확인).
+`neo4j.conf`의 `dbms.security.procedures.unrestricted` 줄은 아래 5단계의 「같은 키 지우고 다시 쓰기」 명령에서 `$conf` 경로만 `"$h\conf\neo4j.conf"`로 바꿔 실행합니다. 처음 설치한 Desktop DBMS는 `labs`에 jar만 있고 `plugins`에는 `README.txt`만 있어 APOC가 **꺼진 상태**입니다.
 
 ### 켜졌는지 확인하기
 
@@ -74,7 +74,7 @@ CALL apoc.meta.schema() YIELD value RETURN size(keys(value)) AS 레이블과관�
 
 ## 따라 하기
 
-모든 명령은 PowerShell 창에서 실행합니다. Windows에 기본으로 들어 있는 **Windows PowerShell 5.1**(시작 메뉴 「Windows PowerShell」)과 **PowerShell 7**(`pwsh`) 어느 쪽이든 그대로 동작하도록 썼고, Windows 11 PC의 Windows PowerShell 5.1에서 실행해 확인했습니다. 관리자 권한으로 열 필요는 없습니다.
+모든 명령은 PowerShell 창에서 실행합니다. Windows에 기본으로 들어 있는 **Windows PowerShell 5.1**(시작 메뉴 「Windows PowerShell」)과 **PowerShell 7**(`pwsh`) 어느 쪽이든 그대로 동작합니다. 관리자 권한으로 열 필요는 없습니다.
 
 <ol class="steps" markdown="1">
 <li markdown="1">**도구를 설치합니다.** 이미 설치된 것은 건너뜁니다. `winget`은 Windows 10/11에 기본으로 들어 있는 패키지 관리자입니다.
@@ -121,7 +121,7 @@ Get-ChildItem 'C:\Program Files\Microsoft\jdk-21*' -Directory | Select-Object -E
 $env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.9.10-hotspot'   # 위 출력으로 바꿉니다
 ```
 
-winget으로 설치했다면 두 번째 줄이 JDK 21 폴더를 보여 줍니다. 아무것도 나오지 않으면 JDK를 다른 곳에 설치한 것입니다. `where.exe java`가 보여 준 경로 중 `jdk-21`이 들어간 줄에서 끝의 `\bin\java.exe`를 뺀 폴더가 `JAVA_HOME`입니다(예: `D:\Dev_tools\jdk-21.0.8\bin\java.exe` → `D:\Dev_tools\jdk-21.0.8`). 실제 PC에서도 JDK가 `D:\Dev_tools`에 있어 두 번째 줄은 빈 결과였습니다.
+winget으로 설치했다면 두 번째 줄이 JDK 21 폴더를 보여 줍니다. 아무것도 나오지 않으면 JDK를 다른 곳에 설치한 것입니다. `where.exe java`가 보여 준 경로 중 `jdk-21`이 들어간 줄에서 끝의 `\bin\java.exe`를 뺀 폴더가 `JAVA_HOME`입니다(예: `D:\Dev_tools\jdk-21.0.8\bin\java.exe` → `D:\Dev_tools\jdk-21.0.8`).
 
 이 설정은 지금 창에만 적용됩니다. `java -version`이 처음부터 21을 보여 주었다면 필요 없습니다. 필요한 경우에는 6단계에서 `env.ps1`을 만든 뒤 `Add-Content -Encoding ascii env.ps1 "`$env:JAVA_HOME = '<위 경로>'"`로 한 줄을 덧붙여 두면, Neo4j를 띄우는 창에서도 자동으로 JDK 21이 쓰입니다.
 </li>
@@ -136,7 +136,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 Get-ExecutionPolicy -List
 ```
 
-`CurrentUser`가 `RemoteSigned`(또는 이미 `Unrestricted`)이면 됩니다. 인터넷에서 받은 서명 없는 스크립트는 여전히 막힙니다. 정책이 `Restricted`인 채로 `. .\env.ps1`을 실행하면 `running scripts is disabled on this system` 오류가 납니다(실제로 확인함). 회사 PC처럼 정책을 바꿀 수 없다면 창을 열 때마다 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`를 먼저 실행하세요. 그 창에서만 적용되고 창을 닫으면 사라집니다.
+`CurrentUser`가 `RemoteSigned`(또는 이미 `Unrestricted`)이면 됩니다. 인터넷에서 받은 서명 없는 스크립트는 여전히 막힙니다. 정책이 `Restricted`인 채로 `. .\env.ps1`을 실행하면 `running scripts is disabled on this system` 오류가 납니다. 회사 PC처럼 정책을 바꿀 수 없다면 창을 열 때마다 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`를 먼저 실행하세요. 그 창에서만 적용되고 창을 닫으면 사라집니다.
 </li>
 <li markdown="1">**실습 폴더를 git 저장소로 만듭니다.** 이 폴더(`C:\lab\law-graph`)에서 5장부터 Claude Code를 열고 단계마다 커밋합니다. `.gitignore`에는 비밀번호가 담긴 `.env`, 8장의 `.mcp.json`, 파이썬 가상환경, Claude Code 개인 설정을 넣습니다.
 
@@ -172,7 +172,7 @@ if (-not (Test-Path C:\lab\neo4j)) {
 Get-ChildItem C:\lab\neo4j
 ```
 
-`if (-not (Test-Path …))`는 이미 `C:\lab\neo4j`가 있으면 압축 풀기와 이름 바꾸기를 건너뜁니다. 이 줄이 없으면 이 단계를 두 번 실행했을 때 `Cannot create a file when that file already exists.` 오류가 납니다(실제 PC에서 확인). 처음부터 다시 설치하고 싶다면 Neo4j를 멈춘 뒤 `C:\lab\neo4j` 폴더를 지우고 다시 실행합니다.
+`if (-not (Test-Path …))`는 이미 `C:\lab\neo4j`가 있으면 압축 풀기와 이름 바꾸기를 건너뜁니다. 이 줄이 없으면 이 단계를 두 번 실행했을 때 `Cannot create a file when that file already exists.` 오류가 납니다. 처음부터 다시 설치하고 싶다면 Neo4j를 멈춘 뒤 `C:\lab\neo4j` 폴더를 지우고 다시 실행합니다.
 
 `bin`, `conf`, `data`, `labs`, `lib`, `logs`, `plugins` 폴더가 보이면 됩니다. 이후 명령은 폴더 이름에 버전이 없도록 `C:\lab\neo4j`로 부릅니다.
 </li>
@@ -201,7 +201,7 @@ C:\lab\neo4j\bin\neo4j-admin.bat server validate-config
 
 마지막 명령이 `Configuration file validation successful.`로 끝나면 설정이 올바릅니다. 같은 키를 지우고 다시 쓰므로 여러 번 실행해도 결과가 같습니다. 주석 줄(`#server.memory…`)은 키 이름 앞에 `#`이 붙어 있어 지워지지 않습니다.
 
-파일 끝에 네 줄을 그냥 덧붙이면 안 되는 이유도 확인했습니다. ① 원래 파일이 줄바꿈 없이 끝나면 첫 줄이 앞 줄 끝에 붙고, ② 이미 값이 있는 키(예: `server.memory.pagecache.size`)가 두 번 나오면 `validate-config`가 `declared multiple times`로 실패하고 Neo4j가 시작하지 않습니다.
+파일 끝에 네 줄을 그냥 덧붙이면 안 되는 이유는 두 가지입니다. ① 원래 파일이 줄바꿈 없이 끝나면 첫 줄이 앞 줄 끝에 붙고, ② 이미 값이 있는 키(예: `server.memory.pagecache.size`)가 두 번 나오면 `validate-config`가 `declared multiple times`로 실패하고 Neo4j가 시작하지 않습니다.
 
 | 설정 | 뜻 |
 |---|---|
@@ -286,9 +286,9 @@ C:\lab\neo4j\bin\neo4j.bat console
 
 ### 한글이 깨지지 않게 하는 설정
 
-한국어 Windows 콘솔의 기본 문자 집합은 CP949입니다. Windows 11 PC에서 한글이 어디서 깨지는지 직접 측정한 결과입니다.
+한국어 Windows 콘솔의 기본 문자 집합은 CP949입니다. 한글이 어디서 깨지고 어떻게 막는지 정리하면 다음과 같습니다.
 
-| 경로 | 측정 결과 | 대응 |
+| 경로 | 일어나는 일 | 대응 |
 |---|---|---|
 | PowerShell → `.bat` → 자바(cypher-shell)로 넘기는 인자 | 한글은 그대로 전달됨. 단 질의 안의 **큰따옴표는 사라짐** | Cypher 문자열은 작은따옴표로 씁니다 |
 | `-f`로 넘긴 질의 파일 | Java 21이 BOM 없는 UTF-8 파일을 정상으로 읽음 | `Write-Utf8`로 BOM 없이 저장 |
@@ -398,7 +398,7 @@ RETURN name, versions, edition
 
     **`Lock file has been locked by another process` 또는 `Neo4j web server failed to start`가 나옵니다**
 
-    - 원인: 같은 Neo4j가 이미 다른 창(또는 Neo4j Desktop)에서 실행 중입니다. 실제 PC에서 두 번째로 `console`을 실행하자 이 오류로 끝났고, 먼저 띄운 Neo4j는 계속 정상으로 동작했습니다.
+    - 원인: 같은 Neo4j가 이미 다른 창(또는 Neo4j Desktop)에서 실행 중입니다. 두 번째로 `console`을 실행하면 이 오류로 끝나지만, 먼저 띄운 Neo4j는 계속 정상으로 동작합니다.
     - 조치: 새로 띄울 필요가 없습니다. 이미 떠 있는 Neo4j 창을 그대로 쓰거나, 그 창에서 Ctrl+C로 멈춘 뒤 다시 실행합니다.
 
     **포트 7474·7687을 이미 쓰고 있다고 나옵니다**

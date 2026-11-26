@@ -125,7 +125,7 @@ MCP 서버가 뜨는지 Claude Code를 열기 전에 확인할 수도 있습니�
 claude mcp list
 ```
 
-`neo4j: uvx neo4j-mcp-server@2.1.2 - ✓ Connected`처럼 나오면 됩니다. 처음 실행하면 `⏸ Pending approval (run claude to approve)`가 나옵니다(실제 PC에서 확인). 아직 이 프로젝트의 MCP 서버를 승인하지 않았다는 뜻이며 오류가 아닙니다. `claude`를 실행해 다음 단계의 승인 창에서 승인하면 `✓ Connected`로 바뀝니다. `✗ Failed`가 나오면 아래 「막히면」의 GL-12(비밀번호)와 APOC 항목을 확인합니다.
+`neo4j: uvx neo4j-mcp-server@2.1.2 - ✓ Connected`처럼 나오면 됩니다. 처음 실행하면 `⏸ Pending approval (run claude to approve)`가 나옵니다. 아직 이 프로젝트의 MCP 서버를 승인하지 않았다는 뜻이며 오류가 아닙니다. `claude`를 실행해 다음 단계의 승인 창에서 승인하면 `✓ Connected`로 바뀝니다. `✗ Failed`가 나오면 아래 「막히면」의 GL-12(비밀번호)와 APOC 항목을 확인합니다.
 </li>
 <li markdown="block">**승인 창에서 `Use this MCP server`를 고릅니다.** 프로젝트에서 새 MCP 서버를 찾으면 이 창이 뜹니다. **기본 선택이 맨 아래 `Continue without using this MCP server`**이므로, 그냥 Enter를 누르면 서버 없이 시작됩니다. ↑를 두 번 눌러 고른 뒤 Enter를 누릅니다.
 
@@ -190,7 +190,7 @@ claude mcp list
 | Get Neo4j Schema | `get-schema` (`mcp__neo4j__get-schema`) | 노드 레이블·관계 타입·속성 키를 반환합니다. 파라미터는 없습니다. 레이블마다 표본을 추출해 만듭니다(APOC의 meta 스키마 사용) |
 | Read Cypher | `read-cypher` (`mcp__neo4j__read-cypher`) | 읽기 전용 Cypher를 실행합니다. `query`(필수, string)와 `params`(object) |
 
-README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. `write-cypher`는 `NEO4J_MCP_READ_ONLY=true`라서 목록에서 빠졌습니다(서버 로그 `Ignoring tool 'write-cypher': not available in read-only mode`). Neo4j 5.26 Community에서도, Windows PC의 Neo4j Desktop(Enterprise 2026.10, APOC 켬)에서도 `tools/list`에 나온 도구는 `get-schema`·`read-cypher` **두 개**였습니다. Enterprise에서는 서버 로그에 `list-gds-procedures`까지 3개가 등록되었다고 나오지만, GDS 플러그인이 없어 목록에서는 빠집니다. GDS가 설치된 DBMS라면 세 번째 도구가 보일 수 있으며, 읽기 전용이라 이 실습에는 영향이 없습니다.
+README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입니다. `write-cypher`는 `NEO4J_MCP_READ_ONLY=true`라서 목록에서 빠졌습니다(서버 로그 `Ignoring tool 'write-cypher': not available in read-only mode`). `tools/list`에 나오는 도구는 `get-schema`·`read-cypher` **두 개**입니다. Neo4j Enterprise(예: Neo4j Desktop)에 연결하면 서버 로그에 `list-gds-procedures`까지 3개가 등록되었다고 나오지만, GDS 플러그인이 없으면 목록에서는 빠집니다. GDS가 설치된 DBMS라면 세 번째 도구가 보일 수 있으며, 읽기 전용이라 이 실습에는 영향이 없습니다.
 </li>
 <li markdown="block">**첫 질문으로 연결을 확인합니다.** 골든 퀘스천 1번을 넣으면 Claude가 도구를 처음 호출할 때 권한을 요청합니다. 처음에는 `get-schema`, 다음에는 `read-cypher`의 권한을 요청합니다.
 
@@ -232,9 +232,9 @@ README에는 도구가 네 개 있지만 이 구성에서는 두 개만 보입�
 !!! warning "막히면"
     **Enter를 눌렀더니 `/mcp`에 연결이 없습니다 (GL-11).** 증상: `.mcp.json`을 만들고 `claude`를 다시 실행했는데 「New MCP server found in this project: neo4j」 창의 기본 선택이 `❯ Continue without using this MCP server`라서 서버 없이 시작됩니다. 원인: Claude Code의 프로젝트 MCP 승인 창 기본값입니다. 조치: ↑ 두 번으로 `Use this MCP server`(또는 `Use this and all future MCP servers in this project`)를 고르고 Enter를 누르세요. 이미 넘어갔다면 `/mcp`에서 neo4j를 골라 켜거나, `claude mcp reset-project-choices` 뒤 다시 시작합니다.
 
-    **서버가 실행되지 않습니다 — APOC가 없음.** 증상: `/mcp`나 `claude mcp list`에서 neo4j가 `failed`이고, 서버 로그에 `please ensure the APOC plugin is installed and includes the 'meta' component`가 나옵니다. 원인: Neo4j MCP 서버는 시작할 때 `get-schema`에 쓸 APOC의 `apoc.meta` 프로시저가 있는지 검사합니다. Windows PC에서 APOC가 꺼진 DBMS에 연결하자 도구 등록 직후 초기화가 이 오류로 실패했습니다. 조치: 3장 5단계(APOC jar를 `plugins`로 복사하고 `dbms.security.procedures.unrestricted=apoc.*` 설정)를 다시 확인하고 Neo4j를 재시작한 뒤, Neo4j Browser에서 `RETURN apoc.version()`이 버전을 돌려주는지 봅니다.
+    **서버가 실행되지 않습니다 — APOC가 없음.** 증상: `/mcp`나 `claude mcp list`에서 neo4j가 `failed`이고, 서버 로그에 `please ensure the APOC plugin is installed and includes the 'meta' component`가 나옵니다. 원인: Neo4j MCP 서버는 시작할 때 `get-schema`에 쓸 APOC의 `apoc.meta` 프로시저가 있는지 검사합니다. APOC가 꺼진 DBMS에 연결하면 도구 등록 직후 초기화가 이 오류로 실패합니다. 조치: 3장 5단계(APOC jar를 `plugins`로 복사하고 `dbms.security.procedures.unrestricted=apoc.*` 설정)를 다시 확인하고 Neo4j를 재시작한 뒤, Neo4j Browser에서 `RETURN apoc.version()`이 버전을 돌려주는지 봅니다.
 
-    **서버가 실행되지 않습니다 — 인증 실패 (GL-12).** 증상: `"NEO4J_MCP_PASSWORD": "${NEO4J_PASSWORD}"`로 썼는데 `claude`를 실행한 창에 `NEO4J_PASSWORD`가 없으면 MCP 서버가 인증 실패로 실행되지 않습니다. Windows PC에서 확인해 보니 서버는 시작할 때(initialize) DB 접속을 먼저 검사해 `impossible to verify connectivity … Unauthorized`로 멈추고, 그 뒤의 도구 목록 요청도 실패합니다. 원인: Claude Code는 `.mcp.json`의 `${변수}`를 claude 프로세스의 환경변수 값으로 치환하고, `.env`는 자동으로 읽지 않습니다. 조치: 새 PowerShell 창마다 `Set-Location C:\lab\law-graph; . .\env.ps1; claude`를 실행하세요. 반대로 비밀번호를 `.mcp.json`에 직접 쓰면 그 파일이 비밀 파일이 되므로 `.gitignore`에서 빠지지 않게 주의하세요.
+    **서버가 실행되지 않습니다 — 인증 실패 (GL-12).** 증상: `"NEO4J_MCP_PASSWORD": "${NEO4J_PASSWORD}"`로 썼는데 `claude`를 실행한 창에 `NEO4J_PASSWORD`가 없으면 MCP 서버가 인증 실패로 실행되지 않습니다. 서버는 시작할 때(initialize) DB 접속을 먼저 검사해 `impossible to verify connectivity … Unauthorized`로 멈추고, 그 뒤의 도구 목록 요청도 실패합니다. 원인: Claude Code는 `.mcp.json`의 `${변수}`를 claude 프로세스의 환경변수 값으로 치환하고, `.env`는 자동으로 읽지 않습니다. 조치: 새 PowerShell 창마다 `Set-Location C:\lab\law-graph; . .\env.ps1; claude`를 실행하세요. 반대로 비밀번호를 `.mcp.json`에 직접 쓰면 그 파일이 비밀 파일이 되므로 `.gitignore`에서 빠지지 않게 주의하세요.
 
 ## 정리와 다음 장
 

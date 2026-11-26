@@ -146,7 +146,7 @@
 <span class="nb">Get-ChildItem</span> <span class="s2">"$h\plugins"</span>
 </code></pre></div>
 
-<p><code>neo4j.conf</code>의 <code>dbms.security.procedures.unrestricted</code> 줄은 아래 5단계의 「같은 키 지우고 다시 쓰기」 명령에서 <code>$conf</code> 경로만 <code>"$h\conf\neo4j.conf"</code>로 바꿔 실행합니다. 처음 설치한 Desktop DBMS는 <code>labs</code>에 jar만 있고 <code>plugins</code>에는 <code>README.txt</code>만 있어 APOC가 <strong>꺼진 상태</strong>입니다(실제 PC에서 확인).</p>
+<p><code>neo4j.conf</code>의 <code>dbms.security.procedures.unrestricted</code> 줄은 아래 5단계의 「같은 키 지우고 다시 쓰기」 명령에서 <code>$conf</code> 경로만 <code>"$h\conf\neo4j.conf"</code>로 바꿔 실행합니다. 처음 설치한 Desktop DBMS는 <code>labs</code>에 jar만 있고 <code>plugins</code>에는 <code>README.txt</code>만 있어 APOC가 <strong>꺼진 상태</strong>입니다.</p>
 <h3 id="켜졌는지-확인하기">켜졌는지 확인하기<a class="anchor" href="#켜졌는지-확인하기" title="Permanent link">#</a></h3>
 <p>Neo4j를 (다시) 시작한 뒤 Neo4j Browser나 cypher-shell에서 실행합니다.</p>
 <p><strong>▶ Neo4j Browser(<code>http://localhost:7474</code>)에 붙여 넣기</strong> — 작업 창에서 <code>Write-Utf8</code>로 파일에 저장해 <code>&amp; $cs … -f 파일</code>로 실행해도 됩니다</p>
@@ -157,7 +157,7 @@
 
 <p>첫 줄이 Neo4j와 같은 버전 번호를, 둘째 줄이 0보다 큰 수를 돌려주면 켜진 것입니다. 셋째 줄은 그래프가 비어 있으면 <code>0</code>입니다. <code>Unknown function 'apoc.version'</code>이 나오면 jar가 <code>plugins</code>에 없거나 Neo4j를 다시 시작하지 않은 것입니다.</p>
 <h2 id="따라-하기">따라 하기<a class="anchor" href="#따라-하기" title="Permanent link">#</a></h2>
-<p>모든 명령은 PowerShell 창에서 실행합니다. Windows에 기본으로 들어 있는 <strong>Windows PowerShell 5.1</strong>(시작 메뉴 「Windows PowerShell」)과 <strong>PowerShell 7</strong>(<code>pwsh</code>) 어느 쪽이든 그대로 동작하도록 썼고, Windows 11 PC의 Windows PowerShell 5.1에서 실행해 확인했습니다. 관리자 권한으로 열 필요는 없습니다.</p>
+<p>모든 명령은 PowerShell 창에서 실행합니다. Windows에 기본으로 들어 있는 <strong>Windows PowerShell 5.1</strong>(시작 메뉴 「Windows PowerShell」)과 <strong>PowerShell 7</strong>(<code>pwsh</code>) 어느 쪽이든 그대로 동작합니다. 관리자 권한으로 열 필요는 없습니다.</p>
 <ol class="steps">
 <li><strong>도구를 설치합니다.</strong> 이미 설치된 것은 건너뜁니다. <code>winget</code>은 Windows 10/11에 기본으로 들어 있는 패키지 관리자입니다.
 
@@ -211,7 +211,7 @@
 
 
 
-winget으로 설치했다면 두 번째 줄이 JDK 21 폴더를 보여 줍니다. 아무것도 나오지 않으면 JDK를 다른 곳에 설치한 것입니다. <code>where.exe java</code>가 보여 준 경로 중 <code>jdk-21</code>이 들어간 줄에서 끝의 <code>\bin\java.exe</code>를 뺀 폴더가 <code>JAVA_HOME</code>입니다(예: <code>D:\Dev_tools\jdk-21.0.8\bin\java.exe</code> → <code>D:\Dev_tools\jdk-21.0.8</code>). 실제 PC에서도 JDK가 <code>D:\Dev_tools</code>에 있어 두 번째 줄은 빈 결과였습니다.
+winget으로 설치했다면 두 번째 줄이 JDK 21 폴더를 보여 줍니다. 아무것도 나오지 않으면 JDK를 다른 곳에 설치한 것입니다. <code>where.exe java</code>가 보여 준 경로 중 <code>jdk-21</code>이 들어간 줄에서 끝의 <code>\bin\java.exe</code>를 뺀 폴더가 <code>JAVA_HOME</code>입니다(예: <code>D:\Dev_tools\jdk-21.0.8\bin\java.exe</code> → <code>D:\Dev_tools\jdk-21.0.8</code>).
 
 이 설정은 지금 창에만 적용됩니다. <code>java -version</code>이 처음부터 21을 보여 주었다면 필요 없습니다. 필요한 경우에는 6단계에서 <code>env.ps1</code>을 만든 뒤 <code>Add-Content -Encoding ascii env.ps1 "</code>$env:JAVA_HOME = '&lt;위 경로&gt;'"`로 한 줄을 덧붙여 두면, Neo4j를 띄우는 창에서도 자동으로 JDK 21이 쓰입니다.
 </li>
@@ -228,7 +228,7 @@ winget으로 설치했다면 두 번째 줄이 JDK 21 폴더를 보여 줍니다
 
 
 
-<code>CurrentUser</code>가 <code>RemoteSigned</code>(또는 이미 <code>Unrestricted</code>)이면 됩니다. 인터넷에서 받은 서명 없는 스크립트는 여전히 막힙니다. 정책이 <code>Restricted</code>인 채로 <code>. .\env.ps1</code>을 실행하면 <code>running scripts is disabled on this system</code> 오류가 납니다(실제로 확인함). 회사 PC처럼 정책을 바꿀 수 없다면 창을 열 때마다 <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code>를 먼저 실행하세요. 그 창에서만 적용되고 창을 닫으면 사라집니다.
+<code>CurrentUser</code>가 <code>RemoteSigned</code>(또는 이미 <code>Unrestricted</code>)이면 됩니다. 인터넷에서 받은 서명 없는 스크립트는 여전히 막힙니다. 정책이 <code>Restricted</code>인 채로 <code>. .\env.ps1</code>을 실행하면 <code>running scripts is disabled on this system</code> 오류가 납니다. 회사 PC처럼 정책을 바꿀 수 없다면 창을 열 때마다 <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code>를 먼저 실행하세요. 그 창에서만 적용되고 창을 닫으면 사라집니다.
 </li>
 <li><strong>실습 폴더를 git 저장소로 만듭니다.</strong> 이 폴더(<code>C:\lab\law-graph</code>)에서 5장부터 Claude Code를 열고 단계마다 커밋합니다. <code>.gitignore</code>에는 비밀번호가 담긴 <code>.env</code>, 8장의 <code>.mcp.json</code>, 파이썬 가상환경, Claude Code 개인 설정을 넣습니다.
 
@@ -268,7 +268,7 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. <code>-Encodi
 
 
 
-<code>if (-not (Test-Path …))</code>는 이미 <code>C:\lab\neo4j</code>가 있으면 압축 풀기와 이름 바꾸기를 건너뜁니다. 이 줄이 없으면 이 단계를 두 번 실행했을 때 <code>Cannot create a file when that file already exists.</code> 오류가 납니다(실제 PC에서 확인). 처음부터 다시 설치하고 싶다면 Neo4j를 멈춘 뒤 <code>C:\lab\neo4j</code> 폴더를 지우고 다시 실행합니다.
+<code>if (-not (Test-Path …))</code>는 이미 <code>C:\lab\neo4j</code>가 있으면 압축 풀기와 이름 바꾸기를 건너뜁니다. 이 줄이 없으면 이 단계를 두 번 실행했을 때 <code>Cannot create a file when that file already exists.</code> 오류가 납니다. 처음부터 다시 설치하고 싶다면 Neo4j를 멈춘 뒤 <code>C:\lab\neo4j</code> 폴더를 지우고 다시 실행합니다.
 
 <code>bin</code>, <code>conf</code>, <code>data</code>, <code>labs</code>, <code>lib</code>, <code>logs</code>, <code>plugins</code> 폴더가 보이면 됩니다. 이후 명령은 폴더 이름에 버전이 없도록 <code>C:\lab\neo4j</code>로 부릅니다.
 </li>
@@ -299,7 +299,7 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. <code>-Encodi
 
 마지막 명령이 <code>Configuration file validation successful.</code>로 끝나면 설정이 올바릅니다. 같은 키를 지우고 다시 쓰므로 여러 번 실행해도 결과가 같습니다. 주석 줄(<code>#server.memory…</code>)은 키 이름 앞에 <code>#</code>이 붙어 있어 지워지지 않습니다.
 
-파일 끝에 네 줄을 그냥 덧붙이면 안 되는 이유도 확인했습니다. ① 원래 파일이 줄바꿈 없이 끝나면 첫 줄이 앞 줄 끝에 붙고, ② 이미 값이 있는 키(예: <code>server.memory.pagecache.size</code>)가 두 번 나오면 <code>validate-config</code>가 <code>declared multiple times</code>로 실패하고 Neo4j가 시작하지 않습니다.
+파일 끝에 네 줄을 그냥 덧붙이면 안 되는 이유는 두 가지입니다. ① 원래 파일이 줄바꿈 없이 끝나면 첫 줄이 앞 줄 끝에 붙고, ② 이미 값이 있는 키(예: <code>server.memory.pagecache.size</code>)가 두 번 나오면 <code>validate-config</code>가 <code>declared multiple times</code>로 실패하고 Neo4j가 시작하지 않습니다.
 
 | 설정 | 뜻 |
 |---|---|
@@ -390,12 +390,12 @@ PowerShell 문자열 안의 <code>`n</code>은 줄바꿈입니다. <code>-Encodi
 </li>
 </ol>
 <h3 id="한글이-깨지지-않게-하는-설정">한글이 깨지지 않게 하는 설정<a class="anchor" href="#한글이-깨지지-않게-하는-설정" title="Permanent link">#</a></h3>
-<p>한국어 Windows 콘솔의 기본 문자 집합은 CP949입니다. Windows 11 PC에서 한글이 어디서 깨지는지 직접 측정한 결과입니다.</p>
+<p>한국어 Windows 콘솔의 기본 문자 집합은 CP949입니다. 한글이 어디서 깨지고 어떻게 막는지 정리하면 다음과 같습니다.</p>
 <table>
 <thead>
 <tr>
 <th>경로</th>
-<th>측정 결과</th>
+<th>일어나는 일</th>
 <th>대응</th>
 </tr>
 </thead>
@@ -522,7 +522,7 @@ n
 </ul>
 <p><strong><code>Lock file has been locked by another process</code> 또는 <code>Neo4j web server failed to start</code>가 나옵니다</strong></p>
 <ul>
-<li>원인: 같은 Neo4j가 이미 다른 창(또는 Neo4j Desktop)에서 실행 중입니다. 실제 PC에서 두 번째로 <code>console</code>을 실행하자 이 오류로 끝났고, 먼저 띄운 Neo4j는 계속 정상으로 동작했습니다.</li>
+<li>원인: 같은 Neo4j가 이미 다른 창(또는 Neo4j Desktop)에서 실행 중입니다. 두 번째로 <code>console</code>을 실행하면 이 오류로 끝나지만, 먼저 띄운 Neo4j는 계속 정상으로 동작합니다.</li>
 <li>조치: 새로 띄울 필요가 없습니다. 이미 떠 있는 Neo4j 창을 그대로 쓰거나, 그 창에서 Ctrl+C로 멈춘 뒤 다시 실행합니다.</li>
 </ul>
 <p><strong>포트 7474·7687을 이미 쓰고 있다고 나옵니다</strong></p>

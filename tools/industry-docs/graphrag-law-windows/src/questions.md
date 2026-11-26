@@ -165,7 +165,7 @@ Claude는 두 번째 질의로 벌칙 장과 제12조·제13조 원문에서 「
 
 PowerShell 반복문으로 실행합니다(Windows PowerShell 5.1과 7 모두 동작). 질문은 5장에서 만든 `golden-questions.md`의 「1. …」 형식 줄에서 읽습니다. 질문 15개를 차례로 실행하므로 10분 안팎 걸리고, 구독 플랜의 사용 한도를 씁니다. 먼저 `$reps = 1`로 한 번씩만 돌려 보는 것을 권합니다.
 
-반복 실행 전에 **MCP 서버가 연결되는지 먼저 확인합니다.** MCP 서버가 연결되지 않은 채 헤드리스로 질문하면 Claude가 답을 내지 못하고 10분 넘게 멈춰 있는 경우를 실제 PC에서 겪었습니다(그때는 APOC가 꺼져 있었습니다). `claude mcp list`에 `✓ Connected`(8장에서 승인했다면) 또는 `⏸ Pending approval`이 아니라 `✗ Failed`가 나오면 반복 실행을 시작하지 말고 [8장 「막히면」](mcp.html)부터 해결합니다. 실행 중 멈춘 것 같으면 Ctrl+C로 중단합니다.
+반복 실행 전에 **MCP 서버가 연결되는지 먼저 확인합니다.** MCP 서버가 연결되지 않은 채 헤드리스로 질문하면 Claude가 답을 내지 못하고 10분 넘게 멈춰 있을 수 있습니다(예: APOC가 꺼져 있을 때). `claude mcp list`에 `✓ Connected`(8장에서 승인했다면) 또는 `⏸ Pending approval`이 아니라 `✗ Failed`가 나오면 반복 실행을 시작하지 말고 [8장 「막히면」](mcp.html)부터 해결합니다. 실행 중 멈춘 것 같으면 Ctrl+C로 중단합니다.
 
 **▶ 작업 창(Windows PowerShell)에 입력**
 
@@ -187,8 +187,8 @@ for ($n = 1; $n -le $qs.Count; $n++) {
 }
 ```
 
-!!! note "Windows PC에서 확인한 결과"
-    Windows PowerShell 5.1에서 이 반복문을 `$reps = 1`, 1번 질문 하나로 두 번 실행했습니다. 두 번 모두 첫 이벤트에 `"mcp_servers":[{"name":"neo4j","status":"connected"}]`가 나왔고, 34초와 27초 만에 「해임한 날부터 30일 이내에 다시 선임」과 제15조 근거를 답했습니다(Neo4j 도구 호출 4번·3번, 비용 약 $0.11·$0.07). `.mcp.json`의 `${NEO4J_PASSWORD}`는 `env.ps1`이 설정한 환경변수로 치환되었습니다. 헤드리스 실행은 `--mcp-config`로 서버를 직접 지정하므로, `claude mcp list`가 `⏸ Pending approval`이어도 연결됩니다.
+!!! note "정상일 때의 모습"
+    정상이면 각 결과 파일의 첫 이벤트에 `"mcp_servers":[{"name":"neo4j","status":"connected"}]`가 있고, 질문 하나는 30초 안팎에 근거 조문이 붙은 답으로 끝납니다. `.mcp.json`의 `${NEO4J_PASSWORD}`는 `env.ps1`이 설정한 환경변수로 채워집니다. 헤드리스 실행은 `--mcp-config`로 서버를 직접 지정하므로, `claude mcp list`가 `⏸ Pending approval`이어도 연결됩니다.
 
 | 명령에 쓴 것 | 뜻 |
 |---|---|

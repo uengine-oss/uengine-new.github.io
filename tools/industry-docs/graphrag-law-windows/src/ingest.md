@@ -45,7 +45,7 @@ claude
 - 끝나면 레이블별 노드 수, 관계 타입별 수, 걸린 시간을 보여 주고 커밋해 줘.
 ```
 </li>
-<li markdown="1">**Claude가 하는 일을 보며 승인합니다.** Claude는 `uv init --bare --python 3.12`와 `uv add pymupdf neo4j python-dotenv`로 프로젝트를 만듭니다. Windows PC에서 같은 명령을 실행해 보니 `Using CPython 3.12.12`로 파이썬을 받고 패키지 15개를 약 11초 만에 설치했습니다(PyMuPDF 2.2가 `onnxruntime`·`numpy` 등을 함께 받아 약 90MB). `--bare`는 `.gitignore`를 만들지 않으므로 3장의 `.gitignore`가 `.env`를 지킵니다. 기록에서 Claude는 이어서 짧은 조사 스크립트로 PDF 줄의 x 좌표를 여러 번 측정해 「조 34, 항·호 50, 목 60」이라는 들여쓰기 규칙을 찾았습니다. 모두 읽기 작업이므로 1로 승인합니다. Windows에서는 Claude가 Git Bash로 명령을 실행하므로 승인 창의 명령이 `uv run python - <<'EOF' …` 같은 bash 문법으로 보여도 정상입니다.
+<li markdown="1">**Claude가 하는 일을 보며 승인합니다.** Claude는 `uv init --bare --python 3.12`와 `uv add pymupdf neo4j python-dotenv`로 프로젝트를 만듭니다. `Using CPython 3.12.12`가 나오며 파이썬을 받고, 패키지 15개를 10초 안팎에 설치합니다(PyMuPDF 2.2가 `onnxruntime`·`numpy` 등을 함께 받아 약 90MB). `--bare`는 `.gitignore`를 만들지 않으므로 3장의 `.gitignore`가 `.env`를 지킵니다. 기록에서 Claude는 이어서 짧은 조사 스크립트로 PDF 줄의 x 좌표를 여러 번 측정해 「조 34, 항·호 50, 목 60」이라는 들여쓰기 규칙을 찾았습니다. 모두 읽기 작업이므로 1로 승인합니다. Windows에서는 Claude가 Git Bash로 명령을 실행하므로 승인 창의 명령이 `uv run python - <<'EOF' …` 같은 bash 문법으로 보여도 정상입니다.
 
 **왜 하나요?** 승인 창은 AI가 무엇을 하려는지 사람이 확인하는 유일한 지점입니다. 읽기만 하는 명령인지, 실습 폴더 안에서만 일하는지 보고 승인해야 의도하지 않은 변경을 막을 수 있습니다.
 </li>

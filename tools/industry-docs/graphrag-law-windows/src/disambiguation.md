@@ -52,9 +52,9 @@ Get-Content -Encoding utf8 data\extract\sample-article.txt |
     --no-session-persistence --disable-slash-commands --strict-mcp-config
 ```
 
-파이프로 넘기는 조문의 한글은 `env.ps1`이 `$OutputEncoding`을 UTF-8로 바꿔 두어야 그대로 전달됩니다(Windows PowerShell 5.1의 기본값은 ASCII라 한글이 `?`가 됩니다). **`--json-schema`에 실제 JSON을 넣을 때 주의:** Windows PowerShell 5.1은 외부 프로그램에 인자를 넘길 때 작은따옴표 문자열 안의 큰따옴표(`"`)를 지워 버립니다. 실제 PC에서 JSON을 그대로 넣자 `--json-schema is not valid JSON`으로 실패했고, 큰따옴표를 `\"`로 바꿔 넘기자 성공했습니다(`structured_output={"actors":[…]}` 반환, 약 7초). 5.1에서 손으로 시험할 때는 `$schema = '{"type":"object", …}'`처럼 변수에 담은 뒤 `--json-schema $schema.Replace('"','\"')`로 넘깁니다. PowerShell 7.3 이상은 큰따옴표를 그대로 넘기므로 `--json-schema $schema`로 씁니다. 실제 실습에서는 `extract_entities.py`가 파이썬에서 호출하므로 이 문제가 생기지 않습니다.
+파이프로 넘기는 조문의 한글은 `env.ps1`이 `$OutputEncoding`을 UTF-8로 바꿔 두어야 그대로 전달됩니다(Windows PowerShell 5.1의 기본값은 ASCII라 한글이 `?`가 됩니다). **`--json-schema`에 실제 JSON을 넣을 때 주의:** Windows PowerShell 5.1은 외부 프로그램에 인자를 넘길 때 작은따옴표 문자열 안의 큰따옴표(`"`)를 지워 버립니다. 그래서 JSON을 그대로 넣으면 `--json-schema is not valid JSON`으로 실패하고, 큰따옴표를 `\"`로 바꿔 넘겨야 `structured_output={"actors":[…]}`가 돌아옵니다. 5.1에서 손으로 시험할 때는 `$schema = '{"type":"object", …}'`처럼 변수에 담은 뒤 `--json-schema $schema.Replace('"','\"')`로 넘깁니다. PowerShell 7.3 이상은 큰따옴표를 그대로 넘기므로 `--json-schema $schema`로 씁니다. 실제 실습에서는 `extract_entities.py`가 파이썬에서 호출하므로 이 문제가 생기지 않습니다.
 
-도구를 모두 끌 때는 `--tools ""`가 아니라 `--tools=`로 씁니다. Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 `""`을 넘기지 못하고 빼 버리기 때문입니다(실제로 확인함). `--tools=`는 5.1과 7 모두에서 같은 뜻으로 전달됩니다.
+도구를 모두 끌 때는 `--tools ""`가 아니라 `--tools=`로 씁니다. Windows PowerShell 5.1은 외부 프로그램에 빈 문자열 `""`을 넘기지 못하고 빼 버리기 때문입니다. `--tools=`는 5.1과 7 모두에서 같은 뜻으로 전달됩니다.
 
 법 제27조(388자)를 보내 받은 응답에는 주체·기관 8개, 용어 4개, 관계 4건이 있었습니다. 다음은 그중 제2항의 관계 한 건입니다.
 
@@ -66,7 +66,7 @@ Get-Content -Encoding utf8 data\extract\sample-article.txt |
  "deadline": "즉시", "recipient": "소방서, 경찰서 또는 그 밖의 관계기관"}
 ```
 
-| 항목 | 실측 |
+| 항목 | 기록 |
 |---|---|
 | 덩어리 | 조 157개(법 46 · 영 29 · 규칙 82), 합계 64,845자, 중앙값 322자, 최대 1,952자(시행규칙 제65조) |
 | 호출 | 157번 모두 성공(`claude-haiku-5-5`), 조당 평균 12.8초, 6개 동시 실행으로 약 6분 |
@@ -248,7 +248,7 @@ provision, mentions, score
 
 노트가 「Graph DB 를 이용하여 동의어들을 찾는 (Dictionary 형식)」이라고 적은 방식이 (나)입니다. 6장에서 정의 조항과 약칭 문형으로 채운 Term의 `aliases`가 곧 사전입니다. 그래서 두 방식을 결합하고 사람이 검토했습니다. 약칭은 사전이, 수식어 차이는 LLM이, 묶음 쪼개기와 「합치면 안 되는 쌍」은 사람이 정한 규칙이 맡습니다.
 
-노트는 LLM 방식 옆에 「돈이 많이 듬」이라고 적었습니다. 이번 실측은 추출 157번 $0.268(약 6분), 중의성 해소 1번 $0.0156(94.9초)이고. 비용은 `claude -p`가 반환한 API 요금 환산치이며 구독 로그인에서는 사용 한도에 반영됩니다. 이 규모에서는 비용이 적게 들었지만 **사람이 틀린 묶음을 찾아 고치는 검토**(따라 하기 4·5단계)가 필요했습니다.
+노트는 LLM 방식 옆에 「돈이 많이 듬」이라고 적었습니다. 기록으로는 추출 157번 $0.268(약 6분), 중의성 해소 1번 $0.0156(94.9초)이고. 비용은 `claude -p`가 반환한 API 요금 환산치이며 구독 로그인에서는 사용 한도에 반영됩니다. 이 규모에서는 비용이 적게 들었지만 **사람이 틀린 묶음을 찾아 고치는 검토**(따라 하기 4·5단계)가 필요했습니다.
 
 ## 적재 때 중의성 해소와 질문 때 엔티티 연결
 
