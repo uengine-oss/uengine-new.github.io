@@ -13,6 +13,9 @@ MCP(Model Context Protocol)는 AI 에이전트가 외부 도구와 데이터를 
 | 연결 방식 | STDIO — Claude Code가 서버를 자식 프로세스로 실행해 표준입출력으로 데이터를 주고받습니다 |
 | 문서 | [neo4j.com/docs/mcp/current](https://neo4j.com/docs/mcp/current/)(installation, stdio-configuration) |
 
+!!! tip "시작하기 전에"
+    6·7장까지 적재가 끝나 있어야 합니다. 3장의 APOC가 켜져 있는지 Neo4j Browser에서 `RETURN apoc.version();`로 확인합니다. MCP의 `get-schema`가 APOC를 씁니다.
+
 ## 따라 하기
 
 <ol class="steps" markdown="1">

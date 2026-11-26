@@ -20,6 +20,9 @@ Cypher는 Neo4j의 질의 언어입니다. 찾으려는 패턴을 `(노드)-[관
 
 변수(`a`, `r`)는 해당 문장 안에서만 쓰는 이름입니다. 관계에는 항상 방향이 있습니다.
 
+!!! tip "시작하기 전에"
+    3장의 **Neo4j 창**에 `Started.`가 떠 있어야 합니다. 꺼져 있다면 새 PowerShell 창에서 `Set-Location C:\lab\law-graph; . .\env.ps1; C:\lab\neo4j\bin\neo4j.bat console`로 다시 켭니다. 질의는 브라우저의 Neo4j Browser(`http://localhost:7474`)에 붙여 넣는 것이 가장 쉽습니다.
+
 ## 따라 하기 ① 만들기
 
 <ol class="steps" markdown="1">

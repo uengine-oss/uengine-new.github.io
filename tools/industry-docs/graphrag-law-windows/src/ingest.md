@@ -21,6 +21,9 @@ Set-Location C:\lab\law-graph
 claude
 ```
 
+!!! tip "시작하기 전에"
+    5장에서 `schema.md`·`schema.cypher`·`golden-questions.md`를 커밋했고, Neo4j 창이 떠 있어야 합니다. Claude Code 창 하나와, 확인용 질의를 칠 **작업 창**(PowerShell, `. .\env.ps1` 실행) 하나를 함께 씁니다.
+
 ## 따라 하기
 
 <ol class="steps" markdown="1">

@@ -82,18 +82,27 @@ CALL apoc.meta.schema() YIELD value RETURN size(keys(value)) AS 레이블과관�
 
 ```powershell
 winget install --id Microsoft.OpenJDK.21 -e      # JDK 21
-winget install --id Git.Git -e                   # Git for Windows
-winget install --id astral-sh.uv -e              # uv
+winget install --id Git.Git -e                   # Git for Windows (Claude Code보다 먼저)
+winget install --id astral-sh.uv -e              # uv (Python 3.12는 uv가 나중에 받습니다)
 ```
 
-설치가 끝나면 **PowerShell 창을 닫고 새로 엽니다.** 새 창이어야 바뀐 `Path`가 적용됩니다. 그다음 버전을 확인합니다.
+`winget`이 처음 실행될 때 원본 약관 동의(`Y`)를 물을 수 있습니다. 설치가 끝나면 **PowerShell 창을 닫고 새로 엽니다.** 새 창이어야 바뀐 `Path`가 적용됩니다. 그다음 Claude Code를 설치합니다. Git for Windows가 먼저 있어야 Claude Code가 명령을 실행할 Git Bash를 찾습니다.
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+설치가 끝나면 다시 **창을 닫고 새로 연 뒤** 버전을 모두 확인합니다.
 
 ```powershell
 $PSVersionTable.PSVersion
 java -version
 git --version
 uv --version
+claude --version
 ```
+
+`claude`를 찾을 수 없다고 나오면 설치 스크립트가 알려 준 폴더(보통 `%USERPROFILE%\.local\bin`)가 `Path`에 들어갔는지 확인하고 창을 새로 엽니다. Claude 계정 로그인은 5장에서 `claude`를 처음 실행할 때 브라우저로 합니다. **Claude Pro 이상 유료 플랜** 계정이어야 합니다.
 
 `java -version`의 첫 줄에 `21.`이 보이면 됩니다(Microsoft 배포판은 `openjdk version "21.…"`, Oracle JDK는 `java version "21.…"`). Neo4j 5.26은 Java 17 또는 21에서 동작합니다. PowerShell 7을 쓰고 싶다면 `winget install --id Microsoft.PowerShell -e`로 따로 설치할 수 있지만 필수는 아닙니다. 여러 자바가 설치되어 있다면 이 세션에서만 JDK 21을 쓰도록 `JAVA_HOME`을 지정합니다(경로는 설치된 버전에 맞게 고칩니다).
 
@@ -101,6 +110,8 @@ uv --version
 Get-ChildItem 'C:\Program Files\Microsoft\jdk-21*' -Directory | Select-Object -ExpandProperty FullName
 $env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.9.10-hotspot'   # 위 출력으로 바꿉니다
 ```
+
+이 설정은 지금 창에만 적용됩니다. `java -version`이 처음부터 21을 보여 주었다면 필요 없습니다. 필요한 경우에는 6단계에서 `env.ps1`을 만든 뒤 `Add-Content -Encoding ascii env.ps1 "`$env:JAVA_HOME = '<위 경로>'"`로 한 줄을 덧붙여 두면, Neo4j를 띄우는 창에서도 자동으로 JDK 21이 쓰입니다.
 </li>
 <li markdown="1">**PowerShell 스크립트 실행을 허용합니다.** 이 교재는 이 장에서 만드는 `env.ps1`이라는 작은 스크립트로 비밀번호와 한글 설정을 창마다 불러옵니다. Windows의 기본 실행 정책(`Restricted`)은 모든 스크립트를 막으므로, 현재 사용자에 한해 로컬 스크립트를 허용합니다.
 
@@ -227,15 +238,17 @@ Set-Location C:\lab\law-graph
 
 맨 앞의 `.`과 공백은 「이 창 안에서 실행하라」(점 소싱)는 뜻입니다. 빼면 스크립트가 따로 실행되어 설정이 남지 않습니다. `env.ps1`에는 비밀번호가 없으므로 커밋해도 됩니다. 스크립트를 영문으로만 쓰고 `ascii`로 저장한 것은, Windows PowerShell 5.1이 BOM 없는 UTF-8 스크립트의 한글을 잘못 읽기 때문입니다.
 </li>
-<li markdown="1">**Neo4j를 실행합니다.** PowerShell 창을 **하나 더** 열고 아래를 실행합니다. 이 창은 Neo4j 전용으로 두고 닫지 않습니다.
+<li markdown="1">**Neo4j를 실행합니다.** PowerShell 창을 **하나 더** 열고 아래를 실행합니다. 이 창은 Neo4j 전용으로 두고 실습하는 동안 닫지 않습니다. 앞으로 이 창을 「**Neo4j 창**」, 명령을 입력하는 원래 창을 「**작업 창**」이라고 부릅니다.
 
 **왜 하나요?** 이후 모든 장이 `localhost:7687`(Bolt)과 `localhost:7474`(Browser)에 접속합니다. 전용 창에 띄워 두면 로그를 바로 볼 수 있고, Ctrl+C 한 번으로 깔끔하게 멈출 수 있습니다.
 
 ```powershell
+Set-Location C:\lab\law-graph
+. .\env.ps1
 C:\lab\neo4j\bin\neo4j.bat console
 ```
 
-`console`은 Neo4j를 이 창에서 앞쪽 프로세스로 실행합니다. 멈출 때는 이 창에서 Ctrl+C를 누릅니다. 처음 실행할 때 Windows 보안 경고(방화벽)가 나오면 「개인 네트워크」만 허용하거나 취소해도 됩니다. Neo4j 5는 기본으로 `localhost`에서만 연결을 받으므로 이 실습에는 영향이 없습니다.
+`env.ps1`을 먼저 읽으면 한글 로그가 깨지지 않고, `JAVA_HOME`을 넣어 두었다면 JDK 21이 쓰입니다. `console`은 Neo4j를 이 창에서 앞쪽 프로세스로 실행합니다. 멈출 때는 이 창에서 Ctrl+C를 누릅니다. 처음 실행할 때 Windows 보안 경고(방화벽)가 나오면 「개인 네트워크」만 허용하거나 취소해도 됩니다. Neo4j 5는 기본으로 `localhost`에서만 연결을 받으므로 이 실습에는 영향이 없습니다.
 </li>
 </ol>
 
@@ -327,7 +340,7 @@ RETURN name, versions, edition
 | 하려는 일 | 방법 | 데이터 |
 |---|---|---|
 | 멈추기 | Neo4j 창에서 Ctrl+C | `C:\lab\neo4j\data`에 그대로 |
-| 다시 켜기 | 새 PowerShell 창에서 `C:\lab\neo4j\bin\neo4j.bat console` | 멈추기 전 그대로 |
+| 다시 켜기 | 새 PowerShell 창에서 `Set-Location C:\lab\law-graph; . .\env.ps1; C:\lab\neo4j\bin\neo4j.bat console` | 멈추기 전 그대로 |
 | DB만 처음부터 | 멈춘 뒤 `Remove-Item -Recurse -Force C:\lab\neo4j\data\databases\neo4j, C:\lab\neo4j\data\transactions\neo4j` | 그래프 데이터만 사라지고 비밀번호는 남음 |
 | 완전히 처음부터 | 멈춘 뒤 `Remove-Item -Recurse -Force C:\lab\neo4j`, 4단계부터 다시 | 모두 사라짐 |
 
