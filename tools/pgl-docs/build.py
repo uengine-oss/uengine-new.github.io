@@ -51,6 +51,7 @@ CHAPTERS = [
     ("missions", "반복 줄이기"),
     ("panel-apps", "반복 줄이기"),
     ("folders", "팀으로 일하기"),
+    ("template-folders", "팀으로 일하기"),
     ("sharing", "팀으로 일하기"),
     ("messenger", "팀으로 일하기"),
     ("meetings", "팀으로 일하기"),

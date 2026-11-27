@@ -83,7 +83,7 @@ AI-DLC 2.11.2에는 요청의 불확실성을 점수로 가늠하는 규칙이 �
 - 이 장의 화면은 「팀 회의실 예약」(classic으로 끝낸 유닛 6개 저장소)에 요청 셋을 실제로 넣어 얻었습니다. 버그 수정은 코드를 고치기 전에 폐기해서 되돌린 파일이 0개였습니다.
 - 충돌 판단은 모델이 합니다. 이 실습에서는 「함께 갈 수 있음」으로 나왔고, 놓치거나 잘못 짚을 수 있습니다.
 - 한 번에 도는 세션은 하나입니다. 유닛마다 작업 트리를 나눠 여러 볼트를 동시에 만드는 것은 아직 해 보지 않았습니다.
-- 화면을 하나씩 따라 하려면 Process GPT Lite 튜토리얼 [32장 「AI-DLC 작업 접수와 볼트 줄」](https://www.uengine.org/docs/process-gpt-lite/robo-dlc-intake.html)을 보세요.
+- 화면을 하나씩 따라 하려면 Process GPT Lite 튜토리얼 [35장 「AI-DLC 작업 접수와 볼트 줄」](https://www.uengine.org/docs/process-gpt-lite/robo-dlc-intake.html)을 보세요.
 
 ## 확인 문제
 

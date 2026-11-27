@@ -57,7 +57,7 @@ AI-DLC는 Claude Code 터미널 하나에서 실행됩니다. 질문 파일과 �
 
 ## 직접 따라 하기
 
-Process GPT Lite 튜토리얼 [30장 AI-DLC 팀 세션](https://www.uengine.org/docs/process-gpt-lite/robo-dlc.html)에 저장소 연결부터 역할 정하기, 몹 회의, 빌드·테스트 승인, 홈 대시보드까지 단계별 실습 안내가 있습니다. 실습 저장소는 이 핸즈온의 레벨 2와 같은 AI-DLC 2.11.2 classic 스코프를 사용합니다.
+Process GPT Lite 튜토리얼 [33장 AI-DLC 팀 세션](https://www.uengine.org/docs/process-gpt-lite/robo-dlc.html)에 저장소 연결부터 역할 정하기, 몹 회의, 빌드·테스트 승인, 홈 대시보드까지 단계별 실습 안내가 있습니다. 실습 저장소는 이 핸즈온의 레벨 2와 같은 AI-DLC 2.11.2 classic 스코프를 사용합니다.
 
 ## 알아 둘 점
 
