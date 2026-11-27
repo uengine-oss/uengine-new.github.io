@@ -68,7 +68,7 @@ classic 스코프에서는 단계가 끝날 때 검토 에이전트가 산출물
 
 ## 직접 따라 하기
 
-Process GPT Lite 튜토리얼 [31장 AI-DLC 검토 보드와 볼트 보드](https://www.uengine.org/docs/process-gpt-lite/robo-dlc-review.html)에 실제로 classic을 실행하며 이 흐름을 따라 하는 단계별 안내가 있습니다.
+Process GPT Lite 튜토리얼 [34장 AI-DLC 검토 보드와 볼트 보드](https://www.uengine.org/docs/process-gpt-lite/robo-dlc-review.html)에 실제로 classic을 실행하며 이 흐름을 따라 하는 단계별 안내가 있습니다.
 
 ## 확인 문제
 

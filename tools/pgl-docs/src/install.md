@@ -83,7 +83,7 @@ cd process-gpt-lite/install
 | `craft` (선택) | ArtCraft 앱 다섯 개(도면·벡터·이미지·소리·영상)의 웹 편집기와 명령줄 도구 | [8장](craft.html)을 따라 할 때 `./install.sh --with-craft`. 미리 빌드된 이미지(약 660MB)를 받아 넣습니다. 소스에서 직접 빌드하려면 `.env`에 `LITE_CRAFT_IMAGE=`(빈 값)를 넣습니다(처음 약 50분, Docker 메모리 12GB 이상) |
 
 !!! note "설치 번들에 빠진 것"
-    현재 설치 번들에는 대화를 주제별로 나누는 **대화 맥락 라우터**와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 `.env`에 주소(`CONTEXT_ROUTER_URL`, `JUDGE_URL`)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 [4장](contexts.html)의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, [8장](craft.html))는 `--with-craft`로 함께 설치하고, Claude Code 작업실([24장](workroom.html))은 따로 설치합니다.
+    현재 설치 번들에는 대화를 주제별로 나누는 **대화 맥락 라우터**와 판단 모델이 들어 있지 않습니다(GPU나 큰 메모리가 필요합니다). 쓰려면 따로 띄운 뒤 `.env`에 주소(`CONTEXT_ROUTER_URL`, `JUDGE_URL`)를 넣어 연결하세요. 연결하지 않아도 채팅은 되지만 [4장](contexts.html)의 “대화가 알아서 나뉘는” 기능은 꺼집니다. 도면·그림·소리·영상 편집기(ArtCraft, [8장](craft.html))는 `--with-craft`로 함께 설치하고, Claude Code 작업실([25장](workroom.html))은 따로 설치합니다.
 
 ## 설정 파일 `.env`
 
@@ -97,7 +97,7 @@ cd process-gpt-lite/install
 | `LLM_MODEL`, `LLM_FAST_MODEL` | `gpt-6-luna`, `gpt-4.1-mini` | 일하는 모델과 빠른 판단용 모델 |
 | `LLM_USE_RESPONSES_API` | `true` | 에이전트가 OpenAI의 Responses API로 부름(추론 모델이 도구를 쓰려면 필요). OpenAI가 아닌 주소로 처음 설치하면 `false` |
 | `LLM_EMBEDDING_MODEL` | `text-embedding-3-small` | 문서 검색용 임베딩 |
-| `TRANSCRIBE_API_KEY` | 빈 값 | 원격 회의 받아쓰기(OpenAI 음성 API 키). 비우면 화상 회의만 되고 자막·회의록 글은 없습니다 ([16장](meetings.html)) |
+| `TRANSCRIBE_API_KEY` | 빈 값 | 원격 회의 받아쓰기(OpenAI 음성 API 키). 비우면 화상 회의만 되고 자막·회의록 글은 없습니다 ([17장](meetings.html)) |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | 빈 값 | Google 로그인과 Gmail 연결 ([5장](mail.html)) |
 | `SMTP_HOST` 외 `SMTP_*` | 빈 값 | 로그인 코드를 실제 메일로 보낼 때. 비우면 번들 메일함으로 갑니다 |
 | `DEMO_LOGIN` | `0` | `1`이면 고정 코드 `000000`도 받습니다 (아래 경고 참고) |

@@ -64,7 +64,7 @@ Process GPT Lite의 **볼트 보드**는 감사 기록을 읽어 이 계층을 �
 
 ## 다른 도구에서도 같은 보드
 
-볼트 보드와 검토 보드는 MCP Apps 규격으로 만든 앱입니다. 앱 하나가 MCP 서버 하나이고, 화면은 해당 서버가 제공하는 HTML 한 장입니다. Lite에서는 폴더 화면의 단추로 열고, 같은 앱 서버를 MCP Apps를 지원하는 다른 호스트에 연결할 수도 있습니다. 자세한 내용은 Process GPT Lite 튜토리얼 [31장의 「앱으로 붙이기」](https://www.uengine.org/docs/process-gpt-lite/robo-dlc-review.html)에 있습니다.
+볼트 보드와 검토 보드는 MCP Apps 규격으로 만든 앱입니다. 앱 하나가 MCP 서버 하나이고, 화면은 해당 서버가 제공하는 HTML 한 장입니다. Lite에서는 폴더 화면의 단추로 열고, 같은 앱 서버를 MCP Apps를 지원하는 다른 호스트에 연결할 수도 있습니다. 자세한 내용은 Process GPT Lite 튜토리얼 [34장의 「앱으로 붙이기」](https://www.uengine.org/docs/process-gpt-lite/robo-dlc-review.html)에 있습니다.
 
 ## 확인 문제
 
